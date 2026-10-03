@@ -305,11 +305,11 @@
 
             <div class="media-container">
                 <video id="manim-player" controls preload="metadata" style="height: 260px; object-fit: cover;">
-                    <source id="video-source" src="https://assets.hujinhai.com/videos/Cool3DLagrange.mp4" type="video/mp4">
+                    <source id="video-source" src="https://manim.hujinhai.com/videos/Cool3DLagrange.mp4" type="video/mp4">
                 </video>
             </div>
             
-            <a id="download-btn" href="https://assets.hujinhai.com/videos/Cool3DLagrange.mp4" target="_blank" download class="btn-action">
+            <a id="download-btn" href="https://manim.hujinhai.com/videos/Cool3DLagrange.mp4" target="_blank" download class="btn-action">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Download Current Video
             </a>
@@ -364,7 +364,7 @@
         const source = document.getElementById('video-source');
         const downloadBtn = document.getElementById('download-btn');
         
-        const newUrl = `https://assets.hujinhai.com/videos/${videoName}.mp4`;
+        const newUrl = `https://manim.hujinhai.com/videos/${videoName}.mp4`;
         
         source.src = newUrl;
         downloadBtn.href = newUrl;
