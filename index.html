@@ -57,7 +57,6 @@
             margin: 0;
             letter-spacing: 2px;
             background: linear-gradient(to right, var(--text-main) 30%, #a0a0a0 100%);
-            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -146,7 +145,7 @@
             margin-bottom: 20px;
         }
 
-        /* 视频选择标签栏 */
+        /* 视频切换标签栏 */
         .video-tabs {
             display: flex;
             gap: 8px;
@@ -185,7 +184,7 @@
         }
         iframe, video { display: block; width: 100%; border: none; }
 
-        /* 胶卷画廊：Humanities 板块的横向图片滑动 */
+        /* 胶卷画廊：Humanities 板块 */
         .filmstrip {
             display: flex;
             gap: 12px;
@@ -212,6 +211,30 @@
             border-color: var(--color-h);
         }
 
+        /* Technology 终端面板 */
+        .tech-terminal {
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #00ffcc;
+            margin-top: auto;
+            position: relative;
+        }
+        .tech-terminal::before {
+            content: '● ● ●';
+            display: block;
+            color: #555;
+            font-size: 0.7rem;
+            margin-bottom: 10px;
+            letter-spacing: 4px;
+        }
+        .terminal-line { margin: 4px 0; }
+        .terminal-dim { color: #666; }
+        .terminal-highlight { color: #ff3366; }
+
         .btn-action {
             display: inline-flex;
             align-items: center;
@@ -228,19 +251,6 @@
             transition: all 0.2s ease;
         }
         .btn-action:hover { background: rgba(255,255,255,0.1); }
-
-        .placeholder-box {
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255,255,255,0.02);
-            color: #444;
-            font-family: monospace;
-            border: 1px dashed rgba(255,255,255,0.1);
-            border-radius: 8px;
-            margin-top: auto;
-        }
 
         footer {
             text-align: center;
@@ -286,7 +296,7 @@
             </div>
         </div>
 
-        <!-- 2. Sciences (多视频标签切换展示区) -->
+        <!-- 2. Sciences -->
         <div class="module-card card-s">
             <div class="module-header">
                 <h2>S - Sciences</h2>
@@ -294,7 +304,6 @@
             </div>
             <p>基于 Python (Manim) 引擎预渲染的数学与算法模型仿真动画。</p>
             
-            <!-- 视频切换按钮标签 -->
             <div class="video-tabs">
                 <button class="video-tab active" onclick="switchVideo('Cool3DLagrange', this)">3D Lagrange</button>
                 <button class="video-tab" onclick="switchVideo('DecisionTreeFullSolution', this)">Decision Tree</button>
@@ -315,7 +324,7 @@
             </a>
         </div>
 
-        <!-- 3. Humanities (5张摄影图横向画廊) -->
+        <!-- 3. Humanities -->
         <div class="module-card card-h">
             <div class="module-header">
                 <h2>H - Humanities</h2>
@@ -336,16 +345,20 @@
             </div>
         </div>
 
-        <!-- 4. Technology -->
+        <!-- 4. Technology (全新高阶系统终端面板) -->
         <div class="module-card card-t">
             <div class="module-header">
                 <h2>T - Technology</h2>
                 <span style="color: var(--color-t); font-size: 1.2rem;">⚙️</span>
             </div>
-            <p>底层工程架构、前端开发实践与自动化部署 (CI/CD) 流水线笔记。连接现实与数字世界的工具库。</p>
+            <p>底层工程架构、GitOps 自动化部署与全栈工具链状态监视器。</p>
             
-            <div class="placeholder-box">
-                // System.pending('code_repos')
+            <div class="tech-terminal">
+                <div class="terminal-line"><span class="terminal-dim"># sys_arch:</span> Cloudflare Edge & Pages CI/CD</div>
+                <div class="terminal-line"><span class="terminal-dim"># storage:</span> R2 Object Storage (manim.hujinhai.com)</div>
+                <div class="terminal-line"><span class="terminal-dim"># engine:</span> Three.js / WebGL 2.0 / Python Manim</div>
+                <div class="terminal-line"><span class="terminal-highlight">status:</span> ALL_NODES_OPERATIONAL [99.9% Edge]</div>
+                <div class="terminal-line" style="color: #00e5ff;">git: main -> origin/deploy (Synced)</div>
             </div>
         </div>
 
@@ -358,7 +371,6 @@
 </div>
 
 <script>
-    // 切换 Manim 视频的交互函数
     function switchVideo(videoName, btnElement) {
         const player = document.getElementById('manim-player');
         const source = document.getElementById('video-source');
@@ -371,7 +383,6 @@
         player.load();
         player.play();
 
-        // 切换标签高亮状态
         document.querySelectorAll('.video-tab').forEach(tab => tab.classList.remove('active'));
         btnElement.classList.add('active');
     }
