@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.H. Lab | Data & Algorithms</title>
+    <style>
+        /* 全局现代字体与暗黑背景 */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ededed;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            /* 背景加上一点非常微弱的网格纹理，增加科技感 */
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* 居中主容器 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px 100px;
+        }
+
+        /* 头部样式：流光渐变标题 */
+        header {
+            margin-bottom: 60px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #00e5ff 0%, #b366ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #888888;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        /* 毛玻璃质感的卡片 */
+        .glass-card {
+            background: rgba(20, 20, 22, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 229, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        p { color: #a1a1aa; margin-bottom: 25px; }
+
+        /* 媒体容器去边框、加圆角 */
+        .media-container {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #050505;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        iframe { display: block; border: none; width: 100%; }
+        video { display: block; width: 100%; outline: none; }
+
+        /* 极简幽灵按钮 (Ghost Button) */
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 25px;
+            padding: 10px 20px;
+            background: transparent;
+            color: #ededed;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .btn-download:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        footer {
+            text-align: center;
+            color: #555555;
+            font-size: 0.85rem;
+            margin-top: 60px;
+        }
+
+        /* 简单的入场动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <!-- 隐去了真名，使用了高级感的代号 -->
+        <h1>J.H. Lab</h1>
+        <div class="subtitle">DATA ARTISAN · ALGORITHM VISUALIZATION</div>
+    </header>
+
+    <!-- 模块一：3D 沙盒 -->
+    <div class="glass-card" style="animation: fadeIn 1s ease-in-out 0.2s both;">
+        <h2><span style="font-size: 1.2rem;">🧊</span> 熵减过程 3D 沙盒</h2>
+        <p>基于 Three.js 的实时渲染实验。拖动滑块或旋转视角，观察数据集从高维随机混沌向低维矩阵晶格的坍缩降维。</p>
+        
+        <div class="media-container">
+            <!-- 你的交互沙盒链接 -->
+            <iframe src="https://entropy-sandbox.pages.dev" height="600px"></iframe>
+        </div>
+    </div>
+
+    <!-- 模块二：Manim 动画 -->
+    <div class="glass-card" style="animation: fadeIn 1s ease-in-out 0.4s both;">
+        <h2><span style="font-size: 1.2rem;">⚡</span> 决策树算法可视化</h2>
+        <p>使用 Python (Manim) 引擎预渲染。将信息增益与特征分裂的抽象计算过程，转化为点阵流动的几何视觉表达。</p>
+        
+        <div class="media-container">
+            <!-- 注意：这里使用了你刚才新规划的 assets 子域名图床 -->
+            <video controls preload="metadata" poster="">
+                <source src="https://assets.hujinhai.com/动画/EntropyReduction.mp4" type="video/mp4">
+            </video>
+        </div>
+        
+        <!-- 极简风的下载按钮 -->
+        <a href="https://assets.hujinhai.com/动画/EntropyReduction.mp4" target="_blank" download class="btn-download">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download Video
+        </a>
+    </div>
+
+    <footer>
+        <p>System Online. All parameters nominal. &copy; 2026 J.H.</p>
+    </footer>
+</div>
+
+</body>
+</html>
