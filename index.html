@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>J.H. Lab | S.H.I.T. Journal</title>
     <style>
-        /* ================= 基础设定与变量 ================= */
         :root {
             --bg-color: #050505;
             --text-main: #f0f0f0;
@@ -13,11 +12,10 @@
             --card-bg: rgba(18, 18, 22, 0.7);
             --card-border: rgba(255, 255, 255, 0.08);
             
-            /* 四大板块的主题色 */
-            --color-s: #00e5ff; /* Science - 青色 */
-            --color-h: #ffaa00; /* Humanities - 琥珀色 */
-            --color-i: #b366ff; /* Information - 紫色 */
-            --color-t: #ff3366; /* Technology - 霓虹红 */
+            --color-s: #00e5ff; /* Science */
+            --color-h: #ffaa00; /* Humanities */
+            --color-i: #b366ff; /* Information */
+            --color-t: #ff3366; /* Technology */
         }
 
         body {
@@ -39,7 +37,6 @@
             padding: 80px 20px 100px;
         }
 
-        /* ================= 头部设计 ================= */
         header {
             margin-bottom: 70px;
             text-align: center;
@@ -59,7 +56,6 @@
             font-weight: 900;
             margin: 0;
             letter-spacing: 2px;
-            /* 渐变流光文字 */
             background: linear-gradient(to right, var(--text-main) 30%, #a0a0a0 100%);
             background-clip: text;
             -webkit-background-clip: text;
@@ -87,19 +83,16 @@
         .a-i { color: var(--color-i); }
         .a-t { color: var(--color-t); }
 
-        /* ================= 四宫格布局 ================= */
         .grid-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
         
-        /* 移动端适配：屏幕变小时变为单列 */
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
             .grid-layout { grid-template-columns: 1fr; }
         }
 
-        /* ================= 卡片通用样式 ================= */
         .module-card {
             background: var(--card-bg);
             backdrop-filter: blur(12px);
@@ -109,13 +102,11 @@
             padding: 35px;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease, border-color 0.3s ease;
             position: relative;
             overflow: hidden;
-            animation: fadeInUp 0.8s ease-out backwards;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        /* 卡片顶部发光装饰线 */
         .module-card::before {
             content: '';
             position: absolute;
@@ -152,33 +143,76 @@
         .module-card p {
             color: var(--text-muted);
             font-size: 0.95rem;
-            margin-bottom: 25px;
-            flex-grow: 1;
+            margin-bottom: 20px;
         }
 
-        /* ================= 媒体容器与按钮 ================= */
+        /* 视频选择标签栏 */
+        .video-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-s) rgba(255,255,255,0.05);
+        }
+        .video-tab {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .video-tab:hover {
+            color: #fff;
+            border-color: rgba(255,255,255,0.3);
+        }
+        .video-tab.active {
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--color-s);
+            border-color: var(--color-s);
+        }
+
         .media-container {
             border-radius: 8px;
             overflow: hidden;
             background: #000;
             border: 1px solid rgba(255,255,255,0.05);
-            margin-top: auto; 
         }
         iframe, video { display: block; width: 100%; border: none; }
-        
-        .placeholder-box {
-            height: 200px;
+
+        /* 胶卷画廊：Humanities 板块的横向图片滑动 */
+        .filmstrip {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255,255,255,0.02);
-            color: #444;
-            font-family: monospace;
-            border: 1px dashed rgba(255,255,255,0.1);
-            border-radius: 8px;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-top: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-h) rgba(255,255,255,0.05);
+        }
+        .filmstrip::-webkit-scrollbar { height: 6px; }
+        .filmstrip::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 3px; }
+        .filmstrip::-webkit-scrollbar-thumb { background: var(--color-h); border-radius: 3px; opacity: 0.6; }
+
+        .filmstrip img {
+            height: 180px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .filmstrip img:hover {
+            transform: scale(1.03);
+            border-color: var(--color-h);
         }
 
-        .btn-download {
+        .btn-action {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -193,40 +227,21 @@
             text-decoration: none;
             transition: all 0.2s ease;
         }
-        .btn-download:hover { background: rgba(255,255,255,0.1); }
+        .btn-action:hover { background: rgba(255,255,255,0.1); }
 
-        /* ================= 横向滑动相册 (新增) ================= */
-        .photo-gallery {
+        .placeholder-box {
+            height: 200px;
             display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-bottom: 12px; /* 给滚动条留出空间 */
-            margin-top: auto;
-            /* 自定义滚动条样式 */
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255, 170, 0, 0.5) rgba(0,0,0,0.2);
-        }
-        /* Webkit浏览器滚动条美化 */
-        .photo-gallery::-webkit-scrollbar { height: 6px; }
-        .photo-gallery::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
-        .photo-gallery::-webkit-scrollbar-thumb { background: rgba(255, 170, 0, 0.5); border-radius: 10px; }
-        
-        .photo-gallery img {
-            height: 220px; /* 固定高度，宽度自适应 */
-            width: auto;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.02);
+            color: #444;
+            font-family: monospace;
+            border: 1px dashed rgba(255,255,255,0.1);
             border-radius: 8px;
-            object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.3s ease, filter 0.3s ease;
-            flex-shrink: 0; /* 防止图片被压缩变形 */
-            cursor: pointer;
-        }
-        .photo-gallery img:hover {
-            transform: scale(1.02);
-            filter: brightness(1.1);
+            margin-top: auto;
         }
 
-        /* ================= 底部版权 ================= */
         footer {
             text-align: center;
             color: #444;
@@ -235,13 +250,8 @@
             font-family: monospace;
         }
 
-        /* ================= 动画定义 ================= */
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -250,7 +260,6 @@
 
 <div class="container">
     
-    <!-- 题头区域 -->
     <header>
         <div class="super-title">The Personal Journal of J.H.</div>
         <h1>S.H.I.T.</h1>
@@ -262,11 +271,10 @@
         </div>
     </header>
 
-    <!-- 四宫格内容区 -->
     <div class="grid-layout">
 
-        <!-- 1. Information (信息) -->
-        <div class="module-card card-i" style="animation-delay: 0.1s;">
+        <!-- 1. Information -->
+        <div class="module-card card-i">
             <div class="module-header">
                 <h2>I - Information</h2>
                 <span style="color: var(--color-i); font-size: 1.2rem;">🧊</span>
@@ -278,50 +286,58 @@
             </div>
         </div>
 
-        <!-- 2. Sciences (科学) -->
-        <div class="module-card card-s" style="animation-delay: 0.2s;">
+        <!-- 2. Sciences (多视频标签切换展示区) -->
+        <div class="module-card card-s">
             <div class="module-header">
                 <h2>S - Sciences</h2>
                 <span style="color: var(--color-s); font-size: 1.2rem;">⚡</span>
             </div>
-            <p>使用 Python (Manim) 引擎预渲染的算法数学模型。将决策树的信息增益与特征分裂过程，转化为点阵流动的几何视觉表达。</p>
+            <p>基于 Python (Manim) 引擎预渲染的数学与算法模型仿真动画。</p>
             
+            <!-- 视频切换按钮标签 -->
+            <div class="video-tabs">
+                <button class="video-tab active" onclick="switchVideo('Cool3DLagrange', this)">3D Lagrange</button>
+                <button class="video-tab" onclick="switchVideo('DecisionTreeFullSolution', this)">Decision Tree</button>
+                <button class="video-tab" onclick="switchVideo('GroupTheoryPromo', this)">Group Theory</button>
+                <button class="video-tab" onclick="switchVideo('LagrangeCosetTiling', this)">Coset Tiling</button>
+                <button class="video-tab" onclick="switchVideo('OffTrainingErrorExplanation', this)">Error Analysis</button>
+            </div>
+
             <div class="media-container">
-                <video controls preload="metadata" style="height: 300px; object-fit: cover;">
-                    <source src="https://assets.hujinhai.com/动画/EntropyReduction.mp4" type="video/mp4">
+                <video id="manim-player" controls preload="metadata" style="height: 260px; object-fit: cover;">
+                    <source id="video-source" src="https://assets.hujinhai.com/videos/Cool3DLagrange.mp4" type="video/mp4">
                 </video>
             </div>
-            <a href="https://assets.hujinhai.com/动画/EntropyReduction.mp4" target="_blank" download class="btn-download">
+            
+            <a id="download-btn" href="https://assets.hujinhai.com/videos/Cool3DLagrange.mp4" target="_blank" download class="btn-action">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                Source Video
+                Download Current Video
             </a>
         </div>
 
-        <!-- 3. Humanities (人文) - 你的摄影画廊 -->
-        <div class="module-card card-h" style="animation-delay: 0.3s;">
+        <!-- 3. Humanities (5张摄影图横向画廊) -->
+        <div class="module-card card-h">
             <div class="module-header">
                 <h2>H - Humanities</h2>
                 <span style="color: var(--color-h); font-size: 1.2rem;">📜</span>
             </div>
-            <p>关于社会科学、哲学思考以及电影/摄影艺术的非结构化记录。探讨数字时代下人的存在方式。</p>
+            <p>关于社会科学、哲学思考以及街头/纪实摄影艺术的非结构化记录。</p>
             
-            <!-- 替换后的横向滑动相册 -->
-            <div class="photo-gallery">
-                <img src="images/1.jpg" alt="纪实摄影 1">
-                <img src="images/2.jpg" alt="纪实摄影 2">
-                <img src="images/3.jpg" alt="纪实摄影 3">
-                <img src="images/4.jpg" alt="纪实摄影 4">
-                <img src="images/5.jpg" alt="纪实摄影 5">
+            <div class="filmstrip">
+                <img src="images/1.jpg" alt="Photo 1">
+                <img src="images/2.jpg" alt="Photo 2">
+                <img src="images/3.jpg" alt="Photo 3">
+                <img src="images/4.jpg" alt="Photo 4">
+                <img src="images/5.jpg" alt="Photo 5">
             </div>
             
-            <!-- 图片下方的极简图注 -->
-            <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 12px; font-family: monospace;">
-                // 街头纪实 · 横向滑动查看全集 👉
+            <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 10px; font-family: monospace;">
+                // 街头纪实与光影切片 (可横向滚动)
             </div>
         </div>
 
-        <!-- 4. Technology (技术) -->
-        <div class="module-card card-t" style="animation-delay: 0.4s;">
+        <!-- 4. Technology -->
+        <div class="module-card card-t">
             <div class="module-header">
                 <h2>T - Technology</h2>
                 <span style="color: var(--color-t); font-size: 1.2rem;">⚙️</span>
@@ -340,6 +356,26 @@
     </footer>
 
 </div>
+
+<script>
+    // 切换 Manim 视频的交互函数
+    function switchVideo(videoName, btnElement) {
+        const player = document.getElementById('manim-player');
+        const source = document.getElementById('video-source');
+        const downloadBtn = document.getElementById('download-btn');
+        
+        const newUrl = `https://assets.hujinhai.com/videos/${videoName}.mp4`;
+        
+        source.src = newUrl;
+        downloadBtn.href = newUrl;
+        player.load();
+        player.play();
+
+        // 切换标签高亮状态
+        document.querySelectorAll('.video-tab').forEach(tab => tab.classList.remove('active'));
+        btnElement.classList.add('active');
+    }
+</script>
 
 </body>
 </html>
