@@ -3,121 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J.H. Lab | S.H.I.T.</title>
+    <title>J.H. Lab | S.H.I.T. Journal</title>
     <style>
-        /* 全局现代字体与暗黑背景 */
+        /* ================= 基础设定与变量 ================= */
+        :root {
+            --bg-color: #050505;
+            --text-main: #f0f0f0;
+            --text-muted: #888888;
+            --card-bg: rgba(18, 18, 22, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            
+            /* 四大板块的主题色 */
+            --color-s: #00e5ff; /* Science - 青色 */
+            --color-h: #ffaa00; /* Humanities - 琥珀色 */
+            --color-i: #b366ff; /* Information - 紫色 */
+            --color-t: #ff3366; /* Technology - 霓虹红 */
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background-color: #000000;
-            color: #ededed;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
             line-height: 1.6;
-            /* 背景加上一点非常微弱的网格纹理，增加科技感 */
-            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.03), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(179, 102, 255, 0.03), transparent 25%);
+            background-attachment: fixed;
         }
 
-        /* 居中主容器 */
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 80px 20px 100px;
         }
 
-        /* 头部样式：流光渐变标题 */
+        /* ================= 头部设计 ================= */
         header {
-            margin-bottom: 60px;
-            animation: fadeIn 1s ease-in-out;
+            margin-bottom: 70px;
+            text-align: center;
+            animation: fadeInDown 0.8s ease-out;
         }
+        
+        .super-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
         h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin: 0 0 10px 0;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #00e5ff 0%, #b366ff 100%);
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: 2px;
+            /* 渐变流光文字 */
+            background: linear-gradient(to right, var(--text-main) 30%, #a0a0a0 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .subtitle {
+
+        .acronym-def {
             font-size: 1.1rem;
-            color: #888888;
-            font-weight: 400;
-            letter-spacing: 1px;
+            font-weight: 500;
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
         }
-
-        /* 毛玻璃质感的卡片 */
-        .glass-card {
-            background: rgba(20, 20, 22, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        
+        .acronym-def span {
+            padding: 4px 12px;
             border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .glass-card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 40px rgba(0, 229, 255, 0.05);
-            transform: translateY(-2px);
+        .a-s { color: var(--color-s); }
+        .a-h { color: var(--color-h); }
+        .a-i { color: var(--color-i); }
+        .a-t { color: var(--color-t); }
+
+        /* ================= 四宫格布局 ================= */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        /* 移动端适配：屏幕变小时变为单列 */
+        @media (max-width: 800px) {
+            .grid-layout { grid-template-columns: 1fr; }
         }
 
-        h2 {
-            font-size: 1.5rem;
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-weight: 600;
-            color: #ffffff;
+        /* ================= 卡片通用样式 ================= */
+        .module-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        /* 卡片顶部发光装饰线 */
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .card-s::before { background: var(--color-s); box-shadow: 0 0 15px var(--color-s); }
+        .card-h::before { background: var(--color-h); box-shadow: 0 0 15px var(--color-h); }
+        .card-i::before { background: var(--color-i); box-shadow: 0 0 15px var(--color-i); }
+        .card-t::before { background: var(--color-t); box-shadow: 0 0 15px var(--color-t); }
+
+        .module-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+        .module-card:hover::before { opacity: 1; }
+
+        .module-header {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
 
-        p { color: #a1a1aa; margin-bottom: 25px; }
+        .module-card h2 {
+            font-size: 1.4rem;
+            margin: 0;
+            font-weight: 700;
+        }
+        .card-s h2 { color: var(--color-s); }
+        .card-h h2 { color: var(--color-h); }
+        .card-i h2 { color: var(--color-i); }
+        .card-t h2 { color: var(--color-t); }
 
-        /* 媒体容器去边框、加圆角 */
+        .module-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        /* ================= 媒体容器与按钮 ================= */
         .media-container {
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
-            background: #050505;
+            background: #000;
             border: 1px solid rgba(255,255,255,0.05);
+            margin-top: auto; /* 推到底部 */
         }
-        iframe { display: block; border: none; width: 100%; }
-        video { display: block; width: 100%; outline: none; }
+        iframe, video { display: block; width: 100%; border: none; }
+        
+        .placeholder-box {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.02);
+            color: #444;
+            font-family: monospace;
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
 
-        /* 极简幽灵按钮 (Ghost Button) */
         .btn-download {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            margin-top: 25px;
-            padding: 10px 20px;
+            margin-top: 15px;
+            padding: 8px;
             background: transparent;
-            color: #ededed;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 500;
+            color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            font-size: 0.85rem;
             text-decoration: none;
             transition: all 0.2s ease;
         }
-        .btn-download:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.4);
-        }
+        .btn-download:hover { background: rgba(255,255,255,0.1); }
 
+        /* ================= 底部版权 ================= */
         footer {
             text-align: center;
-            color: #555555;
+            color: #444;
             font-size: 0.85rem;
-            margin-top: 60px;
+            margin-top: 80px;
+            font-family: monospace;
         }
 
-        /* 简单的入场动画 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        /* ================= 动画定义 ================= */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -125,45 +218,86 @@
 <body>
 
 <div class="container">
+    
+    <!-- 题头区域 -->
     <header>
-        <!-- 隐去了真名，使用了高级感的代号 -->
-        <h1>J.H. Lab</h1>
-        <div class="subtitle">DATA ARTISAN · ALGORITHM VISUALIZATION</div>
+        <div class="super-title">The Personal Journal of J.H.</div>
+        <h1>S.H.I.T.</h1>
+        <div class="acronym-def">
+            <span class="a-s">Sciences</span>
+            <span class="a-h">Humanities</span>
+            <span class="a-i">Information</span>
+            <span class="a-t">Technology</span>
+        </div>
     </header>
 
-    <!-- 模块一：3D 沙盒 -->
-    <div class="glass-card" style="animation: fadeIn 1s ease-in-out 0.2s both;">
-        <h2><span style="font-size: 1.2rem;">🧊</span> 熵减过程 3D 沙盒</h2>
-        <p>基于 Three.js 的实时渲染实验。拖动滑块或旋转视角，观察数据集从高维随机混沌向低维矩阵晶格的坍缩降维。</p>
-        
-        <div class="media-container">
-            <!-- 你的交互沙盒链接 -->
-            <iframe src="https://entropy-sandbox.pages.dev" height="600px"></iframe>
-        </div>
-    </div>
+    <!-- 四宫格内容区 -->
+    <div class="grid-layout">
 
-    <!-- 模块二：Manim 动画 -->
-    <div class="glass-card" style="animation: fadeIn 1s ease-in-out 0.4s both;">
-        <h2><span style="font-size: 1.2rem;">⚡</span> 决策树算法可视化</h2>
-        <p>使用 Python (Manim) 引擎预渲染。将信息增益与特征分裂的抽象计算过程，转化为点阵流动的几何视觉表达。</p>
-        
-        <div class="media-container">
-            <!-- 注意：这里使用了你刚才新规划的 assets 子域名图床 -->
-            <video controls preload="metadata" poster="">
-                <source src="https://assets.hujinhai.com/动画/EntropyReduction.mp4" type="video/mp4">
-            </video>
+        <!-- 1. Information (信息) - 放置 3D 交互沙盒 -->
+        <div class="module-card card-i" style="animation-delay: 0.1s;">
+            <div class="module-header">
+                <h2>I - Information</h2>
+                <span style="color: var(--color-i); font-size: 1.2rem;">🧊</span>
+            </div>
+            <p>基于 Three.js 的实时渲染物理实验。观察数据集从高维随机混沌向低维矩阵晶格的坍缩降维过程，探讨信息熵的演化。</p>
+            
+            <div class="media-container">
+                <iframe src="https://entropy-sandbox.pages.dev" height="300px" scrolling="no"></iframe>
+            </div>
         </div>
-        
-        <!-- 极简风的下载按钮 -->
-        <a href="https://assets.hujinhai.com/动画/EntropyReduction.mp4" target="_blank" download class="btn-download">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            Download Video
-        </a>
+
+        <!-- 2. Sciences (科学) - 放置 Manim 决策树动画 -->
+        <div class="module-card card-s" style="animation-delay: 0.2s;">
+            <div class="module-header">
+                <h2>S - Sciences</h2>
+                <span style="color: var(--color-s); font-size: 1.2rem;">⚡</span>
+            </div>
+            <p>使用 Python (Manim) 引擎预渲染的算法数学模型。将决策树的信息增益与特征分裂过程，转化为点阵流动的几何视觉表达。</p>
+            
+            <div class="media-container">
+                <video controls preload="metadata" style="height: 300px; object-fit: cover;">
+                    <source src="https://assets.hujinhai.com/动画/EntropyReduction.mp4" type="video/mp4">
+                </video>
+            </div>
+            <a href="https://assets.hujinhai.com/动画/EntropyReduction.mp4" target="_blank" download class="btn-download">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Source Video
+            </a>
+        </div>
+
+        <!-- 3. Humanities (人文) - 预留模块 -->
+        <div class="module-card card-h" style="animation-delay: 0.3s;">
+            <div class="module-header">
+                <h2>H - Humanities</h2>
+                <span style="color: var(--color-h); font-size: 1.2rem;">📜</span>
+            </div>
+            <p>关于社会科学、哲学思考以及电影/摄影艺术的非结构化记录。探讨数字时代下人的存在方式。</p>
+            
+            <div class="placeholder-box">
+                // System.pending('articles')
+            </div>
+        </div>
+
+        <!-- 4. Technology (技术) - 预留模块 -->
+        <div class="module-card card-t" style="animation-delay: 0.4s;">
+            <div class="module-header">
+                <h2>T - Technology</h2>
+                <span style="color: var(--color-t); font-size: 1.2rem;">⚙️</span>
+            </div>
+            <p>底层工程架构、前端开发实践与自动化部署 (CI/CD) 流水线笔记。连接现实与数字世界的工具库。</p>
+            
+            <div class="placeholder-box">
+                // System.pending('code_repos')
+            </div>
+        </div>
+
     </div>
 
     <footer>
-        <p>System Online. All parameters nominal. &copy; 2026 J.H.</p>
+        System Online. All parameters nominal. &copy; 2026 J.H. LAB
     </footer>
+
 </div>
 
 </body>
