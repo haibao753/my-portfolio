@@ -274,8 +274,16 @@
             </div>
             <p>关于社会科学、哲学思考以及电影/摄影艺术的非结构化记录。探讨数字时代下人的存在方式。</p>
             
-            <div class="placeholder-box">
-                // System.pending('articles')
+<!-- 替换后的图片展示区 -->
+            <div style="border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); margin-top: auto;">
+                <!-- 如果用 R2 链接，就把 src 里的路径换成你 R2 的 https://... 链接 -->
+                <!-- 如果用本地文件夹，就把 src 换成 images/你的图片名.jpg -->
+                <img src="images/1.jpg" alt="纪实摄影" style="width: 100%; display: block; object-fit: cover; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            </div>
+            
+            <!-- 图片下方的极简图注 -->
+            <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 12px; font-family: monospace;">
+                // 街头纪实 · 极简结构与自然光影
             </div>
         </div>
 
