@@ -162,7 +162,7 @@
             overflow: hidden;
             background: #000;
             border: 1px solid rgba(255,255,255,0.05);
-            margin-top: auto; /* 推到底部 */
+            margin-top: auto; 
         }
         iframe, video { display: block; width: 100%; border: none; }
         
@@ -194,6 +194,37 @@
             transition: all 0.2s ease;
         }
         .btn-download:hover { background: rgba(255,255,255,0.1); }
+
+        /* ================= 横向滑动相册 (新增) ================= */
+        .photo-gallery {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 12px; /* 给滚动条留出空间 */
+            margin-top: auto;
+            /* 自定义滚动条样式 */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 170, 0, 0.5) rgba(0,0,0,0.2);
+        }
+        /* Webkit浏览器滚动条美化 */
+        .photo-gallery::-webkit-scrollbar { height: 6px; }
+        .photo-gallery::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        .photo-gallery::-webkit-scrollbar-thumb { background: rgba(255, 170, 0, 0.5); border-radius: 10px; }
+        
+        .photo-gallery img {
+            height: 220px; /* 固定高度，宽度自适应 */
+            width: auto;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease, filter 0.3s ease;
+            flex-shrink: 0; /* 防止图片被压缩变形 */
+            cursor: pointer;
+        }
+        .photo-gallery img:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
 
         /* ================= 底部版权 ================= */
         footer {
@@ -234,7 +265,7 @@
     <!-- 四宫格内容区 -->
     <div class="grid-layout">
 
-        <!-- 1. Information (信息) - 放置 3D 交互沙盒 -->
+        <!-- 1. Information (信息) -->
         <div class="module-card card-i" style="animation-delay: 0.1s;">
             <div class="module-header">
                 <h2>I - Information</h2>
@@ -247,7 +278,7 @@
             </div>
         </div>
 
-        <!-- 2. Sciences (科学) - 放置 Manim 决策树动画 -->
+        <!-- 2. Sciences (科学) -->
         <div class="module-card card-s" style="animation-delay: 0.2s;">
             <div class="module-header">
                 <h2>S - Sciences</h2>
@@ -266,7 +297,7 @@
             </a>
         </div>
 
-        <!-- 3. Humanities (人文) - 预留模块 -->
+        <!-- 3. Humanities (人文) - 你的摄影画廊 -->
         <div class="module-card card-h" style="animation-delay: 0.3s;">
             <div class="module-header">
                 <h2>H - Humanities</h2>
@@ -274,20 +305,22 @@
             </div>
             <p>关于社会科学、哲学思考以及电影/摄影艺术的非结构化记录。探讨数字时代下人的存在方式。</p>
             
-<!-- 替换后的图片展示区 -->
-            <div style="border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); margin-top: auto;">
-                <!-- 如果用 R2 链接，就把 src 里的路径换成你 R2 的 https://... 链接 -->
-                <!-- 如果用本地文件夹，就把 src 换成 images/你的图片名.jpg -->
-                <img src="images/1.jpg" alt="纪实摄影" style="width: 100%; display: block; object-fit: cover; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <!-- 替换后的横向滑动相册 -->
+            <div class="photo-gallery">
+                <img src="images/1.jpg" alt="纪实摄影 1">
+                <img src="images/2.jpg" alt="纪实摄影 2">
+                <img src="images/3.jpg" alt="纪实摄影 3">
+                <img src="images/4.jpg" alt="纪实摄影 4">
+                <img src="images/5.jpg" alt="纪实摄影 5">
             </div>
             
             <!-- 图片下方的极简图注 -->
             <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 12px; font-family: monospace;">
-                // 街头纪实 · 极简结构与自然光影
+                // 街头纪实 · 横向滑动查看全集 👉
             </div>
         </div>
 
-        <!-- 4. Technology (技术) - 预留模块 -->
+        <!-- 4. Technology (技术) -->
         <div class="module-card card-t" style="animation-delay: 0.4s;">
             <div class="module-header">
                 <h2>T - Technology</h2>
