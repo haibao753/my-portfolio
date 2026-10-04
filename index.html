@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J.H. Lab | S.H.I.T. Journal</title>
+    <title>J.H. Lab | Sciences · Information · Technology · Humanities</title>
     <style>
         :root {
-            --bg-color: #050505;
-            --text-main: #f0f0f0;
-            --text-muted: #888888;
-            --card-bg: rgba(18, 18, 22, 0.7);
+            --bg-color: #050508;
+            --text-main: #f0f3f8;
+            --text-muted: #8a8f9d;
+            --card-bg: rgba(16, 18, 27, 0.75);
             --card-border: rgba(255, 255, 255, 0.08);
             
-            --color-s: #00e5ff; /* Science */
-            --color-h: #ffaa00; /* Humanities */
+            --color-s: #00e5ff; /* Sciences */
             --color-i: #b366ff; /* Information */
             --color-t: #ff3366; /* Technology */
+            --color-h: #ffaa00; /* Humanities */
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -23,87 +27,92 @@
             padding: 0;
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
             line-height: 1.6;
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.03), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(179, 102, 255, 0.03), transparent 25%);
+                radial-gradient(circle at 15% 30%, rgba(0, 229, 255, 0.04), transparent 35%),
+                radial-gradient(circle at 85% 70%, rgba(179, 102, 255, 0.04), transparent 35%);
             background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1120px;
             margin: 0 auto;
-            padding: 80px 20px 100px;
+            padding: 60px 24px 80px;
         }
 
         header {
-            margin-bottom: 70px;
+            margin-bottom: 60px;
             text-align: center;
-            animation: fadeInDown 0.8s ease-out;
+            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         .super-title {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-weight: 600;
         }
 
         h1 {
-            font-size: 4.5rem;
-            font-weight: 900;
+            font-size: 3.8rem;
+            font-weight: 800;
             margin: 0;
-            letter-spacing: 2px;
-            background: linear-gradient(to right, var(--text-main) 30%, #a0a0a0 100%);
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #ffffff 30%, #9aa0b4 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .acronym-def {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            margin-top: 15px;
+            margin-top: 20px;
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
         }
         
         .acronym-def span {
-            padding: 4px 12px;
+            padding: 6px 16px;
             border-radius: 20px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            letter-spacing: 0.5px;
         }
-        .a-s { color: var(--color-s); }
-        .a-h { color: var(--color-h); }
-        .a-i { color: var(--color-i); }
-        .a-t { color: var(--color-t); }
+        .a-s { color: var(--color-s); border-color: rgba(0, 229, 255, 0.2) !important; }
+        .a-i { color: var(--color-i); border-color: rgba(179, 102, 255, 0.2) !important; }
+        .a-t { color: var(--color-t); border-color: rgba(255, 51, 102, 0.2) !important; }
+        .a-h { color: var(--color-h); border-color: rgba(255, 170, 0, 0.2) !important; }
 
         .grid-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
         }
         
-        @media (max-width: 900px) {
+        @media (max-width: 868px) {
             .grid-layout { grid-template-columns: 1fr; }
+            h1 { font-size: 2.8rem; }
         }
 
         .module-card {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--card-border);
             border-radius: 16px;
-            padding: 35px;
+            padding: 32px;
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .module-card::before {
@@ -111,80 +120,97 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 2px;
-            opacity: 0.5;
+            opacity: 0.6;
             transition: opacity 0.3s;
         }
-        .card-s::before { background: var(--color-s); box-shadow: 0 0 15px var(--color-s); }
-        .card-h::before { background: var(--color-h); box-shadow: 0 0 15px var(--color-h); }
-        .card-i::before { background: var(--color-i); box-shadow: 0 0 15px var(--color-i); }
-        .card-t::before { background: var(--color-t); box-shadow: 0 0 15px var(--color-t); }
+        .card-s::before { background: var(--color-s); box-shadow: 0 0 12px var(--color-s); }
+        .card-i::before { background: var(--color-i); box-shadow: 0 0 12px var(--color-i); }
+        .card-t::before { background: var(--color-t); box-shadow: 0 0 12px var(--color-t); }
+        .card-h::before { background: var(--color-h); box-shadow: 0 0 12px var(--color-h); }
 
-        .module-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+        .module-card:hover { 
+            transform: translateY(-4px); 
+            border-color: rgba(255, 255, 255, 0.18); 
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
         .module-card:hover::before { opacity: 1; }
 
         .module-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .module-card h2 {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             margin: 0;
             font-weight: 700;
+            letter-spacing: 0.5px;
         }
         .card-s h2 { color: var(--color-s); }
-        .card-h h2 { color: var(--color-h); }
         .card-i h2 { color: var(--color-i); }
         .card-t h2 { color: var(--color-t); }
+        .card-h h2 { color: var(--color-h); }
 
         .module-card p {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
+            font-size: 0.92rem;
+            margin: 0 0 20px 0;
+            line-height: 1.55;
         }
 
-        /* 视频切换标签栏 */
+        /* 视频选择标签栏 */
         .video-tabs {
             display: flex;
             gap: 8px;
             overflow-x: auto;
             padding-bottom: 8px;
             margin-bottom: 12px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--color-s) rgba(255,255,255,0.05);
+            scrollbar-width: none;
         }
+        .video-tabs::-webkit-scrollbar { display: none; }
+
         .video-tab {
             background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.08);
             color: var(--text-muted);
             padding: 6px 12px;
             border-radius: 6px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s;
         }
         .video-tab:hover {
             color: #fff;
-            border-color: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.25);
         }
         .video-tab.active {
-            background: rgba(0, 229, 255, 0.1);
+            background: rgba(0, 229, 255, 0.12);
             color: var(--color-s);
             border-color: var(--color-s);
+            font-weight: 600;
         }
 
         .media-container {
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
             background: #000;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
         }
-        iframe, video { display: block; width: 100%; border: none; }
+        iframe, video { 
+            display: block; 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            object-fit: cover;
+        }
 
-        /* 胶卷画廊：Humanities 板块 */
+        /* 胶卷画廊：Humanities */
         .filmstrip {
             display: flex;
             gap: 12px;
@@ -192,14 +218,14 @@
             padding-bottom: 10px;
             margin-top: auto;
             scrollbar-width: thin;
-            scrollbar-color: var(--color-h) rgba(255,255,255,0.05);
+            scrollbar-color: var(--color-h) rgba(255,255,255,0.03);
         }
-        .filmstrip::-webkit-scrollbar { height: 6px; }
-        .filmstrip::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 3px; }
-        .filmstrip::-webkit-scrollbar-thumb { background: var(--color-h); border-radius: 3px; opacity: 0.6; }
+        .filmstrip::-webkit-scrollbar { height: 4px; }
+        .filmstrip::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        .filmstrip::-webkit-scrollbar-thumb { background: var(--color-h); border-radius: 2px; }
 
         .filmstrip img {
-            height: 180px;
+            height: 160px;
             border-radius: 6px;
             object-fit: cover;
             border: 1px solid rgba(255,255,255,0.1);
@@ -207,61 +233,64 @@
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
         .filmstrip img:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
             border-color: var(--color-h);
         }
 
-        /* Technology 终端面板 */
+        /* Technology 终端监视面板 */
         .tech-terminal {
-            background: #000000;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #08080a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
-            padding: 16px;
-            font-family: monospace;
-            font-size: 0.85rem;
+            padding: 16px 18px;
+            font-family: "SF Mono", Monaco, Consolas, "Courier New", monospace;
+            font-size: 0.82rem;
             color: #00ffcc;
             margin-top: auto;
-            position: relative;
         }
         .tech-terminal::before {
             content: '● ● ●';
             display: block;
-            color: #555;
-            font-size: 0.7rem;
-            margin-bottom: 10px;
-            letter-spacing: 4px;
+            color: #444;
+            font-size: 0.65rem;
+            margin-bottom: 12px;
+            letter-spacing: 3px;
         }
-        .terminal-line { margin: 4px 0; }
-        .terminal-dim { color: #666; }
-        .terminal-highlight { color: #ff3366; }
+        .terminal-line { margin: 5px 0; }
+        .terminal-dim { color: #666e80; }
+        .terminal-highlight { color: #ff3366; font-weight: 600; }
 
         .btn-action {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-top: 15px;
-            padding: 8px;
-            background: transparent;
+            margin-top: 14px;
+            padding: 9px 16px;
+            background: rgba(255,255,255,0.03);
             color: var(--text-main);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 6px;
-            font-size: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px;
+            font-size: 0.82rem;
             text-decoration: none;
             transition: all 0.2s ease;
         }
-        .btn-action:hover { background: rgba(255,255,255,0.1); }
+        .btn-action:hover { 
+            background: rgba(255,255,255,0.08); 
+            border-color: rgba(255,255,255,0.25);
+        }
 
         footer {
             text-align: center;
-            color: #444;
-            font-size: 0.85rem;
-            margin-top: 80px;
-            font-family: monospace;
+            color: #555d6e;
+            font-size: 0.82rem;
+            margin-top: 70px;
+            font-family: "SF Mono", Consolas, monospace;
+            letter-spacing: 0.5px;
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-16px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -271,38 +300,25 @@
 <div class="container">
     
     <header>
-        <div class="super-title">The Personal Journal of J.H.</div>
-        <h1>S.H.I.T.</h1>
+        <div class="super-title">J.H. Engineering & Research Lab</div>
+        <h1>J.H. LAB</h1>
         <div class="acronym-def">
             <span class="a-s">Sciences</span>
-            <span class="a-h">Humanities</span>
             <span class="a-i">Information</span>
             <span class="a-t">Technology</span>
+            <span class="a-h">Humanities</span>
         </div>
     </header>
 
-    <div class="grid-layout">
+    <main class="grid-layout">
 
-        <!-- 1. Information -->
-        <div class="module-card card-i">
-            <div class="module-header">
-                <h2>I - Information</h2>
-                <span style="color: var(--color-i); font-size: 1.2rem;">🧊</span>
-            </div>
-            <p>基于 Three.js 的实时渲染物理实验。观察数据集从高维随机混沌向低维矩阵晶格的坍缩降维过程，探讨信息熵的演化。</p>
-            
-            <div class="media-container">
-                <iframe src="https://entropy-sandbox.pages.dev" height="300px" scrolling="no"></iframe>
-            </div>
-        </div>
-
-        <!-- 2. Sciences -->
-        <div class="module-card card-s">
+        <!-- 1. Sciences -->
+        <section class="module-card card-s">
             <div class="module-header">
                 <h2>S - Sciences</h2>
                 <span style="color: var(--color-s); font-size: 1.2rem;">⚡</span>
             </div>
-            <p>基于 Python (Manim) 引擎预渲染的数学与算法模型仿真动画。</p>
+            <p>基于 Python (Manim) 算法引擎预渲染的高精数理模型与抽象几何演进仿真。</p>
             
             <div class="video-tabs">
                 <button class="video-tab active" onclick="switchVideo('Cool3DLagrange', this)">3D Lagrange</button>
@@ -313,56 +329,69 @@
             </div>
 
             <div class="media-container">
-                <video id="manim-player" controls preload="metadata" style="height: 260px; object-fit: cover;">
+                <video id="manim-player" controls preload="metadata">
                     <source id="video-source" src="https://manim.hujinhai.com/videos/Cool3DLagrange.mp4" type="video/mp4">
                 </video>
             </div>
             
             <a id="download-btn" href="https://manim.hujinhai.com/videos/Cool3DLagrange.mp4" target="_blank" download class="btn-action">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                Download Current Video
+                下载当前渲染视频 (HD)
             </a>
-        </div>
+        </section>
 
-        <!-- 3. Humanities -->
-        <div class="module-card card-h">
+        <!-- 2. Information -->
+        <section class="module-card card-i">
             <div class="module-header">
-                <h2>H - Humanities</h2>
-                <span style="color: var(--color-h); font-size: 1.2rem;">📜</span>
+                <h2>I - Information</h2>
+                <span style="color: var(--color-i); font-size: 1.2rem;">🧊</span>
             </div>
-            <p>关于社会科学、哲学思考以及街头/纪实摄影艺术的非结构化记录。</p>
+            <p>基于 WebGL / Three.js 的 3D 实时物理沙盒。观察数据集从高维随机混沌向低维晶格的演化。</p>
             
-            <div class="filmstrip">
-                <img src="images/1.jpg" alt="Photo 1">
-                <img src="images/2.jpg" alt="Photo 2">
-                <img src="images/3.jpg" alt="Photo 3">
-                <img src="images/4.jpg" alt="Photo 4">
-                <img src="images/5.jpg" alt="Photo 5">
+            <div class="media-container">
+                <iframe src="https://entropy-sandbox.pages.dev" title="3D Entropy Sandbox" loading="lazy"></iframe>
             </div>
-            
-            <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 10px; font-family: monospace;">
-                // 街头纪实与光影切片 (可横向滚动)
-            </div>
-        </div>
+        </section>
 
-        <!-- 4. Technology (全新高阶系统终端面板) -->
-        <div class="module-card card-t">
+        <!-- 3. Technology -->
+        <section class="module-card card-t">
             <div class="module-header">
                 <h2>T - Technology</h2>
                 <span style="color: var(--color-t); font-size: 1.2rem;">⚙️</span>
             </div>
-            <p>底层工程架构、GitOps 自动化部署与全栈工具链状态监视器。</p>
+            <p>底层分布式基础设施、GitOps 自动化部署与全栈边缘节点监视控制台。</p>
             
             <div class="tech-terminal">
-                <div class="terminal-line"><span class="terminal-dim"># sys_arch:</span> Cloudflare Edge & Pages CI/CD</div>
-                <div class="terminal-line"><span class="terminal-dim"># storage:</span> R2 Object Storage (manim.hujinhai.com)</div>
-                <div class="terminal-line"><span class="terminal-dim"># engine:</span> Three.js / WebGL 2.0 / Python Manim</div>
-                <div class="terminal-line"><span class="terminal-highlight">status:</span> ALL_NODES_OPERATIONAL [99.9% Edge]</div>
-                <div class="terminal-line" style="color: #00e5ff;">git: main -> origin/deploy (Synced)</div>
+                <div class="terminal-line"><span class="terminal-dim"># sys_arch:</span> Cloudflare Edge & Pages CI/CD Pipeline</div>
+                <div class="terminal-line"><span class="terminal-dim"># storage:</span> R2 High-Performance Object Storage</div>
+                <div class="terminal-line"><span class="terminal-dim"># engine:</span> Three.js / WebGL 2.0 / Python Manim Core</div>
+                <div class="terminal-line"><span class="terminal-highlight">status:</span> ALL_NODES_OPERATIONAL [99.9% Availability]</div>
+                <div class="terminal-line" style="color: #00e5ff;">git: main -> origin/deploy (Synced & Active)</div>
             </div>
-        </div>
+        </section>
 
-    </div>
+        <!-- 4. Humanities -->
+        <section class="module-card card-h">
+            <div class="module-header">
+                <h2>H - Humanities</h2>
+                <span style="color: var(--color-h); font-size: 1.2rem;">📜</span>
+            </div>
+            <p>关于社会科学、行为哲学以及纪实视觉摄影艺术的非结构化思考记录。</p>
+            
+            <div class="filmstrip">
+                <img src="images/1.jpg" alt="纪实摄影作品 1">
+                <img src="images/2.jpg" alt="纪实摄影作品 2">
+                <img src="images/3.jpg" alt="纪实摄影作品 3">
+                <img src="images/4.jpg" alt="纪实摄影作品 4">
+                <img src="images/5.jpg" alt="纪实摄影作品 5">
+            </div>
+            
+            <div style="text-align: center; color: var(--text-muted); font-size: 0.78rem; margin-top: 12px; font-family: monospace;">
+                // 纪实影像与光影切片记录 (支持横向滑动)
+            </div>
+        </section>
+
+    </main>
 
     <footer>
         System Online. All parameters nominal. &copy; 2026 J.H. LAB
