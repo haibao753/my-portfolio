@@ -8,6 +8,7 @@
 <meta property="og:title" content="全球资讯观察站 · J.H. Lab">
 <meta property="og:description" content="世界很大，值得仔细阅读。">
 <title>全球资讯观察站 — J.H. LAB / BRIEF</title>
+<link rel="stylesheet" href="/assets/fonts.css">
 <style>
 :root{color-scheme:light;--page:#f7f7f4;--paper:#fff;--surface:#efefeb;--ink:#171816;--muted:#62665f;--soft:#898d86;--line:#d5d7d0;--line-strong:#aeb2a9;--header:rgba(247,247,244,.89)}
 html[data-theme="dark"]{color-scheme:dark;--page:#141514;--paper:#212320;--surface:#1c1e1c;--ink:#f0f0ea;--muted:#afb2a9;--soft:#888e84;--line:#373b35;--line-strong:#646a60;--header:rgba(20,21,20,.89)}
@@ -29,7 +30,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 .header-nav{margin-left:auto;display:flex;gap:27px;align-items:center}
 .header-nav a{font-size:12px;color:var(--muted)}
 .header-nav a:hover,.footer a:hover{color:var(--ink)}
-.header-actions{display:flex;align-items:center;gap:12px}
+.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .theme-toggle{display:inline-flex;align-items:center;gap:10px;padding:9px 13px;border:1px solid var(--line-strong);border-radius:999px;background:transparent;color:var(--ink);font-size:11px;white-space:nowrap}
 .theme-toggle:hover{background:var(--surface)}
 .theme-symbol{width:17px;height:17px}
@@ -81,7 +82,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 .footer-links a{font-size:11px;color:var(--muted)}
 @media(max-width:900px){.wrap{width:calc(100% - 64px)}.hero h1{font-size:clamp(65px,9vw,100px)}.hero-body{gap:25px}.issue-summary{min-width:200px}}
 @media(max-width:700px){.wrap{width:calc(100% - 42px)}.header-row{min-height:73px;gap:12px}.header-nav{display:none}.header-actions{margin-left:auto;gap:8px}.hero{padding:65px 0 52px}.hero h1{font-size:clamp(52px,12.7vw,81px);margin:37px 0 25px}.hero-body{display:block}.issue-summary{border-left:0;border-top:1px solid var(--line);margin-top:35px;padding:18px 0 0;min-width:0}.issue-summary #headlineDate{font-size:22px}.issue-intro{margin-top:35px}.issues-section{padding-top:53px}.section-heading{display:block}.section-heading .hint{margin-top:13px}.grid{grid-template-columns:1fr;gap:0;padding-bottom:70px}.story{min-height:0;padding:27px 0}.story h2{font-size:23px}.disclaimer{display:block}.disclaimer .details{margin-top:17px}.footer-links{justify-content:flex-start}}
-@media(max-width:420px){.wrap{width:calc(100% - 34px)}.logo{font-size:18px}.logo-mark{width:26px;height:26px}.theme-toggle{padding:9px}.theme-label{display:none}.back-link{padding:10px 12px}.hero h1{font-size:clamp(50px,12.5vw,70px)}.archive-label{width:100%;justify-content:space-between}}
+@media(max-width:420px){.header-row{flex-wrap:wrap;padding:10px 0}.header-actions{max-width:100%}.back-link{padding:9px}.theme-toggle{padding:9px}.reading-toggle{font-size:10px}.wrap{width:calc(100% - 34px)}.logo{font-size:18px}.logo-mark{width:26px;height:26px}.theme-toggle{padding:9px}.theme-label{display:none}.back-link{padding:10px 12px}.hero h1{font-size:clamp(50px,12.5vw,70px)}.archive-label{width:100%;justify-content:space-between}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 </style>
 <script>
@@ -93,32 +94,34 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 <a href="/" class="logo" aria-label="返回 J.H. LAB 首页"><span class="logo-mark" aria-hidden="true">J.</span>J.H. LAB</a>
 <nav class="header-nav" aria-label="简报导航"><a href="#archive">分类 / FILTER</a><a href="#archive">日期 / ARCHIVE</a></nav>
 <div class="header-actions">
+<button id="language-toggle" class="language-toggle" type="button" aria-label="Switch to English">EN / English</button>
+<button id="reading-toggle" class="reading-toggle" type="button" aria-pressed="false">人文阅读</button>
 <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换为深色模式" aria-pressed="false" title="切换黑白主题">
 <svg class="theme-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4.25"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.57 4.57l2.12 2.12M17.31 17.31l2.12 2.12M19.43 4.57l-2.12 2.12M6.69 17.31l-2.12 2.12"/></svg>
 <span class="theme-label" id="theme-label">深色模式</span>
 </button>
-<a href="/" class="back-link">返回主页 ↗</a>
+<a href="/" class="back-link" data-i18n="nav.home">返回主页 ↗</a>
 </div>
 </div></header>
 <main class="wrap">
 <section class="hero" aria-labelledby="hero-title">
-<div class="hero-top"><span class="small-label mono">J.H. LAB / GLOBAL INTELLIGENCE</span><span class="right mono">AN OPEN INFORMATION ARCHIVE · 2026</span></div>
-<h1 id="hero-title">全球资讯<br><span class="outlined">观察站.</span></h1>
+<div class="hero-top"><span class="small-label mono" data-i18n="brief.kicker">全球资讯观察站</span><span class="right mono">AN OPEN INFORMATION ARCHIVE · 2026</span></div>
+<h1 id="hero-title" data-i18n="brief.heading">全球资讯<br><span class="outlined">观察站.</span></h1>
 <div class="hero-body">
-<p class="hero-description"><strong>世界很大，值得仔细阅读。</strong><br>穿透日常信息流，连接中国与全球。每日追踪公共议题、前沿科研与技术变化，以中文提供有背景的简报，并保留原始报道的链接。</p>
-<div class="issue-summary"><span class="label mono"><span class="live-dot"></span>CURRENT ISSUE</span><span id="headlineDate">等待首期发布</span><span id="total">— 条精选</span></div>
+<p class="hero-description" data-i18n="brief.desc"><strong>世界很大，值得仔细阅读。</strong><br>穿透日常信息流，连接中国与全球。每日追踪公共议题、前沿科研与技术变化，以中文提供有背景的简报，并保留原始报道的链接。</p>
+<div class="issue-summary"><span class="label mono"><span class="live-dot"></span><span data-i18n="brief.current">本期简报</span></span><span id="headlineDate">等待首期发布</span><span id="total">— 条精选</span></div>
 </div>
-<div class="issue-intro mono"><span>DAILY BRIEF / 计划每日 09:00 更新 · 北京时间</span><span>SCROLL TO DISCOVER ↓</span></div>
+<div class="issue-intro mono"><span data-i18n="brief.schedule">计划每天北京时间 09:00 更新</span><span data-i18n="brief.scroll">向下阅读 ↓</span></div>
 </section>
 <section class="issues-section" aria-labelledby="archive-heading">
-<div class="section-heading"><div><div class="small-label mono">01 / BRIEFING ARCHIVE</div><h2 id="archive-heading">每日观察<span aria-hidden="true">.</span></h2></div><p class="hint">从事实出发，提供理解事件的线索。可按主题筛选，也可回顾历史期数。</p></div>
-<div id="archive" class="toolbar"><div id="tabs" class="tabs" aria-label="按内容分类筛选"></div><label class="archive-label">日期 / ISSUE <select id="issues" class="archive" aria-label="选择历史日期"></select></label></div>
+<div class="section-heading"><div><div class="small-label mono" data-i18n="brief.archiveKicker">每日资讯归档</div><h2 id="archive-heading" data-i18n="brief.archiveHeading">每日观察.</h2></div><p class="hint" data-i18n="brief.archiveDesc">从事实出发，提供理解事件的线索。可按主题筛选，也可回顾历史期数。</p></div>
+<div id="archive" class="toolbar"><div id="tabs" class="tabs" aria-label="按内容分类筛选"></div><label class="archive-label"><span data-i18n="brief.dateLabel">日期 / 期数</span> <select id="issues" class="archive" aria-label="选择历史日期"></select></label></div>
 <p id="status" class="status" role="status">正在加载资讯…</p>
 <div id="stories" class="grid" aria-live="polite"></div>
 </section>
 </main>
-<footer class="wrap disclaimer"><div class="brand">J.H. LAB <span style="font-weight:400;color:var(--muted);font-size:12px">/ BRIEF</span></div><div class="details">本站以 AI 辅助整理公开资讯，摘要仅反映信息来源的观点，并非独立事实核查。重大或存在争议的议题应核对多个来源。所有报道版权归原发布方所有，点击原文查看完整内容。
-<div class="footer-links"><a href="/">首页 ↗</a><a href="mailto:aiformath61@gmail.com">联系 ↗</a><a href="#hero-title">返回顶部 ↑</a></div>
+<footer class="wrap disclaimer"><div class="brand">J.H. LAB <span style="font-weight:400;color:var(--muted);font-size:12px">/ BRIEF</span></div><div class="details"><span data-i18n="brief.disclaimer">本站以 AI 辅助整理公开资讯，摘要仅反映信息来源的观点，并非独立事实核查。重大或存在争议的议题应核对多个来源。所有报道版权归原发布方所有，点击原文查看完整内容。</span>
+<div class="footer-links"><a href="/" data-i18n="nav.home">返回主页 ↗</a><a href="mailto:aiformath61@gmail.com" data-i18n="nav.contact">联系</a><a href="#hero-title">返回顶部 ↑</a></div>
 </div></footer>
 <script>
 (function(){
@@ -143,4 +146,22 @@ async function init(){try{const r=await fetch("./data/index.json",{cache:"no-cac
 init();
 })();
 </script>
-</body></html>
+
+<script>
+(function(){
+"use strict";
+const control=document.getElementById("reading-toggle");
+function change(human){
+ document.documentElement.dataset.reading=human?"humanities":"modern";
+ control.setAttribute("aria-pressed",String(human));
+ let en=document.documentElement.lang==="en";
+ control.textContent=human?(en?"Modern font":"现代阅读"):(en?"Humanist font":"人文阅读");
+ try{localStorage.setItem("jhlab-reading",human?"humanities":"modern")}catch(e){}
+}
+let saved=false;try{saved=localStorage.getItem("jhlab-reading")==="humanities"}catch(e){}
+change(saved);
+control.addEventListener("click",()=>change(document.documentElement.dataset.reading!=="humanities"));
+window.addEventListener("jhlab:language",()=>change(document.documentElement.dataset.reading==="humanities"));
+})();
+</script>
+<script defer src="/assets/i18n.js"></script></body></html>
