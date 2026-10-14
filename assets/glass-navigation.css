@@ -243,3 +243,42 @@ html[data-theme="dark"] .site-menu-panel--floating a{
  .site-menu-panel--floating{background:rgba(248,248,248,.95)!important}
  html[data-theme="dark"] .site-menu-panel--floating{background:rgba(25,27,30,.96)!important}
 }
+
+/* GLASS MENU v4 / DEPTH
+   The clear menu floats above a softly receding document.
+   Only the document (main/footer) shrinks and darkens; the header stays sharp. */
+:root{--menu-recede-scale:.954;--menu-depth-duration:480ms}
+body > main,body > footer{
+ transform-origin:50% var(--menu-focus-y,40vh);
+ transition:transform var(--menu-depth-duration) cubic-bezier(.2,.75,.2,1),
+            filter var(--menu-depth-duration) cubic-bezier(.2,.75,.2,1);
+}
+html.site-menu-is-open body > main,
+html.site-menu-is-open body > footer{
+ transform:scale(var(--menu-recede-scale));
+ filter:brightness(.76) saturate(.83) blur(1.5px);
+}
+.site-menu-veil,.site-menu-veil.is-open{
+ background:rgba(21,26,35,.15)!important;
+ -webkit-backdrop-filter:none!important;
+ backdrop-filter:none!important;
+}
+html[data-theme="dark"] .site-menu-veil,
+html[data-theme="dark"] .site-menu-veil.is-open{
+ background:rgba(0,0,0,.26)!important;
+}
+.site-menu-panel--floating{
+ /* Preserve the transparent, locally blurred glass from v3. */
+ background:rgba(246,247,248,.49)!important;
+ -webkit-backdrop-filter:blur(28px) saturate(170%)!important;
+ backdrop-filter:blur(28px) saturate(170%)!important;
+}
+html[data-theme="dark"] .site-menu-panel--floating{background:rgba(28,30,35,.52)!important}
+@media(max-width:760px){
+ :root{--menu-recede-scale:.945;--menu-depth-duration:510ms}
+}
+@media(prefers-reduced-motion:reduce){
+ body > main,body > footer{transition:none!important}
+ html.site-menu-is-open body > main,
+ html.site-menu-is-open body > footer{transform:none!important;filter:none!important}
+}
