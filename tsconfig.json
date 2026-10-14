@@ -1,1 +1,9 @@
-{"extends":"astro/tsconfigs/strict","compilerOptions":{"types":["astro/client"]}}
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "types": [
+      "astro/client",
+      "node"
+    ]
+  }
+}
