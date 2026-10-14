@@ -176,14 +176,16 @@ test("editorial hero lines and responsive navigation remain readable",async({pag
 });
 
 
-test("scroll-linked depth follows position and never starts a second scroll",async({page})=>{
+test("scroll-linked depth follows position and never starts a second scroll",async({page,isMobile})=>{
  await page.goto("/");
  const target=page.locator(".project").first();
  await target.scrollIntoViewIfNeeded();
- await expect.poll(()=>target.evaluate(el=>el.style.getPropertyValue("--chapter-light"))).not.toBe("");
- const before=await target.evaluate(el=>el.style.getPropertyValue("--chapter-tilt"));
+ const variable=isMobile?"--motion-y":"--chapter-tilt";
+ const tracked=isMobile?page.locator(".project .visual").first():target;
+ await expect.poll(()=>tracked.evaluate((el,key)=>el.style.getPropertyValue(key),variable)).not.toBe("");
+ const before=await tracked.evaluate((el,key)=>el.style.getPropertyValue(key),variable);
  await page.evaluate(()=>window.scrollBy({top:140,behavior:"instant"}));
- await expect.poll(()=>target.evaluate(el=>el.style.getPropertyValue("--chapter-tilt"))).not.toBe(before);
+ await expect.poll(()=>tracked.evaluate((el,key)=>el.style.getPropertyValue(key),variable)).not.toBe(before);
  await page.waitForTimeout(250);
  const steady=await page.evaluate(()=>scrollY);
  await page.waitForTimeout(750);
