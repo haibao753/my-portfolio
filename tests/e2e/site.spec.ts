@@ -114,3 +114,28 @@ test("handwritten signature runs once and native scrolling never snaps after rel
  await page.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
  await expect(signature).toHaveClass(/is-pen-finished/);
 });
+
+test("cinematic motion reveals projects without hijacking native scrolling", async ({ page }) => {
+ await page.goto("/");
+ await expect(page.locator(".motion-progress")).toHaveCount(1);
+ const project=page.locator(".project").first();
+ await project.scrollIntoViewIfNeeded();
+ await expect(project).toHaveClass(/is-motion-revealed/);
+ await page.evaluate(()=>window.scrollTo({top:document.querySelector("#contact")!.getBoundingClientRect().top+window.scrollY,behavior:"instant"}));
+ await page.waitForTimeout(320);
+ const still=await page.evaluate(()=>window.scrollY);
+ await page.waitForTimeout(650);
+ const after=await page.evaluate(()=>window.scrollY);
+ expect(Math.abs(after-still)).toBeLessThanOrEqual(3);
+ const progress=page.locator("[data-motion-progress]");
+ await expect(progress).toHaveCSS("transform",/matrix/);
+});
+
+test("reduced motion keeps all project content visible", async ({page})=>{
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await page.goto("/");
+ for(const card of await page.locator(".project").all()){
+  await expect(card).toHaveCSS("opacity","1");
+ }
+ await expect(page.locator("h1")).toBeVisible();
+});
