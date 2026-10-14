@@ -10,6 +10,7 @@
 <meta property="og:type" content="website">
 <title>J.H. Lab — Research & Creative Computing</title>
 <link rel="stylesheet" href="/assets/fonts.css">
+<link rel="stylesheet" href="/assets/scroll-story.css">
 <style>
 /* J.H. LAB / EDITION 03 — AN EDITORIAL, MONOCHROME DESIGN SYSTEM */
 :root{
@@ -305,6 +306,8 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
 <link rel="stylesheet" href="/assets/transitions.css">
 </head>
 <body>
+<div id="story-progress" class="story-progress" aria-hidden="true"></div>
+<nav id="story-rail" class="story-rail" aria-label="作品章节导航"><a href="#observation" title="全球资讯观察" aria-label="全球资讯观察"></a><a href="#research" title="数学可视化" aria-label="数学可视化"></a><a href="#visual-archive" title="影像档案" aria-label="影像档案"></a><a href="#computing" title="交互计算" aria-label="交互计算"></a></nav>
 <header class="site-header">
  <div class="wrap header-row">
   <a href="/" class="logo" aria-label="J.H. Lab 首页"><span class="logo-mark" aria-hidden="true">J.</span><span>J.H. LAB</span></a>
@@ -342,11 +345,18 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
   </div>
   <div class="hero-foot index-font"><span class="scroll-indicator" data-i18n="hero.scroll">向下探索 ↓</span><span data-i18n="hero.counter">四个研究方向</span></div>
  </section>
+<section class="story-teaser wrap" aria-label="探索方向">
+  <div>
+    <div class="story-teaser-guide"><span data-i18n="story.intro">接下来，沿着四条线索继续探索</span><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M16 2v25m-9-9 9 9 9-9"/></svg></div>
+    <div class="story-teaser-links"><a href="#observation" data-i18n="story.first">世界观察</a><a href="#research" data-i18n="story.second">数学影像</a><a href="#visual-archive" data-i18n="story.third">三维记忆</a><a href="#computing" data-i18n="story.fourth">交互几何</a></div>
+  </div>
+  <div class="story-teaser-title" data-i18n="story.headline">阅读世界，理解抽象，<br>收藏片刻，再创造一种体验。</div>
+</section>
 
  <section id="works" class="wrap" aria-labelledby="works-heading">
   <div class="section-top reveal"><div><div class="small-label index-font">01 / 精选项目</div><h2 id="works-heading" data-i18n="section.works">精选项目</h2></div><p data-i18n="section.worksDesc">从抽象算法到具体世界，从每日观察到私人影像。四个方向，一座持续生长的数字实验室。</p></div>
   <div class="work-list">
-   <article class="work reveal">
+   <article class="work reveal" id="observation" data-story-chapter="1">
     <div class="work-num index-font">01 / 04</div>
     <div class="work-copy">
      <div class="work-overline index-font">资讯 · 世界观察</div>
@@ -362,7 +372,7 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
      </a>
     </div>
    </article>
-   <article class="work reveal" id="research">
+   <article class="work reveal" id="research" data-story-chapter="2">
     <div class="work-num index-font">02 / 04</div>
     <div class="work-copy">
      <div class="work-overline index-font">科学 · 数学可视化</div>
@@ -382,7 +392,7 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
      </a>
     </div>
    </article>
-   <article class="work reveal">
+   <article class="work reveal" id="visual-archive" data-story-chapter="3">
     <div class="work-num index-font">03 / 04</div>
     <div class="work-copy">
      <div class="work-overline index-font">人文 · 三维影像档案</div>
@@ -399,7 +409,7 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
      </a>
     </div>
    </article>
-   <article class="work reveal">
+   <article class="work reveal" id="computing" data-story-chapter="4">
     <div class="work-num index-font">04 / 04</div>
     <div class="work-copy">
      <div class="work-overline index-font">技术 · 交互计算</div>
@@ -525,6 +535,7 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
 })();
 </script>
 <script defer src="/assets/i18n.js"></script>
-<script type="module" src="/assets/minimal-preview.js"></script><script defer src="/assets/transitions.js"></script>
+<script type="module" src="/assets/minimal-preview.js"></script>
+<script defer src="/assets/scroll-story.js"></script><script defer src="/assets/transitions.js"></script>
 </body>
 </html>
