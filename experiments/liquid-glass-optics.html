@@ -12,6 +12,11 @@ p{line-height:1.7;color:#45546c;max-width:720px}
 canvas{display:block;width:100%;height:100%;touch-action:pan-y}
 .fallback{display:none;position:absolute;inset:22% 22%;border-radius:60px;border:5px solid #fffd;background:#fff2;box-shadow:inset 0 4px 10px #fff9,0 16px 50px #2234;backdrop-filter:blur(4px)}
 .stage.no-webgl .fallback{display:block}.controls{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:24px 0}
+.optic-menu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;justify-content:space-evenly;z-index:2;border-radius:40px;overflow:hidden;text-align:center}
+.optic-menu a{display:block;padding:4px;color:#172035;font-size:clamp(12px,2vw,17px);font-weight:700;text-shadow:0 1px 2px #fff9}
+.optic-menu a+a{border-top:1px solid #ffffff6e}
+.optic-menu a:focus-visible{outline:2px solid #075bcb;outline-offset:-3px}
+.optic-menu[hidden]{display:none}
 label{display:flex;align-items:center;gap:10px;font-weight:650}input{accent-color:#1666da}
 small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:18px 22px;border-radius:20px}
 @media(max-width:650px){.stage{aspect-ratio:3/4}.controls{gap:14px}header{padding:18px 20px}}
@@ -20,14 +25,15 @@ small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:
 <header><strong>J.H. LAB / OPTICS</strong><a href="/">← 返回主页</a></header>
 <article><small>EXPERIMENT / 3.0</small><h1>不是磨砂玻璃，<br>而是光线被弯曲。</h1>
 <p>基于有向距离场（SDF）、法线梯度与多通道采样的实时折射实验。拖动玻璃体，观察背景图案如何在边缘发生拉伸、变形和微弱色散。</p>
-<div class="stage" id="stage"><canvas id="optics" aria-label="实时液态玻璃折射实验"></canvas><div class="fallback" aria-hidden="true"></div></div>
-<div class="controls"><label>折射强度 <input id="refract" type="range" min="0" max="100" value="55"><output id="refract-value">55%</output></label>
+<div class="stage" id="stage"><canvas id="optics" aria-label="实时液态玻璃折射实验"></canvas><div class="fallback" aria-hidden="true"></div><nav class="optic-menu" id="optic-menu" aria-label="液态玻璃导航演示"><a href="#principle">作品</a><a href="#principle">数学影像</a><a href="#principle">三维记忆</a><a href="#principle">交互几何</a><a href="#principle">每日简报</a><a href="#principle">联系</a></nav></div>
+<div class="controls"><label><input id="menu-mode" type="checkbox" checked> 显示真实 DOM 菜单</label><label>折射强度 <input id="refract" type="range" min="0" max="100" value="55"><output id="refract-value">55%</output></label>
 <label>色散程度 <input id="dispersion" type="range" min="0" max="100" value="35"><output id="dispersion-value">35%</output></label></div>
-<p class="note">这是 WebGL 光学原型，不是直接采样真实网页 DOM：实验中的背景由着色器生成。正式菜单仍需要保留真实链接、文字和触摸事件。移动端分辨率限制为 1.5×，不连续跑动画帧；无法使用 WebGL 时显示静态 CSS 备用材质。</p>
+<p class="note" id="principle">这是 WebGL 光学原型，不是直接采样真实网页 DOM：实验中的背景由着色器生成。正式菜单仍需要保留真实链接、文字和触摸事件。移动端分辨率限制为 1.5×，不连续跑动画帧；无法使用 WebGL 时显示静态 CSS 备用材质。</p>
 </article>
 <script>
 (() => {
- const stage=document.querySelector('#stage'),canvas=document.querySelector('#optics');
+ const stage=document.querySelector('#stage'),canvas=document.querySelector('#optics'),menu=document.querySelector('#optic-menu');
+ document.querySelector('#menu-mode').addEventListener('change',e=>{menu.hidden=!e.target.checked;});
  const gl=canvas.getContext('webgl',{alpha:false,antialias:false,powerPreference:'low-power',preserveDrawingBuffer:false});
  if(!gl){stage.classList.add('no-webgl');return;}
  const vert='attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
@@ -82,16 +88,19 @@ small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:
  const resolution=gl.getUniformLocation(program,'uRes'),center=gl.getUniformLocation(program,'uCenter'),refract=gl.getUniformLocation(program,'uRefract'),disp=gl.getUniformLocation(program,'uDisp');
  let cx=.5,cy=.5,pending=false,dragging=false;
  const controls=[['refract','refract-value'],['dispersion','dispersion-value']];
- const draw=()=>{pending=false;const rect=stage.getBoundingClientRect(),ratio=Math.min(devicePixelRatio||1,1.5);
+ const draw=()=>{pending=false;const rect=stage.getBoundingClientRect();
+ menu.style.width=(rect.height*.52)+'px';menu.style.height=(rect.height*.58)+'px';
+ menu.style.left=(cx*100)+'%';menu.style.top=((1-cy)*100)+'%';
+ const ratio=Math.min(devicePixelRatio||1,1.5);
  const w=Math.round(rect.width*ratio),h=Math.round(rect.height*ratio);if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;gl.viewport(0,0,w,h);}
  const aspect=w/h;gl.uniform2f(resolution,w,h);gl.uniform2f(center,cx*aspect,cy);gl.uniform1f(refract,Number(document.querySelector('#refract').value)/100);gl.uniform1f(disp,Number(document.querySelector('#dispersion').value)/100);gl.drawArrays(gl.TRIANGLES,0,6);};
  const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(draw);}};
  for(const [id,out] of controls){document.getElementById(id).addEventListener('input',e=>{document.getElementById(out).textContent=e.target.value+'%';schedule();});}
  const move=e=>{if(!dragging)return;const r=stage.getBoundingClientRect();cx=Math.min(.72,Math.max(.28,(e.clientX-r.left)/r.width));cy=Math.min(.72,Math.max(.28,1-(e.clientY-r.top)/r.height));schedule();};
- stage.addEventListener('pointerdown',e=>{dragging=true;stage.setPointerCapture(e.pointerId);move(e);});
- stage.addEventListener('pointermove',move);
- stage.addEventListener('pointerup',()=>{dragging=false;});
- stage.addEventListener('pointercancel',()=>{dragging=false;});
+ canvas.addEventListener('pointerdown',e=>{dragging=true;canvas.setPointerCapture(e.pointerId);move(e);});
+ canvas.addEventListener('pointermove',move);
+ canvas.addEventListener('pointerup',()=>{dragging=false;});
+ canvas.addEventListener('pointercancel',()=>{dragging=false;});
  new ResizeObserver(schedule).observe(stage);schedule();
 })();
 </script></body></html>
