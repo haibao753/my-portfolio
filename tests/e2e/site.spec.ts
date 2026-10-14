@@ -211,7 +211,7 @@ test("mobile menu has a dimmed glass backdrop and compact layout",async({page,is
  const backdrop=page.locator("[data-menu-backdrop]");
  await expect(backdrop).toBeVisible();
  const bg=await backdrop.evaluate(el=>getComputedStyle(el).backgroundColor);
- expect(bg).toMatch(/rgba?\\(/);
+ expect(bg.startsWith("rgba(")||bg.startsWith("rgb(")).toBe(true);
  const panel=page.locator("[data-menu-panel]");
  const box=await panel.boundingBox();
  expect(box?.width??0).toBeLessThanOrEqual(230);
