@@ -41,7 +41,7 @@ html[lang="en"] h1,html[lang="en"] h2,html[lang="en"] h3{font-family:var(--font-
  display:flex!important;flex-direction:column!important;
  gap:0!important;align-items:center!important;
 }
-.hero--cinematic .hero-content>div:nth-child(2){
+.hero--cinematic .hero-content>div:first-child{
  order:0;
  width:100%;max-width:1000px;
  display:flex;flex-direction:column;align-items:center;
@@ -255,4 +255,32 @@ html[data-theme="dark"] .hero--cinematic .hero-artwork__graphic{filter:invert(.9
 @media(prefers-reduced-motion:reduce){
  .hero--cinematic .hero-title.hero-title--scholarly{animation:none!important;filter:none!important;opacity:1!important;transform:none!important}
  #works .work.chapter{transition:none!important;transform:none!important}
+}
+
+/* Finale — the orbital artwork follows Contact as the site's closing signature.
+   Keep the first screen clear and avoid forcing the illustration into the hero. */
+.closing-artwork-section{
+ padding-top:clamp(38px,5.5vw,92px);
+ padding-bottom:clamp(60px,9vw,136px);
+}
+.hero.hero--cinematic.closing-artwork-host{
+ display:block!important;
+ text-align:initial!important;
+ padding:0!important;
+ margin:0!important;
+ border:none!important;
+}
+.closing-artwork-host .hero-artwork{
+ display:block!important;
+ order:initial!important;
+ width:100%!important;
+ margin:0 auto!important;
+ max-width:1180px!important;
+}
+@media(max-width:760px){
+ .closing-artwork-section{padding-top:29px;padding-bottom:75px}
+ .closing-artwork-host .hero-artwork{
+  width:calc(100% + 14px)!important;
+  margin:0 -7px!important;
+ }
 }
