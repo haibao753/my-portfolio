@@ -411,3 +411,64 @@ html[data-theme="dark"] .site-menu-panel--floating{background:rgba(28,30,35,.52)
 @media(max-width:390px){
  .glass-site-header .logo .logo-monogram{width:26px!important;height:25px!important}
 }
+
+/* Edition 15 — right-aligned, compact floating navigation.
+   The underlying page remains visible on the left; only this sheet samples a blurred backdrop. */
+@media(max-width:1180px){
+ .site-menu-panel--floating{
+  left:auto!important;
+  right:clamp(10px,2.3vw,24px)!important;
+  width:min(350px,calc(100vw - 40px))!important;
+  max-width:calc(100vw - 20px)!important;
+  border:1px solid var(--glass-line)!important;
+  border-radius:20px!important;
+  top:calc(var(--menu-top,49px) + 8px)!important;
+  max-height:calc(100dvh - var(--menu-top,49px) - 20px)!important;
+  box-shadow:0 18px 65px rgba(15,19,25,.12)!important;
+  transform:translate(10px,-5px) scale(.985)!important;
+  transform-origin:top right;
+ }
+ .site-menu-panel--floating.is-open{
+  transform:translate(0,0) scale(1)!important;
+ }
+ .site-menu-panel--floating .site-menu-panel__inner{
+  display:flex!important;flex-direction:column!important;
+  width:100%!important;max-width:none!important;
+  margin:0!important;
+  padding:15px 23px 19px!important;
+  gap:0!important;
+ }
+ .site-menu-panel--floating a{
+  font-size:19px!important;
+  line-height:1.25!important;
+  font-weight:570!important;
+  padding:14px 2px!important;
+  letter-spacing:-.035em!important;
+ }
+ .site-menu-panel--floating a:last-of-type{border-bottom:none}
+ .site-menu-panel--floating .site-menu-panel__tool{padding-top:10px!important}
+}
+@media(max-width:760px){
+ .site-menu-panel--floating{
+  right:12px!important;
+  width:min(296px,calc(100vw - 48px))!important;
+  border-radius:18px!important;
+  top:calc(var(--menu-top,48px) + 7px)!important;
+  max-height:calc(100dvh - var(--menu-top,48px) - 18px)!important;
+ }
+ .site-menu-panel--floating .site-menu-panel__inner{
+  padding:12px 20px 15px!important;
+ }
+ .site-menu-panel--floating a{
+  font-size:18px!important;
+  padding:12px 1px!important;
+ }
+}
+@media(max-width:390px){
+ .site-menu-panel--floating{width:min(278px,calc(100vw - 36px))!important;right:10px!important}
+ .site-menu-panel--floating .site-menu-panel__inner{padding:10px 18px 13px!important}
+ .site-menu-panel--floating a{font-size:17px!important;padding:11px 1px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .site-menu-panel--floating{transform:none!important}
+}
