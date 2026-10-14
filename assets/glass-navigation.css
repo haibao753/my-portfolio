@@ -505,3 +505,52 @@ html[data-theme="dark"] .site-menu-panel--floating{background:rgba(28,30,35,.52)
  .site-menu-panel--floating .site-menu-panel__inner{padding:10px 14px 12px!important}
  .site-menu-panel--floating a{font-size:16px!important;padding:11px 0!important}
 }
+
+/* Edition 17 — slimmer silhouette, comfortable thumb-sized menu rows.
+   Full-width clickable anchors retain >= 54px hit areas without a bulky panel. */
+@media(max-width:1180px){
+ .site-menu-panel--floating{
+  width:min(284px,calc(100vw - 62px))!important;
+ }
+ .site-menu-panel--floating .site-menu-panel__inner{
+  padding:17px 15px 20px!important;
+ }
+ .site-menu-panel--floating a{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:58px!important;
+  padding:17px 2px!important;
+  font-size:19px!important;
+  line-height:1.24!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  -webkit-tap-highlight-color:transparent;
+ }
+}
+@media(max-width:760px){
+ .site-menu-panel--floating{
+  width:min(226px,calc(100vw - 74px))!important;
+  right:12px!important;
+ }
+ .site-menu-panel--floating .site-menu-panel__inner{
+  padding:17px 13px 20px!important;
+ }
+ .site-menu-panel--floating a{
+  min-height:62px!important;
+  padding:18px 2px!important;
+  font-size:19px!important;
+ }
+}
+@media(max-width:390px){
+ .site-menu-panel--floating{
+  width:min(216px,calc(100vw - 60px))!important;
+  right:10px!important;
+ }
+ .site-menu-panel--floating .site-menu-panel__inner{padding:14px 11px 17px!important}
+ .site-menu-panel--floating a{
+  min-height:58px!important;
+  padding:17px 2px!important;
+  font-size:18px!important;
+ }
+}
