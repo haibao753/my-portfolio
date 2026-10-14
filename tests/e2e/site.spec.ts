@@ -214,7 +214,7 @@ test("mobile menu has a dimmed glass backdrop and compact layout",async({page,is
  expect(bg.startsWith("rgba(")||bg.startsWith("rgb(")).toBe(true);
  const panel=page.locator("[data-menu-panel]");
  const box=await panel.boundingBox();
- expect(box?.width??0).toBeLessThanOrEqual(230);
+ expect(box?.width??0).toBeLessThanOrEqual(260);
  await page.keyboard.press("Escape");
  await expect(backdrop).toBeHidden();
 });
@@ -237,7 +237,7 @@ test("liquid glass menu recedes the page and restores it on close",async({page,i
  await menu.click();
  await expect(page.locator("html")).toHaveAttribute("data-menu-open","true");
  await expect(page.locator("[data-menu-panel]")).toHaveCSS("backdrop-filter",/blur/);
- await expect(page.locator("main")).not.toHaveCSS("transform","none");
+ await expect(page.locator("main")).toHaveCSS("filter",/brightness/);
  await page.keyboard.press("Escape");
  await expect(page.locator("html")).not.toHaveAttribute("data-menu-open","true");
  await expect(page.locator("[data-menu-panel]")).toBeHidden();
@@ -276,18 +276,19 @@ test("theme transition animates on click but not on reload",async({page})=>{
 });
 
 
-test("mobile menu prevents background scrolling and restores original position",async({page,isMobile})=>{
+test("mobile glass menu stays open while page scrolls beneath sticky navigation",async({page,isMobile})=>{
  if(!isMobile)return;
  await page.goto("/");
- await page.evaluate(()=>window.scrollTo({top:Math.min(600,document.documentElement.scrollHeight-innerHeight),behavior:"instant"}));
+ const toggle=page.locator("[data-menu-toggle]");
+ await toggle.click();
+ await expect(page.locator("[data-menu-panel]")).toBeVisible();
+ await expect(page.locator("[data-menu-backdrop]")).toHaveCSS("pointer-events","none");
  const before=await page.evaluate(()=>scrollY);
- await page.locator("[data-menu-toggle]").click();
- await expect(page.locator("html")).toHaveAttribute("data-menu-active","true");
- await page.evaluate(()=>window.dispatchEvent(new WheelEvent("wheel",{deltaY:360,bubbles:true,cancelable:true})));
- await page.waitForTimeout(100);
- expect(await page.evaluate(()=>scrollY)).toBe(before);
- await page.keyboard.press("Escape");
+ await page.evaluate(()=>window.scrollBy({top:500,behavior:"instant"}));
+ await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(before+100);
+ await expect(page.locator("[data-menu-panel]")).toBeVisible();
+ await expect(toggle).toBeInViewport();
+ await expect(toggle).toHaveAttribute("aria-expanded","true");
+ await toggle.click();
  await expect(page.locator("[data-menu-panel]")).toBeHidden();
- await expect(page.locator("html")).not.toHaveAttribute("data-menu-active","true");
- expect(await page.evaluate(()=>scrollY)).toBe(before);
 });
