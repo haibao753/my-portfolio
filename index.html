@@ -122,6 +122,21 @@ img{max-width:100%}
 .principles-right p{font-size:14px;color:var(--muted);line-height:2.1;max-width:465px;margin:0}
 .keywords{display:flex;gap:8px;flex-wrap:wrap;margin-top:25px}
 .keywords span{border:1px solid var(--line);padding:9px 13px;font-size:10px;letter-spacing:.035em}
+
+/* CONTACT / QUIET EDITORIAL DIRECTORY */
+.contact{border-top:1px solid var(--line);padding:81px 0 100px}
+.contact-heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:40px}
+.contact-heading h2{font-size:clamp(38px,5vw,66px);line-height:1.15;letter-spacing:-.07em;font-weight:550;margin:17px 0 0}
+.contact-heading p{font-size:13px;line-height:1.9;color:var(--muted);max-width:320px;margin:0}
+.contact-list{border-top:1px solid var(--ink)}
+.contact-item{display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:20px;align-items:center;padding:26px 0;border-bottom:1px solid var(--line)}
+.contact-index{font-size:11px;color:var(--muted)}
+.contact-detail{min-width:0}
+.contact-type{font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:6px}
+.contact-value{font-size:clamp(16px,2.2vw,26px);letter-spacing:-.04em;font-weight:500;overflow-wrap:anywhere}
+.contact-action{border:1px solid var(--line-strong);background:transparent;color:var(--ink);padding:10px 15px;font-size:11px;white-space:nowrap;transition:background .2s}
+.contact-action:hover{background:var(--surface)}
+@media(max-width:760px){.contact{padding:65px 0 78px}.contact-heading{display:block}.contact-heading p{margin-top:14px}.contact-item{grid-template-columns:35px minmax(0,1fr);gap:8px 12px;padding:22px 0}.contact-action{grid-column:2;justify-self:start;margin-top:8px}}
 .footer{border-top:1px solid var(--ink);padding:30px 0 49px;display:flex;align-items:start;justify-content:space-between;gap:30px;color:var(--muted);font-size:11px}
 .footer-brand{font-weight:800;font-size:23px;letter-spacing:-.06em;color:var(--ink);margin-bottom:11px}
 .footer-links{display:flex;flex-wrap:wrap;gap:24px;justify-content:flex-end;padding-top:6px}
@@ -200,7 +215,7 @@ img{max-width:100%}
  <div class="wrap header-row">
   <a href="/" class="logo" aria-label="J.H. Lab 首页"><span class="logo-mark" aria-hidden="true">J.</span><span>J.H. LAB</span></a>
   <nav class="nav" aria-label="主导航">
-   <a href="#works">作品 / WORKS</a><a href="#research">研究 / RESEARCH</a><a href="#studio">关于 / ABOUT</a>
+   <a href="#works">作品 / WORKS</a><a href="#research">研究 / RESEARCH</a><a href="#studio">关于 / ABOUT</a><a href="#contact">联系 / CONTACT</a>
   </nav>
   <div class="header-actions">
    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换为深色模式" aria-pressed="false" title="切换黑白主题">
@@ -314,10 +329,28 @@ img{max-width:100%}
    <div class="keywords"><span>MATHEMATICS</span><span>AI / DATA SCIENCE</span><span>MANIM</span><span>THREE.JS</span><span>CREATIVE COMPUTING</span></div>
   </div>
  </section>
+ <section id="contact" class="contact wrap" aria-labelledby="contact-heading">
+  <div class="contact-heading reveal">
+   <div><div class="small-label index-font">03 / GET IN TOUCH</div><h2 id="contact-heading">建立连接<span aria-hidden="true">.</span></h2></div>
+   <p>欢迎交流数学、人工智能、科学传播、创意编程与跨学科合作。</p>
+  </div>
+  <div class="contact-list">
+   <div class="contact-item reveal">
+    <div class="contact-index index-font">01</div>
+    <div class="contact-detail"><div class="contact-type index-font">EMAIL / 电子邮箱</div><div class="contact-value">aiformath61@gmail.com</div></div>
+    <a class="contact-action" href="mailto:aiformath61@gmail.com" aria-label="发送邮件至 aiformath61@gmail.com">发送邮件 ↗</a>
+   </div>
+   <div class="contact-item reveal">
+    <div class="contact-index index-font">02</div>
+    <div class="contact-detail"><div class="contact-type index-font">WECHAT / 微信</div><div class="contact-value" id="wechat-id">happy-everyday2932</div></div>
+    <button class="contact-action" id="copy-wechat" type="button" aria-label="复制微信号 happy-everyday2932">复制微信号 ↗</button>
+   </div>
+  </div>
+ </section>
 </main>
 <footer class="wrap footer">
  <div><div class="footer-brand">J.H. LAB</div><div>Independent research & creative computing.</div><div class="footer-copy index-font">© <span id="year">2026</span> J.H. LAB · BUILT ON CURIOSITY.</div></div>
- <nav class="footer-links" aria-label="页脚导航"><a href="/brief/">GLOBAL BRIEF ↗</a><a href="https://zhengyifan.win/" target="_blank" rel="noopener noreferrer">VISUAL ARCHIVE ↗</a><a href="#top">BACK TO TOP ↑</a></nav>
+ <nav class="footer-links" aria-label="页脚导航"><a href="/brief/">GLOBAL BRIEF ↗</a><a href="https://zhengyifan.win/" target="_blank" rel="noopener noreferrer">VISUAL ARCHIVE ↗</a><a href="#contact">CONTACT ↗</a><a href="#top">BACK TO TOP ↑</a></nav>
 </footer>
 <script>
 (function(){
@@ -355,6 +388,27 @@ img{max-width:100%}
         b.setAttribute("aria-pressed",String(b===button));
       });
     });
+  });
+
+  var copyWechat=document.getElementById("copy-wechat");
+  copyWechat.addEventListener("click",async function(){
+    var value=document.getElementById("wechat-id").textContent.trim();
+    try{
+      if(navigator.clipboard&&window.isSecureContext){
+        await navigator.clipboard.writeText(value);
+      }else{
+        var field=document.createElement("textarea");
+        field.value=value;field.style.position="fixed";field.style.opacity="0";
+        document.body.appendChild(field);field.select();
+        var ok=document.execCommand("copy");field.remove();
+        if(!ok)throw new Error("Clipboard unavailable");
+      }
+      copyWechat.textContent="已复制 ✓";
+      copyWechat.setAttribute("aria-label","微信号已复制");
+    }catch(err){
+      copyWechat.textContent="请长按微信号复制";
+      copyWechat.setAttribute("aria-label","请手动复制微信号");
+    }
   });
   document.getElementById("year").textContent=String(new Date().getFullYear());
   if("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
