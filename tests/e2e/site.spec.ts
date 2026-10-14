@@ -174,3 +174,27 @@ test("editorial hero lines and responsive navigation remain readable",async({pag
  await page.locator("[data-language-toggle]").click();
  await expect(page.locator(".hero-title-line").nth(2)).toBeVisible();
 });
+
+
+test("scroll-linked depth follows position and never starts a second scroll",async({page})=>{
+ await page.goto("/");
+ const target=page.locator(".project").first();
+ await target.scrollIntoViewIfNeeded();
+ await expect.poll(()=>target.evaluate(el=>el.style.getPropertyValue("--chapter-light"))).not.toBe("");
+ const before=await target.evaluate(el=>el.style.getPropertyValue("--chapter-tilt"));
+ await page.evaluate(()=>window.scrollBy({top:140,behavior:"instant"}));
+ await expect.poll(()=>target.evaluate(el=>el.style.getPropertyValue("--chapter-tilt"))).not.toBe(before);
+ await page.waitForTimeout(250);
+ const steady=await page.evaluate(()=>scrollY);
+ await page.waitForTimeout(750);
+ expect(Math.abs((await page.evaluate(()=>scrollY))-steady)).toBeLessThanOrEqual(3);
+});
+
+test("reduced motion turns off scroll-linked depth",async({page})=>{
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await page.goto("/");
+ const visual=page.locator(".project .visual").first();
+ await visual.scrollIntoViewIfNeeded();
+ await expect(visual).toHaveCSS("filter","none");
+ await expect(visual).toHaveCSS("transform","none");
+});
