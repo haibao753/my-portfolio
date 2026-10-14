@@ -60,18 +60,33 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
    const menu=document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
    const panel=document.querySelector<HTMLElement>("[data-menu-panel]");
    const backdrop=document.querySelector<HTMLElement>("[data-menu-backdrop]");
+   const motionReduced=window.matchMedia("(prefers-reduced-motion: reduce)");
+   let closeTimer:ReturnType<typeof setTimeout>|undefined;
+   const finishClose=()=>{
+    if(!panel||!backdrop)return;
+    panel.hidden=true;backdrop.hidden=true;
+    delete panel.dataset.closing;delete backdrop.dataset.closing;
+    closeTimer=undefined;
+   };
    const close=()=>{
-    if(!menu||!panel||!backdrop)return;
+    if(!menu||!panel||!backdrop||panel.hidden||panel.dataset.closing==="true")return;
     menu.setAttribute("aria-expanded","false");
     root.removeAttribute("data-menu-open");
-    panel.hidden=true;backdrop.hidden=true;
+    if(motionReduced.matches){finishClose();return;}
+    panel.dataset.closing="true";backdrop.dataset.closing="true";
+    closeTimer=setTimeout(finishClose,310);
+   };
+   const openMenu=()=>{
+    if(!menu||!panel||!backdrop)return;
+    if(closeTimer!==undefined){clearTimeout(closeTimer);closeTimer=undefined;}
+    delete panel.dataset.closing;delete backdrop.dataset.closing;
+    panel.hidden=false;backdrop.hidden=false;
+    menu.setAttribute("aria-expanded","true");
+    root.dataset.menuOpen="true";
    };
    menu?.addEventListener("click",()=>{
-    if(!menu||!panel||!backdrop)return;
-    const open=menu.getAttribute("aria-expanded")!=="true";
-    menu.setAttribute("aria-expanded",String(open));
-    if(open)root.dataset.menuOpen="true";else root.removeAttribute("data-menu-open");
-    panel.hidden=!open;backdrop.hidden=!open;
+    if(menu.getAttribute("aria-expanded")==="true")close();
+    else openMenu();
    });
    backdrop?.addEventListener("click",close);
    panel?.querySelectorAll("a").forEach(a=>a.addEventListener("click",close));
