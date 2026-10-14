@@ -182,6 +182,8 @@ test("scroll-linked depth follows position and never starts a second scroll",asy
  await target.scrollIntoViewIfNeeded();
  const variable=isMobile?"--motion-y":"--chapter-tilt";
  const tracked=isMobile?page.locator(".project .visual").first():target;
+ await tracked.scrollIntoViewIfNeeded();
+ await page.evaluate(()=>window.dispatchEvent(new Event("scroll")));
  await expect.poll(()=>tracked.evaluate((el,key)=>el.style.getPropertyValue(key),variable)).not.toBe("");
  const before=await tracked.evaluate((el,key)=>el.style.getPropertyValue(key),variable);
  await page.evaluate(()=>window.scrollBy({top:140,behavior:"instant"}));
