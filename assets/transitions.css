@@ -1,0 +1,17 @@
+/* J.H. LAB / Seamless monochrome navigation transition */
+:root{--nav-wash:var(--page,#f7f7f4);--nav-type:var(--ink,#171816);--nav-rule:var(--line,#d5d7d0)}
+html[data-theme="dark"]{--nav-wash:#141514;--nav-type:#f0f0ea;--nav-rule:#41443f}
+.jh-transition{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:var(--nav-wash);color:var(--nav-type);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .32s cubic-bezier(.22,.75,.25,1),visibility 0s linear .32s;font-family:"Noto Sans SC","PingFang SC",sans-serif}
+.jh-transition.is-active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .28s cubic-bezier(.22,.75,.25,1)}
+.jh-transition__center{width:min(300px,calc(100vw - 64px));display:flex;flex-direction:column;align-items:center;text-align:center;gap:24px}
+.jh-transition__mark{width:76px;height:76px;position:relative;display:grid;place-items:center}
+.jh-transition__orbit{position:absolute;width:68px;height:68px;border:1px solid var(--nav-rule);border-radius:50%;animation:jh-spin 2.5s linear infinite}
+.jh-transition__orbit:nth-child(2){width:52px;height:52px;border-color:var(--nav-type);opacity:.4;animation-duration:3.3s;animation-direction:reverse}
+.jh-transition__dot{width:9px;height:9px;border-radius:50%;background:var(--nav-type)}
+.jh-transition__name{font-weight:700;font-size:17px;letter-spacing:.07em}
+.jh-transition__label{font-size:12px;color:var(--nav-type);opacity:.63;margin-top:-12px;letter-spacing:.12em}
+.jh-transition__track{width:100%;height:1px;background:var(--nav-rule);position:relative;overflow:hidden}
+.jh-transition__track:before{content:"";position:absolute;inset:0 auto 0 0;width:35%;background:var(--nav-type);animation:jh-travel 1.45s ease-in-out infinite}
+@keyframes jh-spin{to{transform:rotate(360deg)}}
+@keyframes jh-travel{0%{transform:translateX(-110%)}100%{transform:translateX(410%)}}
+@media(prefers-reduced-motion:reduce){.jh-transition,.jh-transition.is-active{transition:none!important}.jh-transition__orbit,.jh-transition__track:before{animation:none!important}}
