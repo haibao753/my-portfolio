@@ -4,6 +4,7 @@ const paths=[
  "dist/index.html",
  "dist/brief/index.html",
  "dist/brief/data/index.json",
+ "dist/brief/data/2026-10-14.json",
  "dist/experiments/minimal-surfaces-classical.html",
  "dist/experiments/minimal-surfaces-periodic.html",
  "dist/assets/jh-orbit.svg",
@@ -21,6 +22,19 @@ if(!failed){
  for(const url of ["/brief/","https://space.bilibili.com/1572685586","https://zhengyifan.win/","/experiments/minimal-surfaces-classical.html","/experiments/minimal-surfaces-periodic.html","https://entropy-sandbox.pages.dev/"]){
   // Astro may serialize or escape attributes; check URL presence.
   if(!html.includes(url)){console.error("Missing portfolio URL:",url);failed=true;}
+ }
+}
+if(!failed){
+ const brief=readFileSync(join("dist","brief","index.html"),"utf8");
+ if(!brief.includes("id=\"stories\"")||!brief.includes("id=\"issues\"")||!brief.includes("id=\"tabs\"")){
+  console.error("Missing Astro Brief app mount nodes");failed=true;
+ }
+ if(!brief.includes("data-theme-toggle")||!brief.includes("data-language-toggle")){
+  console.error("Shared navigation controls missing from Brief");failed=true;
+ }
+ if(!brief.includes("brief-reader")&&!brief.includes("news-card")){
+  // Note: compiled JS is emitted as a separate hashed script by Astro.
+  console.log("Brief interactive reader emitted as Astro script bundle.");
  }
 }
 if(failed)process.exitCode=1;

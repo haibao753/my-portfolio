@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout title="全球资讯观察站 — J.H. LAB" description="每天以中文整理全球议题、人工智能与前沿科学资讯，保留可信的原始来源。">
+ <section class="brief-hero wrap" id="top" aria-labelledby="brief-heading">
+  <p class="eyebrow"><span data-locale="zh">全球资讯 · 每日观察</span><span data-locale="en">GLOBAL OBSERVATIONS / DAILY</span></p>
+  <h1 id="brief-heading"><span data-locale="zh">全球资讯<br/>观察站</span><span data-locale="en">The World,<br/>in Focus.</span></h1>
+  <div class="hero-panel">
+   <p><span data-locale="zh"><strong>世界很大，值得仔细阅读。</strong>穿透日常信息流，连接中国与全球。每天追踪公共议题、AI 与科研进展，保留原始报道链接。</span>
+      <span data-locale="en"><strong>A wider view of the world.</strong> Selected global affairs, AI and scientific research, with source links. Article summaries remain in Chinese.</span></p>
+   <div class="issue-summary">
+    <span class="eyebrow"><span class="live-dot"></span><span data-locale="zh">本期简报</span><span data-locale="en">LATEST ISSUE</span></span>
+    <strong id="headlineDate">—</strong>
+    <small id="total" aria-live="polite">—</small>
+   </div>
+  </div>
+  <div class="hero-foot"><span><span data-locale="zh">每日更新 · 北京时间</span><span data-locale="en">Updated daily · Beijing time</span></span><a href="#issues-section"><span data-locale="zh">向下阅读 ↓</span><span data-locale="en">Explore ↓</span></a></div>
+ </section>
+ <section class="news wrap" id="issues-section" aria-labelledby="archive-heading">
+  <div class="news-heading">
+   <div><p class="eyebrow"><span data-locale="zh">资讯归档</span><span data-locale="en">THE ARCHIVE</span></p><h2 id="archive-heading"><span data-locale="zh">每日观察。</span><span data-locale="en">Daily Observations.</span></h2></div>
+   <p><span data-locale="zh">从事实出发，寻找理解事件的线索。按主题筛选，或者回看之前的期数。</span><span data-locale="en">Explore each day's selected stories by topic or date.</span></p>
+  </div>
+  <div class="toolbar">
+   <div class="filters" id="tabs" role="group" aria-label="内容分类"></div>
+   <label class="date-picker"><span data-locale="zh">日期 / 期数</span><span data-locale="en">ISSUE DATE</span><select id="issues" aria-label="选择历史日期"></select></label>
+  </div>
+  <p class="status" id="status" role="status" aria-live="polite"><span data-locale="zh">正在载入每日简报…</span><span data-locale="en">Loading Daily Brief…</span></p>
+  <div id="stories" class="stories" aria-live="off"></div>
+  <p class="disclaimer"><span data-locale="zh">简报以 AI 辅助整理公开资讯，仅供信息参考，并非独立事实核查。重要结论请核对原始来源。</span><span data-locale="en">AI-assisted editorial summaries, not independent fact-checking. Verify important claims against original sources.</span></p>
+ </section>
+</BaseLayout>
+<script>
+ import "../../lib/brief-reader";
+</script>
+<style>
+ .brief-hero{padding-top:clamp(54px,8vw,114px);padding-bottom:clamp(40px,6vw,78px)}
+ .brief-hero>h1{font-weight:750;letter-spacing:-.078em;line-height:1.13;font-size:clamp(57px,9.2vw,128px);text-align:center;margin:26px 0 clamp(40px,6vw,75px)}
+ .brief-hero>.eyebrow{text-align:center}
+ .hero-panel{display:grid;grid-template-columns:1.6fr .8fr;gap:clamp(22px,5vw,80px);align-items:center;background:var(--card);border:1px solid var(--stroke);border-radius:var(--radius);box-shadow:var(--shadow-md);padding:clamp(24px,4vw,55px)}
+ .hero-panel>p{max-width:680px;font-size:clamp(14px,1.45vw,18px);line-height:1.95;color:var(--muted);margin:0}
+ .hero-panel>p strong{display:block;color:var(--fg);font-weight:660;margin-bottom:8px}
+ .issue-summary{border-left:1px solid var(--stroke);padding-left:28px;display:flex;flex-direction:column;gap:9px}
+ .issue-summary strong{font-size:clamp(25px,3vw,36px);line-height:1.2;letter-spacing:-.045em}
+ .issue-summary small{color:var(--muted)}
+ .live-dot{display:inline-block;width:7px;height:7px;background:var(--accent);border-radius:50%;margin-right:9px}
+ .hero-foot{display:flex;justify-content:space-between;gap:20px;margin-top:23px;color:var(--muted);font-size:12px}
+ .news{padding-block:clamp(60px,7vw,105px) 135px}
+ .news-heading{display:flex;justify-content:space-between;align-items:end;gap:35px;margin-bottom:38px}
+ .news-heading h2{font-size:clamp(36px,5vw,69px);line-height:1.18;letter-spacing:-.06em;margin:14px 0 0}
+ .news-heading>p{max-width:350px;color:var(--muted);line-height:1.9;font-size:14px}
+ .toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;border-top:1px solid var(--fg);border-bottom:1px solid var(--stroke);padding:18px 0}
+ .filters{display:flex;flex-wrap:wrap;gap:8px}
+ :global(.filter-chip){border:1px solid var(--stroke);background:transparent;color:var(--muted);padding:10px 15px;min-height:42px;border-radius:99px;font-size:13px}
+ :global(.filter-chip[aria-pressed="true"]){background:var(--fg);color:var(--bg);border-color:var(--fg)}
+ .date-picker{display:flex;align-items:center;gap:13px;font-size:12px;color:var(--muted)}
+ .date-picker select{background:var(--card);color:var(--fg);border:1px solid var(--stroke);border-radius:13px;min-height:43px;padding:8px 12px;font:inherit}
+ .status{font-size:12px;color:var(--muted);margin:25px 0}
+ .stories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,27px)}
+ :global(.news-card){min-width:0;display:flex;flex-direction:column;padding:clamp(20px,2.5vw,32px);border:1px solid var(--stroke);border-radius:22px;background:var(--card);box-shadow:var(--shadow-sm)}
+ :global(.news-meta){display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted)}
+ :global(.news-category){color:var(--accent);font-weight:650}
+ :global(.news-card h3){font-size:clamp(19px,2.1vw,27px);line-height:1.45;letter-spacing:-.035em;margin:19px 0 13px}
+ :global(.news-card p){font-size:13px;line-height:1.9;color:var(--muted);margin:0 0 13px}
+ :global(.news-card .news-reason){border-top:1px solid var(--stroke);padding-top:13px;margin-top:auto}
+ :global(.news-card .news-reason b){color:var(--fg)}
+ :global(.news-source){border-top:1px solid var(--stroke);padding-top:16px;margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+ :global(.news-source a){color:var(--accent);font-weight:650}
+ :global(.news-empty){grid-column:1/-1;text-align:center;padding:65px 20px;color:var(--muted)}
+ .disclaimer{max-width:800px;color:var(--muted);font-size:12px;line-height:1.9;margin:55px 0 0}
+ @media(max-width:980px){.stories{grid-template-columns:repeat(2,minmax(0,1fr))}}
+ @media(max-width:760px){.hero-panel{grid-template-columns:1fr;gap:22px}.issue-summary{border-left:0;border-top:1px solid var(--stroke);padding:22px 0 0}.news-heading{display:block}.news-heading>p{margin-top:18px}.stories{grid-template-columns:1fr}.news{padding-bottom:95px}}
+</style>

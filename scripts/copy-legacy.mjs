@@ -4,13 +4,19 @@
 import {cpSync,existsSync,mkdirSync} from "node:fs";
 import {join} from "node:path";
 const root=process.cwd(),out=join(root,"dist");
-for(const path of ["assets","images","experiments","brief"]){
+for(const path of ["assets","images","experiments"]){
  const src=join(root,path);
  if(!existsSync(src))continue;
  const dst=join(out,path);
  mkdirSync(dst,{recursive:true});
- // Brief is not yet migrated: preserve the legacy HTML and its /data/*.json.
- // Assets and experiment pages remain at their historic addresses.
+ // Keep the existing assets and experiment pages at their historic addresses.
  cpSync(src,dst,{recursive:true,force:true});
 }
-console.log("Legacy assets, experiments, and /brief/ preserved in Astro dist.");
+// Only copy the JSON feed. Astro owns dist/brief/index.html; never overwrite it.
+const briefData=join(root,"brief","data");
+if(existsSync(briefData)){
+ const target=join(out,"brief","data");
+ mkdirSync(target,{recursive:true});
+ cpSync(briefData,target,{recursive:true,force:true});
+}
+console.log("Astro owns /brief/; preserved legacy assets, experiments and /brief/data/*.json.");
