@@ -1,0 +1,130 @@
+/* Edition 09 / deliberate paired day-night palettes for every project world.
+   Keep the four art directions recognizable in either global theme. */
+
+/* 01 · Editorial — dark ink, warm archival paper */
+html[data-theme="dark"] .chapter-world{
+ --ch-bg:#211f1b;--ch-ink:#ede7db;--ch-text:#c0b9aa;--ch-line:#58574f;
+ --ink:#ede7db;--muted:#c0b9aa;--line:#58574f;--line-strong:#878475;--surface:#292722;--paper:#302d27
+}
+html[data-theme="dark"] .chapter-world::before{
+ background-image:linear-gradient(rgba(236,229,210,.028) 1px,transparent 1px),linear-gradient(115deg,#25221d,#171a19)!important;
+ background-size:100% 12px,auto!important
+}
+html[data-theme="dark"] .chapter-world .brief-visual{
+ background:#302e28;border-color:#6c695d;box-shadow:15px 16px 0 rgba(0,0,0,.25)
+}
+html[data-theme="dark"] .chapter-world .brief-visual:hover{box-shadow:8px 11px 0 rgba(0,0,0,.35)}
+html[data-theme="dark"] .chapter-world .visual-top{
+ color:#d2cbb9;border-bottom-color:#827d6e
+}
+html[data-theme="dark"] .chapter-world .visual-head{color:#f0e8d8}
+html[data-theme="dark"] .chapter-world .visual-bottom{
+ color:#c3bba8;border-top-color:#777163
+}
+html[data-theme="dark"] .chapter-world .press-edition{
+ color:#c4baa5;border-top-color:#686458
+}
+html[data-theme="dark"] .chapter-world .press-grid span{
+ color:#c5bcaa;border-right-color:#676255
+}
+html[data-theme="dark"] .chapter-world .world-seal{
+ border-color:#b4aa94;color:#e1d8c5
+}
+
+/* 02 · Mathematics — cold graphite and laboratory blue */
+html[data-theme="dark"] .chapter-math{
+ --ch-bg:#111f29;--ch-ink:#e1eff4;--ch-text:#b1c6d2;--ch-line:#365164;
+ --ink:#e1eff4;--muted:#b1c6d2;--line:#365164;--line-strong:#7895a6;--surface:#203443;--paper:#1b2f3b
+}
+html[data-theme="dark"] .chapter-math::before{
+ background-image:
+ linear-gradient(rgba(167,201,222,.068) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(167,201,222,.068) 1px,transparent 1px),
+ linear-gradient(125deg,#0f1d27,#1a303e)!important;
+ background-size:38px 38px,38px 38px,auto!important
+}
+html[data-theme="dark"] .chapter-math .bilibili-visual{
+ background:#1b303e;border-color:#58798b;color:#e1edf3;
+ box-shadow:0 16px 35px rgba(0,0,0,.25)
+}
+html[data-theme="dark"] .chapter-math .bilibili-visual:before{
+ background-image:linear-gradient(rgba(166,210,231,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(166,210,231,.08) 1px,transparent 1px)
+}
+html[data-theme="dark"] .chapter-math .bilibili-visual-head,
+html[data-theme="dark"] .chapter-math .bilibili-visual-footer{
+ color:#b4ccda;border-color:#536d7d
+}
+html[data-theme="dark"] .chapter-math .bilibili-visual-center strong{color:#e8f1f6}
+html[data-theme="dark"] .chapter-math .bilibili-platform{color:#b8cdd9}
+html[data-theme="dark"] .chapter-math .bilibili-play{
+ background:#e6edf2;border-color:#e6edf2;color:#1b2c38
+}
+html[data-theme="dark"] .chapter-math .math-equation{color:#b3c9d9}
+html[data-theme="dark"] .chapter-math .math-sketch path{stroke:#86abc0}
+html[data-theme="dark"] .chapter-math .math-sketch .axis{stroke:#5f889e}
+html[data-theme="dark"] .chapter-math .math-sketch .surface{stroke:#a3cce0}
+
+/* 03 · Gallery — soft chiaroscuro and warm exhibition walls */
+html[data-theme="dark"] .chapter-gallery{
+ --ch-bg:#25211f;--ch-ink:#f2e9df;--ch-text:#c9b7a9;--ch-line:#64594f;
+ --ink:#f2e9df;--muted:#c9b7a9;--line:#64594f;--line-strong:#978475;--surface:#352d28;--paper:#322b27
+}
+html[data-theme="dark"] .chapter-gallery::before{
+ background:linear-gradient(138deg,#201d1b,#332b27 56%,#211d1c)!important
+}
+html[data-theme="dark"] .chapter-gallery .photo-visual{
+ background:#342c26;border-color:#716052;box-shadow:0 20px 48px rgba(0,0,0,.3)
+}
+html[data-theme="dark"] .chapter-gallery .photo-visual img{
+ box-shadow:0 18px 28px rgba(0,0,0,.43);filter:saturate(.75) brightness(.9)
+}
+html[data-theme="dark"] .chapter-gallery .photo-visual:hover img{
+ filter:saturate(.9) brightness(.98)
+}
+html[data-theme="dark"] .chapter-gallery .visual-label{
+ background:#342c27;color:#f1e8dc;border-color:#807061
+}
+html[data-theme="dark"] .chapter-gallery .gallery-exhibition-note{color:#d0bdae}
+
+/* 04 · Laboratory — high-key porcelain counterpart to the dark black box */
+html:not([data-theme="dark"]) .chapter-lab{
+ --ch-bg:#e7eeed;--ch-ink:#20393d;--ch-text:#526a6d;--ch-line:#b6cbcb;
+ --ink:#20393d;--muted:#526a6d;--line:#b6cbcb;--line-strong:#7f9a9c;--surface:#dce8e6;--paper:#f1f6f4
+}
+html:not([data-theme="dark"]) .chapter-lab::before{
+ background-image:
+ radial-gradient(circle at 62% 45%,rgba(99,159,168,.13),transparent 47%),
+ linear-gradient(140deg,#eaf2f0,#dbe9e7 68%,#eaf0ef)!important
+}
+html:not([data-theme="dark"]) .chapter-lab .chapter-heading{border-bottom-color:#b6cbcb}
+html:not([data-theme="dark"]) .chapter-lab .experiment-links{border-top-color:#b6cbcb}
+html:not([data-theme="dark"]) .chapter-lab .experiment-link{border-bottom-color:#b6cbcb}
+html:not([data-theme="dark"]) .chapter-lab .experiment-link:hover{background:#cedfdc}
+html:not([data-theme="dark"]) .chapter-lab .experiment-index,
+html:not([data-theme="dark"]) .chapter-lab .experiment-subtitle{color:#617d80}
+html:not([data-theme="dark"]) .chapter-lab .experiment-title{color:#20393d}
+html:not([data-theme="dark"]) .chapter-lab .experiment-preview{
+ background:radial-gradient(circle at 49% 42%,#eef7f5,#d2e1df 78%)!important;
+ border-color:#8fadaf;color:#20393d;box-shadow:0 20px 45px rgba(30,74,77,.12)
+}
+html:not([data-theme="dark"]) .chapter-lab .experiment-preview .preview-lines{
+ border-color:#839ea0;opacity:.42
+}
+html:not([data-theme="dark"]) .chapter-lab .experiment-preview .preview-lines:after{
+ border-color:#91aeb0
+}
+html:not([data-theme="dark"]) .chapter-lab .experiment-preview .work-overline,
+html:not([data-theme="dark"]) .chapter-lab .experiment-preview .preview-foot{
+ color:#526c71
+}
+html:not([data-theme="dark"]) .chapter-lab .experiment-preview .preview-foot{border-top-color:#9db9b8}
+html:not([data-theme="dark"]) .chapter-lab .preview-title{color:#20393d;text-shadow:none}
+html:not([data-theme="dark"]) .chapter-lab .lab-scan{
+ background:linear-gradient(90deg,transparent,rgba(63,113,121,.35),transparent)
+}
+html:not([data-theme="dark"]) .chapter-lab .lab-crosshair{color:#607e83}
+/* Night laboratory remains its graphite counterpart, explicitly paired. */
+html[data-theme="dark"] .chapter-lab{
+ --ch-bg:#121719;--ch-ink:#edf2f0;--ch-text:#a3b4b6;--ch-line:#3c5053;
+ --ink:#edf2f0;--muted:#a3b4b6;--line:#3c5053;--line-strong:#708990;--surface:#1b2628;--paper:#1a2325
+}
