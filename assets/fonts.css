@@ -15,3 +15,11 @@ html[data-reading="humanities"] .story h2{font-weight:600}
 .language-toggle,.reading-toggle{background:transparent;color:var(--ink);border:1px solid var(--line-strong);padding:9px 12px;border-radius:999px;font-size:11px;white-space:nowrap;cursor:pointer}
 .language-toggle:hover,.reading-toggle:hover{background:var(--surface)}
 @media(max-width:420px){.language-toggle,.reading-toggle{padding:9px 10px}}
+
+/* Three compact controls: language / reading / appearance remain usable on narrow screens. */
+@media(max-width:480px){
+ .header-row{flex-wrap:wrap;gap:8px!important;padding-top:10px;padding-bottom:10px}
+ .header-actions{margin-left:auto;gap:6px!important}
+ .nav-brief,.back-link{font-size:10px!important;padding:9px 11px!important}
+ .language-toggle,.reading-toggle{font-size:10px!important;padding:9px!important}
+}
