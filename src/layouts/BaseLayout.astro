@@ -38,10 +38,19 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
     themeButton.setAttribute("title",dark?"浅色模式":"深色模式");
     themeButton.setAttribute("aria-pressed",String(dark));
    };
+   let themeTransitionTimer:ReturnType<typeof setTimeout>|undefined;
    themeButton?.addEventListener("click",()=>{
+    const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(themeTransitionTimer!==undefined)clearTimeout(themeTransitionTimer);
+    if(!reduced)root.dataset.themeTransition="true";
+    else root.removeAttribute("data-theme-transition");
     root.dataset.theme=root.dataset.theme==="dark"?"light":"dark";
     try{localStorage.setItem("jhlab-theme",root.dataset.theme)}catch{}
     refreshTheme();
+    if(!reduced)themeTransitionTimer=setTimeout(()=>{
+     root.removeAttribute("data-theme-transition");
+     themeTransitionTimer=undefined;
+    },560);
    });
    refreshTheme();
    const language=document.querySelector<HTMLButtonElement>("[data-language-toggle]");
