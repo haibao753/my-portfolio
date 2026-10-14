@@ -153,3 +153,22 @@ test("laboratory finale is animated only while visible and respects reduced moti
  await expect.poll(()=>finale.evaluate((svg:SVGSVGElement)=>svg.animationsPaused())).toBe(true);
  await expect(page.locator(".finale")).toHaveCSS("opacity","1");
 });
+
+test("editorial hero lines and responsive navigation remain readable",async({page,isMobile})=>{
+ await page.goto("/");
+ await expect(page.locator(".hero-title-line")).toHaveCount(4);
+ await expect(page.locator(".hero-title-line").first()).toBeVisible();
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
+ expect(overflow).toBeLessThanOrEqual(2);
+ if(isMobile){
+  const toggle=page.locator("[data-menu-toggle]");
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-expanded","true");
+  await expect(page.locator("[data-menu-panel]")).toBeVisible();
+ }else{
+  const link=page.locator(".desktop-links a").first();
+  await expect(link).toHaveCSS("position","relative");
+ }
+ await page.locator("[data-language-toggle]").click();
+ await expect(page.locator(".hero-title-line").nth(2)).toBeVisible();
+});
