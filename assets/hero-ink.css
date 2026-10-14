@@ -55,6 +55,38 @@
  transform-origin:50% 84%;
 }
 .ink-title:not(.is-typeset) .ink-letter{opacity:1}
+
+/* Selected, hand-traced brush 心: no raster background, only this one glyph. */
+.ink-title .ink-letter.ink-heart-image{
+ position:relative;
+ width:1.06em;
+ height:1.05em;
+ letter-spacing:0!important;
+ margin-left:.015em;
+ margin-right:.02em;
+ vertical-align:bottom;
+ flex:none;
+}
+.ink-title .ink-heart-mark{
+ position:absolute;
+ left:-.055em;
+ top:-.03em;
+ width:1.18em;
+ height:1.11em;
+ display:block;
+ max-width:none;
+ object-fit:contain;
+ transform:translateY(.045em) rotate(-3.5deg);
+ transform-origin:51% 67%;
+ pointer-events:none;
+ user-select:none;
+}
+html[data-theme="dark"] .ink-title .ink-heart-mark{filter:invert(1)}
+@media(max-width:760px){
+ .ink-title .ink-letter.ink-heart-image{width:1.04em;height:1.04em;margin-left:0;margin-right:.01em}
+ .ink-title .ink-heart-mark{left:-.045em;width:1.15em;height:1.09em;transform:translateY(.04em) rotate(-3deg)}
+}
+
 .ink-title .ink-flourish{
  position:absolute;
  display:block;
@@ -88,18 +120,18 @@
 }
 .ink-title .ink-caption{
  position:absolute;
- right:-27px;
- top:8px;
- height:14px;width:14px;
+ right:-16px;
+ top:12px;
+ height:10px;width:10px;
  border:1px solid currentColor;
  border-radius:50%;
- opacity:.56;
+ opacity:.19;
 }
 .ink-title .ink-caption:before,.ink-title .ink-caption:after{
- content:"";position:absolute;background:currentColor;opacity:.75;
+ content:"";position:absolute;background:currentColor;opacity:.38;
 }
-.ink-title .ink-caption:before{height:1px;width:20px;top:6px;left:-4px}
-.ink-title .ink-caption:after{width:1px;height:20px;top:-4px;left:6px}
+.ink-title .ink-caption:before{height:1px;width:14px;top:4px;left:-2px}
+.ink-title .ink-caption:after{width:1px;height:14px;top:-2px;left:4px}
 /* Progressive enhancement: text is never hidden unless the headline was fully composed. */
 @media(prefers-reduced-motion:no-preference){
  .ink-title.is-typeset .ink-letter{
@@ -127,7 +159,7 @@
 }
 @keyframes ink-stroke-draw{0%{stroke-dashoffset:460;opacity:.08}100%{stroke-dashoffset:0;opacity:1}}
 @keyframes ink-dot-arrive{0%{opacity:0;transform:scale(.4)}100%{opacity:1;transform:scale(1)}}
-@keyframes ink-small-signal{from{opacity:0;transform:rotate(35deg) scale(.65)}to{opacity:.56;transform:rotate(0) scale(1)}}
+@keyframes ink-small-signal{from{opacity:0;transform:rotate(35deg) scale(.65)}to{opacity:.19;transform:rotate(0) scale(1)}}
 @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
  .ink-title .ink-line--two{transition:transform .65s cubic-bezier(.2,.9,.3,1)}
  .ink-title:hover .ink-line--two{transform:rotate(-3.5deg) translate(5px,-3px)}
@@ -164,7 +196,7 @@ html[lang="en"] .ink-title .ink-caption{right:-17px}
  }
  .ink-title .ink-line--two{margin-left:clamp(8px,3vw,22px)}
  .ink-title .ink-flourish{left:4%;width:94%;bottom:-12%}
- .ink-title .ink-caption{right:-12px;top:0;transform:scale(.72)}
+ .ink-title .ink-caption{display:none}
  .hero-subtitle{margin-top:27px}
  html[lang="en"] .hero-title.ink-title,html[lang="en"] .hero h1.ink-title{font-size:clamp(40px,9.4vw,65px)!important}
 }
