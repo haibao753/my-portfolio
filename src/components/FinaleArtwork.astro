@@ -1,0 +1,106 @@
+<div class="lab-finale-frame" aria-label="J.H. LAB 实验室艺术装置">
+ <svg class="lab-finale-graphic" data-lab-finale xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1420 790" role="img" aria-labelledby="title desc">
+<title id="title">让好奇心成为作品 — 实验室视觉</title>
+<desc id="desc">实验编辑风格的双行中文标题，配有精细刻度、环形轨道与金属球形节点</desc>
+<defs>
+ <linearGradient id="letter" x1="0" y1="0" x2=".12" y2="1"><stop offset="0" stop-color="#101111"/><stop offset=".64" stop-color="#222426"/><stop offset=".86" stop-color="#565859"/><stop offset="1" stop-color="#1a1c1c"/></linearGradient>
+ <radialGradient id="chrome" cx=".3" cy=".23" r=".76"><stop offset="0" stop-color="#fff"/><stop offset=".14" stop-color="#e5e6e5"/><stop offset=".39" stop-color="#969a9b"/><stop offset=".71" stop-color="#292b2d"/><stop offset=".91" stop-color="#767879"/><stop offset="1" stop-color="#131516"/></radialGradient>
+ <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#171919" stop-opacity=".65"/><stop offset=".35" stop-color="#171919" stop-opacity=".13"/><stop offset="1" stop-color="#171919" stop-opacity=".5"/></linearGradient>
+ <pattern id="micrograin" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="1.4" cy="1.7" r=".46" fill="#fcfcfc" opacity=".6"/><circle cx="5.8" cy="6.3" r=".45" fill="#fff" opacity=".32"/></pattern>
+ <clipPath id="letters"><text x="105" y="331" font-size="207" letter-spacing="-12" font-family="Noto Serif SC, Songti SC, STSong, serif" font-weight="700">让好奇心</text><text x="155" y="574" font-size="207" letter-spacing="-10" font-family="Noto Serif SC, Songti SC, STSong, serif" font-weight="700">成为作品</text></clipPath>
+<style>
+ /* Native SVG animation works even when this file is displayed with an img tag.
+    No JavaScript, canvas or extra image layers are needed. */
+ .lab-orb-moving{display:block}
+ .lab-orb-static{display:none}
+ .lab-orbit-dash{animation:lab-dash-flow 26s linear infinite}
+ .lab-orbit-dash--lower{animation-duration:32s;animation-direction:reverse}
+ .lab-node--pulse{transform-box:fill-box;transform-origin:center;animation:lab-node-breathe 5.2s ease-in-out infinite}
+ .lab-node--pulse2{transform-box:fill-box;transform-origin:center;animation:lab-node-breathe 6.7s ease-in-out -2.3s infinite}
+ .lab-guideline{animation:lab-line-breathe 9s ease-in-out infinite}
+ @keyframes lab-dash-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-108}}
+ @keyframes lab-node-breathe{0%,100%{opacity:.38;transform:scale(.86)}50%{opacity:1;transform:scale(1.19)}}
+ @keyframes lab-line-breathe{0%,100%{opacity:.25}50%{opacity:.5}}
+ @media(prefers-reduced-motion:reduce){
+  .lab-orb-moving{display:none}
+  .lab-orb-static{display:block}
+  .lab-orbit-dash,.lab-node--pulse,.lab-node--pulse2,.lab-guideline{animation:none!important}
+ }
+</style>
+</defs>
+<!-- architectural guidelines -->
+<g stroke="#515758" stroke-width=".8" fill="none" opacity=".35">
+ <path d="M45 325 H1325 M115 574 H1280 M132 70 V675 M1278 133 V670"/>
+ <path class="lab-guideline" d="M270 163 V637 M804 125 V635 M1196 135 V636" opacity=".25" stroke-dasharray="2 7"/>
+ <path d="M1025 196 L1358 48 M1167 507 L1370 673"/>
+</g>
+<g stroke="#424749" fill="none">
+ <path class="lab-orbit-dash" d="M930 284 A233 233 0 0 1 1283 294" stroke-dasharray="3 6" stroke-width="1.2" opacity=".8"/>
+ <path class="lab-orbit-dash lab-orbit-dash--lower" d="M210 579 A280 175 0 0 0 620 649" stroke-dasharray="3 6" stroke-width="1.1" opacity=".7"/>
+ <path d="M206 579 A152 152 0 0 0 161 689" stroke-dasharray="3 6" stroke-width=".9" opacity=".52"/>
+ <path d="M1250 318 V552 H1320" stroke-dasharray="3 5" stroke-width=".8" opacity=".6"/>
+</g>
+<!-- reference-like registration marks -->
+<g fill="none" stroke="#202424" stroke-width="1.05" opacity=".74">
+ <circle cx="132" cy="325" r="16"/><path d="M93 325 H170 M132 286 V365"/>
+ <path d="M1173 332 H1212 M1192 313 V352"/>
+ <circle cx="455" cy="648" r="6"/><circle cx="161" cy="575" r="5" fill="#111"/>
+ <path d="M1358 48 l-6 -1 3 6" opacity=".3"/>
+</g>
+<g fill="#171a1b"><circle class="lab-node--pulse" cx="132" cy="325" r="5"/><circle cx="132" cy="70" r="2.7"/><circle cx="132" cy="675" r="2.7"/><circle class="lab-node--pulse2" cx="804" cy="574" r="4"/><circle cx="1196" cy="574" r="4.5"/><circle class="lab-node--pulse" cx="1250" cy="507" r="3"/><circle cx="1358" cy="48" r="3"/><circle cx="1370" cy="673" r="3"/><rect x="1316" y="550" width="5" height="5"/></g>
+<!-- real searchable glyph shapes, crisp at any scale -->
+<g clip-path="url(#letters)"><path fill="url(#letter)" d="M0 0 H1420 V790 H0Z"/><path fill="url(#micrograin)" d="M0 0 H1420 V790 H0Z" opacity=".58"/></g>
+<!-- material studies -->
+<!-- Static, precisely positioned fallback when Reduced Motion is enabled. -->
+<g class="lab-orb-static">
+ <circle cx="1139" cy="147" r="23" fill="url(#chrome)" stroke="#303435" stroke-opacity=".3"/>
+ <circle cx="345" cy="656" r="19" fill="url(#chrome)" stroke="#303435" stroke-opacity=".3"/>
+</g>
+<!-- Metal spheres traverse the EXISTING guide paths, not an unrelated floating loop. -->
+<g class="lab-orb-moving">
+ <g>
+  <circle r="23" fill="url(#chrome)" stroke="#303435" stroke-opacity=".36"/>
+  <animateMotion dur="24s" repeatCount="indefinite" calcMode="linear" keyPoints="0.57;1;0;0.57" keyTimes="0;0.22;0.73;1"
+   path="M930 284 A233 233 0 0 1 1283 294"/>
+ </g>
+ <g>
+  <circle r="19" fill="url(#chrome)" stroke="#303435" stroke-opacity=".36"/>
+  <animateMotion dur="31s" repeatCount="indefinite" calcMode="linear" keyPoints="0.32;1;0;0.32" keyTimes="0;0.34;0.85;1"
+   path="M210 579 A280 175 0 0 0 620 649"/>
+ </g>
+</g>
+<path d="M119 418 H1305" stroke="url(#fade)" stroke-width=".7" opacity=".42"/>
+</svg>
+ <span class="lab-finale-caption" aria-hidden="true">J.H. LAB / IN MOTION</span>
+</div>
+<script>
+ const graphic=document.querySelector<SVGSVGElement>("[data-lab-finale]");
+ if(graphic){
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)");
+  let visible=false;
+  const update=()=>{
+   if(reduced.matches||!visible||document.hidden)graphic.pauseAnimations?.();
+   else graphic.unpauseAnimations?.();
+  };
+  graphic.pauseAnimations?.();
+  const observer=new IntersectionObserver(entries=>{
+   visible=entries[0]?.isIntersecting??false;
+   update();
+  },{threshold:0.08,rootMargin:"75px"});
+  observer.observe(graphic);
+  document.addEventListener("visibilitychange",update);
+  reduced.addEventListener("change",()=>{
+   if(reduced.matches)graphic.setCurrentTime?.(0);
+   update();
+  });
+  if(reduced.matches)graphic.setCurrentTime?.(0);
+ }
+</script>
+<style>
+ .lab-finale-frame{position:relative;isolation:isolate;border:1px solid var(--stroke);border-radius:29px;overflow:hidden;background:linear-gradient(145deg,#f6f6f4,#e7e8e7);box-shadow:var(--shadow-md);padding:clamp(12px,3vw,34px)}
+ .lab-finale-graphic{display:block;width:100%;height:auto;transform:translateZ(0);translate:0 var(--finale-y,0px);filter:drop-shadow(0 13px 22px rgba(16,20,23,.06))}
+ .lab-finale-caption{position:absolute;right:clamp(18px,3vw,38px);bottom:clamp(15px,2vw,26px);font:600 10px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.13em;color:#565b5b;opacity:.65}
+ :global(html[data-theme="dark"]) .lab-finale-frame{background:linear-gradient(145deg,#c9cacc,#a5a9aa);border-color:rgba(255,255,255,.16)}
+ @media(max-width:760px){.lab-finale-frame{border-radius:23px;padding:5px}.lab-finale-caption{font-size:8px;bottom:11px;right:13px}}
+ @media(prefers-reduced-motion:reduce){.lab-finale-graphic{translate:none!important}}
+</style>

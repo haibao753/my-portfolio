@@ -1,0 +1,46 @@
+---
+interface Props{index:number;href:string}
+const {index,href}=Astro.props;
+---
+<div class:list={["visual",`visual-${index}`]}>
+ {index===0&&<div class="world-art" aria-hidden="true"><span>J.H. / BRIEF</span><strong>WORLD<br/>IN FOCUS.</strong><small>EVERY DAY IS A NEW QUESTION</small></div>}
+ {index===1&&<div class="math-art" aria-hidden="true">
+   <span class="math-label">x² + y² = cosh² z</span>
+   <svg viewBox="0 0 420 320" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.45" opacity=".72">
+    <ellipse cx="210" cy="83" rx="122" ry="46"/><ellipse cx="210" cy="130" rx="84" ry="31"/><ellipse cx="210" cy="193" rx="82" ry="32"/><ellipse cx="210" cy="249" rx="122" ry="44"/>
+    <path d="M88 83C138 119 138 218 88 249M332 83C282 119 282 218 332 249M210 37C210 93 210 236 210 293M148 45C178 116 178 231 148 286M272 45C242 116 242 231 272 286"/>
+   </g></svg><small>MATHEMATICS / MOVEMENT / VISUALIZATION</small>
+  </div>}
+ {index===2&&<div class="photo-art" aria-hidden="true"><img src="/images/2.jpg" alt="" loading="lazy" width="800" height="600" /><img src="/images/4.jpg" alt="" loading="lazy" width="800" height="600" /><img src="/images/5.jpg" alt="" loading="lazy" width="800" height="600" /></div>}
+ {index===3&&<div class="geometry-art">
+   <div id="minimal-preview" aria-label="极小曲面实时三维预览"><div class="preview-fallback" aria-hidden="true">
+    <svg viewBox="0 0 420 320" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.3" opacity=".68">
+     <ellipse cx="210" cy="78" rx="108" ry="42"/><ellipse cx="210" cy="120" rx="78" ry="27"/><ellipse cx="210" cy="200" rx="79" ry="27"/><ellipse cx="210" cy="247" rx="108" ry="42"/>
+     <path d="M102 78C141 116 141 209 102 247M318 78C279 116 279 209 318 247M210 36V289M156 48Q201 160 156 277M264 48Q219 160 264 277"/>
+    </g></svg>
+   </div></div>
+   <span class="visual-label">GEOMETRY / LAB</span>
+  </div>}
+</div>
+{index===3&&<script is:inline type="module" src="/assets/minimal-preview.js"></script>}
+<style>
+ .visual{min-height:380px;border:1px solid var(--stroke);border-radius:22px;overflow:hidden;background:linear-gradient(135deg,#e6ebf0,#f8f9fb);box-shadow:var(--shadow-sm);display:grid;place-items:center;position:relative}
+ .world-art{padding:42px;display:flex;flex-direction:column;justify-content:space-between;width:82%;height:290px;background:rgba(255,255,255,.90);color:#1d1d1f;border:1px solid rgba(24,29,37,.11);box-shadow:var(--shadow-md)}
+ .world-art span,.world-art small,.math-art small{font:600 11px ui-monospace,monospace;letter-spacing:.12em}
+ .world-art strong{font-size:clamp(38px,4vw,64px);line-height:1;letter-spacing:-.085em}
+ .math-art{display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;color:#46657d;width:100%}
+ .math-art svg{width:min(90%,390px);height:285px}
+ .math-label{font:italic 21px Georgia,serif;color:#243e52}
+ .math-art small{font-size:9px}
+ .photo-art{display:grid;grid-template-columns:1fr 1.1fr 1fr;height:380px;gap:8px;padding:9px;width:100%;background:#e1e5e8}
+ .photo-art img{width:100%;height:100%;object-fit:cover;min-width:0}
+ .photo-art img:nth-child(2){transform:scaleY(.92)}
+ .geometry-art{position:relative;width:100%;height:380px;display:grid;place-items:center;color:#5d7c8f}
+ #minimal-preview{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+ .preview-fallback{position:absolute;inset:0;display:grid;place-items:center}
+ .preview-fallback svg{width:84%;height:85%}
+ .visual-label{position:absolute;bottom:23px;font:600 11px ui-monospace,monospace;letter-spacing:.15em;pointer-events:none}
+ .visual-3{background:radial-gradient(circle,#fbfcfd,#dbe6ed)}
+ @media(max-width:900px){.visual{min-height:300px}.photo-art,.geometry-art{height:300px}}
+ @media(max-width:600px){.visual{min-height:230px}.world-art{height:200px;padding:24px}.world-art strong{font-size:34px}.math-art svg{height:175px}.math-label{font-size:17px}.photo-art,.geometry-art{height:230px}}
+</style>

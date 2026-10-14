@@ -1,0 +1,17 @@
+@import "./tokens.css";
+*,*:before,*:after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--fg);line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+button,a{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.wrap{width:min(var(--wide),calc(100% - 48px));margin-inline:auto}
+.eyebrow{font-size:12px;font-weight:650;letter-spacing:.08em;color:var(--muted)}
+h1,h2,h3,p{margin-top:0}
+.skip-link{position:fixed;z-index:300;top:-90px;left:15px;background:var(--card);padding:12px}
+.skip-link:focus{top:15px}
+[data-locale]{display:none!important}
+html[lang="zh-CN"] [data-locale="zh"],html[lang="en"] [data-locale="en"]{display:revert!important}
+@media(max-width:760px){.wrap{width:calc(100% - 36px)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}

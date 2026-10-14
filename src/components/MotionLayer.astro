@@ -1,0 +1,146 @@
+<div class="motion-progress" aria-hidden="true"><span data-motion-progress></span></div>
+<script>
+ const reduce=window.matchMedia("(prefers-reduced-motion: reduce)");
+ const root=document.documentElement;
+ const reveals=[...document.querySelectorAll<HTMLElement>(".intro,.project,.contact,.finale")];
+ let observer:IntersectionObserver|null=null;
+ // First frame remains readable before JS; only below-fold elements may be hidden.
+ function setup(){
+  observer?.disconnect();
+  // Once revealed, chapters stay visible; restoring a page must not replay them.
+  if(reduce.matches||!("IntersectionObserver" in window)){
+   root.removeAttribute("data-motion-ready");
+   reveals.forEach(el=>el.classList.add("is-motion-revealed"));
+   return;
+  }
+  observer=new IntersectionObserver(entries=>{
+   for(const entry of entries){
+    if(!entry.isIntersecting)continue;
+    (entry.target as HTMLElement).classList.add("is-motion-revealed");
+    observer?.unobserve(entry.target);
+   }
+  },{threshold:0.08,rootMargin:"0px 0px 65px 0px"});
+  reveals.forEach(el=>{
+   if(el.getBoundingClientRect().top<innerHeight*.87)el.classList.add("is-motion-revealed");
+   else observer?.observe(el);
+  });
+  root.setAttribute("data-motion-ready","");
+ }
+ let raf=0;
+ const progress=document.querySelector<HTMLElement>("[data-motion-progress]");
+ const visuals=[...document.querySelectorAll<HTMLElement>(".project .visual")];
+ const chapters=[...document.querySelectorAll<HTMLElement>(".project")];
+ const coarseMotion=matchMedia("(pointer:coarse)");
+ const finale=document.querySelector<HTMLElement>(".lab-finale-graphic");
+ let lastScroll=scrollY;
+ let lastFrame=performance.now();
+ let smoothVelocity=0;
+ function draw(){
+  raf=0;
+  if(progress){
+   const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+   progress.style.transform=`scaleX(${Math.max(0,Math.min(1,scrollY/max))})`;
+  }
+  if(reduce.matches){
+   visuals.forEach(el=>el.style.removeProperty("--motion-y"));
+   chapters.forEach(el=>{el.style.removeProperty("--chapter-progress");el.style.removeProperty("--chapter-velocity");el.style.removeProperty("--chapter-light");el.style.removeProperty("--chapter-tilt")});
+   finale?.style.removeProperty("--finale-y");
+   smoothVelocity=0;
+   lastScroll=scrollY;
+   lastFrame=performance.now();
+   return;
+  }
+  // Derive motion entirely from the browser's native scroll position.
+  // Never use scrollTo, scroll snapping, wheel/touch interception or delayed settling.
+  const now=performance.now();
+  const elapsed=Math.max(16,Math.min(100,now-lastFrame));
+  const rawVelocity=Math.max(-2.4,Math.min(2.4,(scrollY-lastScroll)/elapsed));
+  smoothVelocity+= (rawVelocity-smoothVelocity)*0.28;
+  lastScroll=scrollY;
+  lastFrame=now;
+  const viewport=innerHeight;
+  for(const chapter of chapters){
+   const rect=chapter.getBoundingClientRect();
+   if(rect.bottom<0||rect.top>viewport){
+    chapter.style.removeProperty("--chapter-velocity");
+    chapter.style.removeProperty("--chapter-light");
+    chapter.style.removeProperty("--chapter-tilt");
+    continue;
+   }
+   const progress=Math.max(0,Math.min(1,(viewport-rect.top)/(viewport+rect.height)));
+   chapter.style.setProperty("--chapter-progress",progress.toFixed(3));
+   chapter.style.setProperty("--chapter-velocity",smoothVelocity.toFixed(3));
+   if(!coarseMotion.matches)chapter.style.setProperty("--chapter-light",(0.985+progress*0.03).toFixed(3));
+   if(!coarseMotion.matches)chapter.style.setProperty("--chapter-tilt",((progress-0.5)*-1.4).toFixed(2)+"deg");
+  }
+  for(const el of visuals){
+   const rect=el.getBoundingClientRect();
+   if(rect.bottom<0||rect.top>viewport)continue;
+   const phase=Math.max(-1,Math.min(1,(viewport*.5-(rect.top+rect.height*.5))/(viewport*.55+rect.height*.5)));
+   el.style.setProperty("--motion-y",`${(phase*(coarseMotion.matches?5:14)).toFixed(1)}px`);
+  }
+  if(finale){
+   const box=finale.getBoundingClientRect();
+   if(box.bottom>0&&box.top<viewport){
+    const t=Math.max(-1,Math.min(1,(viewport*.5-box.top)/(viewport+box.height)));
+    finale.style.setProperty("--finale-y",`${(t*13).toFixed(1)}px`);
+   }
+  }
+ }
+ function queue(){if(!raf)raf=requestAnimationFrame(draw)}
+ setup();queue();
+ addEventListener("scroll",queue,{passive:true});
+ addEventListener("resize",queue,{passive:true});
+ addEventListener("pageshow",()=>{setup();queue()});
+ reduce.addEventListener?.("change",()=>{setup();queue()});
+ document.addEventListener("visibilitychange",()=>{if(!document.hidden)queue()});
+</script>
+<style>
+ :global(.motion-progress){position:fixed;z-index:110;inset:0 0 auto;height:2px;pointer-events:none}
+ :global(.motion-progress span){display:block;width:100%;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;opacity:.65}
+ :global(.hero .eyebrow),:global(.hero h1),:global(.hero .lead),:global(.hero .actions){animation:motion-hero-in .85s cubic-bezier(.21,.74,.2,1) both}
+ :global(.hero h1){animation:none}
+ :global(.hero-title-line){animation:motion-hero-line 1s cubic-bezier(.18,.85,.2,1) both}
+ :global(.hero-title-line:nth-child(1)){animation-delay:.09s}
+ :global(.hero-title-line:nth-child(2)){animation-delay:.23s}
+ :global(.hero .lead){animation-delay:.18s}
+ :global(.hero .actions){animation-delay:.27s}
+ :global(html[data-motion-ready] .intro:not(.is-motion-revealed)),:global(html[data-motion-ready] .project:not(.is-motion-revealed)),:global(html[data-motion-ready] .contact:not(.is-motion-revealed)),:global(html[data-motion-ready] .finale:not(.is-motion-revealed)){opacity:0;transform:translateY(35px)}
+ :global(.intro),:global(.project),:global(.contact),:global(.finale){transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+ :global(.project .visual){translate:0 var(--motion-y,0px);transition:box-shadow .4s ease}
+ /* Scroll-linked editorial depth: visual-only transforms, with no extra scroll movement. */
+ :global(.project){--chapter-progress:0.5;--chapter-velocity:0;isolation:isolate}
+ :global(.project .visual){will-change:auto}
+ @media(hover:hover) and (pointer:fine){:global(.project .visual){filter:brightness(var(--chapter-light,1))}}
+ :global(.project .visual::before){content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(160deg,rgba(255,255,255,.10),transparent 47%,rgba(0,0,0,.045));opacity:.36}
+ @media(hover:hover) and (pointer:fine) and (min-width:761px){
+  :global(.project .visual){transform:perspective(1200px) rotateX(var(--chapter-tilt,0deg));transform-origin:center}
+ }
+ @media(prefers-reduced-motion:reduce){
+  :global(.project .visual){filter:none!important;transform:none!important}
+  :global(.project .visual::before){display:none!important}
+ }
+ :global(.project .visual::after){content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 1px rgba(255,255,255,.22)}
+ @media(hover:hover) and (pointer:fine){:global(.project:hover){box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--fg) 15%,transparent)}}
+ :global(.project .eyebrow){position:relative;width:max-content;max-width:100%;padding-bottom:13px}
+ :global(.project .eyebrow::after){content:"";position:absolute;left:0;bottom:2px;width:64px;height:1px;background:var(--accent);opacity:.52;transform:scaleX(.2);transform-origin:left;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+ :global(.project.is-motion-revealed .eyebrow::after){transform:scaleX(1)}
+ :global(.project .copy h3){transition:letter-spacing .45s ease}
+ @media(hover:hover){:global(.project:hover .copy h3){letter-spacing:-.056em}}
+ :global(.project .project-link),:global(.project .extra){transition:color .25s ease,letter-spacing .3s ease}
+ :global(.project .project-link:hover){letter-spacing:.035em}
+ :global(.contact-links>a),:global(.contact-links>.wechat){transition:transform .38s cubic-bezier(.16,1,.3,1),box-shadow .38s ease}
+ :global(.contact-links>a:hover),:global(.contact-links>.wechat:hover){transform:translateY(-4px);box-shadow:var(--shadow-md)}
+ :global(.lab-finale-graphic){translate:0 var(--finale-y,0px)}
+ :global(.finale){overflow:hidden}
+ :global(.visual-1 .math-art svg){animation:motion-math-breathe 9s ease-in-out infinite alternate;transform-origin:center}
+ :global(.visual-2 .photo-art img){transition:transform .65s cubic-bezier(.16,1,.3,1)}
+ :global(.visual-2:hover .photo-art img:first-child){transform:translateY(-7px) rotate(-1.5deg)}
+ :global(.visual-2:hover .photo-art img:nth-child(2)){transform:scaleY(.94) translateY(-6px)}
+ :global(.visual-2:hover .photo-art img:last-child){transform:translateY(-5px) rotate(1.5deg)}
+ @keyframes motion-hero-line{from{opacity:0;translate:0 .24em;filter:blur(6px);clip-path:inset(0 0 38% 0)}to{opacity:1;translate:0 0;filter:blur(0);clip-path:inset(0)}}
+ @keyframes motion-hero-in{from{opacity:0;transform:translateY(26px);filter:blur(4px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+ @keyframes motion-math-breathe{from{transform:translateY(-4px) scale(.975)}to{transform:translateY(5px) scale(1.02)}}
+ @media(hover:none){:global(.project:hover){box-shadow:var(--shadow-md)}:global(.contact-links>a:hover),:global(.contact-links>.wechat:hover){transform:none;box-shadow:var(--shadow-sm)}}
+ @media(prefers-reduced-motion:reduce){:global(.hero .eyebrow),:global(.hero h1),:global(.hero-title-line),:global(.hero .lead),:global(.hero .actions){animation:none!important}:global(.intro),:global(.project),:global(.contact),:global(.finale){opacity:1!important;transform:none!important;transition:none!important}:global(.visual-1 .math-art svg){animation:none!important}:global(.project .visual),:global(.lab-finale-graphic){translate:none!important}}
+</style>
