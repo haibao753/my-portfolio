@@ -1,0 +1,54 @@
+/* J.H. LAB / EDITION 08: visual storytelling, not decorative animation */
+:root{--story-reveal:26px}
+.story-progress{position:fixed;z-index:35;top:0;left:0;width:100%;height:2px;pointer-events:none;transform:scaleX(0);transform-origin:left;background:var(--ink);transition:transform .12s linear}
+.story-rail{position:fixed;right:12px;top:50%;transform:translateY(-50%) translateX(20px);z-index:15;display:flex;flex-direction:column;gap:15px;padding:13px 10px;border:1px solid var(--line);border-radius:99px;background:var(--header);backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .35s ease,transform .35s ease}
+.story-rail.is-visible{opacity:1;transform:translateY(-50%) translateX(0);pointer-events:auto}
+.story-rail a{width:8px;height:8px;border-radius:50%;border:1px solid var(--muted);background:transparent;display:block;transition:transform .28s,background .28s,border-color .28s}
+.story-rail a.is-active,.story-rail a:hover{transform:scale(1.34);background:var(--ink);border-color:var(--ink)}
+.story-rail a:focus-visible{outline-offset:5px}
+.story-teaser{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:center;gap:34px;padding:35px 0 41px;border-bottom:1px solid var(--ink)}
+.story-teaser-label{font-size:11px;color:var(--muted);letter-spacing:.1em}
+.story-teaser-title{font-size:clamp(18px,2.35vw,30px);line-height:1.6;letter-spacing:-.04em;font-family:var(--font-display,"Noto Serif SC",serif);font-weight:550}
+.story-teaser-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.story-teaser-links a{font-size:11px;padding:9px 13px;border:1px solid var(--line);border-radius:99px;transition:background .2s,border-color .2s,transform .2s}
+.story-teaser-links a:hover{background:var(--surface);border-color:var(--ink);transform:translateY(-2px)}
+.story-teaser-guide{display:flex;align-items:center;gap:13px;font-size:11px;color:var(--muted)}
+.story-teaser-guide svg{width:30px;height:30px;animation:story-nudge 2.3s cubic-bezier(.38,0,.28,1) infinite}
+@keyframes story-nudge{0%,100%{transform:translateY(-3px);opacity:.5}50%{transform:translateY(5px);opacity:1}}
+/* Change the rhythm of the four projects rather than repeating identical cards */
+.work{transition:background-color .35s ease,border-color .35s ease;scroll-margin-top:110px}
+.work:nth-child(even) .work-copy{grid-column:3;grid-row:1;padding-left:25px;padding-right:0}
+.work:nth-child(even) .work-visual{grid-column:2;grid-row:1}
+.work:nth-child(even) .work-num{grid-column:1;grid-row:1}
+.work-visual{min-width:0}
+.work .visual,.work .bilibili-visual,.work .experiment-preview{min-height:345px}
+.work:nth-child(1) .brief-visual{min-height:405px}
+.work:nth-child(2) .bilibili-visual{min-height:400px}
+.work:nth-child(3) .photo-visual{height:425px}
+.work:nth-child(4) .experiment-preview{min-height:415px}
+.work h3{font-size:clamp(30px,3.65vw,50px);line-height:1.35}
+.work-copy{padding-top:20px}
+.work .work-overline{letter-spacing:.08em}
+.work .work-visual{transition:transform .65s cubic-bezier(.16,1,.3,1)}
+@media(hover:hover) and (pointer:fine){.work:hover .work-visual{transform:translateY(-5px)}}
+@media(max-width:1150px){.story-rail{right:5px}.work:nth-child(even) .work-copy{padding-left:10px}}
+@media(max-width:760px){
+ .story-rail{display:none}
+ .story-teaser{display:block;padding:32px 0}
+ .story-teaser-title{margin-top:15px;font-size:clamp(20px,5.3vw,27px)}
+ .story-teaser-guide{margin-bottom:8px}
+ .story-teaser-links{margin-top:18px;gap:7px}
+ .story-teaser-links a{font-size:10px;padding:8px 11px}
+ .work:nth-child(even) .work-copy{grid-column:2;grid-row:auto;padding:0}
+ .work:nth-child(even) .work-visual{grid-column:1/-1;grid-row:auto}
+ .work:nth-child(even) .work-num{grid-column:1;grid-row:1}
+ .work .visual,.work .bilibili-visual,.work .experiment-preview{min-height:265px}
+ .work:nth-child(1) .brief-visual{min-height:285px}
+ .work:nth-child(2) .bilibili-visual{min-height:300px}
+ .work:nth-child(3) .photo-visual{height:290px}
+ .work:nth-child(4) .experiment-preview{min-height:290px}
+ .work h3{font-size:clamp(27px,6.7vw,36px)}
+ .work-copy{padding-top:0}
+ .story-progress{height:2px}
+}
+@media(prefers-reduced-motion:reduce){.story-rail,.story-rail a,.story-teaser-guide svg,.story-teaser-links a,.work .work-visual{animation:none!important;transition:none!important}}
