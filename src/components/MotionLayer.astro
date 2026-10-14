@@ -30,6 +30,7 @@
  const progress=document.querySelector<HTMLElement>("[data-motion-progress]");
  const visuals=[...document.querySelectorAll<HTMLElement>(".project .visual")];
  const chapters=[...document.querySelectorAll<HTMLElement>(".project")];
+ const coarseMotion=matchMedia("(pointer:coarse)");
  const finale=document.querySelector<HTMLElement>(".lab-finale-graphic");
  let lastScroll=scrollY;
  let lastFrame=performance.now();
@@ -69,14 +70,14 @@
    const progress=Math.max(0,Math.min(1,(viewport-rect.top)/(viewport+rect.height)));
    chapter.style.setProperty("--chapter-progress",progress.toFixed(3));
    chapter.style.setProperty("--chapter-velocity",smoothVelocity.toFixed(3));
-   chapter.style.setProperty("--chapter-light",(0.965+progress*0.07).toFixed(3));
-   chapter.style.setProperty("--chapter-tilt",((progress-0.5)*-1.8).toFixed(2)+"deg");
+   if(!coarseMotion.matches)chapter.style.setProperty("--chapter-light",(0.985+progress*0.03).toFixed(3));
+   if(!coarseMotion.matches)chapter.style.setProperty("--chapter-tilt",((progress-0.5)*-1.4).toFixed(2)+"deg");
   }
   for(const el of visuals){
    const rect=el.getBoundingClientRect();
    if(rect.bottom<0||rect.top>viewport)continue;
    const phase=Math.max(-1,Math.min(1,(viewport*.5-(rect.top+rect.height*.5))/(viewport*.55+rect.height*.5)));
-   el.style.setProperty("--motion-y",`${(phase*(innerWidth<760?9:18)).toFixed(1)}px`);
+   el.style.setProperty("--motion-y",`${(phase*(coarseMotion.matches?5:14)).toFixed(1)}px`);
   }
   if(finale){
    const box=finale.getBoundingClientRect();
@@ -109,9 +110,10 @@
  :global(.project .visual){translate:0 var(--motion-y,0px);transition:box-shadow .4s ease}
  /* Scroll-linked editorial depth: visual-only transforms, with no extra scroll movement. */
  :global(.project){--chapter-progress:0.5;--chapter-velocity:0;isolation:isolate}
- :global(.project .visual){filter:brightness(var(--chapter-light,1));will-change:auto}
+ :global(.project .visual){will-change:auto}
+ @media(hover:hover) and (pointer:fine){:global(.project .visual){filter:brightness(var(--chapter-light,1))}}
  :global(.project .visual::before){content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(160deg,rgba(255,255,255,.10),transparent 47%,rgba(0,0,0,.045));opacity:.36}
- @media(hover:hover) and (min-width:761px){
+ @media(hover:hover) and (pointer:fine) and (min-width:761px){
   :global(.project .visual){transform:perspective(1200px) rotateX(var(--chapter-tilt,0deg));transform-origin:center}
  }
  @media(prefers-reduced-motion:reduce){
@@ -119,7 +121,7 @@
   :global(.project .visual::before){display:none!important}
  }
  :global(.project .visual::after){content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 1px rgba(255,255,255,.22)}
- :global(.project:hover){box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--fg) 15%,transparent)}
+ @media(hover:hover) and (pointer:fine){:global(.project:hover){box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--fg) 15%,transparent)}}
  :global(.project .eyebrow){position:relative;width:max-content;max-width:100%;padding-bottom:13px}
  :global(.project .eyebrow::after){content:"";position:absolute;left:0;bottom:2px;width:64px;height:1px;background:var(--accent);opacity:.52;transform:scaleX(.2);transform-origin:left;transition:transform .6s cubic-bezier(.16,1,.3,1)}
  :global(.project.is-motion-revealed .eyebrow::after){transform:scaleX(1)}
