@@ -63,12 +63,14 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
    const close=()=>{
     if(!menu||!panel||!backdrop)return;
     menu.setAttribute("aria-expanded","false");
+    root.removeAttribute("data-menu-open");
     panel.hidden=true;backdrop.hidden=true;
    };
    menu?.addEventListener("click",()=>{
     if(!menu||!panel||!backdrop)return;
     const open=menu.getAttribute("aria-expanded")!=="true";
     menu.setAttribute("aria-expanded",String(open));
+    if(open)root.dataset.menuOpen="true";else root.removeAttribute("data-menu-open");
     panel.hidden=!open;backdrop.hidden=!open;
    });
    backdrop?.addEventListener("click",close);
