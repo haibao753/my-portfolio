@@ -1,81 +1,39 @@
-/* J.H. LAB — orbital monogram and visible, looping signature writing. */
+/* J.H. LAB — identity and true-path handwriting approximation */
 .logo .logo-monogram{
- display:block;position:relative;flex:0 0 auto;
- width:36px;height:32px;
- border:0!important;border-radius:0!important;
- background:var(--ink);
- -webkit-mask:url("/assets/jh-orbit.svg") center / contain no-repeat;
- mask:url("/assets/jh-orbit.svg") center / contain no-repeat;
+ display:block;position:relative;flex:0 0 auto;width:36px;height:32px;
+ border:0!important;border-radius:0!important;background:var(--ink);
+ -webkit-mask:url("/assets/jh-orbit.svg") center/contain no-repeat;
+ mask:url("/assets/jh-orbit.svg") center/contain no-repeat;
  transition:transform .48s cubic-bezier(.22,1,.36,1),opacity .25s;
 }
 .logo:hover .logo-monogram{transform:rotate(-7deg) scale(1.065)}
 .logo:focus-visible{outline:2px solid var(--ink);outline-offset:7px;border-radius:2px}
-
-/* The pale original underneath prevents a blank or jumpy frame.
-   The upper original progressively reveals itself, then rests before repeating. */
-.hero-autograph{
- display:grid;grid-template-areas:"signature";
- position:relative;isolation:isolate;
- margin-top:36px;
- width:min(400px,100%);
- max-width:510px;
- transform:rotate(-2.1deg);
- transform-origin:30% 60%;
-}
-.hero-autograph__ink,
-.hero-autograph__ghost{
- grid-area:signature;
- display:block;
- width:100%;height:auto;
+.hero-autograph--pen{
+ display:block;position:relative;isolation:isolate;
+ margin-top:36px;width:min(400px,100%);max-width:510px;
  aspect-ratio:2028/518;
- object-fit:contain;
- pointer-events:none;
- user-select:none;
+ transform:rotate(-2.1deg);transform-origin:30% 60%;
+ color:var(--ink);
 }
-.hero-autograph__ghost{opacity:.16}
-.hero-autograph__ink{
- opacity:.95;
- clip-path:inset(0 100% 0 0);
- animation:jh-write-loop 7s cubic-bezier(.48,.03,.28,1) .2s infinite both;
- will-change:clip-path,opacity;
-}
-/* Writing is clearly visible every 7 seconds:
-   0–2.1s ink writes across the page;
-   2.1–5.8s full signature rests;
-   at the end it gently fades so a new cycle can begin. */
-@keyframes jh-write-loop{
- 0%{clip-path:inset(0 100% 0 0);opacity:0}
- 4%{clip-path:inset(0 98% 0 0);opacity:.97}
- 30%{clip-path:inset(0 0 0 0);opacity:.97}
- 82%{clip-path:inset(0 0 0 0);opacity:.97}
- 98%,100%{clip-path:inset(0 0 0 0);opacity:0}
-}
-@keyframes jh-write-on-hover{
- 0%{clip-path:inset(0 100% 0 0);opacity:0}
- 6%{clip-path:inset(0 99% 0 0);opacity:1}
- 58%{clip-path:inset(0 0 0 0);opacity:1}
- 88%{clip-path:inset(0 0 0 0);opacity:1}
- 100%{clip-path:inset(0 0 0 0);opacity:0}
-}
-@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
- .hero-autograph:hover .hero-autograph__ink{
-  animation:jh-write-on-hover 3.6s cubic-bezier(.5,.02,.24,1) infinite both;
- }
-}
-html[data-theme="dark"] .hero-autograph__ink,
-html[data-theme="dark"] .hero-autograph__ghost{filter:invert(1)}
-html[data-theme="dark"] .hero-autograph__ghost{opacity:.22}
+.hero-autograph__draw{display:block;width:100%;height:100%;overflow:visible}
+.hero-autograph__finish{opacity:1;transition:none}
+.hero-autograph__revealed{opacity:0}
+.hero-autograph--pen.is-pen-ready .hero-autograph__finish{opacity:0}
+.hero-autograph--pen.is-pen-ready .hero-autograph__revealed{opacity:1}
+.hero-autograph--pen.is-pen-finished .hero-autograph__finish{opacity:1}
+.hero-autograph--pen.is-pen-finished .hero-autograph__revealed{opacity:1}
+.signature-pen-stroke{stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:760px){
  .logo .logo-monogram{width:31px;height:28px}
- .hero-autograph{margin-top:27px;width:min(350px,100%)}
+ .hero-autograph--pen{margin-top:27px;width:min(350px,100%)}
 }
 @media(max-width:420px){
  .logo .logo-monogram{width:29px;height:26px}
- .hero-autograph{margin-top:25px;width:min(320px,100%)}
+ .hero-autograph--pen{margin-top:25px;width:min(320px,100%)}
 }
 @media(prefers-reduced-motion:reduce){
- .hero-autograph__ink{animation:none!important;clip-path:none!important;opacity:.92!important;will-change:auto}
- .hero-autograph__ghost{display:none!important}
+ .hero-autograph__finish{opacity:1!important}
+ .hero-autograph__revealed{opacity:0!important}
  .logo .logo-monogram{transition:none!important}
- .logo:hover .logo-monogram{transform:none}
+ .logo:hover .logo-monogram{transform:none!important}
 }
