@@ -1,0 +1,44 @@
+/* Contact closing line: character-by-character spring typing, without layout jumps. */
+.contact-heading h2.contact-typewriter{
+ position:relative;
+ width:max-content;
+ max-width:100%;
+ min-height:1.2em;
+}
+.contact-typewriter__measure{visibility:hidden;display:block;pointer-events:none}
+.contact-typewriter__ink{
+ position:absolute;inset:0 auto auto 0;
+ display:block;white-space:nowrap;
+ pointer-events:none;
+}
+.contact-typewriter__glyph{
+ display:inline-block;
+ transform-origin:50% 85%;
+ animation:contact-glyph-pop .36s cubic-bezier(.17,1.35,.42,1) both;
+}
+.contact-typewriter__ink:after{
+ content:"";display:inline-block;
+ width:2px;height:.77em;
+ margin-left:.085em;
+ vertical-align:-.05em;
+ background:var(--ink);
+ animation:contact-caret-blink .7s steps(1,end) infinite;
+}
+.contact-typewriter--done .contact-typewriter__ink:after{
+ animation:contact-caret-blink .9s steps(1,end) 2;
+ opacity:0;
+}
+@keyframes contact-glyph-pop{
+ from{opacity:0;transform:translateY(.2em) scale(.82);filter:blur(3px)}
+ 65%{opacity:1}
+ to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+}
+@keyframes contact-caret-blink{0%,49%{opacity:.72}50%,100%{opacity:0}}
+@media(max-width:760px){
+ .contact-heading h2.contact-typewriter{max-width:100%}
+ .contact-typewriter__ink{white-space:nowrap}
+}
+@media(prefers-reduced-motion:reduce){
+ .contact-typewriter__glyph,.contact-typewriter__ink:after{animation:none!important}
+ .contact-typewriter__ink:after{display:none!important}
+}
