@@ -42,10 +42,10 @@
    span.className="contact-typewriter__glyph";
    span.textContent=letters[index++];
    ink.appendChild(span);
-   const delay=letters[index-1]==="。" ? 280 : 95;
+   const delay=letters[index-1]==="。" ? 470 : 235;
    timer=window.setTimeout(advance,delay);
   }
-  timer=window.setTimeout(advance,100);
+  timer=window.setTimeout(advance,220);
  }
  function handleLanguage(){
   // Translation has just replaced the heading with a new, complete phrase.
