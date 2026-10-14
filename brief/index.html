@@ -85,6 +85,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 @media(max-width:420px){.header-row{flex-wrap:wrap;padding:10px 0}.header-actions{max-width:100%}.back-link{padding:9px}.theme-toggle{padding:9px}.reading-toggle{font-size:10px}.wrap{width:calc(100% - 34px)}.logo{font-size:18px}.logo-mark{width:26px;height:26px}.theme-toggle{padding:9px}.theme-label{display:none}.back-link{padding:10px 12px}.hero h1{font-size:clamp(50px,12.5vw,70px)}.archive-label{width:100%;justify-content:space-between}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 </style>
+<link rel="stylesheet" href="/assets/nav-controls.css">
 <script>
 (function(){try{document.documentElement.dataset.theme=localStorage.getItem("jhlab-theme")==="dark"?"dark":"light"}catch(e){};var m=document.getElementById("theme-color");if(m)m.content=document.documentElement.dataset.theme==="dark"?"#141514":"#f7f7f4"})()
 </script>
@@ -95,14 +96,14 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 <a href="/" class="logo" aria-label="返回 J.H. LAB 首页"><span class="logo-mark" aria-hidden="true">J.</span>J.H. LAB</a>
 <nav class="header-nav" aria-label="简报导航"><a href="#archive">内容分类</a><a href="#archive">日期归档</a></nav>
 <div class="header-actions">
-<button id="language-toggle" class="language-toggle" type="button" aria-label="Switch to English">EN / English</button>
-<button id="reading-toggle" class="reading-toggle" type="button" aria-pressed="false">人文阅读</button>
-<button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换为深色模式" aria-pressed="false" title="切换黑白主题">
-<svg class="theme-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4.25"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.57 4.57l2.12 2.12M17.31 17.31l2.12 2.12M19.43 4.57l-2.12 2.12M6.69 17.31l-2.12 2.12"/></svg>
-<span class="theme-label" id="theme-label">深色模式</span>
-</button>
-<a href="/" class="back-link" data-i18n="nav.home">返回主页 ↗</a>
-</div>
+   <button id="language-toggle" class="language-toggle nav-micro" type="button" aria-label="Switch to English"><span class="lang-globe" aria-hidden="true">文</span><span class="lang-caption">EN</span><span class="lang-chevron" aria-hidden="true">↗</span></button>
+   <button id="reading-toggle" class="reading-toggle nav-micro" type="button" aria-pressed="false" title="切换阅读字体">人文阅读</button>
+   <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换为深色模式" aria-pressed="false" title="切换黑白主题">
+    <span class="theme-icons" aria-hidden="true"><svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4.25"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.57 4.57l2.12 2.12M17.31 17.31l2.12 2.12M19.43 4.57l-2.12 2.12M6.69 17.31l-2.12 2.12"/></svg><svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.1 15.4A8.5 8.5 0 0 1 8.6 3.9 8.5 8.5 0 1 0 20.1 15.4Z"/></svg></span>
+    <span class="theme-label" id="theme-label">深色模式</span>
+   </button>
+   <a href="/" class="back-link nav-brief nav-micro"><span class="nav-brief-text" data-i18n="nav.return">返回主页</span><span class="nav-brief-arrow" aria-hidden="true">↗</span></a>
+  </div>
 </div></header>
 <main class="wrap">
 <section class="hero" aria-labelledby="hero-title">
@@ -166,4 +167,5 @@ window.addEventListener("jhlab:language",()=>change(document.documentElement.dat
 })();
 </script>
 <script defer src="/assets/i18n.js"></script><script defer src="/assets/transitions.js"></script>
+<script defer src="/assets/nav-controls.js"></script>
 </body></html>
