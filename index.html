@@ -280,6 +280,7 @@ img{max-width:100%}
 <link rel="stylesheet" href="/assets/contact-typewriter.css?v=slow3">
 <link rel="stylesheet" href="/assets/contact-atelier.css?v=icons3">
 <link rel="stylesheet" href="/assets/cinematic-clarity.css?v=12">
+<link rel="stylesheet" href="/assets/glass-navigation.css?v=1">
 <style id="contact-icon-critical">
 /* Inline safety net: icon geometry must never expand even if CDN CSS is stale. */
 .contact--atelier .contact-channel-label{display:flex!important;flex-direction:row!important;align-items:center!important;gap:12px!important;margin-bottom:14px!important;min-height:34px}
@@ -291,21 +292,43 @@ img{max-width:100%}
 <body>
 <div id="story-progress" class="story-progress" aria-hidden="true"></div>
 <nav id="story-rail" class="story-rail" aria-label="作品章节导航"><a href="#observation" title="全球资讯观察" aria-label="全球资讯观察"></a><a href="#research" title="数学可视化" aria-label="数学可视化"></a><a href="#visual-archive" title="影像档案" aria-label="影像档案"></a><a href="#computing" title="交互计算" aria-label="交互计算"></a></nav>
-<header class="site-header">
+<header class="site-header glass-site-header">
  <div class="wrap header-row">
-  <a href="/" class="logo" aria-label="J.H. Lab 首页"><span class="logo-mark logo-monogram" aria-hidden="true"></span><span>J.H. LAB</span></a>
-  <nav class="nav" aria-label="主导航">
-   <a href="#works" data-i18n="nav.works">作品</a><a href="#research" data-i18n="nav.research">研究</a><a href="#studio" data-i18n="nav.about">关于</a><a href="#contact" data-i18n="nav.contact">联系</a>
+  <a href="/" class="logo logo--solo" aria-label="J.H. LAB 首页" title="J.H. LAB"><span class="logo-mark logo-monogram" aria-hidden="true"></span></a>
+  <nav class="glass-primary-nav" aria-label="主导航">
+   <a href="/#works" data-i18n="nav.works">作品</a>
+   <a href="/#observation" data-i18n="story.first">世界观察</a>
+   <a href="/#research" data-i18n="story.second">数学影像</a>
+   <a href="/#visual-archive" data-i18n="story.third">三维记忆</a>
+   <a href="/#computing" data-i18n="story.fourth">交互几何</a>
+   <a href="/#studio" data-i18n="nav.about">关于</a>
+   <a href="/#contact" data-i18n="nav.contact">联系</a>
+   <a href="/brief/" data-i18n="nav.brief">每日简报</a>
   </nav>
   <div class="header-actions">
-   <button id="language-toggle" class="language-toggle nav-micro" type="button" aria-label="Switch to English"><span class="lang-globe" aria-hidden="true">文</span><span class="lang-caption">EN</span><span class="lang-chevron" aria-hidden="true">↗</span></button>
+   <button id="language-toggle" class="language-toggle nav-micro" type="button" aria-label="Switch to English"><span class="lang-caption">EN</span></button>
    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换为深色模式" aria-pressed="false" title="切换黑白主题">
     <span class="theme-icons" aria-hidden="true"><svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4.25"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.57 4.57l2.12 2.12M17.31 17.31l2.12 2.12M19.43 4.57l-2.12 2.12M6.69 17.31l-2.12 2.12"/></svg><svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.1 15.4A8.5 8.5 0 0 1 8.6 3.9 8.5 8.5 0 1 0 20.1 15.4Z"/></svg></span>
     <span class="theme-label" id="theme-label">深色模式</span>
    </button>
-   <a href="/brief/" class="nav-brief nav-micro"><span class="nav-brief-text" data-i18n="nav.brief">每日简报</span><span class="nav-brief-arrow" aria-hidden="true">↗</span></a>
+   <button id="site-menu-toggle" class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu-panel" aria-label="打开导航菜单"><span></span><span></span><span></span></button>
   </div>
  </div>
+ <nav id="site-menu-panel" class="site-menu-panel" aria-label="全部页面" inert>
+  <div class="site-menu-panel__inner wrap">
+   <div class="site-menu-panel__eyebrow">J.H. LAB / EXPLORE</div>
+   
+   <a href="/#works" data-i18n="nav.works">作品</a>
+    <a href="/#observation" data-i18n="story.first">世界观察</a>
+    <a href="/#research" data-i18n="story.second">数学影像</a>
+    <a href="/#visual-archive" data-i18n="story.third">三维记忆</a>
+    <a href="/#computing" data-i18n="story.fourth">交互几何</a>
+    <a href="/#studio" data-i18n="nav.about">关于</a>
+    <a href="/#contact" data-i18n="nav.contact">联系</a>
+    <a href="/brief/" data-i18n="nav.brief">每日简报</a>
+   
+  </div>
+ </nav>
 </header>
 <main>
  <section class="hero hero--cinematic wrap" id="top" aria-labelledby="hero-heading">
@@ -643,5 +666,6 @@ img{max-width:100%}
 <script defer src="/assets/signature-pen.js?v=1"></script>
 <script defer src="/assets/contact-typewriter.js?v=slow3"></script>
 <script defer src="/assets/nav-controls.js"></script><script defer src="/assets/transitions.js"></script>
+<script defer src="/assets/glass-navigation.js?v=1"></script>
 </body>
 </html>
