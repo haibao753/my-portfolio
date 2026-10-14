@@ -2,9 +2,11 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import ProjectCard from "../components/ProjectCard.astro";
+import MotionLayer from "../components/MotionLayer.astro";
 import {projects,contact} from "../data/site";
 ---
 <BaseLayout>
+ <MotionLayer />
  <Hero />
  <section class="works wrap" id="projects" aria-labelledby="works-title">
   <div class="intro">
