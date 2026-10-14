@@ -24,7 +24,7 @@ async function mount(){
   for(let i=0;i<=ns;i++){let u=i/ns*Math.PI*2;for(let j=0;j<=nt;j++){let v=(j/nt*2-1)*1.15;let r=Math.cosh(v);pts.push(r*Math.cos(u),v,r*Math.sin(u));}}
   for(let i=0;i<ns;i++)for(let j=0;j<nt;j++){let a=i*(nt+1)+j,b=a+nt+1;inds.push(a,b,a+1,b,b+1,a+1);}
   geo=new THREE.BufferGeometry();geo.setAttribute("position",new THREE.Float32BufferAttribute(pts,3));geo.setIndex(inds);geo.computeVertexNormals();
-  const isDark=()=>document.documentElement.dataset.theme==="dark";
+  const isDark=()=>document.documentElement.dataset.theme==="dark"||Boolean(host.closest(".chapter-lab"));
   let material=new THREE.MeshStandardMaterial({color:isDark()?0xe7e7e0:0x373a36,metalness:.22,roughness:.42,side:THREE.DoubleSide,wireframe:false});
   mesh=new THREE.Mesh(geo,material);mesh.scale.setScalar(.95);scene.add(mesh);
   const light=new THREE.DirectionalLight(0xffffff,3);light.position.set(3,5,5);scene.add(light);scene.add(new THREE.AmbientLight(0xffffff,1.45));
