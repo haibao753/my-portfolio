@@ -28,3 +28,6 @@ Before merging, update the Cloudflare build command to `npm run build` and outpu
 - Verify the new Astro /brief/ page against the daily publishing workflow; keep its JSON feed stable.
 - Reconcile all legacy navigation and script behavior; test external links.
 - Migrate experiments incrementally only after performance checks.
+
+## Reviewable staging output
+Every successful GitHub Action now uploads a `dist/` staging site artifact alongside screenshots; see [safe preview deployment](docs/PREVIEW-DEPLOYMENT.md). CI previews sync current `main` news data without committing generated changes. No production switch or public preview URL has been configured automatically.
