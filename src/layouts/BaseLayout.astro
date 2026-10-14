@@ -71,9 +71,17 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
    const backdrop=document.querySelector<HTMLElement>("[data-menu-backdrop]");
    const motionReduced=window.matchMedia("(prefers-reduced-motion: reduce)");
    let closeTimer:ReturnType<typeof setTimeout>|undefined;
+   // Keep the backdrop aligned with the visual viewport while the menu is open.
+   // Prevent scroll chaining / rubber-banding into the underlying page.
+   const preventBackgroundScroll=(event:Event)=>{
+    if(root.dataset.menuActive==="true" && !(event.target instanceof Element && event.target.closest("[data-menu-panel]")))event.preventDefault();
+   };
+   document.addEventListener("touchmove",preventBackgroundScroll,{passive:false});
+   document.addEventListener("wheel",preventBackgroundScroll,{passive:false});
    const finishClose=()=>{
     if(!panel||!backdrop)return;
     panel.hidden=true;backdrop.hidden=true;
+    root.removeAttribute("data-menu-active");
     delete panel.dataset.closing;delete backdrop.dataset.closing;
     closeTimer=undefined;
    };
@@ -92,6 +100,7 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
     panel.hidden=false;backdrop.hidden=false;
     menu.setAttribute("aria-expanded","true");
     root.dataset.menuOpen="true";
+    root.dataset.menuActive="true";
    };
    menu?.addEventListener("click",()=>{
     if(menu.getAttribute("aria-expanded")==="true")close();
