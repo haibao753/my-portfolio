@@ -28,7 +28,25 @@
         const glyph=document.createElement("span");
         glyph.className="ink-letter";
         glyph.style.setProperty("--glyph-order",String(j));
-        glyph.textContent=character===" "?"\u00a0":character;
+        // The user-chosen brush-stroke 心 is an actual transparent SVG trace,
+        // applied only to the first Chinese line; other glyphs stay editable text.
+        if(i===0&&character==="心"){
+          glyph.classList.add("ink-heart-image");
+          const mark=document.createElement("img");
+          mark.className="ink-heart-mark";
+          mark.src="/assets/heart-ink-selected.svg?v=1";
+          mark.alt="";
+          mark.width=779;
+          mark.height=548;
+          mark.decoding="async";
+          mark.addEventListener("error",()=>{
+            mark.remove();
+            glyph.textContent="心"; // Accessible, legible glyph fallback.
+          },{once:true});
+          glyph.appendChild(mark);
+        }else{
+          glyph.textContent=character===" "?"\u00a0":character;
+        }
         row.appendChild(glyph);
       });
       heading.appendChild(row);
