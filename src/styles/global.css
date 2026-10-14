@@ -44,3 +44,10 @@ html[data-theme-transition="true"] .site-footer{
  html[data-theme-transition="true"] .controls button,
  html[data-theme-transition="true"] .site-footer{transition:none!important}
 }
+
+/* Keep the mobile glass backdrop attached to the viewport, even on upward
+   rubber-band gestures. The page's scroll position is preserved on close. */
+html[data-menu-active="true"]{overflow:hidden;overscroll-behavior:none}
+html[data-menu-active="true"] body{overflow:hidden;overscroll-behavior:none}
+html[data-menu-active="true"] main,
+html[data-menu-active="true"] .site-footer{overscroll-behavior:none}
