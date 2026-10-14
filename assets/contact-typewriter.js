@@ -5,12 +5,13 @@
  if(!heading)return;
  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
  let observer=null,timer=0,sequence=0,near=false;
- const textOf=()=>heading.dataset.i18n==="contact.title"?heading.textContent.trim():"";
+ const textOf=()=>heading.dataset.contactFullText||heading.textContent.trim();
  const clear=()=>{sequence++;if(timer)clearTimeout(timer);timer=0};
  function play(){
   clear();
   const copy=textOf();
   if(!copy)return;
+  heading.dataset.contactFullText=copy;
   if(reduced.matches){
    heading.textContent=copy;
    heading.classList.remove("contact-typewriter");
@@ -51,6 +52,7 @@
   clear();
   heading.classList.remove("contact-typewriter","contact-typewriter--done");
   heading.removeAttribute("aria-label");
+  heading.dataset.contactFullText=heading.textContent.trim();
   if(near)play();
  }
  window.addEventListener("jhlab:language",handleLanguage);
@@ -70,6 +72,7 @@
    // Restore text from aria-label if an animation was interrupted.
    const dict=document.documentElement.lang==="en"?"Connect.":"聊聊新的可能。";
    heading.textContent=dict;
+   heading.dataset.contactFullText=dict;
    if(near)play();
   };
   if(reduced.addEventListener)reduced.addEventListener("change",change);
