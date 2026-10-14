@@ -16,6 +16,11 @@
    if(small.matches){if(reading.parentElement!==readingSlot)readingSlot.appendChild(reading)}
    else if(reading.parentElement!==desktopSlot)desktopSlot.insertBefore(reading,toggle);
   };
+  // Keep the backdrop outside the header's own backdrop-filter context.
+  const veil=document.createElement("div");
+  veil.className="site-menu-veil";
+  veil.setAttribute("aria-hidden","true");
+  document.body.appendChild(veil);
   let lastFocus=null;
   function setOpen(open,{restore=false}={}){
    if(open===(toggle.getAttribute("aria-expanded")==="true"))return;
@@ -23,6 +28,8 @@
    toggle.setAttribute("aria-expanded",String(open));
    toggle.setAttribute("aria-label",open?(document.documentElement.lang==="en"?"Close menu":"关闭导航菜单"):(document.documentElement.lang==="en"?"Open menu":"打开导航菜单"));
    panel.classList.toggle("is-open",open);
+   veil.classList.toggle("is-open",open);
+   document.documentElement.classList.toggle("site-menu-is-open",open);
    panel.inert=!open;
    if(!open&&restore&&lastFocus&&typeof lastFocus.focus==="function")lastFocus.focus();
   }
@@ -30,6 +37,7 @@
   panel.inert=true;
   placeReading();
   toggle.addEventListener("click",()=>setOpen(toggle.getAttribute("aria-expanded")!=="true"));
+  veil.addEventListener("click",()=>setOpen(false,{restore:true}));
   panel.addEventListener("click",e=>{
    if(e.target.closest("a"))setOpen(false);
   });
