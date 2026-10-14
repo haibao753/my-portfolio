@@ -116,25 +116,86 @@ en:{
  "brief.topRight":"Daily observations · 2026","brief.brandFooter":"Brief"
 }};
 const safeHtml=new Set(["chapter.world.pressCol1","chapter.world.pressCol2","story.headline","hero.title","hero.aside","project.brief.art","project.exp.art","studio.title","brief.heading","brief.desc"]);
-const originals=new Map();
+// Locale swaps are atomic: create a single new layout, then animate that layout.
 function readLang(){try{return localStorage.getItem("jhlab-lang")==="en"?"en":"zh"}catch(e){return "zh"}}
-function apply(lang){
+let transitionBusy=false;
+let chosenLang=null;
+const reduceMotion=()=>window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function applyContent(lang){
  const dict=translations[lang]||translations.zh;
  document.documentElement.lang=lang==="en"?"en":"zh-CN";
  document.querySelectorAll("[data-i18n]").forEach(el=>{
   const key=el.dataset.i18n;
   if(!(key in dict))return;
-  if(safeHtml.has(key))el.innerHTML=dict[key];else el.textContent=dict[key];
+  const value=dict[key];
+  if(safeHtml.has(key))el.innerHTML=value;
+  else el.textContent=value;
  });
  const toggle=document.getElementById("language-toggle");
- if(toggle){const caption=toggle.querySelector(".lang-caption")||toggle;caption.textContent=lang==="zh"?"EN":"中文";toggle.setAttribute("aria-label",lang==="zh"?"Switch to English":"切换为中文");toggle.title=lang==="zh"?"Switch to English":"切换为中文";}
+ if(toggle){
+  const caption=toggle.querySelector(".lang-caption")||toggle;
+  caption.textContent=lang==="zh"?"EN":"中文";
+  toggle.setAttribute("aria-label",lang==="zh"?"Switch to English":"切换为中文");
+  toggle.title=lang==="zh"?"Switch to English":"切换为中文";
+ }
  try{localStorage.setItem("jhlab-lang",lang)}catch(e){}
+ // Hero recomposes its accessible two-line lettering immediately.
  window.dispatchEvent(new CustomEvent("jhlab:language",{detail:{language:lang}}));
+}
+function preserveAnchor(swap){
+ // Pin the nearest content point so text-height changes do not jerk the scroll position.
+ const probe=document.elementFromPoint(Math.min(innerWidth/2,innerWidth-8),Math.min(230,innerHeight*.33));
+ const node=probe&&(probe.closest("[data-i18n]")||probe.closest("section,article,main"));
+ const before=node?node.getBoundingClientRect().top:null;
+ swap();
+ if(node&&node.isConnected&&before!==null){
+  const after=node.getBoundingClientRect().top;
+  const movement=after-before;
+  if(Math.abs(movement)>1)window.scrollBy({top:movement,behavior:"instant"});
+ }
+}
+function apply(lang,{animate=true}={}){
+ lang=lang==="en"?"en":"zh";
+ const html=document.documentElement;
+ if(!animate||reduceMotion()||!document.body){
+  html.classList.remove("jhlab-locale-changing","jhlab-lang-fallback","jhlab-lang-fadeout","jhlab-lang-fadein");
+  preserveAnchor(()=>applyContent(lang));
+  return;
+ }
+ if(transitionBusy){chosenLang=lang;return}
+ if((html.lang==="en"?"en":"zh")===lang)return;
+ transitionBusy=true;
+ html.classList.add("jhlab-locale-changing");
+ const swap=()=>preserveAnchor(()=>applyContent(lang));
+ const complete=()=>{
+  html.classList.remove("jhlab-locale-changing","jhlab-lang-fallback","jhlab-lang-fadeout","jhlab-lang-fadein");
+  transitionBusy=false;
+  if(chosenLang){const next=chosenLang;chosenLang=null;if(next!==(html.lang==="en"?"en":"zh"))apply(next)}
+ };
+ if(typeof document.startViewTransition==="function"){
+  try{
+   const transition=document.startViewTransition(swap);
+   transition.finished.then(complete,complete);
+  }catch(_){swap();complete()}
+ }else{
+  // Minimal fallback: 110 ms fade-out, atomic DOM swap, 240 ms fade-in.
+  html.classList.add("jhlab-lang-fallback");
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+   html.classList.add("jhlab-lang-fadeout");
+   window.setTimeout(()=>{
+    swap();
+    html.classList.remove("jhlab-lang-fadeout");
+    html.classList.add("jhlab-lang-fadein");
+    window.setTimeout(complete,260);
+   },125);
+  }));
+ }
 }
 document.addEventListener("DOMContentLoaded",()=>{
  const toggle=document.getElementById("language-toggle");
  if(toggle)toggle.addEventListener("click",()=>apply(document.documentElement.lang==="en"?"zh":"en"));
- apply(readLang());
+ // No transition during startup; initially localized content must appear immediately.
+ apply(readLang(),{animate:false});
 });
 window.JHLabI18n={setLanguage:apply,getLanguage:()=>document.documentElement.lang==="en"?"en":"zh"};
 })();
