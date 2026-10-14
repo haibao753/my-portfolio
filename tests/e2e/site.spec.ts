@@ -276,20 +276,19 @@ test("theme transition animates on click but not on reload",async({page})=>{
 });
 
 
-test("mobile menu prevents background scrolling and restores original position",async({page,isMobile})=>{
+test("mobile glass menu stays open while page scrolls beneath sticky navigation",async({page,isMobile})=>{
  if(!isMobile)return;
  await page.goto("/");
- await page.evaluate(()=>window.scrollTo({top:Math.min(600,document.documentElement.scrollHeight-innerHeight),behavior:"instant"}));
+ const toggle=page.locator("[data-menu-toggle]");
+ await toggle.click();
+ await expect(page.locator("[data-menu-panel]")).toBeVisible();
+ await expect(page.locator("[data-menu-backdrop]")).toHaveCSS("pointer-events","none");
  const before=await page.evaluate(()=>scrollY);
- await page.locator("[data-menu-toggle]").evaluate((el:HTMLElement)=>el.click());
- await expect(page.locator("html")).toHaveAttribute("data-menu-active","true");
- await expect(page.locator("body")).toHaveCSS("position","fixed");
- await expect(page.locator("body")).toHaveCSS("top",`-${before}px`);
- await page.evaluate(()=>window.dispatchEvent(new WheelEvent("wheel",{deltaY:360,bubbles:true,cancelable:true})));
- await page.waitForTimeout(100);
- await expect(page.locator("body")).toHaveCSS("top",`-${before}px`);
- await page.keyboard.press("Escape");
+ await page.evaluate(()=>window.scrollBy({top:500,behavior:"instant"}));
+ await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(before+100);
+ await expect(page.locator("[data-menu-panel]")).toBeVisible();
+ await expect(toggle).toBeInViewport();
+ await expect(toggle).toHaveAttribute("aria-expanded","true");
+ await toggle.click();
  await expect(page.locator("[data-menu-panel]")).toBeHidden();
- await expect(page.locator("html")).not.toHaveAttribute("data-menu-active","true");
- expect(await page.evaluate(()=>scrollY)).toBe(before);
 });
