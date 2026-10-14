@@ -30,10 +30,20 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
   </footer>
   <script>
    const root=document.documentElement;
-   document.querySelector<HTMLButtonElement>("[data-theme-toggle]")?.addEventListener("click",()=>{
+   const themeButton=document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+   const refreshTheme=()=>{
+    if(!themeButton)return;
+    const dark=root.dataset.theme==="dark";
+    themeButton.setAttribute("aria-label",dark?"切换至浅色模式":"切换至深色模式");
+    themeButton.setAttribute("title",dark?"浅色模式":"深色模式");
+    themeButton.setAttribute("aria-pressed",String(dark));
+   };
+   themeButton?.addEventListener("click",()=>{
     root.dataset.theme=root.dataset.theme==="dark"?"light":"dark";
     try{localStorage.setItem("jhlab-theme",root.dataset.theme)}catch{}
+    refreshTheme();
    });
+   refreshTheme();
    const language=document.querySelector<HTMLButtonElement>("[data-language-toggle]");
    const refreshLanguage=()=>{
     if(!language)return;
