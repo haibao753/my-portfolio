@@ -228,3 +228,17 @@ test("theme icon switches appearance and exposes pressed state",async({page})=>{
  await expect(toggle).toHaveAttribute("aria-pressed",before==="dark"?"false":"true");
  await expect(page.locator("html")).toHaveAttribute("data-theme",before==="dark"?"light":"dark");
 });
+
+
+test("liquid glass menu recedes the page and restores it on close",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ const menu=page.locator("[data-menu-toggle]");
+ await menu.click();
+ await expect(page.locator("html")).toHaveAttribute("data-menu-open","true");
+ await expect(page.locator("[data-menu-panel]")).toHaveCSS("backdrop-filter",/blur/);
+ await expect(page.locator("main")).not.toHaveCSS("transform","none");
+ await page.keyboard.press("Escape");
+ await expect(page.locator("html")).not.toHaveAttribute("data-menu-open","true");
+ await expect(page.locator("[data-menu-panel]")).toBeHidden();
+});
