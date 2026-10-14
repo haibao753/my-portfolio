@@ -7,9 +7,18 @@
   const header=document.querySelector(".glass-site-header");
   if(!toggle||!panel||!header)return;
   const small=window.matchMedia("(max-width: 1180px)");
+  const reading=document.getElementById("reading-toggle");
+  const readingSlot=panel.querySelector(".site-menu-panel__tool");
+  const desktopSlot=header.querySelector(".header-actions");
+  // Relocate the same reading control; preserve the original click listener.
+  const placeReading=()=>{
+   if(!reading||!readingSlot||!desktopSlot)return;
+   if(small.matches){if(reading.parentElement!==readingSlot)readingSlot.appendChild(reading)}
+   else if(reading.parentElement!==desktopSlot)desktopSlot.insertBefore(reading,toggle);
+  };
   let lastFocus=null;
   function setOpen(open,{restore=false}={}){
-   if(open===toggle.getAttribute("aria-expanded")==="true")return;
+   if(open===(toggle.getAttribute("aria-expanded")==="true"))return;
    if(open)lastFocus=document.activeElement;
    toggle.setAttribute("aria-expanded",String(open));
    toggle.setAttribute("aria-label",open?(document.documentElement.lang==="en"?"Close menu":"关闭导航菜单"):(document.documentElement.lang==="en"?"Open menu":"打开导航菜单"));
@@ -19,6 +28,7 @@
   }
   // Inert is explicit; a closed menu must never trap keyboard focus.
   panel.inert=true;
+  placeReading();
   toggle.addEventListener("click",()=>setOpen(toggle.getAttribute("aria-expanded")!=="true"));
   panel.addEventListener("click",e=>{
    if(e.target.closest("a"))setOpen(false);
@@ -29,7 +39,7 @@
   document.addEventListener("keydown",e=>{
    if(e.key==="Escape"&&toggle.getAttribute("aria-expanded")==="true"){setOpen(false,{restore:true});}
   });
-  const mediaChange=()=>{if(!small.matches)setOpen(false)};
+  const mediaChange=()=>{if(!small.matches)setOpen(false);placeReading()};
   if(small.addEventListener)small.addEventListener("change",mediaChange);
   else if(small.addListener)small.addListener(mediaChange);
   window.addEventListener("jhlab:language",()=>{
