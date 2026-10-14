@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Three.js · 极小曲面 Minimal Surfaces</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; height: 100%; overflow: hidden;
+    background: radial-gradient(circle at 50% 35%, #16233d 0%, #080b13 55%, #03050a 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  canvas { display: block; }
+
+  #panel {
+    position: fixed; left: 18px; top: 18px;
+    width: 236px; padding: 14px 15px 16px;
+    background: rgba(14, 20, 32, 0.72);
+    border: 1px solid rgba(120, 180, 255, 0.16);
+    border-radius: 14px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    user-select: none;
+  }
+  #panel h1 {
+    margin: 0 0 11px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: #6fa8ff;
+  }
+  .btn {
+    display: block; width: 100%; text-align: left;
+    margin: 4px 0; padding: 8px 11px;
+    font-size: 12.5px; font-family: inherit;
+    color: #b6cee9; background: rgba(255, 255, 255, 0.035);
+    border: 1px solid transparent; border-radius: 9px;
+    cursor: pointer; transition: background .18s, color .18s, border-color .18s;
+  }
+  .btn:hover { background: rgba(120, 180, 255, 0.13); color: #e6f0ff; }
+  .btn.active {
+    background: rgba(90, 160, 255, 0.2);
+    border-color: rgba(120, 180, 255, 0.5);
+    color: #f2f8ff;
+  }
+  #sliderWrap { margin-top: 12px; display: none; }
+  #sliderWrap.show { display: block; }
+  #sliderWrap label {
+    display: block; margin-bottom: 7px;
+    font-size: 11px; color: #7d9cc4; letter-spacing: .04em;
+  }
+  input[type="range"] {
+    width: 100%; accent-color: #5aa0ff; cursor: pointer;
+  }
+  #hint {
+    position: fixed; left: 0; right: 0; bottom: 14px;
+    text-align: center; font-size: 11px; letter-spacing: .1em;
+    color: #3d5madness; color: #3d5a80; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="panel">
+  <h1>Minimal Surfaces</h1>
+  <div id="buttons"></div>
+  <div id="sliderWrap">
+    <label>关联族参数 t &nbsp;(0 = 螺旋面 → 1 = 悬链面)</label>
+    <input id="tSlider" type="range" min="0" max="1" step="0.001" value="0" />
+  </div>
+</div>
+<div id="hint">拖拽旋转 · 滚轮缩放</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+const HALF_PI = Math.PI / 2;
+
+/* ============================================================
+   1. 渲染器 / 场景 / 相机
+   ============================================================ */
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+  42, window.innerWidth / window.innerHeight, 0.1, 200
+);
+camera.position.set(3.3, 2.1, 3.9);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.55;
+controls.minDistance = 1.8;
+controls.maxDistance = 16;
+controls.enablePan = false;
+
+/* ============================================================
+   2. 环境贴图（Canvas 生成，用于金属反射）
+   ============================================================ */
+function makeEnvTexture() {
+  const size = 256;
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = size;
+  const ctx = canvas.getContext('2d');
+
+  const g = ctx.createLinearGradient(0, 0, 0, size);
+  g.addColorStop(0.00, '#5a90e0');
+  g.addColorStop(0.32, '#1b2740');
+  g.addColorStop(0.62, '#080c14');
+  g.addColorStop(1.00, '#22123a');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, size, size);
+
+  // 一块高光，让金属面有亮斑
+  const r = ctx.createRadialGradient(size * 0.3, size * 0.2, 0,
+                                     size * 0.3, size * 0.2, size * 0.34);
+  r.addColorStop(0, 'rgba(255,255,255,0.95)');
+  r.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = r;
+  ctx.fillRect(0, 0, size, size);
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.mapping = THREE.EquirectangularReflectionMapping;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+scene.environment = makeEnvTexture();
+
+/* ============================================================
+   3. 灯光
+   ============================================================ */
+const keyLight = new THREE.DirectionalLight(0xffffff, 2.6);
+keyLight.position.set(5, 8, 6);
+scene.add(keyLight);
+
+const rimLight = new THREE.DirectionalLight(0x5fa8ff, 4.0);
+rimLight.position.set(-6, -3, -5);
+scene.add(rimLight);
+
+const pinkLight = new THREE.PointLight(0xff5fa8, 45, 30, 2);
+pinkLight.position.set(-3.5, 2.6, 3.6);
+scene.add(pinkLight);
+
+const cyanLight = new THREE.PointLight(0x4ff0d0, 35, 30, 2);
+cyanLight.position.set(3.6, -2.6, -3.2);
+scene.add(cyanLight);
+
+scene.add(new THREE.AmbientLight(0x22344f, 1.1));
+
+/* ============================================================
+   4. 材质
+   ============================================================ */
+const material = new THREE.MeshPhysicalMaterial({
+  color: new THREE.Color().setHSL(0.58, 0.5, 0.62),
+  metalness: 0.72,
+  roughness: 0.18,
+  clearcoat: 1.0,
+  clearcoatRoughness: 0.14,
+  iridescence: 1.0,
+  iridescenceIOR: 1.4,
+  iridescenceThicknessRange: [120, 520],
+  envMapIntensity: 1.25,
+  side: THREE.DoubleSide,
+});
+
+const group = new THREE.Group();
+scene.add(group);
+
+/* ============================================================
+   5. 极小曲面定义
+   f(u, v, t, out) → out
+   ============================================================ */
+const SURFACES = [
+  {
+    name: '悬链面 · Catenoid',
+    hue: 0.58,
+    u: [0, Math.PI * 2, 200],
+    v: [-1.9, 1.9, 72],
+    f: (u, v, t, out) => out.set(
+      Math.cosh(v) * Math.cos(u),
+      Math.cosh(v) * Math.sin(u),
+      v
+    ),
+  },
+  {
+    name: '螺旋面 · Helicoid',
+    hue: 0.74,
+    u: [0, Math.PI * 2, 220],
+    v: [-1.5, 1.5, 44],
+    f: (u, v, t, out) => out.set(
+      v * Math.cos(u),
+      v * Math.sin(u),
+      0.5 * u
+    ),
+  },
+  {
+    name: 'Enneper 曲面',
+    hue: 0.5,
+    u: [-2.3, 2.3, 170],
+    v: [-2.3, 2.3, 170],
+    f: (u, v, t, out) => out.set(
+      u - (u * u * u) / 3 + u * v * v,
+      v - (v * v * v) / 3 + v * u * u,
+      u * u - v * v
+    ),
+  },
+  {
+    name: 'Scherk 曲面',
+    hue: 0.09,
+    u: [-1.32, 1.32, 180],
+    v: [-1.32, 1.32, 180],
+    f: (u, v, t, out) => out.set(
+      u,
+      v,
+      Math.log(Math.cos(v)) - Math.log(Math.cos(u))
+    ),
+  },
+  {
+    name: '悬链面 ↔ 螺旋面（Bonnet 关联族）',
+    hue: 0.92,
+    hasSlider: true,
+    u: [0, Math.PI * 2, 190],
+    v: [-1.7, 1.7, 64],
+    // t = 0 → 螺旋面；t = 1 → 悬链面
+    f: (u, v, t, out) => {
+      const c = Math.cos(t * HALF_PI);
+      const s = Math.sin(t * HALF_PI);
+      return out.set(
+         c * Math.sinh(v) * Math.sin(u) + s * Math.cosh(v) * Math.cos(u),
+        -c * Math.sinh(v) * Math.cos(u) + s * Math.cosh(v) * Math.sin(u),
+         c * u + s * v
+      );
+    },
+  },
+];
+
+/* ============================================================
+   6. 参数曲面 → BufferGeometry
+   ============================================================ */
+const _tmp = new THREE.Vector3();
+
+function buildGeometry(def, t = 0) {
+  const [u0, u1, uSeg] = def.u;
+  const [v0, v1, vSeg] = def.v;
+
+  const vertexCount = (uSeg + 1) * (vSeg + 1);
+  const positions = new Float32Array(vertexCount * 3);
+
+  let p = 0;
+  for (let i = 0; i <= uSeg; i++) {
+    const u = u0 + (u1 - u0) * (i / uSeg);
+    for (let j = 0; j <= vSeg; j++) {
+      const v = v0 + (v1 - v0) * (j / vSeg);
+      def.f(u, v, t, _tmp);
+      positions[p++] = _tmp.x;
+      positions[p++] = _tmp.y;
+      positions[p++] = _tmp.z;
+    }
+  }
+
+  const indices = new Uint32Array(uSeg * vSeg * 6);
+  let k = 0;
+  for (let i = 0; i < uSeg; i++) {
+    for (let j = 0; j < vSeg; j++) {
+      const a = i * (vSeg + 1) + j;
+      const b = a + 1;
+      const c = a + (vSeg + 1);
+      const d = c + 1;
+      indices[k++] = a; indices[k++] = c; indices[k++] = b;
+      indices[k++] = b; indices[k++] = c; indices[k++] = d;
+    }
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geo.setIndex(new THREE.BufferAttribute(indices, 1));
+  geo.computeVertexNormals();
+
+  // 归一化尺寸并居中
+  geo.computeBoundingSphere();
+  const radius = geo.boundingSphere.radius || 1;
+  const scale = 1.7 / radius;
+  geo.scale(scale, scale, scale);
+  geo.center();
+  geo.computeBoundingSphere();
+
+  return geo;
+}
+
+/* ============================================================
+   7. 曲面切换逻辑
+   ============================================================ */
+let mesh = null;
+let currentIndex = 0;
+let currentT = 0;
+let intro = 1;   // 切换时的弹入动画进度
+
+function rebuild() {
+  const def = SURFACES[currentIndex];
+  const geo = buildGeometry(def, def.hasSlider ? currentT : 0);
+
+  if (mesh) {
+    mesh.geometry.dispose();
+    mesh.geometry = geo;
+  } else {
+    mesh = new THREE.Mesh(geo, material);
+    group.add(mesh);
+  }
+  material.color.setHSL(def.hue, 0.5, 0.62);
+}
+
+const buttonsEl = document.getElementById('buttons');
+const sliderWrap = document.getElementById('sliderWrap');
+const tSlider = document.getElementById('tSlider');
+
+SURFACES.forEach((def, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'btn' + (i === 0 ? ' active' : '');
+  btn.textContent = def.name;
+  btn.addEventListener('click', () => selectSurface(i));
+  buttonsEl.appendChild(btn);
+  def._btn = btn;
+});
+
+function selectSurface(index) {
+  if (index === currentIndex) return;
+
+  SURFACES[currentIndex]._btn.classList.remove('active');
+  SURFACES[index]._btn.classList.add('active');
+  currentIndex = index;
+
+  const def = SURFACES[index];
+  sliderWrap.classList.toggle('show', !!def.hasSlider);
+
+  rebuild();
+
+  intro = 0;   // 触发弹入动画
+}
+
+tSlider.addEventListener('input', () => {
+  currentT = parseFloat(tSlider.value);
+  rebuild();
+});
+
+/* ============================================================
+   8. 后处理（Bloom）
+   ============================================================ */
+const composer = new EffectComposer(renderer);
+composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+composer.setSize(window.innerWidth, window.innerHeight);
+composer.addPass(new RenderPass(scene, camera));
+
+const bloomPass = new UnrealBloomPass(
+  new THREE.Vector2(window.innerWidth, window.innerHeight),
+  0.36,   // strength
+  0.7,    // radius
+  0.85    // threshold
+);
+composer.addPass(bloomPass);
+
+/* ============================================================
+   9. 主循环
+   ============================================================ */
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  const dt = Math.min(clock.getDelta(), 0.05);
+
+  if (intro < 1) {
+    intro = Math.min(1, intro + dt * 3.4);
+    const e = 1 - Math.pow(1 - intro, 3);       // easeOutCubic
+    group.scale.setScalar(0.84 + 0.16 * e);
+    group.rotation.y = (1 - e) * 0.9;
+  }
+
+  controls.update();
+  composer.render();
+}
+
+rebuild();
+animate();
+
+/* ============================================================
+   10. 自适应
+   ============================================================ */
+window.addEventListener('resize', () => {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(w, h);
+  composer.setSize(w, h);
+  bloomPass.setSize(w, h);
+});
+</script>
+</body>
+</html>
