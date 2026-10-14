@@ -16,8 +16,13 @@
     const copy=lines.map(s=>s.trim()).filter(Boolean);
     if(copy.length!==2)return;
     const seq=++generation;
-    heading.classList.remove("is-typeset");
+    heading.classList.remove("is-typeset","ink-after-locale");
     heading.classList.add("ink-title");
+    // On language switches, compose glyphs in their settled final state.
+    // Entrance animation plays only when first opening the homepage.
+    if(document.documentElement.classList.contains("jhlab-locale-changing")){
+      heading.classList.add("ink-after-locale");
+    }
     heading.setAttribute("aria-label",copy.join(document.documentElement.lang.startsWith("en")?" ":"，"));
     heading.replaceChildren();
     copy.forEach((line,i)=>{
