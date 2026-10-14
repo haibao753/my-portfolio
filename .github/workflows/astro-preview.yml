@@ -32,6 +32,8 @@ jobs:
         run: npm run build
       - name: Check preserved routes
         run: node scripts/verify-build.mjs
+      - name: Validate isolated Workers preview bundle (dry run)
+        run: npm run deploy:preview:dry-run
       - name: Archive deployable static site
         uses: actions/upload-artifact@v4
         with:
