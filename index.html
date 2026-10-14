@@ -258,41 +258,8 @@ img{max-width:100%}
 }
 
 
-/* Navigation / tactile monochrome controls */
-.header-actions{gap:9px}
-.header-actions>.nav-micro,.header-actions>.theme-toggle{position:relative;isolation:isolate;overflow:hidden;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-.language-toggle{height:40px;min-width:95px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 12px;border-radius:999px;border:1px solid var(--line-strong);background:var(--paper);font-size:11px;font-weight:650;letter-spacing:.01em;box-shadow:inset 0 1px 0 rgba(120,120,120,.05);transition:transform .32s cubic-bezier(.2,.8,.2,1),background .3s,border-color .3s,box-shadow .3s}
-.lang-globe{font-size:13px;font-weight:500;line-height:1;display:inline-grid;place-items:center;width:20px;height:20px;border:1px solid var(--line-strong);border-radius:50%;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-.lang-chevron{font-size:12px;opacity:.55;transition:transform .35s,opacity .3s}
-.language-toggle:hover{transform:translateY(-2px);border-color:var(--ink);box-shadow:0 5px 16px rgba(0,0,0,.05)}
-.language-toggle:hover .lang-globe{transform:rotate(-20deg)}
-.language-toggle:hover .lang-chevron{transform:translate(2px,-2px);opacity:1}
-.language-toggle.is-switching .lang-globe{animation:language-spin .6s cubic-bezier(.18,.7,.25,1)}
-.language-toggle.is-switching .lang-caption{animation:language-pop .45s ease both}
-@keyframes language-spin{0%{transform:rotateY(0) scale(1)}48%{transform:rotateY(90deg) scale(.75)}100%{transform:rotateY(360deg) scale(1)}}
-@keyframes language-pop{0%{opacity:.4;transform:translateY(5px)}100%{opacity:1;transform:translateY(0)}}
-.theme-toggle{width:40px;height:40px;padding:0;display:inline-grid;place-items:center;border:1px solid var(--line-strong);background:var(--paper);border-radius:50%;transition:transform .35s cubic-bezier(.2,.8,.2,1),background .3s,border-color .3s}
-.theme-toggle:hover{transform:rotate(-9deg) scale(1.06);border-color:var(--ink)}
-.theme-icons{position:relative;display:block;width:19px;height:19px}
-.theme-sun,.theme-moon{position:absolute;inset:0;width:100%;height:100%;transform-origin:center;transition:opacity .38s,transform .65s cubic-bezier(.2,.75,.2,1)}
-.theme-sun{opacity:1;transform:rotate(0) scale(1)}
-.theme-moon{opacity:0;transform:rotate(-65deg) scale(.45)}
-html[data-theme="dark"] .theme-sun{opacity:0;transform:rotate(85deg) scale(.35)}
-html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
-.theme-toggle.is-switching{animation:theme-press .48s cubic-bezier(.15,.78,.3,1)}
-@keyframes theme-press{0%,100%{box-shadow:0 0 0 0 var(--line);transform:scale(1)}42%{box-shadow:0 0 0 6px var(--line);transform:scale(.88)}}
-.theme-label{display:none!important}
-.nav-brief{height:40px;display:inline-flex;align-items:center;justify-content:center;gap:13px;padding:0 16px;border-radius:999px;overflow:hidden;isolation:isolate;background:var(--ink);color:var(--page);font-weight:650;letter-spacing:.03em;box-shadow:0 1px 0 rgba(0,0,0,.03);transition:transform .28s cubic-bezier(.2,.8,.2,1),background .25s,color .25s,box-shadow .28s}
-.nav-brief:hover{transform:translateY(-2px);background:var(--paper);color:var(--ink);box-shadow:0 6px 22px rgba(0,0,0,.065)}
-.nav-brief-arrow{display:inline-block;font-size:16px;line-height:1;transition:transform .28s cubic-bezier(.2,.8,.2,1)}
-.nav-brief:hover .nav-brief-arrow{transform:translate(3px,-3px)}
-.nav-brief:active,.language-toggle:active{transform:scale(.96)}
-.nav-brief.is-pressing{animation:brief-press .24s cubic-bezier(.2,.7,.2,1)}
-@keyframes brief-press{50%{transform:scale(.955)}}
-@media(max-width:760px){.header-row{gap:10px}.header-actions{gap:7px!important}.language-toggle{min-width:69px;padding:0 9px}.lang-globe{width:17px;height:17px;font-size:11px}.nav-brief{padding:0 13px!important}.theme-toggle{width:38px;height:38px;padding:0!important}.language-toggle{height:38px}.nav-brief{height:38px}}
-@media(max-width:390px){.header-actions{gap:5px!important}.language-toggle{min-width:60px;padding:0 7px!important;gap:5px}.lang-chevron{display:none}.nav-brief{gap:5px;padding:0 9px!important;font-size:10px!important}.logo{font-size:17px}.logo-mark{width:24px;height:24px}}
-@media(prefers-reduced-motion:reduce){.header-actions *, .header-actions *:before,.header-actions *:after{animation:none!important;transition:none!important}}
 </style>
+<link rel="stylesheet" href="/assets/nav-controls.css">
 <link rel="stylesheet" href="/assets/chapter-worlds.css">
 <script>
 (function(){
@@ -527,18 +494,8 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
     themeMeta.content=dark?"#141514":"#f7f7f4";
     try{localStorage.setItem("jhlab-theme",dark?"dark":"light")}catch(e){}
   }
-  // One-shot tactile feedback; respect the operating system reduced-motion preference.
-  var reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function pulse(el,className){
-    if(!el||reducedMotion)return;
-    el.classList.remove(className);void el.offsetWidth;el.classList.add(className);
-  }
-  var langButton=document.getElementById("language-toggle");
-  if(langButton)langButton.addEventListener("click",function(){pulse(langButton,"is-switching")});
-  var briefButton=document.querySelector(".nav-brief");
-  if(briefButton)briefButton.addEventListener("pointerdown",function(){pulse(briefButton,"is-pressing")});
   setTheme(html.dataset.theme==="dark");
-  toggle.addEventListener("click",function(){pulse(toggle,"is-switching");setTheme(html.dataset.theme!=="dark")});
+  toggle.addEventListener("click",function(){setTheme(html.dataset.theme!=="dark")});
   var copyWechat=document.getElementById("copy-wechat");
   copyWechat.addEventListener("click",async function(){
     var value=document.getElementById("wechat-id").textContent.trim();
@@ -573,6 +530,7 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
 </script>
 <script defer src="/assets/i18n.js"></script>
 <script type="module" src="/assets/minimal-preview.js"></script>
-<script defer src="/assets/scroll-story.js"></script><script defer src="/assets/transitions.js"></script>
+<script defer src="/assets/scroll-story.js"></script>
+<script defer src="/assets/nav-controls.js"></script><script defer src="/assets/transitions.js"></script>
 </body>
 </html>
