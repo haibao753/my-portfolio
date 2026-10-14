@@ -8,7 +8,7 @@ interface BriefIndex {dates?:string[]}
 const stories=document.querySelector<HTMLElement>("#stories");
 const tabs=document.querySelector<HTMLElement>("#tabs");
 const issueSelect=document.querySelector<HTMLSelectElement>("#issues");
-const statusNode=document.querySelector<HTMLElement>("#statusNode");
+const statusNode=document.querySelector<HTMLElement>("#status");
 const headline=document.querySelector<HTMLElement>("#headlineDate");
 const total=document.querySelector<HTMLElement>("#total");
 if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
