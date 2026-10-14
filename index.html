@@ -293,6 +293,7 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
 @media(max-width:390px){.header-actions{gap:5px!important}.language-toggle{min-width:60px;padding:0 7px!important;gap:5px}.lang-chevron{display:none}.nav-brief{gap:5px;padding:0 9px!important;font-size:10px!important}.logo{font-size:17px}.logo-mark{width:24px;height:24px}}
 @media(prefers-reduced-motion:reduce){.header-actions *, .header-actions *:before,.header-actions *:after{animation:none!important;transition:none!important}}
 </style>
+<link rel="stylesheet" href="/assets/chapter-worlds.css">
 <script>
 (function(){
   try{
@@ -356,7 +357,11 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
  <section id="works" class="wrap" aria-labelledby="works-heading">
   <div class="section-top reveal"><div><div class="small-label index-font">01 / 精选项目</div><h2 id="works-heading" data-i18n="section.works">精选项目</h2></div><p data-i18n="section.worksDesc">从抽象算法到具体世界，从每日观察到私人影像。四个方向，一座持续生长的数字实验室。</p></div>
   <div class="work-list">
-   <article class="work reveal" id="observation" data-story-chapter="1">
+   <article class="work chapter chapter-world reveal" id="observation" data-story-chapter="1">
+    <div class="chapter-heading">
+      <div class="chapter-heading__left"><span class="chapter-heading__index">01 / 04</span><span class="chapter-heading__label" data-i18n="chapter.world.name">世界观察 · 资讯编辑台</span></div>
+      <div class="chapter-heading__motto" data-i18n="chapter.world.motto">读懂正在发生的世界</div>
+    </div>
     <div class="work-num index-font">01 / 04</div>
     <div class="work-copy">
      <div class="work-overline index-font">资讯 · 世界观察</div>
@@ -367,12 +372,18 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
     <div class="work-visual">
      <a href="/brief/" class="visual brief-visual" aria-label="打开全球资讯观察站">
       <div class="visual-top index-font"><span data-i18n="project.brief.visualKicker">全球资讯观察</span><span data-i18n="project.brief.issueTag">每日更新</span></div>
+      <div class="press-edition"><span data-i18n="chapter.world.pressEdition">读世界 · 每日简报</span><span class="world-seal" aria-hidden="true">JH</span></div>
       <div class="visual-head" data-i18n="project.brief.art">世界很大，<br>值得仔细阅读。</div>
+      <div class="press-grid"><span data-i18n="chapter.world.pressCol1">公共议题<br>全球社会的变动与选择</span><span data-i18n="chapter.world.pressCol2">科技前沿<br>从算法到现实的突破</span></div>
       <div class="visual-bottom index-font"><span data-i18n="project.brief.visualFooter">每日阅读档案</span><span data-i18n="project.brief.archiveBtn">浏览历史简报 ↗</span></div>
      </a>
     </div>
    </article>
-   <article class="work reveal" id="research" data-story-chapter="2">
+   <article class="work chapter chapter-math reveal" id="research" data-story-chapter="2">
+    <div class="chapter-heading">
+      <div class="chapter-heading__left"><span class="chapter-heading__index">02 / 04</span><span class="chapter-heading__label" data-i18n="chapter.math.name">数学影像 · 几何工作台</span></div>
+      <div class="chapter-heading__motto" data-i18n="chapter.math.motto">将抽象，变成可见的结构</div>
+    </div>
     <div class="work-num index-font">02 / 04</div>
     <div class="work-copy">
      <div class="work-overline index-font">科学 · 数学可视化</div>
@@ -383,6 +394,22 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
     <div class="work-visual">
      <a href="https://space.bilibili.com/1572685586" class="bilibili-visual" target="_blank" rel="noopener noreferrer" aria-label="打开一立方米的云的 B 站主页">
       <div class="bilibili-visual-head"><span data-i18n="project.math.visualLabel">数学可视化 · 影像作品</span><span>02 / 04</span></div>
+      <span class="math-equation" aria-hidden="true">x² + y² = cosh² z</span>
+      <svg class="math-sketch" viewBox="0 0 520 340" aria-hidden="true" focusable="false">
+        <path class="axis" d="M32 178H493M259 11V335M65 306L456 34"/>
+        <g class="surface">
+          <path d="M123 68C183 22 347 22 407 68C467 110 341 150 265 153C177 154 65 111 123 68Z"/>
+          <path d="M141 108C200 70 330 70 389 108C449 149 343 187 265 187C185 187 84 151 141 108Z"/>
+          <path d="M165 148C217 118 308 118 357 148C409 181 333 216 265 217C194 217 113 182 165 148Z"/>
+          <path d="M171 190C220 164 306 164 353 190C403 220 333 258 265 259C194 259 121 221 171 190Z"/>
+          <path d="M145 229C197 201 331 201 387 229C444 263 350 301 266 302C184 301 87 263 145 229Z"/>
+          <path d="M123 68C137 115 170 165 171 190C172 213 146 221 145 229"/>
+          <path d="M184 42C190 101 204 155 220 184C225 210 211 237 197 267"/>
+          <path d="M265 31C261 100 261 165 265 188C268 221 266 262 266 302"/>
+          <path d="M348 42C333 103 308 154 308 183C306 218 329 262 331 277"/>
+          <path d="M407 68C389 112 355 170 353 190C351 215 375 237 387 229"/>
+        </g>
+      </svg>
       <div class="bilibili-visual-center">
        <span class="bilibili-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>
        <strong data-i18n="project.math.creator">一立方米的云</strong>
@@ -392,7 +419,11 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
      </a>
     </div>
    </article>
-   <article class="work reveal" id="visual-archive" data-story-chapter="3">
+   <article class="work chapter chapter-gallery reveal" id="visual-archive" data-story-chapter="3">
+    <div class="chapter-heading">
+      <div class="chapter-heading__left"><span class="chapter-heading__index">03 / 04</span><span class="chapter-heading__label" data-i18n="chapter.gallery.name">三维记忆 · 摄影展厅</span></div>
+      <div class="chapter-heading__motto" data-i18n="chapter.gallery.motto">把时间留在空间里</div>
+    </div>
     <div class="work-num index-font">03 / 04</div>
     <div class="work-copy">
      <div class="work-overline index-font">人文 · 三维影像档案</div>
@@ -405,11 +436,16 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
       <img src="images/2.jpg" loading="lazy" alt="影像档案作品预览一">
       <img src="images/4.jpg" loading="lazy" alt="影像档案作品预览二">
       <img src="images/5.jpg" loading="lazy" alt="影像档案作品预览三">
+      <span class="gallery-exhibition-note" data-i18n="chapter.gallery.exhibit">私人影像展 · 光影与记忆</span>
       <span class="visual-label index-font" data-i18n="project.gallery.visual">影像档案 ↗</span>
      </a>
     </div>
    </article>
-   <article class="work reveal" id="computing" data-story-chapter="4">
+   <article class="work chapter chapter-lab reveal" id="computing" data-story-chapter="4">
+    <div class="chapter-heading">
+      <div class="chapter-heading__left"><span class="chapter-heading__index">04 / 04</span><span class="chapter-heading__label" data-i18n="chapter.lab.name">交互计算 · 数字实验室</span></div>
+      <div class="chapter-heading__motto" data-i18n="chapter.lab.motto">让几何成为可以触碰的世界</div>
+    </div>
     <div class="work-num index-font">04 / 04</div>
     <div class="work-copy">
      <div class="work-overline index-font">技术 · 交互计算</div>
@@ -436,6 +472,7 @@ html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1)}
     <div class="work-visual">
      <a href="/experiments/minimal-surfaces-classical.html" class="experiment-preview" aria-label="探索经典极小曲面 Three.js 交互实验">
       <div class="work-overline index-font" data-i18n="project.exp.previewKicker">交互数学实验</div>
+      <span class="lab-crosshair" aria-hidden="true">+ 3D</span><span class="lab-scan" aria-hidden="true"></span>
       <div id="minimal-preview" aria-label="极小曲面实时三维预览" style="position:absolute;inset:0;overflow:hidden;pointer-events:none"><div class="preview-lines preview-fallback" aria-hidden="true"></div></div>
       <div class="preview-title" data-i18n="project.exp.art">几何，<br>正在生长。</div>
       <div class="preview-foot index-font"><span data-i18n="project.exp.previewFooter">曲面可视化</span><span data-i18n="project.exp.previewOpen">进入实验 ↗</span></div>
