@@ -279,7 +279,7 @@ test("theme transition animates on click but not on reload",async({page})=>{
 test("mobile menu prevents background scrolling and restores original position",async({page,isMobile})=>{
  if(!isMobile)return;
  await page.goto("/");
- await page.evaluate(()=>window.scrollTo(0,Math.min(600,document.documentElement.scrollHeight-innerHeight)));
+ await page.evaluate(()=>window.scrollTo({top:Math.min(600,document.documentElement.scrollHeight-innerHeight),behavior:"instant"}));
  const before=await page.evaluate(()=>scrollY);
  await page.locator("[data-menu-toggle]").click();
  await expect(page.locator("html")).toHaveAttribute("data-menu-active","true");
