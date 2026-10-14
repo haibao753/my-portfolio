@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import MotionLayer from "../components/MotionLayer.astro";
+import FinaleArtwork from "../components/FinaleArtwork.astro";
 import {projects,contact} from "../data/site";
 ---
 <BaseLayout>
@@ -27,7 +28,7 @@ import {projects,contact} from "../data/site";
    <div class="wechat"><span class="eyebrow">WECHAT</span><strong>{contact.wechat}</strong><button type="button" data-copy-wechat={contact.wechat}><span class="copy-normal"><span data-locale="zh">复制微信号</span><span data-locale="en">Copy ID</span></span><span class="copy-success"><span data-locale="zh">已复制！</span><span data-locale="en">Copied!</span></span></button></div>
   </div>
  </section>
- <section class="finale wrap" aria-label="J.H. LAB"><img src="/assets/hero-laboratory.svg" loading="lazy" width="1000" height="640" alt="J.H. LAB 数学与艺术实验室图形" /></section>
+ <section class="finale wrap" aria-label="J.H. LAB"><FinaleArtwork /></section>
 </BaseLayout>
 <style>
  .works{padding-bottom:110px}.intro{text-align:center;margin-bottom:60px}.intro h2{font-size:clamp(39px,5.5vw,74px);line-height:1.2;letter-spacing:-.065em;margin:16px 0}.intro>p:last-child{color:var(--muted);font-size:16px}
