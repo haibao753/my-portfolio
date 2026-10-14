@@ -15,3 +15,32 @@ h1,h2,h3,p{margin-top:0}
 html[lang="zh-CN"] [data-locale="zh"],html[lang="en"] [data-locale="en"]{display:revert!important}
 @media(max-width:760px){.wrap{width:calc(100% - 36px)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Coordinated theme color interpolation. Applied only after hydration so a saved
+   preference renders instantly on page load without a flash of the other theme. */
+html[data-theme-transition="true"] body,
+html[data-theme-transition="true"] .glass-nav,
+html[data-theme-transition="true"] .project,
+html[data-theme-transition="true"] .visual,
+html[data-theme-transition="true"] .contact-card,
+html[data-theme-transition="true"] .contact-icon,
+html[data-theme-transition="true"] .copy-control,
+html[data-theme-transition="true"] .mobile-menu,
+html[data-theme-transition="true"] .controls button,
+html[data-theme-transition="true"] .site-footer{
+ transition-property:background-color,color,border-color,box-shadow,filter,transform,opacity;
+ transition-duration:.52s;
+ transition-timing-function:cubic-bezier(.2,.7,.2,1);
+}
+@media(prefers-reduced-motion:reduce){
+ html[data-theme-transition="true"] body,
+ html[data-theme-transition="true"] .glass-nav,
+ html[data-theme-transition="true"] .project,
+ html[data-theme-transition="true"] .visual,
+ html[data-theme-transition="true"] .contact-card,
+ html[data-theme-transition="true"] .contact-icon,
+ html[data-theme-transition="true"] .copy-control,
+ html[data-theme-transition="true"] .mobile-menu,
+ html[data-theme-transition="true"] .controls button,
+ html[data-theme-transition="true"] .site-footer{transition:none!important}
+}
