@@ -139,3 +139,17 @@ test("reduced motion keeps all project content visible", async ({page})=>{
  }
  await expect(page.locator("h1")).toBeVisible();
 });
+
+test("laboratory finale is animated only while visible and respects reduced motion",async({page})=>{
+ await page.goto("/");
+ const finale=page.locator("[data-lab-finale]");
+ await expect(finale).toHaveCount(1);
+ await finale.scrollIntoViewIfNeeded();
+ await expect(finale.locator("animateMotion")).toHaveCount(2);
+ await page.waitForTimeout(180);
+ const running=await finale.evaluate((svg:SVGSVGElement)=>svg.animationsPaused());
+ expect(running).toBe(false);
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await expect.poll(()=>finale.evaluate((svg:SVGSVGElement)=>svg.animationsPaused())).toBe(true);
+ await expect(page.locator(".finale")).toHaveCSS("opacity","1");
+});
