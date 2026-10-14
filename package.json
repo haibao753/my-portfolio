@@ -8,7 +8,9 @@
     "build": "astro build && node scripts/copy-legacy.mjs",
     "preview": "astro preview",
     "check": "astro check",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "deploy:preview": "wrangler deploy --config wrangler.preview.jsonc",
+    "deploy:preview:dry-run": "wrangler deploy --config wrangler.preview.jsonc --dry-run"
   },
   "dependencies": {
     "astro": "^5.0.0"
@@ -17,6 +19,7 @@
     "@astrojs/check": "^0.9.0",
     "typescript": "^5.0.0",
     "@playwright/test": "^1.56.0",
-    "@types/node": "^22.0.0"
+    "@types/node": "^22.0.0",
+    "wrangler": "^4.0.0"
   }
 }
