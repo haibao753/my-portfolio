@@ -1,25 +1,27 @@
-/* J.H. Lab / typography edition 04. External fonts are optional; system fallbacks keep the site readable. */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=LXGW+WenKai:wght@400;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap");
-:root{
- --font-body:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
- --font-display:"LXGW WenKai","STKaiti","Kaiti SC","KaiTi",serif;
- --font-latin:Inter,"Helvetica Neue",Arial,sans-serif;
-}
-html[lang="en"]{--font-body:var(--font-latin);--font-display:Georgia,"Times New Roman",serif}
+/* J.H. Lab — 中文优先的编辑式字体系统。无需下载或转发字体文件。 */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap");
+:root{--font-body:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;--font-display:"Noto Serif SC","Songti SC","STSong",serif;--font-latin:Inter,Arial,sans-serif}
+html[lang="en"]{--font-body:var(--font-latin);--font-display:var(--font-latin)}
 body{font-family:var(--font-body)!important}
-h1,h2,h3{font-family:var(--font-display);font-weight:500}
-.logo,.small-label,.mono,.index-font,.work-overline,.contact-type,.contact-index,.work-num,.footer-brand,.btn,.theme-toggle,.nav-brief,.back-link,.video-switcher{font-family:var(--font-body)}
-html[data-reading="humanities"] .story h2,html[data-reading="humanities"] .story p,html[data-reading="humanities"] .hero-description,html[data-reading="humanities"] .brief-article{font-family:var(--font-display);letter-spacing:.018em}
-html[data-reading="humanities"] .story p{font-size:15px;line-height:2.1}
-html[data-reading="humanities"] .story h2{font-weight:600}
+h1,h2,h3{font-family:var(--font-display);font-weight:600}
+.logo,.mono,.index-font,.small-label,.work-overline,.work-num,.footer-brand,.contact-index,.contact-type,.btn,.video-switcher,.theme-toggle,.nav-brief,.back-link,.language-toggle,.reading-toggle{font-family:var(--font-body)}
+/* Outlined Chinese strokes collide on small screens: never outline headlines. */
+.hero-title .outlined,.hero h1 .outlined{color:var(--ink)!important;-webkit-text-stroke:0!important;font-weight:500!important}
+.hero h1,.hero-title{overflow-wrap:normal;word-break:keep-all;letter-spacing:-.045em!important;line-height:1.22!important}
+.hero-title span,.hero h1 span{letter-spacing:inherit}
 .language-toggle,.reading-toggle{background:transparent;color:var(--ink);border:1px solid var(--line-strong);padding:9px 12px;border-radius:999px;font-size:11px;white-space:nowrap;cursor:pointer}
 .language-toggle:hover,.reading-toggle:hover{background:var(--surface)}
-@media(max-width:420px){.language-toggle,.reading-toggle{padding:9px 10px}}
-
-/* Three compact controls: language / reading / appearance remain usable on narrow screens. */
-@media(max-width:480px){
- .header-row{flex-wrap:wrap;gap:8px!important;padding-top:10px;padding-bottom:10px}
+html[data-reading="humanities"] .story h2,html[data-reading="humanities"] .story p,html[data-reading="humanities"] .hero-description{font-family:var(--font-display);letter-spacing:.012em}
+html[data-reading="humanities"] .story p{font-size:15px;line-height:2.1}
+@media(max-width:760px){
+ .hero-title,.hero h1{font-size:clamp(38px,8.3vw,58px)!important;line-height:1.27!important;letter-spacing:-.055em!important;margin-left:0!important;max-width:100%;overflow-wrap:anywhere}
+ .hero-subtitle,.hero-description{font-size:15px!important;line-height:1.86!important;letter-spacing:0!important;overflow-wrap:anywhere}
+ .hero-content,.hero-body,.hero-copy,.hero-aside,.hero-top,.issue-summary{min-width:0;max-width:100%}
+ .hero{overflow:hidden}
+ .hero-top .right,.hero-top-right{display:none!important}
+ .header-row{flex-wrap:wrap;gap:9px!important;padding-top:10px;padding-bottom:10px}
  .header-actions{margin-left:auto;gap:6px!important}
- .nav-brief,.back-link{font-size:10px!important;padding:9px 11px!important}
+ .back-link,.nav-brief{font-size:10px!important;padding:9px 11px!important}
  .language-toggle,.reading-toggle{font-size:10px!important;padding:9px!important}
 }
+@media(max-width:390px){.hero-title,.hero h1{font-size:clamp(36px,9vw,44px)!important}.hero-cta{gap:9px}.hero-cta a{min-width:0!important}}
