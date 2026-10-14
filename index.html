@@ -9,6 +9,7 @@
 <meta property="og:description" content="数学、信息、技术、人文。让好奇心成为可探索的作品。">
 <meta property="og:type" content="website">
 <title>J.H. Lab — Research & Creative Computing</title>
+<link rel="stylesheet" href="/assets/fonts.css">
 <style>
 /* J.H. LAB / EDITION 03 — AN EDITORIAL, MONOCHROME DESIGN SYSTEM */
 :root{
@@ -229,10 +230,10 @@ img{max-width:100%}
  <div class="wrap header-row">
   <a href="/" class="logo" aria-label="J.H. Lab 首页"><span class="logo-mark" aria-hidden="true">J.</span><span>J.H. LAB</span></a>
   <nav class="nav" aria-label="主导航">
-   <a href="#works">作品 / WORKS</a><a href="#research">研究 / RESEARCH</a><a href="#studio">关于 / ABOUT</a><a href="#contact">联系 / CONTACT</a>
+   <a href="#works" data-i18n="nav.works">作品</a><a href="#research" data-i18n="nav.research">研究</a><a href="#studio" data-i18n="nav.about">关于</a><a href="#contact" data-i18n="nav.contact">联系</a>
   </nav>
   <div class="header-actions">
-   <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换为深色模式" aria-pressed="false" title="切换黑白主题">
+   <button id="language-toggle" class="language-toggle" type="button" aria-label="Switch to English">EN / English</button><button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换为深色模式" aria-pressed="false" title="切换黑白主题">
     <svg class="theme-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
      <circle cx="12" cy="12" r="4.25"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.57 4.57l2.12 2.12M17.31 17.31l2.12 2.12M19.43 4.57l-2.12 2.12M6.69 17.31l-2.12 2.12"/>
     </svg>
@@ -244,14 +245,14 @@ img{max-width:100%}
 </header>
 <main>
  <section class="hero wrap" id="top" aria-labelledby="hero-heading">
-  <div class="hero-top"><span class="small-label index-font">J.H. LAB / INDEPENDENT DIGITAL STUDIO</span><span class="hero-top-right index-font"><span class="status-dot"></span>SELECTED WORKS / 2026</span></div>
+  <div class="hero-top"><span class="small-label index-font">独立研究与创意计算实验室</span><span class="hero-top-right index-font"><span class="status-dot"></span>精选作品 / 2026</span></div>
   <div class="hero-content">
    <div>
-    <h1 class="hero-title" id="hero-heading">Curiosity<br><span class="outlined">in motion.</span></h1>
-    <p class="hero-subtitle">让好奇心成为作品。<br><em>在数学、人工智能、信息与视觉艺术的交汇处，探索新的表达方式。</em></p>
+    <h1 class="hero-title" id="hero-heading" data-i18n="hero.title">让好奇心<br><span class="outlined">成为作品.</span></h1>
+    <p class="hero-subtitle" data-i18n="hero.lead">让好奇心成为作品。在数学、人工智能、信息与视觉艺术的交汇处，探索新的表达方式。</p>
     <div class="hero-cta">
-     <a class="button-primary" href="#works">浏览精选项目 <span aria-hidden="true">↘</span></a>
-     <a class="button-quiet" href="/brief/">阅读全球资讯观察 <span aria-hidden="true">↗</span></a>
+     <a class="button-primary" href="#works"><span data-i18n="hero.explore">浏览精选项目 ↘</span></a>
+     <a class="button-quiet" href="/brief/"><span data-i18n="hero.brief">阅读全球资讯观察 ↗</span></a>
     </div>
    </div>
    <aside class="hero-aside">
@@ -264,20 +265,20 @@ img{max-width:100%}
  </section>
 
  <section id="works" class="wrap" aria-labelledby="works-heading">
-  <div class="section-top reveal"><div><div class="small-label index-font">01 / SELECTED PROJECTS</div><h2 id="works-heading">研究、创造与记录<span aria-hidden="true">.</span></h2></div><p>从抽象算法到具体世界，从每日观察到私人影像。四个方向，一座持续生长的数字实验室。</p></div>
+  <div class="section-top reveal"><div><div class="small-label index-font">01 / 精选项目</div><h2 id="works-heading" data-i18n="section.works">精选项目</h2></div><p data-i18n="section.worksDesc">从抽象算法到具体世界，从每日观察到私人影像。四个方向，一座持续生长的数字实验室。</p></div>
   <div class="work-list">
    <article class="work reveal">
     <div class="work-num index-font">01 / 04</div>
     <div class="work-copy">
-     <div class="work-overline index-font">INFORMATION — GLOBAL OBSERVATORY</div>
-     <h3>全球资讯观察站</h3>
-     <p>每日用中文整理值得追踪的全球信息。连接公共议题、国际社会、AI 与前沿科研；提供摘要、观察角度与原始来源。</p>
-     <a href="/brief/" class="open-link">进入观察站 <span class="north" aria-hidden="true">↗</span></a>
+     <div class="work-overline index-font">资讯 · 世界观察</div>
+     <h3 data-i18n="project.brief.title">全球资讯观察站</h3>
+     <p data-i18n="project.brief.desc">每日用中文整理值得追踪的全球信息。连接公共议题、国际社会、AI 与前沿科研；提供摘要、观察角度与原始来源。</p>
+     <a href="/brief/" class="open-link"><span data-i18n="project.brief.open">进入观察站 ↗</span></a>
     </div>
     <div class="work-visual">
      <a href="/brief/" class="visual brief-visual" aria-label="打开全球资讯观察站">
       <div class="visual-top index-font"><span>J.H. / BRIEFING</span><span>ISSUE · DAILY</span></div>
-      <div class="visual-head">世界很大，<br>值得仔细阅读。</div>
+      <div class="visual-head" data-i18n="project.brief.art">世界很大，<br>值得仔细阅读。</div>
       <div class="visual-bottom index-font"><span>GLOBAL INTELLIGENCE</span><span>OPEN ARCHIVE ↗</span></div>
      </a>
     </div>
@@ -285,9 +286,9 @@ img{max-width:100%}
    <article class="work reveal" id="research">
     <div class="work-num index-font">02 / 04</div>
     <div class="work-copy">
-     <div class="work-overline index-font">SCIENCES — MATHEMATICAL VISUALIZATION</div>
-     <h3>让抽象数学可见</h3>
-     <p>用 Python 和 Manim，将群论、几何、算法及机器学习中的抽象概念转化为可观看、可理解的动态结构。</p>
+     <div class="work-overline index-font">科学 · 数学可视化</div>
+     <h3 data-i18n="project.math.title">让抽象数学可见</h3>
+     <p data-i18n="project.math.desc">用 Python 和 Manim，将群论、几何、算法及机器学习中的抽象概念转化为可观看、可理解的动态结构。</p>
      <a href="https://manim.hujinhai.com/videos/Cool3DLagrange.mp4" id="download-btn" class="open-link" target="_blank" rel="noopener noreferrer">打开当前动画 <span class="north" aria-hidden="true">↗</span></a>
     </div>
     <div class="work-visual">
@@ -304,9 +305,9 @@ img{max-width:100%}
    <article class="work reveal">
     <div class="work-num index-font">03 / 04</div>
     <div class="work-copy">
-     <div class="work-overline index-font">HUMANITIES — SPATIAL PHOTO ARCHIVE</div>
-     <h3>三维影像档案</h3>
-     <p>摄影不只是被观看的平面，也可以成为可以漫游的空间。把光影、日常和时间的碎片保存在独立的 3D 影像世界里。</p>
+     <div class="work-overline index-font">人文 · 三维影像档案</div>
+     <h3 data-i18n="project.gallery.title">三维影像档案</h3>
+     <p data-i18n="project.gallery.desc">摄影不只是被观看的平面，也可以成为可以漫游的空间。把光影、日常和时间的碎片保存在独立的 3D 影像世界里。</p>
      <a href="https://zhengyifan.win/" target="_blank" rel="noopener noreferrer" class="open-link">探索三维相册 <span class="north" aria-hidden="true">↗</span></a>
     </div>
     <div class="work-visual">
@@ -321,23 +322,23 @@ img{max-width:100%}
    <article class="work reveal">
     <div class="work-num index-font">04 / 04</div>
     <div class="work-copy">
-     <div class="work-overline index-font">TECHNOLOGY — INTERACTIVE COMPUTING</div>
-     <h3>交互计算实验</h3>
-     <p>通过 Three.js 与 WebGL 将数学曲面、空间结构和数据的演变转化为可直接操控的场景。选择作品后进入独立的全屏交互体验。</p>
+     <div class="work-overline index-font">技术 · 交互计算</div>
+     <h3 data-i18n="project.exp.title">交互计算实验</h3>
+     <p data-i18n="project.exp.desc">通过 Three.js 与 WebGL 将数学曲面、空间结构和数据的演变转化为可直接操控的场景。选择作品后进入独立的全屏交互体验。</p>
      <div class="experiment-links" aria-label="选择 Three.js 交互实验">
       <a class="experiment-link" href="/experiments/minimal-surfaces-classical.html">
        <span class="experiment-index index-font">01</span>
-       <span class="experiment-title">经典极小曲面<span class="experiment-subtitle">Catenoid / Helicoid / Enneper / Bonnet 关联族</span></span>
+       <span class="experiment-title"><span data-i18n="project.exp.classical">经典极小曲面</span><span class="experiment-subtitle">Catenoid / Helicoid / Enneper / Bonnet 关联族</span></span>
        <span class="experiment-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="experiment-link" href="/experiments/minimal-surfaces-periodic.html">
        <span class="experiment-index index-font">02</span>
-       <span class="experiment-title">周期极小曲面<span class="experiment-subtitle">Gyroid / Schwarz P &amp; D / Neovius</span></span>
+       <span class="experiment-title"><span data-i18n="project.exp.periodic">周期极小曲面</span><span class="experiment-subtitle">Gyroid / Schwarz P &amp; D / Neovius</span></span>
        <span class="experiment-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="experiment-link" href="https://entropy-sandbox.pages.dev/" target="_blank" rel="noopener noreferrer">
        <span class="experiment-index index-font">03</span>
-       <span class="experiment-title">熵与空间沙盒<span class="experiment-subtitle">Entropy Sandbox / Three.js / WebGL</span></span>
+       <span class="experiment-title"><span data-i18n="project.exp.entropy">熵与空间沙盒</span><span class="experiment-subtitle">Entropy Sandbox / Three.js / WebGL</span></span>
        <span class="experiment-arrow" aria-hidden="true">↗</span>
       </a>
      </div>
@@ -345,8 +346,8 @@ img{max-width:100%}
     <div class="work-visual">
      <a href="/experiments/minimal-surfaces-classical.html" class="experiment-preview" aria-label="探索经典极小曲面 Three.js 交互实验">
       <div class="work-overline index-font">INTERACTIVE MATHEMATICS / 3D</div>
-      <div class="preview-lines" aria-hidden="true"></div>
-      <div class="preview-title">Geometry<br>in motion.</div>
+      <div id="minimal-preview" aria-label="极小曲面实时三维预览" style="position:absolute;inset:0;overflow:hidden;pointer-events:none"><div class="preview-lines preview-fallback" aria-hidden="true"></div></div>
+      <div class="preview-title" data-i18n="project.exp.art">几何，<br>正在生长。</div>
       <div class="preview-foot index-font"><span>THREE.JS / MINIMAL SURFACES</span><span>EXPLORE ↗</span></div>
      </a>
     </div>
@@ -355,34 +356,34 @@ img{max-width:100%}
  </section>
 
  <section id="studio" class="principles wrap" aria-labelledby="studio-heading">
-  <div class="reveal"><div class="small-label index-font">02 / AN OPEN-ENDED PRACTICE</div><h2 id="studio-heading">精确的思考，<br>自由的表达。</h2></div>
+  <div class="reveal"><div class="small-label index-font" data-i18n="studio.kicker">开放的探索实践</div><h2 id="studio-heading" data-i18n="studio.title">精确的思考，<br>自由的表达。</h2></div>
   <div class="principles-right reveal">
-   <p>科学提供理解世界的方法，艺术扩展感知世界的维度。J.H. Lab 是一个持续更新的个人实验场：在严谨与想象之间，记录每一次学习、试验与创造。</p>
+   <p data-i18n="studio.desc">科学提供理解世界的方法，艺术扩展感知世界的维度。J.H. Lab 是一个持续更新的个人实验场：在严谨与想象之间，记录每一次学习、试验与创造。</p>
    <div class="keywords"><span>MATHEMATICS</span><span>AI / DATA SCIENCE</span><span>MANIM</span><span>THREE.JS</span><span>CREATIVE COMPUTING</span></div>
   </div>
  </section>
  <section id="contact" class="contact wrap" aria-labelledby="contact-heading">
   <div class="contact-heading reveal">
-   <div><div class="small-label index-font">03 / GET IN TOUCH</div><h2 id="contact-heading">建立连接<span aria-hidden="true">.</span></h2></div>
-   <p>欢迎交流数学、人工智能、科学传播、创意编程与跨学科合作。</p>
+   <div><div class="small-label index-font" data-i18n="contact.kicker">取得联系</div><h2 id="contact-heading" data-i18n="contact.title">建立连接.</h2></div>
+   <p data-i18n="contact.desc">欢迎交流数学、人工智能、科学传播、创意编程与跨学科合作。</p>
   </div>
   <div class="contact-list">
    <div class="contact-item reveal">
     <div class="contact-index index-font">01</div>
-    <div class="contact-detail"><div class="contact-type index-font">EMAIL / 电子邮箱</div><div class="contact-value">aiformath61@gmail.com</div></div>
-    <a class="contact-action" href="mailto:aiformath61@gmail.com" aria-label="发送邮件至 aiformath61@gmail.com">发送邮件 ↗</a>
+    <div class="contact-detail"><div class="contact-type index-font" data-i18n="contact.email">电子邮箱</div><div class="contact-value">aiformath61@gmail.com</div></div>
+    <a class="contact-action" href="mailto:aiformath61@gmail.com" aria-label="发送邮件至 aiformath61@gmail.com"><span data-i18n="contact.mailaction">发送邮件 ↗</span></a>
    </div>
    <div class="contact-item reveal">
     <div class="contact-index index-font">02</div>
-    <div class="contact-detail"><div class="contact-type index-font">WECHAT / 微信</div><div class="contact-value" id="wechat-id">happy-everyday2932</div></div>
-    <button class="contact-action" id="copy-wechat" type="button" aria-label="复制微信号 happy-everyday2932">复制微信号 ↗</button>
+    <div class="contact-detail"><div class="contact-type index-font" data-i18n="contact.wechat">微信</div><div class="contact-value" id="wechat-id">happy-everyday2932</div></div>
+    <button class="contact-action" id="copy-wechat" type="button" aria-label="复制微信号 happy-everyday2932"><span data-i18n="contact.copy">复制微信号 ↗</span></button>
    </div>
   </div>
  </section>
 </main>
 <footer class="wrap footer">
- <div><div class="footer-brand">J.H. LAB</div><div>Independent research & creative computing.</div><div class="footer-copy index-font">© <span id="year">2026</span> J.H. LAB · BUILT ON CURIOSITY.</div></div>
- <nav class="footer-links" aria-label="页脚导航"><a href="/brief/">GLOBAL BRIEF ↗</a><a href="https://zhengyifan.win/" target="_blank" rel="noopener noreferrer">VISUAL ARCHIVE ↗</a><a href="#contact">CONTACT ↗</a><a href="#top">BACK TO TOP ↑</a></nav>
+ <div><div class="footer-brand">J.H. LAB</div><div><span data-i18n="footer.tagline">独立研究与创意计算实验室</span></div><div class="footer-copy index-font">© <span id="year">2026</span> J.H. LAB · BUILT ON CURIOSITY.</div></div>
+ <nav class="footer-links" aria-label="页脚导航"><a href="/brief/"><span data-i18n="footer.brief">全球资讯 ↗</span></a><a href="https://zhengyifan.win/" target="_blank" rel="noopener noreferrer"><span data-i18n="footer.archive">影像档案 ↗</span></a><a href="#contact"><span data-i18n="footer.contact">联系 ↗</span></a><a href="#top"><span data-i18n="footer.top">返回顶部 ↑</span></a></nav>
 </footer>
 <script>
 (function(){
@@ -454,5 +455,6 @@ img{max-width:100%}
   }
 })();
 </script>
-</body>
+<script defer src="/assets/i18n.js"></script>
+<script type="module" src="/assets/minimal-preview.js"></script></body>
 </html>
