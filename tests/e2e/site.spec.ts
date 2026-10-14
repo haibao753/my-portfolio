@@ -291,3 +291,16 @@ test("mobile menu prevents background scrolling and restores original position",
  await expect(page.locator("html")).not.toHaveAttribute("data-menu-active","true");
  expect(await page.evaluate(()=>scrollY)).toBe(before);
 });
+
+
+test("optical glass laboratory preserves real accessible menu controls",async({page})=>{
+ await page.goto("/experiments/liquid-glass-optics.html");
+ await expect(page.locator("#optic-menu a")).toHaveCount(6);
+ await expect(page.locator("#optic-menu")).toBeVisible();
+ await page.locator("#menu-mode").uncheck();
+ await expect(page.locator("#optic-menu")).toBeHidden();
+ await page.locator("#menu-mode").check();
+ await expect(page.locator("#optic-menu")).toBeVisible();
+ await page.locator("#refract").fill("75");
+ await expect(page.locator("#refract-value")).toHaveText("75%");
+});
