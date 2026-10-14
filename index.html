@@ -90,6 +90,35 @@
         .a-t { color: var(--color-t); border-color: rgba(255, 51, 102, 0.2) !important; }
         .a-h { color: var(--color-h); border-color: rgba(255, 170, 0, 0.2) !important; }
 
+        /* Global intelligence brief: primary homepage entry */
+        .brief-entry {
+            display: inline-flex;
+            align-items: center;
+            gap: 13px;
+            margin-top: 28px;
+            padding: 12px 20px;
+            border: 1px solid rgba(179, 102, 255, 0.36);
+            border-radius: 12px;
+            color: #f0e8ff;
+            background: linear-gradient(110deg, rgba(179, 102, 255, 0.15), rgba(0, 229, 255, 0.055));
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.13);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: transform .2s, border-color .2s, box-shadow .2s;
+        }
+        .brief-entry:hover, .brief-entry:focus-visible {
+            transform: translateY(-2px);
+            border-color: rgba(179, 102, 255, 0.75);
+            box-shadow: 0 12px 34px rgba(179, 102, 255, 0.12);
+        }
+        .brief-entry .brief-dot {
+            width: 8px; height: 8px; flex: none;
+            background: #52d6b1; border-radius: 50%;
+            box-shadow: 0 0 12px rgba(82, 214, 177, 0.6);
+        }
+        .brief-entry .brief-arrow { color: #ba9df5; font-size: 1.1rem; }
+
         .grid-layout {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -308,6 +337,11 @@
             <span class="a-t">Technology</span>
             <span class="a-h">Humanities</span>
         </div>
+        <a class="brief-entry" href="/brief/" aria-label="进入全球资讯观察站，查看每日中文全球简报">
+            <span class="brief-dot" aria-hidden="true"></span>
+            <span>全球资讯观察站 <span style="font-weight:400;opacity:.72">/ DAILY BRIEF</span></span>
+            <span class="brief-arrow" aria-hidden="true">↗</span>
+        </a>
     </header>
 
     <main class="grid-layout">
