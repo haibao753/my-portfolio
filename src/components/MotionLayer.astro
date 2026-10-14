@@ -42,7 +42,7 @@
   }
   if(reduce.matches){
    visuals.forEach(el=>el.style.removeProperty("--motion-y"));
-   chapters.forEach(el=>{el.style.removeProperty("--chapter-progress");el.style.removeProperty("--chapter-velocity")});
+   chapters.forEach(el=>{el.style.removeProperty("--chapter-progress");el.style.removeProperty("--chapter-velocity");el.style.removeProperty("--chapter-light");el.style.removeProperty("--chapter-tilt")});
    finale?.style.removeProperty("--finale-y");
    smoothVelocity=0;
    lastScroll=scrollY;
@@ -62,11 +62,15 @@
    const rect=chapter.getBoundingClientRect();
    if(rect.bottom<0||rect.top>viewport){
     chapter.style.removeProperty("--chapter-velocity");
+    chapter.style.removeProperty("--chapter-light");
+    chapter.style.removeProperty("--chapter-tilt");
     continue;
    }
    const progress=Math.max(0,Math.min(1,(viewport-rect.top)/(viewport+rect.height)));
    chapter.style.setProperty("--chapter-progress",progress.toFixed(3));
    chapter.style.setProperty("--chapter-velocity",smoothVelocity.toFixed(3));
+   chapter.style.setProperty("--chapter-light",(0.965+progress*0.07).toFixed(3));
+   chapter.style.setProperty("--chapter-tilt",((progress-0.5)*-1.8).toFixed(2)+"deg");
   }
   for(const el of visuals){
    const rect=el.getBoundingClientRect();
@@ -105,10 +109,10 @@
  :global(.project .visual){translate:0 var(--motion-y,0px);transition:box-shadow .4s ease}
  /* Scroll-linked editorial depth: visual-only transforms, with no extra scroll movement. */
  :global(.project){--chapter-progress:0.5;--chapter-velocity:0;isolation:isolate}
- :global(.project .visual){filter:brightness(calc(.965 + var(--chapter-progress)*.07));will-change:auto}
- :global(.project .visual::before){content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(160deg,rgba(255,255,255,.10),transparent 47%,rgba(0,0,0,.045));opacity:calc(.28 + var(--chapter-progress)*.3)}
+ :global(.project .visual){filter:brightness(var(--chapter-light,1));will-change:auto}
+ :global(.project .visual::before){content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(160deg,rgba(255,255,255,.10),transparent 47%,rgba(0,0,0,.045));opacity:.36}
  @media(hover:hover) and (min-width:761px){
-  :global(.project .visual){transform:perspective(1200px) rotateX(calc((var(--chapter-progress) - .5)*-1.8deg));transform-origin:center}
+  :global(.project .visual){transform:perspective(1200px) rotateX(var(--chapter-tilt,0deg));transform-origin:center}
  }
  @media(prefers-reduced-motion:reduce){
   :global(.project .visual){filter:none!important;transform:none!important}
