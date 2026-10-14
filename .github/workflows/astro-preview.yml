@@ -28,6 +28,13 @@ jobs:
         run: npm run build
       - name: Check preserved routes
         run: node scripts/verify-build.mjs
+      - name: Archive deployable static site
+        uses: actions/upload-artifact@v4
+        with:
+          name: astro-preview-dist
+          path: dist/
+          retention-days: 14
+          if-no-files-found: error
       - name: Install browser for visual acceptance
         run: npx playwright install --with-deps chromium
       - name: Browser acceptance tests
