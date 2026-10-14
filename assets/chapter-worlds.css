@@ -1,6 +1,7 @@
 /* J.H. LAB / Edition 09 — Four Worlds, Four Art Directions
    An editorial newspaper, mathematical drawing table, photographic gallery,
    and live black-box lab. Section-level, intentional contrast. */
+body{overflow-x:clip}
 #works{overflow:visible}
 #works .work-list{border:0}
 .work.chapter{
@@ -202,9 +203,9 @@ html[lang="en"] .chapter-heading__motto{font-size:clamp(16px,1.8vw,22px)}
  .chapter-world .visual-head{font-size:clamp(27px,7vw,38px)}
  .chapter-world .press-grid{gap:8px;padding:13px 0}
  .chapter-world .press-grid span{font-size:10px}
- .chapter-math .work-visual,.chapter-gallery .work-visual{grid-column:1/-1;grid-row:2;margin-top:0}
- .chapter-math .work-num,.chapter-gallery .work-num{grid-column:1;grid-row:3}
- .chapter-math .work-copy,.chapter-gallery .work-copy{grid-column:2;grid-row:3;display:block;padding:0}
+ .work.chapter-math .work-visual,.work.chapter-gallery .work-visual{grid-column:1/-1;grid-row:2;margin-top:0}
+ .work.chapter-math .work-num,.work.chapter-gallery .work-num{grid-column:1;grid-row:3}
+ .work.chapter-math .work-copy,.work.chapter-gallery .work-copy{grid-column:2;grid-row:3;display:block;padding:0}
  .chapter-math .bilibili-visual{min-height:400px!important}
  .math-equation{top:52px;font-size:10px}
  .work.chapter-gallery{row-gap:22px;min-height:unset}
@@ -213,7 +214,7 @@ html[lang="en"] .chapter-heading__motto{font-size:clamp(16px,1.8vw,22px)}
  .chapter-gallery .photo-visual img:nth-child(2){height:95%}
  .chapter-gallery .visual-label{left:13px;bottom:13px;padding:7px 9px;font-size:10px}
  .gallery-exhibition-note{top:7px;left:15px;font-size:8px}
- .chapter-gallery .work-overline,.chapter-gallery h3,.chapter-gallery .work-copy p,.chapter-gallery .open-link{grid-column:auto;grid-row:auto}
+ .work.chapter-gallery .work-overline,.work.chapter-gallery h3,.work.chapter-gallery .work-copy p,.work.chapter-gallery .open-link{grid-column:auto;grid-row:auto}
  .chapter-gallery h3{font-size:clamp(29px,8vw,40px);margin:13px 0}
  .chapter-lab .experiment-preview{min-height:430px!important}
 }
