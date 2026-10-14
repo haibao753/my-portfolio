@@ -1,0 +1,26 @@
+/* Exit control for standalone, full-screen 3D mathematical experiments. */
+body.experiment-dark{--exit-bg:rgba(15,23,34,.85);--exit-border:rgba(160,189,210,.4);--exit-fg:#edf4fb;--exit-hover:rgba(39,56,73,.94)}
+body.experiment-light{--exit-bg:rgba(249,250,250,.92);--exit-border:rgba(80,99,119,.27);--exit-fg:#283a4f;--exit-hover:#e8eff4}
+.experiment-exit{
+ position:fixed;z-index:12000;
+ top:max(16px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));
+ display:inline-flex;align-items:center;gap:10px;min-height:44px;
+ padding:10px 15px;border:1px solid var(--exit-border);border-radius:999px;
+ background:var(--exit-bg);color:var(--exit-fg);text-decoration:none;
+ font:600 12px/1.2 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+ letter-spacing:.015em;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.12);
+ -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+ transition:transform .3s cubic-bezier(.2,.75,.2,1),background .25s,border-color .25s,box-shadow .25s;
+ -webkit-tap-highlight-color:transparent;touch-action:manipulation
+}
+.experiment-exit svg{width:16px;height:16px;flex:none;transition:transform .3s cubic-bezier(.2,.75,.2,1)}
+.experiment-exit:hover{background:var(--exit-hover);transform:translateY(-2px);box-shadow:0 11px 34px rgba(0,0,0,.17)}
+.experiment-exit:hover svg{transform:translateX(-3px)}
+.experiment-exit:active{transform:scale(.97)}
+.experiment-exit:focus-visible{outline:2px solid var(--exit-fg);outline-offset:4px}
+@media(max-width:600px){
+ .experiment-exit{top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));min-height:42px;padding:9px 12px;font-size:11px}
+ /* Give the exit control a reserved strip at the top; the 3D stage stays full screen. */
+ #panel{top:max(72px,calc(env(safe-area-inset-top) + 64px))!important;left:12px!important;max-width:calc(100vw - 24px);max-height:calc(100dvh - 145px);overflow-y:auto}
+}
+@media(prefers-reduced-motion:reduce){.experiment-exit,.experiment-exit svg{transition:none!important}}
