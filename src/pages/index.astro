@@ -23,9 +23,17 @@ import {projects,contact} from "../data/site";
    <h2><span data-locale="zh">聊聊新的可能。</span><span data-locale="en">Let's talk possibilities.</span></h2>
    <p class="description"><span data-locale="zh">这里没有什么高深的研究机构，只有一个好奇心有点过剩的大学生。欢迎来交换脑洞，分享有趣的东西，或者一起琢磨点不太正经但很好玩的项目。</span><span data-locale="en">No fancy research institute here—just a university student with way too much curiosity. Come swap ideas or make something delightfully weird.</span></p>
   </div>
-  <div class="contact-links">
-   <a href={`mailto:${contact.email}`}><span class="eyebrow">EMAIL</span><strong>{contact.email}</strong><span>↗</span></a>
-   <div class="wechat"><span class="eyebrow">WECHAT</span><strong>{contact.wechat}</strong><button type="button" data-copy-wechat={contact.wechat}><span class="copy-normal"><span data-locale="zh">复制微信号</span><span data-locale="en">Copy ID</span></span><span class="copy-success"><span data-locale="zh">已复制！</span><span data-locale="en">Copied!</span></span></button></div>
+  <div class="contact-links" aria-label="Contact methods">
+   <a class="contact-card" href={`mailto:${contact.email}`} aria-label={`发送邮件至 ${contact.email}`}>
+    <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></span>
+    <span class="contact-copy"><span class="eyebrow">EMAIL</span><strong>{contact.email}</strong><span class="contact-hint"><span data-locale="zh">发送邮件，聊聊新想法</span><span data-locale="en">Send a note and say hello</span></span></span>
+    <span class="contact-action" aria-hidden="true">↗</span>
+   </a>
+   <div class="contact-card wechat">
+    <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.6 3C4.86 3 1 6.02 1 9.78c0 2.13 1.21 4.03 3.1 5.27l-.75 2.72 3.06-1.5c1 .32 2.08.5 3.19.5h.53a7.15 7.15 0 0 1-.25-1.86c0-3.88 3.44-7 7.68-7.29C16.51 4.94 13.34 3 9.6 3Zm-3.1 5.9a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm6.05 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/><path d="M17.38 9.45c-3.66 0-6.62 2.34-6.62 5.23 0 2.89 2.96 5.23 6.62 5.23.76 0 1.49-.11 2.17-.31L21.7 21l-.54-2.31c1.74-.96 2.84-2.41 2.84-4.01 0-2.89-2.96-5.23-6.62-5.23Zm-2.4 4.5a.84.84 0 1 1 0-1.68.84.84 0 0 1 0 1.68Zm4.83 0a.84.84 0 1 1 0-1.68.84.84 0 0 1 0 1.68Z"/></svg></span>
+    <span class="contact-copy"><span class="eyebrow">WECHAT</span><strong>{contact.wechat}</strong><span class="contact-hint"><span data-locale="zh">添加微信，一起交流</span><span data-locale="en">Connect on WeChat</span></span></span>
+    <button type="button" class="copy-control" data-copy-wechat={contact.wechat} aria-label="复制微信号" data-copied="false"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span class="copy-normal"><span data-locale="zh">复制</span><span data-locale="en">Copy</span></span><span class="copy-success" role="status"><span data-locale="zh">已复制 ✓</span><span data-locale="en">Copied ✓</span></span></button>
+   </div>
   </div>
  </section>
  <section class="finale wrap" aria-label="J.H. LAB"><FinaleArtwork /></section>
@@ -36,10 +44,25 @@ import {projects,contact} from "../data/site";
  .contact{padding-block:clamp(90px,10vw,150px);display:grid;grid-template-columns:1.2fr 1fr;gap:50px;border-top:1px solid var(--stroke)}
  .contact h2{font-size:clamp(42px,5vw,76px);letter-spacing:-.065em;line-height:1.2;margin:20px 0}
  .description{max-width:490px;line-height:2;color:var(--muted)}
- .contact-links{display:grid;gap:18px;align-content:center}.contact-links>a,.wechat{display:grid;gap:10px;border:1px solid var(--stroke);padding:26px;border-radius:23px;background:var(--card);box-shadow:var(--shadow-sm)}
- .contact-links strong{overflow-wrap:anywhere;font-size:clamp(17px,2vw,23px);font-weight:600}
- .wechat button{justify-self:start;border:0;background:none;color:var(--accent);padding:0;font-size:13px;font-weight:600}
- .copy-success{display:none}button[data-copied="true"] .copy-normal{display:none}button[data-copied="true"] .copy-success{display:inline}
+ .contact-links{display:grid;gap:15px;align-content:center;min-width:0}
+ .contact-card{position:relative;display:flex;align-items:center;gap:16px;min-width:0;min-height:112px;padding:20px 22px;border:1px solid var(--stroke);border-radius:22px;background:var(--card);box-shadow:var(--shadow-sm);color:var(--fg);text-decoration:none;transition:transform .38s cubic-bezier(.16,1,.3,1),box-shadow .38s ease,border-color .38s ease}
+ .contact-card::before{content:"";position:absolute;top:0;left:22px;right:22px;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--fg) 9%,transparent),transparent);pointer-events:none}
+ .contact-icon{width:47px;height:47px;flex:0 0 47px;display:grid;place-items:center;border:1px solid var(--stroke);border-radius:14px;background:var(--bg);color:var(--fg)}
+ .contact-icon svg{width:24px;height:24px;display:block}
+ .contact-copy{min-width:0;display:flex;flex:1;flex-direction:column;gap:3px}
+ .contact-copy .eyebrow{font-size:10px;letter-spacing:.15em}
+ .contact-copy strong{overflow-wrap:anywhere;font-size:clamp(14px,1.4vw,19px);font-weight:650;line-height:1.4}
+ .contact-hint{font-size:12px;color:var(--muted);margin-top:4px}
+ .contact-action{font-size:22px;line-height:1;align-self:center;color:var(--muted);transition:transform .3s ease}
+ .copy-control{display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;gap:6px;min-height:44px;min-width:64px;padding:8px 10px;border-radius:12px;border:1px solid var(--stroke);background:var(--bg);color:var(--fg);font:600 12px inherit;cursor:pointer;transition:background-color .25s ease,box-shadow .25s ease}
+ .copy-control .copy-icon{height:16px;width:16px;display:block}
+ .copy-success{display:none}
+ .copy-control[data-copied="true"]{color:var(--accent);border-color:var(--accent)}
+ .copy-control[data-copied="true"] .copy-normal,.copy-control[data-copied="true"] .copy-icon{display:none}
+ .copy-control[data-copied="true"] .copy-success{display:inline}
+ @media(hover:hover) and (pointer:fine){.contact-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:color-mix(in srgb,var(--fg) 20%,transparent)}.contact-card:hover .contact-action{transform:translate(3px,-3px)}.copy-control:hover{background:var(--card);box-shadow:var(--shadow-sm)}}
+ @media(max-width:600px){.contact-links{gap:12px}.contact-card{padding:16px;min-height:94px;gap:12px}.contact-icon{height:42px;width:42px;flex-basis:42px;border-radius:12px}.contact-copy strong{font-size:14px}.copy-control{min-width:54px}}
+ @media(prefers-reduced-motion:reduce){.contact-card,.contact-action,.copy-control{transition:none!important}}
  .finale{padding-bottom:clamp(70px,10vw,135px)}.finale img{width:100%;height:auto;display:block;border-radius:29px;background:var(--card)}
  @media(max-width:800px){.contact{grid-template-columns:1fr;gap:20px}}
 </style>
