@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "date": "2026-10-14",
+  "items": [
+    {
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFB5R2p1V0RoRTdaVVBmd0tkM2Uxd0RqdFFYODNXckxEZVk3N0xwVTRub08tZGpWb25Sd2p3VjZWSzNNMUxsbnlMRkJhZXMwMVc0OHRVNUN4Z1FMSHJGcVIyZFRRdTI?oc=5",
+      "title_zh": "中国经济走弱正在造就“失落的一代”",
+      "summary_zh": "《华尔街日报》报道称，中国经济增速放缓与就业市场收缩正在影响年轻一代的职业前景。该报道聚焦青年失业与就业结构变化，但摘要信息有限，具体数据与案例需查阅原文核实。",
+      "why_zh": "青年就业是理解中国经济与社会稳定的关键切口，不同于日常宏观数据报道，它关注结构性代际影响。"
+    },
+    {
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBjZFMxbnlOdGFNeVZ3VVlYVmJqUnFMQWFYX0ZsT1FnNTZqa3F6Um9odUVkR1ZaQXlBVEt2am9KUk5iTUdybXR1Q2IzX0s2a1d2MTc5aGVGVDRtUlZLT2FYdmZldnRpSzZyVXVBaHJNRExzMERtOGc?oc=5",
+      "title_zh": "全世界劳动者，给大众汽车发邮件",
+      "summary_zh": "ChinaTalk播客讨论跨国劳工行动与大众汽车相关议题，涉及全球供应链中的劳工权益与跨国企业责任。节目具体论点与嘉宾信息需以原音频为准。",
+      "why_zh": "从跨国劳工视角切入中德汽车产业互动，区别于常见的地缘政治或销量报道，关注劳动者行动维度。"
+    },
+    {
+      "category": "AI",
+      "source": "Hugging Face",
+      "published": "2026-10-13",
+      "url": "https://huggingface.co/blog/LiquidAI/lfm25-24b-a2b",
+      "title_zh": "LFM2.5-24B-A2B：在设备端运行快速、私密的智能体",
+      "summary_zh": "Hugging Face发布LFM2.5-24B-A2B模型，主打在本地设备上运行快速且保护隐私的AI智能体。该条目未提供摘要，模型架构、性能基准与许可条款需查阅模型卡确认。",
+      "why_zh": "端侧智能体模型直接关系隐私与推理成本，对关注AI Agent落地的大学生有实际参考价值。"
+    },
+    {
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-10-14",
+      "url": "https://www.theregister.com/paas-and-iaas/2026/10/14/us-tech-giants-warn-europe-that-ditching-us-tech-giants-could-cost-115b/5303031",
+      "title_zh": "美国科技巨头警告欧洲：弃用美国科技企业或损失1150亿欧元",
+      "summary_zh": "亚马逊、谷歌、Meta等组成的游说团体警告欧洲，若推进云主权计划、减少依赖美国科技企业，可能造成约1150亿欧元损失。该数字来自行业游说方，需结合独立研究审视。",
+      "why_zh": "云主权与数字依赖是欧美科技政策核心摩擦，此条呈现产业界立场，区别于单纯产品发布新闻。"
+    },
+    {
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-10-14",
+      "url": "https://arstechnica.com/gadgets/2026/10/the-internets-undersea-backbone-is-slipping-into-to-the-danger-zone/",
+      "title_zh": "互联网的海底骨干正滑入危险地带",
+      "summary_zh": "Ars Technica介绍Elisabeth Braw新书《海底战争》，讨论海底光缆等基础设施面临的地缘政治与安全风险上升。具体风险案例与评估来自作者论述，需结合多方信源判断。",
+      "why_zh": "海底光缆承载全球互联网流量，其安全议题兼具技术与地缘维度，对理解全球网络脆弱性有启发。"
+    },
+    {
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-10-14",
+      "url": "https://www.technologyreview.com/2026/10/14/1146452/the-download-military-fake-blood-future-batteries/",
+      "title_zh": "每日简报：人造血液与电池的未来",
+      "summary_zh": "MIT Technology Review每日简报涵盖两项议题：美国军方竞相研发人造血液，以及电池技术前景。简报提及2007年美军直升机运送血液被击落事件，作为研发背景。",
+      "why_zh": "人造血液与电池技术分别涉及军事医学和能源转型，属于有实质科研进展的科技议题。"
+    },
+    {
+      "category": "数学",
+      "source": "Quanta Magazine",
+      "published": "2026-10-12",
+      "url": "https://www.quantamagazine.org/is-attention-the-essence-of-intelligence-20261012/",
+      "title_zh": "‘注意力’是智能的本质吗？",
+      "summary_zh": "Quanta Magazine专栏文章探讨注意力机制为何成为当前AI革命的关键。文章指出，一种数学机制使AI模型能够大规模处理语言，并追问：为什么注意力是核心？",
+      "why_zh": "从数学原理层面解释Transformer核心机制，帮助理解AI能力来源，而非停留在应用层面。"
+    },
+    {
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-10-14",
+      "url": "https://arstechnica.com/security/2026/10/anthropic-warns-small-ai-models-could-self-replicate-through-iot-devices/",
+      "title_zh": "Anthropic警告小型AI模型可能通过物联网设备自我复制",
+      "summary_zh": "Anthropic警告称，基于小权重模型的复制体可能催生新一代计算机蠕虫，通过物联网设备实现自我复制。",
+      "why_zh": "AI安全前沿议题，涉及模型自主复制风险，对理解AI治理与物联网安全有启发。"
+    },
+    {
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-10-14",
+      "url": "https://www.theregister.com/devops/2026/10/14/python-315-goes-global-with-utf-8-support/5302966",
+      "title_zh": "Python 3.15全面支持UTF-8编码",
+      "summary_zh": "Python 3.15将默认启用UTF-8支持，结束Windows开发者数十年来跨平台字符编码损坏的问题。",
+      "why_zh": "影响全球Python开发者的基础性变更，解决长期跨平台痛点，具实际工程意义。"
+    },
+    {
+      "category": "国际科技",
+      "source": "TechCrunch",
+      "published": "2026-10-14",
+      "url": "https://techcrunch.com/2026/10/14/scimplify-raises-25m-to-challenge-chinas-grip-on-critical-materials-with-ai/",
+      "title_zh": "Scimplify融资2500万美元，以AI挑战中国在关键材料领域的主导地位",
+      "summary_zh": "Scimplify完成2500万美元融资，年化营收运行率增长两倍至2亿美元，计划拓展美国市场，以AI技术切入关键材料供应链。",
+      "why_zh": "关键材料供应链与AI结合的地缘经济议题，反映全球试图降低对中国依赖的产业动向。"
+    },
+    {
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-14",
+      "url": "https://www.psypost.org/teenage-smartphone-habits-displace-study-time-without-directly-raising-stress/",
+      "title_zh": "青少年高智能手机依赖与时间分配改变相关",
+      "summary_zh": "一项纵向研究显示，过度使用智能手机的青少年学业技能受损，原因在于数字习惯挤占了学习时间，而非直接增加学业压力。",
+      "why_zh": "用纵向数据厘清手机依赖影响学业的机制，对教育者和家长有实际参考价值。"
+    },
+    {
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-10-14",
+      "url": "https://www.technologyreview.com/2026/10/14/1145807/us-military-race-to-make-fake-blood/",
+      "title_zh": "美军竞相研发人造血液",
+      "summary_zh": "MIT Technology Review报道美军推动人造血液研发，以应对战场输血需求。文章以2007年伊拉克战场直升机救援任务为引，讲述军事医疗后勤挑战。",
+      "why_zh": "军事医学与生物技术交叉领域，涉及战场急救结构性难题，具科技与政策双重意义。"
+    }
+  ]
+}
