@@ -1,4 +1,4 @@
-/* J.H. LAB / Edition 21 — perceptible, reader-safe chapter acceleration.
+/* J.H. LAB / Edition 22 — native mobile scrolling, desktop-only chapter acceleration.
  * Accelerate over the END of each long visual chapter; do not force one-screen
  * pagination. A new gesture cancels an in-progress glide. */
 (()=>{
@@ -12,7 +12,7 @@
  const headerHeight=()=>document.querySelector(".glass-site-header")?.getBoundingClientRect().height||0;
  const destination=el=>Math.max(0,topOf(el)-headerHeight()-12);
  const blocked=()=>reduced.matches||document.documentElement.classList.contains("site-menu-is-open");
- let anim=0,running=false,lockUntil=0,gestureDir=0,touchStartY=0,scrollIdle=0;
+ let anim=0,running=false,lockUntil=0;
  const stop=()=>{
   if(anim)cancelAnimationFrame(anim);
   anim=0;running=false;
@@ -70,31 +70,10 @@
   if(next!==null){e.preventDefault();glide(next);}
  }
  addEventListener("wheel",wheel,{passive:false});
- // On touchscreens we never preventDefault, never capture a swipe, and only
- // accelerate after native scrolling settles close to a genuine chapter break.
- addEventListener("touchstart",e=>{
-  stop();clearTimeout(scrollIdle);gestureDir=0;
-  touchStartY=e.touches[0]?.clientY??0;
- },{passive:true});
- addEventListener("touchend",e=>{
-  const endY=e.changedTouches[0]?.clientY??touchStartY;
-  const dist=touchStartY-endY;
-  gestureDir=Math.abs(dist)>=48?Math.sign(dist):0;
-  if(!pointer.matches&&gestureDir){
-   clearTimeout(scrollIdle);scrollIdle=setTimeout(settle,240);
-  }
- },{passive:true});
- function settle(){
-  if(pointer.matches||!canMove()||!gestureDir)return;
-  const next=candidate(gestureDir);
-  if(next!==null)glide(next);
-  gestureDir=0;
- }
- addEventListener("scroll",()=>{
-  if(pointer.matches||running||!gestureDir)return;
-  clearTimeout(scrollIdle);
-  scrollIdle=setTimeout(settle,200);
- },{passive:true});
+ // Mobile touch gestures must remain 100% native. In particular, do not
+ // schedule another scroll after touchend: browser momentum is still running.
+ // A fresh touch only cancels any desktop-driven animation.
+ addEventListener("touchstart",stop,{passive:true});
  addEventListener("keydown",e=>{
   if(["PageDown","PageUp"," ","ArrowDown","ArrowUp","Home","End"].includes(e.key)){
    stop();lockUntil=performance.now()+300;
