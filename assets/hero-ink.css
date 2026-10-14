@@ -1,213 +1,69 @@
-@import url("https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap");
-/*
- J.H. LAB / THE INK EDITION
- A deliberately loose two-register hero: editorial brush-serif above,
- live brush calligraphy below. The real headline remains HTML for accessibility.
-*/
-.hero{position:relative}
-.hero-title.ink-title{
- position:relative;
- display:flex;
- flex-direction:column;
- align-items:flex-start;
+/* J.H. LAB · Light Scholarly Edition
+   A single type family, quiet breathing room, no separate brush glyph or ornaments.
+   This stylesheet is deliberately scoped to the homepage hero. */
+.hero-title.hero-title--scholarly{
+ display:block;
  width:max-content;
  max-width:100%;
- margin-top:0;
- margin-bottom:31px;
- overflow:visible;
- isolation:isolate;
- font-size:clamp(65px,8.3vw,126px);
- line-height:1.23!important;
- letter-spacing:-.065em!important;
- font-weight:400;
+ margin:0 0 35px 0;
+ padding:0;
  color:var(--ink);
+ font-family:"Noto Serif SC","Songti SC","STSong",serif!important;
+ font-size:clamp(64px,8.45vw,124px);
+ font-weight:500!important;
+ line-height:1.26!important;
+ letter-spacing:-.055em!important;
+ white-space:normal;
+ word-break:keep-all;
+ overflow-wrap:normal;
+ text-rendering:optimizeLegibility;
  -webkit-text-stroke:0!important;
 }
-.ink-title .ink-line{
- display:block;
- position:relative;
- width:max-content;
- max-width:100%;
- white-space:nowrap;
- font-kerning:normal;
- font-feature-settings:"kern" 1;
- transform-origin:18% 80%;
+.hero-title--scholarly br{display:block}
+html[lang="en"] .hero-title.hero-title--scholarly{
+ font-family:Georgia,"Times New Roman",serif!important;
+ font-size:clamp(56px,7.5vw,113px);
+ font-weight:400!important;
+ line-height:1.14!important;
+ letter-spacing:-.057em!important;
 }
-.ink-title .ink-line--one{
- font-family:"ZCOOL XiaoWei","STKaiti","KaiTi","Noto Serif SC",serif!important;
- font-weight:400;
- letter-spacing:-.048em!important;
-}
-.ink-title .ink-line--two{
- font-family:"Ma Shan Zheng","STKaiti","KaiTi","Noto Serif SC",serif!important;
- font-weight:400;
- margin-left:clamp(13px,3vw,46px);
- margin-top:-.04em;
- transform:rotate(-2.3deg);
- letter-spacing:-.072em!important;
-}
-.ink-title .ink-letter{
- position:relative;
- display:inline-block;
- will-change:transform,opacity;
- font:inherit;
- letter-spacing:inherit;
- transform-origin:50% 84%;
-}
-.ink-title:not(.is-typeset) .ink-letter{opacity:1}
-
-/* Selected, hand-traced brush 心: no raster background, only this one glyph. */
-.ink-title .ink-letter.ink-heart-image{
- position:relative;
- width:1.06em;
- height:1.05em;
- letter-spacing:0!important;
- margin-left:.015em;
- margin-right:.02em;
- vertical-align:bottom;
- flex:none;
-}
-.ink-title .ink-heart-mark{
- position:absolute;
- left:-.055em;
- top:-.03em;
- width:1.18em;
- height:1.11em;
- display:block;
- max-width:none;
- object-fit:contain;
- transform:translateY(.045em) rotate(-3.5deg);
- transform-origin:51% 67%;
- pointer-events:none;
- user-select:none;
-}
-html[data-theme="dark"] .ink-title .ink-heart-mark{filter:invert(1)}
-@media(max-width:760px){
- .ink-title .ink-letter.ink-heart-image{width:1.04em;height:1.04em;margin-left:0;margin-right:.01em}
- .ink-title .ink-heart-mark{left:-.045em;width:1.15em;height:1.09em;transform:translateY(.04em) rotate(-3deg)}
-}
-
-.ink-title .ink-flourish{
- position:absolute;
- display:block;
- width:90%;
- height:32%;
- left:8%;
- bottom:-11%;
- overflow:visible;
- pointer-events:none;
- color:var(--ink);
- transform:rotate(-2deg);
- z-index:-1;
- opacity:.84;
-}
-.ink-title .ink-flourish path{
- fill:none;
- stroke:currentColor;
- stroke-width:2;
- stroke-linecap:round;
- stroke-linejoin:round;
- vector-effect:non-scaling-stroke;
-}
-.ink-title .ink-flourish .ink-stroke{
- stroke-dasharray:460;
- stroke-dashoffset:460;
-}
-.ink-title .ink-flourish .ink-dot{
- fill:currentColor;
- stroke:none;
- transform-origin:center;
-}
-.ink-title .ink-caption{
- position:absolute;
- right:-16px;
- top:12px;
- height:10px;width:10px;
- border:1px solid currentColor;
- border-radius:50%;
- opacity:.19;
-}
-.ink-title .ink-caption:before,.ink-title .ink-caption:after{
- content:"";position:absolute;background:currentColor;opacity:.38;
-}
-.ink-title .ink-caption:before{height:1px;width:14px;top:4px;left:-2px}
-.ink-title .ink-caption:after{width:1px;height:14px;top:-2px;left:4px}
-/* Progressive enhancement: text is never hidden unless the headline was fully composed. */
 @media(prefers-reduced-motion:no-preference){
- .ink-title.is-typeset .ink-letter{
-  opacity:0;
-  animation:ink-glyph-arrive .91s cubic-bezier(.18,.83,.18,1) both;
-  animation-delay:calc(80ms + var(--glyph-order) * 85ms);
+ .hero-title--scholarly{
+  animation:scholarly-arrival .85s cubic-bezier(.22,1,.36,1) both;
  }
- .ink-title.is-typeset .ink-line--two .ink-letter{
-  animation-delay:calc(420ms + var(--glyph-order) * 91ms);
- }
- .ink-title.is-typeset .ink-flourish .ink-stroke{
-  animation:ink-stroke-draw 1.32s cubic-bezier(.26,.68,.22,1) 900ms both;
- }
- .ink-title.is-typeset .ink-flourish .ink-dot{
-  opacity:0;animation:ink-dot-arrive .45s cubic-bezier(.15,.8,.23,1) 1.86s both;
- }
- .ink-title.is-typeset .ink-caption{
-  opacity:0;animation:ink-small-signal .55s ease 1.48s both;
+ @keyframes scholarly-arrival{
+  from{opacity:0;transform:translateY(14px);filter:blur(3px)}
+  to{opacity:1;transform:translateY(0);filter:blur(0)}
  }
 }
-@keyframes ink-glyph-arrive{
- 0%{opacity:0;filter:blur(7px);transform:translate3d(-8px,29px,0) rotate(-9deg) scale(.98)}
- 55%{opacity:.94;filter:blur(.5px)}
- 100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0) rotate(0) scale(1)}
-}
-@keyframes ink-stroke-draw{0%{stroke-dashoffset:460;opacity:.08}100%{stroke-dashoffset:0;opacity:1}}
-@keyframes ink-dot-arrive{0%{opacity:0;transform:scale(.4)}100%{opacity:1;transform:scale(1)}}
-@keyframes ink-small-signal{from{opacity:0;transform:rotate(35deg) scale(.65)}to{opacity:.19;transform:rotate(0) scale(1)}}
-@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
- .ink-title .ink-line--two{transition:transform .65s cubic-bezier(.2,.9,.3,1)}
- .ink-title:hover .ink-line--two{transform:rotate(-3.5deg) translate(5px,-3px)}
-}
-html[lang="en"] .hero-title.ink-title{
- font-size:clamp(51px,8vw,126px);
- line-height:1.12!important;
- letter-spacing:-.06em!important;
-}
-html[lang="en"] .ink-title .ink-line--one{
- font-family:Georgia,"Times New Roman",serif!important;
- font-weight:400;
-}
-html[lang="en"] .ink-title .ink-line--two{
- font-family:Georgia,"Times New Roman",serif!important;
- font-style:italic;
- margin-left:clamp(15px,3vw,42px);
- letter-spacing:-.065em!important;
-}
-html[lang="en"] .ink-title .ink-caption{right:-17px}
 @media(max-width:1050px){
- .hero-title.ink-title{font-size:clamp(57px,8.1vw,100px)}
+ .hero-title.hero-title--scholarly{font-size:clamp(56px,8.6vw,100px)}
 }
 @media(max-width:760px){
- .hero-title.ink-title,.hero h1.ink-title{
-  font-size:clamp(46px,10vw,67px)!important;
-  line-height:1.25!important;
-  letter-spacing:-.045em!important;
-  overflow:visible;
-  word-break:keep-all;
+ .hero-title.hero-title--scholarly,.hero h1.hero-title--scholarly{
+  font-size:clamp(40px,9.3vw,68px)!important;
+  line-height:1.28!important;
+  letter-spacing:-.058em!important;
   max-width:100%;
-  margin-left:0!important;
-  margin-bottom:30px;
+  margin:0 0 28px!important;
+  overflow-wrap:normal;
+  word-break:keep-all;
  }
- .ink-title .ink-line--two{margin-left:clamp(8px,3vw,22px)}
- .ink-title .ink-flourish{left:4%;width:94%;bottom:-12%}
- .ink-title .ink-caption{display:none}
- .hero-subtitle{margin-top:27px}
- html[lang="en"] .hero-title.ink-title,html[lang="en"] .hero h1.ink-title{font-size:clamp(40px,9.4vw,65px)!important}
+ html[lang="en"] .hero-title.hero-title--scholarly,
+ html[lang="en"] .hero h1.hero-title--scholarly{
+  font-size:clamp(35px,8.3vw,59px)!important;
+  line-height:1.17!important;
+ }
 }
 @media(max-width:390px){
- .hero-title.ink-title,.hero h1.ink-title{font-size:clamp(43px,10.7vw,53px)!important}
- html[lang="en"] .hero-title.ink-title,html[lang="en"] .hero h1.ink-title{font-size:clamp(34px,9.1vw,44px)!important}
- .ink-title .ink-caption{display:none}
+ .hero-title.hero-title--scholarly,.hero h1.hero-title--scholarly{
+  font-size:clamp(35px,9.15vw,43px)!important;
+ }
+ html[lang="en"] .hero-title.hero-title--scholarly,
+ html[lang="en"] .hero h1.hero-title--scholarly{
+  font-size:clamp(30px,7.9vw,38px)!important;
+ }
 }
 @media(prefers-reduced-motion:reduce){
- .ink-title .ink-letter{opacity:1!important;animation:none!important;filter:none!important;transform:none!important;will-change:auto}
- .ink-title .ink-flourish .ink-stroke{stroke-dasharray:none!important;stroke-dashoffset:0!important;animation:none!important}
- .ink-title .ink-flourish .ink-dot{opacity:1!important;animation:none!important}
- .ink-title .ink-line--two{transition:none!important}
+ .hero-title.hero-title--scholarly{animation:none!important;opacity:1!important;filter:none!important;transform:none!important}
 }
