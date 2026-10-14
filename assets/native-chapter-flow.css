@@ -1,0 +1,49 @@
+/* J.H. LAB — Edition 23 / Native scroll, kinetic chapter visuals.
+   NO scroll snap, NO smooth programmatic scroll, NO post-release animation. */
+:root{--chapter-motion-strength:1}
+#works .work.chapter .chapter-heading,
+#works .work.chapter .work-visual{
+ translate:0 var(--chapter-flow-y,0px);
+}
+#works .work.chapter .chapter-heading{
+ opacity:var(--chapter-flow-opacity,1);
+}
+#works .work.chapter .work-visual{
+ /* Move independent of hover transforms; document layout never changes. */
+ will-change:auto;
+}
+#works .work.chapter.is-flow-visible .work-visual{
+ will-change:translate;
+}
+#works .work.chapter.is-flow-visible .chapter-heading{
+ will-change:translate;
+}
+/* A subtle horizontal phase indicator in the whitespace between sections. */
+#works .work.chapter{
+ --chapter-phase:0;
+}
+#works .work.chapter .chapter-heading__left{
+ position:relative;
+}
+#works .work.chapter .chapter-heading__left::after{
+ content:"";
+ display:block;
+ width:clamp(26px,5vw,70px);
+ max-width:100%;
+ height:1px;
+ margin-top:8px;
+ background:currentColor;
+ opacity:calc(var(--chapter-phase,0) * .17);
+ transform-origin:left;
+ transform:scaleX(var(--chapter-phase,0));
+}
+@media(max-width:760px){
+ #works .work.chapter .chapter-heading__left::after{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ #works .work.chapter .chapter-heading,
+ #works .work.chapter .work-visual{
+  translate:none!important;opacity:1!important;
+ }
+ #works .work.chapter .chapter-heading__left::after{display:none!important}
+}
