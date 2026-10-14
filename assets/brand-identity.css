@@ -1,0 +1,41 @@
+/* J.H. LAB — cohesive identity: sculpted JH star-orbit emblem + expressive signature. */
+.logo .logo-monogram{
+ display:block;position:relative;flex:0 0 auto;
+ width:36px;height:32px;
+ border:0!important;border-radius:0!important;
+ background:var(--ink);
+ -webkit-mask:url("/assets/jh-orbit.svg") center / contain no-repeat;
+ mask:url("/assets/jh-orbit.svg") center / contain no-repeat;
+ transition:transform .48s cubic-bezier(.22,1,.36,1),opacity .25s;
+}
+.logo:hover .logo-monogram{transform:rotate(-7deg) scale(1.065)}
+.logo:focus-visible{outline:2px solid var(--ink);outline-offset:7px;border-radius:2px}
+.hero-autograph{
+ display:flex;align-items:center;gap:10px;
+ margin-top:36px;max-width:510px;
+ transform:rotate(-2.1deg);
+ transform-origin:30% 60%;
+}
+.hero-autograph__ink{
+ display:block;width:min(400px,100%);height:auto;aspect-ratio:2028 / 518;
+ object-fit:contain;opacity:.88;
+ clip-path:inset(0 100% 0 0);
+ animation:jh-signature-appear 1.42s cubic-bezier(.23,.67,.24,1) .28s both;
+}
+html[data-theme="dark"] .hero-autograph__ink{filter:invert(1);opacity:.93}
+@keyframes jh-signature-appear{from{clip-path:inset(0 100% 0 0);opacity:0}to{clip-path:inset(0 0 0 0);opacity:.88}}
+@media(max-width:760px){
+ .logo .logo-monogram{width:31px;height:28px}
+ .hero-autograph{margin-top:27px;max-width:390px}
+ .hero-autograph__ink{width:min(350px,100%)}
+}
+@media(max-width:420px){
+ .logo .logo-monogram{width:29px;height:26px}
+ .hero-autograph{margin-top:25px;width:100%}
+ .hero-autograph__ink{width:min(320px,100%)}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero-autograph__ink{animation:none!important;clip-path:none!important;opacity:.88}
+ .logo .logo-monogram{transition:none!important}
+ .logo:hover .logo-monogram{transform:none}
+}
