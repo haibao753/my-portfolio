@@ -71,30 +71,9 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
    const backdrop=document.querySelector<HTMLElement>("[data-menu-backdrop]");
    const motionReduced=window.matchMedia("(prefers-reduced-motion: reduce)");
    let closeTimer:ReturnType<typeof setTimeout>|undefined;
-   let lockedScrollY=0;
-   const unlockBackground=()=>{
-    if(root.dataset.menuActive!=="true")return;
-    root.removeAttribute("data-menu-active");
-    for(const prop of ["position","top","left","right","width"])document.body.style.removeProperty(prop);
-    window.scrollTo({top:lockedScrollY,behavior:"instant"});
-   };
-   const lockBackground=()=>{
-    if(root.dataset.menuActive==="true")return;
-    lockedScrollY=window.scrollY;
-    Object.assign(document.body.style,{position:"fixed",top:`-${lockedScrollY}px`,left:"0",right:"0",width:"100%"});
-    root.dataset.menuActive="true";
-   };
-   // Keep the backdrop aligned with the visual viewport while the menu is open.
-   // Prevent scroll chaining / rubber-banding into the underlying page.
-   const preventBackgroundScroll=(event:Event)=>{
-    if(root.dataset.menuActive==="true" && !(event.target instanceof Element && event.target.closest("[data-menu-panel]")))event.preventDefault();
-   };
-   document.addEventListener("touchmove",preventBackgroundScroll,{passive:false});
-   document.addEventListener("wheel",preventBackgroundScroll,{passive:false});
    const finishClose=()=>{
     if(!panel||!backdrop)return;
     panel.hidden=true;backdrop.hidden=true;
-    unlockBackground();
     delete panel.dataset.closing;delete backdrop.dataset.closing;
     closeTimer=undefined;
    };
@@ -113,13 +92,11 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
     panel.hidden=false;backdrop.hidden=false;
     menu.setAttribute("aria-expanded","true");
     root.dataset.menuOpen="true";
-    lockBackground();
    };
    menu?.addEventListener("click",()=>{
     if(menu.getAttribute("aria-expanded")==="true")close();
     else openMenu();
    });
-   backdrop?.addEventListener("click",close);
    panel?.querySelectorAll("a").forEach(a=>a.addEventListener("click",close));
    document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
    const copy=document.querySelector<HTMLButtonElement>("[data-copy-wechat]");
