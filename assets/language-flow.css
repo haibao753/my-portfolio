@@ -49,6 +49,19 @@
     opacity:.19!important;
   }
 }
+/* Once the locale is changed, the freshly constructed title stays settled.
+   This prevents the brush-glyph entrance from replaying after the crossfade. */
+.ink-title.ink-after-locale.is-typeset .ink-letter,
+.ink-title.ink-after-locale.is-typeset .ink-flourish .ink-stroke,
+.ink-title.ink-after-locale.is-typeset .ink-flourish .ink-dot,
+.ink-title.ink-after-locale.is-typeset .ink-caption{
+ animation:none!important;
+ opacity:1!important;
+ filter:none!important;
+}
+.ink-title.ink-after-locale.is-typeset .ink-letter{transform:none!important}
+.ink-title.ink-after-locale.is-typeset .ink-flourish .ink-stroke{stroke-dashoffset:0!important}
+.ink-title.ink-after-locale.is-typeset .ink-caption{opacity:.19!important}
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),::view-transition-new(root){animation-duration:.01ms!important}
   html.jhlab-lang-fallback main,html.jhlab-lang-fallback footer{transition:none!important}
