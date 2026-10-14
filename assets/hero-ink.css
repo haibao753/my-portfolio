@@ -81,3 +81,36 @@ html[data-theme="dark"] .hero .hero-artwork__graphic{filter:invert(.94) contrast
 @media(prefers-reduced-motion:reduce){
  .hero .hero-artwork__graphic,.hero .hero-artwork__en-orbit{animation:none!important}
 }
+
+
+/* Inline SVG is animated by the site, not the external-image animation engine.
+   The spheres travel along the drawn paths; guide nodes pulse subtly. */
+.hero .hero-artwork__graphic{overflow:visible}
+.hero .hero-artwork__graphic .lab-metal-ball{will-change:transform}
+@media(prefers-reduced-motion:no-preference){
+ .hero .hero-artwork__graphic .lab-orbit-dash{
+  animation:lab-track-dashes 10s linear infinite;
+ }
+ .hero .hero-artwork__graphic .lab-orbit-dash--lower{
+  animation-duration:14s;
+  animation-direction:reverse;
+ }
+ .hero .hero-artwork__graphic .lab-node--pulse,
+ .hero .hero-artwork__graphic .lab-node--pulse2{
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:lab-locator-breathe 4.5s ease-in-out infinite;
+ }
+ .hero .hero-artwork__graphic .lab-node--pulse2{animation-delay:-2s;animation-duration:5.8s}
+ @keyframes lab-track-dashes{to{stroke-dashoffset:-72}}
+ @keyframes lab-locator-breathe{
+  0%,100%{opacity:.42;transform:scale(.88)}
+  50%{opacity:1;transform:scale(1.22)}
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .hero .hero-artwork__graphic .lab-orbit-dash,
+ .hero .hero-artwork__graphic .lab-node--pulse,
+ .hero .hero-artwork__graphic .lab-node--pulse2{animation:none!important}
+ .hero .hero-artwork__graphic .lab-metal-ball{will-change:auto}
+}
