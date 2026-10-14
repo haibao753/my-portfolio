@@ -6,6 +6,7 @@ const paths=[
  "dist/brief/data/index.json",
  "dist/experiments/minimal-surfaces-classical.html",
  "dist/experiments/minimal-surfaces-periodic.html",
+ "dist/experiments/liquid-glass-optics.html",
  "dist/assets/jh-orbit.svg",
  "dist/assets/jhlab-signature.svg",
  "dist/images/1.jpg"
