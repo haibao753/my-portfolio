@@ -278,6 +278,7 @@ img{max-width:100%}
 <link rel="stylesheet" href="/assets/transitions.css">
 <link rel="stylesheet" href="/assets/language-flow.css?v=2">
 <link rel="stylesheet" href="/assets/contact-typewriter.css?v=slow3">
+<link rel="stylesheet" href="/assets/contact-atelier.css?v=1">
 </head>
 <body>
 <div id="story-progress" class="story-progress" aria-hidden="true"></div>
@@ -531,23 +532,42 @@ img{max-width:100%}
    <div class="keywords"><span>MATHEMATICS</span><span>AI / DATA SCIENCE</span><span>MANIM</span><span>THREE.JS</span><span>CREATIVE COMPUTING</span></div>
   </div>
  </section>
- <section id="contact" class="contact wrap" aria-labelledby="contact-heading">
+ <section id="contact" class="contact contact--atelier wrap" aria-labelledby="contact-heading">
   <div class="contact-heading reveal">
-   <div><div class="small-label index-font" data-i18n="contact.kicker">取得联系</div><h2 id="contact-heading" data-i18n="contact.title">聊聊新的可能。</h2></div>
+   <div>
+    <div class="small-label index-font" data-i18n="contact.kicker">取得联系</div>
+    <h2 id="contact-heading" data-i18n="contact.title">聊聊新的可能。</h2>
+   </div>
    <p data-i18n="contact.desc">欢迎交流数学、人工智能、科学传播、创意编程与跨学科合作。</p>
+   <div class="contact-orbit-art" aria-hidden="true">
+    <svg viewBox="0 0 180 180" fill="none">
+     <circle cx="90" cy="90" r="67" stroke="currentColor" stroke-width=".75" stroke-dasharray="2 6" opacity=".62"/>
+     <circle cx="90" cy="90" r="27" stroke="currentColor" stroke-width=".7" opacity=".4"/>
+     <path d="M90 0V180M0 90H180" stroke="currentColor" stroke-width=".55" opacity=".36"/>
+     <circle cx="90" cy="90" r="3" fill="currentColor"/>
+     <g class="contact-orbit-travel"><circle cx="90" cy="23" r="5" fill="currentColor"/><circle cx="90" cy="23" r="9" stroke="currentColor" stroke-width=".7" opacity=".4"/></g>
+    </svg>
+   </div>
   </div>
   <div class="contact-list">
    <div class="contact-item reveal">
-    <div class="contact-index index-font">01</div>
-    <div class="contact-detail"><div class="contact-type index-font" data-i18n="contact.email">电子邮箱</div><div class="contact-value">aiformath61@gmail.com</div></div>
-    <a class="contact-action" href="mailto:aiformath61@gmail.com" aria-label="发送邮件至 aiformath61@gmail.com"><span data-i18n="contact.mailaction">发送邮件 ↗</span></a>
+    <div class="contact-index index-font">01 — INBOX</div>
+    <div class="contact-detail">
+     <div class="contact-type index-font" data-i18n="contact.email">电子邮箱</div>
+     <div class="contact-value">aiformath61@gmail.com</div>
+    </div>
+    <a class="contact-action" href="mailto:aiformath61@gmail.com" aria-label="发送邮件至 aiformath61@gmail.com"><span data-i18n="contact.mailaction">发送邮件</span><span class="contact-action__arrow" aria-hidden="true">↗</span></a>
    </div>
    <div class="contact-item reveal">
-    <div class="contact-index index-font">02</div>
-    <div class="contact-detail"><div class="contact-type index-font" data-i18n="contact.wechat">微信</div><div class="contact-value" id="wechat-id">happy-everyday2932</div></div>
-    <button class="contact-action" id="copy-wechat" type="button" aria-label="复制微信号 happy-everyday2932"><span data-i18n="contact.copy">复制微信号 ↗</span></button>
+    <div class="contact-index index-font">02 — SOCIAL</div>
+    <div class="contact-detail">
+     <div class="contact-type index-font" data-i18n="contact.wechat">微信</div>
+     <div class="contact-value" id="wechat-id">happy-everyday2932</div>
+    </div>
+    <button class="contact-action" id="copy-wechat" type="button" aria-label="复制微信号 happy-everyday2932"><span data-i18n="contact.copy">复制微信号</span><span class="contact-action__arrow" aria-hidden="true">↗</span></button>
    </div>
   </div>
+  <div class="contact-caption" aria-hidden="true"><span>J.H. LAB / OPEN CHANNEL</span><span>EST. 2026 — ALWAYS CURIOUS</span></div>
  </section>
 </main>
 <footer class="wrap footer">
@@ -603,7 +623,7 @@ img{max-width:100%}
   }
 })();
 </script>
-<script defer src="/assets/i18n.js?v=contact2"></script>
+<script defer src="/assets/i18n.js?v=atelier1"></script>
 
 <script type="module" src="/assets/minimal-preview.js"></script>
 <script defer src="/assets/scroll-story.js"></script>
