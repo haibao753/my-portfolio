@@ -4,7 +4,6 @@ const paths=[
  "dist/index.html",
  "dist/brief/index.html",
  "dist/brief/data/index.json",
- "dist/brief/data/2026-10-14.json",
  "dist/experiments/minimal-surfaces-classical.html",
  "dist/experiments/minimal-surfaces-periodic.html",
  "dist/assets/jh-orbit.svg",
