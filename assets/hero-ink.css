@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap");
+/*
+ J.H. LAB / THE INK EDITION
+ A deliberately loose two-register hero: editorial brush-serif above,
+ live brush calligraphy below. The real headline remains HTML for accessibility.
+*/
+.hero{position:relative}
+.hero-title.ink-title{
+ position:relative;
+ display:flex;
+ flex-direction:column;
+ align-items:flex-start;
+ width:max-content;
+ max-width:100%;
+ margin-top:0;
+ margin-bottom:31px;
+ overflow:visible;
+ isolation:isolate;
+ font-size:clamp(65px,8.3vw,126px);
+ line-height:1.23!important;
+ letter-spacing:-.065em!important;
+ font-weight:400;
+ color:var(--ink);
+ -webkit-text-stroke:0!important;
+}
+.ink-title .ink-line{
+ display:block;
+ position:relative;
+ width:max-content;
+ max-width:100%;
+ white-space:nowrap;
+ font-kerning:normal;
+ font-feature-settings:"kern" 1;
+ transform-origin:18% 80%;
+}
+.ink-title .ink-line--one{
+ font-family:"ZCOOL XiaoWei","STKaiti","KaiTi","Noto Serif SC",serif!important;
+ font-weight:400;
+ letter-spacing:-.048em!important;
+}
+.ink-title .ink-line--two{
+ font-family:"Ma Shan Zheng","STKaiti","KaiTi","Noto Serif SC",serif!important;
+ font-weight:400;
+ margin-left:clamp(13px,3vw,46px);
+ margin-top:-.04em;
+ transform:rotate(-2.3deg);
+ letter-spacing:-.072em!important;
+}
+.ink-title .ink-letter{
+ position:relative;
+ display:inline-block;
+ will-change:transform,opacity;
+ font:inherit;
+ letter-spacing:inherit;
+ transform-origin:50% 84%;
+}
+.ink-title:not(.is-typeset) .ink-letter{opacity:1}
+.ink-title .ink-flourish{
+ position:absolute;
+ display:block;
+ width:90%;
+ height:32%;
+ left:8%;
+ bottom:-11%;
+ overflow:visible;
+ pointer-events:none;
+ color:var(--ink);
+ transform:rotate(-2deg);
+ z-index:-1;
+ opacity:.84;
+}
+.ink-title .ink-flourish path{
+ fill:none;
+ stroke:currentColor;
+ stroke-width:2;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+ vector-effect:non-scaling-stroke;
+}
+.ink-title .ink-flourish .ink-stroke{
+ stroke-dasharray:460;
+ stroke-dashoffset:460;
+}
+.ink-title .ink-flourish .ink-dot{
+ fill:currentColor;
+ stroke:none;
+ transform-origin:center;
+}
+.ink-title .ink-caption{
+ position:absolute;
+ right:-27px;
+ top:8px;
+ height:14px;width:14px;
+ border:1px solid currentColor;
+ border-radius:50%;
+ opacity:.56;
+}
+.ink-title .ink-caption:before,.ink-title .ink-caption:after{
+ content:"";position:absolute;background:currentColor;opacity:.75;
+}
+.ink-title .ink-caption:before{height:1px;width:20px;top:6px;left:-4px}
+.ink-title .ink-caption:after{width:1px;height:20px;top:-4px;left:6px}
+/* Progressive enhancement: text is never hidden unless the headline was fully composed. */
+@media(prefers-reduced-motion:no-preference){
+ .ink-title.is-typeset .ink-letter{
+  opacity:0;
+  animation:ink-glyph-arrive .91s cubic-bezier(.18,.83,.18,1) both;
+  animation-delay:calc(80ms + var(--glyph-order) * 85ms);
+ }
+ .ink-title.is-typeset .ink-line--two .ink-letter{
+  animation-delay:calc(420ms + var(--glyph-order) * 91ms);
+ }
+ .ink-title.is-typeset .ink-flourish .ink-stroke{
+  animation:ink-stroke-draw 1.32s cubic-bezier(.26,.68,.22,1) 900ms both;
+ }
+ .ink-title.is-typeset .ink-flourish .ink-dot{
+  opacity:0;animation:ink-dot-arrive .45s cubic-bezier(.15,.8,.23,1) 1.86s both;
+ }
+ .ink-title.is-typeset .ink-caption{
+  opacity:0;animation:ink-small-signal .55s ease 1.48s both;
+ }
+}
+@keyframes ink-glyph-arrive{
+ 0%{opacity:0;filter:blur(7px);transform:translate3d(-8px,29px,0) rotate(-9deg) scale(.98)}
+ 55%{opacity:.94;filter:blur(.5px)}
+ 100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0) rotate(0) scale(1)}
+}
+@keyframes ink-stroke-draw{0%{stroke-dashoffset:460;opacity:.08}100%{stroke-dashoffset:0;opacity:1}}
+@keyframes ink-dot-arrive{0%{opacity:0;transform:scale(.4)}100%{opacity:1;transform:scale(1)}}
+@keyframes ink-small-signal{from{opacity:0;transform:rotate(35deg) scale(.65)}to{opacity:.56;transform:rotate(0) scale(1)}}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ .ink-title .ink-line--two{transition:transform .65s cubic-bezier(.2,.9,.3,1)}
+ .ink-title:hover .ink-line--two{transform:rotate(-3.5deg) translate(5px,-3px)}
+}
+html[lang="en"] .hero-title.ink-title{
+ font-size:clamp(51px,8vw,126px);
+ line-height:1.12!important;
+ letter-spacing:-.06em!important;
+}
+html[lang="en"] .ink-title .ink-line--one{
+ font-family:Georgia,"Times New Roman",serif!important;
+ font-weight:400;
+}
+html[lang="en"] .ink-title .ink-line--two{
+ font-family:Georgia,"Times New Roman",serif!important;
+ font-style:italic;
+ margin-left:clamp(15px,3vw,42px);
+ letter-spacing:-.065em!important;
+}
+html[lang="en"] .ink-title .ink-caption{right:-17px}
+@media(max-width:1050px){
+ .hero-title.ink-title{font-size:clamp(57px,8.1vw,100px)}
+}
+@media(max-width:760px){
+ .hero-title.ink-title,.hero h1.ink-title{
+  font-size:clamp(46px,10vw,67px)!important;
+  line-height:1.25!important;
+  letter-spacing:-.045em!important;
+  overflow:visible;
+  word-break:keep-all;
+  max-width:100%;
+  margin-left:0!important;
+  margin-bottom:30px;
+ }
+ .ink-title .ink-line--two{margin-left:clamp(8px,3vw,22px)}
+ .ink-title .ink-flourish{left:4%;width:94%;bottom:-12%}
+ .ink-title .ink-caption{right:-12px;top:0;transform:scale(.72)}
+ .hero-subtitle{margin-top:27px}
+ html[lang="en"] .hero-title.ink-title,html[lang="en"] .hero h1.ink-title{font-size:clamp(40px,9.4vw,65px)!important}
+}
+@media(max-width:390px){
+ .hero-title.ink-title,.hero h1.ink-title{font-size:clamp(43px,10.7vw,53px)!important}
+ html[lang="en"] .hero-title.ink-title,html[lang="en"] .hero h1.ink-title{font-size:clamp(34px,9.1vw,44px)!important}
+ .ink-title .ink-caption{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .ink-title .ink-letter{opacity:1!important;animation:none!important;filter:none!important;transform:none!important;will-change:auto}
+ .ink-title .ink-flourish .ink-stroke{stroke-dasharray:none!important;stroke-dashoffset:0!important;animation:none!important}
+ .ink-title .ink-flourish .ink-dot{opacity:1!important;animation:none!important}
+ .ink-title .ink-line--two{transition:none!important}
+}
