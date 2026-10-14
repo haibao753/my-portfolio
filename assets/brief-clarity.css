@@ -1,0 +1,55 @@
+/* J.H. LAB / Daily Brief — calm cinematic editorial continuity */
+:root{--br-radius:23px;--br-card:#f5f6f8;--br-accent:#086bdf}
+html[data-theme="dark"]{--br-card:#202329;--br-accent:#80b6ff}
+.site-header{border-top:0!important}
+.header-row{min-height:78px}
+.nav-brief,.language-toggle,.theme-toggle,.reading-toggle{border-radius:100px!important}
+.hero{padding-top:clamp(82px,10vw,142px)!important}
+.hero-top{justify-content:center!important}
+.hero-top .right{display:none}
+.hero h1{
+ font-family:var(--font-body)!important;
+ text-align:center;
+ font-size:clamp(64px,9.15vw,132px)!important;
+ line-height:1.13!important;
+ font-weight:730!important;
+ letter-spacing:-.075em!important;
+ margin:25px auto 50px!important;
+}
+html[lang="en"] .hero h1{font-family:var(--font-latin)!important}
+.hero-body{
+ align-items:center!important;
+ background:var(--br-card);
+ border:1px solid var(--line);
+ border-radius:var(--br-radius);
+ padding:clamp(25px,4.2vw,55px);
+ gap:clamp(20px,5vw,70px);
+}
+.hero-description{font-size:clamp(15px,1.5vw,18px);line-height:1.85}
+.hero-description strong{font-weight:650}
+.issue-summary{border-left:1px solid var(--line);min-width:230px}
+.issue-summary #headlineDate{font-size:clamp(20px,2.2vw,27px);font-weight:650}
+.issue-intro{margin-top:46px}
+.issues-section{padding-top:clamp(80px,9vw,125px)}
+.section-heading h2{
+ font-family:var(--font-body)!important;
+ font-size:clamp(38px,4.5vw,68px)!important;
+ letter-spacing:-.065em!important;
+ font-weight:720!important;
+}
+.btn,.archive{border-radius:100px!important}
+#stories .card,#stories article,.story-card{border-radius:18px;overflow:hidden}
+.disclaimer{border-color:var(--line)!important}
+@media(max-width:760px){
+ .header-row{min-height:70px}
+ .hero{padding-top:77px!important}
+ .hero h1{font-size:clamp(52px,11vw,86px)!important;margin:22px auto 36px!important}
+ .hero-body{display:block;padding:25px 22px}
+ .issue-summary{margin-top:31px;padding:22px 0 0;border-left:none;border-top:1px solid var(--line)}
+ .issue-intro{margin-top:30px}
+ .issues-section{padding-top:75px}
+ .section-heading h2{font-size:clamp(37px,8vw,56px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .btn,.nav-brief,.language-toggle,.theme-toggle{transition:none!important}
+}
