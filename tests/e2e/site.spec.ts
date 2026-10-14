@@ -92,3 +92,25 @@ test("legacy experimental routes and published JSON remain available", async ({ 
  const index=await (await request.get("/brief/data/index.json")).json();
  expect(Array.isArray(index.dates)).toBeTruthy();
 });
+
+test("handwritten signature runs once and native scrolling never snaps after release", async ({ page }) => {
+ await page.goto("/");
+ const signature=page.locator(".hero-autograph--pen");
+ await expect(signature).toBeVisible();
+ await expect(signature).toHaveClass(/is-pen-finished/,{timeout:25_000});
+ await expect(signature.locator(".hero-autograph__finish")).toHaveCSS("opacity","1");
+ // Scroll by a native instant position change: a delayed chapter snap must not take over.
+ await page.evaluate(()=>{
+  const target=document.querySelector<HTMLElement>("#projects");
+  if(!target)throw Error("Missing projects");
+  window.scrollTo({top:target.getBoundingClientRect().top+window.scrollY+170,behavior:"instant"});
+ });
+ await page.waitForTimeout(280);
+ const stationary=await page.evaluate(()=>window.scrollY);
+ await page.waitForTimeout(820);
+ const after=await page.evaluate(()=>window.scrollY);
+ expect(Math.abs(after-stationary)).toBeLessThanOrEqual(3);
+ // Leaving and returning must never replay the signature.
+ await page.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
+ await expect(signature).toHaveClass(/is-pen-finished/);
+});
