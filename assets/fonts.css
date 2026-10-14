@@ -1,0 +1,17 @@
+/* J.H. Lab / typography edition 04. External fonts are optional; system fallbacks keep the site readable. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=LXGW+WenKai:wght@400;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap");
+:root{
+ --font-body:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+ --font-display:"LXGW WenKai","STKaiti","Kaiti SC","KaiTi",serif;
+ --font-latin:Inter,"Helvetica Neue",Arial,sans-serif;
+}
+html[lang="en"]{--font-body:var(--font-latin);--font-display:Georgia,"Times New Roman",serif}
+body{font-family:var(--font-body)!important}
+h1,h2,h3{font-family:var(--font-display);font-weight:500}
+.logo,.small-label,.mono,.index-font,.work-overline,.contact-type,.contact-index,.work-num,.footer-brand,.btn,.theme-toggle,.nav-brief,.back-link,.video-switcher{font-family:var(--font-body)}
+html[data-reading="humanities"] .story h2,html[data-reading="humanities"] .story p,html[data-reading="humanities"] .hero-description,html[data-reading="humanities"] .brief-article{font-family:var(--font-display);letter-spacing:.018em}
+html[data-reading="humanities"] .story p{font-size:15px;line-height:2.1}
+html[data-reading="humanities"] .story h2{font-weight:600}
+.language-toggle,.reading-toggle{background:transparent;color:var(--ink);border:1px solid var(--line-strong);padding:9px 12px;border-radius:999px;font-size:11px;white-space:nowrap;cursor:pointer}
+.language-toggle:hover,.reading-toggle:hover{background:var(--surface)}
+@media(max-width:420px){.language-toggle,.reading-toggle{padding:9px 10px}}
