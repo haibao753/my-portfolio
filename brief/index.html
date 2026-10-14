@@ -88,6 +88,7 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 <script>
 (function(){try{document.documentElement.dataset.theme=localStorage.getItem("jhlab-theme")==="dark"?"dark":"light"}catch(e){};var m=document.getElementById("theme-color");if(m)m.content=document.documentElement.dataset.theme==="dark"?"#141514":"#f7f7f4"})()
 </script>
+<link rel="stylesheet" href="/assets/transitions.css">
 </head>
 <body>
 <header class="site-header"><div class="wrap header-row">
@@ -164,4 +165,5 @@ control.addEventListener("click",()=>change(document.documentElement.dataset.rea
 window.addEventListener("jhlab:language",()=>change(document.documentElement.dataset.reading==="humanities"));
 })();
 </script>
-<script defer src="/assets/i18n.js"></script></body></html>
+<script defer src="/assets/i18n.js"></script><script defer src="/assets/transitions.js"></script>
+</body></html>
