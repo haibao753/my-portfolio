@@ -282,3 +282,54 @@ html[data-theme="dark"] .site-menu-panel--floating{background:rgba(28,30,35,.52)
  html.site-menu-is-open body > main,
  html.site-menu-is-open body > footer{transform:none!important;filter:none!important}
 }
+
+/* Edition 13 — compact, optically aligned glass toolbar.
+   Preserve 44px touch targets while reducing visible badge / monogram dimensions. */
+.glass-site-header .header-row{
+ min-height:62px!important;
+}
+.glass-site-header .logo--solo{
+ min-height:44px!important;min-width:44px!important;
+ padding:0!important;align-items:center!important;
+}
+.glass-site-header .logo .logo-monogram{
+ width:32px!important;height:30px!important;
+ transform:translateY(1px);
+}
+.glass-site-header .header-actions .language-toggle{
+ height:34px!important;min-height:34px!important;
+ min-width:54px!important;
+}
+.glass-site-header .header-actions .theme-toggle{
+ width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;
+}
+.glass-site-header .site-menu-toggle{
+ height:34px!important;min-height:34px!important;flex-basis:36px!important;
+}
+@media(max-width:1180px){
+ .glass-site-header .header-row{min-height:58px!important}
+}
+@media(max-width:760px){
+ .glass-site-header .header-row{
+  min-height:56px!important;
+  gap:10px!important;
+ }
+ .glass-site-header .logo--solo{min-height:44px!important;min-width:40px!important}
+ .glass-site-header .logo .logo-monogram{width:29px!important;height:28px!important}
+ .glass-site-header .header-actions{gap:7px!important}
+ .glass-site-header .header-actions .language-toggle{
+  height:33px!important;min-height:33px!important;min-width:49px!important;
+  padding:0 10px!important;font-size:11px!important;
+ }
+ .glass-site-header .header-actions .theme-toggle{
+  width:33px!important;height:33px!important;min-width:33px!important;min-height:33px!important;
+ }
+ .glass-site-header .site-menu-toggle{
+  height:33px!important;min-height:33px!important;flex-basis:35px!important;
+ }
+ .glass-site-header .theme-icons{width:17px!important;height:17px!important}
+}
+@media(max-width:390px){
+ .glass-site-header .logo .logo-monogram{width:27px!important;height:26px!important}
+ .glass-site-header .header-actions .language-toggle{min-width:47px!important}
+}
