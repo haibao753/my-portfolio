@@ -3,6 +3,18 @@
 "use strict";
 const translations={
 zh:{
+ "chapter.world.name":"世界观察 · 资讯编辑台",
+ "chapter.world.motto":"读懂正在发生的世界",
+ "chapter.world.pressEdition":"读世界 · 每日简报",
+ "chapter.world.pressCol1":"公共议题<br>全球社会的变动与选择",
+ "chapter.world.pressCol2":"科技前沿<br>从算法到现实的突破",
+ "chapter.math.name":"数学影像 · 几何工作台",
+ "chapter.math.motto":"将抽象，变成可见的结构",
+ "chapter.gallery.name":"三维记忆 · 摄影展厅",
+ "chapter.gallery.motto":"把时间留在空间里",
+ "chapter.gallery.exhibit":"私人影像展 · 光影与记忆",
+ "chapter.lab.name":"交互计算 · 数字实验室",
+ "chapter.lab.motto":"让几何成为可以触碰的世界",
  "story.intro":"接下来，沿着四条线索继续探索","story.first":"世界观察","story.second":"数学影像","story.third":"三维记忆","story.fourth":"交互几何","story.headline":"阅读世界，理解抽象，<br>收藏片刻，再创造一种体验。","nav.works":"作品","nav.research":"研究","nav.about":"关于","nav.contact":"联系",
  "nav.home":"返回主页 ↗","nav.brief":"每日简报",
  "hero.kicker":"独立研究与创意计算实验室",
@@ -48,6 +60,18 @@ zh:{
  "brief.topRight":"每日观察 · 2026","brief.brandFooter":"资讯观察"
 },
 en:{
+ "chapter.world.name":"World Observatory · Editorial",
+ "chapter.world.motto":"Understand the world in motion",
+ "chapter.world.pressEdition":"Global affairs · Daily brief",
+ "chapter.world.pressCol1":"Public affairs<br>Choices shaping our society",
+ "chapter.world.pressCol2":"Emerging technology<br>Ideas meeting the real world",
+ "chapter.math.name":"Mathematics · Drawing Studio",
+ "chapter.math.motto":"Making abstract structures visible",
+ "chapter.gallery.name":"Visual Memory · Photo Gallery",
+ "chapter.gallery.motto":"Give memory a space of its own",
+ "chapter.gallery.exhibit":"A private exhibition · Light and memory",
+ "chapter.lab.name":"Interactive Computing · Laboratory",
+ "chapter.lab.motto":"Geometry becomes an experience",
  "story.intro":"Follow four paths of curiosity","story.first":"World","story.second":"Mathematics","story.third":"Memory","story.fourth":"Interaction","story.headline":"Read the world. Explore ideas.<br>Preserve moments. Create experiences.","nav.works":"Works","nav.research":"Research","nav.about":"About","nav.contact":"Contact",
  "nav.home":"Back home ↗","nav.brief":"Daily brief",
  "hero.kicker":"Independent research & creative computing",
@@ -91,7 +115,7 @@ en:{
  "footer.copy":"Creative work driven by curiosity",
  "brief.topRight":"Daily observations · 2026","brief.brandFooter":"Brief"
 }};
-const safeHtml=new Set(["story.headline","hero.title","hero.aside","project.brief.art","project.exp.art","studio.title","brief.heading","brief.desc"]);
+const safeHtml=new Set(["chapter.world.pressCol1","chapter.world.pressCol2","story.headline","hero.title","hero.aside","project.brief.art","project.exp.art","studio.title","brief.heading","brief.desc"]);
 const originals=new Map();
 function readLang(){try{return localStorage.getItem("jhlab-lang")==="en"?"en":"zh"}catch(e){return "zh"}}
 function apply(lang){
