@@ -202,3 +202,29 @@ test("reduced motion turns off scroll-linked depth",async({page})=>{
  await expect(visual).toHaveCSS("filter","none");
  await expect(visual).toHaveCSS("transform","none");
 });
+
+
+test("mobile menu has a dimmed glass backdrop and compact layout",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ await page.locator("[data-menu-toggle]").click();
+ const backdrop=page.locator("[data-menu-backdrop]");
+ await expect(backdrop).toBeVisible();
+ const bg=await backdrop.evaluate(el=>getComputedStyle(el).backgroundColor);
+ expect(bg).toMatch(/rgba?\\(/);
+ const panel=page.locator("[data-menu-panel]");
+ const box=await panel.boundingBox();
+ expect(box?.width??0).toBeLessThanOrEqual(230);
+ await page.keyboard.press("Escape");
+ await expect(backdrop).toBeHidden();
+});
+
+test("theme icon switches appearance and exposes pressed state",async({page})=>{
+ await page.goto("/");
+ const toggle=page.locator("[data-theme-toggle]");
+ await expect(toggle.locator("svg")).toBeVisible();
+ const before=await page.locator("html").getAttribute("data-theme");
+ await toggle.click();
+ await expect(toggle).toHaveAttribute("aria-pressed",before==="dark"?"false":"true");
+ await expect(page.locator("html")).toHaveAttribute("data-theme",before==="dark"?"light":"dark");
+});
