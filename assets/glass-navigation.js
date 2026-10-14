@@ -31,10 +31,19 @@
   positionPanel();
   window.addEventListener("resize",positionPanel,{passive:true});
   window.addEventListener("scroll",positionPanel,{passive:true});
+  // Anchor the scale to the current viewport instead of the top of a long page.
+  // This prevents jumping if the visitor opens the menu after scrolling.
+  const setDepthOrigins=()=>{
+   document.querySelectorAll("body > main,body > footer").forEach(el=>{
+    const rect=el.getBoundingClientRect();
+    const y=Math.max(0,Math.min(rect.height,window.innerHeight*.48-rect.top));
+    el.style.setProperty("--menu-focus-y",y+"px");
+   });
+  };
   let lastFocus=null;
   function setOpen(open,{restore=false}={}){
    if(open===(toggle.getAttribute("aria-expanded")==="true"))return;
-   if(open){lastFocus=document.activeElement;positionPanel()}
+   if(open){lastFocus=document.activeElement;positionPanel();setDepthOrigins()}
    toggle.setAttribute("aria-expanded",String(open));
    toggle.setAttribute("aria-label",open?(document.documentElement.lang==="en"?"Close menu":"关闭导航菜单"):(document.documentElement.lang==="en"?"Open menu":"打开导航菜单"));
    panel.classList.toggle("is-open",open);
