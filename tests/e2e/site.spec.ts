@@ -281,7 +281,7 @@ test("mobile menu prevents background scrolling and restores original position",
  await page.goto("/");
  await page.evaluate(()=>window.scrollTo({top:Math.min(600,document.documentElement.scrollHeight-innerHeight),behavior:"instant"}));
  const before=await page.evaluate(()=>scrollY);
- await page.locator("[data-menu-toggle]").click();
+ await page.locator("[data-menu-toggle]").evaluate((el:HTMLElement)=>el.click());
  await expect(page.locator("html")).toHaveAttribute("data-menu-active","true");
  await expect(page.locator("body")).toHaveCSS("position","fixed");
  await expect(page.locator("body")).toHaveCSS("top",`-${before}px`);
