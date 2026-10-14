@@ -53,7 +53,7 @@ function init(){
  create();incoming();
  document.addEventListener("click",outgoing,{capture:true});
  window.addEventListener("pageshow",()=>{if(document.readyState==="complete")hide()});
- window.addEventListener("pagehide",()=>{try{sessionStorage.removeItem(KEY)}catch(e){}});
+ // Preserve the navigation marker across pagehide, so the destination can fade in.
  window.addEventListener("jhlab:language",setLabel);
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
