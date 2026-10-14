@@ -217,6 +217,45 @@ img{max-width:100%}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }
+
+/* EDITION 05 / QUIET KINETICS — monochrome micro-interactions */
+.hero-aside{position:relative}
+.kinetic-mark{position:relative;width:130px;height:130px;margin-bottom:auto;margin-left:auto;flex:none;isolation:isolate}
+.kinetic-mark .km-orbit{position:absolute;inset:10px;border:1px solid var(--line-strong);border-radius:50%;transform:rotate(-27deg) scaleY(.53);animation:km-orbit 24s linear infinite}
+.kinetic-mark .km-orbit:nth-child(2){inset:17px;transform:rotate(56deg) scaleY(.62);animation:km-orbit-reverse 30s linear infinite;border-color:var(--line)}
+.kinetic-mark .km-core{position:absolute;top:50%;left:50%;width:11px;height:11px;background:var(--ink);border-radius:50%;transform:translate(-50%,-50%)}
+.kinetic-mark .km-satellite{position:absolute;top:7px;left:50%;width:6px;height:6px;background:var(--ink);border-radius:50%;transform-origin:0 58px;animation:km-satellite 18s linear infinite}
+.kinetic-mark .km-cross{position:absolute;left:0;top:50%;height:1px;width:100%;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+@keyframes km-orbit{from{transform:rotate(-27deg) scaleY(.53)}to{transform:rotate(333deg) scaleY(.53)}}
+@keyframes km-orbit-reverse{from{transform:rotate(56deg) scaleY(.62)}to{transform:rotate(-304deg) scaleY(.62)}}
+@keyframes km-satellite{to{transform:rotate(360deg)}}
+.hero-cta .button-primary span,.hero-cta .button-quiet span{display:inline-block;transition:transform .32s cubic-bezier(.2,.7,.2,1)}
+.hero-cta a:hover span{transform:translateX(3px)}
+.work{position:relative;transition:background-color .35s ease}
+.work:before{content:"";position:absolute;top:-1px;left:0;width:0;height:1px;background:var(--ink);transition:width .7s cubic-bezier(.19,1,.22,1);pointer-events:none}
+.work:hover:before{width:100%}
+.work-num{transition:color .25s,transform .35s}
+.work:hover .work-num{color:var(--ink);transform:translateX(3px)}
+.work h3{transition:transform .4s cubic-bezier(.19,1,.22,1)}
+.work:hover h3{transform:translateX(4px)}
+.bilibili-visual .bilibili-play{transition:transform .4s cubic-bezier(.19,1,.22,1)}
+.bilibili-visual:hover .bilibili-play{transform:scale(1.06) rotate(5deg)}
+.brief-visual:after{transition:transform 1.2s cubic-bezier(.19,1,.22,1),opacity .5s}
+.brief-visual:hover:after{transform:translate(-14px,8px);opacity:.8}
+.photo-visual img{transition:filter .55s,transform .7s cubic-bezier(.19,1,.22,1)}
+.photo-visual:hover img:first-child{transform:translateY(-5px)}
+.photo-visual:hover img:last-of-type{transform:translateY(5px)}
+.contact-item{transition:padding-left .35s,background .35s}
+.contact-item:hover{padding-left:9px;background:var(--surface)}
+.theme-symbol{transition:transform .65s cubic-bezier(.2,.7,.2,1)}
+.theme-toggle:hover .theme-symbol{transform:rotate(42deg)}
+@media(max-width:760px){.kinetic-mark{width:82px;height:82px;margin-bottom:18px;margin-right:3px}.kinetic-mark .km-satellite{display:none}.hero-aside{padding-top:8px}}
+@media(hover:none){.work:hover h3,.work:hover .work-num,.contact-item:hover{transform:none;padding-left:0}.work:hover:before{width:0}}
+@media(prefers-reduced-motion:reduce){
+ .kinetic-mark *, .kinetic-mark *:before,.kinetic-mark *:after{animation:none!important}
+ .hero-cta a:hover span,.work:hover h3,.work:hover .work-num,.photo-visual:hover img,.brief-visual:hover:after{transform:none!important}
+}
+
 </style>
 <script>
 (function(){
@@ -260,6 +299,7 @@ img{max-width:100%}
     </div>
    </div>
    <aside class="hero-aside">
+    <div class="kinetic-mark" aria-hidden="true"><span class="km-cross"></span><span class="km-orbit"></span><span class="km-orbit"></span><span class="km-core"></span><span class="km-satellite"></span></div>
     <span class="small-label index-font" data-i18n="hero.studioTitle">关于这个站点</span>
     <p data-i18n="hero.heroInfo">这里记录我的研究、阅读、可视化实验，以及与世界发生连接的方式。</p>
     <div class="coordinates index-font"><span data-i18n="hero.asideMeta">建立于 2026 年 · 持续探索</span></div>
