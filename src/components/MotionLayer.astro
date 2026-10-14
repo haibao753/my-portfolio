@@ -26,10 +26,10 @@
   });
   root.setAttribute("data-motion-ready","");
  }
- let raf=0,lastScroll=scrollY;
+ let raf=0;
  const progress=document.querySelector<HTMLElement>("[data-motion-progress]");
  const visuals=[...document.querySelectorAll<HTMLElement>(".project .visual")];
- const finale=document.querySelector<HTMLElement>(".finale img");
+ const finale=document.querySelector<HTMLElement>(".lab-finale-graphic");
  function draw(){
   raf=0;
   if(progress){
@@ -56,7 +56,6 @@
     finale.style.setProperty("--finale-y",`${(t*13).toFixed(1)}px`);
    }
   }
-  lastScroll=scrollY;
  }
  function queue(){if(!raf)raf=requestAnimationFrame(draw)}
  setup();queue();
@@ -82,7 +81,7 @@
  :global(.project .project-link:hover){letter-spacing:.035em}
  :global(.contact-links>a),:global(.contact-links>.wechat){transition:transform .38s cubic-bezier(.16,1,.3,1),box-shadow .38s ease}
  :global(.contact-links>a:hover),:global(.contact-links>.wechat:hover){transform:translateY(-4px);box-shadow:var(--shadow-md)}
- :global(.finale img){translate:0 var(--finale-y,0px)}
+ :global(.lab-finale-graphic){translate:0 var(--finale-y,0px)}
  :global(.finale){overflow:hidden}
  :global(.visual-1 .math-art svg){animation:motion-math-breathe 9s ease-in-out infinite alternate;transform-origin:center}
  :global(.visual-2 .photo-art img){transition:transform .65s cubic-bezier(.16,1,.3,1)}
@@ -92,5 +91,5 @@
  @keyframes motion-hero-in{from{opacity:0;transform:translateY(26px);filter:blur(4px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
  @keyframes motion-math-breathe{from{transform:translateY(-4px) scale(.975)}to{transform:translateY(5px) scale(1.02)}}
  @media(hover:none){:global(.project:hover){box-shadow:var(--shadow-md)}:global(.contact-links>a:hover),:global(.contact-links>.wechat:hover){transform:none;box-shadow:var(--shadow-sm)}}
- @media(prefers-reduced-motion:reduce){:global(.hero .eyebrow),:global(.hero h1),:global(.hero .lead),:global(.hero .actions){animation:none!important}:global(.intro),:global(.project),:global(.contact),:global(.finale){opacity:1!important;transform:none!important;transition:none!important}:global(.visual-1 .math-art svg){animation:none!important}:global(.project .visual),:global(.finale img){translate:none!important}}
+ @media(prefers-reduced-motion:reduce){:global(.hero .eyebrow),:global(.hero h1),:global(.hero .lead),:global(.hero .actions){animation:none!important}:global(.intro),:global(.project),:global(.contact),:global(.finale){opacity:1!important;transform:none!important;transition:none!important}:global(.visual-1 .math-art svg){animation:none!important}:global(.project .visual),:global(.lab-finale-graphic){translate:none!important}}
 </style>
