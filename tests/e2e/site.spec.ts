@@ -263,3 +263,14 @@ test("mobile liquid glass menu animates closed and supports rapid reopening",asy
  await expect(panel).toBeHidden();
  await expect(page.locator("html")).not.toHaveAttribute("data-menu-open","true");
 });
+
+
+test("theme transition animates on click but not on reload",async({page})=>{
+ await page.goto("/");
+ const toggle=page.locator("[data-theme-toggle]");
+ await toggle.click();
+ await expect(page.locator("html")).toHaveAttribute("data-theme-transition","true");
+ await expect.poll(()=>page.locator("html").getAttribute("data-theme-transition"),{timeout:3000}).toBeNull();
+ await page.reload();
+ await expect(page.locator("html")).not.toHaveAttribute("data-theme-transition","true");
+});
