@@ -1,455 +1,146 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J.H. Lab | Sciences · Information · Technology · Humanities</title>
-    <style>
-        :root {
-            --bg-color: #050508;
-            --text-main: #f0f3f8;
-            --text-muted: #8a8f9d;
-            --card-bg: rgba(16, 18, 27, 0.75);
-            --card-border: rgba(255, 255, 255, 0.08);
-            
-            --color-s: #00e5ff; /* Sciences */
-            --color-i: #b366ff; /* Information */
-            --color-t: #ff3366; /* Technology */
-            --color-h: #ffaa00; /* Humanities */
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-            line-height: 1.6;
-            background-image: 
-                radial-gradient(circle at 15% 30%, rgba(0, 229, 255, 0.04), transparent 35%),
-                radial-gradient(circle at 85% 70%, rgba(179, 102, 255, 0.04), transparent 35%);
-            background-attachment: fixed;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .container {
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 60px 24px 80px;
-        }
-
-        header {
-            margin-bottom: 60px;
-            text-align: center;
-            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .super-title {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        h1 {
-            font-size: 3.8rem;
-            font-weight: 800;
-            margin: 0;
-            letter-spacing: 3px;
-            background: linear-gradient(135deg, #ffffff 30%, #9aa0b4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .acronym-def {
-            font-size: 0.95rem;
-            font-weight: 500;
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        
-        .acronym-def span {
-            padding: 6px 16px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(8px);
-            letter-spacing: 0.5px;
-        }
-        .a-s { color: var(--color-s); border-color: rgba(0, 229, 255, 0.2) !important; }
-        .a-i { color: var(--color-i); border-color: rgba(179, 102, 255, 0.2) !important; }
-        .a-t { color: var(--color-t); border-color: rgba(255, 51, 102, 0.2) !important; }
-        .a-h { color: var(--color-h); border-color: rgba(255, 170, 0, 0.2) !important; }
-
-        /* Global intelligence brief: primary homepage entry */
-        .brief-entry {
-            display: inline-flex;
-            align-items: center;
-            gap: 13px;
-            margin-top: 28px;
-            padding: 12px 20px;
-            border: 1px solid rgba(179, 102, 255, 0.36);
-            border-radius: 12px;
-            color: #f0e8ff;
-            background: linear-gradient(110deg, rgba(179, 102, 255, 0.15), rgba(0, 229, 255, 0.055));
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.13);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: transform .2s, border-color .2s, box-shadow .2s;
-        }
-        .brief-entry:hover, .brief-entry:focus-visible {
-            transform: translateY(-2px);
-            border-color: rgba(179, 102, 255, 0.75);
-            box-shadow: 0 12px 34px rgba(179, 102, 255, 0.12);
-        }
-        .brief-entry .brief-dot {
-            width: 8px; height: 8px; flex: none;
-            background: #52d6b1; border-radius: 50%;
-            box-shadow: 0 0 12px rgba(82, 214, 177, 0.6);
-        }
-        .brief-entry .brief-arrow { color: #ba9df5; font-size: 1.1rem; }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 28px;
-        }
-        
-        @media (max-width: 868px) {
-            .grid-layout { grid-template-columns: 1fr; }
-            h1 { font-size: 2.8rem; }
-        }
-
-        .module-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .module-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            opacity: 0.6;
-            transition: opacity 0.3s;
-        }
-        .card-s::before { background: var(--color-s); box-shadow: 0 0 12px var(--color-s); }
-        .card-i::before { background: var(--color-i); box-shadow: 0 0 12px var(--color-i); }
-        .card-t::before { background: var(--color-t); box-shadow: 0 0 12px var(--color-t); }
-        .card-h::before { background: var(--color-h); box-shadow: 0 0 12px var(--color-h); }
-
-        .module-card:hover { 
-            transform: translateY(-4px); 
-            border-color: rgba(255, 255, 255, 0.18); 
-            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-        }
-        .module-card:hover::before { opacity: 1; }
-
-        .module-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .module-card h2 {
-            font-size: 1.35rem;
-            margin: 0;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        .card-s h2 { color: var(--color-s); }
-        .card-i h2 { color: var(--color-i); }
-        .card-t h2 { color: var(--color-t); }
-        .card-h h2 { color: var(--color-h); }
-
-        .module-card p {
-            color: var(--text-muted);
-            font-size: 0.92rem;
-            margin: 0 0 20px 0;
-            line-height: 1.55;
-        }
-
-        /* 视频选择标签栏 */
-        .video-tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 8px;
-            margin-bottom: 12px;
-            scrollbar-width: none;
-        }
-        .video-tabs::-webkit-scrollbar { display: none; }
-
-        .video-tab {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: var(--text-muted);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.78rem;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-        }
-        .video-tab:hover {
-            color: #fff;
-            border-color: rgba(255,255,255,0.25);
-        }
-        .video-tab.active {
-            background: rgba(0, 229, 255, 0.12);
-            color: var(--color-s);
-            border-color: var(--color-s);
-            font-weight: 600;
-        }
-
-        .media-container {
-            border-radius: 10px;
-            overflow: hidden;
-            background: #000;
-            border: 1px solid rgba(255,255,255,0.06);
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-        }
-        iframe, video { 
-            display: block; 
-            width: 100%; 
-            height: 100%; 
-            border: none; 
-            object-fit: cover;
-        }
-
-        /* 胶卷画廊：Humanities */
-        .filmstrip {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            margin-top: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--color-h) rgba(255,255,255,0.03);
-        }
-        .filmstrip::-webkit-scrollbar { height: 4px; }
-        .filmstrip::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-        .filmstrip::-webkit-scrollbar-thumb { background: var(--color-h); border-radius: 2px; }
-
-        .filmstrip img {
-            height: 160px;
-            border-radius: 6px;
-            object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.1);
-            flex-shrink: 0;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .filmstrip img:hover {
-            transform: scale(1.02);
-            border-color: var(--color-h);
-        }
-
-        /* Technology 终端监视面板 */
-        .tech-terminal {
-            background: #08080a;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            padding: 16px 18px;
-            font-family: "SF Mono", Monaco, Consolas, "Courier New", monospace;
-            font-size: 0.82rem;
-            color: #00ffcc;
-            margin-top: auto;
-        }
-        .tech-terminal::before {
-            content: '● ● ●';
-            display: block;
-            color: #444;
-            font-size: 0.65rem;
-            margin-bottom: 12px;
-            letter-spacing: 3px;
-        }
-        .terminal-line { margin: 5px 0; }
-        .terminal-dim { color: #666e80; }
-        .terminal-highlight { color: #ff3366; font-weight: 600; }
-
-        .btn-action {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 14px;
-            padding: 9px 16px;
-            background: rgba(255,255,255,0.03);
-            color: var(--text-main);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 8px;
-            font-size: 0.82rem;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-        .btn-action:hover { 
-            background: rgba(255,255,255,0.08); 
-            border-color: rgba(255,255,255,0.25);
-        }
-
-        footer {
-            text-align: center;
-            color: #555d6e;
-            font-size: 0.82rem;
-            margin-top: 70px;
-            font-family: "SF Mono", Consolas, monospace;
-            letter-spacing: 0.5px;
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07090f">
+<meta name="description" content="J.H. Lab — 探索数学、信息、交互技术与人文影像的独立数字实验室。">
+<title>J.H. Lab — Independent Digital Laboratory</title>
+<style>
+:root{color-scheme:dark;--bg:#07090f;--bg2:#0c111b;--line:rgba(206,224,255,.12);--ink:#edf3ff;--muted:#919bad;--cyan:#8be6e5;--violet:#baa9ff;--orange:#f6bf8b}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif;-webkit-font-smoothing:antialiased}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 65% 38% at 87% 0%,rgba(76,97,143,.15),transparent 85%),radial-gradient(ellipse 55% 45% at 0% 55%,rgba(49,88,103,.11),transparent 90%)}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+::selection{background:#80d9eb;color:#071018}
+.shell{width:min(1320px,calc(100% - 96px));margin-inline:auto}
+.topbar{height:80px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:-.04em;font-size:21px}
+.brand-mark{width:27px;height:27px;border:1.5px solid #c8e4f0;border-radius:8px;display:grid;place-items:center;transform:rotate(-13deg);font-size:12px;letter-spacing:0}
+.brand-mark span{transform:rotate(13deg)}
+.mainnav{display:flex;gap:30px;align-items:center;font-size:12px;letter-spacing:.055em;color:#bac4d1}
+.mainnav a{transition:color .2s}.mainnav a:hover{color:#fff}
+.nav-cta{border:1px solid #55717d;padding:11px 18px;border-radius:999px;color:#d4f9ff!important}
+.mobile-link{display:none}
+.eyebrow{font-family:ui-monospace,Consolas,monospace;font-size:11px;letter-spacing:.19em;color:var(--cyan);text-transform:uppercase}
+.hero{min-height:640px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:30px;border-bottom:1px solid var(--line);position:relative;padding:68px 0 86px}
+.hero h1{font-size:clamp(64px,8vw,124px);font-weight:650;letter-spacing:-.095em;line-height:.97;margin:34px 0 24px}
+.hero h1 .accent{background:linear-gradient(100deg,#f1f8ff,#a3c3d5 70%,#98a1ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{max-width:555px;color:#aeb9c7;font-size:16px;line-height:1.95}
+.hero-sub strong{color:#f3f8ff;font-weight:550}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+.action{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:15px 21px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--line);transition:transform .2s,border-color .2s,background .2s}
+.action:hover{transform:translateY(-3px);border-color:#87b5c9}
+.action.primary{background:#d8eced;border-color:#d8eced;color:#111923}
+.action.primary:hover{background:white}
+.action .arrow{font-size:17px}
+.hero-meta{display:flex;gap:21px;flex-wrap:wrap;margin-top:56px;color:#8290a1;font:11px ui-monospace,Consolas,monospace;letter-spacing:.06em}
+.hero-meta span:first-child:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#8ae6ba;box-shadow:0 0 12px #8ae6ba;margin-right:9px}
+.orbit-scene{height:475px;position:relative;display:grid;place-items:center;isolation:isolate;overflow:hidden}
+.orbit-scene:before{content:"";position:absolute;inset:9%;background:radial-gradient(circle,rgba(70,131,160,.16),transparent 66%);filter:blur(25px)}
+.orbit{position:absolute;width:340px;height:340px;border:1px solid rgba(153,209,234,.3);border-radius:50%;transform:rotateX(66deg) rotateZ(-32deg);box-shadow:0 0 40px rgba(89,180,220,.065),inset 0 0 35px rgba(89,180,220,.05)}
+.orbit.o2{transform:rotateY(66deg) rotateZ(37deg);width:325px;height:325px;border-color:rgba(167,157,230,.29)}
+.orbit.o3{transform:rotateX(22deg) rotateY(58deg) rotateZ(-18deg);width:395px;height:395px;border-style:dashed;border-color:rgba(192,221,238,.14)}
+.core{width:180px;height:180px;border:1px solid rgba(146,214,231,.35);border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 34% 26%,rgba(139,230,229,.14),rgba(20,33,55,.05) 67%,transparent);box-shadow:inset 0 0 52px rgba(74,170,196,.07),0 0 65px rgba(57,130,175,.14)}
+.core span{font-size:49px;font-weight:300;letter-spacing:-.11em;color:#e1f8fc}
+.orbit-label{position:absolute;font:10px ui-monospace,Consolas,monospace;color:#91afc6;letter-spacing:.12em}
+.orbit-label.l1{top:15%;right:5%}.orbit-label.l2{bottom:14%;left:10%}
+.plus{position:absolute;color:#406275;font-size:13px}
+.plus.p1{top:23%;left:10%}.plus.p2{right:10%;bottom:23%}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;padding:94px 0 32px}
+.section-head h2{font-size:clamp(29px,4vw,47px);line-height:1.22;letter-spacing:-.06em;font-weight:600;margin:13px 0 0}
+.section-head p{max-width:400px;line-height:1.8;color:var(--muted);font-size:13px;margin:0}
+.project-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px}
+.panel{border:1px solid var(--line);background:linear-gradient(142deg,#101823,#0a0e16 82%);border-radius:13px;overflow:hidden;position:relative;transition:border-color .25s,transform .25s}
+.panel:hover{border-color:rgba(161,216,229,.36)}
+.panel.large{grid-column:span 7}.panel.small{grid-column:span 5}.panel.half{grid-column:span 6}
+.panel-inner{padding:33px}
+.number{font:11px ui-monospace,Consolas,monospace;color:#7695a5;letter-spacing:.12em}
+.panel h3{margin:17px 0 10px;font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.055em;line-height:1.24}
+.panel p{color:#a3afbf;line-height:1.85;font-size:13px;max-width:520px;margin:0}
+.panel-link{display:inline-flex;align-items:center;gap:12px;margin-top:23px;color:#c4f5fb;font-size:12px;font-weight:650}
+.panel-link:hover{text-decoration:underline;text-underline-offset:4px}
+.brief-visual{min-height:230px;margin-top:25px;border-radius:8px;border:1px solid #273747;background:radial-gradient(circle at 80% 28%,#1d3445,#0c1420 64%);padding:24px;position:relative;overflow:hidden}
+.brief-visual:before{content:"";position:absolute;right:-50px;top:-75px;width:260px;height:260px;border:1px solid #34566d;border-radius:50%;box-shadow:0 0 0 40px rgba(49,83,107,.1),0 0 0 90px rgba(49,83,107,.055)}
+.brief-visual .topline{font:10px ui-monospace,Consolas,monospace;color:#85bccc;letter-spacing:.19em}
+.brief-visual .headline{position:relative;font-size:clamp(27px,3.3vw,42px);max-width:390px;line-height:1.3;letter-spacing:-.055em;margin:28px 0 16px}
+.brief-visual .tag{position:relative;font-size:11px;color:#80c5da}
+.brief-visual .tag:before{content:"●";color:#67dcb3;margin-right:8px}
+.science-player{margin-top:22px;aspect-ratio:16/9;background:#020407;border:1px solid #27333f;border-radius:8px;overflow:hidden}
+.science-player video{display:block;width:100%;height:100%;object-fit:contain}
+.video-tabs{display:flex;gap:8px;overflow:auto;margin-top:14px;padding-bottom:3px;scrollbar-width:thin}
+.video-tab{flex:none;background:transparent;border:1px solid #33404c;color:#a9b6c6;border-radius:7px;padding:9px 12px;font-size:11px;cursor:pointer;transition:background .2s,color .2s}
+.video-tab[aria-pressed=true]{color:#d9fbff;background:#17303a;border-color:#457280}
+.lab-visual{height:245px;margin-top:27px;border-radius:9px;background:radial-gradient(circle at 50% 50%,#1a3843,#0a141d 67%);overflow:hidden;position:relative;display:grid;place-items:center;border:1px solid #244352}
+.lab-visual:before,.lab-visual:after{content:"";position:absolute;width:195px;height:195px;border:1px solid rgba(114,213,214,.5);transform:rotate(45deg) skew(17deg,17deg);box-shadow:0 0 35px rgba(91,181,183,.12)}
+.lab-visual:after{width:125px;height:125px;transform:rotate(-25deg) skew(17deg,17deg);border-color:rgba(193,182,244,.44)}
+.lab-visual span{z-index:1;font:11px ui-monospace,Consolas,monospace;letter-spacing:.14em;color:#cdeef3;background:#0c1a25d9;padding:10px}
+.gallery-visual{height:235px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:26px;overflow:hidden;border-radius:8px}
+.gallery-visual img{height:100%;width:100%;min-width:0;object-fit:cover;filter:saturate(.75) contrast(1.07);transition:transform .4s,filter .4s}
+.gallery-visual img:hover{transform:scale(1.06);filter:saturate(1.1)}
+.note-strip{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;padding:62px 0 75px;border-bottom:1px solid var(--line)}
+.note-strip h2{font-size:clamp(24px,3vw,35px);letter-spacing:-.045em;margin:10px 0}
+.note-strip p{color:var(--muted);font-size:13px;margin:0}
+.stack{display:flex;gap:9px;flex-wrap:wrap;max-width:480px}
+.stack span{font:11px ui-monospace,Consolas,monospace;color:#aebed0;border:1px solid #2c3745;border-radius:99px;padding:9px 12px}
+footer{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:36px 0 47px;font:11px ui-monospace,Consolas,monospace;color:#788596}
+footer a:hover{color:white}
+@media(max-width:950px){.shell{width:min(100% - 48px,1320px)}.hero{min-height:auto;padding:70px 0;grid-template-columns:1fr}.orbit-scene{position:absolute;right:0;top:44px;width:45%;height:380px;opacity:.28;pointer-events:none}.hero-copy{position:relative;z-index:1}.panel.large,.panel.small,.panel.half{grid-column:span 12}.section-head{padding-top:68px}.science-player{max-height:460px}.gallery-visual{height:320px}}
+@media(max-width:620px){.shell{width:calc(100% - 36px)}.topbar{height:68px}.mainnav{display:none}.mobile-link{display:inline-flex;font-size:12px;color:#c6e6eb;border:1px solid #37535c;border-radius:99px;padding:9px 12px}.hero{padding:70px 0 50px}.hero h1{font-size:clamp(58px,14vw,87px);margin-top:23px}.hero-sub{font-size:14px}.hero-meta{margin-top:42px;gap:10px 18px}.orbit-scene{top:55px;right:-24px;width:230px;height:260px;opacity:.15}.section-head{display:block;padding-top:62px}.section-head p{margin-top:15px}.panel-inner{padding:24px}.brief-visual{padding:19px;min-height:215px}.gallery-visual{height:190px}.note-strip{padding:54px 0}.stack{margin-top:10px}.action{padding:13px 16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style>
 </head>
 <body>
-
-<div class="container">
-    
-    <header>
-        <div class="super-title">J.H. Engineering & Research Lab</div>
-        <h1>J.H. LAB</h1>
-        <div class="acronym-def">
-            <span class="a-s">Sciences</span>
-            <span class="a-i">Information</span>
-            <span class="a-t">Technology</span>
-            <span class="a-h">Humanities</span>
-        </div>
-        <a class="brief-entry" href="/brief/" aria-label="进入全球资讯观察站，查看每日中文全球简报">
-            <span class="brief-dot" aria-hidden="true"></span>
-            <span>全球资讯观察站 <span style="font-weight:400;opacity:.72">/ DAILY BRIEF</span></span>
-            <span class="brief-arrow" aria-hidden="true">↗</span>
-        </a>
-    </header>
-
-    <main class="grid-layout">
-
-        <!-- 1. Sciences -->
-        <section class="module-card card-s">
-            <div class="module-header">
-                <h2>S - Sciences</h2>
-                <span style="color: var(--color-s); font-size: 1.2rem;">⚡</span>
-            </div>
-            <p>基于 Python (Manim) 算法引擎预渲染的高精数理模型与抽象几何演进仿真。</p>
-            
-            <div class="video-tabs">
-                <button class="video-tab active" onclick="switchVideo('Cool3DLagrange', this)">3D Lagrange</button>
-                <button class="video-tab" onclick="switchVideo('DecisionTreeFullSolution', this)">Decision Tree</button>
-                <button class="video-tab" onclick="switchVideo('GroupTheoryPromo', this)">Group Theory</button>
-                <button class="video-tab" onclick="switchVideo('LagrangeCosetTiling', this)">Coset Tiling</button>
-                <button class="video-tab" onclick="switchVideo('OffTrainingErrorExplanation', this)">Error Analysis</button>
-            </div>
-
-            <div class="media-container">
-                <video id="manim-player" controls preload="metadata">
-                    <source id="video-source" src="https://manim.hujinhai.com/videos/Cool3DLagrange.mp4" type="video/mp4">
-                </video>
-            </div>
-            
-            <a id="download-btn" href="https://manim.hujinhai.com/videos/Cool3DLagrange.mp4" target="_blank" download class="btn-action">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                下载当前渲染视频 (HD)
-            </a>
-        </section>
-
-        <!-- 2. Information -->
-        <section class="module-card card-i">
-            <div class="module-header">
-                <h2>I - Information</h2>
-                <span style="color: var(--color-i); font-size: 1.2rem;">🧊</span>
-            </div>
-            <p>基于 WebGL / Three.js 的 3D 实时物理沙盒。观察数据集从高维随机混沌向低维晶格的演化。</p>
-            
-            <div class="media-container">
-                <iframe src="https://entropy-sandbox.pages.dev" title="3D Entropy Sandbox" loading="lazy"></iframe>
-            </div>
-        </section>
-
-        <!-- 3. Technology -->
-        <section class="module-card card-t">
-            <div class="module-header">
-                <h2>T - Technology</h2>
-                <span style="color: var(--color-t); font-size: 1.2rem;">⚙️</span>
-            </div>
-            <p>底层分布式基础设施、GitOps 自动化部署与全栈边缘节点监视控制台。</p>
-            
-            <div class="tech-terminal">
-                <div class="terminal-line"><span class="terminal-dim"># sys_arch:</span> Cloudflare Edge & Pages CI/CD Pipeline</div>
-                <div class="terminal-line"><span class="terminal-dim"># storage:</span> R2 High-Performance Object Storage</div>
-                <div class="terminal-line"><span class="terminal-dim"># engine:</span> Three.js / WebGL 2.0 / Python Manim Core</div>
-                <div class="terminal-line"><span class="terminal-highlight">status:</span> ALL_NODES_OPERATIONAL [99.9% Availability]</div>
-                <div class="terminal-line" style="color: #00e5ff;">git: main -> origin/deploy (Synced & Active)</div>
-            </div>
-        </section>
-
-        <!-- 4. Humanities -->
-        <section class="module-card card-h">
-            <div class="module-header">
-                <h2>H - Humanities</h2>
-                <span style="color: var(--color-h); font-size: 1.2rem;">📜</span>
-            </div>
-            <p>关于社会科学、行为哲学以及纪实视觉摄影艺术的非结构化思考记录。</p>
-            
-            <div class="filmstrip">
-                <img src="images/1.jpg" alt="纪实摄影作品 1">
-                <img src="images/2.jpg" alt="纪实摄影作品 2">
-                <img src="images/3.jpg" alt="纪实摄影作品 3">
-                <img src="images/4.jpg" alt="纪实摄影作品 4">
-                <img src="images/5.jpg" alt="纪实摄影作品 5">
-            </div>
-            
-            <div style="text-align: center; color: var(--text-muted); font-size: 0.78rem; margin-top: 12px; font-family: monospace;">
-                // 纪实影像与光影切片记录 (支持横向滑动)
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        System Online. All parameters nominal. &copy; 2026 J.H. LAB
-    </footer>
-
+<div class="shell">
+<header class="topbar">
+<a class="brand" href="/" aria-label="J.H. Lab 首页"><span class="brand-mark"><span>J.</span></span> J.H. LAB</a>
+<nav class="mainnav" aria-label="主导航"><a href="#projects">精选项目</a><a href="#science">数学可视化</a><a href="#gallery">视觉档案</a><a href="#about">实验室</a><a class="nav-cta" href="/brief/">全球资讯观察站 ↗</a></nav>
+<a class="mobile-link" href="/brief/">每日简报 ↗</a>
+</header>
+<main>
+<section class="hero" aria-labelledby="hero-title">
+<div class="hero-copy">
+<div class="eyebrow">INDEPENDENT DIGITAL LABORATORY · EST. 2026</div>
+<h1 id="hero-title">Ideas into<br><span class="accent">reality.</span></h1>
+<p class="hero-sub">一座生长中的独立数字实验室。<br>在<strong>数学与科学</strong>的精确、<strong>信息与技术</strong>的边界，以及<strong>人文与影像</strong>的感性之间，探索值得被创造、理解和记录的事物。</p>
+<div class="hero-actions"><a class="action primary" href="#projects">探索作品 <span class="arrow">↘</span></a><a class="action" href="/brief/">阅读今日全球简报 <span class="arrow">↗</span></a></div>
+<div class="hero-meta"><span>PUBLIC DIGITAL LAB</span><span>MATHEMATICS / AI / DESIGN</span><span>SCROLL TO EXPLORE ↓</span></div>
 </div>
-
+<div class="orbit-scene" aria-hidden="true"><div class="orbit"></div><div class="orbit o2"></div><div class="orbit o3"></div><div class="core"><span>JH</span></div><span class="orbit-label l1">SYSTEM / 01</span><span class="orbit-label l2">BOUNDLESS CURIOSITY</span><span class="plus p1">+</span><span class="plus p2">+</span></div>
+</section>
+<section id="projects" aria-labelledby="projects-title">
+<div class="section-head"><div><div class="eyebrow">01 / SELECTED WORK</div><h2 id="projects-title">探索的四个维度<span style="color:var(--cyan)">.</span></h2></div><p>不只是一个作品陈列页。这里连接持续更新的研究、交互实验、科技资讯与视觉记忆。</p></div>
+<div class="project-grid">
+<article class="panel large"><div class="panel-inner"><div class="number">01 — INFORMATION / PUBLIC INTELLIGENCE</div><h3>全球资讯观察站</h3><p>每天用中文重新组织全球重要信息：公共政策、国际社会、人工智能与前沿研究。保留原始来源，重视信息之外的背景与价值。</p><a class="panel-link" href="/brief/">进入资讯观察站 <span aria-hidden="true">↗</span></a><a href="/brief/" class="brief-visual" style="display:block;color:inherit;text-decoration:none" aria-label="访问每日资讯观察站"><div class="topline">J.H. LAB / GLOBAL INTELLIGENCE</div><div class="headline">看见世界，<br>不止于信息流。</div><div class="tag">DAILY BRIEF · 09:00 CST</div></a></div></article>
+<article class="panel small" id="gallery"><div class="panel-inner"><div class="number">02 — HUMANITIES / VISUAL ARCHIVE</div><h3>时光的三维档案</h3><p>从平面影像走向可以探索的空间。独立的 3D 相册，用更自由的交互方式保存片段、记忆与光影。</p><a class="panel-link" href="https://zhengyifan.win/" target="_blank" rel="noopener noreferrer">进入 3D 相册空间 <span aria-hidden="true">↗</span></a><a class="gallery-visual" href="https://zhengyifan.win/" target="_blank" rel="noopener noreferrer" aria-label="打开独立 3D 相册站"><img src="images/2.jpg" loading="lazy" alt="视觉档案照片一"><img src="images/4.jpg" loading="lazy" alt="视觉档案照片二"><img src="images/5.jpg" loading="lazy" alt="视觉档案照片三"></a></div></article>
+<article class="panel half" id="science"><div class="panel-inner"><div class="number">03 — SCIENCES / COMPUTATIONAL VISUALIZATION</div><h3>把抽象数学变得可见</h3><p>使用 Python 与 Manim 将抽象结构、算法与几何关系转化为清晰的动态表达。选择下方主题体验数理可视化。</p><div class="science-player"><video id="manim-player" controls preload="metadata" playsinline aria-label="Manim 数学动画"><source id="video-source" src="https://manim.hujinhai.com/videos/Cool3DLagrange.mp4" type="video/mp4">你的浏览器不支持视频播放。</video></div><div class="video-tabs" role="group" aria-label="选择数学动画"><button type="button" class="video-tab" aria-pressed="true" data-video="Cool3DLagrange">3D Lagrange</button><button type="button" class="video-tab" aria-pressed="false" data-video="DecisionTreeFullSolution">Decision Tree</button><button type="button" class="video-tab" aria-pressed="false" data-video="GroupTheoryPromo">Group Theory</button><button type="button" class="video-tab" aria-pressed="false" data-video="LagrangeCosetTiling">Coset Tiling</button><button type="button" class="video-tab" aria-pressed="false" data-video="OffTrainingErrorExplanation">Error Analysis</button></div><a class="panel-link" id="download-btn" href="https://manim.hujinhai.com/videos/Cool3DLagrange.mp4" target="_blank" rel="noopener noreferrer">打开当前视频文件 <span aria-hidden="true">↗</span></a></div></article>
+<article class="panel half"><div class="panel-inner"><div class="number">04 — TECHNOLOGY / INTERACTIVE EXPERIMENTS</div><h3>交互世界的实验</h3><p>基于 Three.js 与 WebGL 的实时可视化沙盒，观察数据、熵与空间结构如何在交互中呈现。可前往独立实验站体验。</p><a class="panel-link" href="https://entropy-sandbox.pages.dev/" target="_blank" rel="noopener noreferrer">启动交互沙盒 <span aria-hidden="true">↗</span></a><a class="lab-visual" href="https://entropy-sandbox.pages.dev/" target="_blank" rel="noopener noreferrer" aria-label="打开 3D Entropy Sandbox"><span>THREE.JS / WEBGL EXPERIMENT</span></a></div></article>
+</div>
+</section>
+<section class="note-strip" id="about"><div><div class="eyebrow">02 / THE LAB</div><h2>以好奇心驱动的创造实践。</h2><p>在开放网络中学习，在代码与设计之间不断试验。</p></div><div class="stack" aria-label="实验室技术与领域"><span>MATHEMATICS</span><span>PYTHON / MANIM</span><span>AI / DATA SCIENCE</span><span>THREE.JS</span><span>WEBGL</span><span>CREATIVE CODING</span></div></section>
+</main>
+<footer><span>© 2026 J.H. LAB · MADE TO EXPLORE</span><span><a href="/brief/">GLOBAL BRIEF ↗</a> &nbsp;·&nbsp; <a href="https://zhengyifan.win/" target="_blank" rel="noopener noreferrer">3D GALLERY ↗</a> &nbsp;·&nbsp; <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">BACK TO TOP ↑</a></span></footer>
+</div>
 <script>
-    function switchVideo(videoName, btnElement) {
-        const player = document.getElementById('manim-player');
-        const source = document.getElementById('video-source');
-        const downloadBtn = document.getElementById('download-btn');
-        
-        const newUrl = `https://manim.hujinhai.com/videos/${videoName}.mp4`;
-        
-        source.src = newUrl;
-        downloadBtn.href = newUrl;
-        player.load();
-        player.play();
-
-        document.querySelectorAll('.video-tab').forEach(tab => tab.classList.remove('active'));
-        btnElement.classList.add('active');
-    }
+(function(){
+"use strict";
+var player=document.getElementById("manim-player");
+var source=document.getElementById("video-source");
+var download=document.getElementById("download-btn");
+var allowed=new Set(["Cool3DLagrange","DecisionTreeFullSolution","GroupTheoryPromo","LagrangeCosetTiling","OffTrainingErrorExplanation"]);
+document.querySelectorAll(".video-tab").forEach(function(btn){
+btn.addEventListener("click",function(){
+var key=btn.getAttribute("data-video");
+if(!allowed.has(key))return;
+var url="https://manim.hujinhai.com/videos/"+key+".mp4";
+source.src=url;download.href=url;
+player.load();
+document.querySelectorAll(".video-tab").forEach(function(other){other.setAttribute("aria-pressed",String(other===btn))});
+});
+});
+})();
 </script>
-
 </body>
 </html>
