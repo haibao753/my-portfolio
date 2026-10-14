@@ -90,7 +90,7 @@ html[data-theme="dark"] .glass-site-header .site-menu-toggle{background:rgba(255
 .glass-site-header .site-menu-toggle[aria-expanded="true"] span:first-child{transform:translateY(6.5px) rotate(45deg)}
 .glass-site-header .site-menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
 .glass-site-header .site-menu-toggle[aria-expanded="true"] span:last-child{transform:translateY(-6.5px) rotate(-45deg)}
-.glass-site-header .site-menu-panel{
+.site-menu-panel--floating{
  position:absolute;top:100%;left:0;width:100%;z-index:3;
  background:var(--glass-bg);
  -webkit-backdrop-filter:blur(32px) saturate(180%);
@@ -102,32 +102,32 @@ html[data-theme="dark"] .glass-site-header .site-menu-toggle{background:rgba(255
  transform:translateY(-8px);
  transition:opacity .26s ease,transform .34s cubic-bezier(.2,.85,.2,1),visibility .26s;
 }
-.glass-site-header .site-menu-panel.is-open{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
-.glass-site-header .site-menu-panel__inner{
+.site-menu-panel--floating.is-open{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+.site-menu-panel--floating__inner{
  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
  gap:0 24px;padding-top:25px;padding-bottom:39px;
 }
-.glass-site-header .site-menu-panel__eyebrow{
+.site-menu-panel--floating__eyebrow{
  grid-column:1/-1;margin-bottom:17px;
  font-size:10px;letter-spacing:.16em;color:var(--muted);font-weight:650;
 }
-.glass-site-header .site-menu-panel a{
+.site-menu-panel--floating a{
  display:block;color:var(--ink);text-decoration:none;
  border-bottom:1px solid var(--glass-line);
  font-size:clamp(19px,2.6vw,29px);font-weight:590;
  letter-spacing:-.04em;padding:17px 2px;
  transition:opacity .18s ease,transform .22s ease;
 }
-.glass-site-header .site-menu-panel a:hover{opacity:.58;transform:translateX(4px)}
-.glass-site-header .site-menu-panel__tool{grid-column:1/-1;padding-top:24px}
-.glass-site-header .site-menu-panel__tool .reading-toggle{
+.site-menu-panel--floating a:hover{opacity:.58;transform:translateX(4px)}
+.site-menu-panel--floating__tool{grid-column:1/-1;padding-top:24px}
+.site-menu-panel--floating__tool .reading-toggle{
  display:inline-flex!important;align-items:center;justify-content:center;
  min-height:39px!important;border-radius:999px!important;
  background:var(--surface)!important;color:var(--ink);
  border:1px solid var(--line)!important;padding:0 15px!important;
 }
 .glass-site-header .logo:focus-visible,.glass-site-header .site-menu-toggle:focus-visible,
-.glass-site-header .site-menu-panel a:focus-visible{
+.site-menu-panel--floating a:focus-visible{
  outline:2px solid var(--ink);outline-offset:4px;border-radius:6px;
 }
 @media(max-width:1180px){
@@ -143,10 +143,10 @@ html[data-theme="dark"] .glass-site-header .site-menu-toggle{background:rgba(255
  .glass-site-header .header-actions .language-toggle{min-width:53px!important;height:35px!important;padding:0 10px!important;font-size:12px!important}
  .glass-site-header .header-actions .theme-toggle{width:35px!important;height:35px!important;min-width:35px!important}
  .glass-site-header .site-menu-toggle{height:35px!important;min-height:35px!important;flex-basis:37px}
- .glass-site-header .site-menu-panel__inner{display:flex;flex-direction:column;gap:0;padding-top:24px;padding-bottom:39px}
- .glass-site-header .site-menu-panel a{font-size:clamp(23px,5.2vw,34px);padding:13px 1px}
- .glass-site-header .site-menu-panel__eyebrow{font-size:10px;margin-bottom:11px}
- .glass-site-header .site-menu-panel__tool{padding-top:20px}
+ .site-menu-panel--floating__inner{display:flex;flex-direction:column;gap:0;padding-top:24px;padding-bottom:39px}
+ .site-menu-panel--floating a{font-size:clamp(23px,5.2vw,34px);padding:13px 1px}
+ .site-menu-panel--floating__eyebrow{font-size:10px;margin-bottom:11px}
+ .site-menu-panel--floating__tool{padding-top:20px}
 }
 @media(max-width:390px){
  .glass-site-header .header-actions{gap:6px!important}
@@ -158,7 +158,7 @@ html[data-theme="dark"] .glass-site-header .site-menu-toggle{background:rgba(255
  .glass-site-header *, .glass-site-header *:before,.glass-site-header *:after{transition:none!important;animation:none!important}
 }
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
- .site-header.glass-site-header,.glass-site-header .site-menu-panel{background:var(--page)!important}
+ .site-header.glass-site-header,.site-menu-panel--floating{background:var(--page)!important}
 }
 
 /* Independent page veil: blurs the actual document, not the already-blurred header.
@@ -181,17 +181,17 @@ html[data-theme="dark"] .site-menu-veil{background:rgba(10,12,16,.42)}
  opacity:1;
  pointer-events:auto;
 }
-.glass-site-header .site-menu-panel{
+.site-menu-panel--floating{
  /* The navigation itself must be opaque enough for every item to read clearly. */
  background:rgba(250,250,249,.91)!important;
  -webkit-backdrop-filter:blur(34px) saturate(170%)!important;
  backdrop-filter:blur(34px) saturate(170%)!important;
 }
-html[data-theme="dark"] .glass-site-header .site-menu-panel{
+html[data-theme="dark"] .site-menu-panel--floating{
  background:rgba(27,29,33,.92)!important;
 }
 @media(max-width:1180px){
- .glass-site-header .site-menu-panel.is-open{
+ .site-menu-panel--floating.is-open{
   box-shadow:0 30px 80px rgba(15,18,25,.12);
  }
 }
@@ -201,5 +201,45 @@ html[data-theme="dark"] .glass-site-header .site-menu-panel{
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
  .site-menu-veil{background:rgba(247,247,244,.91)}
  html[data-theme="dark"] .site-menu-veil{background:rgba(13,15,18,.93)}
- .glass-site-header .site-menu-panel{background:var(--page)!important}
+ .site-menu-panel--floating{background:var(--page)!important}
+}
+
+
+/* GLASS MENU v3: a genuinely transparent blurred sheet, ONLY underneath its bounds.
+   The detached panel samples page pixels; its dismiss veil does not blur anything. */
+.site-menu-veil,
+.site-menu-veil.is-open{
+ background:transparent!important;
+ -webkit-backdrop-filter:none!important;
+ backdrop-filter:none!important;
+}
+.site-menu-panel--floating{
+ position:fixed!important;
+ top:var(--menu-top,63px);
+ left:0;right:0;width:100%;
+ z-index:155!important;
+ margin:0;
+ background:rgba(246,247,248,.50)!important;
+ -webkit-backdrop-filter:blur(28px) saturate(170%)!important;
+ backdrop-filter:blur(28px) saturate(170%)!important;
+ border-bottom:1px solid rgba(140,146,155,.22);
+ box-shadow:0 19px 34px rgba(20,25,30,.045);
+ max-height:calc(100dvh - var(--menu-top,63px));
+ overflow-y:auto;overscroll-behavior:contain;
+}
+.site-menu-panel--floating.is-open{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+html[data-theme="dark"] .site-menu-panel--floating{
+ background:rgba(28,30,35,.55)!important;
+ border-color:rgba(255,255,255,.11);
+}
+.site-menu-panel--floating .site-menu-panel__inner{position:relative;z-index:1}
+.site-menu-panel--floating a,.site-menu-panel--floating .site-menu-panel__eyebrow{
+ text-shadow:0 1px 3px rgba(250,250,250,.15)
+}
+html[data-theme="dark"] .site-menu-panel--floating a{
+ text-shadow:0 1px 3px rgba(0,0,0,.16)
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+ .site-menu-panel--floating{background:rgba(248,248,248,.95)!important}
+ html[data-theme="dark"] .site-menu-panel--floating{background:rgba(25,27,30,.96)!important}
 }
