@@ -3,7 +3,7 @@ import SignatureMark from "./SignatureMark.astro";
 ---
 <section id="top" class="hero wrap">
  <p class="eyebrow"><span data-locale="zh">独立创作 · 数学 · AI · 影像</span><span data-locale="en">Independent experiments · Math · AI · Art</span></p>
- <h1><span data-locale="zh">让好奇心<br />成为作品。</span><span data-locale="en">Make curiosity<br />visible.</span></h1>
+ <h1 class="hero-title"><span data-locale="zh"><span class="hero-title-line">让好奇心</span><span class="hero-title-line">成为作品。</span></span><span data-locale="en"><span class="hero-title-line">Make curiosity</span><span class="hero-title-line">visible.</span></span></h1>
  <p class="lead"><span data-locale="zh">这里没有标准答案，只有不断冒出来的新问题。用数学、代码与想象力，做一点有趣的东西。</span><span data-locale="en">No perfect answers, just interesting questions. A personal space for mathematics, code and imagination.</span></p>
  <div class="actions">
   <a class="primary" href="#projects"><span data-locale="zh">探索作品 ↗</span><span data-locale="en">Explore Works ↗</span></a>
@@ -15,6 +15,10 @@ import SignatureMark from "./SignatureMark.astro";
  .hero{text-align:center;padding-top:clamp(52px,8vw,105px);padding-bottom:clamp(90px,11vw,165px)}
  .hero .eyebrow{margin-bottom:22px}
  .hero h1{font-weight:750;letter-spacing:-.075em;line-height:1.14;font-size:clamp(53px,8vw,118px);margin:0 auto 20px}
+ .hero-title-line{display:block;overflow:visible;white-space:nowrap}
+ .hero-title [data-locale]{width:100%}
+ .hero-title .hero-title-line:nth-child(2){margin-top:.018em}
+ @media(max-width:500px){.hero-title{font-size:clamp(40px,10vw,56px)!important}.hero-title-line{white-space:normal}}
  .lead{font-size:clamp(15px,1.5vw,19px);line-height:1.9;color:var(--muted);max-width:650px;margin:0 auto}
  .actions{display:flex;justify-content:center;flex-wrap:wrap;gap:15px;margin-top:30px}
  .actions a{min-height:46px;border-radius:99px;padding:11px 24px;font-size:14px;display:inline-flex;align-items:center;justify-content:center;font-weight:600}
