@@ -472,3 +472,36 @@ html[data-theme="dark"] .site-menu-panel--floating{background:rgba(28,30,35,.52)
 @media(prefers-reduced-motion:reduce){
  .site-menu-panel--floating{transform:none!important}
 }
+
+/* Edition 16 — slim centered menu typography */
+@media(max-width:1180px){
+ .site-menu-panel--floating{
+  width:min(312px,calc(100vw - 56px))!important;
+ }
+ .site-menu-panel--floating .site-menu-panel__inner{
+  padding:14px 18px 16px!important;
+ }
+ .site-menu-panel--floating a{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  text-align:center!important;
+  font-size:18px!important;line-height:1.25!important;
+  padding:13px 0!important;
+ }
+ .site-menu-panel--floating .site-menu-panel__tool{text-align:center!important;padding-top:8px!important}
+}
+@media(max-width:760px){
+ .site-menu-panel--floating{
+  width:min(252px,calc(100vw - 72px))!important;
+  right:12px!important;
+ }
+ .site-menu-panel--floating .site-menu-panel__inner{padding:12px 16px 14px!important}
+ .site-menu-panel--floating a{font-size:17px!important;padding:12px 0!important}
+}
+@media(max-width:390px){
+ .site-menu-panel--floating{
+  width:min(236px,calc(100vw - 56px))!important;
+  right:10px!important;
+ }
+ .site-menu-panel--floating .site-menu-panel__inner{padding:10px 14px 12px!important}
+ .site-menu-panel--floating a{font-size:16px!important;padding:11px 0!important}
+}
