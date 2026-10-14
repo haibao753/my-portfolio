@@ -242,3 +242,24 @@ test("liquid glass menu recedes the page and restores it on close",async({page,i
  await expect(page.locator("html")).not.toHaveAttribute("data-menu-open","true");
  await expect(page.locator("[data-menu-panel]")).toBeHidden();
 });
+
+
+test("mobile liquid glass menu animates closed and supports rapid reopening",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ const panel=page.locator("[data-menu-panel]");
+ await toggle.click();
+ await expect(panel).toBeVisible();
+ await toggle.click();
+ await expect(panel).toHaveAttribute("data-closing","true");
+ await expect(panel).toBeVisible();
+ await toggle.click();
+ await expect(toggle).toHaveAttribute("aria-expanded","true");
+ await expect(panel).not.toHaveAttribute("data-closing","true");
+ await page.waitForTimeout(400);
+ await expect(panel).toBeVisible();
+ await page.keyboard.press("Escape");
+ await expect(panel).toBeHidden();
+ await expect(page.locator("html")).not.toHaveAttribute("data-menu-open","true");
+});
