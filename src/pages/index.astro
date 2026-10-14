@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import {projects,contact} from "../data/site";
+---
+<BaseLayout>
+ <Hero />
+ <section class="works wrap" id="projects" aria-labelledby="works-title">
+  <div class="intro">
+   <p class="eyebrow"><span data-locale="zh">精选 / 2026</span><span data-locale="en">Selected / 2026</span></p>
+   <h2 id="works-title"><span data-locale="zh">一些有趣的尝试。</span><span data-locale="en">Things worth exploring.</span></h2>
+   <p><span data-locale="zh">数学、资讯、影像和代码，都是认识世界的不同方法。</span><span data-locale="en">Math, news, images and code are different ways of seeing the world.</span></p>
+  </div>
+  <div class="projects">{projects.map((project,index)=><ProjectCard project={project} index={index} />)}</div>
+ </section>
+ <section class="contact wrap" id="contact">
+  <div>
+   <p class="eyebrow"><span data-locale="zh">说声你好</span><span data-locale="en">SAY HELLO</span></p>
+   <h2><span data-locale="zh">聊聊新的可能。</span><span data-locale="en">Let's talk possibilities.</span></h2>
+   <p class="description"><span data-locale="zh">这里没有什么高深的研究机构，只有一个好奇心有点过剩的大学生。欢迎来交换脑洞，分享有趣的东西，或者一起琢磨点不太正经但很好玩的项目。</span><span data-locale="en">No fancy research institute here—just a university student with way too much curiosity. Come swap ideas or make something delightfully weird.</span></p>
+  </div>
+  <div class="contact-links">
+   <a href={`mailto:${contact.email}`}><span class="eyebrow">EMAIL</span><strong>{contact.email}</strong><span>↗</span></a>
+   <div class="wechat"><span class="eyebrow">WECHAT</span><strong>{contact.wechat}</strong><button type="button" data-copy-wechat={contact.wechat}><span data-locale="zh">复制微信号</span><span data-locale="en">Copy ID</span></button></div>
+  </div>
+ </section>
+ <section class="finale wrap" aria-label="J.H. LAB"><img src="/assets/hero-laboratory.svg" loading="lazy" width="1000" height="640" alt="J.H. LAB 数学与艺术实验室图形" /></section>
+</BaseLayout>
+<style>
+ .works{padding-bottom:110px}.intro{text-align:center;margin-bottom:60px}.intro h2{font-size:clamp(39px,5.5vw,74px);line-height:1.2;letter-spacing:-.065em;margin:16px 0}.intro>p:last-child{color:var(--muted);font-size:16px}
+ .projects{display:grid;gap:clamp(32px,5vw,75px)}
+ .contact{padding-block:clamp(90px,10vw,150px);display:grid;grid-template-columns:1.2fr 1fr;gap:50px;border-top:1px solid var(--stroke)}
+ .contact h2{font-size:clamp(42px,5vw,76px);letter-spacing:-.065em;line-height:1.2;margin:20px 0}
+ .description{max-width:490px;line-height:2;color:var(--muted)}
+ .contact-links{display:grid;gap:18px;align-content:center}.contact-links>a,.wechat{display:grid;gap:10px;border:1px solid var(--stroke);padding:26px;border-radius:23px;background:var(--card);box-shadow:var(--shadow-sm)}
+ .contact-links strong{overflow-wrap:anywhere;font-size:clamp(17px,2vw,23px);font-weight:600}
+ .wechat button{justify-self:start;border:0;background:none;color:var(--accent);padding:0;font-size:13px;font-weight:600}
+ .finale{padding-bottom:clamp(70px,10vw,135px)}.finale img{width:100%;height:auto;display:block;border-radius:29px;background:var(--card)}
+ @media(max-width:800px){.contact{grid-template-columns:1fr;gap:20px}}
+</style>

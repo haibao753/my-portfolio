@@ -1,0 +1,46 @@
+---
+import {navigation} from "../data/site";
+---
+<header class="glass-nav">
+ <div class="nav-inner wrap">
+  <a href="/" class="brand" aria-label="J.H. LAB 首页"><span aria-hidden="true"></span></a>
+  <nav class="desktop-links" aria-label="Main navigation">
+   {navigation.map(item=><a href={item.href}>
+    <span data-locale="zh">{item.label.zh}</span><span data-locale="en">{item.label.en}</span>
+   </a>)}
+  </nav>
+  <div class="controls">
+   <button type="button" data-language-toggle aria-label="Switch to English">EN</button>
+   <button type="button" data-theme-toggle aria-label="切换深浅色主题" title="Theme">◐</button>
+   <button type="button" data-menu-toggle aria-controls="mobile-navigation" aria-expanded="false" aria-label="菜单"><span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span></button>
+  </div>
+ </div>
+</header>
+<div data-menu-backdrop class="menu-backdrop" hidden></div>
+<nav id="mobile-navigation" data-menu-panel class="mobile-menu" aria-label="Mobile navigation" hidden>
+ {navigation.map(item=><a href={item.href}>
+  <span data-locale="zh">{item.label.zh}</span><span data-locale="en">{item.label.en}</span>
+ </a>)}
+</nav>
+<style>
+ .glass-nav{position:sticky;top:0;z-index:101;background:var(--glass);-webkit-backdrop-filter:blur(24px) saturate(165%);backdrop-filter:blur(24px) saturate(165%);border-bottom:1px solid var(--stroke);box-shadow:var(--shadow-sm)}
+ .nav-inner{min-height:60px;display:grid;grid-template-columns:minmax(70px,1fr) auto minmax(130px,1fr);align-items:center;gap:20px}
+ .brand{display:flex;align-items:center;min-width:44px;min-height:44px}
+ .brand span{display:block;width:31px;height:30px;background:var(--fg);-webkit-mask:url("/assets/jh-orbit.svg") center/contain no-repeat;mask:url("/assets/jh-orbit.svg") center/contain no-repeat}
+ .desktop-links{display:flex;justify-content:center;gap:clamp(18px,2vw,34px);white-space:nowrap}
+ .desktop-links a{font-size:clamp(13px,.9vw,15px);font-weight:580;opacity:.78}
+ .desktop-links a:hover{opacity:1}
+ .controls{display:flex;justify-content:flex-end;gap:9px}
+ .controls button{height:36px;min-width:36px;border:1px solid var(--stroke);border-radius:99px;background:transparent;color:var(--fg);font-size:13px}
+ .controls [data-language-toggle]{min-width:53px}
+ .controls [data-menu-toggle]{display:none}
+ .hamburger{display:flex;flex-direction:column;align-items:center;gap:4px}
+ .hamburger i{display:block;width:17px;height:1.5px;border-radius:2px;background:currentColor}
+ .menu-backdrop{position:fixed;inset:0;z-index:102;background:rgba(20,24,30,.1)}
+ .mobile-menu{position:fixed;z-index:103;top:66px;right:12px;width:min(226px,calc(100vw - 72px));padding:16px;border:1px solid var(--stroke);border-radius:19px;background:var(--glass);-webkit-backdrop-filter:blur(28px) saturate(170%);backdrop-filter:blur(28px) saturate(170%);box-shadow:var(--shadow-lg)}
+ .mobile-menu a{display:flex;align-items:center;justify-content:center;text-align:center;min-height:60px;border-bottom:1px solid var(--stroke);font-size:18px;font-weight:600}
+ .mobile-menu a:last-child{border-bottom:0}
+ [hidden]{display:none!important}
+ @media(max-width:1180px){.nav-inner{grid-template-columns:1fr auto;min-height:50px}.desktop-links{display:none}.controls [data-menu-toggle]{display:flex;align-items:center;justify-content:center}}
+ @media(max-width:760px){.nav-inner{min-height:48px}.brand span{width:27px;height:26px}.controls button{height:33px;min-width:33px}.mobile-menu{top:55px}}
+</style>

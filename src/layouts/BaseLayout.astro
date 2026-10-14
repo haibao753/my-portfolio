@@ -1,0 +1,82 @@
+---
+import "../styles/global.css";
+import SiteNav from "../components/SiteNav.astro";
+const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、影像与有趣的想法。"}=Astro.props;
+---
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+ <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content={description} />
+  <link rel="icon" href="/assets/jh-orbit.svg" type="image/svg+xml" />
+  <title>{title}</title>
+  <script is:inline>
+   (()=>{try{
+    const theme=localStorage.getItem("jhlab-theme");
+    if(theme==="dark"||theme==="light")document.documentElement.dataset.theme=theme;
+    const lang=localStorage.getItem("jhlab-locale");
+    if(lang==="en")document.documentElement.lang="en";
+   }catch{}})();
+  </script>
+ </head>
+ <body>
+  <a href="#main" class="skip-link">跳过导航 / Skip navigation</a>
+  <SiteNav />
+  <main id="main"><slot /></main>
+  <footer class="site-footer wrap">
+   <span>© {new Date().getFullYear()} J.H. LAB</span>
+   <a href="#top"><span data-locale="zh">返回顶部 ↑</span><span data-locale="en">Back to top ↑</span></a>
+  </footer>
+  <script>
+   const root=document.documentElement;
+   document.querySelector<HTMLButtonElement>("[data-theme-toggle]")?.addEventListener("click",()=>{
+    root.dataset.theme=root.dataset.theme==="dark"?"light":"dark";
+    try{localStorage.setItem("jhlab-theme",root.dataset.theme)}catch{}
+   });
+   const language=document.querySelector<HTMLButtonElement>("[data-language-toggle]");
+   const refreshLanguage=()=>{
+    if(!language)return;
+    const en=root.lang==="en";
+    language.textContent=en?"中文":"EN";
+    language.setAttribute("aria-label",en?"切换为中文":"Switch to English");
+   };
+   language?.addEventListener("click",()=>{
+    root.lang=root.lang==="en"?"zh-CN":"en";
+    try{localStorage.setItem("jhlab-locale",root.lang==="en"?"en":"zh")}catch{}
+    refreshLanguage();
+   });
+   refreshLanguage();
+   const menu=document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+   const panel=document.querySelector<HTMLElement>("[data-menu-panel]");
+   const backdrop=document.querySelector<HTMLElement>("[data-menu-backdrop]");
+   const close=()=>{
+    if(!menu||!panel||!backdrop)return;
+    menu.setAttribute("aria-expanded","false");
+    panel.hidden=true;backdrop.hidden=true;
+   };
+   menu?.addEventListener("click",()=>{
+    if(!menu||!panel||!backdrop)return;
+    const open=menu.getAttribute("aria-expanded")!=="true";
+    menu.setAttribute("aria-expanded",String(open));
+    panel.hidden=!open;backdrop.hidden=!open;
+   });
+   backdrop?.addEventListener("click",close);
+   panel?.querySelectorAll("a").forEach(a=>a.addEventListener("click",close));
+   document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
+   const copy=document.querySelector<HTMLButtonElement>("[data-copy-wechat]");
+   copy?.addEventListener("click",async()=>{
+    const id=copy.dataset.copyWechat??"";
+    try{
+     await navigator.clipboard.writeText(id);
+     const en=root.lang==="en";
+     copy.textContent=en?"Copied!":"已复制！";
+     window.setTimeout(()=>{copy.textContent=en?"Copy WeChat ID":"复制微信号"},1500);
+    }catch{copy.textContent=id;}
+   });
+  </script>
+ </body>
+</html>
+<style>
+ .site-footer{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--stroke);padding-top:32px;padding-bottom:48px;color:var(--muted);font-size:12px}
+</style>
