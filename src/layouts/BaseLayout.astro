@@ -69,10 +69,12 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
     const id=copy.dataset.copyWechat??"";
     try{
      await navigator.clipboard.writeText(id);
-     const en=root.lang==="en";
-     copy.textContent=en?"Copied!":"已复制！";
-     window.setTimeout(()=>{copy.textContent=en?"Copy WeChat ID":"复制微信号"},1500);
-    }catch{copy.textContent=id;}
+     copy.dataset.copied="true";
+     window.setTimeout(()=>{copy.dataset.copied="false"},1500);
+    }catch{
+     copy.dataset.copied="false";
+     window.prompt("Copy WeChat ID",id);
+    }
    });
   </script>
  </body>

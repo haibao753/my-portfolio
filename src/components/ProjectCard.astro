@@ -1,5 +1,6 @@
 ---
 import type {Project} from "../data/site";
+import ProjectVisual from "./ProjectVisual.astro";
 interface Props {project:Project;index:number}
 const {project,index}=Astro.props;
 const external=project.href.startsWith("http");
@@ -14,12 +15,7 @@ const external=project.href.startsWith("http");
   </a>
   {project.extra?.map(link=><a class="extra" href={link.href} target={link.href.startsWith("http")?"_blank":undefined} rel={link.href.startsWith("http")?"noopener noreferrer":undefined}><span data-locale="zh">{link.label.zh}</span><span data-locale="en">{link.label.en}</span> ↗</a>)}
  </div>
- <div class:list={["visual",`visual-${index}`]} aria-hidden="true">
-  {index===0?<div class="world-art"><span>J.H. / BRIEF</span><strong>WORLD<br/>IN FOCUS.</strong><small>EVERY DAY IS A NEW QUESTION</small></div>:null}
-  {index===1?<div class="math-art"><span>∫</span><strong>f(x) = curiosity</strong><small>GEOMETRY / MOTION / THOUGHT</small></div>:null}
-  {index===2?<img src="/images/1.jpg" alt="" loading="lazy" width="800" height="600" />:null}
-  {index===3?<div class="geometry-art"><div class="ring one"></div><div class="ring two"></div><div class="ring three"></div><span>GEOMETRY / LAB</span></div>:null}
- </div>
+ <ProjectVisual index={index} href={project.href} />
 </article>
 <style>
  .project{display:grid;grid-template-columns:1fr 1.08fr;gap:clamp(24px,5vw,74px);align-items:center;min-height:500px;padding:clamp(29px,5vw,72px);border:1px solid var(--stroke);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow-md);overflow:hidden;scroll-margin-top:100px}
@@ -28,21 +24,7 @@ const external=project.href.startsWith("http");
  .copy p{max-width:450px;font-size:clamp(14px,1.4vw,17px);line-height:1.95;color:var(--muted);margin-bottom:27px}
  .project-link{display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-size:14px;font-weight:650}
  .extra{display:block;font-size:13px;margin-top:12px;color:var(--muted)}
- .visual{min-height:380px;border:1px solid var(--stroke);border-radius:22px;overflow:hidden;background:linear-gradient(135deg,#e6ebf0,#f8f9fb);box-shadow:var(--shadow-sm);display:grid;place-items:center;position:relative}
- .world-art{padding:42px;display:flex;flex-direction:column;justify-content:space-between;width:82%;height:290px;background:rgba(255,255,255,.9);border:1px solid rgba(24,29,37,.11);box-shadow:var(--shadow-md)}
- .world-art span,.world-art small,.math-art small{font:600 11px ui-monospace,monospace;letter-spacing:.12em}
- .world-art strong{font-size:clamp(38px,4vw,64px);line-height:1;letter-spacing:-.085em}
- .math-art{text-align:center;color:#1b344b}
- .math-art>span{display:block;font-family:Georgia,serif;font-size:170px;line-height:1;font-style:italic;color:#8cacc6}
- .math-art strong{display:block;font:italic 24px Georgia,serif;margin:0 0 30px}
- .visual-2 img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
- .visual-3{background:radial-gradient(circle,#fbfcfd,#dbe6ed)}
- .geometry-art{position:relative;width:100%;height:380px;display:grid;place-items:center}
- .geometry-art .ring{position:absolute;width:200px;height:200px;border-radius:50%;border:1px solid #7592a5;transform:rotateX(65deg) rotate(28deg)}
- .geometry-art .two{transform:rotateY(70deg) rotate(32deg)}
- .geometry-art .three{transform:rotate(50deg) skew(10deg,20deg)}
- .geometry-art span{font-size:11px;letter-spacing:.15em;align-self:end;margin-bottom:30px}
  @media(min-width:901px){.project:nth-child(even) .visual{grid-column:1;grid-row:1}.project:nth-child(even) .copy{grid-column:2;grid-row:1}}
- @media(max-width:900px){.project{grid-template-columns:1fr;gap:24px;min-height:0}.visual{min-height:300px}.geometry-art{height:300px}}
- @media(max-width:600px){.project{padding:22px;border-radius:23px}.visual{min-height:230px}.world-art{height:200px;padding:24px}.world-art strong{font-size:34px}.math-art>span{font-size:110px}.geometry-art{height:230px}.ring{max-width:160px;max-height:160px}}
+ @media(max-width:900px){.project{grid-template-columns:1fr;gap:24px;min-height:0}.geometry-art{height:300px}}
+ @media(max-width:600px){.project{padding:22px;border-radius:23px}}
 </style>

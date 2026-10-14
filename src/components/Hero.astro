@@ -1,3 +1,6 @@
+---
+import SignatureMark from "./SignatureMark.astro";
+---
 <section id="top" class="hero wrap">
  <p class="eyebrow"><span data-locale="zh">独立创作 · 数学 · AI · 影像</span><span data-locale="en">Independent experiments · Math · AI · Art</span></p>
  <h1><span data-locale="zh">让好奇心<br />成为作品。</span><span data-locale="en">Make curiosity<br />visible.</span></h1>
@@ -6,7 +9,7 @@
   <a class="primary" href="#projects"><span data-locale="zh">探索作品 ↗</span><span data-locale="en">Explore Works ↗</span></a>
   <a class="secondary" href="/brief/"><span data-locale="zh">阅读每日简报 →</span><span data-locale="en">Daily Brief →</span></a>
  </div>
- <img class="signature" src="/assets/jhlab-signature.svg" alt="J.H. LAB 手写签名" width="270" height="70" loading="eager" />
+ <SignatureMark />
 </section>
 <style>
  .hero{text-align:center;padding-top:clamp(52px,8vw,105px);padding-bottom:clamp(90px,11vw,165px)}
@@ -17,7 +20,6 @@
  .actions a{min-height:46px;border-radius:99px;padding:11px 24px;font-size:14px;display:inline-flex;align-items:center;justify-content:center;font-weight:600}
  .primary{background:var(--accent);color:white;box-shadow:0 10px 23px rgba(5,103,222,.17)}
  .secondary{color:var(--accent)}
- .signature{display:block;width:190px;height:auto;margin:30px auto 0;transform:rotate(-2deg)}
  html[data-theme="dark"] .signature{filter:invert(1)}
- @media(max-width:760px){.hero{padding-top:38px;padding-bottom:88px}.hero h1{font-size:clamp(46px,10vw,70px)}.signature{width:155px}}
+ @media(max-width:760px){.hero{padding-top:38px;padding-bottom:88px}.hero h1{font-size:clamp(46px,10vw,70px)}}
 </style>
