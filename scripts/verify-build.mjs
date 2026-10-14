@@ -24,7 +24,7 @@ if(!failed){
   index=JSON.parse(readFileSync(join(dataRoot,"index.json"),"utf8"));
   if(!Array.isArray(index.dates)||index.dates.length===0)throw Error("empty or missing dates");
   if(new Set(index.dates).size!==index.dates.length)throw Error("duplicate dates");
-  if(index.dates.some(date=>!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)))throw Error("invalid date");
+  if(index.dates.some(date=>!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(date)))throw Error("invalid date");
   if(index.dates.some((date,i)=>i>0&&date>index.dates[i-1]))throw Error("dates not newest-first");
   for(const date of index.dates){
    const issuePath=join(dataRoot,`${date}.json`);
