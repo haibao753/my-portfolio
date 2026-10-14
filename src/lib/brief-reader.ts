@@ -72,7 +72,7 @@ if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
   try{
    if(!isDate(date))throw Error("日期格式不正确");
    const response=await fetch(`/brief/data/${date}.json`,{cache:"no-cache"});
-   if(!response.ok)throw Error(`HTTP ${response.statusNode}`);
+   if(!response.ok)throw Error(`HTTP ${response.status}`);
    const data=await response.json() as BriefIssue;
    if(currentRequest!==request)return;
    if(data.date!==date||!Array.isArray(data.items))throw Error("日报数据结构不符合预期");
@@ -91,7 +91,7 @@ if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
  const initialize=async()=>{
   try{
    const response=await fetch("/brief/data/index.json",{cache:"no-cache"});
-   if(!response.ok)throw Error(`HTTP ${response.statusNode}`);
+   if(!response.ok)throw Error(`HTTP ${response.status}`);
    const index=await response.json() as BriefIndex;
    const dates=[...new Set((index.dates||[]).filter(isDate))].sort().reverse();
    issueSelect.replaceChildren();
