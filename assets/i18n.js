@@ -6,7 +6,7 @@ zh:{
  "nav.works":"作品","nav.research":"研究","nav.about":"关于","nav.contact":"联系",
  "nav.home":"返回主页 ↗","nav.brief":"每日简报 ↗",
  "hero.kicker":"独立研究与创意计算实验室",
- "hero.title":"让好奇心<br><span class=\"outlined\">成为作品.</span>",
+ "hero.title":"让好奇心<br>成为作品",
  "hero.lead":"让好奇心成为作品。在数学、人工智能、信息与视觉艺术的交汇处，探索新的表达方式。",
  "hero.explore":"浏览精选项目 ↘","hero.brief":"阅读全球资讯观察 ↗",
  "hero.aside":"独立研究与创意计算。<br>科学 · 信息 · 技术 · 人文。",
@@ -31,7 +31,7 @@ zh:{
  "contact.kicker":"取得联系","contact.title":"建立连接.","contact.desc":"欢迎交流数学、人工智能、科学传播、创意编程与跨学科合作。",
  "contact.email":"电子邮箱","contact.wechat":"微信","contact.mailaction":"发送邮件 ↗","contact.copy":"复制微信号 ↗",
  "footer.tagline":"独立研究与创意计算实验室","footer.brief":"全球资讯 ↗","footer.archive":"影像档案 ↗","footer.contact":"联系 ↗","footer.top":"返回顶部 ↑",
- "brief.kicker":"全球资讯观察站","brief.heading":"全球资讯<br><span class=\"outlined\">观察站.</span>",
+ "brief.kicker":"全球资讯观察站","brief.heading":"全球资讯<br>观察站",
  "brief.desc":"<strong>世界很大，值得仔细阅读。</strong><br>穿透日常信息流，连接中国与全球。每日追踪公共议题、前沿科研与技术变化，以中文提供有背景的简报，并保留原始报道的链接。",
  "brief.current":"本期简报","brief.await":"等待首期发布",
  "brief.schedule":"计划每天北京时间 09:00 更新","brief.scroll":"向下阅读 ↓",
@@ -39,13 +39,19 @@ zh:{
  "brief.dateLabel":"日期 / 期数","brief.disclaimer":"本站以 AI 辅助整理公开资讯，摘要仅反映信息来源的观点，并非独立事实核查。重大或存在争议的议题应核对多个来源。所有报道版权归原发布方所有，点击原文查看完整内容。",
  "brief.reading":"人文阅读",
  "brief.fontModern":"现代阅读",
- "brief.note":"目前仅翻译页面界面；每日新闻正文保留原发布的中文摘要。"
+ "brief.note":"目前仅翻译页面界面；每日新闻正文保留原发布的中文摘要。",
+ "hero.asideTitle":"关于本站","hero.asideMeta":"建立于 2026 年 · 持续探索","hero.heroInfo":"这里记录我的研究、阅读、可视化实验，以及与世界发生连接的方式。",
+ "hero.featured":"精选作品 · 2026","hero.counter":"四个研究方向","hero.studioTitle":"关于这个站点",
+ "project.brief.visualKicker":"全球资讯观察","project.brief.issueTag":"每日更新","project.brief.visualFooter":"每日阅读档案","project.brief.archiveBtn":"浏览历史简报 ↗",
+ "project.gallery.visual":"影像档案 ↗","project.exp.previewKicker":"交互数学实验","project.exp.previewFooter":"曲面可视化","project.exp.previewOpen":"进入实验 ↗",
+ "footer.copy":"以好奇心驱动的创造实践",
+ "brief.topRight":"每日观察 · 2026","brief.brandFooter":"资讯观察"
 },
 en:{
  "nav.works":"Works","nav.research":"Research","nav.about":"About","nav.contact":"Contact",
  "nav.home":"Back home ↗","nav.brief":"Daily brief ↗",
  "hero.kicker":"Independent research & creative computing",
- "hero.title":"Curiosity<br><span class=\"outlined\">in motion.</span>",
+ "hero.title":"Curiosity<br>in motion.",
  "hero.lead":"Turning curiosity into creation. Exploring the intersection of mathematics, artificial intelligence, information and visual art.",
  "hero.explore":"Explore selected work ↘","hero.brief":"Read the global brief ↗",
  "hero.aside":"Independent research and creative computing.<br>Science · Information · Technology · Humanities.",
@@ -70,14 +76,20 @@ en:{
  "contact.kicker":"Get in touch","contact.title":"Connect.","contact.desc":"Open to conversations and collaborations in mathematics, AI, science communication and creative coding.",
  "contact.email":"Email","contact.wechat":"WeChat","contact.mailaction":"Send email ↗","contact.copy":"Copy WeChat ID ↗",
  "footer.tagline":"Independent research & creative computing","footer.brief":"Global Brief ↗","footer.archive":"Visual Archive ↗","footer.contact":"Contact ↗","footer.top":"Back to top ↑",
- "brief.kicker":"Global intelligence observatory","brief.heading":"Global<br><span class=\"outlined\">Briefing.</span>",
+ "brief.kicker":"Global intelligence observatory","brief.heading":"Global<br>Briefing.",
  "brief.desc":"<strong>A wider world, worth reading closely.</strong><br>Daily Chinese-language briefings covering public affairs, new research and technology, with original source links.",
  "brief.current":"Current issue","brief.await":"Awaiting first issue",
  "brief.schedule":"Planned daily update · 09:00 Beijing time","brief.scroll":"Scroll to read ↓",
  "brief.archiveKicker":"News archive","brief.archiveHeading":"Daily observations.","brief.archiveDesc":"Curated context for understanding events. Filter by subject or explore earlier issues.",
  "brief.dateLabel":"Date / issue","brief.disclaimer":"These AI-assisted summaries reflect cited sources and are not independent fact-checks. Cross-check significant or contested claims with multiple sources. Original publishers retain copyright.",
  "brief.reading":"Humanist font","brief.fontModern":"Modern font",
- "brief.note":"Interface translations only. Daily article summaries remain in their published Chinese."
+ "brief.note":"Interface translations only. Daily article summaries remain in their published Chinese.",
+ "hero.asideTitle":"About this site","hero.asideMeta":"Established 2026 · Exploring continuously","hero.heroInfo":"A record of research, reading, visual experiments, and ways of engaging with the world.",
+ "hero.featured":"Selected work · 2026","hero.counter":"Four fields of research","hero.studioTitle":"About the studio",
+ "project.brief.visualKicker":"Global observation","project.brief.issueTag":"Updated daily","project.brief.visualFooter":"Reading archive","project.brief.archiveBtn":"Browse archives ↗",
+ "project.gallery.visual":"Visual archive ↗","project.exp.previewKicker":"Interactive mathematics","project.exp.previewFooter":"Surface visualization","project.exp.previewOpen":"Enter experiment ↗",
+ "footer.copy":"Creative work driven by curiosity",
+ "brief.topRight":"Daily observations · 2026","brief.brandFooter":"Brief"
 }};
 const safeHtml=new Set(["hero.title","hero.aside","project.brief.art","project.exp.art","studio.title","brief.heading","brief.desc"]);
 const originals=new Map();
