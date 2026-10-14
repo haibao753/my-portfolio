@@ -4,7 +4,7 @@
 const translations={
 zh:{
  "nav.works":"作品","nav.research":"研究","nav.about":"关于","nav.contact":"联系",
- "nav.home":"返回主页 ↗","nav.brief":"每日简报 ↗",
+ "nav.home":"返回主页 ↗","nav.brief":"每日简报",
  "hero.kicker":"独立研究与创意计算实验室",
  "hero.title":"让好奇心<br>成为作品",
  "hero.lead":"让好奇心成为作品。在数学、人工智能、信息与视觉艺术的交汇处，探索新的表达方式。",
@@ -49,7 +49,7 @@ zh:{
 },
 en:{
  "nav.works":"Works","nav.research":"Research","nav.about":"About","nav.contact":"Contact",
- "nav.home":"Back home ↗","nav.brief":"Daily brief ↗",
+ "nav.home":"Back home ↗","nav.brief":"Daily brief",
  "hero.kicker":"Independent research & creative computing",
  "hero.title":"Curiosity<br>in motion.",
  "hero.lead":"Turning curiosity into creation. Exploring the intersection of mathematics, artificial intelligence, information and visual art.",
