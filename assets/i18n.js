@@ -103,7 +103,7 @@ function apply(lang){
   if(safeHtml.has(key))el.innerHTML=dict[key];else el.textContent=dict[key];
  });
  const toggle=document.getElementById("language-toggle");
- if(toggle){toggle.textContent=lang==="zh"?"EN / English":"中文";toggle.setAttribute("aria-label",lang==="zh"?"Switch to English":"切换为中文");}
+ if(toggle){const caption=toggle.querySelector(".lang-caption")||toggle;caption.textContent=lang==="zh"?"EN":"中文";toggle.setAttribute("aria-label",lang==="zh"?"Switch to English":"切换为中文");toggle.title=lang==="zh"?"Switch to English":"切换为中文";}
  try{localStorage.setItem("jhlab-lang",lang)}catch(e){}
  window.dispatchEvent(new CustomEvent("jhlab:language",{detail:{language:lang}}));
 }
