@@ -1,26 +1,134 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090d18">
-<meta name="description" content="J.H. Lab 全球资讯观察站：每天精选中国与全球重要动态、前沿科研、公共政策与技术趋势。">
-<title>全球资讯观察站 · J.H. Lab</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f7f4" id="theme-color">
+<meta name="description" content="J.H. Lab 全球资讯观察站：每日以中文整理全球公共议题、国际社会、人工智能与前沿科研，保留原始来源。">
+<meta property="og:title" content="全球资讯观察站 · J.H. Lab">
+<meta property="og:description" content="世界很大，值得仔细阅读。">
+<title>全球资讯观察站 — J.H. LAB / BRIEF</title>
 <style>
-:root{color-scheme:dark;--bg:#090d18;--surface:#111827;--line:#263146;--text:#e6ebf4;--muted:#92a3b9;--accent:#77dcff}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse 80% 36% at 50% -5%,#123049 0%,transparent 78%),var(--bg);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif;color:var(--text);line-height:1.72}a{color:inherit}a:hover{color:var(--accent)}
-.wrap{width:min(1060px,calc(100% - 38px));margin:auto}.top{border-bottom:1px solid var(--line);background:#090d18cc;backdrop-filter:blur(18px);position:sticky;top:0;z-index:2}.top-inner{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{font-size:13px;letter-spacing:.14em;font-weight:750;text-decoration:none}.nav{display:flex;gap:18px;font-size:13px;color:var(--muted)}.nav a{text-decoration:none}
-.hero{padding:72px 0 32px}.eyebrow{font-size:12px;letter-spacing:.22em;color:var(--accent);font-weight:750}.hero h1{font-size:clamp(36px,7vw,66px);letter-spacing:-.06em;line-height:1.13;margin:16px 0}.hero p{color:var(--muted);max-width:640px;font-size:16px}.sub{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-top:26px}.chip,.btn{border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-size:12px;background:#162133;color:var(--muted)}.live{width:7px;height:7px;display:inline-block;border-radius:99px;background:#52d6b1;margin-right:7px}.toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);padding-top:26px;margin-top:20px}.tabs{display:flex;flex-wrap:wrap;gap:7px}.btn{cursor:pointer;transition:all .2s}.btn[aria-pressed=true]{border-color:#52788a;background:#143345;color:#c4f1ff}.archive{background:#131d2c;border:1px solid var(--line);color:var(--text);padding:9px 12px;border-radius:12px;min-width:136px}
-.status{color:var(--muted);font-size:13px;margin:19px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0 64px}.story{background:linear-gradient(145deg,#141e30,#101726);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;min-height:260px;transition:border-color .2s,transform .2s}.story:hover{border-color:#507d93;transform:translateY(-2px)}.meta{font-size:12px;color:#89a5b8;display:flex;align-items:center;justify-content:space-between;gap:8px}.category{color:#8ee2ff;font-weight:700}.story h2{font-size:21px;line-height:1.45;letter-spacing:-.02em;margin:16px 0 11px}.story p{font-size:14px;color:#b8c5d5;margin:0 0 12px}.reason{border-left:2px solid #4589a9;padding-left:12px;margin:12px 0!important}.reason b{color:#d5eaf4}.source{margin-top:auto;padding-top:12px;display:flex;gap:14px;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}.source a{color:#92e7ff;text-decoration:none;font-weight:700}.note{color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding:20px 0 35px}.empty{grid-column:1/-1;border:1px dashed #405067;border-radius:18px;padding:40px;color:var(--muted);text-align:center}
-@media(max-width:700px){.hero{padding-top:47px}.grid{grid-template-columns:1fr}.story{min-height:unset;padding:20px}.hero h1{font-size:41px}.nav{gap:8px}.story h2{font-size:19px}}
+:root{color-scheme:light;--page:#f7f7f4;--paper:#fff;--surface:#efefeb;--ink:#171816;--muted:#62665f;--soft:#898d86;--line:#d5d7d0;--line-strong:#aeb2a9;--header:rgba(247,247,244,.89)}
+html[data-theme="dark"]{color-scheme:dark;--page:#141514;--paper:#212320;--surface:#1c1e1c;--ink:#f0f0ea;--muted:#afb2a9;--soft:#888e84;--line:#373b35;--line-strong:#646a60;--header:rgba(20,21,20,.89)}
+*,*:before,*:after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:var(--page);color:var(--ink);font-family:Inter,"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.65;transition:color .35s,background-color .35s}
+a{color:inherit;text-decoration:none}
+button,select{font:inherit}
+button{cursor:pointer}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+::selection{background:var(--ink);color:var(--page)}
+.wrap{width:min(1320px,calc(100% - 104px));margin-inline:auto}
+.mono{font-family:"SFMono-Regular",Consolas,monospace;font-variant-numeric:tabular-nums}
+.small-label{font-size:11px;font-weight:650;letter-spacing:.17em;text-transform:uppercase}
+.site-header{position:sticky;top:0;z-index:20;background:var(--header);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.header-row{min-height:83px;display:flex;align-items:center;gap:26px}
+.logo{display:flex;align-items:center;gap:12px;font-size:20px;letter-spacing:-.065em;font-weight:800;white-space:nowrap}
+.logo-mark{display:grid;place-items:center;width:29px;height:29px;border:1.5px solid var(--ink);border-radius:50%;font-size:13px;letter-spacing:-.09em}
+.header-nav{margin-left:auto;display:flex;gap:27px;align-items:center}
+.header-nav a{font-size:12px;color:var(--muted)}
+.header-nav a:hover,.footer a:hover{color:var(--ink)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.theme-toggle{display:inline-flex;align-items:center;gap:10px;padding:9px 13px;border:1px solid var(--line-strong);border-radius:999px;background:transparent;color:var(--ink);font-size:11px;white-space:nowrap}
+.theme-toggle:hover{background:var(--surface)}
+.theme-symbol{width:17px;height:17px}
+.back-link{border:1px solid var(--ink);border-radius:999px;padding:10px 17px;font-size:11px;font-weight:700;white-space:nowrap}
+.back-link:hover{color:var(--page);background:var(--ink)}
+.hero{padding:91px 0 65px;border-bottom:1px solid var(--line)}
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:18px;color:var(--muted)}
+.hero-top .right{font-size:10px}
+.hero h1{font-size:clamp(65px,9.6vw,132px);font-weight:550;line-height:1.04;letter-spacing:-.092em;margin:47px 0 33px}
+.hero h1 .outlined{font-weight:400;color:transparent;-webkit-text-stroke:1.2px var(--ink)}
+.hero-body{display:flex;justify-content:space-between;align-items:end;gap:60px}
+.hero-description{font-size:clamp(14px,1.5vw,18px);max-width:620px;line-height:2;letter-spacing:-.015em;margin:0;color:var(--muted)}
+.hero-description strong{font-weight:500;color:var(--ink)}
+.issue-summary{min-width:240px;border-left:1px solid var(--line);padding-left:26px;display:flex;flex-direction:column;gap:10px;align-self:stretch;justify-content:end}
+.issue-summary .label{font-size:10px;letter-spacing:.13em;color:var(--muted)}
+.issue-summary #headlineDate{font-size:23px;letter-spacing:-.045em;font-weight:550}
+.issue-summary #total{font-size:12px;color:var(--muted)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--ink);display:inline-block;margin-right:9px}
+.issue-intro{border-top:1px solid var(--line);margin-top:75px;padding-top:18px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:10px;letter-spacing:.07em}
+.issues-section{padding-top:70px}
+.section-heading{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:27px}
+.section-heading h2{font-size:clamp(30px,4.4vw,54px);font-weight:550;letter-spacing:-.06em;line-height:1.2;margin:16px 0 0}
+.section-heading .hint{color:var(--muted);max-width:340px;font-size:12px;line-height:1.85}
+.toolbar{border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding:17px 0;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.tabs{display:flex;flex-wrap:wrap;gap:7px}
+.btn{border:1px solid var(--line);padding:9px 13px;background:transparent;color:var(--muted);font-size:11px;transition:background .2s,color .2s,border-color .2s}
+.btn:hover{border-color:var(--line-strong);color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--page);border-color:var(--ink)}
+.archive-label{display:flex;align-items:center;gap:13px;color:var(--muted);font-size:11px;white-space:nowrap}
+.archive{border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);padding:10px 12px;font-size:12px;min-width:145px;border-radius:0}
+.status{color:var(--muted);font-size:11px;letter-spacing:.03em;margin:20px 0 22px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px;padding:0 0 95px}
+.story{border-top:1px solid var(--line);padding:30px 0 33px;display:flex;flex-direction:column;min-height:330px;transition:border-color .25s}
+.story:hover{border-top-color:var(--ink)}
+.meta{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--soft);font-size:10px;letter-spacing:.045em}
+.category{font-weight:700;color:var(--ink);font-size:10px;letter-spacing:.12em}
+.story h2{font-size:clamp(20px,2.3vw,29px);line-height:1.42;letter-spacing:-.048em;font-weight:550;margin:21px 0 17px}
+.story p{font-size:13px;line-height:1.93;color:var(--muted);margin:0 0 16px}
+.reason{padding:0 0 0 14px;border-left:1px solid var(--line-strong);margin-top:8px!important}
+.reason b{color:var(--ink);font-weight:600}
+.source{margin-top:auto;padding-top:20px;display:flex;align-items:end;justify-content:space-between;gap:14px;font-size:11px;color:var(--muted)}
+.source a{color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:4px;font-size:11px;font-weight:650;white-space:nowrap}
+.source a:hover{opacity:.65}
+.empty{grid-column:1/-1;border-bottom:1px solid var(--line);padding:55px 0;text-align:center;color:var(--muted);font-size:14px}
+.disclaimer{border-top:1px solid var(--ink);padding:36px 0 50px;display:flex;justify-content:space-between;gap:50px}
+.disclaimer .brand{font-weight:750;font-size:23px;letter-spacing:-.06em;white-space:nowrap}
+.disclaimer .details{max-width:685px;color:var(--muted);font-size:11px;line-height:2}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end;margin-top:14px}
+.footer-links a{font-size:11px;color:var(--muted)}
+@media(max-width:900px){.wrap{width:calc(100% - 64px)}.hero h1{font-size:clamp(65px,9vw,100px)}.hero-body{gap:25px}.issue-summary{min-width:200px}}
+@media(max-width:700px){.wrap{width:calc(100% - 42px)}.header-row{min-height:73px;gap:12px}.header-nav{display:none}.header-actions{margin-left:auto;gap:8px}.hero{padding:65px 0 52px}.hero h1{font-size:clamp(52px,12.7vw,81px);margin:37px 0 25px}.hero-body{display:block}.issue-summary{border-left:0;border-top:1px solid var(--line);margin-top:35px;padding:18px 0 0;min-width:0}.issue-summary #headlineDate{font-size:22px}.issue-intro{margin-top:35px}.issues-section{padding-top:53px}.section-heading{display:block}.section-heading .hint{margin-top:13px}.grid{grid-template-columns:1fr;gap:0;padding-bottom:70px}.story{min-height:0;padding:27px 0}.story h2{font-size:23px}.disclaimer{display:block}.disclaimer .details{margin-top:17px}.footer-links{justify-content:flex-start}}
+@media(max-width:420px){.wrap{width:calc(100% - 34px)}.logo{font-size:18px}.logo-mark{width:26px;height:26px}.theme-toggle{padding:9px}.theme-label{display:none}.back-link{padding:10px 12px}.hero h1{font-size:clamp(50px,12.5vw,70px)}.archive-label{width:100%;justify-content:space-between}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 </style>
+<script>
+(function(){try{document.documentElement.dataset.theme=localStorage.getItem("jhlab-theme")==="dark"?"dark":"light"}catch(e){};var m=document.getElementById("theme-color");if(m)m.content=document.documentElement.dataset.theme==="dark"?"#141514":"#f7f7f4"})()
+</script>
 </head>
-<body><header class="top"><div class="wrap top-inner"><a class="brand" href="/">J.H. LAB <span style="color:#77dcff">/ BRIEF</span></a><nav class="nav"><a href="/">返回主页 ↗</a><a href="#archive">历史简报</a></nav></div></header>
+<body>
+<header class="site-header"><div class="wrap header-row">
+<a href="/" class="logo" aria-label="返回 J.H. LAB 首页"><span class="logo-mark" aria-hidden="true">J.</span>J.H. LAB</a>
+<nav class="header-nav" aria-label="简报导航"><a href="#archive">分类 / FILTER</a><a href="#archive">日期 / ARCHIVE</a></nav>
+<div class="header-actions">
+<button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换为深色模式" aria-pressed="false" title="切换黑白主题">
+<svg class="theme-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4.25"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.57 4.57l2.12 2.12M17.31 17.31l2.12 2.12M19.43 4.57l-2.12 2.12M6.69 17.31l-2.12 2.12"/></svg>
+<span class="theme-label" id="theme-label">深色模式</span>
+</button>
+<a href="/" class="back-link">返回主页 ↗</a>
+</div>
+</div></header>
 <main class="wrap">
-<section class="hero"><div class="eyebrow">GLOBAL INTELLIGENCE OBSERVATORY</div><h1>全球资讯<br>观察站<span style="color:#74daf8">.</span></h1><p>穿透日常信息流，连接中国与全球。每日追踪值得认真理解的公共议题、研究突破与技术变化；用中文呈现，附原始来源。</p><div class="sub"><span class="chip"><span class="live"></span>计划每日 09:00 更新 · 北京时间</span><span class="chip" id="headlineDate">等待首期发布</span><span class="chip" id="total">— 条精选</span></div></section>
-<div class="toolbar" id="archive"><div class="tabs" id="tabs" aria-label="内容分类"></div><label style="font-size:12px;color:var(--muted)">期数 <select id="issues" class="archive" aria-label="选择历史日期"></select></label></div>
-<p class="status" id="status" role="status">正在加载资讯…</p><section class="grid" id="stories" aria-live="polite"></section>
+<section class="hero" aria-labelledby="hero-title">
+<div class="hero-top"><span class="small-label mono">J.H. LAB / GLOBAL INTELLIGENCE</span><span class="right mono">AN OPEN INFORMATION ARCHIVE · 2026</span></div>
+<h1 id="hero-title">全球资讯<br><span class="outlined">观察站.</span></h1>
+<div class="hero-body">
+<p class="hero-description"><strong>世界很大，值得仔细阅读。</strong><br>穿透日常信息流，连接中国与全球。每日追踪公共议题、前沿科研与技术变化，以中文提供有背景的简报，并保留原始报道的链接。</p>
+<div class="issue-summary"><span class="label mono"><span class="live-dot"></span>CURRENT ISSUE</span><span id="headlineDate">等待首期发布</span><span id="total">— 条精选</span></div>
+</div>
+<div class="issue-intro mono"><span>DAILY BRIEF / 计划每日 09:00 更新 · 北京时间</span><span>SCROLL TO DISCOVER ↓</span></div>
+</section>
+<section class="issues-section" aria-labelledby="archive-heading">
+<div class="section-heading"><div><div class="small-label mono">01 / BRIEFING ARCHIVE</div><h2 id="archive-heading">每日观察<span aria-hidden="true">.</span></h2></div><p class="hint">从事实出发，提供理解事件的线索。可按主题筛选，也可回顾历史期数。</p></div>
+<div id="archive" class="toolbar"><div id="tabs" class="tabs" aria-label="按内容分类筛选"></div><label class="archive-label">日期 / ISSUE <select id="issues" class="archive" aria-label="选择历史日期"></select></label></div>
+<p id="status" class="status" role="status">正在加载资讯…</p>
+<div id="stories" class="grid" aria-live="polite"></div>
+</section>
 </main>
-<footer class="wrap note">J.H. Lab · AI 辅助整理的公开资讯，摘要仅代表来源所述，并非独立事实核查。争议议题应核对多个来源。本站不保存访客个人数据。<br>所有报道版权归原发布方所有，点击原文链接查看完整内容。</footer>
+<footer class="wrap disclaimer"><div class="brand">J.H. LAB <span style="font-weight:400;color:var(--muted);font-size:12px">/ BRIEF</span></div><div class="details">本站以 AI 辅助整理公开资讯，摘要仅反映信息来源的观点，并非独立事实核查。重大或存在争议的议题应核对多个来源。所有报道版权归原发布方所有，点击原文查看完整内容。
+<div class="footer-links"><a href="/">首页 ↗</a><a href="mailto:aiformath61@gmail.com">联系 ↗</a><a href="#hero-title">返回顶部 ↑</a></div>
+</div></footer>
+<script>
+(function(){
+"use strict";
+var html=document.documentElement,toggle=document.getElementById("theme-toggle"),label=document.getElementById("theme-label"),meta=document.getElementById("theme-color");
+function setTheme(dark){html.dataset.theme=dark?"dark":"light";toggle.setAttribute("aria-pressed",String(dark));toggle.setAttribute("aria-label",dark?"切换为浅色模式":"切换为深色模式");label.textContent=dark?"浅色模式":"深色模式";meta.content=dark?"#141514":"#f7f7f4";try{localStorage.setItem("jhlab-theme",dark?"dark":"light")}catch(e){}}
+setTheme(html.dataset.theme==="dark");
+toggle.addEventListener("click",function(){setTheme(html.dataset.theme!=="dark")});
+})();
+</script>
 <script>
 (()=>{"use strict";
 const root=document.getElementById("stories"),tabs=document.getElementById("tabs"),issues=document.getElementById("issues"),status=document.getElementById("status");
@@ -34,4 +142,5 @@ async function loadIssue(date){status.textContent="正在加载 "+date+"…";try
 async function init(){try{const r=await fetch("./data/index.json",{cache:"no-cache"});if(!r.ok)throw Error("暂无已发布的资讯");const index=await r.json();list=Array.isArray(index.dates)?index.dates.filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)):[];const bjNow=new Date(Date.now()+8*3600000);const recent=[0,1].map(offset=>new Date(bjNow.getTime()-offset*86400000).toISOString().slice(0,10));for(const date of recent){if(list.includes(date))continue;try{const probe=await fetch("./data/"+date+".json",{cache:"no-store"});if(probe.ok){const data=await probe.json();if(data.date===date&&Array.isArray(data.items)&&data.items.length)list.push(date)}}catch{}}list=[...new Set(list)].sort().reverse();issues.replaceChildren();if(!list.length){root.append(node("div","empty","观察站已就绪，正在等待第一期日报发布。"));status.textContent="尚无归档数据。";return}for(const date of list){const o=node("option","",date);o.value=date;issues.append(o)}issues.onchange=()=>loadIssue(issues.value);await loadIssue(list[0])}catch(e){root.replaceChildren(node("div","empty","观察站页面已经就绪，首期数据发布后将自动显示。"));status.textContent=String(e.message||e)}}
 init();
 })();
-</script></body></html>
+</script>
+</body></html>
