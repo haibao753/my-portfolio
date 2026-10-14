@@ -3,7 +3,7 @@
 "use strict";
 const translations={
 zh:{
- "nav.works":"作品","nav.research":"研究","nav.about":"关于","nav.contact":"联系",
+ "story.intro":"接下来，沿着四条线索继续探索","story.first":"世界观察","story.second":"数学影像","story.third":"三维记忆","story.fourth":"交互几何","story.headline":"阅读世界，理解抽象，<br>收藏片刻，再创造一种体验。","nav.works":"作品","nav.research":"研究","nav.about":"关于","nav.contact":"联系",
  "nav.home":"返回主页 ↗","nav.brief":"每日简报",
  "hero.kicker":"独立研究与创意计算实验室",
  "hero.title":"让好奇心<br>成为作品",
@@ -48,7 +48,7 @@ zh:{
  "brief.topRight":"每日观察 · 2026","brief.brandFooter":"资讯观察"
 },
 en:{
- "nav.works":"Works","nav.research":"Research","nav.about":"About","nav.contact":"Contact",
+ "story.intro":"Follow four paths of curiosity","story.first":"World","story.second":"Mathematics","story.third":"Memory","story.fourth":"Interaction","story.headline":"Read the world. Explore ideas.<br>Preserve moments. Create experiences.","nav.works":"Works","nav.research":"Research","nav.about":"About","nav.contact":"Contact",
  "nav.home":"Back home ↗","nav.brief":"Daily brief",
  "hero.kicker":"Independent research & creative computing",
  "hero.title":"Curiosity<br>in motion.",
@@ -91,7 +91,7 @@ en:{
  "footer.copy":"Creative work driven by curiosity",
  "brief.topRight":"Daily observations · 2026","brief.brandFooter":"Brief"
 }};
-const safeHtml=new Set(["hero.title","hero.aside","project.brief.art","project.exp.art","studio.title","brief.heading","brief.desc"]);
+const safeHtml=new Set(["story.headline","hero.title","hero.aside","project.brief.art","project.exp.art","studio.title","brief.heading","brief.desc"]);
 const originals=new Map();
 function readLang(){try{return localStorage.getItem("jhlab-lang")==="en"?"en":"zh"}catch(e){return "zh"}}
 function apply(lang){
