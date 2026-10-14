@@ -9,6 +9,7 @@ npm run dev
 npm run check
 npm run build
 npm run preview
+npm run test:e2e # after installing Playwright Chromium
 ```
 
 - Site source: `src/`.
@@ -22,7 +23,7 @@ npm run preview
 Before merging, update the Cloudflare build command to `npm run build` and output directory to `dist` **only after** verifying a preview deployment. Do not switch the live environment just because this branch exists.
 
 ## Remaining work
-- Verify build/TypeScript with CI and visual screenshots.
+- Inspect GitHub Actions Playwright screenshots and perform manual Android/Windows visual checks.
 - Migrate remaining long-form content and handwriting animation with original silhouette.
 - Verify the new Astro /brief/ page against the daily publishing workflow; keep its JSON feed stable.
 - Reconcile all legacy navigation and script behavior; test external links.

@@ -7,13 +7,15 @@
     "dev": "astro dev",
     "build": "astro build && node scripts/copy-legacy.mjs",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "astro": "^5.0.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "@playwright/test": "^1.56.0"
   }
 }
