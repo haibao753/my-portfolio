@@ -1,0 +1,115 @@
+/* J.H. LAB — Depth & Materials / Edition 18
+   An intentionally restrained three-level elevation system shared by homepage and Brief.
+   Decorative text, labels, plain sections and footer remain flat. */
+:root{
+ --depth-soft:0 5px 18px rgba(27,36,53,.045),0 1px 3px rgba(27,36,53,.04);
+ --depth-card:0 16px 44px rgba(27,36,53,.085),0 3px 9px rgba(27,36,53,.045);
+ --depth-poster:0 12px 30px rgba(27,36,53,.095),0 2px 6px rgba(27,36,53,.05);
+ --depth-overlay:0 22px 58px rgba(20,27,40,.16),0 5px 16px rgba(20,27,40,.065);
+ --depth-highlight:rgba(255,255,255,.74);
+ --depth-edge:rgba(53,68,91,.095);
+ --depth-primary:0 10px 23px rgba(5,103,222,.20),0 2px 6px rgba(5,103,222,.10);
+}
+html[data-theme="dark"]{
+ --depth-soft:0 6px 21px rgba(0,0,0,.18),0 1px 3px rgba(0,0,0,.16);
+ --depth-card:0 17px 46px rgba(0,0,0,.31),0 3px 10px rgba(0,0,0,.17);
+ --depth-poster:0 12px 28px rgba(0,0,0,.29),0 2px 7px rgba(0,0,0,.15);
+ --depth-overlay:0 24px 65px rgba(0,0,0,.43),0 4px 15px rgba(0,0,0,.21);
+ --depth-highlight:rgba(255,255,255,.09);
+ --depth-edge:rgba(255,255,255,.085);
+ --depth-primary:0 9px 24px rgba(9,89,191,.28),0 2px 8px rgba(9,89,191,.18);
+}
+/* 1. The header casts a minimal shadow and has a subtle inner glass rim. */
+.site-header.glass-site-header{
+ box-shadow:var(--depth-soft),inset 0 1px 0 var(--depth-highlight)!important;
+ border-bottom:1px solid var(--depth-edge)!important;
+}
+.glass-site-header .header-actions .language-toggle,
+.glass-site-header .header-actions .theme-toggle,
+.glass-site-header .site-menu-toggle{
+ box-shadow:0 1px 3px rgba(14,22,36,.035),inset 0 1px 0 var(--depth-highlight)!important;
+}
+/* 2. The right-hand menu remains transparent with LOCAL backdrop blur, but gains depth. */
+.site-menu-panel--floating{
+ box-shadow:var(--depth-overlay),inset 0 1px 0 var(--depth-highlight)!important;
+ border-color:var(--depth-edge)!important;
+}
+.site-menu-panel--floating::after{
+ content:"";position:absolute;inset:0;
+ border-radius:inherit;pointer-events:none;
+ box-shadow:inset 0 1px 0 var(--depth-highlight);
+}
+/* 3. A product is a physical stage, while its visual is a second, lighter paper layer. */
+#works .work.chapter{
+ box-shadow:var(--depth-card),inset 0 1px 0 var(--depth-highlight)!important;
+ border-color:var(--depth-edge)!important;
+ transition:transform .42s cubic-bezier(.2,.8,.2,1),box-shadow .42s ease!important;
+}
+#works .work.chapter:hover{
+ transform:translateY(-3px);
+ box-shadow:0 22px 54px rgba(27,36,53,.115),0 4px 11px rgba(27,36,53,.055)!important;
+}
+html[data-theme="dark"] #works .work.chapter:hover{box-shadow:0 20px 54px rgba(0,0,0,.37),0 4px 12px rgba(0,0,0,.22)!important}
+#works .work.chapter .work-visual .visual{
+ box-shadow:var(--depth-poster),inset 0 1px 0 var(--depth-highlight)!important;
+ border:1px solid var(--depth-edge);
+}
+/* 4. Contact cards: a more tactile surface, with restrained hover response. */
+.contact--atelier .contact-item{
+ box-shadow:var(--depth-soft),inset 0 1px 0 var(--depth-highlight)!important;
+ transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease,background .35s ease!important;
+}
+.contact--atelier .contact-item:hover{
+ transform:translateY(-2px);
+ box-shadow:var(--depth-card),inset 0 1px 0 var(--depth-highlight)!important;
+}
+/* 5. Important buttons respond to touch/hover, but never cast heavy black shadows. */
+.hero--cinematic .hero-cta .button-primary{
+ box-shadow:var(--depth-primary)!important;
+ transition:transform .27s ease,box-shadow .27s ease,background .27s ease!important;
+}
+.hero--cinematic .hero-cta .button-primary:hover{
+ transform:translateY(-2px);
+ box-shadow:0 13px 29px rgba(5,103,222,.25),0 3px 8px rgba(5,103,222,.14)!important;
+}
+.hero--cinematic .hero-cta .button-primary:active{transform:translateY(0)}
+/* 6. Daily Brief: one elevated hero stage; entries remain readable editorial cards. */
+body:has(.issues-section) .hero-body{
+ box-shadow:var(--depth-card),inset 0 1px 0 var(--depth-highlight)!important;
+ border-color:var(--depth-edge)!important;
+}
+body:has(.issues-section) .story{
+ position:relative;
+ padding:27px clamp(18px,2.1vw,30px) 30px!important;
+ border:1px solid var(--depth-edge)!important;
+ border-radius:20px;
+ background:var(--paper);
+ box-shadow:var(--depth-soft);
+ transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease!important;
+}
+body:has(.issues-section) .story:hover{
+ transform:translateY(-2px);
+ box-shadow:var(--depth-card)!important;
+}
+body:has(.issues-section) .archive,
+body:has(.issues-section) .btn{
+ box-shadow:0 2px 8px rgba(28,37,52,.035);
+}
+@media(max-width:760px){
+ /* Compact screens benefit from gentler shading and no hover-induced shifts. */
+ #works .work.chapter,#works .work.chapter:hover{
+  transform:none;
+  box-shadow:var(--depth-soft),0 10px 28px rgba(27,36,53,.045)!important;
+ }
+ .contact--atelier .contact-item,.contact--atelier .contact-item:hover{
+  transform:none;box-shadow:var(--depth-soft)!important;
+ }
+ body:has(.issues-section) .story,body:has(.issues-section) .story:hover{
+  transform:none;box-shadow:var(--depth-soft)!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ #works .work.chapter,.contact--atelier .contact-item,
+ .hero--cinematic .hero-cta .button-primary,
+ body:has(.issues-section) .story{transition:none!important;transform:none!important}
+}
