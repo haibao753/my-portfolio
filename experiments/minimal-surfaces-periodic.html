@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Three.js · 极小曲面 Minimal Surfaces</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; height: 100%; overflow: hidden;
+    background: #eef1f5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  canvas { display: block; }
+
+  #panel {
+    position: fixed; left: 18px; top: 18px;
+    width: 220px; padding: 13px 14px 15px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 13px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+    user-select: none;
+  }
+  #panel h1 {
+    margin: 0 0 10px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #4a6fa5;
+  }
+  .btn {
+    display: block; width: 100%; text-align: left;
+    margin: 4px 0; padding: 7px 10px;
+    font-size: 12.5px; font-family: inherit;
+    color: #4a5568; background: rgba(0, 0, 0, 0.025);
+    border: 1px solid transparent; border-radius: 8px;
+    cursor: pointer; transition: background .16s, color .16s, border-color .16s;
+  }
+  .btn:hover { background: rgba(74, 111, 165, 0.1); color: #1a365d; }
+  .btn.active {
+    background: rgba(74, 111, 165, 0.14);
+    border-color: rgba(74, 111, 165, 0.32);
+    color: #1a365d;
+  }
+  #hint {
+    position: fixed; left: 0; right: 0; bottom: 14px;
+    text-align: center; font-size: 11px; letter-spacing: .08em;
+    color: #8a9bb5; pointer-events: none;
+  }
+  #loading {
+    position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    font-size: 13px; color: #7d9cc4; letter-spacing: .1em;
+    transition: opacity .4s;
+  }
+  #loading.hide { opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<div id="panel">
+  <h1>Minimal Surfaces</h1>
+  <div id="buttons"></div>
+</div>
+<div id="hint">拖拽旋转 · 滚轮缩放</div>
+<div id="loading">生成曲面中…</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ============================================================
+   1. 基础场景
+   ============================================================ */
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+renderer.shadowMap.enabled = false;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#eef1f5');
+
+const camera = new THREE.PerspectiveCamera(
+  42, window.innerWidth / window.innerHeight, 0.1, 100
+);
+camera.position.set(3.6, 2.8, 4.6);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.9;
+controls.minDistance = 2.2;
+controls.maxDistance = 16;
+controls.target.set(0, 0, 0);
+
+/* ============================================================
+   2. 环境贴图（渐变画布 → 金属/玻璃反射）
+   ============================================================ */
+function makeEnvTexture() {
+  const size = 512;
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = size;
+  const ctx = canvas.getContext('2d');
+
+  const g = ctx.createLinearGradient(0, 0, size, size);
+  g.addColorStop(0.0, '#ffffff');
+  g.addColorStop(0.45, '#c8dcf5');
+  g.addColorStop(1.0, '#a8c0e0');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, size, size);
+
+  const r = ctx.createRadialGradient(
+    size * 0.4, size * 0.3, 0,
+    size * 0.4, size * 0.3, size * 0.55
+  );
+  r.addColorStop(0, 'rgba(255,255,255,1)');
+  r.addColorStop(0.55, 'rgba(255,255,255,0.25)');
+  r.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = r;
+  ctx.fillRect(0, 0, size, size);
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.mapping = THREE.EquirectangularReflectionMapping;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+scene.environment = makeEnvTexture();
+
+/* ============================================================
+   3. 灯光
+   ============================================================ */
+const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+keyLight.position.set(5, 8, 6);
+scene.add(keyLight);
+
+const fillLight = new THREE.DirectionalLight(0xc0d8ff, 1.2);
+fillLight.position.set(-6, 2, -5);
+scene.add(fillLight);
+
+const rimLight = new THREE.PointLight(0x5fa8ff, 20, 20, 2);
+rimLight.position.set(-4, 4, 3);
+scene.add(rimLight);
+
+scene.add(new THREE.AmbientLight(0xffffff, 1.0));
+
+/* ============================================================
+   4. 材质（玻璃/塑料质感 + 顶点颜色）
+   ============================================================ */
+const material = new THREE.MeshPhysicalMaterial({
+  vertexColors: true,
+  metalness: 0.15,
+  roughness: 0.14,
+  clearcoat: 1.0,
+  clearcoatRoughness: 0.1,
+  envMapIntensity: 1.4,
+  side: THREE.DoubleSide,
+  transparent: false,
+});
+
+/* ============================================================
+   5. 极小曲面定义
+   隐式函数 f(x,y,z) = 0 即曲面
+   ============================================================ */
+const SURFACES = [
+  {
+    name: 'Gyroid',
+    fn: (x, y, z) =>
+      Math.sin(x) * Math.cos(y) +
+      Math.sin(y) * Math.cos(z) +
+      Math.sin(z) * Math.cos(x),
+    freq: Math.PI * 4,   // 每个轴 2 个周期
+  },
+  {
+    name: 'Schwarz P',
+    fn: (x, y, z) =>
+      Math.cos(x) + Math.cos(y) + Math.cos(z),
+    freq: Math.PI * 4,
+  },
+  {
+    name: 'Schwarz D',
+    fn: (x, y, z) =>
+      Math.sin(x) * Math.sin(y) * Math.sin(z) +
+      Math.sin(x) * Math.cos(y) * Math.cos(z) +
+      Math.cos(x) * Math.sin(y) * Math.cos(z) +
+      Math.cos(x) * Math.cos(y) * Math.sin(z),
+    freq: Math.PI * 4,
+  },
+  {
+    name: 'Neovius',
+    fn: (x, y, z) =>
+      3 * (Math.cos(x) + Math.cos(y) + Math.cos(z)) +
+      4 * Math.cos(x) * Math.cos(y) * Math.cos(z),
+    freq: Math.PI * 3,
+  },
+];
+
+/* ============================================================
+   6. Surface Nets —— 从隐式函数提取网格
+   比 Marching Cubes 更简单、代码量更少
+   ============================================================ */
+function extractGeometry(def, resolution = 48) {
+  const size = resolution;
+  const size2 = size * size;
+  const size3 = size2 * size;
+  const range = 1.0;
+
+  // ---- 6.1 采样标量场 ----
+  const field = new Float32Array(size3);
+  const freq = def.freq;
+
+  for (let k = 0; k < size; k++) {
+    const z = -range + 2 * range * k / (size - 1);
+    for (let j = 0; j < size; j++) {
+      const y = -range + 2 * range * j / (size - 1);
+      for (let i = 0; i < size; i++) {
+        const x = -range + 2 * range * i / (size - 1);
+        field[i + j * size + k * size2] = def.fn(x * freq, y * freq, z * freq);
+      }
+    }
+  }
+
+  // ---- 6.2 每个立方体生成一个顶点 ----
+  const positions = [];
+  const vertexIdx = new Int32Array(size3).fill(-1);
+
+  const idx = (i, j, k) => i + j * size + k * size2;
+
+  // 角点偏移 (对应 8 个角)
+  const cornerOffsets = [
+    [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
+    [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1],
+  ];
+  // 12 条边 (对应角点索引)
+  const edges = [
+    [0, 1], [1, 2], [2, 3], [3, 0],
+    [4, 5], [5, 6], [6, 7], [7, 4],
+    [0, 4], [1, 5], [2, 6], [3, 7],
+  ];
+
+  for (let k = 0; k < size - 1; k++) {
+    for (let j = 0; j < size - 1; j++) {
+      for (let i = 0; i < size - 1; i++) {
+        // 8 个角点的场值
+        const v = new Array(8);
+        for (let c = 0; c < 8; c++) {
+          const o = cornerOffsets[c];
+          v[c] = field[idx(i + o[0], j + o[1], k + o[2])];
+        }
+
+        // 统计正负号变化
+        let positive = 0;
+        for (let c = 0; c < 8; c++) if (v[c] > 0) positive++;
+        if (positive === 0 || positive === 8) continue;
+
+        // 计算所有穿边插值点的平均值
+        let sx = 0, sy = 0, sz = 0, count = 0;
+        for (const [a, b] of edges) {
+          if ((v[a] > 0) !== (v[b] > 0)) {
+            const t = -v[a] / (v[b] - v[a]);
+            const oa = cornerOffsets[a];
+            const ob = cornerOffsets[b];
+            sx += (i + oa[0]) + t * (ob[0] - oa[0]);
+            sy += (j + oa[1]) + t * (ob[1] - oa[1]);
+            sz += (k + oa[2]) + t * (ob[2] - oa[2]);
+            count++;
+          }
+        }
+
+        if (count > 0) {
+          // 格子坐标 → 世界坐标 [-1, 1]
+          const px = -range + 2 * range * (sx / count) / (size - 1);
+          const py = -range + 2 * range * (sy / count) / (size - 1);
+          const pz = -range + 2 * range * (sz / count) / (size - 1);
+
+          vertexIdx[idx(i, j, k)] = positions.length / 3;
+          positions.push(px, py, pz);
+        }
+      }
+    }
+  }
+
+  // ---- 6.3 连接四边形 ----
+  const indices = [];
+  const pushQuad = (c1, c2, c3, c4, flip) => {
+    if (flip) {
+      indices.push(c1, c3, c2, c1, c4, c3);
+    } else {
+      indices.push(c1, c2, c3, c1, c3, c4);
+    }
+  };
+
+  for (let k = 0; k < size; k++) {
+    for (let j = 0; j < size; j++) {
+      for (let i = 0; i < size; i++) {
+        // --- X 方向边 (i,j,k) - (i+1,j,k) ---
+        if (i + 1 < size) {
+          const va = field[idx(i, j, k)];
+          const vb = field[idx(i + 1, j, k)];
+          if ((va > 0) !== (vb > 0)) {
+            // 共享这条边的 4 个立方体
+            if (j - 1 >= 0 && k - 1 >= 0) {
+              const c1 = vertexIdx[idx(i, j - 1, k - 1)];
+              const c2 = vertexIdx[idx(i, j, k - 1)];
+              const c3 = vertexIdx[idx(i, j, k)];
+              const c4 = vertexIdx[idx(i, j - 1, k)];
+              if (c1 >= 0 && c2 >= 0 && c3 >= 0 && c4 >= 0) {
+                pushQuad(c1, c2, c3, c4, va > 0);
+              }
+            }
+          }
+        }
+
+        // --- Y 方向边 (i,j,k) - (i,j+1,k) ---
+        if (j + 1 < size) {
+          const va = field[idx(i, j, k)];
+          const vb = field[idx(i, j + 1, k)];
+          if ((va > 0) !== (vb > 0)) {
+            if (i - 1 >= 0 && k - 1 >= 0) {
+              const c1 = vertexIdx[idx(i - 1, j, k - 1)];
+              const c2 = vertexIdx[idx(i, j, k - 1)];
+              const c3 = vertexIdx[idx(i, j, k)];
+              const c4 = vertexIdx[idx(i - 1, j, k)];
+              if (c1 >= 0 && c2 >= 0 && c3 >= 0 && c4 >= 0) {
+                pushQuad(c1, c2, c3, c4, va <= 0);
+              }
+            }
+          }
+        }
+
+        // --- Z 方向边 (i,j,k) - (i,j,k+1) ---
+        if (k + 1 < size) {
+          const va = field[idx(i, j, k)];
+          const vb = field[idx(i, j, k + 1)];
+          if ((va > 0) !== (vb > 0)) {
+            if (i - 1 >= 0 && j - 1 >= 0) {
+              const c1 = vertexIdx[idx(i - 1, j - 1, k)];
+              const c2 = vertexIdx[idx(i, j - 1, k)];
+              const c3 = vertexIdx[idx(i, j, k)];
+              const c4 = vertexIdx[idx(i - 1, j, k)];
+              if (c1 >= 0 && c2 >= 0 && c3 >= 0 && c4 >= 0) {
+                pushQuad(c1, c2, c3, c4, va > 0);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ---- 6.4 构建 BufferGeometry ----
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
+
+  // ---- 6.5 顶点颜色（基于 Y 轴高度 + XZ 径向距离的蓝绿渐变）----
+  const posAttr = geometry.attributes.position;
+  const count = posAttr.count;
+  const colors = new Float32Array(count * 3);
+
+  const colorLow = new THREE.Color('#1b4f8a');   // 深蓝
+  const colorHigh = new THREE.Color('#2ec4a0');  // 青绿
+
+  // 计算 Y 轴范围用于归一化
+  let minY = Infinity, maxY = -Infinity;
+  for (let i = 0; i < count; i++) {
+    const y = posAttr.getY(i);
+    if (y < minY) minY = y;
+    if (y > maxY) maxY = y;
+  }
+  const yRange = maxY - minY || 1;
+
+  for (let i = 0; i < count; i++) {
+    const px = posAttr.getX(i);
+    const py = posAttr.getY(i);
+    const pz = posAttr.getZ(i);
+
+    const t = (py - minY) / yRange;                    // 0 底部 → 1 顶部
+    const r = Math.sqrt(px * px + pz * pz) / range;    // 径向距离
+
+    const mixFactor = THREE.MathUtils.clamp(t * 0.75 + r * 0.25, 0, 1);
+    const c = colorLow.clone().lerp(colorHigh, mixFactor);
+
+    colors[i * 3] = c.r;
+    colors[i * 3 + 1] = c.g;
+    colors[i * 3 + 2] = c.b;
+  }
+
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  geometry.computeBoundingSphere();
+
+  return geometry;
+}
+
+/* ============================================================
+   7. 曲面切换
+   ============================================================ */
+let mesh = null;
+let currentIndex = 0;
+let intro = 1;
+
+function buildSurface(index) {
+  const def = SURFACES[index];
+  const geometry = extractGeometry(def, 48);
+
+  if (mesh) {
+    mesh.geometry.dispose();
+    mesh.geometry = geometry;
+  } else {
+    mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+  }
+
+  // 居中
+  geometry.computeBoundingBox();
+  const center = new THREE.Vector3();
+  geometry.boundingBox.getCenter(center);
+  geometry.translate(-center.x, -center.y, -center.z);
+
+  intro = 0;
+}
+
+/* ============================================================
+   8. UI
+   ============================================================ */
+const buttonsEl = document.getElementById('buttons');
+const loadingEl = document.getElementById('loading');
+
+SURFACES.forEach((def, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'btn' + (i === 0 ? ' active' : '');
+  btn.textContent = def.name;
+  btn.addEventListener('click', () => {
+    if (i === currentIndex) return;
+    document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentIndex = i;
+
+    loadingEl.classList.remove('hide');
+    loadingEl.style.opacity = '1';
+
+    // 让 UI 先更新，再执行耗时计算
+    setTimeout(() => {
+      buildSurface(i);
+      loadingEl.style.opacity = '0';
+    }, 20);
+  });
+  buttonsEl.appendChild(btn);
+});
+
+/* ============================================================
+   9. 动画循环
+   ============================================================ */
+const clock = new THREE.Clock();
+let initialLoad = true;
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  const dt = Math.min(clock.getDelta(), 0.05);
+
+  if (intro < 1) {
+    intro = Math.min(1, intro + dt * 3.0);
+    const e = 1 - Math.pow(1 - intro, 3);
+    scene.scale.setScalar(0.88 + 0.12 * e);
+  } else {
+    scene.scale.setScalar(1);
+  }
+
+  controls.update();
+  renderer.render(scene, camera);
+
+  if (initialLoad && mesh) {
+    initialLoad = false;
+    loadingEl.classList.add('hide');
+  }
+}
+
+// 首次生成
+setTimeout(() => {
+  buildSurface(0);
+  animate();
+}, 50);
+
+/* ============================================================
+   10. 自适应
+   ============================================================ */
+window.addEventListener('resize', () => {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(w, h);
+});
+</script>
+</body>
+</html>
