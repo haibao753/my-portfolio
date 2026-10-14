@@ -165,6 +165,8 @@ test("editorial hero lines and responsive navigation remain readable",async({pag
   await toggle.click();
   await expect(toggle).toHaveAttribute("aria-expanded","true");
   await expect(page.locator("[data-menu-panel]")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.locator("[data-menu-panel]")).toBeHidden();
  }else{
   const link=page.locator(".desktop-links a").first();
   await expect(link).toHaveCSS("position","relative");
