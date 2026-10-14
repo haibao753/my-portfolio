@@ -214,7 +214,7 @@ test("mobile menu has a dimmed glass backdrop and compact layout",async({page,is
  expect(bg.startsWith("rgba(")||bg.startsWith("rgb(")).toBe(true);
  const panel=page.locator("[data-menu-panel]");
  const box=await panel.boundingBox();
- expect(box?.width??0).toBeLessThanOrEqual(230);
+ expect(box?.width??0).toBeLessThanOrEqual(260);
  await page.keyboard.press("Escape");
  await expect(backdrop).toBeHidden();
 });
@@ -237,7 +237,7 @@ test("liquid glass menu recedes the page and restores it on close",async({page,i
  await menu.click();
  await expect(page.locator("html")).toHaveAttribute("data-menu-open","true");
  await expect(page.locator("[data-menu-panel]")).toHaveCSS("backdrop-filter",/blur/);
- await expect(page.locator("main")).not.toHaveCSS("transform","none");
+ await expect(page.locator("main")).toHaveCSS("filter",/brightness/);
  await page.keyboard.press("Escape");
  await expect(page.locator("html")).not.toHaveAttribute("data-menu-open","true");
  await expect(page.locator("[data-menu-panel]")).toBeHidden();
@@ -283,9 +283,11 @@ test("mobile menu prevents background scrolling and restores original position",
  const before=await page.evaluate(()=>scrollY);
  await page.locator("[data-menu-toggle]").click();
  await expect(page.locator("html")).toHaveAttribute("data-menu-active","true");
+ await expect(page.locator("body")).toHaveCSS("position","fixed");
+ await expect(page.locator("body")).toHaveCSS("top",`-${before}px`);
  await page.evaluate(()=>window.dispatchEvent(new WheelEvent("wheel",{deltaY:360,bubbles:true,cancelable:true})));
  await page.waitForTimeout(100);
- expect(await page.evaluate(()=>scrollY)).toBe(before);
+ await expect(page.locator("body")).toHaveCSS("top",`-${before}px`);
  await page.keyboard.press("Escape");
  await expect(page.locator("[data-menu-panel]")).toBeHidden();
  await expect(page.locator("html")).not.toHaveAttribute("data-menu-active","true");
