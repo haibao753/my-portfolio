@@ -40,7 +40,7 @@ zh:{
  "project.exp.art":"几何，<br>正在生长。",
  "studio.kicker":"开放的探索实践","studio.title":"精确的思考，<br>自由的表达。",
  "studio.desc":"科学提供理解世界的方法，艺术扩展感知世界的维度。这里是一个持续更新的个人实验场：在严谨与想象之间，记录每一次学习、试验与创造。",
- "contact.kicker":"取得联系","contact.title":"建立连接.","contact.desc":"欢迎交流数学、人工智能、科学传播、创意编程与跨学科合作。",
+ "contact.kicker":"取得联系","contact.title":"聊聊新的可能。","contact.desc":"欢迎交流数学、人工智能、科学传播、创意编程与跨学科合作。",
  "contact.email":"电子邮箱","contact.wechat":"微信","contact.mailaction":"发送邮件 ↗","contact.copy":"复制微信号 ↗",
  "footer.tagline":"独立研究与创意计算实验室","footer.brief":"全球资讯 ↗","footer.archive":"影像档案 ↗","footer.contact":"联系 ↗","footer.top":"返回顶部 ↑",
  "brief.kicker":"全球资讯观察站","brief.heading":"全球资讯<br>观察站",
