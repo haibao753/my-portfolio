@@ -274,3 +274,20 @@ test("theme transition animates on click but not on reload",async({page})=>{
  await page.reload();
  await expect(page.locator("html")).not.toHaveAttribute("data-theme-transition","true");
 });
+
+
+test("mobile menu prevents background scrolling and restores original position",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ await page.evaluate(()=>window.scrollTo(0,Math.min(600,document.documentElement.scrollHeight-innerHeight)));
+ const before=await page.evaluate(()=>scrollY);
+ await page.locator("[data-menu-toggle]").click();
+ await expect(page.locator("html")).toHaveAttribute("data-menu-active","true");
+ await page.evaluate(()=>window.dispatchEvent(new WheelEvent("wheel",{deltaY:360,bubbles:true,cancelable:true})));
+ await page.waitForTimeout(100);
+ expect(await page.evaluate(()=>scrollY)).toBe(before);
+ await page.keyboard.press("Escape");
+ await expect(page.locator("[data-menu-panel]")).toBeHidden();
+ await expect(page.locator("html")).not.toHaveAttribute("data-menu-active","true");
+ expect(await page.evaluate(()=>scrollY)).toBe(before);
+});
