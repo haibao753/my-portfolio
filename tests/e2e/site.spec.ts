@@ -600,3 +600,20 @@ test("real homepage navbar has full-perimeter compositor optics without blocking
  }
  await expect(nav.locator(".brand")).toBeVisible();
 });
+
+test("optical engine changes actual RGB pixel positions, not merely CSS opacity", async ({page}) => {
+ await page.goto("/experiments/optical-engine-v1.html");
+ await expect(page.locator("#status")).toContainText("WebGL 运行中");
+ const sample=async()=>page.locator("#glass").evaluate((canvas:HTMLCanvasElement)=>{
+  const gl=canvas.getContext("webgl",{preserveDrawingBuffer:true})!;
+  const bytes=new Uint8Array(canvas.width*canvas.height*4);
+  gl.readPixels(0,0,canvas.width,canvas.height,gl.RGBA,gl.UNSIGNED_BYTE,bytes);
+  return Array.from(bytes.filter((_,i)=>i%4===0)).reduce((a,b,i)=>a+(b*(i%17+1)),0);
+ });
+ await page.locator("#enabled").uncheck();
+ await page.waitForTimeout(150);
+ const plain=await sample();
+ await page.locator("#enabled").check();
+ await page.waitForTimeout(150);
+ expect(await sample()).not.toBe(plain);
+});
