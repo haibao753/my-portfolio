@@ -11,6 +11,8 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
   nav.prepend(glass);
   const gl=glass.getContext('webgl',{alpha:true,preserveDrawingBuffer:true,antialias:false});
   const source=document.createElement('canvas'),ctx=source.getContext('2d',{alpha:false});
+  // Expose the real input surface to browser pixel tests without rendering it onscreen.
+  glass.opticalSource=source;
   let shader=null;
   if(gl&&ctx){try{shader=setup(gl)}catch(err){nav.dataset.opticalError='shader'}}
   if(shader){
@@ -66,7 +68,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
       elements++;
      }
     }
-    try{shader(source,{strength:2,optical:1,reflectivity:.35});nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors)}catch{nav.dataset.opticalError='texture'}
+    try{shader(source,{strength:2,optical:1,reflectivity:.35});nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalError=''}catch{nav.dataset.opticalError='texture'}
    };
    let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
    addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});
