@@ -153,3 +153,23 @@ test('live optical input preserves rounded blue pill rather than rectangular fil
  expect(samples.centre[2]).toBeGreaterThan(samples.centre[0]+70);
  expect(samples.corner[2]).toBeLessThan(samples.centre[2]-35);
 });
+
+test('studio key light brightens curved rim but leaves clear centre untouched',async({page})=>{
+ await page.goto('/?opticalEngine=2');
+ const data=await page.evaluate(async()=>{
+  const modulePath='/assets/optical-engine.js';const {setup}=await import(modulePath);
+  const source=document.createElement('canvas');source.width=464;source.height=216;
+  const ctx=source.getContext('2d')!;ctx.fillStyle='#4f718c';ctx.fillRect(0,0,464,216);
+  const output=document.createElement('canvas');output.width=320;output.height=72;
+  const gl=output.getContext('webgl',{alpha:true,preserveDrawingBuffer:true})!;
+  const draw=setup(gl);
+  const read=(x:number,y:number)=>{const p=new Uint8Array(4);gl.readPixels(x,71-y,1,1,gl.RGBA,gl.UNSIGNED_BYTE,p);return Array.from(p)};
+  const opts={liquid:1,optical:1,reflectivity:.78,cornerRadius:30,bevelWidth:19,
+    surfaceSize:[320,72] as [number,number],scenePadding:72,lightDirection:[-.55,.85] as [number,number]};
+  draw(source,{...opts,studioLight:0});const off={center:read(160,36),rim:read(160,3)};
+  draw(source,{...opts,studioLight:.8});const on={center:read(160,36),rim:read(160,3)};
+  return {off,on};
+ });
+ expect(data.on.center).toEqual(data.off.center);
+ expect(data.on.rim.slice(0,3).some((v:number,i:number)=>v>data.off.rim[i])).toBe(true);
+});
