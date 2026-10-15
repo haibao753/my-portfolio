@@ -102,7 +102,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
       width:r.width,height:r.height});
     return r;
    };
-   const observer=new MutationObserver(()=>{candidates=Array.from(root.querySelectorAll('*'));invalidateLayout()});
+   const observer=new MutationObserver(records=>{if(records.some(record=>record.type==='childList'))candidates=Array.from(root.querySelectorAll('*'));invalidateLayout()});
    observer.observe(root,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['style','class','src','srcset','width','height','hidden']});
    const refresh=()=>{
     const frameStart=performance.now();
