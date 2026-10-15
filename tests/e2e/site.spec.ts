@@ -690,3 +690,25 @@ test("optical framebuffer preserves genuine blue background and red image RGB ch
  expect(rgb.blue[2]).toBeGreaterThan(rgb.blue[0]+100);
  expect(rgb.red[0]).toBeGreaterThan(rgb.red[2]+100);
 });
+
+test("live optical source retains object-fit cover composition",async({page})=>{
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ await page.evaluate(async()=>{
+  const rect=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const main=document.querySelector("main")!;
+  const img=document.createElement("img");
+  img.src="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="120" height="40"><rect width="40" height="40" fill="red"/><rect x="40" width="40" height="40" fill="green"/><rect x="80" width="40" height="40" fill="blue"/></svg>');
+  img.style.cssText="position:fixed;left:25px;top:"+Math.round(rect.top+12)+"px;width:40px;height:40px;object-fit:cover";
+  main.appendChild(img);await img.decode();dispatchEvent(new Event("scroll"));
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-images")||0)).toBeGreaterThan(0);
+ const rgb=await page.locator(".live-optical-layer").evaluate((glass:HTMLCanvasElement)=>{
+  const src=(glass as HTMLCanvasElement&{opticalSource:HTMLCanvasElement}).opticalSource;
+  const nav=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  return Array.from(src.getContext("2d")!.getImageData(Math.round(45-nav.left),24,1,1).data).slice(0,3);
+ });
+ expect(rgb[1]).toBeGreaterThan(rgb[0]);
+ expect(rgb[1]).toBeGreaterThan(rgb[2]);
+});
