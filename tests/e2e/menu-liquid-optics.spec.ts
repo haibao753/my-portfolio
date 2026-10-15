@@ -10,6 +10,6 @@ test('expanded menu uses sampled GPU material instead of frosted backdrop',async
  await expect.poll(()=>menu.getAttribute('data-menu-optics')).toBe('active');
  await expect(menu.locator('.menu-optical-layer')).toBeVisible();
  const filter=await menu.evaluate(el=>getComputedStyle(el).backdropFilter);
- expect(filter).toContain('blur(5px)');
+ expect(filter).toContain('blur(3px)');
  await expect(menu.locator('a').first()).toBeVisible();
 });
