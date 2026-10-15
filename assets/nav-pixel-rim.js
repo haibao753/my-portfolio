@@ -1,7 +1,7 @@
-/* J.H. LAB experimental pixel reflection. Opt in with ?pixelGlass=1.
+/* J.H. LAB experimental pixel reflection. Enabled by default in preview; ?pixelGlass=0 disables.
  * Text is reconstructed into a Canvas pixel texture; it is NOT a DOM screenshot. */
 (()=>{'use strict';
-if(new URLSearchParams(location.search).get('pixelGlass')!=='1')return;
+if(new URLSearchParams(location.search).get('pixelGlass')==='0')return;
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 const nav=document.querySelector('.glass-nav'),canvas=nav?.querySelector('.nav-pixel-rim');
 if(!nav||!canvas)return;
