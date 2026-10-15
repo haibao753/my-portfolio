@@ -593,7 +593,7 @@ test("real homepage navbar has full-perimeter compositor optics without blocking
   await expect(edge).toBeAttached();
   const info=await edge.evaluate(el=>{
    const style=getComputedStyle(el);
-   return {pointerEvents:style.pointerEvents,backdrop:style.backdropFilter||style.webkitBackdropFilter};
+   return {pointerEvents:style.pointerEvents,backdrop:style.backdropFilter||style.getPropertyValue('-webkit-backdrop-filter')};
   });
   expect(info.pointerEvents).toBe("none");
   expect(info.backdrop).not.toBe("none");
