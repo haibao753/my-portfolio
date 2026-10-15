@@ -106,6 +106,10 @@ vec4 liquidPixel(){
  // centre stays compositor-native instead of duplicating reconstructed DOM.
  float edgeWeight=1.-smoothstep(1.,max(bevelWidth,3.)*.85,-sd);
  alpha*=mix(1.,edgeWeight,rimOnly);
+ // Explicit antialiased rounded silhouette. CSS radius alone must not be
+ // relied on to clip the WebGL framebuffer: it is always rectangular.
+ float silhouette=1.-smoothstep(-.75,.75,sd);
+ alpha*=silhouette;
  return vec4(mix(base.rgb,pixel,optical)*alpha,alpha);
 }
 vec2 sampleDirection(vec2 p,float eta){
