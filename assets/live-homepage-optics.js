@@ -43,6 +43,9 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     return rect.width*rect.height>=width*height*.7?null:{dirtyRect:rect};
    };
    let candidates=Array.from(root.querySelectorAll('*'));
+   let lastPaintScrollX=NaN,lastPaintScrollY=NaN,lastPaintEpoch=-1;
+   let lastPaintWidth=0,lastPaintHeight=0;
+   let skippedRasterFrames=0;
    const glyphCache=new WeakMap();
    let glyphMeasurements=0,cacheHits=0;
    const fixedPosition=(el)=>{for(let p=el;p&&p!==root;p=p.parentElement){if(getComputedStyle(p).position==='fixed')return true}return false};
@@ -101,6 +104,14 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     const nr=nav.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,Math.round(nr.width)),h=Math.max(1,Math.round(nr.height));
     if(glass.width!==Math.round(w*dpr)||glass.height!==Math.round(h*dpr)){glass.width=Math.round(w*dpr);glass.height=Math.round(h*dpr)}
     if(source.width!==w||source.height!==h){source.width=w;source.height=h;}
+    const unchangedLayout=lastPaintEpoch===layoutEpoch&&lastPaintWidth===w&&lastPaintHeight===h;
+    const sameScroll=lastPaintScrollX===window.scrollX&&lastPaintScrollY===window.scrollY;
+    if(unchangedLayout&&sameScroll){
+     skippedRasterFrames++;
+     nav.dataset.opticalRasterSkipped=String(skippedRasterFrames);
+     nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1);
+     return;
+    }
     ctx.clearRect(0,0,w,h);
     let elements=0,images=0,colors=0,gradients=0,vectors=0;
     const offsetX=nr.left,offsetY=nr.top;
@@ -200,6 +211,9 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     }
     if(Math.abs(window.scrollY-startScrollY)>2){schedule();return;}
     measuredEpoch=layoutEpoch;
+    lastPaintEpoch=layoutEpoch;lastPaintWidth=w;lastPaintHeight=h;
+    lastPaintScrollX=window.scrollX;lastPaintScrollY=window.scrollY;
+    nav.dataset.opticalRasterSkipped=String(skippedRasterFrames);
     nav.dataset.opticalGlyphMeasures=String(glyphMeasurements);nav.dataset.opticalGlyphCacheHits=String(cacheHits);
     nav.dataset.opticalAlignmentX=String(offsetX.toFixed(2));nav.dataset.opticalAlignmentY=String(offsetY.toFixed(2));
     try{const delta=changedRect();shader(source,{strength:2,optical:1,reflectivity:.35,...(delta||{})});
