@@ -362,6 +362,10 @@ test("glass navigation fits short phone viewports without covering its close con
  expect(bounds).not.toBeNull();
  expect((bounds?.y??0)+(bounds?.height??0)).toBeLessThanOrEqual(430);
  await expect(toggle).toBeInViewport();
+ const scrolling=await panel.evaluate(el=>({scrollHeight:el.scrollHeight,clientHeight:el.clientHeight}));
+ expect(scrolling.scrollHeight).toBeGreaterThan(scrolling.clientHeight);
+ await panel.evaluate(el=>{el.scrollTop=el.scrollHeight;});
+ await expect(panel.locator("a").last()).toBeInViewport();
  await page.keyboard.press("Escape");
  await expect(panel).toBeHidden();
 });
