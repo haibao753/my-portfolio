@@ -21,6 +21,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
    const observer=new MutationObserver(()=>{candidates=Array.from(root.querySelectorAll('*'));schedule()});
    observer.observe(root,{childList:true,subtree:true});
    const refresh=()=>{
+    nav.dataset.opticalRefreshes=String(Number(nav.dataset.opticalRefreshes||0)+1);
     const nr=nav.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,Math.round(nr.width)),h=Math.max(1,Math.round(nr.height));
     if(glass.width!==Math.round(w*dpr)||glass.height!==Math.round(h*dpr)){glass.width=Math.round(w*dpr);glass.height=Math.round(h*dpr)}
     if(source.width!==w||source.height!==h){source.width=w;source.height=h;}
@@ -35,6 +36,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
      if(style.display==='none'||style.visibility==='hidden'||Number(style.opacity)===0)continue;
      nearby.push({el,r,style});
     }
+    nav.dataset.opticalNearby=String(nearby.length);
     // Paint CSS color surfaces beneath media and text rather than painting over them.
     for(const {el,r,style} of nearby){
      if(el===root)continue;
