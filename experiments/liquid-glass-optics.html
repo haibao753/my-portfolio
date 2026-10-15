@@ -67,6 +67,8 @@ small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:
    vec2 uv=gl_FragCoord.xy/uRes;
    vec2 aspect=vec2(uRes.x/uRes.y,1.);
    vec2 pos=uv*aspect;float d=field(pos);
+   // Most pixels are outside the lens. Avoid normals and four scene evaluations there.
+   if(d>.014){gl_FragColor=vec4(scene(uv),1.);return;}
    vec2 e=vec2(.0025,0.);
    vec2 normal=normalize(vec2(field(pos+e.xy)-field(pos-e.xy),field(pos+e.yx)-field(pos-e.yx))+.000001);
    float inner=1.-smoothstep(-.02,.012,d);
