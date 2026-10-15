@@ -39,7 +39,7 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
      // otherwise a dark photograph beside it can turn a white-background logo white.
      const sampleTarget=target.matches('.brand')?target.querySelector('span'):target;
      const r=sampleTarget.getBoundingClientRect();if(!r.width||!r.height)continue;
-     const x=Math.max(0,Math.floor(r.left-nr.left+overscan)),y=Math.max(0,Math.floor(r.top-nr.top+overscan));
+     const x=Math.max(0,Math.floor(r.left-nr.left)),y=Math.max(0,Math.floor(r.top-nr.top));
      const w=Math.min(source.width-x,Math.ceil(r.width)),h=Math.min(source.height-y,Math.ceil(r.height));
      if(w<1||h<1)continue;
      const pixels=ctx.getImageData(x,y,w,h).data;
@@ -172,7 +172,13 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
     const frameStart=performance.now();
     nav.dataset.opticalRefreshes=String(Number(nav.dataset.opticalRefreshes||0)+1);
     const navBounds=nav.getBoundingClientRect();
-    const nr={left:navBounds.left-overscan,top:navBounds.top-overscan,right:navBounds.right+overscan,bottom:navBounds.bottom+overscan,width:Math.round(navBounds.width)+2*overscan,height:Math.round(navBounds.height)+2*overscan};
+    // Quantize the entire padded sampling frame once. Use its origin and
+    // dimensions consistently for rasterization, damage and GPU sampling.
+    const sampleLeft=Math.floor(navBounds.left)-overscan;
+    const sampleTop=Math.floor(navBounds.top)-overscan;
+    const sampleRight=Math.ceil(navBounds.right)+overscan;
+    const sampleBottom=Math.ceil(navBounds.bottom)+overscan;
+    const nr={left:sampleLeft,top:sampleTop,right:sampleRight,bottom:sampleBottom,width:sampleRight-sampleLeft,height:sampleBottom-sampleTop};
     const dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,nr.width),h=Math.max(1,nr.height);
     if(glass.width!==Math.round((w-2*overscan)*dpr)||glass.height!==Math.round((h-2*overscan)*dpr)){glass.width=Math.round((w-2*overscan)*dpr);glass.height=Math.round((h-2*overscan)*dpr)}
     if(source.width!==w||source.height!==h){source.width=w;source.height=h;}
