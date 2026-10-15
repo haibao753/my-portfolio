@@ -583,3 +583,20 @@ test("shared scene uses text extracted from the actual Astro homepage", async ({
  expect(html).toContain(heading!);
  await expect(page.locator("#scene")).toHaveAttribute("data-link",/\S+/);
 });
+
+test("real homepage navbar has full-perimeter compositor optics without blocking controls", async ({page}) => {
+ await page.goto("/");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-native-optics","full-scene");
+ for(const side of ["top","bottom","left","right"]){
+  const edge=page.locator(".native-optic-"+side);
+  await expect(edge).toBeAttached();
+  const info=await edge.evaluate(el=>{
+   const style=getComputedStyle(el);
+   return {pointerEvents:style.pointerEvents,backdrop:style.backdropFilter||style.webkitBackdropFilter};
+  });
+  expect(info.pointerEvents).toBe("none");
+  expect(info.backdrop).not.toBe("none");
+ }
+ await expect(nav.locator("[data-menu-toggle]")).toBeVisible({visible:true});
+});
