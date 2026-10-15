@@ -30,3 +30,30 @@ test('curved meniscus bends scene pixels and reflects actual source colors',asyn
  expect(result.reflected[0]).not.toEqual(result.refracted[0]);
  expect(result.reflected[3][3]).toBe(0);
 });
+
+test('overscan maps external scene colors into reflected rim without moving centre',async({page})=>{
+ await page.goto('/?opticalEngine=2');
+ const result=await page.evaluate(async()=>{
+  const modulePath='/assets/optical-engine.js';
+  const {setup}=await import(modulePath);
+  const source=document.createElement('canvas');
+  const pad=24,w=320,h=72;source.width=w+pad*2;source.height=h+pad*2;
+  const ctx=source.getContext('2d')!;
+  ctx.fillStyle='#14395b';ctx.fillRect(0,0,source.width,source.height);
+  const target=document.createElement('canvas');target.width=w;target.height=h;
+  const gl=target.getContext('webgl',{alpha:true,preserveDrawingBuffer:true})!;
+  const render=setup(gl);
+  const read=(x:number,y:number)=>{
+   const pixel=new Uint8Array(4);gl.readPixels(x,h-1-y,1,1,gl.RGBA,gl.UNSIGNED_BYTE,pixel);return Array.from(pixel);
+  };
+  const opts={liquid:1,optical:1,reflectivity:1,strength:1.25,cornerRadius:28,bevelWidth:12,surfaceSize:[w,h] as [number,number],scenePadding:pad};
+  render(source,opts);
+  const beforeRim=read(2,36),beforeCentre=read(160,36);
+  ctx.fillStyle='#fc3010';ctx.fillRect(0,pad,23,h);
+  render(source,opts);
+  const afterRim=read(2,36),afterCentre=read(160,36);
+  return {beforeRim,afterRim,beforeCentre,afterCentre};
+ });
+ expect(result.afterCentre).toEqual(result.beforeCentre);
+ expect(result.afterRim).not.toEqual(result.beforeRim);
+});
