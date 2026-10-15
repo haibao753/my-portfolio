@@ -204,7 +204,7 @@ test("reduced motion turns off scroll-linked depth",async({page})=>{
 });
 
 
-test("mobile menu has a dimmed glass backdrop and compact layout",async({page,isMobile})=>{
+test("mobile menu glass stays compact and translucent",async({page,isMobile})=>{
  if(!isMobile)return;
  await page.goto("/");
  await page.locator("[data-menu-toggle]").click();
@@ -276,19 +276,21 @@ test("theme transition animates on click but not on reload",async({page})=>{
 });
 
 
-test("mobile menu keeps background scroll position stable under direct wheel input",async({page,isMobile})=>{
+test("mobile glass menu stays open while page scrolls and header stays visible",async({page,isMobile})=>{
  if(!isMobile)return;
  await page.goto("/");
- await page.evaluate(()=>window.scrollTo({top:Math.min(600,document.documentElement.scrollHeight-innerHeight),behavior:"instant"}));
- await page.locator("[data-menu-toggle]").evaluate((el:HTMLElement)=>el.click());
- await expect(page.locator("html")).toHaveAttribute("data-menu-active","true");
- const before=await page.evaluate(()=>scrollY);
- await page.evaluate(()=>window.dispatchEvent(new WheelEvent("wheel",{deltaY:360,bubbles:true,cancelable:true})));
- await page.waitForTimeout(100);
- expect(await page.evaluate(()=>scrollY)).toBe(before);
- await page.keyboard.press("Escape");
+ const toggle=page.locator("[data-menu-toggle]");
+ await toggle.click();
+ await expect(page.locator("[data-menu-panel]")).toBeVisible();
+ await expect(page.locator("[data-menu-backdrop]")).toHaveCSS("pointer-events","none");
+ const before=await page.evaluate(()=>window.scrollY);
+ await page.evaluate(()=>window.scrollBy({top:500,behavior:"instant"}));
+ await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBeGreaterThan(before+100);
+ await expect(page.locator("[data-menu-panel]")).toBeVisible();
+ await expect(toggle).toBeInViewport();
+ await expect(toggle).toHaveAttribute("aria-expanded","true");
+ await toggle.click();
  await expect(page.locator("[data-menu-panel]")).toBeHidden();
- await expect(page.locator("html")).not.toHaveAttribute("data-menu-active","true");
 });
 
 test("optical glass laboratory preserves real accessible menu controls",async({page})=>{
