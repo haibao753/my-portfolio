@@ -742,3 +742,28 @@ test("live optical input captures a CSS gradient and inline SVG pixels",async({p
  expect(sampled.right[2]).toBeGreaterThan(sampled.right[0]+60);
  expect(sampled.svg[1]).toBeGreaterThan(sampled.svg[0]+70);
 });
+
+test("optical source preserves subregion positions after responsive nav offset",async({page})=>{
+ await page.setViewportSize({width:412,height:860});
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ await page.evaluate(()=>{
+  const nr=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const patch=document.createElement("div");
+  patch.style.cssText="position:fixed;left:"+Math.round(nr.left+46)+"px;top:"+Math.round(nr.top+18)+"px;width:34px;height:26px;background:rgb(240,32,53)";
+  document.querySelector("main")!.appendChild(patch);
+  dispatchEvent(new Event("scroll"));
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-colors")||0)).toBeGreaterThan(0);
+ const result=await page.locator(".live-optical-layer").evaluate((glass:HTMLCanvasElement)=>{
+  const src=(glass as HTMLCanvasElement & {opticalSource:HTMLCanvasElement}).opticalSource;
+  const nr=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const p=src.getContext("2d")!.getImageData(60,29,1,1).data;
+  return {red:p[0],green:p[1],blue:p[2],navX:nr.left,sourceWidth:src.width};
+ });
+ expect(result.navX).toBeGreaterThan(0);
+ expect(result.red).toBeGreaterThan(180);
+ expect(result.green).toBeLessThan(80);
+ expect(result.blue).toBeLessThan(100);
+});
