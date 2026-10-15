@@ -627,5 +627,5 @@ test("live homepage optics is opt-in and tracks actual DOM content during scroll
  await expect(page.locator(".live-optical-layer")).toBeAttached();
  await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight*.35));
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-samples")||0)).toBeGreaterThan(0);
- await expect(nav.locator("[data-menu-toggle]")).toBeVisible();
+ await expect(nav.locator(".brand")).toBeVisible();
 });
