@@ -5,10 +5,24 @@
 - Production Worker: `my-portfolio`, custom domain `hujinhai.com`.
 - GitHub connection: `haibao753/my-portfolio`.
 - Production branch: **`main`**.
-- Build command: **none**. Deploy command: **`npx wrangler deploy`**. Root: `/`.
+- Previously recorded Build command: **none**. Deploy command: **`npx wrangler deploy`**. Root: `/`.
 - Existing production API build token: managed **only in Cloudflare**, not in this repository.
 
-The owner approved production promotion on 2026-10-15 after reviewing the independent preview. Keep the existing Worker, domain, branch and dashboard commands. The root Wrangler custom build now supplies the missing Astro build step and publishes static dist assets.
+The owner approved production promotion on 2026-10-15 after reviewing the independent preview. Keep the existing Worker, domain and production branch.
+
+## Workers Builds settings to apply
+
+Cloudflare's current [Workers Builds configuration documentation](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/) states that Wrangler custom-build configuration is not honored by Workers Builds. Configure the explicit build step instead:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `npm run build:cloudflare` |
+| Deploy command | `npx wrangler deploy` |
+| Preview command | `npx wrangler preview` |
+| Root directory | `/` |
+| Production branch | `main` |
+
+`build:cloudflare` fetches the published news ref, synchronizes JSON and runs the production Astro build. It never uploads or deploys. The direct Wrangler CLI custom-build entry remains guarded. Do not infer dashboard success from its local dry-run. At this revision, Pages preview and GitHub validation are confirmed; Workers build failure details still require authenticated Cloudflare logs.
 
 ## Dedicated preview Worker
 
@@ -56,7 +70,7 @@ This approach should be checked against Cloudflare's current build environment b
 
 The root wrangler.jsonc explicitly selects the existing my-portfolio Worker and
 static dist assets, so Wrangler no longer guesses the jh-lab package name or an
-Astro SSR Worker entry point. Its custom build accepts preview/version uploads.
+Astro SSR Worker entry point. Direct CLI custom builds accept preview/version uploads.
 Default wrangler deploy is permitted only when the deployment branch is main,
 following the owner's explicit approval. Unknown/feature branches fail closed.
 

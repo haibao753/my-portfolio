@@ -27,7 +27,7 @@ npm run test:e2e # after installing Playwright Chromium
 - The preview/dev server may not serve every legacy URL until the content is moved into public/ or a preview build is used; use `npm run build && npm run preview` for migration acceptance.
 
 ## Deployment
-Cloudflare's existing `npx wrangler deploy` command reads the root `wrangler.jsonc`. Its custom build synchronizes published news JSON and runs the Astro build. Only the approved `main` branch can deploy production; other branches use preview/version uploads. The existing Worker and domain remain `my-portfolio` and `hujinhai.com`. No dashboard build-command change is needed.
+For Cloudflare Workers Builds, set the dashboard Build command to `npm run build:cloudflare`, the production Deploy command to `npx wrangler deploy`, and the Preview command to `npx wrangler preview`. The explicit build synchronizes the published news JSON and generates `dist/`. Workers Builds does not honor Wrangler custom-build settings, so a successful CLI custom build alone does not verify the dashboard configuration. The root Wrangler custom build remains available for direct CLI use and preserves its production branch guard. The existing Worker and domain remain `my-portfolio` and `hujinhai.com`.
 
 ## Remaining work
 - Inspect GitHub Actions Playwright screenshots and perform manual Android/Windows visual checks.

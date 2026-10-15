@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && node scripts/copy-legacy.mjs",
+    "build:cloudflare": "node scripts/build-cloudflare.mjs --build-only",
     "preview": "astro preview",
     "check": "astro check",
     "validate": "npm run check && node --test tests/build-guard.test.mjs && npm run build && node scripts/verify-build.mjs",
