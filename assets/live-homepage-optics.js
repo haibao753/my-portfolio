@@ -15,15 +15,16 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
   if(gl&&ctx){try{shader=setup(gl)}catch(err){nav.dataset.opticalError='shader'}}
   if(shader){
    nav.dataset.liveOptics='on';
+   const candidates=Array.from(root.querySelectorAll('*'));
    const refresh=()=>{
     const nr=nav.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,Math.round(nr.width)),h=Math.max(1,Math.round(nr.height));
     if(glass.width!==Math.round(w*dpr)||glass.height!==Math.round(h*dpr)){glass.width=Math.round(w*dpr);glass.height=Math.round(h*dpr)}
-    source.width=w;source.height=h;
+    if(source.width!==w||source.height!==h){source.width=w;source.height=h;}
     ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);
     let elements=0,images=0,colors=0;
     const nearby=[];
     // Only objects crossing the navbar geometry are relevant; draw in document order.
-    for(const el of root.querySelectorAll('*')){
+    for(const el of candidates){
      const r=el.getBoundingClientRect();
      if(r.right<nr.left||r.left>nr.right||r.bottom<nr.top-18||r.top>nr.bottom+18)continue;
      const style=getComputedStyle(el);
