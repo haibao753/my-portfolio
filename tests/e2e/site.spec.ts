@@ -847,3 +847,25 @@ test("unchanged scroll event does not repaint canvas or reupload texture",async(
  expect(Number(await nav.getAttribute("data-optical-uploaded-pixels")||0)).toBe(before.uploads);
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-raster-skipped")||0)).toBeGreaterThan(0);
 });
+
+test("optical changed-pixel scan detects small transparent and opaque edits exactly",async({page})=>{
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ await page.evaluate(()=>{
+  const r=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const box=document.createElement("div");
+  box.id="optic-exact-pixel";
+  box.style.cssText="position:fixed;left:"+Math.round(r.left+32)+"px;top:"+Math.round(r.top+18)+"px;width:16px;height:16px;background:rgba(255,0,0,.5)";
+  document.querySelector("main")!.appendChild(box);
+  dispatchEvent(new Event("scroll"));
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-texture-partial")||0)).toBeGreaterThan(0);
+ const before=Number(await nav.getAttribute("data-optical-uploaded-pixels")||0);
+ await page.evaluate(()=>{
+  document.querySelector<HTMLElement>("#optic-exact-pixel")!.style.backgroundColor="rgba(255,0,0,.6)";
+  dispatchEvent(new Event("scroll"));
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-uploaded-pixels")||0)).toBeGreaterThan(before);
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-diff-compared")||0)).toBeGreaterThan(0);
+});
