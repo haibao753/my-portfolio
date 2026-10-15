@@ -108,3 +108,22 @@ test('rounded GPU silhouette stays transparent outside all four corners',async({
  expect(pixels.corners).toEqual([0,0,0,0]);
  expect(pixels.centre).toBeGreaterThan(0);
 });
+
+test('bright CTA behind glass does not project a rectangular ghost outside curved rim',async({page})=>{
+ await page.goto('/?opticalEngine=2');
+ const result=await page.evaluate(async()=>{
+  const modulePath='/assets/optical-engine.js';const {setup}=await import(modulePath);
+  const source=document.createElement('canvas');source.width=464;source.height=216;
+  const ctx=source.getContext('2d')!;ctx.fillStyle='#f6f6f5';ctx.fillRect(0,0,464,216);
+  ctx.fillStyle='#006ddd';ctx.fillRect(145,66,170,44);
+  const target=document.createElement('canvas');target.width=320;target.height=72;
+  const gl=target.getContext('webgl',{alpha:true,preserveDrawingBuffer:true})!;
+  setup(gl)(source,{liquid:1,optical:1,strength:1.25,reflectivity:.78,reflectionQuality:1,
+   reflectionReach:2.2,cornerRadius:30,bevelWidth:19,scenePadding:72,surfaceSize:[320,72]});
+  const px=(x:number,y:number)=>{const p=new Uint8Array(4);gl.readPixels(x,71-y,1,1,gl.RGBA,gl.UNSIGNED_BYTE,p);return Array.from(p)};
+  return {corner:px(0,0),interior:px(160,36),lower:px(160,65)};
+ });
+ expect(result.corner[3]).toBe(0);
+ expect(result.interior[3]).toBeGreaterThan(0);
+ expect(result.lower[3]).toBeGreaterThan(0);
+});
