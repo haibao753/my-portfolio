@@ -50,7 +50,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     }
     for(const {el,r,style} of nearby){
      const bg=style.backgroundImage;
-     const m=bg&&bg.match(/^linear-gradient\\(\\s*(to right|to left|to bottom|to top)\\s*,\\s*(#[0-9a-f]{3,8}|rgb\\([^)]*\\))\\s*,\\s*(#[0-9a-f]{3,8}|rgb\\([^)]*\\))\\s*\\)$/i);
+     const m=bg&&bg.match(/^linear-gradient\(\s*(to right|to left|to bottom|to top)\s*,\s*(#[0-9a-f]{3,8}|rgb\([^)]*\))\s*,\s*(#[0-9a-f]{3,8}|rgb\([^)]*\))\s*\)$/i);
      if(m){
       const gradient=ctx.createLinearGradient(r.left-nr.left,r.top-nr.top,
        r.left-nr.left+(m[1]==='to right'?r.width:m[1]==='to left'?-r.width:0),
