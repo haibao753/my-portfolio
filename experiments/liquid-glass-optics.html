@@ -27,7 +27,7 @@ small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:
 </style></head><body>
 <header><strong>J.H. LAB / OPTICS</strong><a href="/">← 返回主页</a></header>
 <article><small>EXPERIMENT / 3.0</small><h1>不是磨砂玻璃，<br>而是光线被弯曲。</h1>
-<p>基于有向距离场（SDF）、法线梯度与多通道采样的实时折射实验。拖动玻璃体，观察背景图案如何在边缘发生拉伸、变形和微弱色散。</p>
+<p>基于有向距离场（SDF）、法线梯度与多通道采样的实时折射实验。用鼠标或触控笔拖动玻璃体（手机可调节滑块），观察背景图案如何在边缘发生拉伸、变形和微弱色散。</p>
 <div class="stage" id="stage"><canvas id="optics" aria-label="实时液态玻璃折射实验"></canvas><div class="fallback" aria-hidden="true"></div><nav class="optic-menu" id="optic-menu" aria-label="液态玻璃导航演示"><a href="#principle">作品</a><a href="#principle">数学影像</a><a href="#principle">三维记忆</a><a href="#principle">交互几何</a><a href="#principle">每日简报</a><a href="#principle">联系</a></nav></div>
 <div class="controls"><label><input id="menu-mode" type="checkbox" checked> 显示真实 DOM 菜单</label><label>折射强度 <input id="refract" type="range" min="0" max="100" value="55"><output id="refract-value">55%</output></label>
 <label>色散程度 <input id="dispersion" type="range" min="0" max="100" value="35"><output id="dispersion-value">35%</output></label></div>
@@ -102,7 +102,12 @@ small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:
  const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(draw);}};
  for(const [id,out] of controls){document.getElementById(id).addEventListener('input',e=>{document.getElementById(out).textContent=e.target.value+'%';schedule();});}
  const move=e=>{if(!dragging)return;const r=stage.getBoundingClientRect();cx=Math.min(.72,Math.max(.28,(e.clientX-r.left)/r.width));cy=Math.min(.72,Math.max(.28,1-(e.clientY-r.top)/r.height));schedule();};
- canvas.addEventListener('pointerdown',e=>{dragging=true;canvas.setPointerCapture(e.pointerId);move(e);});
+ canvas.addEventListener('pointerdown',e=>{
+  // A vertical swipe should continue scrolling the document. Only a deliberate
+  // mouse or pen drag manipulates the optical lens.
+  if(e.pointerType==='touch')return;
+  dragging=true;canvas.setPointerCapture(e.pointerId);move(e);
+ });
  canvas.addEventListener('pointermove',move);
  canvas.addEventListener('pointerup',()=>{dragging=false;});
  canvas.addEventListener('pointercancel',()=>{dragging=false;});
