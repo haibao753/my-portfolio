@@ -3,7 +3,8 @@ import {test,expect} from '@playwright/test';
 test('curved meniscus bends scene pixels and reflects actual source colors',async({page})=>{
  await page.goto('/?opticalEngine=2');
  const result=await page.evaluate(async()=>{
-  const {setup}=await import('/assets/optical-engine.js');
+  const modulePath='/assets/optical-engine.js';
+  const {setup}=await import(modulePath);
   const source=document.createElement('canvas');source.width=320;source.height=72;
   const ctx=source.getContext('2d')!;
   ctx.fillStyle='#0b2948';ctx.fillRect(0,0,320,72);
