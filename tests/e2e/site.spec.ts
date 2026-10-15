@@ -598,5 +598,5 @@ test("real homepage navbar has full-perimeter compositor optics without blocking
   expect(info.pointerEvents).toBe("none");
   expect(info.backdrop).not.toBe("none");
  }
- await expect(nav.locator("[data-menu-toggle]")).toBeVisible({visible:true});
+ await expect(nav.locator(".brand")).toBeVisible();
 });
