@@ -540,3 +540,19 @@ test("shared scene optical shader samples real RGB from image, gradient, SVG and
  expect(red.rgb[0]).toBeGreaterThan(red.rgb[1]+25);
  expect(blue.rgb[2]).toBeGreaterThan(blue.rgb[0]+25);
 });
+
+test("shared RGB scene includes actual portfolio photo pixels without reupload on scroll", async ({page}) => {
+ await page.goto("/experiments/shared-scene-optics.html");
+ await expect(page.locator("#status")).toContainText("WebGL");
+ await page.waitForFunction(()=>{const i=new Image();i.src="/images/1.jpg";return i.complete&&i.naturalWidth>0;});
+ await page.waitForTimeout(250);
+ const result=await page.locator("#scene").evaluate((el:HTMLCanvasElement)=>{
+  const data=el.getContext("2d")!.getImageData(25,1480,Math.min(220,el.width-30),120).data;
+  const colors=new Set<string>();
+  for(let i=0;i<data.length;i+=48)colors.add(data[i]+","+data[i+1]+","+data[i+2]);
+  return colors.size;
+ });
+ expect(result).toBeGreaterThan(20);
+ await page.locator("#viewport").evaluate((el:HTMLElement)=>{el.scrollTop=1350;el.dispatchEvent(new Event("scroll"))});
+ await expect(page.locator("#status")).toContainText("WebGL");
+});
