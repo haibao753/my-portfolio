@@ -202,6 +202,24 @@ import {navigation} from "../data/site";
   background:rgba(18,25,38,.045)!important;
   border-color:rgba(215,231,250,.20)!important;
  }
+
+ /* Menu is non-modal visually: never dim, desaturate or blur the page. */
+ .menu-backdrop,.menu-backdrop:not([hidden]){background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ :global(html[data-menu-open="true"] main),
+ :global(html[data-menu-open="true"] .site-footer){filter:none!important;opacity:1!important;transform:none!important}
+ /* Match the navbar's liquid-v2 centre, rim and outline, rather than frosted panel. */
+ .glass-nav[data-optical-material="liquid-v2"]~.mobile-menu[data-menu-optics="active"],
+ .mobile-menu[data-menu-optics="active"]{
+  background:linear-gradient(155deg,rgba(255,255,255,.10),rgba(232,244,255,.025) 48%,rgba(255,255,255,.07))!important;
+  -webkit-backdrop-filter:blur(2.2px) saturate(1.24)!important;
+  backdrop-filter:blur(2.2px) saturate(1.24)!important;
+  border-color:rgba(255,255,255,.36)!important;
+  box-shadow:0 10px 30px rgba(9,14,26,.12),inset 0 1px rgba(255,255,255,.26)!important;
+ }
+ :global(html[data-theme="dark"]) .mobile-menu[data-menu-optics="active"]{
+  background:linear-gradient(155deg,rgba(125,156,188,.09),rgba(21,30,42,.06) 50%,rgba(122,151,184,.045))!important;
+  border-color:rgba(215,231,250,.23)!important;
+ }
 </style>
 <script is:inline type="module" src="/assets/live-homepage-optics.js"></script>
 
