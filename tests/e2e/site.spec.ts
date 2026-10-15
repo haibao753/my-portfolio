@@ -365,3 +365,20 @@ test("glass navigation fits short phone viewports without covering its close con
  await page.keyboard.press("Escape");
  await expect(panel).toBeHidden();
 });
+
+
+test("glass menu dismisses on desktop breakpoint and restores focus on Escape",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ const menu=page.locator("[data-menu-panel]");
+ await toggle.click();
+ await page.keyboard.press("Escape");
+ await expect(menu).toBeHidden();
+ await expect(toggle).toBeFocused();
+ await toggle.click();
+ await page.setViewportSize({width:1280,height:800});
+ await expect(menu).toBeHidden();
+ await expect(toggle).toHaveAttribute("aria-expanded","false");
+ await expect(page.locator("html")).not.toHaveAttribute("data-menu-open","true");
+});
