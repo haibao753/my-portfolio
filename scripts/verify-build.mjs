@@ -2,6 +2,8 @@ import {existsSync,readFileSync} from "node:fs";
 import {join} from "node:path";
 const paths=[
  "dist/index.html",
+ "dist/robots.txt",
+ "dist/sitemap.xml",
  "dist/brief/index.html",
  "dist/brief/data/index.json",
  "dist/experiments/minimal-surfaces-classical.html",
@@ -38,6 +40,18 @@ if(!failed){
 }
 if(!failed){
  const html=readFileSync(join("dist","index.html"),"utf8");
+ const photo=html.match(/<div[^>]*class="photo-art"[\s\S]*?<\/div>/)?.[0]||"";
+ const images=[...photo.matchAll(/<img\b[^>]*>/g)].map(match=>match[0]);
+ if(images.length!==3||images.some(image=>!image.includes("srcset=")||!image.includes(".webp")||image.includes('/images/'))){
+  console.error("Photo strip must contain three responsive optimized images");failed=true;
+ }
+ for(const path of ["index.html","brief/index.html"]){
+  const page=readFileSync(join("dist",path),"utf8");
+  const url=path==="index.html"?"https://hujinhai.com/":"https://hujinhai.com/brief/";
+  if(!page.includes(`rel="canonical" href="${url}"`)||!page.includes(`property="og:url" content="${url}"`)){
+   console.error("Incorrect production canonical or sharing URL:",path);failed=true;
+  }
+ }
  for(const url of ["/brief/","https://space.bilibili.com/1572685586","https://zhengyifan.win/","/experiments/minimal-surfaces-classical.html","/experiments/minimal-surfaces-periodic.html","https://entropy-sandbox.pages.dev/"]){
   // Astro may serialize or escape attributes; check URL presence.
   if(!html.includes(url)){console.error("Missing portfolio URL:",url);failed=true;}

@@ -13,12 +13,15 @@ on:
       - "assets/**"
       - "docs/liquid-glass-3-acceptance.md"
       - "package.json"
+      - "package-lock.json"
       - "astro.config.mjs"
       - "tsconfig.json"
       - ".github/workflows/astro-preview.yml"
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ASTRO_TELEMETRY_DISABLED: '1'
     permissions:
       contents: read
     steps:
@@ -26,22 +29,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: npm
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: Type check
         run: npm run check
       - name: Guard experimental default Worker deployment
         run: node --test tests/build-guard.test.mjs
-      - name: Fetch latest published brief data from main
-        run: |
-          git fetch --no-tags --depth=1 origin main
-          node scripts/sync-news-preview.mjs
       - name: Build
-        run: npm run build
+        run: npm run build:cloudflare
       - name: Check preserved routes
         run: node scripts/verify-build.mjs
       - name: Validate isolated Workers preview bundle (dry run)
         run: npm run deploy:preview:dry-run
+      - name: Validate branch Preview assets configuration (dry run only)
+        run: npx wrangler deploy --config wrangler.branch-preview.jsonc --dry-run
       - name: Validate default production build and assets configuration (dry run only)
         env:
           WORKERS_CI_BRANCH: main

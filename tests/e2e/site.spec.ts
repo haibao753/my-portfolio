@@ -1,4 +1,25 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+
+// Cache tests need a stable scene: homepage motion deliberately mutates styles
+// on scroll and therefore invalidates raster caches. Keep the real renderer and
+// navigation, but remove unrelated animated content for these controlled probes.
+async function isolateOpticalScene(page:Page){
+ const nav=page.locator(".glass-nav");
+ const before=Number(await nav.getAttribute("data-optical-refreshes")||0);
+ await page.evaluate(()=>{
+  const main=document.querySelector<HTMLElement>("main")!;
+  main.replaceChildren();
+  main.style.cssText="min-height:2000px;padding:0;margin:0";
+  const spacer=document.createElement("div");
+  spacer.style.height="2000px";
+  spacer.setAttribute("aria-hidden","true");
+  main.appendChild(spacer);
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-refreshes")||0)).toBeGreaterThan(before);
+ // Let the scene's ResizeObserver deliver its initial size invalidation before
+ // measuring reuse on a later, independent scroll frame.
+ await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))));
+}
 
 test("home renders, preserves work destinations, and has no horizontal overflow", async ({ page }) => {
  await page.goto("/");
@@ -788,6 +809,7 @@ test("optical glyph geometry cache survives scrolling and invalidates for text m
  await page.goto("/?opticalEngine=1");
  const nav=page.locator(".glass-nav");
  await expect(nav).toHaveAttribute("data-live-optics","on");
+ await isolateOpticalScene(page);
  await page.evaluate(()=>{
   const bounds=document.querySelector(".glass-nav")!.getBoundingClientRect();
   const text=document.createElement("p");text.id="optical-cache-probe";
@@ -797,7 +819,9 @@ test("optical glyph geometry cache survives scrolling and invalidates for text m
  });
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-samples")||0)).toBeGreaterThan(0);
  const before=Number(await nav.getAttribute("data-optical-glyph-measures"));
- await page.evaluate(()=>dispatchEvent(new Event("scroll")));
+ // An unchanged scroll event now correctly skips the entire raster pass.
+ // Move the native scroll position to exercise glyph reuse instead.
+ await page.evaluate(()=>window.scrollBy({top:12,behavior:"instant"}));
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-glyph-cache-hits")||0)).toBeGreaterThan(0);
  expect(Number(await nav.getAttribute("data-optical-glyph-measures"))).toBe(before);
  await page.locator("#optical-cache-probe").evaluate(el=>{el.textContent="UPDATED OPTICAL TEXT"});
@@ -808,8 +832,9 @@ test("optical geometry cache reuses measured document bounds across scroll frame
  await page.goto("/?opticalEngine=1");
  const nav=page.locator(".glass-nav");
  await expect(nav).toHaveAttribute("data-live-optics","on");
+ await isolateOpticalScene(page);
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-refreshes")||0)).toBeGreaterThan(0);
- await page.evaluate(()=>{dispatchEvent(new Event("scroll"))});
+ await page.evaluate(()=>window.scrollBy({top:12,behavior:"instant"}));
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-geometry-cache-hits")||0)).toBeGreaterThan(0);
  const count=Number(await nav.getAttribute("data-optical-geometry-reads")||0);
  const hits=Number(await nav.getAttribute("data-optical-geometry-cache-hits")||0);
@@ -822,16 +847,23 @@ test("live optical GPU texture skips unchanged frames and uploads a localized co
  await page.goto("/?opticalEngine=1");
  const nav=page.locator(".glass-nav");
  await expect(nav).toHaveAttribute("data-live-optics","on");
- const initial=Number(await nav.getAttribute("data-optical-texture-full")||0);
- await page.evaluate(()=>dispatchEvent(new Event("scroll")));
- await expect.poll(async()=>Number(await nav.getAttribute("data-optical-raster-skipped")||0)).toBeGreaterThan(0);
+ await isolateOpticalScene(page);
  await page.evaluate(()=>{
   const nr=document.querySelector(".glass-nav")!.getBoundingClientRect();
   const patch=document.createElement("div");
+  patch.id="optical-color-patch";
   patch.style.cssText="position:fixed;left:"+Math.round(nr.left+18)+"px;top:"+Math.round(nr.top+16)+"px;width:18px;height:16px;background:rgb(220,30,50)";
   document.querySelector("main")!.appendChild(patch);
   dispatchEvent(new Event("scroll"));
  });
+ // Inserting a node deliberately needs a full repaint. Measure partial uploads
+ // only after that structural frame, then change the existing node's color.
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-colors")||0)).toBeGreaterThan(0);
+ const initial=Number(await nav.getAttribute("data-optical-texture-full")||0);
+ const skipped=Number(await nav.getAttribute("data-optical-raster-skipped")||0);
+ await page.evaluate(()=>dispatchEvent(new Event("scroll")));
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-raster-skipped")||0)).toBeGreaterThan(skipped);
+ await page.locator("#optical-color-patch").evaluate(el=>{(el as HTMLElement).style.backgroundColor="rgb(30,180,50)"});
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-texture-partial")||0)).toBeGreaterThan(0);
  const full=Number(await nav.getAttribute("data-optical-texture-full")||0);
  expect(full).toBe(initial);
@@ -841,6 +873,8 @@ test("unchanged scroll event does not repaint canvas or reupload texture",async(
  await page.goto("/?opticalEngine=1");
  const nav=page.locator(".glass-nav");
  await expect(nav).toHaveAttribute("data-live-optics","on");
+ await isolateOpticalScene(page);
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-texture-full")||0)).toBeGreaterThan(0);
  const before=await nav.evaluate(el=>({uploads:Number(el.getAttribute("data-optical-uploaded-pixels")||0),refreshes:Number(el.getAttribute("data-optical-refreshes")||0)}));
  await page.evaluate(()=>dispatchEvent(new Event("scroll")));
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-refreshes")||0)).toBeGreaterThan(before.refreshes);

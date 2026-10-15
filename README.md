@@ -1,5 +1,12 @@
 # J.H. LAB — Astro portfolio and daily briefing
 
+## Performance and reliability
+- `npm run validate` runs Astro diagnostics, deployment guards, the production build and artifact checks.
+- `npm ci` installs the committed dependency lockfile reproducibly.
+- The homepage photo strip uses Astro-generated WebP at 320/640/960px. Historic `/images/*.jpg` URLs remain available to legacy pages.
+- Production pages emit canonical/sharing metadata plus `/robots.txt` and `/sitemap.xml`.
+- Brief filtering keeps keyboard focus, validates incoming JSON, cancels outdated requests and clears stale cards on a failed issue load. The publishing JSON schema is unchanged.
+
 The owner approved promoting the reviewed Liquid Glass preview to production on 2026-10-15. The site uses Astro static output, shared glass navigation, and a separately generated daily briefing archive.
 
 ## Local usage
@@ -20,7 +27,7 @@ npm run test:e2e # after installing Playwright Chromium
 - The preview/dev server may not serve every legacy URL until the content is moved into public/ or a preview build is used; use `npm run build && npm run preview` for migration acceptance.
 
 ## Deployment
-Cloudflare's existing `npx wrangler deploy` command reads the root `wrangler.jsonc`. Its custom build synchronizes published news JSON and runs the Astro build. Only the approved `main` branch can deploy production; other branches use preview/version uploads. The existing Worker and domain remain `my-portfolio` and `hujinhai.com`. No dashboard build-command change is needed.
+Cloudflare production currently builds with `npm run build` and deploys with `npx wrangler deploy --config wrangler.production.jsonc`; keep those settings while this PR is unmerged. Preview Base uses the explicit Build command `npm run build:cloudflare` and Preview command `npx wrangler preview --config wrangler.branch-preview.jsonc`. The Preview build synchronizes published news JSON and generates `dist/`. Its assets-only configuration includes the required empty `previews` block and avoids a Wrangler 4.151.0 issue that labels Preview custom builds as `deploy`. The root Wrangler custom build remains available for direct CLI use and preserves its production branch guard. The existing Worker and domain remain `my-portfolio` and `hujinhai.com`.
 
 ## Remaining work
 - Inspect GitHub Actions Playwright screenshots and perform manual Android/Windows visual checks.
