@@ -348,3 +348,20 @@ test("floating mobile menu supports page scrolling and menu controls across them
  await toggle.click();
  await expect(panel).toBeHidden();
 });
+
+
+test("glass navigation fits short phone viewports without covering its close control",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.setViewportSize({width:375,height:430});
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ await toggle.click();
+ const panel=page.locator("[data-menu-panel]");
+ await expect(panel).toBeVisible();
+ const bounds=await panel.boundingBox();
+ expect(bounds).not.toBeNull();
+ expect((bounds?.y??0)+(bounds?.height??0)).toBeLessThanOrEqual(430);
+ await expect(toggle).toBeInViewport();
+ await page.keyboard.press("Escape");
+ await expect(panel).toBeHidden();
+});
