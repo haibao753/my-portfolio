@@ -571,3 +571,15 @@ test("shared RGB scene reuses GPU texture during scroll-only interaction", async
  }
  expect(await read()).toBe(initial);
 });
+
+test("shared scene uses text extracted from the actual Astro homepage", async ({page}) => {
+ const home=await page.request.get("/");
+ expect(home.ok()).toBeTruthy();
+ const html=await home.text();
+ await page.goto("/experiments/shared-scene-optics.html");
+ await expect(page.locator("#scene")).toHaveAttribute("data-source","homepage");
+ const heading=await page.locator("#scene").getAttribute("data-heading");
+ expect(heading).toBeTruthy();
+ expect(html).toContain(heading!);
+ await expect(page.locator("#scene")).toHaveAttribute("data-link",/\S+/);
+});
