@@ -21,6 +21,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
    const observer=new MutationObserver(()=>{candidates=Array.from(root.querySelectorAll('*'));schedule()});
    observer.observe(root,{childList:true,subtree:true});
    const refresh=()=>{
+    const frameStart=performance.now();
     nav.dataset.opticalRefreshes=String(Number(nav.dataset.opticalRefreshes||0)+1);
     const nr=nav.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,Math.round(nr.width)),h=Math.max(1,Math.round(nr.height));
     if(glass.width!==Math.round(w*dpr)||glass.height!==Math.round(h*dpr)){glass.width=Math.round(w*dpr);glass.height=Math.round(h*dpr)}
@@ -70,7 +71,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
       elements++;
      }
     }
-    try{shader(source,{strength:2,optical:1,reflectivity:.35});nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalError=''}catch{nav.dataset.opticalError='texture'}
+    try{shader(source,{strength:2,optical:1,reflectivity:.35});nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalError='';nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1)}catch{nav.dataset.opticalError='texture'}
    };
    let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
    addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});
