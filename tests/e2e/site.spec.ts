@@ -629,3 +629,25 @@ test("live homepage optics is opt-in and tracks actual DOM content during scroll
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-samples")||0)).toBeGreaterThan(0);
  await expect(nav.locator(".brand")).toBeVisible();
 });
+
+test("live homepage optical source includes colored CSS surfaces and nearby image pixels", async ({page}) => {
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ await page.evaluate(async()=>{
+  const nr=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const main=document.querySelector("main")!;
+  const box=document.createElement("div");
+  box.style.cssText="position:fixed;left:20px;top:"+Math.round(nr.top+12)+"px;width:85px;height:36px;background:rgb(11, 107, 235)";
+  main.appendChild(box);
+  const image=document.createElement("img");
+  image.alt="red optical source";
+  image.src="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="40"><rect width="80" height="40" fill="#ee2233"/></svg>');
+  image.style.cssText="position:fixed;left:130px;top:"+Math.round(nr.top+10)+"px;width:80px;height:40px";
+  main.appendChild(image);
+  await image.decode();
+  dispatchEvent(new Event("scroll"));
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-colors")||0)).toBeGreaterThan(0);
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-images")||0)).toBeGreaterThan(0);
+});
