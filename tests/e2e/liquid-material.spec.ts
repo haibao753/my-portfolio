@@ -35,11 +35,14 @@ test('liquid lighting redraws without re-uploading the scene and follows theme c
  await page.evaluate(()=>{
   const main=document.querySelector('main')!;main.replaceChildren();main.style.cssText='height:2000px;';
   const backdrop=document.createElement('div');backdrop.style.cssText='position:fixed;inset:0;height:120px;background:var(--card)';main.appendChild(backdrop);
+  const brand=document.querySelector('.brand')!.getBoundingClientRect(),mark=document.querySelector('.brand span')!.getBoundingClientRect();
+  const neighbour=document.createElement('div');neighbour.style.cssText=`position:fixed;top:0;left:${mark.right+1}px;width:${Math.max(0,brand.right-mark.right-1)}px;height:120px;background:#111`;main.appendChild(neighbour);
  });
  await expect.poll(()=>nav.getAttribute('data-optical-texture-full')).not.toBeNull();
  await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))));
  const before=Number(await nav.getAttribute('data-optical-uploaded-pixels'));
  await expect(page.locator('[data-theme-toggle]')).toHaveCSS('color','rgb(21, 32, 45)');
+ await expect(page.locator('.brand')).toHaveCSS('color','rgb(21, 32, 45)');
  const box=(await nav.boundingBox())!;
  await page.mouse.move(box.x+box.width*.72,box.y+box.height*.4);
  await expect.poll(()=>nav.evaluate(el=>(el as HTMLElement).style.getPropertyValue('--glass-light-x'))).toBe('72.0%');

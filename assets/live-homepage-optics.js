@@ -33,7 +33,10 @@ if(['1','2'].includes(params.get('opticalEngine'))&&!matchMedia('(prefers-reduce
     const nr=nav.getBoundingClientRect();
     const background=getComputedStyle(document.body).backgroundColor.match(/[\d.]+/g)?.slice(0,3).map(Number)||[247,247,245];
     for(const target of inkTargets){
-     const r=target.getBoundingClientRect();if(!r.width||!r.height)continue;
+     // The brand link fills a grid column; sample beneath the actual mark,
+     // otherwise a dark photograph beside it can turn a white-background logo white.
+     const sampleTarget=target.matches('.brand')?target.querySelector('span'):target;
+     const r=sampleTarget.getBoundingClientRect();if(!r.width||!r.height)continue;
      const x=Math.max(0,Math.floor(r.left-nr.left)),y=Math.max(0,Math.floor(r.top-nr.top));
      const w=Math.min(source.width-x,Math.ceil(r.width)),h=Math.min(source.height-y,Math.ceil(r.height));
      if(w<1||h<1)continue;
