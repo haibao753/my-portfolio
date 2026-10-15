@@ -601,3 +601,27 @@ test("pixel rim can be disabled with an explicit query parameter", async ({page}
  await expect(page.locator(".glass-nav")).not.toHaveAttribute("data-pixel-optics","on");
  await expect(page.locator(".nav-pixel-rim")).toBeHidden();
 });
+
+test("shared scene optical shader samples real RGB from image, gradient, SVG and blue ink", async ({page}) => {
+ await page.goto("/experiments/shared-scene-optics.html");
+ await expect(page.locator("#status")).toContainText("WebGL");
+ const collect=async(top:number)=>{
+  await page.locator("#viewport").evaluate((el:HTMLElement,t)=>{el.scrollTop=t;el.dispatchEvent(new Event("scroll"))},top);
+  await page.waitForTimeout(120);
+  return page.locator("#rim").evaluate((canvas:HTMLCanvasElement)=>{
+   const gl=canvas.getContext("webgl",{preserveDrawingBuffer:true})!;
+   const data=new Uint8Array(canvas.width*canvas.height*4);
+   gl.readPixels(0,0,canvas.width,canvas.height,gl.RGBA,gl.UNSIGNED_BYTE,data);
+   let peak=0,rgb=[0,0,0];
+   for(let i=0;i<data.length;i+=4){if(data[i+3]>peak){peak=data[i+3];rgb=[data[i],data[i+1],data[i+2]]}}
+   return {peak,rgb};
+  });
+ };
+ const blue=await collect(260),red=await collect(360),gradient=await collect(550),vector=await collect(750);
+ expect(blue.peak).toBeGreaterThan(0);
+ expect(red.peak).toBeGreaterThan(0);
+ expect(gradient.peak).toBeGreaterThan(0);
+ expect(vector.peak).toBeGreaterThan(0);
+ expect(red.rgb[0]).toBeGreaterThan(red.rgb[1]+25);
+ expect(blue.rgb[2]).toBeGreaterThan(blue.rgb[0]+25);
+});
