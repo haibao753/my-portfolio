@@ -7,7 +7,8 @@ const params=new URLSearchParams(location.search);
 const requested=params.get('opticalEngine');
 const mode=requested===null?'2':requested;
 const liquid=mode==='2';
-const overscan=liquid?24:0;
+// Long-range rim reflections must have actual source pixels beyond the silhouette.
+const overscan=liquid?72:0;
 // Keep ordinary navigation URLs clean; preserve explicit comparison/disable links.
 if(['0','1','2'].includes(requested))document.querySelectorAll('a[href]').forEach(link=>{
  const target=new URL(link.href,location.href);
@@ -55,7 +56,7 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
      target.style.setProperty('--glass-ink-shadow',dark?'0 1px 2px rgba(255,255,255,.62)':'0 1px 3px rgba(0,0,0,.62)');
     }
    };
-   const draw=(changes={})=>shader(source,{strength:liquid?1.25:2,optical:1,reflectivity:liquid?.72:.35,liquid:liquid?1:0,surfaceSize:[source.width-2*overscan,source.height-2*overscan],scenePadding:overscan,cornerRadius:parseFloat(getComputedStyle(nav).borderTopLeftRadius)||26,lightDirection,...changes});
+   const draw=(changes={})=>shader(source,{strength:liquid?1.25:2,optical:1,reflectivity:liquid?.78:.35,liquid:liquid?1:0,bevelWidth:liquid?19:12,reflectionReach:liquid?2.2:1,surfaceSize:[source.width-2*overscan,source.height-2*overscan],scenePadding:overscan,cornerRadius:parseFloat(getComputedStyle(nav).borderTopLeftRadius)||26,lightDirection,...changes});
    const fallback=()=>{nav.dataset.liveOptics='fallback';delete nav.dataset.opticalMaterial;glass.hidden=true;};
    glass.addEventListener('webglcontextlost',fallback);
    matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',e=>{if(e.matches)fallback()});
