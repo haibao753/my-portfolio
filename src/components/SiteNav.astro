@@ -2,6 +2,10 @@
 import {navigation} from "../data/site";
 ---
 <header class="glass-nav">
+ <span class="nav-rim-reflection" aria-hidden="true"></span>
+ <span class="nav-rim-dark" aria-hidden="true"></span>
+ <canvas class="nav-pixel-rim" aria-hidden="true"></canvas>
+ <span class="nav-optical-shell" aria-hidden="true"></span>
  <div class="nav-inner wrap">
   <a href="/" class="brand" aria-label="J.H. LAB 首页"><span aria-hidden="true"></span></a>
   <nav class="desktop-links" aria-label="Main navigation">
@@ -91,4 +95,58 @@ import {navigation} from "../data/site";
  [hidden]{display:none!important}
  @media(max-width:1180px){.nav-inner{grid-template-columns:1fr auto;min-height:50px}.desktop-links{display:none}.controls [data-menu-toggle]{display:flex;align-items:center;justify-content:center}}
  @media(max-width:760px){.nav-inner{min-height:56px}.brand span{width:27px;height:26px}.controls button{height:44px;min-width:44px}.glass-nav{border-radius:24px}.glass-nav .wrap{width:calc(100% - 24px)}}
+
+ /* Scroll-responsive grazing reflection on the lower curved glass rim.
+    CSS optical approximation: it does not capture live pixels below the glass. */
+ .glass-nav{--rim-track:50%;--rim-strength:.28;--rim-shift:0px}
+ .glass-nav::after{
+  border-bottom-color:rgba(255,255,255,.32);
+  background:
+   radial-gradient(ellipse 23% 9px at var(--rim-track) 100%,rgba(255,255,255,calc(.46 * var(--rim-strength))) 0%,transparent 95%),
+   linear-gradient(90deg,transparent 0%,rgba(255,255,255,.05) 14%,rgba(255,255,255,calc(.62 * var(--rim-strength))) var(--rim-track),rgba(151,203,255,.17) 84%,transparent 100%);
+  background-size:100% 100%,100% 3px;
+  background-position:center,bottom;
+  background-repeat:no-repeat;
+  box-shadow:inset 0 1px rgba(255,255,255,.58),inset 0 -2px rgba(133,179,239,calc(.38 * var(--rim-strength)));
+ }
+ .glass-nav .nav-rim-reflection{
+  position:absolute;z-index:2;pointer-events:none;bottom:-1px;left:18px;right:18px;height:5px;
+  border-radius:0 0 24px 24px;
+  background:linear-gradient(90deg,transparent 2%,rgba(255,255,255,.07) 18%,rgba(255,255,255,.85) var(--rim-track),rgba(140,194,255,.22) 76%,transparent 98%);
+  opacity:var(--rim-strength);
+  filter:blur(.7px);transform:translate3d(0,0,0);
+  -webkit-mask-image:linear-gradient(to bottom,transparent,black 45%,transparent);
+  mask-image:linear-gradient(to bottom,transparent,black 45%,transparent);
+ }
+ :global(html[data-theme="dark"]) .glass-nav .nav-rim-reflection{
+  background:linear-gradient(90deg,transparent 2%,rgba(170,195,240,.1) 20%,rgba(226,240,255,.79) var(--rim-track),rgba(119,167,222,.25) 82%,transparent 98%);
+ }
+ @media(prefers-reduced-motion:reduce){.glass-nav .nav-rim-reflection{opacity:.25}}
+
+ /* Subtle, but visible dark ink in the glass's lower meniscus. */
+ .glass-nav .nav-rim-dark{
+  position:absolute;left:10px;right:10px;bottom:-2px;height:11px;z-index:3;
+  border-radius:0 0 24px 24px;display:grid;grid-template-columns:repeat(24,minmax(0,1fr));
+  overflow:hidden;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,black 32%,black 71%,transparent);
+  mask-image:linear-gradient(to bottom,transparent,black 32%,black 71%,transparent);
+ }
+ .glass-nav .nav-rim-dark span{
+  background:linear-gradient(to bottom,transparent,rgba(15,19,25,.82) 46%,rgba(15,19,25,.65) 80%,transparent);
+  opacity:var(--dark-rim-opacity,0);
+  filter:blur(1px);
+ }
+ :global(html[data-theme="dark"]) .glass-nav .nav-rim-dark span{
+  background:linear-gradient(to bottom,transparent,rgba(0,0,0,.85) 46%,rgba(0,0,0,.7) 80%,transparent);
+ }
+
+ .glass-nav .nav-pixel-rim{position:absolute;left:5px;right:5px;top:0;bottom:0;width:calc(100% - 10px);height:100%;z-index:2;pointer-events:none;display:none;border-radius:inherit}
+ .glass-nav[data-pixel-optics="on"] .nav-pixel-rim{display:block}
+ .glass-nav .nav-optical-shell{position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:inherit;display:none;box-shadow:inset 0 1px 1px rgba(255,255,255,.92),inset 0 -1px 1px rgba(183,198,217,.45);background:radial-gradient(ellipse 78% 18px at 45% 0%,rgba(255,255,255,.38),transparent 94%),radial-gradient(ellipse 75% 16px at 54% 100%,rgba(255,255,255,.17),transparent 95%)}
+ .glass-nav[data-pixel-optics="on"] .nav-optical-shell{display:block}
+ .glass-nav[data-pixel-optics="on"]::after{border-color:rgba(255,255,255,.18);box-shadow:inset 0 1px rgba(255,255,255,.43),inset 0 -1px rgba(145,171,208,.12)}
+ .glass-nav[data-pixel-optics="on"] .nav-rim-dark{display:none}
+ @media(prefers-reduced-motion:reduce){.glass-nav .nav-pixel-rim{display:none!important}}
 </style>
+
+<script is:inline src="/assets/nav-pixel-rim.js" defer></script>

@@ -516,3 +516,112 @@ test("reduced-motion mobile glass menu remains usable while the document scrolls
  await expect(panel).toBeHidden();
  await expect(toggle).toHaveAttribute("aria-expanded","false");
 });
+
+test("pixel optics laboratory draws a changing WebGL texture on scroll", async ({ page }) => {
+ await page.goto("/experiments/pixel-optics-lab.html");
+ await expect(page.locator("#glass")).toBeVisible();
+ await expect(page.locator("#scroll")).toBeVisible();
+ await expect(page.getByText("真实像素纹理驱动的玻璃边缘")).toBeVisible();
+ const available=await page.locator("#status").textContent();
+ if (!available?.includes("WebGL ·")) {
+  test.skip(true, "Browser runner has no WebGL context");
+  return;
+ }
+ const before=await page.locator("#glass").evaluate((c:HTMLCanvasElement)=>c.toDataURL());
+ await page.locator("#scroll").evaluate((el:HTMLElement)=>{el.scrollTop=220;el.dispatchEvent(new Event("scroll"))});
+ await page.waitForTimeout(150);
+ const after=await page.locator("#glass").evaluate((c:HTMLCanvasElement)=>c.toDataURL());
+ expect(after).not.toBe(before);
+});
+
+test("default homepage pixel rim activates and preserves accessible navigation", async ({page}) => {
+ await page.goto("/");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toBeVisible();
+ const context=await page.locator(".nav-pixel-rim").evaluate((el:HTMLCanvasElement)=>Boolean(el.getContext("webgl")));
+ if (!context) {test.skip(true,"WebGL context unavailable");return;}
+ await expect(nav).toHaveAttribute("data-pixel-optics","on");
+ await expect(page.locator("[data-theme-toggle]")).toBeVisible();
+ await page.evaluate(()=>window.scrollTo(0,300));
+ await expect(nav).toBeVisible();
+});
+
+test("pixel rim responds to heading proximity instead of staying a static tint", async ({page}) => {
+ await page.goto("/");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-pixel-optics","on");
+ const rim=page.locator(".nav-pixel-rim");
+ const measure=()=>rim.evaluate((canvas:HTMLCanvasElement)=>{
+  const gl=canvas.getContext("webgl",{preserveDrawingBuffer:true});
+  if(!gl)return -1;
+  const pixels=new Uint8Array(canvas.width*canvas.height*4);
+  gl.readPixels(0,0,canvas.width,canvas.height,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
+  let sum=0;for(let i=3;i<pixels.length;i+=4)sum+=pixels[i];
+  return sum;
+ });
+ const far=await measure();
+ await page.evaluate(()=>{
+  const title=document.querySelector(".hero h1")!;
+  const bar=document.querySelector(".glass-nav")!;
+  window.scrollTo(0,window.scrollY+title.getBoundingClientRect().top-bar.getBoundingClientRect().bottom-15);
+ });
+ await page.waitForTimeout(250);
+ const near=await measure();
+ expect(near).toBeGreaterThan(far);
+});
+
+test("pixel rim preserves red channel from a real image", async ({page}) => {
+ await page.goto("/");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-pixel-optics","on");
+ await page.evaluate(async()=>{
+  const n=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const img=document.createElement("img");
+  img.alt="optical red test";
+  img.src="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="110"><rect width="320" height="110" fill="#ed1717"/></svg>');
+  img.style.cssText="position:fixed;left:100px;top:"+Math.round(n.bottom+3)+"px;width:320px;height:110px;z-index:10";
+  document.querySelector("main")!.appendChild(img);
+  await img.decode();
+  window.dispatchEvent(new Event("scroll"));
+ });
+ await page.waitForTimeout(180);
+ const sample=await page.locator(".nav-pixel-rim").evaluate((c:HTMLCanvasElement)=>{
+  const gl=c.getContext("webgl",{preserveDrawingBuffer:true})!;
+  const pixels=new Uint8Array(c.width*c.height*4);
+  gl.readPixels(0,0,c.width,c.height,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
+  let reds=0;
+  for(let i=0;i<pixels.length;i+=4){if(pixels[i]>pixels[i+1]+35&&pixels[i]>pixels[i+2]+35&&pixels[i+3]>15)reds++;}
+  return reds;
+ });
+ expect(sample).toBeGreaterThan(0);
+});
+
+test("pixel rim can be disabled with an explicit query parameter", async ({page}) => {
+ await page.goto("/?pixelGlass=0");
+ await expect(page.locator(".glass-nav")).not.toHaveAttribute("data-pixel-optics","on");
+ await expect(page.locator(".nav-pixel-rim")).toBeHidden();
+});
+
+test("shared scene optical shader samples real RGB from image, gradient, SVG and blue ink", async ({page}) => {
+ await page.goto("/experiments/shared-scene-optics.html");
+ await expect(page.locator("#status")).toContainText("WebGL");
+ const collect=async(top:number)=>{
+  await page.locator("#viewport").evaluate((el:HTMLElement,t)=>{el.scrollTop=t;el.dispatchEvent(new Event("scroll"))},top);
+  await page.waitForTimeout(120);
+  return page.locator("#rim").evaluate((canvas:HTMLCanvasElement)=>{
+   const gl=canvas.getContext("webgl",{preserveDrawingBuffer:true})!;
+   const data=new Uint8Array(canvas.width*canvas.height*4);
+   gl.readPixels(0,0,canvas.width,canvas.height,gl.RGBA,gl.UNSIGNED_BYTE,data);
+   let peak=0,rgb=[0,0,0];
+   for(let i=0;i<data.length;i+=4){if(data[i+3]>peak){peak=data[i+3];rgb=[data[i],data[i+1],data[i+2]]}}
+   return {peak,rgb};
+  });
+ };
+ const blue=await collect(260),red=await collect(360),gradient=await collect(550),vector=await collect(750);
+ expect(blue.peak).toBeGreaterThan(0);
+ expect(red.peak).toBeGreaterThan(0);
+ expect(gradient.peak).toBeGreaterThan(0);
+ expect(vector.peak).toBeGreaterThan(0);
+ expect(red.rgb[0]).toBeGreaterThan(red.rgb[1]+25);
+ expect(blue.rgb[2]).toBeGreaterThan(blue.rgb[0]+25);
+});
