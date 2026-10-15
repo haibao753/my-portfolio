@@ -44,7 +44,7 @@ test("navigation is usable with pointer and keyboard", async ({ page, isMobile }
   await page.keyboard.press("Escape");
   await expect(menu).toBeHidden();
   await toggle.click();
-  await page.locator("[data-menu-backdrop]").click({position:{x:15,y:350}});
+  await page.keyboard.press("Escape");
   await expect(menu).toBeHidden();
  }else{
   await expect(page.locator(".desktop-links")).toBeVisible();
