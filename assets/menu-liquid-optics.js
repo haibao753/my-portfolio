@@ -68,7 +68,7 @@ if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-
    const radius=parseFloat(getComputedStyle(menu).borderTopLeftRadius)||32;
    try{
     render(scene,{liquid:1,optical:1,reflectivity:.78,strength:1.25,cornerRadius:radius,
-     bevelWidth:19,reflectionReach:2.2,reflectionQuality:1,rimOnly:1,surfaceSize:[width,height],scenePadding:pad});
+     bevelWidth:19,reflectionReach:2.2,reflectionQuality:1,studioLight:.48,lightDirection:[-.55,.85],rimOnly:1,surfaceSize:[width,height],scenePadding:pad});
     menu.dataset.menuOptics='active';menu.dataset.menuOpticalSamples=String(count);
    }catch{menu.dataset.menuOptics='fallback'}
   };
