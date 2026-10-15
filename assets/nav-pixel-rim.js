@@ -74,7 +74,7 @@ function paint(){
  for(const img of document.querySelectorAll('main img')){
   const b=img.getBoundingClientRect();
   if(b.bottom<rect.bottom-30||b.top>rect.bottom+96||b.right<rect.left||b.left>rect.right)continue;
-  if(!img.complete||!img.naturalWidth)continue;
+  if(!img.complete||!img.naturalWidth)continue;\n  // Never taint the entire optical texture with non-CORS foreign pixels.\n  const url=new URL(img.currentSrc||img.src,location.href);\n  if(url.origin!==location.origin&&url.protocol!=='data:'&&img.crossOrigin!=='anonymous')continue;
   const x=b.left-rect.left-10,y=b.top-rect.bottom+30;
   try{
    ctx.drawImage(img,x,y,b.width,b.height);
