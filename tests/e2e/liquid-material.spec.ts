@@ -53,9 +53,9 @@ test('liquid lighting redraws without re-uploading the scene and follows theme c
  })).toEqual({x:72,active:1});
  expect(Number(await nav.getAttribute('data-optical-uploaded-pixels'))).toBe(before);
  if(isMobile)await page.evaluate(()=>window.dispatchEvent(new PointerEvent('pointerup',{pointerType:'touch',pointerId:71})));
- const uploads=Number(await nav.getAttribute('data-optical-texture-full'));
+ const uploads=Number(await nav.getAttribute('data-optical-uploaded-pixels'));
  await page.locator('[data-theme-toggle]').click();
- await expect.poll(async()=>Number(await nav.getAttribute('data-optical-texture-full'))).toBeGreaterThan(uploads);
+ await expect.poll(async()=>Number(await nav.getAttribute('data-optical-uploaded-pixels'))).toBeGreaterThan(uploads);
  await expect(page.locator('[data-theme-toggle]')).toHaveCSS('color','rgb(246, 248, 251)');
  await expect(page.locator('[data-theme-toggle]')).toBeVisible();
 });
