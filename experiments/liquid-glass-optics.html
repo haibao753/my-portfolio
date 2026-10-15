@@ -101,7 +101,7 @@ small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:
  const ratio=Math.min(devicePixelRatio||1,1.5);
  const w=Math.round(rect.width*ratio),h=Math.round(rect.height*ratio);if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;gl.viewport(0,0,w,h);}
  const aspect=w/h;gl.uniform2f(resolution,w,h);gl.uniform2f(center,cx*aspect,cy);gl.uniform1f(refract,Number(document.querySelector('#refract').value)/100);gl.uniform1f(scrollUniform,window.scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight));gl.uniform1f(disp,Number(document.querySelector('#dispersion').value)/100);gl.drawArrays(gl.TRIANGLES,0,6);};
- const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(draw);}};
+ const schedule=()=>{if(!pending&&!document.hidden&&inView&&!lost){pending=true;requestAnimationFrame(draw);}};
  for(const [id,out] of controls){document.getElementById(id).addEventListener('input',e=>{document.getElementById(out).textContent=e.target.value+'%';schedule();});}
  const move=e=>{if(!dragging)return;const r=stage.getBoundingClientRect();cx=Math.min(.72,Math.max(.28,(e.clientX-r.left)/r.width));cy=Math.min(.72,Math.max(.28,1-(e.clientY-r.top)/r.height));schedule();};
  canvas.addEventListener('pointerdown',e=>{
