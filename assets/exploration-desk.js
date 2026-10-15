@@ -66,7 +66,7 @@ if(desk){
  });
  // Curated arrangements keep objects separated and the title readable. Randomly
  // throwing rectangles into the stage can bury links beneath other objects.
- const layouts=[[[.05,330],[.52,21],[.77,241],[.42,350]],[[.08,338],[.71,25],[.73,306],[.39,364]],[[.13,345],[.57,35],[.78,276],[.45,348]]];
+ const layouts=[[[.05,360],[.52,21],[.77,241],[.42,350]],[[.08,360],[.71,25],[.73,306],[.39,364]],[[.13,360],[.57,35],[.78,276],[.45,348]]];
  const shuffle=()=>{
   arrangement=(arrangement+1)%layouts.length;
   if(!mobile.matches)objects.forEach((object,index)=>{
