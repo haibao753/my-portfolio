@@ -57,7 +57,7 @@ export function setup(gl){
  for(const p of [gl.TEXTURE_MIN_FILTER,gl.TEXTURE_MAG_FILTER])gl.texParameteri(gl.TEXTURE_2D,p,gl.LINEAR);
  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
- const copyFbo=gl.createFramebuffer(),readFbo=gl.createFramebuffer();
+ const readFbo=gl.createFramebuffer();
  let active=tex,spare=alternate;
  let textureWidth=0,textureHeight=0;
  const stats={fullUploads:0,partialUploads:0,skippedUploads:0,uploadedPixels:0,gpuScrolls:0};
@@ -66,18 +66,17 @@ export function setup(gl){
   if(source.width!==textureWidth||source.height!==textureHeight){
    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);
    textureWidth=source.width;textureHeight=source.height;
+   gl.bindTexture(gl.TEXTURE_2D,spare);
+   gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,textureWidth,textureHeight,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+   gl.bindTexture(gl.TEXTURE_2D,active);
    stats.fullUploads++;stats.uploadedPixels+=source.width*source.height;
   }else if(scrollShift&&Number.isInteger(scrollShift.y)&&scrollShift.x===0&&Math.abs(scrollShift.y)<textureHeight){
    const dy=scrollShift.y;
    gl.bindFramebuffer(gl.FRAMEBUFFER,readFbo);
    gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,active,0);
    gl.bindTexture(gl.TEXTURE_2D,spare);
-   gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,textureWidth,textureHeight,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
-   gl.bindFramebuffer(gl.FRAMEBUFFER,copyFbo);
-   gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,spare,0);
-   // WebGL1 copyTexSubImage2D copies from the bound framebuffer to bound texture.
-   gl.bindFramebuffer(gl.FRAMEBUFFER,readFbo);
-   gl.copyTexSubImage2D(gl.TEXTURE_2D,0,0,Math.max(dy,0),0,Math.max(-dy,0),textureWidth,textureHeight-Math.abs(dy));
+   // CSS y-down displacement is reversed in bottom-origin WebGL texture coordinates.
+   gl.copyTexSubImage2D(gl.TEXTURE_2D,0,0,Math.max(-dy,0),0,Math.max(dy,0),textureWidth,textureHeight-Math.abs(dy));
    const swap=active;active=spare;spare=swap;
    gl.bindTexture(gl.TEXTURE_2D,active);
    const patch=dirtyRect||{x:0,y:dy<0?textureHeight+dy:0,width:textureWidth,height:Math.abs(dy)};
@@ -110,6 +109,7 @@ export function setup(gl){
    gl.texSubImage2D(gl.TEXTURE_2D,0,0,0,gl.RGBA,gl.UNSIGNED_BYTE,source);
    stats.fullUploads++;stats.uploadedPixels+=source.width*source.height;
   }
+  gl.bindTexture(gl.TEXTURE_2D,active);
   gl.viewport(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight);
   gl.uniform1i(gl.getUniformLocation(program,"scene"),0);gl.uniform2f(gl.getUniformLocation(program,"resolution"),gl.drawingBufferWidth,gl.drawingBufferHeight);
   gl.uniform1f(gl.getUniformLocation(program,"strength"),strength);
