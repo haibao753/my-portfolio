@@ -120,7 +120,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
    const observer=new MutationObserver(records=>{
     const structural=records.some(record=>record.type==='childList');
     if(structural){candidates=Array.from(root.querySelectorAll('*'));forceFull=true}
-    else for(const record of records)markElement(record.target.parentElement||record.target);
+    else for(const record of records)markElement(record.target instanceof Element?record.target:record.target.parentElement);
     invalidateLayout();
    });
    observer.observe(root,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['style','class','src','srcset','width','height','hidden']});
@@ -176,6 +176,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
      nearby.push({el,r,style});
     }
     nav.dataset.opticalNearby=String(nearby.length);
+    for(const {el,r} of nearby)oldBounds.set(el,{left:r.left,top:r.top,width:r.width,height:r.height});
     nav.dataset.opticalGeometryReads=String(geometryReads);
     nav.dataset.opticalGeometryCacheHits=String(geometryCacheHits);
     // Paint CSS color surfaces beneath media and text rather than painting over them.
