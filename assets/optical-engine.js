@@ -52,13 +52,28 @@ export function setup(gl){
  const loc=gl.getAttribLocation(program,"position");gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
  const tex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tex);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
  let textureWidth=0,textureHeight=0;
- return function render(source,{strength=1,optical=1,reflectivity=1}={}){
+ const stats={fullUploads:0,partialUploads:0,skippedUploads:0,uploadedPixels:0};
+ const render=function(source,{strength=1,optical=1,reflectivity=1,dirtyRect=null,unchanged=false}={}){
   gl.useProgram(program);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
   if(source.width!==textureWidth||source.height!==textureHeight){
    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);
    textureWidth=source.width;textureHeight=source.height;
+   stats.fullUploads++;stats.uploadedPixels+=source.width*source.height;
+  }else if(unchanged){
+   stats.skippedUploads++;
+  }else if(dirtyRect){
+   const x=Math.max(0,Math.floor(dirtyRect.x)),y=Math.max(0,Math.floor(dirtyRect.y));
+   const w=Math.min(source.width-x,Math.ceil(dirtyRect.width)),h=Math.min(source.height-y,Math.ceil(dirtyRect.height));
+   if(w>0&&h>0){
+    const patch=new Uint8Array(source.getContext('2d').getImageData(x,y,w,h).data);
+    // UNPACK_FLIP_Y_WEBGL does not flip typed arrays; offset is bottom-origin.
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);
+    gl.texSubImage2D(gl.TEXTURE_2D,0,x,source.height-y-h,w,h,gl.RGBA,gl.UNSIGNED_BYTE,patch);
+    stats.partialUploads++;stats.uploadedPixels+=w*h;
+   }
   }else{
    gl.texSubImage2D(gl.TEXTURE_2D,0,0,0,gl.RGBA,gl.UNSIGNED_BYTE,source);
+   stats.fullUploads++;stats.uploadedPixels+=source.width*source.height;
   }
   gl.viewport(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight);
   gl.uniform1i(gl.getUniformLocation(program,"scene"),0);gl.uniform2f(gl.getUniformLocation(program,"resolution"),gl.drawingBufferWidth,gl.drawingBufferHeight);
@@ -67,4 +82,6 @@ export function setup(gl){
   gl.uniform1f(gl.getUniformLocation(program,"reflectivity"),reflectivity);
   gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
  };
+ render.stats=stats;
+ return render;
 }
