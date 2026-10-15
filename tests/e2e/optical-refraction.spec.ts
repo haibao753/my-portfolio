@@ -127,3 +127,29 @@ test('bright CTA behind glass does not project a rectangular ghost outside curve
  expect(result.interior[3]).toBeGreaterThan(0);
  expect(result.lower[3]).toBeGreaterThan(0);
 });
+
+test('live optical input preserves rounded blue pill rather than rectangular fill',async({page})=>{
+ await page.goto('/?opticalEngine=2');
+ const nav=page.locator('.glass-nav');
+ await page.evaluate(()=>{
+  const main=document.querySelector('main')!;
+  const pill=document.createElement('div');pill.id='optics-rounded-pill-test';
+  pill.style.cssText='position:fixed;top:35px;left:100px;width:140px;height:48px;background:rgb(0, 105, 230);border-radius:24px;z-index:0';
+  main.appendChild(pill);
+ });
+ await expect.poll(()=>nav.getAttribute('data-optical-colors')).not.toBeNull();
+ const samples=await page.evaluate(async()=>{
+  await new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve())));
+  const header=document.querySelector('.glass-nav')!;
+  const glass=header.querySelector('.live-optical-layer') as HTMLCanvasElement & {opticalSource:HTMLCanvasElement};
+  const source=glass.opticalSource,ctx=source.getContext('2d')!;
+  const rect=document.getElementById('optics-rounded-pill-test')!.getBoundingClientRect();
+  const headerRect=header.getBoundingClientRect();
+  const padding=Number(header.getAttribute('data-optical-overscan')||0);
+  const x=Math.floor(rect.left-headerRect.left+padding),y=Math.floor(rect.top-headerRect.top+padding);
+  const px=(dx:number,dy:number)=>Array.from(ctx.getImageData(x+dx,y+dy,1,1).data);
+  return {corner:px(1,1),centre:px(70,24)};
+ });
+ expect(samples.centre[2]).toBeGreaterThan(samples.centre[0]+70);
+ expect(samples.corner[2]).toBeLessThan(samples.centre[2]-35);
+});
