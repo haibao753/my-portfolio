@@ -898,3 +898,58 @@ test("damage compositor repaints only a small style region but falls back on str
  });
  await expect(nav).toHaveAttribute("data-optical-damage-mode","full");
 });
+
+test("GPU scroll shift preserves image pixels while uploading only uncovered strip",async({page})=>{
+ await page.goto("/experiments/optical-engine-v1.html");
+ const result=await page.evaluate(async()=>{
+  const {setup}=await import("/assets/optical-engine.js");
+  const canvas=document.createElement("canvas");canvas.width=64;canvas.height=48;
+  const gl=canvas.getContext("webgl",{preserveDrawingBuffer:true,alpha:true})!;
+  const render=setup(gl);
+  const src=document.createElement("canvas");src.width=64;src.height=48;
+  const ctx=src.getContext("2d")!;
+  ctx.fillStyle="rgb(231,21,34)";ctx.fillRect(0,0,64,48);
+  render(src,{optical:0});
+  ctx.clearRect(0,0,64,48);
+  ctx.fillStyle="rgb(231,21,34)";ctx.fillRect(0,0,64,38);
+  ctx.fillStyle="rgb(21,42,233)";ctx.fillRect(0,38,64,10);
+  render(src,{optical:0,scrollShift:{x:0,y:-10},dirtyRect:{x:0,y:38,width:64,height:10}});
+  const p=new Uint8Array(4);
+  const at=(x:number,y:number)=>{gl.readPixels(x,y,1,1,gl.RGBA,gl.UNSIGNED_BYTE,p);return Array.from(p)};
+  return {top:at(32,40),bottom:at(32,3),stats:render.stats};
+ });
+ expect(result.stats.gpuScrolls).toBe(1);
+ expect(result.stats.uploadedPixels).toBe(64*48+64*10);
+ expect(result.top[0]).toBeGreaterThan(150);
+ expect(result.bottom[2]).toBeGreaterThan(150);
+});
+
+test("real browser DOM RGB agrees with the optical source for a known opaque patch",async({page})=>{
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ const rect=await nav.boundingBox();expect(rect).not.toBeNull();
+ await page.evaluate(()=>{
+  const nav=document.querySelector(".glass-nav")!,nr=nav.getBoundingClientRect();
+  const block=document.createElement("div");
+  block.style.cssText="position:fixed;left:"+Math.round(nr.left+30)+"px;top:"+Math.round(nr.top+18)+"px;width:48px;height:30px;background:rgb(22, 100, 221)";
+  document.querySelector("main")!.appendChild(block);
+  dispatchEvent(new Event("scroll"));
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-colors")||0)).toBeGreaterThan(0);
+ await nav.evaluate(el=>{(el as HTMLElement).style.visibility="hidden"});
+ const screenshot=await page.screenshot({scale:"css",animations:"disabled"});
+ await nav.evaluate(el=>{(el as HTMLElement).style.visibility=""});
+ const result=await page.evaluate(async(encoded:string)=>{
+  const image=new Image();image.src="data:image/png;base64,"+encoded;await image.decode();
+  const snap=document.createElement("canvas");snap.width=image.naturalWidth;snap.height=image.naturalHeight;
+  const sc=snap.getContext("2d")!;sc.drawImage(image,0,0);
+  const nav=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const src=(document.querySelector(".live-optical-layer") as HTMLCanvasElement&{opticalSource:HTMLCanvasElement}).opticalSource;
+  const input=src.getContext("2d")!;
+  const x=Math.round(nav.left+52),y=Math.round(nav.top+30);
+  const a=sc.getImageData(x,y,1,1).data,b=input.getImageData(x-Math.round(nav.left),y-Math.round(nav.top),1,1).data;
+  return {actual:[a[0],a[1],a[2]],optical:[b[0],b[1],b[2]],error:Math.max(Math.abs(a[0]-b[0]),Math.abs(a[1]-b[1]),Math.abs(a[2]-b[2]))};
+ },screenshot.toString("base64"));
+ expect(result.error).toBeLessThan(12);
+});
