@@ -318,6 +318,9 @@ test("optical lab has a usable menu if WebGL is unavailable",async({page})=>{
  await expect(page.locator("#stage")).toHaveClass(/no-webgl/);
  await expect(page.locator("#optic-menu a")).toHaveCount(6);
  await expect(page.locator("#optic-menu")).toBeVisible();
+ const dimensions=await page.locator("#optic-menu").boundingBox();
+ expect(dimensions?.width??0).toBeGreaterThan(100);
+ expect(dimensions?.height??0).toBeGreaterThan(100);
 });
 
 
