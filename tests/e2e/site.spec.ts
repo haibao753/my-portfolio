@@ -302,3 +302,18 @@ test("optical glass laboratory preserves real accessible menu controls",async({p
  await page.locator("#refract").fill("75");
  await expect(page.locator("#refract-value")).toHaveText("75%");
 });
+
+
+test("optical lab has a usable menu if WebGL is unavailable",async({page})=>{
+ await page.addInitScript(()=>{
+  const original=HTMLCanvasElement.prototype.getContext;
+  HTMLCanvasElement.prototype.getContext=function(type,...args){
+   if(type==="webgl"||type==="experimental-webgl")return null;
+   return original.call(this,type,...args);
+  } as typeof HTMLCanvasElement.prototype.getContext;
+ });
+ await page.goto("/experiments/liquid-glass-optics.html");
+ await expect(page.locator("#stage")).toHaveClass(/no-webgl/);
+ await expect(page.locator("#optic-menu a")).toHaveCount(6);
+ await expect(page.locator("#optic-menu")).toBeVisible();
+});
