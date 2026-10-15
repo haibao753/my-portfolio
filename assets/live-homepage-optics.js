@@ -3,6 +3,7 @@
  * This is NOT browser compositor capture.
  */
 import {setup} from '/assets/optical-engine.js';
+import {glassPointerFor,subscribeGlassPointer} from '/assets/glass-pointer-light.js';
 const params=new URLSearchParams(location.search);
 const requested=params.get('opticalEngine');
 const mode=requested===null?'2':requested;
@@ -56,7 +57,7 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
      target.style.setProperty('--glass-ink-shadow',dark?'0 1px 2px rgba(255,255,255,.62)':'0 1px 3px rgba(0,0,0,.62)');
     }
    };
-   const draw=(changes={})=>shader(source,{strength:liquid?1.25:2,optical:1,reflectivity:liquid?.78:.35,liquid:liquid?1:0,bevelWidth:liquid?19:12,reflectionReach:liquid?2.2:1,reflectionQuality:liquid?1:0,studioLight:liquid?.48:0,surfaceSize:[source.width-2*overscan,source.height-2*overscan],scenePadding:overscan,cornerRadius:parseFloat(getComputedStyle(nav).borderTopLeftRadius)||26,lightDirection,...changes});
+   const draw=(changes={})=>shader(source,{strength:liquid?1.25:2,optical:1,reflectivity:liquid?.78:.35,liquid:liquid?1:0,bevelWidth:liquid?19:12,reflectionReach:liquid?2.2:1,reflectionQuality:liquid?1:0,studioLight:liquid?.48:0,surfaceSize:[source.width-2*overscan,source.height-2*overscan],scenePadding:overscan,cornerRadius:parseFloat(getComputedStyle(nav).borderTopLeftRadius)||26,lightDirection,...glassPointerFor(nav),...changes});
    const fallback=()=>{nav.dataset.liveOptics='fallback';delete nav.dataset.opticalMaterial;glass.hidden=true;};
    glass.addEventListener('webglcontextlost',fallback);
    matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',e=>{if(e.matches)fallback()});
@@ -356,16 +357,7 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
     nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalGradients=String(gradients);nav.dataset.opticalVectors=String(vectors);nav.dataset.opticalError='';nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1)}catch{nav.dataset.opticalError='texture'}
    };
    let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
-   if(liquid)nav.addEventListener('pointermove',event=>{
-    if(event.pointerType!=='mouse')return;
-    const rect=nav.getBoundingClientRect();
-    const x=Math.min(1,Math.max(0,(event.clientX-rect.left)/rect.width));
-    const y=Math.min(1,Math.max(0,(event.clientY-rect.top)/rect.height));
-    lightDirection=[(x-.5)*1.5,1.-y*1.5];
-    nav.style.setProperty('--glass-light-x',`${(x*100).toFixed(1)}%`);
-    schedule();
-   },{passive:true});
-   if(liquid)nav.addEventListener('pointerleave',()=>{lightDirection=[-.55,.85];nav.style.removeProperty('--glass-light-x');schedule()},{passive:true});
+   if(liquid)subscribeGlassPointer(schedule);
    new MutationObserver(()=>{forceFull=true;invalidateLayout()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','data-theme-transition','lang']});
    addEventListener('scroll',schedule,{passive:true});
    addEventListener('visibilitychange',()=>{if(!document.hidden){forceFull=true;schedule()}});
