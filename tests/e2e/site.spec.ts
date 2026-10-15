@@ -317,3 +317,14 @@ test("optical lab has a usable menu if WebGL is unavailable",async({page})=>{
  await expect(page.locator("#optic-menu a")).toHaveCount(6);
  await expect(page.locator("#optic-menu")).toBeVisible();
 });
+
+
+test("optical laboratory preserves native mobile scrolling with visible DOM links",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/experiments/liquid-glass-optics.html");
+ const before=await page.evaluate(()=>window.scrollY);
+ await page.evaluate(()=>window.scrollBy({top:400,behavior:"instant"}));
+ await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBeGreaterThan(before+100);
+ await expect(page.locator("#optic-menu a")).toHaveCount(6);
+ await expect(page.locator("#stage")).not.toHaveClass(/no-webgl/);
+});
