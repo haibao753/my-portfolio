@@ -43,6 +43,7 @@ test('reduced motion and offscreen scenes stop the render loop',async({page})=>{
 test('context loss and disabled JavaScript keep the art and project routes available',async({page,browser})=>{
  await page.goto('/lab/');const host=page.locator('[data-optical-universe]');await expect(host).toHaveAttribute('data-universe-gpu','true');
  await page.locator('[data-sculpture-canvas]').evaluate((canvas:HTMLCanvasElement)=>canvas.getContext('webgl')!.getExtension('WEBGL_lose_context')!.loseContext());await expect(host).toHaveAttribute('data-universe-gpu','false');await expect(page.locator('[data-sculpture-fallback]')).toBeVisible();await expect(page.locator('[data-universe-pause]')).toBeDisabled();
- await page.locator('button[data-universe-mode="1"]').click();await expect(host).toHaveAttribute('data-universe-mode','1');await expect(page.locator('.enter-world')).toHaveAttribute('href','#worlds');
+ await page.locator('button[data-universe-mode="1"]').click();await expect(host).toHaveAttribute('data-universe-mode','1');await expect(page.locator('.primary-entry')).toHaveAttribute('href','#worlds');
+ await expect(page.locator('.experiment-entry')).toHaveAttribute('href','/experiments/minimal-surfaces-classical.html');
  const ctx=await browser.newContext({javaScriptEnabled:false});try{const fallback=await ctx.newPage();await fallback.goto(new URL('/lab/',page.url()).href);await expect(fallback.locator('[data-sculpture-fallback]')).toBeVisible();await expect(fallback.locator('[data-lab-open]')).toHaveCount(4)}finally{await ctx.close()}
 });
