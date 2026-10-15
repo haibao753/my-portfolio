@@ -14,7 +14,9 @@ if(process.argv[1] && import.meta.url===pathToFileURL(process.argv[1]).href){
  const branch=process.env.WORKERS_CI_BRANCH||process.env.GITHUB_REF_NAME||
   execFileSync("git",["branch","--show-current"],{encoding:"utf8"}).trim();
  assertWorkerCommand(process.env.WRANGLER_COMMAND,branch);
- execFileSync("git",["fetch","--no-tags","--depth=1","origin","main:refs/remotes/origin/main"],{stdio:"inherit"});
+ // Refresh only a remote-tracking ref. Shallow builds may otherwise reject an
+ // actual fast-forward because the new parent history is outside their depth.
+ execFileSync("git",["fetch","--no-tags","--depth=1","origin","+main:refs/remotes/origin/main"],{stdio:"inherit"});
  execFileSync(process.execPath,["scripts/sync-news-preview.mjs"],{stdio:"inherit"});
  execFileSync("npm",["run","build"],{stdio:"inherit"});
 }

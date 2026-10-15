@@ -230,8 +230,10 @@ test("glass toolbar remains readable and the floating menu clears its lower edge
  if(isMobile){
   await page.locator("[data-menu-toggle]").click();
   const panel=page.locator("[data-menu-panel]");
-  const [barBox,menuBox]=await Promise.all([header.boundingBox(),panel.boundingBox()]);
-  expect(menuBox!.y).toBeGreaterThanOrEqual(barBox!.y+barBox!.height+6);
+  await expect.poll(async()=>{
+   const [barBox,menuBox]=await Promise.all([header.boundingBox(),panel.boundingBox()]);
+   return menuBox!.y-(barBox!.y+barBox!.height);
+  }).toBeGreaterThanOrEqual(6);
   await page.evaluate(()=>window.scrollTo({top:600,behavior:"instant"}));
   await expect(header).toBeInViewport();
   await expect(panel).toBeVisible();
