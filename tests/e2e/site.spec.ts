@@ -783,3 +783,23 @@ test("live optical layer preserves transparent pixels outside reconstructed cont
  expect(state.alpha).toBe(true);
  expect(state.transparent).toBeGreaterThan(0);
 });
+
+test("optical glyph geometry cache survives scrolling and invalidates for text mutations",async({page})=>{
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ await page.evaluate(()=>{
+  const bounds=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const text=document.createElement("p");text.id="optical-cache-probe";
+  text.textContent="GLASS PIXEL CACHE PROBE";
+  text.style.cssText="position:fixed;left:36px;top:"+Math.round(bounds.top+18)+"px;font:700 20px Arial;color:rgb(18,91,210)";
+  document.querySelector("main")!.appendChild(text);dispatchEvent(new Event("scroll"));
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-samples")||0)).toBeGreaterThan(0);
+ const before=Number(await nav.getAttribute("data-optical-glyph-measures"));
+ await page.evaluate(()=>dispatchEvent(new Event("scroll")));
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-glyph-cache-hits")||0)).toBeGreaterThan(0);
+ expect(Number(await nav.getAttribute("data-optical-glyph-measures"))).toBe(before);
+ await page.locator("#optical-cache-probe").evaluate(el=>{el.textContent="UPDATED OPTICAL TEXT"});
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-glyph-measures")||0)).toBeGreaterThan(0);
+});
