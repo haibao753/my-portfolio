@@ -15,6 +15,7 @@ uniform float scenePadding;
 uniform float rimOnly;
 uniform float reflectionReach;
 uniform float reflectionQuality;
+uniform float studioLight;
 vec4 sampleLiquidScene(vec2 coord){return texture2D(scene,clamp((coord*surfaceSize+vec2(scenePadding))/max(sceneSize,vec2(1.)),0.,1.));}
 uniform float cornerRadius;
 uniform float bevelWidth;
@@ -105,9 +106,23 @@ vec4 liquidPixel(){
  // Blend the clear interior back to original pixels before the bevel ends.
  float opticEnvelope=1.-smoothstep(width*.55,width,-sd);
  pixel=mix(base.rgb,pixel,opticEnvelope);
- vec3 light=normalize(vec3(lightDirection,.7));
- float specular=pow(max(dot(N,normalize(light+vec3(0.,0.,1.))),0.),26.);
- pixel+=vec3(.96,.98,1.)*specular*bending*.055*reflectivity;
+ // Screen-space studio softbox. A broad lobe is integrated analytically
+ // using a softened microfacet half-vector response; intensity vanishes in
+ // the flat centre and outside the rounded silhouette.
+ vec3 L=normalize(vec3(lightDirection,.9));
+ vec3 V=vec3(0.,0.,1.);
+ vec3 H=normalize(L+V);
+ float ndh=max(dot(N,H),0.);
+ float rough=.37;
+ float alpha2=rough*rough*rough*rough;
+ float d=ndh*ndh*(alpha2-1.)+1.;
+ float ggx=alpha2/(3.14159265*d*d);
+ float softbox=pow(ndh,5.)*.58+min(ggx*.095,.42);
+ float grazing=clamp(fresnel+.20*bending,0.,1.);
+ float lightMask=reflectionEnvelope*opticEnvelope;
+ vec3 key=vec3(1.,.982,.945)*softbox*grazing*lightMask;
+ vec3 fill=vec3(.70,.84,1.)*pow(max(dot(N,normalize(vec3(-L.xy,.7))),0.),6.)*.035*lightMask;
+ pixel+=studioLight*(key+fill);
  float coverage=clamp(.5-sd,0.,1.);
  float alpha=mix(base.a, max(transmittedAlpha,reflected.a*reflectionMix)*coverage,optical);
  // Detached menus only project the optically active curved rim. Their clear
@@ -174,8 +189,8 @@ export function setup(gl){
  let active=tex,spare=alternate;
  let textureWidth=0,textureHeight=0;
  const stats={fullUploads:0,partialUploads:0,skippedUploads:0,uploadedPixels:0,gpuScrolls:0};
- const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','surfaceSize','sceneSize','scenePadding','rimOnly','reflectionReach','reflectionQuality','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
- const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,rimOnly=0,reflectionReach=1,reflectionQuality=0,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
+ const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','surfaceSize','sceneSize','scenePadding','rimOnly','reflectionReach','reflectionQuality','studioLight','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
+ const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,rimOnly=0,reflectionReach=1,reflectionQuality=0,studioLight=0,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
   gl.useProgram(program);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,active);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
   if(source.width!==textureWidth||source.height!==textureHeight){
    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);
@@ -236,6 +251,7 @@ export function setup(gl){
   gl.uniform1f(uniforms.rimOnly,rimOnly);
   gl.uniform1f(uniforms.reflectionReach,reflectionReach);
   gl.uniform1f(uniforms.reflectionQuality,reflectionQuality);
+  gl.uniform1f(uniforms.studioLight,studioLight);
   gl.uniform1f(uniforms.cornerRadius,cornerRadius);
   gl.uniform1f(uniforms.bevelWidth,bevelWidth);
   gl.uniform2f(uniforms.lightDirection,...lightDirection);
