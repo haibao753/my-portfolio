@@ -49,7 +49,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     return rect.width*rect.height>=width*height*.7?null:{dirtyRect:rect};
    };
    let candidates=Array.from(root.querySelectorAll('*'));
-   let pendingRegions=[],forceFull=true;
+   let pendingRegions=[],forceFull=true,fullFallbacks=0,partialFrames=0;
    const oldBounds=new WeakMap();
    const stage=document.createElement('canvas');
    const stageCtx=stage.getContext('2d');
@@ -159,7 +159,11 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     }
     if(!partial){ctx.clearRect(0,0,w,h);region=null}
     else{ctx.save();ctx.beginPath();ctx.rect(region.x,region.y,region.width,region.height);ctx.clip();ctx.clearRect(region.x,region.y,region.width,region.height)}
+    if(partial)partialFrames++;else fullFallbacks++;
     nav.dataset.opticalDamageMode=partial?'partial':'full';
+    nav.dataset.opticalDamagePixels=String(region?region.width*region.height:w*h);
+    nav.dataset.opticalDamagePartialFrames=String(partialFrames);
+    nav.dataset.opticalDamageFullFallbacks=String(fullFallbacks);
     let elements=0,images=0,colors=0,gradients=0,vectors=0;
     const offsetX=nr.left,offsetY=nr.top;
     const startScrollY=window.scrollY;
