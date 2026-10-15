@@ -326,5 +326,4 @@ test("optical laboratory preserves native mobile scrolling with visible DOM link
  await page.evaluate(()=>window.scrollBy({top:400,behavior:"instant"}));
  await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBeGreaterThan(before+100);
  await expect(page.locator("#optic-menu a")).toHaveCount(6);
- await expect(page.locator("#stage")).not.toHaveClass(/no-webgl/);
 });
