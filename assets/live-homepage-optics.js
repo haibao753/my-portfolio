@@ -258,7 +258,9 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     }
     if(partial)ctx.restore();
     if(Math.abs(window.scrollY-startScrollY)>2){forceFull=true;schedule();return;}
-    const uploadRegion=partial?region:null;
+    // A scrolled frame translates existing pixels: upload the whole shifted texture
+    // until a GPU-side texture copy/scroll primitive is available.
+    const uploadRegion=partial&&!canShift?region:null;
     forceFull=false;pendingRegions=[];
     measuredEpoch=layoutEpoch;
     lastPaintEpoch=layoutEpoch;lastPaintWidth=w;lastPaintHeight=h;
