@@ -61,7 +61,9 @@ vec4 liquidPixel(){
  float incidence=atan(slope);
  float transmitted=asin(clamp(sin(incidence)/ior,0.,.999));
  float nonlinear=sin(incidence-transmitted);
- float travel=(5.+width*2.4)*strength*nonlinear*bending;
+ // Cap spatial displacement to the physical bevel: long-range probing must
+ // influence reflection color, not drag whole UI elements into a straight band.
+ float travel=min((5.+width*2.4)*strength*nonlinear*bending,width*.68);
  vec2 offset=-normal*travel/size;
  vec2 sampleUV=clamp(uv+offset,0.,1.);
  vec2 chromatic=normal*(.26*strength*bending)/size;
@@ -76,7 +78,7 @@ vec4 liquidPixel(){
  // than substituting a synthetic white specular stripe.
  // Wider environment probe: travel outward through the padded scene, with
  // curvature controlling where the distant reflections originate.
- float reflectionTravel=(3.+width*1.55)*bending*reflectionReach;
+ float reflectionTravel=min((3.+width*1.55)*bending*reflectionReach,max(scenePadding-4.,0.));
  vec2 reflectedUV=uv+normal*reflectionTravel/size;
  vec4 reflected=sampleLiquidScene(reflectedUV);
  // 5 taps along the local curved contour integrate real neighboring scene
@@ -95,8 +97,14 @@ vec4 liquidPixel(){
  float cosine=max(N.z,0.);
  float f0=pow((ior-1.)/(ior+1.),2.);
  float fresnel=f0+(1.-f0)*pow(1.-cosine,5.);
- float reflectionMix=clamp((fresnel*.82+.08*bending)*reflectivity,0.,.42);
+ // Taper reflection smoothly over the bevel: prevents a hard horizontal
+ // discontinuity when a bright CTA enters/leaves the sampling footprint.
+ float reflectionEnvelope=smoothstep(0.,2.,-sd)*(1.-smoothstep(width*.58,width*.98,-sd));
+ float reflectionMix=clamp((fresnel*.82+.08*bending)*reflectivity*reflectionEnvelope,0.,.25);
  vec3 pixel=mix(transmittedRGB,reflected.rgb,reflectionMix*reflected.a);
+ // Blend the clear interior back to original pixels before the bevel ends.
+ float opticEnvelope=1.-smoothstep(width*.55,width,-sd);
+ pixel=mix(base.rgb,pixel,opticEnvelope);
  vec3 light=normalize(vec3(lightDirection,.7));
  float specular=pow(max(dot(N,normalize(light+vec3(0.,0.,1.))),0.),26.);
  pixel+=vec3(.96,.98,1.)*specular*bending*.055*reflectivity;
