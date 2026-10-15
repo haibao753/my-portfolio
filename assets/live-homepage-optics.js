@@ -4,7 +4,10 @@
  */
 import {setup} from '/assets/optical-engine.js';
 const params=new URLSearchParams(location.search);
-if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+const liquid=params.get('opticalEngine')==='2';
+// The query is an explicit material preview, overriding the OS transparency
+// preference for this visit. Ordinary URLs retain the existing CSS fallback.
+if(['1','2'].includes(params.get('opticalEngine'))&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
  const nav=document.querySelector('.glass-nav'),root=document.querySelector('main');
  if(nav&&root){
   const glass=document.createElement('canvas');glass.className='live-optical-layer';glass.setAttribute('aria-hidden','true');
@@ -17,6 +20,41 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
   if(gl&&ctx){try{shader=setup(gl)}catch(err){nav.dataset.opticalError='shader'}}
   if(shader){
    nav.dataset.liveOptics='on';
+   nav.dataset.opticalMaterial=liquid?'liquid-v2':'classic';
+   if(liquid)document.querySelectorAll('a[href]').forEach(link=>{
+    const target=new URL(link.href,location.href);
+    if(target.origin===location.origin&&['/','/brief/'].includes(target.pathname)){
+     target.searchParams.set('opticalEngine','2');link.href=target.href;
+    }
+   });
+   let lightDirection=[-.55,.85];
+   const inkTargets=Array.from(nav.querySelectorAll('.desktop-links a,.brand,.controls button'));
+   const updateInk=()=>{
+    const nr=nav.getBoundingClientRect();
+    const background=getComputedStyle(document.body).backgroundColor.match(/[\d.]+/g)?.slice(0,3).map(Number)||[247,247,245];
+    for(const target of inkTargets){
+     const r=target.getBoundingClientRect();if(!r.width||!r.height)continue;
+     const x=Math.max(0,Math.floor(r.left-nr.left)),y=Math.max(0,Math.floor(r.top-nr.top));
+     const w=Math.min(source.width-x,Math.ceil(r.width)),h=Math.min(source.height-y,Math.ceil(r.height));
+     if(w<1||h<1)continue;
+     const pixels=ctx.getImageData(x,y,w,h).data;
+     let luminance=0;
+     for(const sy of [.25,.5,.75])for(const sx of [.2,.5,.8]){
+      const i=(Math.min(h-1,Math.floor(h*sy))*w+Math.min(w-1,Math.floor(w*sx)))*4,a=pixels[i+3]/255;
+      const linear=[0,1,2].map(channel=>{const value=(pixels[i+channel]*a+background[channel]*(1-a))/255;return value<=.04045?value/12.92:Math.pow((value+.055)/1.055,2.4)});
+      luminance+=linear[0]*.2126+linear[1]*.7152+linear[2]*.0722;
+     }
+     luminance/=9;
+     const dark=(luminance+.05)/.064>(.94+.05)/(luminance+.05);
+     target.style.setProperty('--glass-ink',dark?'#15202d':'#f6f8fb');
+     target.style.setProperty('--glass-ink-shadow',dark?'0 1px 2px rgba(255,255,255,.62)':'0 1px 3px rgba(0,0,0,.62)');
+    }
+   };
+   const draw=(changes={})=>shader(source,{strength:liquid?1.25:2,optical:1,reflectivity:liquid?.72:.35,liquid:liquid?1:0,surfaceSize:[source.width,source.height],cornerRadius:parseFloat(getComputedStyle(nav).borderTopLeftRadius)||26,lightDirection,...changes});
+   const fallback=()=>{nav.dataset.liveOptics='fallback';delete nav.dataset.opticalMaterial;glass.hidden=true;};
+   glass.addEventListener('webglcontextlost',fallback);
+   matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',e=>{if(e.matches)fallback()});
+   matchMedia('(prefers-reduced-transparency: reduce)').addEventListener('change',e=>{if(e.matches)fallback()});
    const vectorCache=new WeakMap();
    let previousPixels=null,previousWidth=0,previousHeight=0;
    let lastDiffComparedPixels=0;
@@ -125,6 +163,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
    });
    observer.observe(root,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['style','class','src','srcset','width','height','hidden']});
    const refresh=()=>{
+    if(gl.isContextLost()||glass.hidden)return;
     const frameStart=performance.now();
     nav.dataset.opticalRefreshes=String(Number(nav.dataset.opticalRefreshes||0)+1);
     const nr=nav.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,Math.round(nr.width)),h=Math.max(1,Math.round(nr.height));
@@ -133,6 +172,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     const unchangedLayout=lastPaintEpoch===layoutEpoch&&lastPaintWidth===w&&lastPaintHeight===h;
     const sameScroll=lastPaintScrollX===window.scrollX&&lastPaintScrollY===window.scrollY;
     if(unchangedLayout&&sameScroll){
+     if(liquid){draw({unchanged:true});nav.dataset.opticalTextureSkipped=String(shader.stats.skippedUploads);}
      skippedRasterFrames++;
      nav.dataset.opticalRasterSkipped=String(skippedRasterFrames);
      nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1);
@@ -264,6 +304,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
      }
     }
     if(partial)ctx.restore();
+    if(liquid)updateInk();
     if(Math.abs(window.scrollY-startScrollY)>2){forceFull=true;schedule();return;}
     // A scrolled frame translates existing pixels: upload the whole shifted texture
     // until a GPU-side texture copy/scroll primitive is available.
@@ -276,7 +317,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     nav.dataset.opticalRasterSkipped=String(skippedRasterFrames);
     nav.dataset.opticalGlyphMeasures=String(glyphMeasurements);nav.dataset.opticalGlyphCacheHits=String(cacheHits);
     nav.dataset.opticalAlignmentX=String(offsetX.toFixed(2));nav.dataset.opticalAlignmentY=String(offsetY.toFixed(2));
-    try{const delta=uploadRegion?{dirtyRect:uploadRegion}:changedRect();shader(source,{strength:2,optical:1,reflectivity:.35,...(delta||{}),...(gpuShift?{dirtyRect:uploadRegion,scrollShift:gpuShift}:{})});
+    try{const delta=uploadRegion?{dirtyRect:uploadRegion}:changedRect();draw({...delta,...(gpuShift?{dirtyRect:uploadRegion,scrollShift:gpuShift}:{})});
     nav.dataset.opticalDiffCompared=String(lastDiffComparedPixels);
     nav.dataset.opticalGpuScrolls=String(shader.stats.gpuScrolls);
     nav.dataset.opticalTextureFull=String(shader.stats.fullUploads);
@@ -286,6 +327,17 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalGradients=String(gradients);nav.dataset.opticalVectors=String(vectors);nav.dataset.opticalError='';nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1)}catch{nav.dataset.opticalError='texture'}
    };
    let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
+   if(liquid)nav.addEventListener('pointermove',event=>{
+    if(event.pointerType!=='mouse')return;
+    const rect=nav.getBoundingClientRect();
+    const x=Math.min(1,Math.max(0,(event.clientX-rect.left)/rect.width));
+    const y=Math.min(1,Math.max(0,(event.clientY-rect.top)/rect.height));
+    lightDirection=[(x-.5)*1.5,1.-y*1.5];
+    nav.style.setProperty('--glass-light-x',`${(x*100).toFixed(1)}%`);
+    schedule();
+   },{passive:true});
+   if(liquid)nav.addEventListener('pointerleave',()=>{lightDirection=[-.55,.85];nav.style.removeProperty('--glass-light-x');schedule()},{passive:true});
+   new MutationObserver(()=>{forceFull=true;invalidateLayout()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','data-theme-transition','lang']});
    addEventListener('scroll',schedule,{passive:true});
    addEventListener('visibilitychange',()=>{if(!document.hidden){forceFull=true;schedule()}});
    addEventListener('resize',()=>{forceFull=true;invalidateLayout()},{passive:true});

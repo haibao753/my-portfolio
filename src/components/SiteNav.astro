@@ -122,5 +122,18 @@ import {navigation} from "../data/site";
     of normal flow so resizing it cannot recursively enlarge the sticky header. */
  .glass-nav :global(.live-optical-layer){position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;border-radius:inherit;opacity:.76;mix-blend-mode:multiply}
  .glass-nav[data-live-optics="on"] .native-optic-edge{opacity:.22}
+ /* V2 keeps the sampled RGB intact. Multiply compositing made clear glass
+    grey and removed bright photo detail, especially against the dark theme. */
+ .glass-nav[data-optical-material="liquid-v2"]{background:linear-gradient(155deg,rgba(255,255,255,.10),rgba(232,244,255,.025) 48%,rgba(255,255,255,.07));-webkit-backdrop-filter:blur(2.2px) saturate(1.24);backdrop-filter:blur(2.2px) saturate(1.24);border-color:rgba(255,255,255,.62);box-shadow:0 8px 24px rgba(20,33,52,.09),0 1px 2px rgba(20,33,52,.10),inset 0 1px 1px rgba(255,255,255,.92),inset 0 -1px 2px rgba(39,68,101,.17)}
+ .glass-nav[data-optical-material="liquid-v2"] :global(.live-optical-layer){opacity:1;mix-blend-mode:normal}
+ .glass-nav[data-optical-material="liquid-v2"] .native-optic-edge{opacity:0}
+ .glass-nav[data-optical-material="liquid-v2"]::before{z-index:0;background:radial-gradient(ellipse 48% 55% at var(--glass-light-x,28%) 0%,rgba(255,255,255,.27),transparent 78%)}
+ .glass-nav[data-optical-material="liquid-v2"]::after{border-color:rgba(255,255,255,.18);box-shadow:inset 0 1px rgba(255,255,255,.68),inset 0 -1px rgba(38,79,122,.12)}
+ .glass-nav[data-optical-material="liquid-v2"] .controls button{background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.025));border-color:rgba(107,128,153,.16);box-shadow:inset 0 1px rgba(255,255,255,.42),0 1px 2px rgba(18,36,59,.04)}
+ .glass-nav[data-optical-material="liquid-v2"] :is(.desktop-links a,.brand,.controls button){color:var(--glass-ink,var(--fg));text-shadow:var(--glass-ink-shadow,none)}
+ .glass-nav[data-optical-material="liquid-v2"] .brand span{background:currentColor}
+ .glass-nav[data-optical-material="liquid-v2"]~.mobile-menu{background:linear-gradient(145deg,rgba(255,255,255,.24),rgba(230,241,255,.08));-webkit-backdrop-filter:blur(7px) saturate(1.28);backdrop-filter:blur(7px) saturate(1.28);box-shadow:0 18px 48px rgba(20,32,54,.18),inset 0 1px rgba(255,255,255,.9),inset 0 -1px 2px rgba(54,93,139,.16)}
+ :global(html[data-theme="dark"]) .glass-nav[data-optical-material="liquid-v2"]{background:linear-gradient(155deg,rgba(125,156,188,.09),rgba(21,30,42,.06) 50%,rgba(122,151,184,.045));border-color:rgba(220,237,255,.35);box-shadow:0 10px 28px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.5),inset 0 -1px rgba(129,174,225,.17)}
+ :global(html[data-theme="dark"]) .glass-nav[data-optical-material="liquid-v2"]~.mobile-menu{background:linear-gradient(145deg,rgba(43,58,76,.38),rgba(19,29,43,.18));box-shadow:0 18px 48px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.46),inset 0 -1px rgba(120,169,221,.2)}
 </style>
 <script is:inline type="module" src="/assets/live-homepage-optics.js"></script>

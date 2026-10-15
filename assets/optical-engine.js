@@ -8,6 +8,44 @@ uniform vec2 resolution;
 uniform float strength;
 uniform float optical;
 uniform float reflectivity;
+uniform float liquid;
+uniform vec2 surfaceSize;
+uniform float cornerRadius;
+uniform float bevelWidth;
+uniform vec2 lightDirection;
+vec4 liquidPixel(){
+ // Signed distance and normals use CSS pixels, so a wide desktop bar and a
+ // narrow mobile bar have the same meniscus instead of stretched UV edges.
+ vec2 p=(uv-.5)*surfaceSize;
+ float radius=min(cornerRadius,min(surfaceSize.x,surfaceSize.y)*.5);
+ vec2 q=abs(p)-(surfaceSize*.5-vec2(radius));
+ vec2 outside=max(q,0.);
+ float distance=length(outside)+min(max(q.x,q.y),0.)-radius;
+ vec2 normal=length(outside)>.0001?normalize(outside)*sign(p):
+  (q.x>q.y?vec2(sign(p.x),0.):vec2(0.,sign(p.y)));
+ float rim=1.-smoothstep(0.,max(bevelWidth,1.),max(-distance,0.));
+ // Inward sampling keeps all rays within the reconstructed scene. The clear
+ // centre is unchanged; displacement and dispersion belong to the meniscus.
+ vec2 bend=-normal*(6.*strength*rim)/surfaceSize;
+ vec2 dispersion=normal*(.48*rim*strength)/surfaceSize;
+ vec2 sampleUV=clamp(uv+bend,0.,1.);
+ vec4 red=texture2D(scene,clamp(sampleUV+dispersion,0.,1.));
+ vec4 green=texture2D(scene,sampleUV);
+ vec4 blue=texture2D(scene,clamp(sampleUV-dispersion,0.,1.));
+ vec3 pixel=vec3(red.r,green.g,blue.b);
+ float coverage=max(red.a,max(green.a,blue.a));
+ vec3 N=normalize(vec3(normal*rim*.92,1.));
+ float f0=pow((1.48-1.)/(1.48+1.),2.);
+ float fresnel=f0+(1.-f0)*pow(1.-N.z,5.);
+ vec3 light=normalize(vec3(lightDirection, .42));
+ float specular=pow(max(dot(N,normalize(light+vec3(0.,0.,1.))),0.),28.);
+ float reflection=clamp((fresnel*rim*.65+specular*rim*.28)*reflectivity,0.,.24);
+ pixel=mix(pixel,vec3(.97,.985,1.),reflection);
+ float mask=clamp(.5-distance,0.,1.);
+ vec4 original=texture2D(scene,uv);
+ float alpha=mix(original.a,coverage*mask,optical);
+ return vec4(mix(original.rgb,pixel,optical)*alpha,alpha);
+}
 vec2 sampleDirection(vec2 p,float eta){
  vec2 q=p*2.-1.;
  // Rounded capsule: optically active meniscus on all sides.
@@ -22,6 +60,7 @@ vec2 sampleDirection(vec2 p,float eta){
  return displacement;
 }
 void main(){
+ if(liquid>.5){gl_FragColor=liquidPixel();return;}
  vec2 displacement=sampleDirection(uv,1./1.48);
  vec2 rUV=clamp(uv+displacement*1.012,0.,1.);
  vec2 gUV=clamp(uv+displacement,0.,1.);
@@ -61,7 +100,8 @@ export function setup(gl){
  let active=tex,spare=alternate;
  let textureWidth=0,textureHeight=0;
  const stats={fullUploads:0,partialUploads:0,skippedUploads:0,uploadedPixels:0,gpuScrolls:0};
- const render=function(source,{strength=1,optical=1,reflectivity=1,dirtyRect=null,unchanged=false,scrollShift=null}={}){
+ const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','surfaceSize','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
+ const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,surfaceSize=[source.width,source.height],cornerRadius=26,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
   gl.useProgram(program);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,active);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
   if(source.width!==textureWidth||source.height!==textureHeight){
    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);
@@ -111,10 +151,15 @@ export function setup(gl){
   }
   gl.bindTexture(gl.TEXTURE_2D,active);
   gl.viewport(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight);
-  gl.uniform1i(gl.getUniformLocation(program,"scene"),0);gl.uniform2f(gl.getUniformLocation(program,"resolution"),gl.drawingBufferWidth,gl.drawingBufferHeight);
-  gl.uniform1f(gl.getUniformLocation(program,"strength"),strength);
-  gl.uniform1f(gl.getUniformLocation(program,"optical"),optical);
-  gl.uniform1f(gl.getUniformLocation(program,"reflectivity"),reflectivity);
+  gl.uniform1i(uniforms.scene,0);gl.uniform2f(uniforms.resolution,gl.drawingBufferWidth,gl.drawingBufferHeight);
+  gl.uniform1f(uniforms.strength,strength);
+  gl.uniform1f(uniforms.optical,optical);
+  gl.uniform1f(uniforms.reflectivity,reflectivity);
+  gl.uniform1f(uniforms.liquid,liquid);
+  gl.uniform2f(uniforms.surfaceSize,...surfaceSize);
+  gl.uniform1f(uniforms.cornerRadius,cornerRadius);
+  gl.uniform1f(uniforms.bevelWidth,bevelWidth);
+  gl.uniform2f(uniforms.lightDirection,...lightDirection);
   gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
  };
  render.stats=stats;
