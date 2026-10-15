@@ -13,6 +13,7 @@ uniform vec2 surfaceSize;
 uniform vec2 sceneSize;
 uniform float scenePadding;
 uniform float rimOnly;
+uniform float reflectionReach;
 vec4 sampleLiquidScene(vec2 coord){return texture2D(scene,clamp((coord*surfaceSize+vec2(scenePadding))/max(sceneSize,vec2(1.)),0.,1.));}
 uniform float cornerRadius;
 uniform float bevelWidth;
@@ -63,7 +64,9 @@ vec4 liquidPixel(){
  // Internal grazing reflection: look back into the source along the surface
  // normal. Mirrored UVs make actual scene geometry visible in the rim rather
  // than substituting a synthetic white specular stripe.
- float reflectionTravel=(2.5+width*.95)*bending;
+ // Wider environment probe: travel outward through the padded scene, with
+ // curvature controlling where the distant reflections originate.
+ float reflectionTravel=(3.+width*1.55)*bending*reflectionReach;
  vec2 reflectedUV=uv+normal*reflectionTravel/size;
  vec4 reflected=sampleLiquidScene(reflectedUV);
  vec3 N=normalize(vec3(normal*slope,1.));
@@ -137,8 +140,8 @@ export function setup(gl){
  let active=tex,spare=alternate;
  let textureWidth=0,textureHeight=0;
  const stats={fullUploads:0,partialUploads:0,skippedUploads:0,uploadedPixels:0,gpuScrolls:0};
- const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','surfaceSize','sceneSize','scenePadding','rimOnly','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
- const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,rimOnly=0,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
+ const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','surfaceSize','sceneSize','scenePadding','rimOnly','reflectionReach','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
+ const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,rimOnly=0,reflectionReach=1,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
   gl.useProgram(program);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,active);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
   if(source.width!==textureWidth||source.height!==textureHeight){
    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);
@@ -197,6 +200,7 @@ export function setup(gl){
   gl.uniform2f(uniforms.sceneSize,source.width,source.height);
   gl.uniform1f(uniforms.scenePadding,scenePadding);
   gl.uniform1f(uniforms.rimOnly,rimOnly);
+  gl.uniform1f(uniforms.reflectionReach,reflectionReach);
   gl.uniform1f(uniforms.cornerRadius,cornerRadius);
   gl.uniform1f(uniforms.bevelWidth,bevelWidth);
   gl.uniform2f(uniforms.lightDirection,...lightDirection);
