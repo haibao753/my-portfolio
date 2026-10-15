@@ -6,7 +6,8 @@ const viewport=document.querySelector('#viewport'),scene=document.querySelector(
 const context=scene.getContext('2d',{alpha:false});const gl=rim.getContext('webgl',{alpha:true,preserveDrawingBuffer:true,antialias:false});
 const height=1850;let width=0;let textureDirty=true;let textureUploads=0;
 const svg='<svg xmlns="http://www.w3.org/2000/svg" width="240" height="130"><circle cx="120" cy="65" r="54" fill="#18b85a"/><path d="M35 65h170M120 8v114" stroke="#fff" stroke-width="10"/></svg>';
-const photo=new Image();photo.decoding='async';photo.src='/images/1.jpg';\nconst vector=new Image();vector.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+const photo=new Image();photo.decoding='async';photo.src='/images/1.jpg';
+const vector=new Image();vector.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
 const red=new Image();red.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="240" height="130"><rect width="240" height="130" fill="#f02732"/><circle cx="80" cy="65" r="34" fill="#ffdc40"/></svg>');
 function draw(){
  width=Math.max(260,Math.round(viewport.clientWidth));scene.width=width;scene.height=height;const c=context;
