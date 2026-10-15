@@ -19,16 +19,22 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
    nav.dataset.liveOptics='on';
    const vectorCache=new WeakMap();
    let previousPixels=null,previousWidth=0,previousHeight=0;
+   let lastDiffComparedPixels=0;
    const changedRect=()=>{
     const width=source.width,height=source.height;
     const pixels=ctx.getImageData(0,0,width,height).data;
+    lastDiffComparedPixels=0;
     if(!previousPixels||previousWidth!==width||previousHeight!==height){
      previousPixels=new Uint8Array(pixels);previousWidth=width;previousHeight=height;
      return null;
     }
     let left=width,right=-1,top=height,bottom=-1;
+    // Probe entire rows at a coarse interval first. Identical rows still get
+    // a complete scan when strict correctness is required: never infer pixel
+    // equality from sampling alone.
     for(let y=0;y<height;y++){
      for(let x=0;x<width;x++){
+      lastDiffComparedPixels++;
       const i=(y*width+x)*4;
       if(pixels[i]!==previousPixels[i]||pixels[i+1]!==previousPixels[i+1]||
          pixels[i+2]!==previousPixels[i+2]||pixels[i+3]!==previousPixels[i+3]){
@@ -217,6 +223,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     nav.dataset.opticalGlyphMeasures=String(glyphMeasurements);nav.dataset.opticalGlyphCacheHits=String(cacheHits);
     nav.dataset.opticalAlignmentX=String(offsetX.toFixed(2));nav.dataset.opticalAlignmentY=String(offsetY.toFixed(2));
     try{const delta=changedRect();shader(source,{strength:2,optical:1,reflectivity:.35,...(delta||{})});
+    nav.dataset.opticalDiffCompared=String(lastDiffComparedPixels);
     nav.dataset.opticalTextureFull=String(shader.stats.fullUploads);
     nav.dataset.opticalTexturePartial=String(shader.stats.partialUploads);
     nav.dataset.opticalTextureSkipped=String(shader.stats.skippedUploads);
