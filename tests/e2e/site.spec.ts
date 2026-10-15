@@ -712,3 +712,33 @@ test("live optical source retains object-fit cover composition",async({page})=>{
  expect(rgb[1]).toBeGreaterThan(rgb[0]);
  expect(rgb[1]).toBeGreaterThan(rgb[2]);
 });
+
+test("live optical input captures a CSS gradient and inline SVG pixels",async({page})=>{
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ await page.evaluate(()=>{
+  const rect=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const main=document.querySelector("main")!;
+  const gradient=document.createElement("div");
+  gradient.style.cssText="position:fixed;left:24px;top:"+Math.round(rect.top+12)+"px;width:100px;height:42px;background-image:linear-gradient(to right,rgb(240, 20, 30),rgb(20, 30, 240))";
+  main.appendChild(gradient);
+  const holder=document.createElement("div");
+  holder.style.cssText="position:fixed;left:150px;top:"+Math.round(rect.top+12)+"px;width:45px;height:42px";
+  holder.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="45" height="42" viewBox="0 0 45 42"><rect width="45" height="42" fill="#08d858"/></svg>';
+  main.appendChild(holder);
+  dispatchEvent(new Event("scroll"));
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-gradients")||0)).toBeGreaterThan(0);
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-vectors")||0)).toBeGreaterThan(0);
+ const sampled=await page.locator(".live-optical-layer").evaluate((glass:HTMLCanvasElement)=>{
+  const src=(glass as HTMLCanvasElement&{opticalSource:HTMLCanvasElement}).opticalSource;
+  const bounds=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const ctx=src.getContext("2d")!;
+  const pixel=(x:number)=>Array.from(ctx.getImageData(Math.round(x-bounds.left),25,1,1).data).slice(0,3);
+  return {left:pixel(35),right:pixel(112),svg:pixel(172)};
+ });
+ expect(sampled.left[0]).toBeGreaterThan(sampled.left[2]+60);
+ expect(sampled.right[2]).toBeGreaterThan(sampled.right[0]+60);
+ expect(sampled.svg[1]).toBeGreaterThan(sampled.svg[0]+70);
+});
