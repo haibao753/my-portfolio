@@ -16,6 +16,8 @@ uniform float rimOnly;
 uniform float reflectionReach;
 uniform float reflectionQuality;
 uniform float studioLight;
+uniform vec2 pointerLightPosition;
+uniform float pointerLightActive;
 vec4 sampleLiquidScene(vec2 coord){return texture2D(scene,clamp((coord*surfaceSize+vec2(scenePadding))/max(sceneSize,vec2(1.)),0.,1.));}
 uniform float cornerRadius;
 uniform float bevelWidth;
@@ -123,6 +125,17 @@ vec4 liquidPixel(){
  vec3 key=vec3(1.,.982,.945)*softbox*grazing*lightMask;
  vec3 fill=vec3(.70,.84,1.)*pow(max(dot(N,normalize(vec3(-L.xy,.7))),0.),6.)*.035*lightMask;
  pixel+=studioLight*(key+fill);
+ // Cursor/finger light: bounded local illumination, not a white overlay.
+ // Distance is expressed in CSS pixels so mobile and desktop match.
+ vec2 lightDelta=(uv-pointerLightPosition)*size;
+ float lightDistance=length(lightDelta);
+ float pool=exp(-pow(lightDistance/85.,2.));
+ vec3 pointerL=normalize(vec3(lightDelta*.018,1.4));
+ vec3 pointerH=normalize(pointerL+V);
+ float highlight=pow(max(dot(N,pointerH),0.),9.);
+ float curvedResponse=.18+.82*bending;
+ float pointerGlow=pointerLightActive*pool*(.11+.27*highlight)*curvedResponse;
+ pixel+=vec3(.96,.98,1.)*pointerGlow;
  float coverage=clamp(.5-sd,0.,1.);
  float alpha=mix(base.a, max(transmittedAlpha,reflected.a*reflectionMix)*coverage,optical);
  // Detached menus only project the optically active curved rim. Their clear
@@ -189,8 +202,8 @@ export function setup(gl){
  let active=tex,spare=alternate;
  let textureWidth=0,textureHeight=0;
  const stats={fullUploads:0,partialUploads:0,skippedUploads:0,uploadedPixels:0,gpuScrolls:0};
- const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','surfaceSize','sceneSize','scenePadding','rimOnly','reflectionReach','reflectionQuality','studioLight','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
- const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,rimOnly=0,reflectionReach=1,reflectionQuality=0,studioLight=0,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
+ const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','surfaceSize','sceneSize','scenePadding','rimOnly','reflectionReach','reflectionQuality','studioLight','pointerLightPosition','pointerLightActive','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
+ const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,rimOnly=0,reflectionReach=1,reflectionQuality=0,studioLight=0,pointerLightPosition=[-5,-5],pointerLightActive=0,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
   gl.useProgram(program);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,active);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
   if(source.width!==textureWidth||source.height!==textureHeight){
    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);
@@ -252,6 +265,8 @@ export function setup(gl){
   gl.uniform1f(uniforms.reflectionReach,reflectionReach);
   gl.uniform1f(uniforms.reflectionQuality,reflectionQuality);
   gl.uniform1f(uniforms.studioLight,studioLight);
+  gl.uniform2f(uniforms.pointerLightPosition,...pointerLightPosition);
+  gl.uniform1f(uniforms.pointerLightActive,pointerLightActive);
   gl.uniform1f(uniforms.cornerRadius,cornerRadius);
   gl.uniform1f(uniforms.bevelWidth,bevelWidth);
   gl.uniform2f(uniforms.lightDirection,...lightDirection);
