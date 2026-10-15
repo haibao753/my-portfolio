@@ -2,13 +2,13 @@
 import {Image} from 'astro:assets';
 import photo from '../../images/4.jpg';
 import {projects} from '../data/site';
-const names=[{zh:'今日的世界',en:'The world, today'},{zh:'一个数学脑洞',en:'A mathematical hunch'},{zh:'捡到一束光',en:'A piece of light'},{zh:'还没做完的实验',en:'An unfinished experiment'}];
+const names=[{zh:'每日简报',en:'Daily Brief'},{zh:'数学动画',en:'Math in Motion'},{zh:'三维摄影空间',en:'Photography in 3D'},{zh:'交互几何实验',en:'Interactive Geometry'}];
 const questions=[{zh:'世界很大，从哪个问题开始？',en:'A big world. Which question comes first?'},{zh:'如果一个公式，也有自己的风景？',en:'What if a formula had its own landscape?'},{zh:'一张照片，能不能走进去？',en:'Could you walk into a photograph?'},{zh:'几何可不可以，拿在手里玩？',en:'What if geometry were something to play with?'}];
 ---
 <section class="exploration" id="worlds" data-exploration-desk aria-labelledby="worlds-title">
- <header class="desk-meta"><span>01 — SELECTED OBSESSIONS</span><span class="desk-counter"><span data-locale="zh">已探索</span><span data-locale="en">EXPLORED</span> <b data-clue-count>0</b> / 4</span></header>
+ <header class="desk-meta"><span>01 — WORK & PROJECTS</span><span class="desk-counter"><span data-locale="zh">已了解</span><span data-locale="en">VIEWED</span> <b data-clue-count>0</b> / 4</span></header>
  <div class="lab-desk" data-lab-stage>
-  <div class="desk-title"><h2 id="worlds-title"><span data-locale="zh">世界，不止一种<br/><em>打开方式。</em></span><span data-locale="en">More than one way<br/><em>to see the world.</em></span></h2><p><span data-locale="zh">四个入口，没有标准路线。<br/>跟着你的好奇心走。</span><span data-locale="en">Four doors. No prescribed path.<br/>Follow your curiosity.</span></p></div>
+  <div class="desk-title"><h2 id="worlds-title"><span data-locale="zh">我做的东西，<br/><em>都在这里。</em></span><span data-locale="en">Things I make.<br/><em>Places you can explore.</em></span></h2><p><span data-locale="zh">选一个感兴趣的方向。<br/>点击卡片看介绍，再进入作品。</span><span data-locale="en">Choose something that interests you.<br/>Open a card for details and a link to the project.</span></p></div>
   {projects.map((project,index)=><article id={project.id} class:list={['lab-object','object-'+index]} data-lab-object data-clue={index} data-visited="false">
    <button type="button" class="drag-grip" data-lab-drag data-zh={'移动'+names[index].zh+'，可用方向键'} data-en={'Move '+names[index].en+'; arrow keys also work'} aria-label={'移动'+names[index].zh+'，可用方向键'} aria-describedby="desk-drag-help">⠿</button>
    <a class="object-face" href={project.href} target={project.href.startsWith('http')?'_blank':undefined} rel={project.href.startsWith('http')?'noopener noreferrer':undefined} data-lab-open aria-controls="desk-discovery" aria-expanded="false">
@@ -22,7 +22,7 @@ const questions=[{zh:'世界很大，从哪个问题开始？',en:'A big world. 
   </article>)}
   <span class="index-watermark" aria-hidden="true">ALWAYS<br/>BECOMING.</span>
  </div>
- <footer class="desk-tools"><p id="desk-drag-help"><span class="desktop-hint"><span data-locale="zh">拖动 ⠿ 重新策展，点击作品进入。</span><span data-locale="en">Drag ⠿ to curate your own view. Open a work to explore.</span></span><span class="mobile-hint"><span data-locale="zh">每个作品，都是另一个世界。</span><span data-locale="en">Every work is another world.</span></span></p><div class="desk-buttons" data-lab-controls hidden><button type="button" data-lab-shuffle><span data-locale="zh">重新策展 ⤨</span><span data-locale="en">REARRANGE ⤨</span></button><button type="button" data-lab-surprise><span data-locale="zh">给我一个意外 ↗</span><span data-locale="en">SURPRISE ME ↗</span></button><button type="button" data-lab-reset hidden><span data-locale="zh">重新探索 ↺</span><span data-locale="en">START AGAIN ↺</span></button></div></footer>
+ <footer class="desk-tools"><p id="desk-drag-help"><span class="desktop-hint"><span data-locale="zh">拖动 ⠿ 调整排列，点击卡片看作品介绍。</span><span data-locale="en">Drag ⠿ to rearrange. Open a card for project details.</span></span><span class="mobile-hint"><span data-locale="zh">点击卡片看介绍，再进入完整作品。</span><span data-locale="en">Open a card for details and the full project.</span></span></p><div class="desk-buttons" data-lab-controls hidden><button type="button" data-lab-shuffle><span data-locale="zh">重新策展 ⤨</span><span data-locale="en">REARRANGE ⤨</span></button><button type="button" data-lab-surprise><span data-locale="zh">随机看一个作品 ↗</span><span data-locale="en">PICK A PROJECT ↗</span></button><button type="button" data-lab-reset hidden><span data-locale="zh">重新浏览 ↺</span><span data-locale="en">START AGAIN ↺</span></button></div></footer>
  <p class="trail-status" role="status" aria-live="polite" data-lab-status></p>
  <dialog id="desk-discovery" class="discovery" aria-labelledby="discovery-title" data-lab-inspector><button type="button" class="discovery-close" data-lab-close data-zh="收起便签" data-en="Close note" aria-label="收起便签">×</button><div data-lab-discovery-content></div></dialog>
 </section>

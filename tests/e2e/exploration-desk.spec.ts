@@ -73,13 +73,13 @@ test('exploration remains bilingual and usable with reduced motion',async({page}
  await expect(page.locator('.live-optical-layer')).toHaveCount(0);
  await page.locator('[data-language-toggle]').click();
  await expect(page.locator('html')).toHaveAttribute('lang','en');
- await expect(page.locator('[data-lab-open]').first()).toContainText('The world, today');
+ await expect(page.locator('[data-lab-open]').first()).toContainText('Daily Brief');
  await expect(page.locator('[data-lab-drag]').first()).toHaveAttribute('aria-label',/Move/);
  await page.locator('[data-theme-toggle]').click();
  await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
  await page.locator('[data-lab-surprise]').click();
  await expect(page.locator('[data-lab-inspector]')).toBeVisible();
- await expect(page.locator('[data-lab-status]')).toContainText('A new thread');
+ await expect(page.locator('[data-lab-status]')).toContainText('Project preview');
  await expect(page.locator('[data-lab-close]')).toHaveAttribute('aria-label','Close note');
 });
 

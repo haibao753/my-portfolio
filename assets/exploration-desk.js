@@ -34,9 +34,9 @@ if(desk){
   const firstVisit=!visited.has(index);visited.add(index);renderTrail();
   if(!inspector.open)inspector.show();
   inspector.querySelector('[data-lab-close]').focus({preventScroll:true});
-  if(visited.size===objects.length)say('四个角落都走过了。再把它们拼成自己的路线。','All four corners explored. Now make a trail of your own.');
-  else if(firstVisit)say(`找到一条新线索 · ${visited.size} / 4`,`A new thread to follow · ${visited.size} / 4`);
-  else say('沿着这条线索，再走远一点。','Follow this thread a little further.');
+  if(visited.size===objects.length)say('四个方向都看过了，可以打开感兴趣的完整作品。','All four projects previewed. Open any project to see the full work.');
+  else if(firstVisit)say(`已查看作品 · ${visited.size} / 4`,`Project preview · ${visited.size} / 4`);
+  else say('点击介绍中的链接，进入完整作品。','Use the project link to see the full work.');
  };
  objects.forEach((object,index)=>{
   const link=object.querySelector('[data-lab-open]');
@@ -81,7 +81,7 @@ if(desk){
    const order=arrangement%2?[2,0,3,1]:[0,1,2,3];
    objects.forEach((object,index)=>{const slot=order.indexOf(index);object.style.gridColumn='1';object.style.gridRow=slot+2});
   }
-  say('换个摆法，也许会想到别的。','A different arrangement. A different thought.');
+  say('作品排列已更新，点击卡片查看介绍。','Arrangement updated. Open a card for project details.');
  };
  desk.querySelector('[data-lab-shuffle]').addEventListener('click',shuffle);
  desk.querySelector('[data-lab-surprise]').addEventListener('click',event=>{
@@ -89,11 +89,11 @@ if(desk){
   const pool=candidates.length?candidates:objects.map((_,i)=>i).filter(i=>i!==active);
   discover(pool[Math.floor(Math.random()*pool.length)],event.currentTarget);
  });
- reset.addEventListener('click',()=>{close();visited.clear();renderTrail();shuffle();say('清空足迹，再从一个意外开始。','A clean trail. Start with another happy accident.')});
+ reset.addEventListener('click',()=>{close();visited.clear();renderTrail();shuffle();say('浏览记录已重置，选一个作品重新开始。','Preview history cleared. Choose a project to start again.')});
  desk.querySelector('[data-lab-close]').addEventListener('click',close);
  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&inspector.open){event.preventDefault();close()}});
  const restoreLayout=()=>objects.forEach(object=>{object.style.removeProperty('left');object.style.removeProperty('top');object.style.removeProperty('--angle');object.style.removeProperty('grid-column');object.style.removeProperty('grid-row')});
  addEventListener('resize',restoreLayout,{passive:true});
- new MutationObserver(()=>{translate();if(active!==null&&inspector.open){if(visited.size===objects.length)say('四个角落都走过了。再把它们拼成自己的路线。','All four corners explored. Now make a trail of your own.');else say(`找到一条新线索 · ${visited.size} / 4`,`A new thread to follow · ${visited.size} / 4`)}}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+ new MutationObserver(()=>{translate();if(active!==null&&inspector.open){if(visited.size===objects.length)say('四个方向都看过了，可以打开感兴趣的完整作品。','All four projects previewed. Open any project to see the full work.');else say(`已查看作品 · ${visited.size} / 4`,`Project preview · ${visited.size} / 4`)}}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
  desk.dataset.labReady='true';desk.querySelector('[data-lab-controls]').hidden=false;translate();renderTrail();
 }

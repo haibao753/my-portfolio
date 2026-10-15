@@ -13,7 +13,7 @@ if(host){
  const en=()=>document.documentElement.lang==='en';
  const state=()=>{
   host.dataset.universeGpu=String(!!render);host.dataset.universeMotion=playing&&render?'playing':'paused';host.dataset.universeMode=String(mode);
-  pause.disabled=!render;pause.setAttribute('aria-pressed',String(!playing||!render));pause.querySelector('[data-universe-pause-label]').textContent=en()?(playing&&render?'Pause flow':'Resume flow'):(playing&&render?'暂停流动':'继续流动');
+  pause.disabled=!render;pause.setAttribute('aria-pressed',String(!playing||!render));pause.querySelector('[data-universe-pause-label]').textContent=en()?(playing&&render?'Pause animation':'Resume animation'):(playing&&render?'暂停动画':'继续动画');
   canvas.hidden=!render;
  };
  function paint(){
@@ -60,7 +60,7 @@ if(host){
  }
  const touch=()=>{
   interaction++;targetShape++;pulse=1;if(!playing)shape=targetShape;
-  host.dataset.universeInteractions=String(interaction);feedback.textContent=en()?'Same universe. Another possibility.':'同一个世界，另一个可能。';queue();
+  host.dataset.universeInteractions=String(interaction);feedback.textContent=en()?'Shape changed. Click again to try another.':'形态已改变。再点一次，试试下一种。';queue();
  };
  host.querySelector('[data-sculpture-touch]').addEventListener('click',touch);
  stage.addEventListener('pointermove',event=>{if(event.pointerType!=='mouse')return;const r=stage.getBoundingClientRect();targetPointer=[(event.clientX-r.left)/width*2-1,1-(event.clientY-r.top)/height*2];if(!playing){pointer=[...targetPointer]}queue()},{passive:true});
@@ -75,6 +75,6 @@ if(host){
  new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;host.dataset.universeInView=String(visible);if(visible)queue();else stop()},{threshold:.02}).observe(stage);
  document.addEventListener('visibilitychange',()=>{stop();if(!document.hidden)queue()});
  reduce.addEventListener('change',()=>{if(reduce.matches){playing=false;stop();state();queue()}});
- new MutationObserver(()=>{state();if(interaction)feedback.textContent=en()?'Same universe. Another possibility.':'同一个世界，另一个可能。'}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+ new MutationObserver(()=>{state();if(interaction)feedback.textContent=en()?'Shape changed. Click again to try another.':'形态已改变。再点一次，试试下一种。'}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
  new ResizeObserver(resize).observe(stage);state();resize();
 }

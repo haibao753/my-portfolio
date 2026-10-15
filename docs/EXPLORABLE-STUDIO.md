@@ -1,7 +1,15 @@
-# Beyond Ordinary — independent portfolio preview
+# Jinhai Hu — independent portfolio preview
 
 Open `/lab/` on the branch preview. The production homepage and existing routes
 remain available. This draft awaits visual review before homepage promotion.
+
+The opening identifies the owner and the site's purpose immediately: a personal
+portfolio of mathematical animations, interactive experiments and photography.
+Two prominent actions let visitors view the work index or launch the real
+geometry experiment directly. The sculpture has visible play instructions;
+its palette controls are explicitly lighting controls. Project cards use
+functional names and explain that opening a card reveals details and its
+full-project link. The visual treatment remains the same optical composition.
 
 The full-height opening combines original typography, an orbital light plate and
 a living three-dimensional optical sculpture. Its signed-distance field blends
