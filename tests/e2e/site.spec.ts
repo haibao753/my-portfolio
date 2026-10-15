@@ -307,7 +307,7 @@ test("optical glass laboratory preserves real accessible menu controls",async({p
 test("optical lab has a usable menu if WebGL is unavailable",async({page})=>{
  await page.addInitScript(()=>{
   const original=HTMLCanvasElement.prototype.getContext;
-  HTMLCanvasElement.prototype.getContext=function(type,...args){
+  HTMLCanvasElement.prototype.getContext=function(this:HTMLCanvasElement,type,...args){
    if(type==="webgl"||type==="experimental-webgl")return null;
    return original.call(this,type,...args);
   } as typeof HTMLCanvasElement.prototype.getContext;
