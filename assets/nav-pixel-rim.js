@@ -8,7 +8,7 @@ if(!nav||!canvas)return;
 const gl=canvas.getContext('webgl',{alpha:true,premultipliedAlpha:false,antialias:false,preserveDrawingBuffer:true});
 if(!gl)return;
 const vs='attribute vec2 pos;varying vec2 uv;void main(){uv=vec2((pos.x+1.)*.5,(pos.y+1.)*.5);gl_Position=vec4(pos,0.,1.);}';
-const fs='precision mediump float;varying vec2 uv;uniform sampler2D scene;uniform float opacity;void main(){float x=clamp(uv.x+.002*sin(uv.y*8.+uv.x*11.),0.,1.);float sy=mix(.12,.91,uv.y);vec3 col=texture2D(scene,vec2(x,sy)).rgb;vec3 background=vec3(1.);vec3 absorption=clamp(background-col,0.,1.);float density=max(max(absorption.r,absorption.g),absorption.b);float meniscus=pow(sin(3.14159265*uv.y),1.35);float fresnel=pow(abs(uv.y-.5)*2.,2.);vec3 tinted=mix(col,vec3(.04,.06,.09),.10+.10*fresnel);float alpha=clamp(density*meniscus*(.76+.12*fresnel)*opacity,0.,.82);gl_FragColor=vec4(tinted,alpha);}';
+const fs='precision mediump float;varying vec2 uv;uniform sampler2D scene;uniform float opacity;uniform vec2 resolution;void main(){float t=clamp(uv.y,0.,1.);float top=pow(smoothstep(.78,1.,t),1.4);float bottom=pow(1.-smoothstep(0.,.20,t),1.4);float sides=pow(1.-smoothstep(0.,.09,min(uv.x,1.-uv.x)),1.6);float corner=length(vec2(min(uv.x,1.-uv.x)*resolution.x,min(t,1.-t)*resolution.y));float radius=26.;float outer=smoothstep(2.,9.,corner);float shell=max(max(top*.13,bottom*.42),sides*.13)*outer;float y=mix(.12,.91,clamp(t/.2,0.,1.));float x=clamp(uv.x+.002*sin(t*7.+uv.x*12.),0.,1.);vec3 col=texture2D(scene,vec2(x,y)).rgb;float ink=max(max(1.-col.r,1.-col.g),1.-col.b);vec3 tint=mix(col,vec3(.10,.14,.19),.12);float alpha=clamp(ink*shell*opacity,0.,.52);gl_FragColor=vec4(tint,alpha);}';
 function compile(t,s){const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))throw Error('shader compile');return x}
 let program;
 try{program=gl.createProgram();gl.attachShader(program,compile(gl.VERTEX_SHADER,vs));gl.attachShader(program,compile(gl.FRAGMENT_SHADER,fs));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))return}catch{return}
@@ -23,7 +23,7 @@ function paint(){
  scheduled=false;
  const rect=nav.getBoundingClientRect(),width=Math.max(1,Math.round(rect.width-20));
  const dpr=Math.min(devicePixelRatio||1,2);
- canvas.width=Math.round(width*dpr);canvas.height=Math.round(14*dpr);
+ canvas.width=Math.round(width*dpr);canvas.height=Math.round(rect.height*dpr);
  off.width=width;off.height=126;ctx.fillStyle='#fff';ctx.fillRect(0,0,width,126);
  let found=false;
  // Draw the actual browser-laid-out text fragments rather than guessing one line.
@@ -75,6 +75,7 @@ function paint(){
  gl.bindTexture(gl.TEXTURE_2D,texture);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
  try{gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,off)}catch{return}
  gl.uniform1f(gl.getUniformLocation(program,'opacity'),found?1:0);
+ gl.uniform2f(gl.getUniformLocation(program,'resolution'),width,rect.height);
  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
 }
 function queue(){if(!scheduled){scheduled=true;requestAnimationFrame(paint)}}
