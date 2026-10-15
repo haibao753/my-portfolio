@@ -617,3 +617,15 @@ test("optical engine changes actual RGB pixel positions, not merely CSS opacity"
  await page.waitForTimeout(150);
  expect(await sample()).not.toBe(plain);
 });
+
+test("live homepage optics is opt-in and tracks actual DOM content during scroll", async ({page}) => {
+ await page.goto("/");
+ await expect(page.locator(".glass-nav")).not.toHaveAttribute("data-live-optics","on");
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ await expect(page.locator(".live-optical-layer")).toBeAttached();
+ await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight*.35));
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-samples")||0)).toBeGreaterThan(0);
+ await expect(nav.locator("[data-menu-toggle]")).toBeVisible();
+});
