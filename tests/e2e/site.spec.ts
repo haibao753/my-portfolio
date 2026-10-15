@@ -534,8 +534,8 @@ test("pixel optics laboratory draws a changing WebGL texture on scroll", async (
  expect(after).not.toBe(before);
 });
 
-test("opt-in homepage pixel rim activates and preserves accessible navigation", async ({page}) => {
- await page.goto("/?pixelGlass=1");
+test("default homepage pixel rim activates and preserves accessible navigation", async ({page}) => {
+ await page.goto("/");
  const nav=page.locator(".glass-nav");
  await expect(nav).toBeVisible();
  const context=await page.locator(".nav-pixel-rim").evaluate((el:HTMLCanvasElement)=>Boolean(el.getContext("webgl")));
@@ -547,7 +547,7 @@ test("opt-in homepage pixel rim activates and preserves accessible navigation", 
 });
 
 test("pixel rim responds to heading proximity instead of staying a static tint", async ({page}) => {
- await page.goto("/?pixelGlass=1");
+ await page.goto("/");
  const nav=page.locator(".glass-nav");
  await expect(nav).toHaveAttribute("data-pixel-optics","on");
  const rim=page.locator(".nav-pixel-rim");
@@ -571,7 +571,7 @@ test("pixel rim responds to heading proximity instead of staying a static tint",
 });
 
 test("pixel rim preserves red channel from a real image", async ({page}) => {
- await page.goto("/?pixelGlass=1");
+ await page.goto("/");
  const nav=page.locator(".glass-nav");
  await expect(nav).toHaveAttribute("data-pixel-optics","on");
  await page.evaluate(async()=>{
@@ -594,4 +594,10 @@ test("pixel rim preserves red channel from a real image", async ({page}) => {
   return reds;
  });
  expect(sample).toBeGreaterThan(0);
+});
+
+test("pixel rim can be disabled with an explicit query parameter", async ({page}) => {
+ await page.goto("/?pixelGlass=0");
+ await expect(page.locator(".glass-nav")).not.toHaveAttribute("data-pixel-optics","on");
+ await expect(page.locator(".nav-pixel-rim")).toBeHidden();
 });
