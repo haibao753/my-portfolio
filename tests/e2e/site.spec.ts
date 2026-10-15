@@ -382,3 +382,18 @@ test("glass menu dismisses on desktop breakpoint and restores focus on Escape",a
  await expect(toggle).toHaveAttribute("aria-expanded","false");
  await expect(page.locator("html")).not.toHaveAttribute("data-menu-open","true");
 });
+
+
+test("glass menu stays open after ordinary page load and closes on link activation",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ const panel=page.locator("[data-menu-panel]");
+ await toggle.click();
+ await expect(panel).toBeVisible();
+ await page.waitForTimeout(400);
+ await expect(panel).toBeVisible();
+ await panel.locator("a[href='/#projects']").click();
+ await expect(panel).toBeHidden();
+ await expect(toggle).toHaveAttribute("aria-expanded","false");
+});
