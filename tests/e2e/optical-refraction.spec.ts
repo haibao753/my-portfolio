@@ -57,3 +57,16 @@ test('overscan maps external scene colors into reflected rim without moving cent
  expect(result.afterCentre).toEqual(result.beforeCentre);
  expect(result.afterRim).not.toEqual(result.beforeRim);
 });
+
+test('navigation keeps a distant sampling margin for the thicker meniscus',async({page})=>{
+ await page.goto('/?opticalEngine=2');
+ const nav=page.locator('.glass-nav');
+ await expect.poll(()=>nav.getAttribute('data-optical-overscan')).toBe('72');
+ const sizes=await nav.evaluate(el=>{
+  const canvas=el.querySelector('.live-optical-layer') as HTMLCanvasElement;
+  const source=(canvas as HTMLCanvasElement & {opticalSource:HTMLCanvasElement}).opticalSource;
+  return {scene:[source.width,source.height],surface:[canvas.width,canvas.height]};
+ });
+ expect(sizes.scene[0]).toBeGreaterThan(sizes.surface[0]);
+ expect(sizes.scene[1]).toBeGreaterThan(sizes.surface[1]);
+});
