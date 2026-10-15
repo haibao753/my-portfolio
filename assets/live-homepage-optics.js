@@ -29,15 +29,15 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
      return null;
     }
     let left=width,right=-1,top=height,bottom=-1;
-    // Probe entire rows at a coarse interval first. Identical rows still get
-    // a complete scan when strict correctness is required: never infer pixel
-    // equality from sampling alone.
+    // Exact RGBA comparison as packed 32-bit pixels, 1 comparison rather
+    // than 4 per pixel. No probabilistic hashing or sampled-pixel shortcuts.
+    const current32=new Uint32Array(pixels.buffer,pixels.byteOffset,width*height);
+    const previous32=new Uint32Array(previousPixels.buffer,previousPixels.byteOffset,width*height);
     for(let y=0;y<height;y++){
+     const start=y*width;
      for(let x=0;x<width;x++){
       lastDiffComparedPixels++;
-      const i=(y*width+x)*4;
-      if(pixels[i]!==previousPixels[i]||pixels[i+1]!==previousPixels[i+1]||
-         pixels[i+2]!==previousPixels[i+2]||pixels[i+3]!==previousPixels[i+3]){
+      if(current32[start+x]!==previous32[start+x]){
        if(x<left)left=x;if(x>right)right=x;
        if(y<top)top=y;if(y>bottom)bottom=y;
       }
