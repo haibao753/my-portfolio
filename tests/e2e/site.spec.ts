@@ -625,7 +625,7 @@ test("live homepage optics is opt-in and tracks actual DOM content during scroll
  const nav=page.locator(".glass-nav");
  await expect(nav).toHaveAttribute("data-live-optics","on");
  await expect(page.locator(".live-optical-layer")).toBeAttached();
- await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight*.35));
+ await page.evaluate(()=>{const title=document.querySelector(".intro h2");const nav=document.querySelector(".glass-nav");if(!title||!nav)throw Error("missing heading");window.scrollTo(0,window.scrollY+title.getBoundingClientRect().top-nav.getBoundingClientRect().top-16);dispatchEvent(new Event("scroll"));});
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-samples")||0)).toBeGreaterThan(0);
  await expect(nav.locator(".brand")).toBeVisible();
 });
