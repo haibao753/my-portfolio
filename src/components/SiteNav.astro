@@ -58,12 +58,13 @@ import {navigation} from "../data/site";
  .menu-backdrop:not([hidden]){animation:backdrop-enter .32s ease both}
  .menu-backdrop[data-closing="true"]{animation:backdrop-exit .3s ease both;pointer-events:none}
  /* Clear-centre refractive glass approximation; the WebGL optical shader lives in the laboratory route. */
- .mobile-menu{position:fixed;z-index:105;top:76px;right:12px;width:min(258px,calc(100vw - 46px));padding:9px 13px;border:1px solid rgba(255,255,255,.76);border-radius:32px;background:linear-gradient(140deg,rgba(255,255,255,.18),rgba(220,240,255,.035) 46%,rgba(255,255,255,.09));-webkit-backdrop-filter:blur(3px) saturate(180%) contrast(1.07);backdrop-filter:blur(3px) saturate(180%) contrast(1.07);box-shadow:0 22px 54px rgba(9,14,26,.22),inset 0 2px 2px rgba(255,255,255,.92),inset 0 -2px 4px rgba(110,165,230,.17);isolation:isolate;overflow:hidden}
+ .mobile-menu{position:fixed;z-index:105;top:76px;right:12px;width:min(258px,calc(100vw - 46px));padding:9px 13px;max-height:calc(100dvh - 88px);overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;border:1px solid rgba(255,255,255,.76);border-radius:32px;background:linear-gradient(140deg,rgba(255,255,255,.18),rgba(220,240,255,.035) 46%,rgba(255,255,255,.09));-webkit-backdrop-filter:blur(3px) saturate(180%) contrast(1.07);backdrop-filter:blur(3px) saturate(180%) contrast(1.07);box-shadow:0 22px 54px rgba(9,14,26,.22),inset 0 2px 2px rgba(255,255,255,.92),inset 0 -2px 4px rgba(110,165,230,.17);isolation:isolate;overflow:hidden}
  .mobile-menu::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:radial-gradient(ellipse 90% 18% at 35% 1%,rgba(255,255,255,.42),transparent 90%),radial-gradient(ellipse 30% 45% at 100% 60%,rgba(125,195,255,.20),transparent),linear-gradient(110deg,transparent 31%,rgba(255,255,255,.12) 44%,transparent 60%);animation:liquid-sheen 5s ease-in-out infinite alternate}
  .mobile-menu::after{content:"";position:absolute;inset:1px;z-index:2;pointer-events:none;border-radius:31px;border:2px solid rgba(255,255,255,.34);box-shadow:inset 0 1px rgba(255,255,255,.76),inset 0 -1px rgba(133,179,239,.33)}
  :global(html[data-theme="dark"]) .mobile-menu{background:linear-gradient(140deg,rgba(120,157,194,.19),rgba(30,48,68,.10) 50%,rgba(112,157,198,.10));border-color:rgba(224,240,255,.42);box-shadow:0 22px 65px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.42)}
  :global(html[data-menu-open="true"] main),:global(html[data-menu-open="true"] .site-footer){filter:brightness(.92)}
  :global(main),:global(.site-footer){transition:filter .44s ease}
+ .mobile-menu a:focus-visible{outline:2px solid var(--accent);outline-offset:-3px;border-radius:12px}
  .mobile-menu a{display:flex;align-items:center;justify-content:center;text-align:center;min-height:55px;border-bottom:1px solid rgba(105,115,132,.16);font-size:16px;font-weight:600;position:relative;z-index:1}
  .mobile-menu a:last-child{border-bottom:0}
  .mobile-menu:not([hidden]){animation:nav-panel-enter .28s cubic-bezier(.16,1,.3,1) both}
@@ -82,5 +83,5 @@ import {navigation} from "../data/site";
  @media(prefers-reduced-motion:reduce){:global(main),:global(.site-footer){transition:none!important}:global(html[data-menu-open="true"]) main,:global(html[data-menu-open="true"]) .site-footer{transform:none;filter:none}.mobile-menu::before{animation:none!important}.mobile-menu:not([hidden]),.menu-backdrop:not([hidden]){animation:none!important}.theme-glyph svg,.sun-core,.sun-rays,.moon-shape{transition:none!important}.controls button,.desktop-links a,.mobile-menu a,.hamburger i{transition:none!important}}
  [hidden]{display:none!important}
  @media(max-width:1180px){.nav-inner{grid-template-columns:1fr auto;min-height:50px}.desktop-links{display:none}.controls [data-menu-toggle]{display:flex;align-items:center;justify-content:center}}
- @media(max-width:760px){.nav-inner{min-height:56px}.brand span{width:27px;height:26px}.controls button{height:44px;min-width:44px}.mobile-menu{top:64px}}
+ @media(max-width:760px){.nav-inner{min-height:56px}.brand span{width:27px;height:26px}.controls button{height:44px;min-width:44px}.mobile-menu{top:64px;max-height:calc(100dvh - 76px)}}
 </style>
