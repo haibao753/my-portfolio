@@ -70,3 +70,25 @@ test('navigation keeps a distant sampling margin for the thicker meniscus',async
  expect(sizes.scene[0]).toBeGreaterThan(sizes.surface[0]);
  expect(sizes.scene[1]).toBeGreaterThan(sizes.surface[1]);
 });
+
+test('multi-tap reflections preserve centre and alter detailed rim only',async({page})=>{
+ await page.goto('/?opticalEngine=2');
+ const result=await page.evaluate(async()=>{
+  const path='/assets/optical-engine.js';const {setup}=await import(path);
+  const scene=document.createElement('canvas');scene.width=464;scene.height=216;
+  const ctx=scene.getContext('2d')!;
+  ctx.fillStyle='#304050';ctx.fillRect(0,0,464,216);
+  for(let y=0;y<216;y+=3){ctx.fillStyle=y%6===0?'#e02030':'#10b9ee';ctx.fillRect(0,y,464,1)}
+  const output=document.createElement('canvas');output.width=320;output.height=72;
+  const gl=output.getContext('webgl',{alpha:true,preserveDrawingBuffer:true})!;
+  const render=setup(gl);
+  const read=(x:number,y:number)=>{const p=new Uint8Array(4);gl.readPixels(x,71-y,1,1,gl.RGBA,gl.UNSIGNED_BYTE,p);return Array.from(p)};
+  const opts={liquid:1,reflectivity:1,strength:1.25,cornerRadius:30,bevelWidth:19,
+    surfaceSize:[320,72] as [number,number],scenePadding:72,reflectionReach:2.2};
+  render(scene,{...opts,reflectionQuality:0});const single=[read(160,36),read(160,3),read(3,36)];
+  render(scene,{...opts,reflectionQuality:1});const multi=[read(160,36),read(160,3),read(3,36)];
+  return {single,multi};
+ });
+ expect(result.multi[0]).toEqual(result.single[0]);
+ expect(result.multi.slice(1).some((p:number[],i:number)=>p.some((v:number,j:number)=>v!==result.single[i+1][j]))).toBe(true);
+});
