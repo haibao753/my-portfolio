@@ -237,12 +237,26 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
     for(const {el,r} of nearby)oldBounds.set(el,{left:r.left,top:r.top,width:r.width,height:r.height});
     nav.dataset.opticalGeometryReads=String(geometryReads);
     nav.dataset.opticalGeometryCacheHits=String(geometryCacheHits);
+    // Respect the source element's own rounded geometry, not just the glass.
+    // A rectangular fillRect was converting pill-shaped CTAs into square ghosts.
+    const roundedPath=(r,style)=>{
+     const lengths=[style.borderTopLeftRadius,style.borderTopRightRadius,style.borderBottomRightRadius,style.borderBottomLeftRadius];
+     const radii=lengths.map(v=>Math.max(0,Math.min(parseFloat(v)||0,r.width/2,r.height/2)));
+     const x=r.left-nr.left,y=r.top-nr.top,w=r.width,h=r.height;
+     ctx.beginPath();
+     ctx.moveTo(x+radii[0],y);ctx.lineTo(x+w-radii[1],y);
+     ctx.quadraticCurveTo(x+w,y,x+w,y+radii[1]);
+     ctx.lineTo(x+w,y+h-radii[2]);ctx.quadraticCurveTo(x+w,y+h,x+w-radii[2],y+h);
+     ctx.lineTo(x+radii[3],y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-radii[3]);
+     ctx.lineTo(x,y+radii[0]);ctx.quadraticCurveTo(x,y,x+radii[0],y);
+     ctx.closePath();
+    };
     // Paint CSS color surfaces beneath media and text rather than painting over them.
     for(const {el,r,style} of nearby){
      if(el===root)continue;
      const color=style.backgroundColor;
      if(color&&color!=='transparent'&&color!=='rgba(0, 0, 0, 0)'){
-      ctx.fillStyle=color;ctx.fillRect(r.left-nr.left,r.top-nr.top,r.width,r.height);colors++;
+      ctx.fillStyle=color;roundedPath(r,style);ctx.fill();colors++;
      }
     }
     for(const {el,r,style} of nearby){
