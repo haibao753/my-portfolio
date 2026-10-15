@@ -65,7 +65,9 @@ export function setup(gl){
    const x=Math.max(0,Math.floor(dirtyRect.x)),y=Math.max(0,Math.floor(dirtyRect.y));
    const w=Math.min(source.width-x,Math.ceil(dirtyRect.width)),h=Math.min(source.height-y,Math.ceil(dirtyRect.height));
    if(w>0&&h>0){
-    const patch=new Uint8Array(source.getContext('2d').getImageData(x,y,w,h).data);
+    const pixels=source.getContext('2d').getImageData(x,y,w,h).data;
+    const patch=new Uint8Array(pixels.length);
+    for(let row=0;row<h;row++)patch.set(pixels.subarray(row*w*4,(row+1)*w*4),(h-row-1)*w*4);
     // UNPACK_FLIP_Y_WEBGL does not flip typed arrays; offset is bottom-origin.
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);
     gl.texSubImage2D(gl.TEXTURE_2D,0,x,source.height-y-h,w,h,gl.RGBA,gl.UNSIGNED_BYTE,patch);
