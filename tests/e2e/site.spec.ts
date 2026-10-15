@@ -243,7 +243,8 @@ test("mobile menu glass stays compact and translucent",async({page,isMobile})=>{
 test("glass toolbar remains readable and the floating menu clears its lower edge",async({page,isMobile})=>{
  await page.goto("/");
  const header=page.locator(".glass-nav");
- await expect(header).toHaveCSS("backdrop-filter",/blur\(3px\)/);
+ await expect(header).toHaveAttribute("data-optical-material","liquid-v2");
+ await expect(header).toHaveCSS("backdrop-filter",/blur\(2\.2px\)/);
  const before=await header.boundingBox();
  expect(before?.y??-1).toBeGreaterThanOrEqual(7);
  await page.locator("[data-theme-toggle]").click();
@@ -639,9 +640,16 @@ test("optical engine changes actual RGB pixel positions, not merely CSS opacity"
  expect(await sample()).not.toBe(plain);
 });
 
-test("live homepage optics is opt-in and tracks actual DOM content during scroll", async ({page}) => {
+test("live optics defaults to V2, supports disabling, and tracks actual DOM content during scroll", async ({page}) => {
  await page.goto("/");
+ await expect(page.locator(".glass-nav")).toHaveAttribute("data-optical-material","liquid-v2");
+ await expect(page.locator('.desktop-links a[href="/brief/"]')).toBeAttached();
+ await page.goto("/brief/");
+ await expect(page.locator(".glass-nav")).toHaveAttribute("data-optical-material","liquid-v2");
+ await page.goto("/?opticalEngine=0");
  await expect(page.locator(".glass-nav")).not.toHaveAttribute("data-live-optics","on");
+ await expect(page.locator('.desktop-links a[href$="/brief/?opticalEngine=0"]')).toBeAttached();
+ await expect(page.locator(".glass-nav")).toHaveCSS("backdrop-filter",/blur\(3px\)/);
  await page.goto("/?opticalEngine=1");
  const nav=page.locator(".glass-nav");
  await expect(nav).toHaveAttribute("data-live-optics","on");
