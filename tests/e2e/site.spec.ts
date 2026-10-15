@@ -569,3 +569,29 @@ test("pixel rim responds to heading proximity instead of staying a static tint",
  const near=await measure();
  expect(near).toBeGreaterThan(far);
 });
+
+test("pixel rim preserves red channel from a real image", async ({page}) => {
+ await page.goto("/?pixelGlass=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-pixel-optics","on");
+ await page.evaluate(async()=>{
+  const n=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const img=document.createElement("img");
+  img.alt="optical red test";
+  img.src="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="110"><rect width="320" height="110" fill="#ed1717"/></svg>');
+  img.style.cssText="position:fixed;left:100px;top:"+Math.round(n.bottom+3)+"px;width:320px;height:110px;z-index:10";
+  document.querySelector("main")!.appendChild(img);
+  await img.decode();
+  window.dispatchEvent(new Event("scroll"));
+ });
+ await page.waitForTimeout(180);
+ const sample=await page.locator(".nav-pixel-rim").evaluate((c:HTMLCanvasElement)=>{
+  const gl=c.getContext("webgl",{preserveDrawingBuffer:true})!;
+  const pixels=new Uint8Array(c.width*c.height*4);
+  gl.readPixels(0,0,c.width,c.height,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
+  let reds=0;
+  for(let i=0;i<pixels.length;i+=4){if(pixels[i]>pixels[i+1]+35&&pixels[i]>pixels[i+2]+35&&pixels[i+3]>15)reds++;}
+  return reds;
+ });
+ expect(sample).toBeGreaterThan(0);
+});
