@@ -96,25 +96,28 @@ import {navigation} from "../data/site";
  @media(max-width:1180px){.nav-inner{grid-template-columns:1fr auto;min-height:50px}.desktop-links{display:none}.controls [data-menu-toggle]{display:flex;align-items:center;justify-content:center}}
  @media(max-width:760px){.nav-inner{min-height:56px}.brand span{width:27px;height:26px}.controls button{height:44px;min-width:44px}.glass-nav{border-radius:24px}.glass-nav .wrap{width:calc(100% - 24px)}}
 
- /* The browser compositor supplies the real backdrop pixels. Unlike the old
-  * text-only Canvas shader, these strips also cover images, SVG and gradients.
-  * This is compositor-backed blur/reflection styling, not GPU ray tracing. */
+ /* The backdrop is provided by the browser compositor (actual DOM/media RGB).
+  * Meniscus strips amplify local edge contrast, NOT physically displace pixels. */
  .glass-nav[data-native-optics="full-scene"]{overflow:hidden}
  .glass-nav .native-optic-edge{position:absolute;z-index:0;pointer-events:none;display:block;border-radius:inherit;
-  -webkit-backdrop-filter:blur(2.4px) saturate(1.5) contrast(1.16);
-  backdrop-filter:blur(2.4px) saturate(1.5) contrast(1.16)}
- .glass-nav .native-optic-top{top:0;left:0;right:0;height:11px;
-  -webkit-mask-image:linear-gradient(to bottom,black,rgba(0,0,0,.72) 35%,transparent);
-  mask-image:linear-gradient(to bottom,black,rgba(0,0,0,.72) 35%,transparent);
-  box-shadow:inset 0 1px rgba(255,255,255,.78)}
- .glass-nav .native-optic-bottom{bottom:0;left:0;right:0;height:13px;
-  -webkit-mask-image:linear-gradient(to top,black,rgba(0,0,0,.66) 40%,transparent);
-  mask-image:linear-gradient(to top,black,rgba(0,0,0,.66) 40%,transparent);
-  box-shadow:inset 0 -1px rgba(22,45,73,.13)}
- .glass-nav .native-optic-left{top:7px;bottom:7px;left:0;width:10px;
+  -webkit-backdrop-filter:blur(.7px) saturate(1.85) contrast(1.38);
+  backdrop-filter:blur(.7px) saturate(1.85) contrast(1.38)}
+ .glass-nav .native-optic-top{top:0;left:0;right:0;height:15px;
+  background:linear-gradient(to bottom,rgba(255,255,255,.28),rgba(255,255,255,.055) 25%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.8) 42%,transparent);
+  mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.8) 42%,transparent);
+  box-shadow:inset 0 1px rgba(255,255,255,.83)}
+ .glass-nav .native-optic-bottom{bottom:0;left:0;right:0;height:20px;
+  background:linear-gradient(to top,rgba(53,74,104,.055),transparent 86%);
+  -webkit-backdrop-filter:blur(.45px) saturate(2.15) contrast(1.67);
+  backdrop-filter:blur(.45px) saturate(2.15) contrast(1.67);
+  -webkit-mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.93) 26%,rgba(0,0,0,.57) 57%,transparent 100%);
+  mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.93) 26%,rgba(0,0,0,.57) 57%,transparent 100%);
+  box-shadow:inset 0 -1px rgba(20,39,66,.18)}
+ .glass-nav .native-optic-left{top:8px;bottom:8px;left:0;width:14px;
   -webkit-mask-image:linear-gradient(to right,black,transparent);
   mask-image:linear-gradient(to right,black,transparent)}
- .glass-nav .native-optic-right{top:7px;bottom:7px;right:0;width:10px;
+ .glass-nav .native-optic-right{top:8px;bottom:8px;right:0;width:14px;
   -webkit-mask-image:linear-gradient(to left,black,transparent);
   mask-image:linear-gradient(to left,black,transparent)}
  @media(prefers-reduced-transparency:reduce){.glass-nav .native-optic-edge{display:none}}
