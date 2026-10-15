@@ -77,8 +77,13 @@ small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:
    vec2 offset=normal*(.004+rim*.033+bulge*.012)*uRefract*inner;
    vec2 sampling=uv-offset/aspect;
    vec2 chrom=normal*.009*uDisp*rim/aspect;
-   vec3 col=vec3(scene(sampling+chrom).r,scene(sampling).g,scene(sampling-chrom).b);
    vec3 untouched=scene(uv);
+   vec3 col=scene(sampling);
+   // Only split RGB channels where the rim actually makes dispersion visible.
+   if(uDisp>.001 && rim>.06){
+     col.r=scene(sampling+chrom).r;
+     col.b=scene(sampling-chrom).b;
+   }
    col=mix(untouched,col,inner);
    float topHighlight=pow(max(dot(normal,normalize(vec2(-.5,1.))),0.),4.);
    col+=vec3(1.,.98,.95)*rim*(.26+.49*topHighlight)*inner;
