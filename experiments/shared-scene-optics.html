@@ -20,7 +20,10 @@ function draw(){
  if(vector.complete&&vector.naturalWidth)c.drawImage(vector,20,810,Math.min(240,width-40),130);
  c.fillStyle='#171717';c.font='850 42px system-ui';c.fillText(homepageTitle,20,1080,Math.max(100,width-40));
  c.fillStyle='#73777d';c.font='24px system-ui';c.fillText('图片、颜色、渐变与 SVG',20,1200,Math.max(100,width-40));
- c.fillStyle='#f6a316';c.fillRect(20,1290,width-40,120);\n if(photo.complete&&photo.naturalWidth){const w=Math.min(width-40,540);const h=Math.min(280,w*photo.naturalHeight/photo.naturalWidth);c.drawImage(photo,20,1470,w,h)}\n else{c.fillStyle='#d6dce7';c.fillRect(20,1470,width-40,270)}\n textureDirty=true;
+ c.fillStyle='#f6a316';c.fillRect(20,1290,width-40,120);
+ if(photo.complete&&photo.naturalWidth){const w=Math.min(width-40,540);const h=Math.min(280,w*photo.naturalHeight/photo.naturalWidth);c.drawImage(photo,20,1470,w,h)}
+ else{c.fillStyle='#d6dce7';c.fillRect(20,1470,width-40,270)}
+ textureDirty=true;
  render();
 }
 const vert='attribute vec2 p;varying vec2 uv;void main(){uv=(p+1.)*.5;gl_Position=vec4(p,0.,1.);}';
