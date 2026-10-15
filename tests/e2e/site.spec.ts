@@ -651,3 +651,29 @@ test("live homepage optical source includes colored CSS surfaces and nearby imag
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-colors")||0)).toBeGreaterThan(0);
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-images")||0)).toBeGreaterThan(0);
 });
+
+test("optical framebuffer preserves genuine blue background and red image RGB channels", async ({page}) => {
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ await page.evaluate(async()=>{
+  const nr=document.querySelector(".glass-nav")!.getBoundingClientRect(),main=document.querySelector("main")!;
+  const blue=document.createElement("div");
+  blue.style.cssText="position:fixed;left:24px;top:"+Math.round(nr.top+14)+"px;width:50px;height:35px;background:rgb(11, 107, 235)";
+  main.appendChild(blue);
+  const red=document.createElement("img");
+  red.src="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="70" height="40"><rect width="70" height="40" fill="#ee2233"/></svg>');
+  red.style.cssText="position:fixed;left:132px;top:"+Math.round(nr.top+14)+"px;width:70px;height:40px";
+  main.appendChild(red);await red.decode();dispatchEvent(new Event("scroll"));
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-images")||0)).toBeGreaterThan(0);
+ const rgb=await page.locator(".live-optical-layer").evaluate((glass:HTMLCanvasElement)=>{
+  const source=(glass as HTMLCanvasElement & {opticalSource:HTMLCanvasElement}).opticalSource;
+  const ctx=source.getContext("2d")!;
+  const nr=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const pixel=(x:number)=>Array.from(ctx.getImageData(Math.round(x-nr.left),Math.round(nr.top+28-nr.top),1,1).data).slice(0,3);
+  return {blue:pixel(44),red:pixel(153)};
+ });
+ expect(rgb.blue[2]).toBeGreaterThan(rgb.blue[0]+100);
+ expect(rgb.red[0]).toBeGreaterThan(rgb.red[2]+100);
+});
