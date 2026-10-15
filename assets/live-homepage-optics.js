@@ -19,8 +19,27 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
    nav.dataset.liveOptics='on';
    const vectorCache=new WeakMap();
    let candidates=Array.from(root.querySelectorAll('*'));
-   const observer=new MutationObserver(()=>{candidates=Array.from(root.querySelectorAll('*'));schedule()});
-   observer.observe(root,{childList:true,subtree:true});
+   const glyphCache=new WeakMap();
+   let glyphMeasurements=0,cacheHits=0;
+   const fixedPosition=(el)=>{for(let p=el;p&&p!==root;p=p.parentElement){if(getComputedStyle(p).position==='fixed')return true}return false};
+   const measureGlyphs=(node,el,style)=>{
+    const text=node.textContent||'',range=document.createRange(),glyphs=[];
+    const fixed=fixedPosition(el),sx=window.scrollX,sy=window.scrollY;
+    for(let i=0;i<Math.min(text.length,240);i++){
+     range.setStart(node,i);range.setEnd(node,i+1);
+     const r=range.getBoundingClientRect();
+     if(r.width)glyphs.push({char:text[i],x:r.left+(fixed?0:sx),y:r.top+(fixed?0:sy),w:r.width,h:r.height});
+    }
+    glyphMeasurements+=Math.min(text.length,240);
+    const entry={glyphs,fixed,font:style.fontStyle+' '+style.fontWeight+' '+style.fontSize+' '+style.fontFamily,color:style.color,text};
+    glyphCache.set(node,entry);
+    return entry;
+   };
+   let layoutEpoch=0,measuredEpoch=-1;
+   const invalidateLayout=()=>{layoutEpoch++;schedule()};
+   const geometryCache=new WeakMap();
+   const observer=new MutationObserver(()=>{candidates=Array.from(root.querySelectorAll('*'));invalidateLayout()});
+   observer.observe(root,{childList:true,subtree:true,characterData:true});
    const refresh=()=>{
     const frameStart=performance.now();
     nav.dataset.opticalRefreshes=String(Number(nav.dataset.opticalRefreshes||0)+1);
@@ -32,6 +51,8 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     const offsetX=nr.left,offsetY=nr.top;
     const startScrollY=window.scrollY;
     const nearby=[];
+    const needsMeasurement=measuredEpoch!==layoutEpoch;
+    if(needsMeasurement){glyphMeasurements=0;cacheHits=0;}
     // Only objects crossing the navbar geometry are relevant; draw in document order.
     for(const el of candidates){
      const r=el.getBoundingClientRect();
@@ -104,25 +125,31 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
       if(!Number.isFinite(fontSize)||fontSize<8)continue;
       ctx.font=style.fontStyle+' '+style.fontWeight+' '+fontSize+'px '+style.fontFamily;
       ctx.fillStyle=style.color;ctx.textBaseline='top';
-      const range=document.createRange();
-      const len=Math.min(text.length,240);
-      for(let i=0;i<len;i++){
-       range.setStart(node,i);range.setEnd(node,i+1);
-       const g=range.getBoundingClientRect();
-       if(g.width<=0||g.bottom<nr.top||g.top>nr.bottom)continue;
-       ctx.fillText(text.slice(i,i+1),g.left-nr.left,g.top-nr.top);
+      let entry=glyphCache.get(node);
+      const font=style.fontStyle+' '+style.fontWeight+' '+style.fontSize+' '+style.fontFamily;
+      if(!entry||needsMeasurement||entry.text!==text||entry.font!==font||entry.color!==style.color){
+       entry=measureGlyphs(node,el,style);
+      }else{cacheHits++}
+      ctx.font=entry.font;ctx.fillStyle=entry.color;
+      for(const g of entry.glyphs){
+       const x=g.x-(entry.fixed?0:window.scrollX)-nr.left;
+       const y=g.y-(entry.fixed?0:window.scrollY)-nr.top;
+       if(y+g.h<0||y>nr.height)continue;
+       ctx.fillText(g.char,x,y);
       }
       elements++;
      }
     }
     if(Math.abs(window.scrollY-startScrollY)>2){schedule();return;}
+    measuredEpoch=layoutEpoch;
+    nav.dataset.opticalGlyphMeasures=String(glyphMeasurements);nav.dataset.opticalGlyphCacheHits=String(cacheHits);
     nav.dataset.opticalAlignmentX=String(offsetX.toFixed(2));nav.dataset.opticalAlignmentY=String(offsetY.toFixed(2));
     try{shader(source,{strength:2,optical:1,reflectivity:.35});nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalGradients=String(gradients);nav.dataset.opticalVectors=String(vectors);nav.dataset.opticalError='';nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1)}catch{nav.dataset.opticalError='texture'}
    };
    let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
    addEventListener('scroll',schedule,{passive:true});
-   addEventListener('visibilitychange',()=>{if(!document.hidden)schedule()});addEventListener('resize',schedule,{passive:true});
-   document.fonts?.ready.then(schedule);
+   addEventListener('visibilitychange',()=>{if(!document.hidden)schedule()});addEventListener('resize',invalidateLayout,{passive:true});
+   document.fonts?.ready.then(invalidateLayout);
    root.querySelectorAll('img').forEach(img=>img.addEventListener('load',schedule));
    schedule();
   }
