@@ -49,6 +49,21 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     return rect.width*rect.height>=width*height*.7?null:{dirtyRect:rect};
    };
    let candidates=Array.from(root.querySelectorAll('*'));
+   let pendingRegions=[],forceFull=true;
+   const oldBounds=new WeakMap();
+   const stage=document.createElement('canvas');
+   const stageCtx=stage.getContext('2d');
+   const rectUnion=(a,b)=>({x:Math.min(a.x,b.x),y:Math.min(a.y,b.y),width:Math.max(a.x+a.width,b.x+b.width)-Math.min(a.x,b.x),height:Math.max(a.y+a.height,b.y+b.height)-Math.min(a.y,b.y)});
+   const regionFor=(r,nr,pad=8)=>({x:Math.floor(r.left-nr.left-pad),y:Math.floor(r.top-nr.top-pad),width:Math.ceil(r.width+2*pad),height:Math.ceil(r.height+2*pad)});
+   const clampRegion=(r,w,h)=>{const x=Math.max(0,r.x),y=Math.max(0,r.y);return {x,y,width:Math.max(0,Math.min(w,r.x+r.width)-x),height:Math.max(0,Math.min(h,r.y+r.height)-y)}};
+   const markElement=(el)=>{
+    if(!(el instanceof Element))return;
+    const nr=nav.getBoundingClientRect(),old=oldBounds.get(el),now=el.getBoundingClientRect();
+    let rect=regionFor(now,nr);
+    if(old)rect=rectUnion(rect,regionFor(old,nr));
+    pendingRegions.push(rect);
+    oldBounds.set(el,{left:now.left,top:now.top,width:now.width,height:now.height});
+   };
    let lastPaintScrollX=NaN,lastPaintScrollY=NaN,lastPaintEpoch=-1;
    let lastPaintWidth=0,lastPaintHeight=0;
    let skippedRasterFrames=0;
@@ -102,7 +117,12 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
       width:r.width,height:r.height});
     return r;
    };
-   const observer=new MutationObserver(records=>{if(records.some(record=>record.type==='childList'))candidates=Array.from(root.querySelectorAll('*'));invalidateLayout()});
+   const observer=new MutationObserver(records=>{
+    const structural=records.some(record=>record.type==='childList');
+    if(structural){candidates=Array.from(root.querySelectorAll('*'));forceFull=true}
+    else for(const record of records)markElement(record.target.parentElement||record.target);
+    invalidateLayout();
+   });
    observer.observe(root,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['style','class','src','srcset','width','height','hidden']});
    const refresh=()=>{
     const frameStart=performance.now();
@@ -118,7 +138,28 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
      nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1);
      return;
     }
-    ctx.clearRect(0,0,w,h);
+    const scrollDX=lastPaintScrollX-window.scrollX,scrollDY=lastPaintScrollY-window.scrollY;
+    const canShift=Number.isInteger(scrollDX)&&Number.isInteger(scrollDY)&&scrollDX===0&&Math.abs(scrollDY)>0&&Math.abs(scrollDY)<h
+     &&lastPaintEpoch===layoutEpoch&&!forceFull&&!pendingRegions.length&&lastPaintWidth===w&&lastPaintHeight===h;
+    let region=null,partial=false;
+    if(canShift){
+     // Exact translation is safe only when no fixed/sticky/animated contributors intersect.
+     const unsafe=candidates.some(el=>{const r=readBounds(el);if(r.bottom<nr.top||r.top>nr.bottom||r.right<nr.left||r.left>nr.right)return false;
+      return fixedPosition(el)||getComputedStyle(el).position==='sticky'||getComputedStyle(el).animationName!=='none'||getComputedStyle(el).transform!=='none';});
+     if(!unsafe){
+      stage.width=w;stage.height=h;stageCtx.clearRect(0,0,w,h);stageCtx.drawImage(source,0,0);
+      ctx.clearRect(0,0,w,h);ctx.drawImage(stage,scrollDX,scrollDY);
+      region=scrollDY<0?{x:0,y:h+scrollDY,width:w,height:-scrollDY}:{x:0,y:0,width:w,height:scrollDY};
+      partial=true;
+     }
+    }
+    if(!partial&&pendingRegions.length&&!forceFull&&lastPaintWidth===w&&lastPaintHeight===h&&sameScroll){
+     region=clampRegion(pendingRegions.reduce(rectUnion),w,h);
+     partial=region.width*region.height<w*h*.65;
+    }
+    if(!partial){ctx.clearRect(0,0,w,h);region=null}
+    else{ctx.save();ctx.beginPath();ctx.rect(region.x,region.y,region.width,region.height);ctx.clip();ctx.clearRect(region.x,region.y,region.width,region.height)}
+    nav.dataset.opticalDamageMode=partial?'partial':'full';
     let elements=0,images=0,colors=0,gradients=0,vectors=0;
     const offsetX=nr.left,offsetY=nr.top;
     const startScrollY=window.scrollY;
@@ -215,14 +256,17 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
       elements++;
      }
     }
-    if(Math.abs(window.scrollY-startScrollY)>2){schedule();return;}
+    if(partial)ctx.restore();
+    if(Math.abs(window.scrollY-startScrollY)>2){forceFull=true;schedule();return;}
+    const uploadRegion=partial?region:null;
+    forceFull=false;pendingRegions=[];
     measuredEpoch=layoutEpoch;
     lastPaintEpoch=layoutEpoch;lastPaintWidth=w;lastPaintHeight=h;
     lastPaintScrollX=window.scrollX;lastPaintScrollY=window.scrollY;
     nav.dataset.opticalRasterSkipped=String(skippedRasterFrames);
     nav.dataset.opticalGlyphMeasures=String(glyphMeasurements);nav.dataset.opticalGlyphCacheHits=String(cacheHits);
     nav.dataset.opticalAlignmentX=String(offsetX.toFixed(2));nav.dataset.opticalAlignmentY=String(offsetY.toFixed(2));
-    try{const delta=changedRect();shader(source,{strength:2,optical:1,reflectivity:.35,...(delta||{})});
+    try{const delta=uploadRegion?{dirtyRect:uploadRegion}:changedRect();shader(source,{strength:2,optical:1,reflectivity:.35,...(delta||{})});
     nav.dataset.opticalDiffCompared=String(lastDiffComparedPixels);
     nav.dataset.opticalTextureFull=String(shader.stats.fullUploads);
     nav.dataset.opticalTexturePartial=String(shader.stats.partialUploads);
@@ -232,7 +276,8 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
    };
    let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
    addEventListener('scroll',schedule,{passive:true});
-   addEventListener('visibilitychange',()=>{if(!document.hidden)schedule()});addEventListener('resize',invalidateLayout,{passive:true});
+   addEventListener('visibilitychange',()=>{if(!document.hidden){forceFull=true;schedule()}});
+   addEventListener('resize',()=>{forceFull=true;invalidateLayout()},{passive:true});
    document.fonts?.ready.then(invalidateLayout);
    root.querySelectorAll('img').forEach(img=>img.addEventListener('load',invalidateLayout));
    // Content and font changes invalidate both text positions and element geometry.
