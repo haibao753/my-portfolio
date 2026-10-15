@@ -545,3 +545,27 @@ test("opt-in homepage pixel rim activates and preserves accessible navigation", 
  await page.evaluate(()=>window.scrollTo(0,300));
  await expect(nav).toBeVisible();
 });
+
+test("pixel rim responds to heading proximity instead of staying a static tint", async ({page}) => {
+ await page.goto("/?pixelGlass=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-pixel-optics","on");
+ const rim=page.locator(".nav-pixel-rim");
+ const measure=()=>rim.evaluate((canvas:HTMLCanvasElement)=>{
+  const gl=canvas.getContext("webgl",{preserveDrawingBuffer:true});
+  if(!gl)return -1;
+  const pixels=new Uint8Array(canvas.width*canvas.height*4);
+  gl.readPixels(0,0,canvas.width,canvas.height,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
+  let sum=0;for(let i=3;i<pixels.length;i+=4)sum+=pixels[i];
+  return sum;
+ });
+ const far=await measure();
+ await page.evaluate(()=>{
+  const title=document.querySelector(".hero h1")!;
+  const bar=document.querySelector(".glass-nav")!;
+  window.scrollTo(0,window.scrollY+title.getBoundingClientRect().top-bar.getBoundingClientRect().bottom-15);
+ });
+ await page.waitForTimeout(250);
+ const near=await measure();
+ expect(near).toBeGreaterThan(far);
+});
