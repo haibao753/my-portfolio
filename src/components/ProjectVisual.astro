@@ -1,6 +1,10 @@
 ---
+import { Image } from "astro:assets";
+import photo2 from "../../images/2.jpg";
+import photo4 from "../../images/4.jpg";
+import photo5 from "../../images/5.jpg";
 interface Props{index:number;href:string}
-const {index,href}=Astro.props;
+const {index}=Astro.props;
 ---
 <div class:list={["visual",`visual-${index}`]}>
  {index===0&&<div class="world-art" aria-hidden="true"><span>J.H. / BRIEF</span><strong>WORLD<br/>IN FOCUS.</strong><small>EVERY DAY IS A NEW QUESTION</small></div>}
@@ -11,7 +15,7 @@ const {index,href}=Astro.props;
     <path d="M88 83C138 119 138 218 88 249M332 83C282 119 282 218 332 249M210 37C210 93 210 236 210 293M148 45C178 116 178 231 148 286M272 45C242 116 242 231 272 286"/>
    </g></svg><small>MATHEMATICS / MOVEMENT / VISUALIZATION</small>
   </div>}
- {index===2&&<div class="photo-art" aria-hidden="true"><img src="/images/2.jpg" alt="" loading="lazy" width="800" height="600" /><img src="/images/4.jpg" alt="" loading="lazy" width="800" height="600" /><img src="/images/5.jpg" alt="" loading="lazy" width="800" height="600" /></div>}
+ {index===2&&<div class="photo-art" aria-hidden="true">{[photo2,photo4,photo5].map(photo=><Image src={photo} alt="" format="webp" quality={80} width={960} widths={[320,640,960]} sizes="(max-width: 600px) 34vw, (max-width: 900px) 18vw, 180px" loading="lazy" decoding="async" />)}</div>}
  {index===3&&<div class="geometry-art">
    <div id="minimal-preview" aria-label="极小曲面实时三维预览"><div class="preview-fallback" aria-hidden="true">
     <svg viewBox="0 0 420 320" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.3" opacity=".68">

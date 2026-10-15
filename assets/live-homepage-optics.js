@@ -213,7 +213,9 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
        const url=URL.createObjectURL(blob);
        cached={image,signature};
        vectorCache.set(el,cached);
-       image.onload=()=>{URL.revokeObjectURL(url);schedule()};
+       // Decoding changes the raster source even when DOM and scroll are stable.
+       // Invalidate the unchanged-frame shortcut so the SVG actually gets drawn.
+       image.onload=()=>{URL.revokeObjectURL(url);forceFull=true;invalidateLayout()};
        image.onerror=()=>URL.revokeObjectURL(url);
        image.src=url;
       }

@@ -118,7 +118,9 @@ import {navigation} from "../data/site";
   -webkit-mask-image:linear-gradient(to left,black,transparent);
   mask-image:linear-gradient(to left,black,transparent)}
  @media(prefers-reduced-transparency:reduce){.glass-nav .native-optic-edge{display:none}}
- .glass-nav .live-optical-layer{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;border-radius:inherit;opacity:.76;mix-blend-mode:multiply}
+ /* JavaScript creates this canvas without Astro's scope attribute. Keep it out
+    of normal flow so resizing it cannot recursively enlarge the sticky header. */
+ .glass-nav :global(.live-optical-layer){position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;border-radius:inherit;opacity:.76;mix-blend-mode:multiply}
  .glass-nav[data-live-optics="on"] .native-optic-edge{opacity:.22}
 </style>
 <script is:inline type="module" src="/assets/live-homepage-optics.js"></script>

@@ -1,5 +1,12 @@
 # J.H. LAB — Astro portfolio and daily briefing
 
+## Performance and reliability
+- `npm run validate` runs Astro diagnostics, deployment guards, the production build and artifact checks.
+- `npm ci` installs the committed dependency lockfile reproducibly.
+- The homepage photo strip uses Astro-generated WebP at 320/640/960px. Historic `/images/*.jpg` URLs remain available to legacy pages.
+- Production pages emit canonical/sharing metadata plus `/robots.txt` and `/sitemap.xml`.
+- Brief filtering keeps keyboard focus, validates incoming JSON, cancels outdated requests and clears stale cards on a failed issue load. The publishing JSON schema is unchanged.
+
 The owner approved promoting the reviewed Liquid Glass preview to production on 2026-10-15. The site uses Astro static output, shared glass navigation, and a separately generated daily briefing archive.
 
 ## Local usage

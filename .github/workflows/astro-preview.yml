@@ -13,12 +13,15 @@ on:
       - "assets/**"
       - "docs/liquid-glass-3-acceptance.md"
       - "package.json"
+      - "package-lock.json"
       - "astro.config.mjs"
       - "tsconfig.json"
       - ".github/workflows/astro-preview.yml"
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ASTRO_TELEMETRY_DISABLED: '1'
     permissions:
       contents: read
     steps:
@@ -26,8 +29,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: npm
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: Type check
         run: npm run check
       - name: Guard experimental default Worker deployment

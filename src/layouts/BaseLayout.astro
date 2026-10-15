@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import SiteNav from "../components/SiteNav.astro";
 const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、影像与有趣的想法。"}=Astro.props;
+const canonicalURL=new URL(Astro.url.pathname,Astro.site);
 ---
 <!doctype html>
 <html lang="zh-CN" data-theme="light">
@@ -9,12 +10,22 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="J.H. LAB" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="color-scheme" content="light dark" />
   <link rel="icon" href="/assets/jh-orbit.svg" type="image/svg+xml" />
   <title>{title}</title>
   <script is:inline>
    (()=>{try{
     const theme=localStorage.getItem("jhlab-theme");
-    if(theme==="dark"||theme==="light")document.documentElement.dataset.theme=theme;
+    document.documentElement.dataset.theme=theme==="dark"||theme==="light"?theme:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
     const lang=localStorage.getItem("jhlab-locale");
     if(lang==="en")document.documentElement.lang="en";
    }catch{}})();
@@ -34,8 +45,9 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
    const refreshTheme=()=>{
     if(!themeButton)return;
     const dark=root.dataset.theme==="dark";
-    themeButton.setAttribute("aria-label",dark?"切换至浅色模式":"切换至深色模式");
-    themeButton.setAttribute("title",dark?"浅色模式":"深色模式");
+    const en=root.lang==="en";
+    themeButton.setAttribute("aria-label",en?(dark?"Switch to light mode":"Switch to dark mode"):(dark?"切换至浅色模式":"切换至深色模式"));
+    themeButton.setAttribute("title",en?(dark?"Light mode":"Dark mode"):(dark?"浅色模式":"深色模式"));
     themeButton.setAttribute("aria-pressed",String(dark));
    };
    let themeTransitionTimer:ReturnType<typeof setTimeout>|undefined;
@@ -59,6 +71,9 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
     const en=root.lang==="en";
     language.textContent=en?"中文":"EN";
     language.setAttribute("aria-label",en?"切换为中文":"Switch to English");
+    document.querySelector("[data-menu-toggle]")?.setAttribute("aria-label",en?"Menu":"菜单");
+    document.querySelector(".brand")?.setAttribute("aria-label",en?"J.H. LAB home":"J.H. LAB 首页");
+    refreshTheme();
    };
    language?.addEventListener("click",()=>{
     root.lang=root.lang==="en"?"zh-CN":"en";
@@ -105,12 +120,21 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
     panel.inert=false;
     menu.setAttribute("aria-expanded","true");
     root.dataset.menuOpen="true";
+    panel.querySelector<HTMLAnchorElement>("a")?.focus({preventScroll:true});
    };
    menu?.addEventListener("click",()=>{
     if(menu.getAttribute("aria-expanded")==="true")close();
     else openMenu();
    });
    panel?.querySelectorAll("a").forEach(a=>a.addEventListener("click",close));
+   // The visual backdrop deliberately passes through touch scrolling.
+   // Dismiss on an outside click without intercepting native touch gestures.
+   document.addEventListener("click",event=>{
+    if(menu?.getAttribute("aria-expanded")==="true"&&event.target instanceof Node&&!header?.contains(event.target)&&!panel?.contains(event.target))close();
+   });
+   document.addEventListener("focusin",event=>{
+    if(menu?.getAttribute("aria-expanded")==="true"&&event.target instanceof Node&&!header?.contains(event.target)&&!panel?.contains(event.target))close();
+   });
    document.addEventListener("keydown",e=>{
     if(e.key==="Escape"&&panel&&!panel.hidden){
      close();
@@ -137,7 +161,7 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
      window.setTimeout(()=>{copy.dataset.copied="false"},1500);
     }catch{
      copy.dataset.copied="false";
-     window.prompt("Copy WeChat ID",id);
+     window.prompt(root.lang==="en"?"Copy WeChat ID":"复制微信号",id);
     }
    });
   </script>
