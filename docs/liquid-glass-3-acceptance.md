@@ -20,6 +20,16 @@ Navigate to `/experiments/liquid-glass-optics.html`.
 - Check that glass fallback navigation remains readable if WebGL is unavailable or the rendering context is lost.
 - Compare phone battery/thermal behavior with no interaction versus scrolling the lab. Shader is event-driven and limited to at most 1.5 device pixel ratio.
 - Observe that scene behind the refractive body is *shader-generated*, not live DOM content.
+- The raster budget is at most 1,000,000 pixels, with depth, stencil and multisample buffers disabled. No idle render loop is used.
+- Context loss/restoration deliberately keeps the CSS fallback until reload, because old WebGL resource handles are invalid after restoration.
+
+## Preview and automated checks
+
+- Stable independent Cloudflare Pages preview: https://experiment-liquid-glass-3d-o.jhlab-preview.pages.dev/
+- GitHub Actions validates the full build, preserved routes, preview Worker bundle and Chromium desktop/Pixel 7 tests. The mobile scroll test sends a native Chromium touch scroll gesture.
+- The production Worker build check is separate from Pages. A successful Pages preview does not prove that production Workers configuration is correct.
+- Changes in experiments, tests, assets and Wrangler configuration must also trigger CI.
+- The closed/closing menu is inert, so its links cannot receive keyboard focus during the exit animation.
 
 ## Acceptance boundary
 

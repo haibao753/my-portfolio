@@ -6,6 +6,12 @@ on:
     paths:
       - "src/**"
       - "scripts/**"
+      - "experiments/**"
+      - "tests/**"
+      - "playwright.config.ts"
+      - "wrangler*.jsonc"
+      - "assets/**"
+      - "docs/liquid-glass-3-acceptance.md"
       - "package.json"
       - "astro.config.mjs"
       - "tsconfig.json"

@@ -284,13 +284,61 @@ test("mobile glass menu stays open while page scrolls and header stays visible",
  await expect(page.locator("[data-menu-panel]")).toBeVisible();
  await expect(page.locator("[data-menu-backdrop]")).toHaveCSS("pointer-events","none");
  const before=await page.evaluate(()=>window.scrollY);
- await page.evaluate(()=>window.scrollBy({top:500,behavior:"instant"}));
+ const touch=await page.context().newCDPSession(page);
+ await touch.send("Input.synthesizeScrollGesture",{x:24,y:600,yDistance:-420,speed:650,gestureSourceType:"touch"});
+ await touch.detach();
  await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBeGreaterThan(before+100);
  await expect(page.locator("[data-menu-panel]")).toBeVisible();
  await expect(toggle).toBeInViewport();
  await expect(toggle).toHaveAttribute("aria-expanded","true");
  await toggle.click();
  await expect(page.locator("[data-menu-panel]")).toBeHidden();
+});
+
+test("closing menu immediately removes its links from keyboard focus",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ const panel=page.locator("[data-menu-panel]");
+ await toggle.click();
+ await expect(panel).not.toHaveAttribute("inert");
+ await toggle.click();
+ await expect(panel).toHaveAttribute("inert","");
+ await expect(panel).toBeHidden();
+});
+
+test("optical lab remains navigable after context loss and restoration",async({page})=>{
+ await page.goto("/experiments/liquid-glass-optics.html");
+ await page.locator("#optics").dispatchEvent("webglcontextlost",{cancelable:true});
+ await expect(page.locator("#stage")).toHaveClass(/no-webgl/);
+ await page.locator("#optics").dispatchEvent("webglcontextrestored");
+ await expect(page.locator("#stage")).toHaveClass(/no-webgl/);
+ await expect(page.locator("#optic-menu a")).toHaveCount(6);
+ await page.locator("#optic-menu a[href='/brief/']").click();
+ await expect(page).toHaveURL(/\/brief\/$/);
+});
+
+test("optical lab caps raster size and does not render while idle",async({page})=>{
+ await page.addInitScript(()=>{
+  const draw=WebGLRenderingContext.prototype.drawArrays;
+  (window as any).__opticDraws=0;
+  WebGLRenderingContext.prototype.drawArrays=function(...args){
+   (window as any).__opticDraws++;
+   return draw.apply(this,args);
+  };
+ });
+ await page.goto("/experiments/liquid-glass-optics.html");
+ await page.locator("#stage").scrollIntoViewIfNeeded();
+ test.skip(await page.locator("#stage").evaluate(el=>el.classList.contains("no-webgl")),"WebGL unavailable; covered by fallback tests");
+ await expect.poll(()=>page.evaluate(()=>(window as any).__opticDraws)).toBeGreaterThan(0);
+ const pixels=await page.locator("#optics").evaluate(el=>(el as HTMLCanvasElement).width*(el as HTMLCanvasElement).height);
+ expect(pixels).toBeLessThanOrEqual(1_000_000);
+ await page.waitForTimeout(200);
+ const settled=await page.evaluate(()=>(window as any).__opticDraws);
+ await page.waitForTimeout(250);
+ expect(await page.evaluate(()=>(window as any).__opticDraws)).toBe(settled);
+ await page.locator("#dispersion").fill("80");
+ await expect.poll(()=>page.evaluate(()=>(window as any).__opticDraws)).toBeGreaterThan(settled);
 });
 
 test("optical glass laboratory preserves real accessible menu controls",async({page})=>{
