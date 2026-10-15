@@ -2,6 +2,7 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "my-portfolio",
   "compatibility_date": "2026-10-15",
+  "previews": {},
   "build": {
     "command": "node scripts/build-cloudflare.mjs"
   },

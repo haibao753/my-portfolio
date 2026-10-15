@@ -5,24 +5,25 @@
 - Production Worker: `my-portfolio`, custom domain `hujinhai.com`.
 - GitHub connection: `haibao753/my-portfolio`.
 - Production branch: **`main`**.
-- Previously recorded Build command: **none**. Deploy command: **`npx wrangler deploy`**. Root: `/`.
+- Authenticated production settings: Build command **`npm run build`**, Deploy command **`npx wrangler deploy --config wrangler.production.jsonc`**, Root `/`.
 - Existing production API build token: managed **only in Cloudflare**, not in this repository.
 
 The owner approved production promotion on 2026-10-15 after reviewing the independent preview. Keep the existing Worker, domain and production branch.
 
-## Workers Builds settings to apply
+## Workers Builds settings
 
 Cloudflare's current [Workers Builds configuration documentation](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/) states that Wrangler custom-build configuration is not honored by Workers Builds. Configure the explicit build step instead:
 
-| Setting | Value |
-| --- | --- |
-| Build command | `npm run build:cloudflare` |
-| Deploy command | `npx wrangler deploy` |
-| Preview command | `npx wrangler preview` |
-| Root directory | `/` |
-| Production branch | `main` |
+| Setting | Production (preserved) | Preview Base |
+| --- | --- | --- |
+| Build command | `npm run build` | `npm run build:cloudflare` |
+| Deploy / Preview command | `npx wrangler deploy --config wrangler.production.jsonc` | `npx wrangler preview` |
+| Root directory | `/` | `/` |
+| Production branch | `main` | feature branches |
 
-`build:cloudflare` fetches the published news ref, synchronizes JSON and runs the production Astro build. It never uploads or deploys. The direct Wrangler CLI custom-build entry remains guarded. Do not infer dashboard success from its local dry-run. At this revision, Pages preview and GitHub validation are confirmed; Workers build failure details still require authenticated Cloudflare logs.
+`build:cloudflare` fetches the published news ref, synchronizes JSON and runs the production Astro build. It never uploads or deploys. The direct Wrangler CLI custom-build entry remains guarded. Do not infer dashboard success from its local dry-run.
+
+Authenticated logs for build `93a85ac4` confirmed that the dashboard Build command was empty and `npx wrangler preview` failed because the root configuration lacked a `previews` block. The root configuration now includes an empty block, as required by the [Preview configuration documentation](https://developers.cloudflare.com/workers/previews/configuration/#wrangler-configuration-file). Assets remain at the top level; no production data bindings or routes are added to the Preview.
 
 ## Dedicated preview Worker
 
