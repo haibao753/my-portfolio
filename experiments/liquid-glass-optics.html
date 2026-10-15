@@ -11,7 +11,10 @@ p{line-height:1.7;color:#45546c;max-width:720px}
 .stage{position:relative;aspect-ratio:1.55;min-height:350px;border-radius:34px;overflow:hidden;box-shadow:0 22px 75px #263d6228;background:linear-gradient(135deg,#8ed2ff,#d39adf,#ffc28d);touch-action:pan-y}
 canvas{display:block;width:100%;height:100%;touch-action:pan-y}
 .fallback{display:none;position:absolute;inset:22% 22%;border-radius:60px;border:5px solid #fffd;background:#fff2;box-shadow:inset 0 4px 10px #fff9,0 16px 50px #2234;backdrop-filter:blur(4px)}
-.stage.no-webgl .fallback{display:block}.controls{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:24px 0}
+.stage.no-webgl .fallback{display:block}
+.stage.no-webgl canvas{visibility:hidden}
+.stage.no-webgl .optic-menu{background:rgba(255,255,255,.17);backdrop-filter:blur(5px);border:2px solid #fffd;box-shadow:inset 0 2px 3px #fffa,0 12px 32px #18334c36}
+.stage:not(.no-webgl) .fallback{display:none}.controls{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:24px 0}
 .optic-menu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;justify-content:space-evenly;z-index:2;border-radius:40px;overflow:hidden;text-align:center}
 .optic-menu a{display:block;padding:4px;color:#172035;font-size:clamp(12px,2vw,17px);font-weight:700;text-shadow:0 1px 2px #fff9}
 .optic-menu a+a{border-top:1px solid #ffffff6e}
@@ -34,6 +37,8 @@ small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:
 (() => {
  const stage=document.querySelector('#stage'),canvas=document.querySelector('#optics'),menu=document.querySelector('#optic-menu');
  document.querySelector('#menu-mode').addEventListener('change',e=>{menu.hidden=!e.target.checked;});
+ let lost=false;
+ canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();lost=true;stage.classList.add('no-webgl');});
  const gl=canvas.getContext('webgl',{alpha:false,antialias:false,powerPreference:'low-power',preserveDrawingBuffer:false});
  if(!gl){stage.classList.add('no-webgl');return;}
  const vert='attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
@@ -88,7 +93,7 @@ small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:
  const resolution=gl.getUniformLocation(program,'uRes'),center=gl.getUniformLocation(program,'uCenter'),refract=gl.getUniformLocation(program,'uRefract'),disp=gl.getUniformLocation(program,'uDisp');
  let cx=.5,cy=.5,pending=false,dragging=false;
  const controls=[['refract','refract-value'],['dispersion','dispersion-value']];
- const draw=()=>{pending=false;const rect=stage.getBoundingClientRect();
+ const draw=()=>{pending=false;if(lost||document.hidden)return;const rect=stage.getBoundingClientRect();
  menu.style.width=(rect.height*.52)+'px';menu.style.height=(rect.height*.58)+'px';
  menu.style.left=(cx*100)+'%';menu.style.top=((1-cy)*100)+'%';
  const ratio=Math.min(devicePixelRatio||1,1.5);
@@ -101,6 +106,7 @@ small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:
  canvas.addEventListener('pointermove',move);
  canvas.addEventListener('pointerup',()=>{dragging=false;});
  canvas.addEventListener('pointercancel',()=>{dragging=false;});
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)schedule();});
  new ResizeObserver(schedule).observe(stage);schedule();
 })();
 </script></body></html>
