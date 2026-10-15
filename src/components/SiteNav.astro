@@ -23,7 +23,7 @@ import {navigation} from "../data/site";
  </a>)}
 </nav>
 <style>
- .glass-nav{position:sticky;top:0;z-index:101;background:var(--glass);-webkit-backdrop-filter:blur(24px) saturate(165%);backdrop-filter:blur(24px) saturate(165%);border-bottom:1px solid var(--stroke);box-shadow:var(--shadow-sm)}
+ .glass-nav{position:sticky;top:0;z-index:110;background:var(--glass);-webkit-backdrop-filter:blur(24px) saturate(165%);backdrop-filter:blur(24px) saturate(165%);border-bottom:1px solid var(--stroke);box-shadow:var(--shadow-sm)}
  .nav-inner{min-height:68px;display:grid;grid-template-columns:minmax(60px,1fr) auto minmax(125px,1fr);align-items:center;gap:clamp(14px,2vw,30px)}
  .brand{display:flex;align-items:center;min-width:44px;min-height:44px}
  .brand span{display:block;width:31px;height:30px;background:var(--fg);-webkit-mask:url("/assets/jh-orbit.svg") center/contain no-repeat;mask:url("/assets/jh-orbit.svg") center/contain no-repeat}
@@ -54,17 +54,17 @@ import {navigation} from "../data/site";
  .controls [data-menu-toggle]{display:none}
  .hamburger{display:flex;flex-direction:column;align-items:center;gap:4px}
  .hamburger i{display:block;width:17px;height:1.5px;border-radius:2px;background:currentColor}
- .menu-backdrop{position:fixed;inset:0;z-index:99;background:rgba(9,13,20,.20);-webkit-backdrop-filter:blur(2px) saturate(.88);backdrop-filter:blur(2px) saturate(.88)}
+ .menu-backdrop{position:fixed;inset:0;z-index:99;background:rgba(9,13,20,.09);-webkit-backdrop-filter:saturate(.96);backdrop-filter:saturate(.96);pointer-events:none}
  .menu-backdrop:not([hidden]){animation:backdrop-enter .32s ease both}
  .menu-backdrop[data-closing="true"]{animation:backdrop-exit .3s ease both;pointer-events:none}
- .mobile-menu{position:fixed;z-index:103;top:76px;right:12px;width:min(258px,calc(100vw - 46px));padding:9px 13px;border:1px solid rgba(255,255,255,.78);border-radius:27px;background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(224,239,255,.055) 45%,rgba(255,255,255,.12));-webkit-backdrop-filter:blur(12px) saturate(190%) brightness(1.10);backdrop-filter:blur(12px) saturate(190%) brightness(1.10);box-shadow:0 25px 70px rgba(0,0,0,.25),0 6px 20px rgba(0,0,0,.1),inset 0 2px 2px rgba(255,255,255,.98),inset 2px 0 2px rgba(255,255,255,.72),inset -2px -2px 6px rgba(255,255,255,.24);isolation:isolate;overflow:hidden}
- .mobile-menu::before{content:"";position:absolute;inset:-35% -40%;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 20% 15%,rgba(255,255,255,.65),transparent 33%),radial-gradient(ellipse at 82% 76%,rgba(159,200,255,.32),transparent 48%),linear-gradient(110deg,transparent 30%,rgba(255,255,255,.25) 46%,transparent 62%);transform:rotate(-8deg);animation:liquid-sheen 5s ease-in-out infinite alternate}
- :global(html[data-theme="dark"]) .mobile-menu{background:linear-gradient(145deg,rgba(85,98,121,.24),rgba(29,37,53,.18) 52%,rgba(95,112,142,.15));border-color:rgba(255,255,255,.26);box-shadow:0 24px 66px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.28)}
- :global(html[data-theme="dark"]) .mobile-menu::before{opacity:.32}
- :global(html[data-menu-open="true"]) main,:global(html[data-menu-open="true"]) .site-footer{transform:scale(.955) translateY(10px);filter:blur(1px) brightness(.79);opacity:.9}
- :global(main),:global(.site-footer){transform-origin:center 15vh;transition:transform .48s cubic-bezier(.2,.78,.2,1),filter .48s ease,opacity .48s ease}
- .mobile-menu::after{content:"";position:absolute;inset:2px;border-radius:25px;pointer-events:none;border:1px solid rgba(255,255,255,.28);box-shadow:inset 0 10px 18px rgba(255,255,255,.12),inset 0 -8px 18px rgba(100,150,210,.08)}
- .mobile-menu a{display:flex;align-items:center;justify-content:center;text-align:center;min-height:55px;border-bottom:1px solid rgba(105,115,132,.2);font-size:16px;font-weight:600;position:relative;z-index:1}
+ /* Clear-centre refractive glass approximation; the WebGL optical shader lives in the laboratory route. */
+ .mobile-menu{position:fixed;z-index:105;top:76px;right:12px;width:min(258px,calc(100vw - 46px));padding:9px 13px;border:1px solid rgba(255,255,255,.76);border-radius:32px;background:linear-gradient(140deg,rgba(255,255,255,.18),rgba(220,240,255,.035) 46%,rgba(255,255,255,.09));-webkit-backdrop-filter:blur(3px) saturate(180%) contrast(1.07);backdrop-filter:blur(3px) saturate(180%) contrast(1.07);box-shadow:0 22px 54px rgba(9,14,26,.22),inset 0 2px 2px rgba(255,255,255,.92),inset 0 -2px 4px rgba(110,165,230,.17);isolation:isolate;overflow:hidden}
+ .mobile-menu::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:radial-gradient(ellipse 90% 18% at 35% 1%,rgba(255,255,255,.42),transparent 90%),radial-gradient(ellipse 30% 45% at 100% 60%,rgba(125,195,255,.20),transparent),linear-gradient(110deg,transparent 31%,rgba(255,255,255,.12) 44%,transparent 60%);animation:liquid-sheen 5s ease-in-out infinite alternate}
+ .mobile-menu::after{content:"";position:absolute;inset:1px;z-index:2;pointer-events:none;border-radius:31px;border:2px solid rgba(255,255,255,.34);box-shadow:inset 0 1px rgba(255,255,255,.76),inset 0 -1px rgba(133,179,239,.33)}
+ :global(html[data-theme="dark"]) .mobile-menu{background:linear-gradient(140deg,rgba(120,157,194,.19),rgba(30,48,68,.10) 50%,rgba(112,157,198,.10));border-color:rgba(224,240,255,.42);box-shadow:0 22px 65px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.42)}
+ :global(html[data-menu-open="true"] main),:global(html[data-menu-open="true"] .site-footer){filter:brightness(.92)}
+ :global(main),:global(.site-footer){transition:filter .44s ease}
+ .mobile-menu a{display:flex;align-items:center;justify-content:center;text-align:center;min-height:55px;border-bottom:1px solid rgba(105,115,132,.16);font-size:16px;font-weight:600;position:relative;z-index:1}
  .mobile-menu a:last-child{border-bottom:0}
  .mobile-menu:not([hidden]){animation:nav-panel-enter .28s cubic-bezier(.16,1,.3,1) both}
  .mobile-menu[data-closing="true"]{animation:nav-panel-exit .3s cubic-bezier(.4,0,.75,.25) both;pointer-events:none}
