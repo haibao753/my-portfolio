@@ -533,3 +533,15 @@ test("pixel optics laboratory draws a changing WebGL texture on scroll", async (
  const after=await page.locator("#glass").evaluate((c:HTMLCanvasElement)=>c.toDataURL());
  expect(after).not.toBe(before);
 });
+
+test("opt-in homepage pixel rim activates and preserves accessible navigation", async ({page}) => {
+ await page.goto("/?pixelGlass=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toBeVisible();
+ const context=await page.locator(".nav-pixel-rim").evaluate((el:HTMLCanvasElement)=>Boolean(el.getContext("webgl")));
+ if (!context) {test.skip(true,"WebGL context unavailable");return;}
+ await expect(nav).toHaveAttribute("data-pixel-optics","on");
+ await expect(page.locator("[data-theme-toggle]")).toBeVisible();
+ await page.evaluate(()=>window.scrollTo(0,300));
+ await expect(nav).toBeVisible();
+});
