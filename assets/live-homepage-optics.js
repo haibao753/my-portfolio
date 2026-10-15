@@ -15,7 +15,9 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
   if(gl&&ctx){try{shader=setup(gl)}catch(err){nav.dataset.opticalError='shader'}}
   if(shader){
    nav.dataset.liveOptics='on';
-   const candidates=Array.from(root.querySelectorAll('*'));
+   let candidates=Array.from(root.querySelectorAll('*'));
+   const observer=new MutationObserver(()=>{candidates=Array.from(root.querySelectorAll('*'));schedule()});
+   observer.observe(root,{childList:true,subtree:true});
    const refresh=()=>{
     const nr=nav.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,Math.round(nr.width)),h=Math.max(1,Math.round(nr.height));
     if(glass.width!==Math.round(w*dpr)||glass.height!==Math.round(h*dpr)){glass.width=Math.round(w*dpr);glass.height=Math.round(h*dpr)}
