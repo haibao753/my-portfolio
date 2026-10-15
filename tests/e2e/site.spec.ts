@@ -528,7 +528,7 @@ test("pixel optics laboratory draws a changing WebGL texture on scroll", async (
   return;
  }
  const before=await page.locator("#glass").evaluate((c:HTMLCanvasElement)=>c.toDataURL());
- await page.locator("#scroll").evaluate((el:HTMLElement)=>{el.scrollTop=110;el.dispatchEvent(new Event("scroll"))});
+ await page.locator("#scroll").evaluate((el:HTMLElement)=>{el.scrollTop=220;el.dispatchEvent(new Event("scroll"))});
  await page.waitForTimeout(150);
  const after=await page.locator("#glass").evaluate((c:HTMLCanvasElement)=>c.toDataURL());
  expect(after).not.toBe(before);
