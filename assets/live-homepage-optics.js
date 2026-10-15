@@ -7,6 +7,7 @@ const params=new URLSearchParams(location.search);
 const requested=params.get('opticalEngine');
 const mode=requested===null?'2':requested;
 const liquid=mode==='2';
+const overscan=liquid?24:0;
 // Keep ordinary navigation URLs clean; preserve explicit comparison/disable links.
 if(['0','1','2'].includes(requested))document.querySelectorAll('a[href]').forEach(link=>{
  const target=new URL(link.href,location.href);
@@ -38,7 +39,7 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
      // otherwise a dark photograph beside it can turn a white-background logo white.
      const sampleTarget=target.matches('.brand')?target.querySelector('span'):target;
      const r=sampleTarget.getBoundingClientRect();if(!r.width||!r.height)continue;
-     const x=Math.max(0,Math.floor(r.left-nr.left)),y=Math.max(0,Math.floor(r.top-nr.top));
+     const x=Math.max(0,Math.floor(r.left-nr.left+overscan)),y=Math.max(0,Math.floor(r.top-nr.top+overscan));
      const w=Math.min(source.width-x,Math.ceil(r.width)),h=Math.min(source.height-y,Math.ceil(r.height));
      if(w<1||h<1)continue;
      const pixels=ctx.getImageData(x,y,w,h).data;
@@ -54,7 +55,7 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
      target.style.setProperty('--glass-ink-shadow',dark?'0 1px 2px rgba(255,255,255,.62)':'0 1px 3px rgba(0,0,0,.62)');
     }
    };
-   const draw=(changes={})=>shader(source,{strength:liquid?1.25:2,optical:1,reflectivity:liquid?.72:.35,liquid:liquid?1:0,surfaceSize:[source.width,source.height],cornerRadius:parseFloat(getComputedStyle(nav).borderTopLeftRadius)||26,lightDirection,...changes});
+   const draw=(changes={})=>shader(source,{strength:liquid?1.25:2,optical:1,reflectivity:liquid?.72:.35,liquid:liquid?1:0,surfaceSize:[source.width-2*overscan,source.height-2*overscan],scenePadding:overscan,cornerRadius:parseFloat(getComputedStyle(nav).borderTopLeftRadius)||26,lightDirection,...changes});
    const fallback=()=>{nav.dataset.liveOptics='fallback';delete nav.dataset.opticalMaterial;glass.hidden=true;};
    glass.addEventListener('webglcontextlost',fallback);
    matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',e=>{if(e.matches)fallback()});
@@ -170,8 +171,10 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
     if(gl.isContextLost()||glass.hidden)return;
     const frameStart=performance.now();
     nav.dataset.opticalRefreshes=String(Number(nav.dataset.opticalRefreshes||0)+1);
-    const nr=nav.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,Math.round(nr.width)),h=Math.max(1,Math.round(nr.height));
-    if(glass.width!==Math.round(w*dpr)||glass.height!==Math.round(h*dpr)){glass.width=Math.round(w*dpr);glass.height=Math.round(h*dpr)}
+    const navBounds=nav.getBoundingClientRect();
+    const nr={left:navBounds.left-overscan,top:navBounds.top-overscan,right:navBounds.right+overscan,bottom:navBounds.bottom+overscan,width:Math.round(navBounds.width)+2*overscan,height:Math.round(navBounds.height)+2*overscan};
+    const dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,nr.width),h=Math.max(1,nr.height);
+    if(glass.width!==Math.round((w-2*overscan)*dpr)||glass.height!==Math.round((h-2*overscan)*dpr)){glass.width=Math.round((w-2*overscan)*dpr);glass.height=Math.round((h-2*overscan)*dpr)}
     if(source.width!==w||source.height!==h){source.width=w;source.height=h;}
     const unchangedLayout=lastPaintEpoch===layoutEpoch&&lastPaintWidth===w&&lastPaintHeight===h;
     const sameScroll=lastPaintScrollX===window.scrollX&&lastPaintScrollY===window.scrollY;
@@ -320,7 +323,8 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
     lastPaintScrollX=window.scrollX;lastPaintScrollY=window.scrollY;
     nav.dataset.opticalRasterSkipped=String(skippedRasterFrames);
     nav.dataset.opticalGlyphMeasures=String(glyphMeasurements);nav.dataset.opticalGlyphCacheHits=String(cacheHits);
-    nav.dataset.opticalAlignmentX=String(offsetX.toFixed(2));nav.dataset.opticalAlignmentY=String(offsetY.toFixed(2));
+    nav.dataset.opticalAlignmentX=String((offsetX+overscan).toFixed(2));nav.dataset.opticalAlignmentY=String((offsetY+overscan).toFixed(2));
+    nav.dataset.opticalOverscan=String(overscan);
     try{const delta=uploadRegion?{dirtyRect:uploadRegion}:changedRect();draw({...delta,...(gpuShift?{dirtyRect:uploadRegion,scrollShift:gpuShift}:{})});
     nav.dataset.opticalDiffCompared=String(lastDiffComparedPixels);
     nav.dataset.opticalGpuScrolls=String(shader.stats.gpuScrolls);
