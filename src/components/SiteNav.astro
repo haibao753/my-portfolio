@@ -172,9 +172,10 @@ import {navigation} from "../data/site";
  /* Expanded menu uses the same GPU optical material as the navigation.
     Keep links above the canvas; do not stack frosted pseudo-borders. */
  .mobile-menu[data-menu-optics="active"]{
-  background:rgba(255,255,255,.065);
-  -webkit-backdrop-filter:none;
-  backdrop-filter:none;
+  /* Native centre uses the real browser composited scene; GPU shapes the rim. */
+  background:rgba(246,248,252,.12);
+  -webkit-backdrop-filter:blur(5px) saturate(115%);
+  backdrop-filter:blur(5px) saturate(115%);
   border:1px solid rgba(255,255,255,.32);
   box-shadow:0 18px 52px rgba(12,23,39,.16),inset 0 1px rgba(255,255,255,.32);
  }
