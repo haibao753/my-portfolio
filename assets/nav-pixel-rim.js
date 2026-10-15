@@ -26,10 +26,22 @@ function paint(){
  canvas.width=Math.round(width*dpr);canvas.height=Math.round(rect.height*dpr);
  off.width=width;off.height=126;ctx.fillStyle='#fff';ctx.fillRect(0,0,width,126);
  let found=false;
+ // Approximate CSS color blocks and simple gradients before drawing glyphs/images.
+ // Elements without their own background do not overwrite the scene texture.
+ for(const el of document.querySelectorAll('main *')){
+  const b=el.getBoundingClientRect();
+  if(b.bottom<rect.bottom-30||b.top>rect.bottom+96||b.right<rect.left||b.left>rect.right)continue;
+  const style=getComputedStyle(el);
+  const bg=style.backgroundColor;
+  if(!bg||bg==='transparent'||bg==='rgba(0, 0, 0, 0)')continue;
+  const x=b.left-rect.left-10,y=b.top-rect.bottom+30;
+  ctx.save();ctx.fillStyle=bg;ctx.fillRect(x,y,b.width,b.height);ctx.restore();
+  found=true;
+ }
  // Draw the actual browser-laid-out text fragments rather than guessing one line.
  // Range.getClientRects gives line geometry; individual glyph pixels are rasterized
  // into the texture before WebGL samples them. This is still a reconstruction.
- const candidates=document.querySelectorAll('main h1,main h2,main h3,main h4,main p,main strong');
+ const candidates=document.querySelectorAll('main *');
  for(const el of candidates){
   const b=el.getBoundingClientRect();
   if(b.bottom<rect.bottom-30||b.top>rect.bottom+95||b.right<rect.left||b.left>rect.right)continue;
@@ -38,7 +50,7 @@ function paint(){
   while((node=walker.nextNode())&&lines<140){
    const text=node.textContent;
    if(!text||!text.trim())continue;
-   const parent=node.parentElement||el,style=getComputedStyle(parent);
+   if(node.parentElement!==el)continue; // Each text node is painted once by its own element.\n   const parent=node.parentElement||el,style=getComputedStyle(parent);
    if(style.visibility==='hidden'||style.display==='none')continue;
    const size=parseFloat(style.fontSize);
    if(!Number.isFinite(size)||size<8)continue;
