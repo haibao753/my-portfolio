@@ -168,5 +168,28 @@ import {navigation} from "../data/site";
     inset 0 -1px 0 rgba(119,164,214,.06);
  }
  @media(max-width:760px){.glass-nav{border-radius:28px}}
+
+ /* Expanded menu uses the same GPU optical material as the navigation.
+    Keep links above the canvas; do not stack frosted pseudo-borders. */
+ .mobile-menu[data-menu-optics="active"]{
+  background:rgba(255,255,255,.065);
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  border:1px solid rgba(255,255,255,.32);
+  box-shadow:0 18px 52px rgba(12,23,39,.16),inset 0 1px rgba(255,255,255,.32);
+ }
+ .mobile-menu[data-menu-optics="active"]::before,
+ .mobile-menu[data-menu-optics="active"]::after{display:none}
+ .mobile-menu :global(.menu-optical-layer){
+  position:absolute;inset:0;width:100%;height:100%;pointer-events:none;
+  z-index:0;border-radius:inherit;opacity:1;mix-blend-mode:normal;
+ }
+ .mobile-menu a{z-index:2}
+ :global(html[data-theme="dark"]) .mobile-menu[data-menu-optics="active"]{
+  background:rgba(18,25,38,.12);
+  border-color:rgba(215,231,250,.20);
+ }
 </style>
 <script is:inline type="module" src="/assets/live-homepage-optics.js"></script>
+
+<script is:inline type="module" src="/assets/menu-liquid-optics.js"></script>
