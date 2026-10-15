@@ -265,7 +265,8 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     if(Math.abs(window.scrollY-startScrollY)>2){forceFull=true;schedule();return;}
     // A scrolled frame translates existing pixels: upload the whole shifted texture
     // until a GPU-side texture copy/scroll primitive is available.
-    const uploadRegion=partial&&!canShift?region:null;
+    const uploadRegion=partial?region:null;
+    const gpuShift=partial&&canShift?{x:0,y:scrollDY}:null;
     forceFull=false;pendingRegions=[];
     measuredEpoch=layoutEpoch;
     lastPaintEpoch=layoutEpoch;lastPaintWidth=w;lastPaintHeight=h;
@@ -273,8 +274,9 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     nav.dataset.opticalRasterSkipped=String(skippedRasterFrames);
     nav.dataset.opticalGlyphMeasures=String(glyphMeasurements);nav.dataset.opticalGlyphCacheHits=String(cacheHits);
     nav.dataset.opticalAlignmentX=String(offsetX.toFixed(2));nav.dataset.opticalAlignmentY=String(offsetY.toFixed(2));
-    try{const delta=uploadRegion?{dirtyRect:uploadRegion}:changedRect();shader(source,{strength:2,optical:1,reflectivity:.35,...(delta||{})});
+    try{const delta=uploadRegion?{dirtyRect:uploadRegion}:changedRect();shader(source,{strength:2,optical:1,reflectivity:.35,...(delta||{}),...(gpuShift?{dirtyRect:uploadRegion,scrollShift:gpuShift}:{})});
     nav.dataset.opticalDiffCompared=String(lastDiffComparedPixels);
+    nav.dataset.opticalGpuScrolls=String(shader.stats.gpuScrolls);
     nav.dataset.opticalTextureFull=String(shader.stats.fullUploads);
     nav.dataset.opticalTexturePartial=String(shader.stats.partialUploads);
     nav.dataset.opticalTextureSkipped=String(shader.stats.skippedUploads);
