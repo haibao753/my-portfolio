@@ -27,7 +27,7 @@ test('liquid meniscus preserves the clear centre and CSS-pixel geometry across D
  expect(Math.abs(result[0].edgeAfter[0]-result[1].edgeAfter[0])).toBeLessThanOrEqual(2);
 });
 
-test('liquid lighting redraws without re-uploading the scene and follows theme changes',async({page})=>{
+test('liquid lighting redraws without re-uploading the scene and follows theme changes',async({page,isMobile})=>{
  await page.goto('/?opticalEngine=2');
  const nav=page.locator('.glass-nav'),canvas=page.locator('.live-optical-layer');
  await expect(nav).toHaveAttribute('data-optical-material','liquid-v2');
@@ -44,9 +44,15 @@ test('liquid lighting redraws without re-uploading the scene and follows theme c
  await expect(page.locator('[data-theme-toggle]')).toHaveCSS('color','rgb(21, 32, 45)');
  await expect(page.locator('.brand')).toHaveCSS('color','rgb(21, 32, 45)');
  const box=(await nav.boundingBox())!;
- await page.mouse.move(box.x+box.width*.72,box.y+box.height*.4);
- await expect.poll(()=>nav.evaluate(el=>(el as HTMLElement).style.getPropertyValue('--glass-light-x'))).toBe('72.0%');
+ const pointer={x:box.x+box.width*.72,y:box.y+box.height*.4};
+ if(isMobile)await page.evaluate(({x,y})=>window.dispatchEvent(new PointerEvent('pointerdown',{pointerType:'touch',pointerId:71,clientX:x,clientY:y})),pointer);
+ else await page.mouse.move(pointer.x,pointer.y);
+ await expect.poll(()=>nav.evaluate(async el=>{
+  const path='/assets/glass-pointer-light.js';const {glassPointerFor}=await import(path);
+  const light=glassPointerFor(el);return {x:Math.round(light.pointerLightPosition[0]*100),active:light.pointerLightActive};
+ })).toEqual({x:72,active:1});
  expect(Number(await nav.getAttribute('data-optical-uploaded-pixels'))).toBe(before);
+ if(isMobile)await page.evaluate(()=>window.dispatchEvent(new PointerEvent('pointerup',{pointerType:'touch',pointerId:71})));
  const uploads=Number(await nav.getAttribute('data-optical-texture-full'));
  await page.locator('[data-theme-toggle]').click();
  await expect.poll(async()=>Number(await nav.getAttribute('data-optical-texture-full'))).toBeGreaterThan(uploads);
