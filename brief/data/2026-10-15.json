@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "date": "2026-10-15",
+  "items": [
+    {
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-15",
+      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxObEJraUNzdHNUUE5xeVE1U29vSlhWcWtGa3ZzRGtOUVJfNnFldjZQNlBmU1dHTUFxa2JoRFdERHFkUkdaTUE2ZWdIanh1NE9QUVZWLS1UeVU5cWxWcGJKS0pLSUFBQXBvRVhnamRkSEUwWjZ5LTMtYmNQcTJiRVdrV0JDaVN5Zw?oc=5",
+      "title_zh": "东亚青年就业危机掩盖了即将到来的劳动力短缺",
+      "summary_zh": "文章指出，尽管东亚地区当前面临严峻的青年失业问题，但这可能掩盖了未来因人口结构变化导致的劳动力短缺趋势。这种短期困境与长期结构性矛盾并存，对政策制定和社会预期产生复杂影响。",
+      "why_zh": "提供宏观视角，揭示就业数据背后的结构性悖论，区别于单纯报道失业率的常规新闻。"
+    },
+    {
+      "category": "科学研究",
+      "source": "Nature Machine Learning",
+      "published": "2026-10-14",
+      "url": "https://www.nature.com/articles/d41586-026-03223-8",
+      "title_zh": "中国人工智能研究蓬勃发展：身处一线的感受",
+      "summary_zh": "《自然》杂志探讨了中国AI研究的快速扩张及其对科研生态的影响。文章通过一线研究人员视角，分析资源投入、竞争压力及国际合作现状，呈现中国在全球AI版图中的实际位置与挑战。",
+      "why_zh": "来自顶级科学期刊的深度观察，结合国际视野与中国本土实践，具有较高学术参考价值。"
+    },
+    {
+      "category": "国际科技",
+      "source": "TechCrunch",
+      "published": "2026-10-15",
+      "url": "https://techcrunch.com/2026/10/14/ricursive-intelligence-is-betting-on-ai-designed-chips-to-help-solve-the-compute-crisis/",
+      "title_zh": "Ricursive Intelligence押注AI设计芯片以解决算力危机",
+      "summary_zh": "初创公司Ricursive Intelligence开发能自主设计并迭代优化芯片的AI系统，旨在加速硬件研发流程以应对全球算力瓶颈。该模式试图通过自动化降低设计门槛并提升效率。",
+      "why_zh": "聚焦AI基础设施底层创新，展示技术如何反向赋能硬件设计，具备前沿产业启发意义。"
+    },
+    {
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-10-14",
+      "url": "https://arstechnica.com/security/2026/10/fridge-hack-costing-millions-and-sparking-fires-stemmed-from-poor-security/",
+      "title_zh": "超市冰箱黑客攻击源于安全漏洞，造成数百万损失并引发火灾",
+      "summary_zh": "Ars Technica报道一起针对700家超市物联网设备的网络攻击事件。由于设备暴露于互联网且存在过时安全补丁，导致大规模故障、经济损失甚至火灾隐患，凸显IoT安全短板。",
+      "why_zh": "具体案例警示物联网在关键基础设施中的安全风险，比一般科技新闻更具现实危害性参考。"
+    },
+    {
+      "category": "数学",
+      "source": "Quanta Magazine",
+      "published": "2026-10-14",
+      "url": "https://www.quantamagazine.org/triplet-of-ghostly-galaxies-hints-at-what-dark-matter-is-and-isnt-20261014/",
+      "title_zh": "“幽灵”星系三重奏揭示暗物质的本质与局限",
+      "summary_zh": "Quanta Magazine报道，一次星系碰撞可能导致三个星系缺失暗物质。这一发现对替代引力理论构成挑战，为理解暗物质是否存在及其性质提供了关键观测证据，深化了宇宙学基础研究的讨论。",
+      "why_zh": "区别于普通天文新闻，该研究直接触及物理学核心争议，展示科学如何通过异常现象检验理论边界，具有极高的学术启发价值。"
+    },
+    {
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOS2MyWnNPV3k1Q0dYNjBabG1GYi1uYnZqUUx0d3RhZFVYYU5YcGd3RmpPWWZVRjRRTURjcThFNXFSU2RhQzdVWENFbTBNYmNwendldUdCVUsyWVltWndNbHcySWwwMnZrTDVhdUs0YXM3a3F0cjRtaUZhQ1RBNnhqYWh6QTBydW5Dc2VKd0xDQTJBVmJjdEs3Qw?oc=5",
+      "title_zh": "中亚维吾尔人处境与美国外交角色的潜在影响",
+      "summary_zh": "The Diplomat分析指出，对于居住在中亚的维吾尔人群体，美国的外交政策可能成为其生存的关键因素。文章探讨了地缘政治背景下的人权议题及国际干预的可能性，呈现了特定群体的跨国困境。",
+      "why_zh": "提供国内媒体较少深入探讨的国际视角，聚焦具体人群在地缘政治中的真实处境，有助于读者理解复杂国际关系下的人道主义议题。"
+    },
+    {
+      "category": "AI",
+      "source": "Google Research",
+      "published": "2026-10-14",
+      "url": "https://research.google/blog/putting-earth-ai-to-work-geospatial-agents-for-our-planets-biggest-challenges/",
+      "title_zh": "谷歌推出地球AI：应对全球挑战的地理空间智能代理",
+      "summary_zh": "Google Research发布Earth AI项目，利用地理空间智能代理技术解决气候变化、灾害响应等全球性重大挑战。该项目展示了AI在宏观环境数据处理与实际应用层面的最新进展，强调技术对社会问题的赋能。",
+      "why_zh": "体现AI从通用模型向垂直领域（如地理空间）深化的趋势，展示科技巨头如何将前沿算法应用于解决现实世界的基础设施与环境问题。"
+    },
+    {
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-14",
+      "url": "https://www.psypost.org/neighborhood-air-pollution-linked-to-slower-brain-development-in-early-adolescence/",
+      "title_zh": "社区空气污染与青少年早期大脑发育迟缓存在关联",
+      "summary_zh": "PsyPost报道一项研究发现，居住在细颗粒物或臭氧水平不健康区域的儿童，其认知表现和大脑成熟度的两年增长幅度低于人口统计学匹配的同伴。这揭示了环境污染对神经发育的长期负面影响。",
+      "why_zh": "将公共卫生数据与神经科学结合，量化了环境因素对个体发展的具体损害，为关注教育公平与健康政策的读者提供了实证依据。"
+    }
+  ]
+}
