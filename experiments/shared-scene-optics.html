@@ -4,7 +4,7 @@
 (()=>{
 const viewport=document.querySelector('#viewport'),scene=document.querySelector('#scene'),rim=document.querySelector('#rim'),status=document.querySelector('#status'),power=document.querySelector('#power'),optics=document.querySelector('#optics');
 const context=scene.getContext('2d',{alpha:false});const gl=rim.getContext('webgl',{alpha:true,preserveDrawingBuffer:true,antialias:false});
-const height=1850;let width=0;let textureDirty=true;
+const height=1850;let width=0;let textureDirty=true;let textureUploads=0;
 const svg='<svg xmlns="http://www.w3.org/2000/svg" width="240" height="130"><circle cx="120" cy="65" r="54" fill="#18b85a"/><path d="M35 65h170M120 8v114" stroke="#fff" stroke-width="10"/></svg>';
 const photo=new Image();photo.decoding='async';photo.src='/images/1.jpg';\nconst vector=new Image();vector.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
 const red=new Image();red.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="240" height="130"><rect width="240" height="130" fill="#f02732"/><circle cx="80" cy="65" r="34" fill="#ffdc40"/></svg>');
@@ -29,7 +29,7 @@ let prog,texture;if(gl){try{prog=gl.createProgram();gl.attachShader(prog,compile
 function render(){
  if(!prog){status.textContent='WebGL 不可用，使用 CSS 回退';return}
  const box=rim.getBoundingClientRect(),scale=Math.min(devicePixelRatio||1,2);rim.width=Math.round(box.width*scale);rim.height=Math.round(box.height*scale);
- gl.viewport(0,0,rim.width,rim.height);gl.useProgram(prog);gl.bindTexture(gl.TEXTURE_2D,texture);if(textureDirty){gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,scene);textureDirty=false;}
+ gl.viewport(0,0,rim.width,rim.height);gl.useProgram(prog);gl.bindTexture(gl.TEXTURE_2D,texture);if(textureDirty){gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,scene);textureDirty=false;textureUploads++;}
  gl.uniform1i(gl.getUniformLocation(prog,'scene'),0);
  gl.uniform1f(gl.getUniformLocation(prog,'sourceTop'),viewport.scrollTop+20);
  gl.uniform1f(gl.getUniformLocation(prog,'sourceHeight'),box.height);
@@ -37,9 +37,9 @@ function render(){
  gl.uniform1f(gl.getUniformLocation(prog,'strength'),Number(power.value));
  gl.uniform1f(gl.getUniformLocation(prog,'enabled'),optics.checked?1:0);
  gl.uniform1f(gl.getUniformLocation(prog,'width'),width);
- gl.drawArrays(gl.TRIANGLE_STRIP,0,4);status.textContent='WebGL · 全场景 RGB 纹理取样';
+ gl.drawArrays(gl.TRIANGLE_STRIP,0,4);status.textContent='WebGL · 全场景 RGB 纹理取样 · GPU 上传 '+textureUploads+' 次';
 }
 let pending=false;function schedule(){if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;render()})}}
-viewport.addEventListener('scroll',schedule,{passive:true});power.addEventListener('input',schedule);optics.addEventListener('change',schedule);window.addEventListener('resize',draw);document.querySelector('#reset').addEventListener('click',()=>{viewport.scrollTop=0;schedule()});red.onload=draw;vector.onload=draw;photo.onload=draw;photo.onerror=draw;draw();
+viewport.addEventListener('scroll',schedule,{passive:true});power.addEventListener('input',schedule);optics.addEventListener('change',schedule);window.addEventListener('resize',draw);document.querySelector('#reset').addEventListener('click',()=>{viewport.scrollTop=0;schedule()});red.onload=draw;vector.onload=draw;photo.onload=draw;photo.onerror=draw;document.fonts?.ready.then(draw);draw();
 })();
 </script></body></html>
