@@ -30,6 +30,8 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Type check
         run: npm run check
+      - name: Guard experimental default Worker deployment
+        run: node --test tests/build-guard.test.mjs
       - name: Fetch latest published brief data from main
         run: |
           git fetch --no-tags --depth=1 origin main

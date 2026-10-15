@@ -52,6 +52,23 @@ This approach should be checked against Cloudflare's current build environment b
 
 ## CI safeguards and artifacts
 
+### Default Workers command on the experimental branch
+
+The root wrangler.jsonc explicitly selects the existing my-portfolio Worker and
+static dist assets, so Wrangler no longer guesses the jh-lab package name or an
+Astro SSR Worker entry point. Its custom build accepts preview/version uploads
+and rejects default wrangler deploy. This file is only on the experimental PR;
+it must not be copied to main as a production release.
+
+The separate wrangler.preview.jsonc still deploys only jhlab-preview. Cloudflare
+Pages keeps using its dashboard configuration (no pages_build_output_dir is
+declared in the root Workers config).
+
+Reproduced before this repair: the default deployment command entered Astro
+auto-configuration and failed with Missing entry-point to Worker script or to
+assets directory. This reproduction is evidence of a source configuration
+defect; Cloudflare's detailed remote failure must still be checked independently.
+
 GitHub Actions fetches the latest publicly published `main` news JSON **inside the runner only** before building, then validates Astro, existing routes, desktop and mobile Chromium UX and a Wrangler **dry-run**. It uploads a complete static `dist/` artifact, screenshots and traces. A dry-run validates the upload shape but does **not** deploy, guarantee permissions, or produce a preview URL.
 
 Latest runs and artifacts: https://github.com/haibao753/my-portfolio/actions
