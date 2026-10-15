@@ -329,3 +329,22 @@ test("optical laboratory preserves native mobile scrolling with visible DOM link
  await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBeGreaterThan(before+100);
  await expect(page.locator("#optic-menu a")).toHaveCount(6);
 });
+
+
+test("floating mobile menu supports page scrolling and menu controls across themes",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ await toggle.click();
+ const panel=page.locator("[data-menu-panel]");
+ await expect(panel).toBeVisible();
+ await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight-innerHeight,behavior:"instant"}));
+ await expect(toggle).toBeInViewport();
+ await expect(panel).toBeInViewport();
+ await page.locator("[data-theme-toggle]").click();
+ await expect(panel).toBeVisible();
+ await page.locator("[data-language-toggle]").click();
+ await expect(panel.locator("a").first()).toBeVisible();
+ await toggle.click();
+ await expect(panel).toBeHidden();
+});
