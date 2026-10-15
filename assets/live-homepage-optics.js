@@ -10,7 +10,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
   const glass=document.createElement('canvas');glass.className='live-optical-layer';glass.setAttribute('aria-hidden','true');
   nav.prepend(glass);
   const gl=glass.getContext('webgl',{alpha:true,preserveDrawingBuffer:true,antialias:false});
-  const source=document.createElement('canvas'),ctx=source.getContext('2d',{alpha:false});
+  const source=document.createElement('canvas'),ctx=source.getContext('2d',{alpha:true});
   // Expose the real input surface to browser pixel tests without rendering it onscreen.
   glass.opticalSource=source;
   let shader=null;
@@ -27,7 +27,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     const nr=nav.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,Math.round(nr.width)),h=Math.max(1,Math.round(nr.height));
     if(glass.width!==Math.round(w*dpr)||glass.height!==Math.round(h*dpr)){glass.width=Math.round(w*dpr);glass.height=Math.round(h*dpr)}
     if(source.width!==w||source.height!==h){source.width=w;source.height=h;}
-    ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);
+    ctx.clearRect(0,0,w,h);
     let elements=0,images=0,colors=0,gradients=0,vectors=0;
     const offsetX=nr.left,offsetY=nr.top;
     const startScrollY=window.scrollY;
