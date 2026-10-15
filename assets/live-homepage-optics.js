@@ -17,6 +17,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
   if(gl&&ctx){try{shader=setup(gl)}catch(err){nav.dataset.opticalError='shader'}}
   if(shader){
    nav.dataset.liveOptics='on';
+   const vectorCache=new WeakMap();
    let candidates=Array.from(root.querySelectorAll('*'));
    const observer=new MutationObserver(()=>{candidates=Array.from(root.querySelectorAll('*'));schedule()});
    observer.observe(root,{childList:true,subtree:true});
@@ -27,7 +28,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     if(glass.width!==Math.round(w*dpr)||glass.height!==Math.round(h*dpr)){glass.width=Math.round(w*dpr);glass.height=Math.round(h*dpr)}
     if(source.width!==w||source.height!==h){source.width=w;source.height=h;}
     ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);
-    let elements=0,images=0,colors=0;
+    let elements=0,images=0,colors=0,gradients=0,vectors=0;
     const startScrollY=window.scrollY;
     const nearby=[];
     // Only objects crossing the navbar geometry are relevant; draw in document order.
@@ -48,6 +49,32 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
      }
     }
     for(const {el,r,style} of nearby){
+     const bg=style.backgroundImage;
+     const m=bg&&bg.match(/^linear-gradient\\(\\s*(to right|to left|to bottom|to top)\\s*,\\s*(#[0-9a-f]{3,8}|rgb\\([^)]*\\))\\s*,\\s*(#[0-9a-f]{3,8}|rgb\\([^)]*\\))\\s*\\)$/i);
+     if(m){
+      const gradient=ctx.createLinearGradient(r.left-nr.left,r.top-nr.top,
+       r.left-nr.left+(m[1]==='to right'?r.width:m[1]==='to left'?-r.width:0),
+       r.top-nr.top+(m[1]==='to bottom'?r.height:m[1]==='to top'?-r.height:0));
+      gradient.addColorStop(0,m[2]);gradient.addColorStop(1,m[3]);ctx.fillStyle=gradient;
+      ctx.fillRect(r.left-nr.left,r.top-nr.top,r.width,r.height);gradients++;
+     }
+     if(el instanceof SVGSVGElement){
+      let cached=vectorCache.get(el);
+      const signature=el.outerHTML;
+      if(!cached||cached.signature!==signature){
+       const image=new Image();
+       const blob=new Blob([new XMLSerializer().serializeToString(el)],{type:'image/svg+xml'});
+       const url=URL.createObjectURL(blob);
+       cached={image,signature};
+       vectorCache.set(el,cached);
+       image.onload=()=>{URL.revokeObjectURL(url);schedule()};
+       image.onerror=()=>URL.revokeObjectURL(url);
+       image.src=url;
+      }
+      if(cached.image.complete&&cached.image.naturalWidth){
+       try{ctx.drawImage(cached.image,r.left-nr.left,r.top-nr.top,r.width,r.height);vectors++}catch{}
+      }
+     }
      if(elements>240)break;
      if(el instanceof HTMLImageElement&&el.complete&&el.naturalWidth){
       const url=new URL(el.currentSrc||el.src,location.href);
@@ -85,7 +112,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
      }
     }
     if(Math.abs(window.scrollY-startScrollY)>2){schedule();return;}
-    try{shader(source,{strength:2,optical:1,reflectivity:.35});nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalError='';nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1)}catch{nav.dataset.opticalError='texture'}
+    try{shader(source,{strength:2,optical:1,reflectivity:.35});nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalGradients=String(gradients);nav.dataset.opticalVectors=String(vectors);nav.dataset.opticalError='';nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1)}catch{nav.dataset.opticalError='texture'}
    };
    let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
    addEventListener('scroll',schedule,{passive:true});
