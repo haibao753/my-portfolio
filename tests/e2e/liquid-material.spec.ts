@@ -63,7 +63,7 @@ test('liquid material returns to usable CSS glass after context loss or reduced 
  await expect(page.locator('.live-optical-layer')).toBeHidden();
  await expect(nav.locator('.brand')).toBeVisible();
  await page.emulateMedia({reducedMotion:'reduce'});
- await page.goto('/?opticalEngine=2');
+ await page.goto('/');
  await expect(page.locator('.live-optical-layer')).toHaveCount(0);
  await expect(page.locator('[data-theme-toggle]')).toBeVisible();
 });

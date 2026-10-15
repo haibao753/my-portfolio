@@ -1,13 +1,20 @@
-/* Experimental live homepage-to-GPU adapter.
+/* Live homepage-to-GPU adapter.
  * DOM text and same-origin images are re-rasterized at browser-computed positions.
- * This is NOT browser compositor capture and is deliberately opt-in.
+ * This is NOT browser compositor capture.
  */
 import {setup} from '/assets/optical-engine.js';
 const params=new URLSearchParams(location.search);
-const liquid=params.get('opticalEngine')==='2';
-// The query is an explicit material preview, overriding the OS transparency
-// preference for this visit. Ordinary URLs retain the existing CSS fallback.
-if(['1','2'].includes(params.get('opticalEngine'))&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+const requested=params.get('opticalEngine');
+const mode=requested===null?'2':requested;
+const liquid=mode==='2';
+// Keep ordinary navigation URLs clean; preserve explicit comparison/disable links.
+if(['0','1','2'].includes(requested))document.querySelectorAll('a[href]').forEach(link=>{
+ const target=new URL(link.href,location.href);
+ if(target.origin===location.origin&&['/','/brief/'].includes(target.pathname)){
+  target.searchParams.set('opticalEngine',requested);link.href=target.href;
+ }
+});
+if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
  const nav=document.querySelector('.glass-nav'),root=document.querySelector('main');
  if(nav&&root){
   const glass=document.createElement('canvas');glass.className='live-optical-layer';glass.setAttribute('aria-hidden','true');
@@ -21,12 +28,6 @@ if(['1','2'].includes(params.get('opticalEngine'))&&!matchMedia('(prefers-reduce
   if(shader){
    nav.dataset.liveOptics='on';
    nav.dataset.opticalMaterial=liquid?'liquid-v2':'classic';
-   if(liquid)document.querySelectorAll('a[href]').forEach(link=>{
-    const target=new URL(link.href,location.href);
-    if(target.origin===location.origin&&['/','/brief/'].includes(target.pathname)){
-     target.searchParams.set('opticalEngine','2');link.href=target.href;
-    }
-   });
    let lightDirection=[-.55,.85];
    const inkTargets=Array.from(nav.querySelectorAll('.desktop-links a,.brand,.controls button'));
    const updateInk=()=>{
