@@ -185,6 +185,18 @@ import {navigation} from "../data/site";
   position:absolute;inset:0;width:100%;height:100%;pointer-events:none;
   z-index:0;border-radius:inherit;opacity:.52;mix-blend-mode:normal;
  }
+ /* Clip the rectangular GPU backing canvas, not the scrollable menu's content. */
+ .mobile-menu :global(.menu-optical-layer){
+  clip-path:inset(0 round 32px);
+  -webkit-clip-path:inset(0 round 32px);
+ }
+ .glass-nav :global(.live-optical-layer){
+  clip-path:inset(0 round 30px);
+  -webkit-clip-path:inset(0 round 30px);
+ }
+ @media(max-width:760px){
+  .glass-nav :global(.live-optical-layer){clip-path:inset(0 round 28px);-webkit-clip-path:inset(0 round 28px)}
+ }
  .mobile-menu a{z-index:2}
  :global(html[data-theme="dark"]) .mobile-menu[data-menu-optics="active"]{
   background:rgba(18,25,38,.045)!important;
