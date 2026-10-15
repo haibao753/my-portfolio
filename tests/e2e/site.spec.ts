@@ -817,3 +817,22 @@ test("optical geometry cache reuses measured document bounds across scroll frame
  await page.evaluate(()=>{document.querySelector("main")!.style.paddingTop="7px";dispatchEvent(new Event("resize"))});
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-geometry-reads")||0)).toBeGreaterThan(0);
 });
+
+test("live optical GPU texture skips unchanged frames and uploads a localized color patch",async({page})=>{
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ const initial=Number(await nav.getAttribute("data-optical-texture-full")||0);
+ await page.evaluate(()=>dispatchEvent(new Event("scroll")));
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-texture-skipped")||0)).toBeGreaterThan(0);
+ await page.evaluate(()=>{
+  const nr=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const patch=document.createElement("div");
+  patch.style.cssText="position:fixed;left:"+Math.round(nr.left+18)+"px;top:"+Math.round(nr.top+16)+"px;width:18px;height:16px;background:rgb(220,30,50)";
+  document.querySelector("main")!.appendChild(patch);
+  dispatchEvent(new Event("scroll"));
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-texture-partial")||0)).toBeGreaterThan(0);
+ const full=Number(await nav.getAttribute("data-optical-texture-full")||0);
+ expect(full).toBe(initial);
+});
