@@ -17,9 +17,24 @@ interception. The note is a non-modal dialog, dismissible with Escape; closing
 restores focus to its trigger. Theme, locale and reduced motion remain shared
 with the rest of the site. Without JavaScript, objects are direct project links.
 
-The existing optical engine and all production deployment settings are reused.
-The glass study on the desk is a CSS material, while the navigation keeps the
-existing WebGL engine. No third-party service, analytics or backend is added.
+The first screen is an optical playground. Three freely moving GPU lenses reuse
+the shared engine over a controlled canvas plate. Their source is sampled using
+the inverse of each lens's translation and rotation, so the clear body stays
+aligned with the actual visible scene. Spectrum, photographs and typography are
+different plates; depth adjusts the bevel. Dragging and rotation work with mouse,
+touch and keyboard. Vertical phone gestures continue to scroll the document.
+
+Optional lensPower, shapeWobble and shapePhase extend the shared kernel for convex
+body magnification and a bounded, softly changing droplet contour. Defaults are
+zero, preserving existing navigation optics. This remains an optical
+approximation over a controlled scene, not compositor capture or a fluid solver.
+
+Motion is capped at 30 desktop/20 phone draws per second; these are scheduling
+caps, not measured GPU frame-rate guarantees. Pause, an offscreen stage or a
+hidden document stops the animation loop. Reduced motion starts paused, with an
+explicit play control. GPU context loss leaves a usable static CSS fallback.
+The smaller glass study on the desk remains CSS. No third-party service,
+analytics, backend or production deployment setting is added.
 
 Local review: `npm ci`, `npm run validate`, then
 `npm run preview -- --host 127.0.0.1 --port 4324` and open `/lab/`.

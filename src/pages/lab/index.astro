@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ExplorationDesk from '../../components/ExplorationDesk.astro';
+import LiquidAtelier from '../../components/LiquidAtelier.astro';
 import {projects,contact} from '../../data/site';
 ---
-<BaseLayout title="J.H. LAB — 随便走走 / Open Studio" description="一个可以探索、摆弄和偶遇新想法的个人实验室。">
+<BaseLayout title="J.H. LAB — 光的游乐场 / Light Playground" description="拖动、旋转，让液态玻璃在照片、字形与光谱之间自由流动。">
+ <LiquidAtelier />
  <ExplorationDesk />
  <section class="field-notes wrap" aria-labelledby="field-notes-title">
   <header><p class="eyebrow">FIELD NOTES / 2026</p><h2 id="field-notes-title"><span data-locale="zh">逛累了，就坐一会儿。</span><span data-locale="en">Take a seat. Stay curious.</span></h2></header>
