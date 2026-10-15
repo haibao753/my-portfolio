@@ -49,7 +49,7 @@ vec4 liquidPixel(){
  float incidence=atan(slope);
  float transmitted=asin(clamp(sin(incidence)/ior,0.,.999));
  float nonlinear=sin(incidence-transmitted);
- float travel=(3.+width*.55)*strength*nonlinear*bending;
+ float travel=(5.+width*2.4)*strength*nonlinear*bending;
  vec2 offset=-normal*travel/size;
  vec2 sampleUV=clamp(uv+offset,0.,1.);
  vec2 chromatic=normal*(.26*strength*bending)/size;
