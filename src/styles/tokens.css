@@ -3,6 +3,10 @@
  --bg:#f7f7f5;--fg:#1d1d1f;--muted:#67676e;--card:#fff;
  --stroke:rgba(25,27,35,.10);--accent:#086bdf;
  --glass:rgba(250,250,250,.68);
+ --optic-glass-fill:linear-gradient(140deg,rgba(255,255,255,.18),rgba(220,240,255,.035) 46%,rgba(255,255,255,.09));
+ --optic-glass-rim:rgba(255,255,255,.76);
+ --optic-glass-filter:blur(3px) saturate(180%) contrast(1.07);
+ --optic-glass-edge:inset 0 2px 2px rgba(255,255,255,.92),inset 0 -2px 4px rgba(110,165,230,.17);
  --shadow-sm:0 5px 18px rgba(25,28,37,.055);
  --shadow-md:0 16px 44px rgba(25,28,37,.08);
  --shadow-lg:0 22px 64px rgba(25,28,37,.14);
@@ -13,6 +17,9 @@
  color-scheme:dark;--bg:#131417;--fg:#f6f6f7;--muted:#a9a9b1;
  --card:#202126;--stroke:rgba(255,255,255,.12);--accent:#80b5ff;
  --glass:rgba(27,29,34,.70);
+ --optic-glass-fill:linear-gradient(140deg,rgba(120,157,194,.19),rgba(30,48,68,.10) 50%,rgba(112,157,198,.10));
+ --optic-glass-rim:rgba(224,240,255,.42);
+ --optic-glass-edge:inset 0 1px rgba(255,255,255,.42),inset 0 -1px rgba(133,179,239,.22);
  --shadow-sm:0 5px 18px rgba(0,0,0,.17);
  --shadow-md:0 18px 48px rgba(0,0,0,.3);
  --shadow-lg:0 24px 70px rgba(0,0,0,.45);

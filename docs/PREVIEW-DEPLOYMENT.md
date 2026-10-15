@@ -1,4 +1,4 @@
-# J.H. LAB 2.0 — Cloudflare Workers staging
+# J.H. LAB — Cloudflare production and independent preview
 
 ## Verified production configuration (Cloudflare dashboard screenshots, 2026-10-15)
 
@@ -8,7 +8,7 @@
 - Build command: **none**. Deploy command: **`npx wrangler deploy`**. Root: `/`.
 - Existing production API build token: managed **only in Cloudflare**, not in this repository.
 
-**Do not change the production Worker, custom domain, production branch, build command, or deploy command during preview.**
+The owner approved production promotion on 2026-10-15 after reviewing the independent preview. Keep the existing Worker, domain, branch and dashboard commands. The root Wrangler custom build now supplies the missing Astro build step and publishes static dist assets.
 
 ## Dedicated preview Worker
 
@@ -52,13 +52,13 @@ This approach should be checked against Cloudflare's current build environment b
 
 ## CI safeguards and artifacts
 
-### Default Workers command on the experimental branch
+### Default Workers command and branch protection
 
 The root wrangler.jsonc explicitly selects the existing my-portfolio Worker and
 static dist assets, so Wrangler no longer guesses the jh-lab package name or an
-Astro SSR Worker entry point. Its custom build accepts preview/version uploads
-and rejects default wrangler deploy. This file is only on the experimental PR;
-it must not be copied to main as a production release.
+Astro SSR Worker entry point. Its custom build accepts preview/version uploads.
+Default wrangler deploy is permitted only when the deployment branch is main,
+following the owner's explicit approval. Unknown/feature branches fail closed.
 
 The separate wrangler.preview.jsonc still deploys only jhlab-preview. Cloudflare
 Pages keeps using its dashboard configuration (no pages_build_output_dir is
@@ -80,4 +80,4 @@ Latest runs and artifacts: https://github.com/haibao753/my-portfolio/actions
 - Check all four work cards, external links, 3D previews, copy-WeChat controls.
 - Check latest `/brief/data/index.json` and dated issue files, filters and external source links.
 - Check `/experiments/minimal-surfaces-classical.html` and `periodic.html`.
-- Keep the draft PR open, production unchanged, until the visual and deployment requirements are met.
+- Merge the approved PR only after the source/build/browser checks pass. Verify the main-branch Cloudflare deployment and the actual production response after merging; a preview success alone is insufficient.

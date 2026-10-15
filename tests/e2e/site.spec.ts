@@ -219,6 +219,29 @@ test("mobile menu glass stays compact and translucent",async({page,isMobile})=>{
  await expect(backdrop).toBeHidden();
 });
 
+test("glass toolbar remains readable and the floating menu clears its lower edge",async({page,isMobile})=>{
+ await page.goto("/");
+ const header=page.locator(".glass-nav");
+ await expect(header).toHaveCSS("backdrop-filter",/blur\(3px\)/);
+ const before=await header.boundingBox();
+ expect(before?.y??-1).toBeGreaterThanOrEqual(7);
+ await page.locator("[data-theme-toggle]").click();
+ await expect(header).toBeInViewport();
+ if(isMobile){
+  await page.locator("[data-menu-toggle]").click();
+  const panel=page.locator("[data-menu-panel]");
+  const [barBox,menuBox]=await Promise.all([header.boundingBox(),panel.boundingBox()]);
+  expect(menuBox!.y).toBeGreaterThanOrEqual(barBox!.y+barBox!.height+6);
+  await page.evaluate(()=>window.scrollTo({top:600,behavior:"instant"}));
+  await expect(header).toBeInViewport();
+  await expect(panel).toBeVisible();
+  const after=await header.boundingBox();
+  expect(Math.abs(after!.y-before!.y)).toBeLessThan(2);
+ }
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+ expect(overflow).toBeLessThanOrEqual(2);
+});
+
 test("theme icon switches appearance and exposes pressed state",async({page})=>{
  await page.goto("/");
  const toggle=page.locator("[data-theme-toggle]");

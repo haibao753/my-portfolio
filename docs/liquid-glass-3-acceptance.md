@@ -1,6 +1,6 @@
 # Liquid Glass 3.0 — mobile acceptance
 
-This PR is a **preview**, not a production release. It combines a CSS-backed glass menu with a separate WebGL optics lab. It does **not** capture or refract live website DOM pixels.
+The owner approved promoting the reviewed preview on 2026-10-15 and requested matching glass styling on the toolbar. It combines CSS-backed glass navigation with a separate WebGL optics lab. It does **not** capture or refract live website DOM pixels. Main-branch deployment still requires verification after merging.
 
 ## Functional checks (Android Chrome, plus iOS Safari if available)
 
@@ -33,4 +33,4 @@ Navigate to `/experiments/liquid-glass-optics.html`.
 
 ## Acceptance boundary
 
-CI covers navigation, scrolling, accessibility regression, and build integrity. Visual resemblance to Apple's Liquid Glass, native-device frame pacing, and optical accuracy **require manual device review**. Do not merge this experimental PR into `main` merely because CI is green.
+CI covers navigation, scrolling, accessibility regression, and build integrity. Visual resemblance to Apple's Liquid Glass, native-device frame pacing, and optical accuracy require manual device review. The owner has accepted the existing phone preview; retain this distinction in release notes.

@@ -1,6 +1,6 @@
-# J.H. LAB — Astro Foundation (work in progress)
+# J.H. LAB — Astro portfolio and daily briefing
 
-> This branch starts a staged migration. **Main / production has not been replaced.**
+The owner approved promoting the reviewed Liquid Glass preview to production on 2026-10-15. The site uses Astro static output, shared glass navigation, and a separately generated daily briefing archive.
 
 ## Local usage
 ```sh
@@ -20,7 +20,7 @@ npm run test:e2e # after installing Playwright Chromium
 - The preview/dev server may not serve every legacy URL until the content is moved into public/ or a preview build is used; use `npm run build && npm run preview` for migration acceptance.
 
 ## Deployment
-Before merging, update the Cloudflare build command to `npm run build` and output directory to `dist` **only after** verifying a preview deployment. Do not switch the live environment just because this branch exists.
+Cloudflare's existing `npx wrangler deploy` command reads the root `wrangler.jsonc`. Its custom build synchronizes published news JSON and runs the Astro build. Only the approved `main` branch can deploy production; other branches use preview/version uploads. The existing Worker and domain remain `my-portfolio` and `hujinhai.com`. No dashboard build-command change is needed.
 
 ## Remaining work
 - Inspect GitHub Actions Playwright screenshots and perform manual Android/Windows visual checks.
@@ -30,4 +30,4 @@ Before merging, update the Cloudflare build command to `npm run build` and outpu
 - Migrate experiments incrementally only after performance checks.
 
 ## Reviewable staging output
-Every successful GitHub Action now uploads a `dist/` staging site artifact alongside screenshots; see [safe preview deployment](docs/PREVIEW-DEPLOYMENT.md). CI previews sync current `main` news data without committing generated changes. No production switch or public preview URL has been configured automatically.
+Every successful GitHub Action uploads a `dist/` artifact alongside screenshots; see [deployment details](docs/PREVIEW-DEPLOYMENT.md). CI previews sync current `main` news data without committing generated changes. Independent preview: https://experiment-liquid-glass-3d-o.jhlab-preview.pages.dev/

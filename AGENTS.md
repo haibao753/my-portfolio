@@ -3,9 +3,11 @@
 ## Goal
 Build a maintainable, multilingual, accessible creative portfolio. Prefer restrained Apple-inspired editorial design, original art direction, and fast mobile performance.
 
-## Migration safety
-- **Do not replace, delete or deploy the legacy main branch during the refactor.**
-- Astro migration lives on `refactor/astro-foundation` until verified, reviewed and merged.
+## Production and release safety
+- The owner approved promoting the reviewed Liquid Glass preview to production on 2026-10-15, including matching glass styling on the toolbar.
+- Production source is the Astro `src/` tree. Production builds use `npm run build`, including the legacy asset/JSON copy step, and publish only `dist/`.
+- Only `main` may use default `wrangler deploy`; feature branches use preview/version uploads or the dedicated preview configuration.
+- Future major design changes still require owner approval. Keep changes in a PR until the relevant checks pass.
 - Keep all existing routes, assets, daily news JSON, email, WeChat and outgoing links working.
 - The separate private news automation publishes into `brief/data/`; do not alter its schema or pipeline.
 - The legacy /brief/, /experiments/, /assets/ and /images/ directories are copied into dist/ after build. Migrate deliberately later.

@@ -70,6 +70,14 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
    const panel=document.querySelector<HTMLElement>("[data-menu-panel]");
    const backdrop=document.querySelector<HTMLElement>("[data-menu-backdrop]");
    const motionReduced=window.matchMedia("(prefers-reduced-motion: reduce)");
+   const header=document.querySelector<HTMLElement>(".glass-nav");
+   const positionMenu=()=>{
+    if(header&&panel)panel.style.setProperty("--menu-top",Math.ceil(header.getBoundingClientRect().bottom+8)+"px");
+   };
+   if(header)new ResizeObserver(positionMenu).observe(header);
+   window.addEventListener("resize",positionMenu,{passive:true});
+   window.visualViewport?.addEventListener("resize",positionMenu,{passive:true});
+   positionMenu();
    if(panel)panel.inert=true;
    let closeTimer:ReturnType<typeof setTimeout>|undefined;
    const finishClose=()=>{
@@ -90,6 +98,7 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
    };
    const openMenu=()=>{
     if(!menu||!panel||!backdrop)return;
+    positionMenu();
     if(closeTimer!==undefined){clearTimeout(closeTimer);closeTimer=undefined;}
     delete panel.dataset.closing;delete backdrop.dataset.closing;
     panel.hidden=false;backdrop.hidden=false;
