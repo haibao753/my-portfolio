@@ -4,6 +4,7 @@ import {navigation} from "../data/site";
 <header class="glass-nav">
  <span class="nav-rim-reflection" aria-hidden="true"></span>
  <span class="nav-rim-dark" aria-hidden="true"></span>
+ <canvas class="nav-pixel-rim" aria-hidden="true"></canvas>
  <div class="nav-inner wrap">
   <a href="/" class="brand" aria-label="J.H. LAB 首页"><span aria-hidden="true"></span></a>
   <nav class="desktop-links" aria-label="Main navigation">
@@ -137,74 +138,11 @@ import {navigation} from "../data/site";
  :global(html[data-theme="dark"]) .glass-nav .nav-rim-dark span{
   background:linear-gradient(to bottom,transparent,rgba(0,0,0,.85) 46%,rgba(0,0,0,.7) 80%,transparent);
  }
+
+ .glass-nav .nav-pixel-rim{position:absolute;left:10px;right:10px;bottom:-3px;width:calc(100% - 20px);height:14px;z-index:4;pointer-events:none;display:none;border-radius:0 0 22px 22px}
+ .glass-nav[data-pixel-optics="on"] .nav-pixel-rim{display:block}
+ .glass-nav[data-pixel-optics="on"] .nav-rim-dark{display:none}
+ @media(prefers-reduced-motion:reduce){.glass-nav .nav-pixel-rim{display:none!important}}
 </style>
 
-<script>
- const opticNav=document.querySelector<HTMLElement>(".glass-nav");
- if(opticNav){
-  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
-  const rim=opticNav.querySelector<HTMLElement>(".nav-rim-dark");
-  const bands=Array.from({length:24},()=>document.createElement("span"));
-  bands.forEach(b=>rim?.appendChild(b));
-  let queued=false;
-  function paint(){
-   queued=false;
-   if(!rim)return;
-   if(reduced.matches){
-    bands.forEach(b=>b.style.opacity="0");
-    return;
-   }
-   const nav=opticNav!.getBoundingClientRect();
-   const amounts=new Array(24).fill(0);
-   // Use real rendered text line boxes (Range), not a whole paragraph's bounds.
-   // Elements are still not sampled as pixels; the edge impression is approximate.
-   const elements=document.querySelectorAll<HTMLElement>("main h1,main h2,main h3,main h4,main p,main strong,main a,main img");
-   const parseColor=(value:string)=>{
-     const match=value.match(/[0-9]+/g);
-    if(!match)return .4;
-     const [r,g,b]=match.slice(0,3).map(Number);
-    return 1-(.2126*r+.7152*g+.0722*b)/255;
-   };
-   for(const el of elements){
-    const box=el.getBoundingClientRect();
-    if(box.bottom<nav.bottom-18||box.top>nav.bottom+36||box.right<nav.left||box.left>nav.right)continue;
-    const isImage=el.tagName==="IMG";
-    const darkness=isImage?.38:Math.min(1,parseColor(getComputedStyle(el).color));
-    if(darkness<.22)continue;
-    const rects:DOMRect[]=[];
-    if(isImage)rects.push(box);
-    else{
-     const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
-     let node:Node|null;
-     while((node=walker.nextNode())){
-      if(!node.textContent?.trim())continue;
-      const range=document.createRange();
-      range.selectNodeContents(node);
-      rects.push(...Array.from(range.getClientRects()));
-      if(rects.length>60)break;
-     }
-    }
-    for(const textBox of rects){
-     if(textBox.bottom<nav.bottom-10||textBox.top>nav.bottom+23)continue;
-     const distance=Math.abs((textBox.top+textBox.bottom)/2-nav.bottom);
-     const intensity=darkness*Math.max(0,1-distance/38)*.95;
-     for(let i=0;i<amounts.length;i++){
-      const x=nav.left+(i+.5)*nav.width/amounts.length;
-      if(x>=textBox.left-6&&x<=textBox.right+6)amounts[i]=Math.max(amounts[i],intensity);
-     }
-    }
-   }
-   // Blend adjacent segments into a continuous reflection.
-   bands.forEach((band,i)=>{
-    const strength=(amounts[i]*.66+(amounts[i-1]||0)*.17+(amounts[i+1]||0)*.17);
-    band.style.opacity=Math.min(.95,strength).toFixed(3);
-   });
-   opticNav!.style.setProperty("--rim-strength",".24");
-  }
-  const schedule=()=>{if(!queued){queued=true;requestAnimationFrame(paint)}};
-  window.addEventListener("scroll",schedule,{passive:true});
-  window.addEventListener("resize",schedule,{passive:true});
-  reduced.addEventListener?.("change",schedule);
-  paint();
- }
-</script>
+<script is:inline src="/assets/nav-pixel-rim.js" defer></script>
