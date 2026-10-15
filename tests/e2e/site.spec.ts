@@ -516,3 +516,87 @@ test("reduced-motion mobile glass menu remains usable while the document scrolls
  await expect(panel).toBeHidden();
  await expect(toggle).toHaveAttribute("aria-expanded","false");
 });
+
+test("shared scene optical shader samples real RGB from image, gradient, SVG and blue ink", async ({page}) => {
+ await page.goto("/experiments/shared-scene-optics.html");
+ await expect(page.locator("#status")).toContainText("WebGL");
+ const collect=async(top:number)=>{
+  await page.locator("#viewport").evaluate((el:HTMLElement,t)=>{el.scrollTop=t;el.dispatchEvent(new Event("scroll"))},top);
+  await page.waitForTimeout(120);
+  return page.locator("#rim").evaluate((canvas:HTMLCanvasElement)=>{
+   const gl=canvas.getContext("webgl",{preserveDrawingBuffer:true})!;
+   const data=new Uint8Array(canvas.width*canvas.height*4);
+   gl.readPixels(0,0,canvas.width,canvas.height,gl.RGBA,gl.UNSIGNED_BYTE,data);
+   let peak=0,rgb=[0,0,0];
+   for(let i=0;i<data.length;i+=4){if(data[i+3]>peak){peak=data[i+3];rgb=[data[i],data[i+1],data[i+2]]}}
+   return {peak,rgb};
+  });
+ };
+ const blue=await collect(260),red=await collect(360),gradient=await collect(550),vector=await collect(750);
+ expect(blue.peak).toBeGreaterThan(0);
+ expect(red.peak).toBeGreaterThan(0);
+ expect(gradient.peak).toBeGreaterThan(0);
+ expect(vector.peak).toBeGreaterThan(0);
+ expect(red.rgb[0]).toBeGreaterThan(red.rgb[1]+25);
+ expect(blue.rgb[2]).toBeGreaterThan(blue.rgb[0]+25);
+});
+
+test("shared RGB scene includes actual portfolio photo pixels without reupload on scroll", async ({page}) => {
+ await page.goto("/experiments/shared-scene-optics.html");
+ await expect(page.locator("#status")).toContainText("WebGL");
+ await page.waitForFunction(()=>{const i=new Image();i.src="/images/1.jpg";return i.complete&&i.naturalWidth>0;});
+ await page.waitForTimeout(250);
+ const result=await page.locator("#scene").evaluate((el:HTMLCanvasElement)=>{
+  const data=el.getContext("2d")!.getImageData(25,1480,Math.min(220,el.width-30),120).data;
+  const colors=new Set<string>();
+  for(let i=0;i<data.length;i+=48)colors.add(data[i]+","+data[i+1]+","+data[i+2]);
+  return colors.size;
+ });
+ expect(result).toBeGreaterThan(20);
+ await page.locator("#viewport").evaluate((el:HTMLElement)=>{el.scrollTop=1350;el.dispatchEvent(new Event("scroll"))});
+ await expect(page.locator("#status")).toContainText("WebGL");
+});
+
+test("shared RGB scene reuses GPU texture during scroll-only interaction", async ({page}) => {
+ await page.goto("/experiments/shared-scene-optics.html");
+ const status=page.locator("#status");
+ await expect(status).toContainText("GPU 上传");
+ const read=async()=>Number((await status.textContent())?.match(/GPU 上传 (\d+) 次/)?.[1]||0);
+ await page.waitForTimeout(200);
+ const initial=await read();
+ expect(initial).toBeGreaterThan(0);
+ for(const position of [180,420,680,920,1140]){
+  await page.locator("#viewport").evaluate((el:HTMLElement,y)=>{el.scrollTop=y;el.dispatchEvent(new Event("scroll"))},position);
+  await page.waitForTimeout(55);
+ }
+ expect(await read()).toBe(initial);
+});
+
+test("shared scene uses text extracted from the actual Astro homepage", async ({page}) => {
+ const home=await page.request.get("/");
+ expect(home.ok()).toBeTruthy();
+ const html=await home.text();
+ await page.goto("/experiments/shared-scene-optics.html");
+ await expect(page.locator("#scene")).toHaveAttribute("data-source","homepage");
+ const heading=await page.locator("#scene").getAttribute("data-heading");
+ expect(heading).toBeTruthy();
+ expect(html).toContain(heading!);
+ await expect(page.locator("#scene")).toHaveAttribute("data-link",/\S+/);
+});
+
+test("real homepage navbar has full-perimeter compositor optics without blocking controls", async ({page}) => {
+ await page.goto("/");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-native-optics","full-scene");
+ for(const side of ["top","bottom","left","right"]){
+  const edge=page.locator(".native-optic-"+side);
+  await expect(edge).toBeAttached();
+  const info=await edge.evaluate(el=>{
+   const style=getComputedStyle(el);
+   return {pointerEvents:style.pointerEvents,backdrop:style.backdropFilter||style.getPropertyValue('-webkit-backdrop-filter')};
+  });
+  expect(info.pointerEvents).toBe("none");
+  expect(info.backdrop).not.toBe("none");
+ }
+ await expect(nav.locator(".brand")).toBeVisible();
+});

@@ -1,7 +1,11 @@
 ---
 import {navigation} from "../data/site";
 ---
-<header class="glass-nav">
+<header class="glass-nav" data-native-optics="full-scene">
+ <span class="native-optic-edge native-optic-top" aria-hidden="true"></span>
+ <span class="native-optic-edge native-optic-bottom" aria-hidden="true"></span>
+ <span class="native-optic-edge native-optic-left" aria-hidden="true"></span>
+ <span class="native-optic-edge native-optic-right" aria-hidden="true"></span>
  <div class="nav-inner wrap">
   <a href="/" class="brand" aria-label="J.H. LAB 首页"><span aria-hidden="true"></span></a>
   <nav class="desktop-links" aria-label="Main navigation">
@@ -91,4 +95,27 @@ import {navigation} from "../data/site";
  [hidden]{display:none!important}
  @media(max-width:1180px){.nav-inner{grid-template-columns:1fr auto;min-height:50px}.desktop-links{display:none}.controls [data-menu-toggle]{display:flex;align-items:center;justify-content:center}}
  @media(max-width:760px){.nav-inner{min-height:56px}.brand span{width:27px;height:26px}.controls button{height:44px;min-width:44px}.glass-nav{border-radius:24px}.glass-nav .wrap{width:calc(100% - 24px)}}
+
+ /* The browser compositor supplies the real backdrop pixels. Unlike the old
+  * text-only Canvas shader, these strips also cover images, SVG and gradients.
+  * This is compositor-backed blur/reflection styling, not GPU ray tracing. */
+ .glass-nav[data-native-optics="full-scene"]{overflow:hidden}
+ .glass-nav .native-optic-edge{position:absolute;z-index:0;pointer-events:none;display:block;border-radius:inherit;
+  -webkit-backdrop-filter:blur(2.4px) saturate(1.5) contrast(1.16);
+  backdrop-filter:blur(2.4px) saturate(1.5) contrast(1.16)}
+ .glass-nav .native-optic-top{top:0;left:0;right:0;height:11px;
+  -webkit-mask-image:linear-gradient(to bottom,black,rgba(0,0,0,.72) 35%,transparent);
+  mask-image:linear-gradient(to bottom,black,rgba(0,0,0,.72) 35%,transparent);
+  box-shadow:inset 0 1px rgba(255,255,255,.78)}
+ .glass-nav .native-optic-bottom{bottom:0;left:0;right:0;height:13px;
+  -webkit-mask-image:linear-gradient(to top,black,rgba(0,0,0,.66) 40%,transparent);
+  mask-image:linear-gradient(to top,black,rgba(0,0,0,.66) 40%,transparent);
+  box-shadow:inset 0 -1px rgba(22,45,73,.13)}
+ .glass-nav .native-optic-left{top:7px;bottom:7px;left:0;width:10px;
+  -webkit-mask-image:linear-gradient(to right,black,transparent);
+  mask-image:linear-gradient(to right,black,transparent)}
+ .glass-nav .native-optic-right{top:7px;bottom:7px;right:0;width:10px;
+  -webkit-mask-image:linear-gradient(to left,black,transparent);
+  mask-image:linear-gradient(to left,black,transparent)}
+ @media(prefers-reduced-transparency:reduce){.glass-nav .native-optic-edge{display:none}}
 </style>
