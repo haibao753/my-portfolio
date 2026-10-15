@@ -42,6 +42,8 @@ jobs:
         run: node scripts/verify-build.mjs
       - name: Validate isolated Workers preview bundle (dry run)
         run: npm run deploy:preview:dry-run
+      - name: Validate branch Preview assets configuration (dry run only)
+        run: npx wrangler deploy --config wrangler.branch-preview.jsonc --dry-run
       - name: Validate default production build and assets configuration (dry run only)
         env:
           WORKERS_CI_BRANCH: main
