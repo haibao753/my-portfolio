@@ -1,48 +1,45 @@
-# Explorable studio concept
+# Beyond Ordinary — independent portfolio preview
 
-Open `/lab/` on the PR preview. This is a separate, functional homepage concept;
-the existing `/`, Brief and experiments remain available. Promotion to the
-homepage follows visual review.
+Open `/lab/` on the branch preview. The production homepage and existing routes
+remain available. This draft awaits visual review before homepage promotion.
 
-Four objects use the existing project data: a newspaper, a mathematical orbit,
-a photograph and a glass geometry study. Open an object to see a question,
-project context and its real destination. Discovery follows a four-part trail,
-remembered only for the current browser session. Surprise selects an unexplored
-object first; completing the trail exposes a reset so visitors can start again.
+The full-height opening combines original typography, an orbital light plate and
+a living three-dimensional optical sculpture. Its signed-distance field blends
+two joined rings with a soft body; a bounded ray march finds the surface and its
+normal. The shader extends the shared optical kernel's vertex interface with
+scene-texture refraction, RGB dispersion, Schlick Fresnel reflection and an
+analytical light environment. It is an optical approximation, not a path tracer
+or fluid simulation. Only the controlled canvas plate is sampled, not browser
+composited DOM. No generated bitmap or external visual service is required.
 
-Desktop grip buttons support pointer capture and arrow-key movement. Curated
-shuffle layouts preserve space around the headline. Phone layouts use a normal
-document grid: shuffle changes object order, with no touch, wheel or scroll
-interception. The note is a non-modal dialog, dismissible with Escape; closing
-restores focus to its trigger. Theme, locale and reduced motion remain shared
-with the rest of the site. Without JavaScript, objects are direct project links.
+Pointer movement changes the sculpture's orientation. Touch, click, Enter or
+Space on its native button changes form and sends a visible pulse. Three worlds
+change palette, environment and form: Mercury, Prism and Aurora. Pause freezes
+the animation clock; palette and keyboard controls remain available. Native
+vertical phone scrolling is preserved. A single bounded framebuffer (maximum
+680px desktop / 400px phone dimension) limits GPU work; the 30/20 draw scheduling
+caps are not measured frame-rate guarantees. Hidden/offscreen scenes stop the
+loop. Reduced motion starts paused. Context loss uses the static CSS sculpture;
+project links remain functional without JavaScript.
 
-The first screen is an optical playground. Three freely moving GPU lenses reuse
-the shared engine over a controlled canvas plate. Their source is sampled using
-the inverse of each lens's translation and rotation, so the clear body stays
-aligned with the actual visible scene. Spectrum, photographs and typography are
-different plates; depth adjusts the bevel. Dragging and rotation work with mouse,
-touch and keyboard. Vertical phone gestures continue to scroll the document.
+The immersive header uses a legible transparent treatment. The ordinary DOM
+raster adapters skip this route because they cannot sample its canvas world;
+navigation on the existing homepage retains its optical material. Shared menu,
+locale, theme and contact controls remain available.
 
-All three silhouettes now cycle between a circle, a stretched capsule and a
-softly joined asymmetric droplet, with staggered phases over a roughly 14-second
-loop. The same blended distance field drives coverage, surface normals,
-refraction and reflection, so highlights follow the changing contour. Fixed
-framebuffers have room for the whole family; shape-only redraws reuse the scene
-texture. Pause freezes shape, drift and lighting on the same clock.
+Below the opening, four original editorial posters reuse real project data.
+Desktop visitors can curate their positions with the grip or keyboard. Phone
+posters follow normal document flow and shuffle their order. The four-stop
+discovery trail, non-modal details, focus restoration and session-only progress
+remain supported. Theme and locale work throughout.
 
-Optional lensPower, shapeWobble, shapePhase and shapeMorph extend the shared kernel
-for convex magnification, gentle contour wobble and full silhouette morphing. Defaults are
-zero, preserving existing navigation optics. This remains an optical
-approximation over a controlled scene, not compositor capture or a fluid solver.
+The earlier draggable, rotating two-dimensional glass studies are retained at
+`/lab/glass/`, including full circle/capsule/droplet morphing, background and
+depth controls. Both renderers preserve the current production optical defaults.
+Private Brief data and its schema, production commands, domains and DNS are
+unchanged.
 
-Motion is capped at 30 desktop/20 phone draws per second; these are scheduling
-caps, not measured GPU frame-rate guarantees. Pause, an offscreen stage or a
-hidden document stops the animation loop. Reduced motion starts paused, with an
-explicit play control. GPU context loss leaves a usable static CSS fallback.
-The smaller glass study on the desk remains CSS. No third-party service,
-analytics, backend or production deployment setting is added.
-
-Local review: `npm ci`, `npm run validate`, then
-`npm run preview -- --host 127.0.0.1 --port 4324` and open `/lab/`.
-Interaction coverage lives in `tests/e2e/exploration-desk.spec.ts`.
+Local review: `npm ci`, `npm run validate`,
+`npm run preview -- --host 127.0.0.1 --port 4324`.
+Browser coverage: `optical-universe.spec.ts`, `exploration-desk.spec.ts` and
+`liquid-motion.spec.ts`, alongside the existing homepage and optical regressions.

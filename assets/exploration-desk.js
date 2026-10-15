@@ -66,20 +66,20 @@ if(desk){
  });
  // Curated arrangements keep objects separated and the title readable. Randomly
  // throwing rectangles into the stage can bury links beneath other objects.
- const layouts=[[[.05,360],[.52,21],[.77,241],[.42,350]],[[.08,360],[.71,25],[.73,306],[.39,364]],[[.13,360],[.57,35],[.78,276],[.45,348]]];
+ const layouts=[[[.03,245],[.54,330],[.04,680],[.53,765]],[[.07,260],[.51,315],[.03,690],[.53,755]],[[.04,270],[.53,325],[.06,670],[.51,770]]];
  const shuffle=()=>{
   arrangement=(arrangement+1)%layouts.length;
   if(!mobile.matches)objects.forEach((object,index)=>{
-   const narrow=[[[.04,350],[.60,32],[.69,347],[.36,440]],[[.06,360],[.65,32],[.71,355],[.37,450]],[[.04,390],[.62,50],[.70,365],[.38,370]]];
+   const narrow=[[[.03,230],[.54,300],[.04,630],[.53,700]],[[.07,245],[.51,295],[.03,635],[.53,690]],[[.04,250],[.53,305],[.06,620],[.51,705]]];
    const position=(stage.clientWidth>1036?layouts:narrow)[arrangement][index];
    object.style.left=Math.min(stage.clientWidth-object.offsetWidth-18,stage.clientWidth*position[0])+'px';
    object.style.top=position[1]+'px';
-   object.style.setProperty('--angle',((index%2?1:-1)*(4+arrangement*3))+'deg');
+   object.style.setProperty('--angle',((index%2?1:-1)*(1+arrangement))+'deg');
   });
   else{
    // On narrow screens re-order the exploration path rather than intercept touch.
    const order=arrangement%2?[2,0,3,1]:[0,1,2,3];
-   objects.forEach((object,index)=>{const slot=order.indexOf(index);object.style.gridColumn=slot%2+1;object.style.gridRow=Math.floor(slot/2)+2});
+   objects.forEach((object,index)=>{const slot=order.indexOf(index);object.style.gridColumn='1';object.style.gridRow=slot+2});
   }
   say('换个摆法，也许会想到别的。','A different arrangement. A different thought.');
  };

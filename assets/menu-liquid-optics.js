@@ -8,7 +8,7 @@ import {glassPointerFor,subscribeGlassPointer} from '/assets/glass-pointer-light
 const menu=document.querySelector('[data-menu-panel]');
 const root=document.querySelector('main');
 const params=new URLSearchParams(location.search);
-if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+if(menu&&root&&!document.body.classList.contains('immersive-world')&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
  const canvas=document.createElement('canvas');
  canvas.className='menu-optical-layer';canvas.setAttribute('aria-hidden','true');
  menu.prepend(canvas);

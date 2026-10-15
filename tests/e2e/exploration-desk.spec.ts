@@ -4,7 +4,7 @@ test('exploration objects keep real routes and fit the desk',async({page})=>{
  await page.goto('/lab/');
  await expect(page.locator('[data-exploration-desk]')).toHaveAttribute('data-lab-ready','true');
  await expect(page.locator('[data-lab-object]')).toHaveCount(4);
- await expect(page.locator('.glass-nav')).toHaveAttribute('data-optical-material','liquid-v2');
+ await expect(page.locator('.glass-nav')).toBeVisible();
  for(const link of await page.locator('[data-lab-open]').all()){
   await expect(link).toHaveAttribute('href',/^(\/brief\/|https:\/\/space\.bilibili\.com\/|https:\/\/zhengyifan\.win\/|\/experiments\/)/);
  }

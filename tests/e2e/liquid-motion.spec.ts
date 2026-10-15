@@ -6,7 +6,7 @@ async function pixelHash(page:Page){return page.locator('[data-free-lens="0"] ca
 })}
 
 test('free glass uses three GPU lenses and changes real scene pixels while drifting',async({page})=>{
- await page.goto('/lab/');const host=page.locator('[data-liquid-atelier]');
+ await page.goto('/lab/glass/');const host=page.locator('[data-liquid-atelier]');
  await expect(host).toHaveAttribute('data-gpu-lenses','3');
  await expect.poll(async()=>Number(await host.getAttribute('data-optical-frames'))).toBeGreaterThan(2);
  const before=await pixelHash(page),position=await page.locator('[data-free-lens="0"]').getAttribute('style');
@@ -19,7 +19,7 @@ test('free glass uses three GPU lenses and changes real scene pixels while drift
 });
 
 test('pause freezes motion, while background and thickness still change optical pixels',async({page})=>{
- await page.goto('/lab/');const host=page.locator('[data-liquid-atelier]');
+ await page.goto('/lab/glass/');const host=page.locator('[data-liquid-atelier]');
  await page.locator('[data-optical-pause]').click();await expect(host).toHaveAttribute('data-motion','paused');
  await page.waitForTimeout(100);const frames=await host.getAttribute('data-optical-frames');
  const phases=await page.locator('[data-free-lens]').evaluateAll(lenses=>lenses.map(lens=>(lens as HTMLElement).dataset.shapePhase));
@@ -36,7 +36,7 @@ test('pause freezes motion, while background and thickness still change optical 
 });
 
 test('glass can be moved and rotated with keyboard and pointer',async({page,isMobile})=>{
- await page.goto('/lab/');await page.locator('[data-optical-pause]').click();
+ await page.goto('/lab/glass/');await page.locator('[data-optical-pause]').click();
  const lens=page.locator('[data-free-lens="0"]'),grab=lens.locator('[data-lens-grab]');
  await grab.focus();await page.waitForTimeout(80);const before=await lens.getAttribute('style');
  await page.keyboard.press('ArrowRight');await expect.poll(()=>lens.getAttribute('style')).not.toBe(before);
@@ -55,17 +55,20 @@ test('glass can be moved and rotated with keyboard and pointer',async({page,isMo
 });
 
 test('offscreen glass stops drawing and reduced motion starts paused',async({page})=>{
- await page.goto('/lab/');const host=page.locator('[data-liquid-atelier]');
- await page.locator('.all-paths').scrollIntoViewIfNeeded();await expect(host).toHaveAttribute('data-in-view','false');
+ await page.goto('/lab/glass/');const host=page.locator('[data-liquid-atelier]');
+ // A short study page may fit in a tall desktop viewport. Give the lifecycle
+ // fixture a scrollable tail so the lens can actually leave that viewport.
+ await page.locator('main').evaluate(el=>{const spacer=document.createElement('div');spacer.style.height='100vh';el.appendChild(spacer)});
+ await page.locator('.site-footer').scrollIntoViewIfNeeded();await expect(host).toHaveAttribute('data-in-view','false');
  await page.waitForTimeout(100);const frames=await host.getAttribute('data-optical-frames');await page.waitForTimeout(200);expect(await host.getAttribute('data-optical-frames')).toBe(frames);
- await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/lab/');
+ await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/lab/glass/');
  await expect(host).toHaveAttribute('data-motion','paused');
  await expect(host).toHaveAttribute('data-gpu-lenses','3');
  await page.waitForTimeout(100);const paused=await host.getAttribute('data-optical-frames');await page.waitForTimeout(200);expect(await host.getAttribute('data-optical-frames')).toBe(paused);
 });
 
 test('lost GPU contexts keep a usable static material and scene controls',async({page})=>{
- await page.goto('/lab/');const host=page.locator('[data-liquid-atelier]');
+ await page.goto('/lab/glass/');const host=page.locator('[data-liquid-atelier]');
  await expect(host).toHaveAttribute('data-gpu-lenses','3');
  await page.locator('[data-free-lens] canvas').evaluateAll(canvases=>canvases.forEach(canvas=>(canvas as HTMLCanvasElement).getContext('webgl')!.getExtension('WEBGL_lose_context')!.loseContext()));
  await expect(host).toHaveAttribute('data-gpu-lenses','0');await expect(page.locator('[data-optical-fallback]')).toBeVisible();

@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import SiteNav from "../components/SiteNav.astro";
-const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、影像与有趣的想法。"}=Astro.props;
+const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、影像与有趣的想法。",immersive=false}=Astro.props;
 const canonicalURL=new URL(Astro.url.pathname,Astro.site);
 ---
 <!doctype html>
@@ -31,7 +31,7 @@ const canonicalURL=new URL(Astro.url.pathname,Astro.site);
    }catch{}})();
   </script>
  </head>
- <body>
+ <body class:list={{'immersive-world':immersive}}>
   <a href="#main" class="skip-link">跳过导航 / Skip navigation</a>
   <SiteNav />
   <main id="main"><slot /></main>
