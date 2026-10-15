@@ -404,3 +404,20 @@ test("glass menu stays open after ordinary page load and closes on link activati
  await expect(panel).toBeHidden();
  await expect(toggle).toHaveAttribute("aria-expanded","false");
 });
+
+
+test("optical lab links are actual routes and survive missing WebGL",async({page})=>{
+ await page.addInitScript(()=>{
+  HTMLCanvasElement.prototype.getContext=function(this:HTMLCanvasElement,type,...args){
+   if(type==="webgl"||type==="experimental-webgl")return null;
+   return null;
+  } as typeof HTMLCanvasElement.prototype.getContext;
+ });
+ await page.goto("/experiments/liquid-glass-optics.html");
+ const menu=page.locator("#optic-menu");
+ await expect(menu).toBeVisible();
+ const destinations=await menu.locator("a").evaluateAll(links=>links.map(link=>link.getAttribute("href")));
+ expect(destinations).toEqual(["/#projects","/#mathematics","/#gallery","/#experiments","/brief/","/#contact"]);
+ await menu.locator("a").first().click();
+ await expect(page).toHaveURL(/\/#projects$/);
+});
