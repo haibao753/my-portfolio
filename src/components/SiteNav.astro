@@ -64,6 +64,8 @@ import {navigation} from "../data/site";
  :global(html[data-theme="dark"]) .mobile-menu{background:linear-gradient(140deg,rgba(120,157,194,.19),rgba(30,48,68,.10) 50%,rgba(112,157,198,.10));border-color:rgba(224,240,255,.42);box-shadow:0 22px 65px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.42)}
  :global(html[data-menu-open="true"] main),:global(html[data-menu-open="true"] .site-footer){filter:brightness(.92)}
  :global(main),:global(.site-footer){transition:filter .44s ease}
+ @supports not (height:100dvh){.mobile-menu{max-height:calc(100vh - 88px)}@media(max-width:760px){.mobile-menu{max-height:calc(100vh - 76px)}}}
+ @media(max-height:530px){.mobile-menu a{min-height:44px}}
  .mobile-menu a:focus-visible{outline:2px solid var(--accent);outline-offset:-3px;border-radius:12px}
  .mobile-menu a{display:flex;align-items:center;justify-content:center;text-align:center;min-height:55px;border-bottom:1px solid rgba(105,115,132,.16);font-size:16px;font-weight:600;position:relative;z-index:1}
  .mobile-menu a:last-child{border-bottom:0}
