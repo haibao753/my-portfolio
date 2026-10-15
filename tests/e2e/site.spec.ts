@@ -421,3 +421,20 @@ test("optical lab links are actual routes and survive missing WebGL",async({page
  await menu.locator("a").first().click();
  await expect(page).toHaveURL(/\/#projects$/);
 });
+
+
+test("reduced-motion mobile glass menu remains usable while the document scrolls",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ const panel=page.locator("[data-menu-panel]");
+ await toggle.click();
+ await expect(panel).toBeVisible();
+ await page.evaluate(()=>window.scrollTo({top:Math.min(500,document.documentElement.scrollHeight-innerHeight),behavior:"instant"}));
+ await expect(panel).toBeVisible();
+ await expect(toggle).toBeInViewport();
+ await page.keyboard.press("Escape");
+ await expect(panel).toBeHidden();
+ await expect(toggle).toHaveAttribute("aria-expanded","false");
+});
