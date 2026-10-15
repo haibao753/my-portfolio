@@ -824,7 +824,7 @@ test("live optical GPU texture skips unchanged frames and uploads a localized co
  await expect(nav).toHaveAttribute("data-live-optics","on");
  const initial=Number(await nav.getAttribute("data-optical-texture-full")||0);
  await page.evaluate(()=>dispatchEvent(new Event("scroll")));
- await expect.poll(async()=>Number(await nav.getAttribute("data-optical-texture-skipped")||0)).toBeGreaterThan(0);
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-raster-skipped")||0)).toBeGreaterThan(0);
  await page.evaluate(()=>{
   const nr=document.querySelector(".glass-nav")!.getBoundingClientRect();
   const patch=document.createElement("div");
@@ -835,4 +835,15 @@ test("live optical GPU texture skips unchanged frames and uploads a localized co
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-texture-partial")||0)).toBeGreaterThan(0);
  const full=Number(await nav.getAttribute("data-optical-texture-full")||0);
  expect(full).toBe(initial);
+});
+
+test("unchanged scroll event does not repaint canvas or reupload texture",async({page})=>{
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ const before=await nav.evaluate(el=>({uploads:Number(el.getAttribute("data-optical-uploaded-pixels")||0),refreshes:Number(el.getAttribute("data-optical-refreshes")||0)}));
+ await page.evaluate(()=>dispatchEvent(new Event("scroll")));
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-refreshes")||0)).toBeGreaterThan(before.refreshes);
+ expect(Number(await nav.getAttribute("data-optical-uploaded-pixels")||0)).toBe(before.uploads);
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-raster-skipped")||0)).toBeGreaterThan(0);
 });
