@@ -74,12 +74,12 @@ vec4 liquidPixel(){
  vec3 pixel=mix(transmittedRGB,reflected.rgb,reflectionMix*reflected.a);
  vec3 light=normalize(vec3(lightDirection,.7));
  float specular=pow(max(dot(N,normalize(light+vec3(0.,0.,1.))),0.),26.);
- pixel+=vec3(.96,.98,1.)*specular*bending*.085*reflectivity;
+ pixel+=vec3(.96,.98,1.)*specular*bending*.055*reflectivity;
  float coverage=clamp(.5-sd,0.,1.);
  float alpha=mix(base.a, max(transmittedAlpha,reflected.a*reflectionMix)*coverage,optical);
  // Detached menus only project the optically active curved rim. Their clear
  // centre stays compositor-native instead of duplicating reconstructed DOM.
- float edgeWeight=1.-smoothstep(2.,max(bevelWidth,3.)+5.,-sd);
+ float edgeWeight=1.-smoothstep(1.,max(bevelWidth,3.)*.85,-sd);
  alpha*=mix(1.,edgeWeight,rimOnly);
  return vec4(mix(base.rgb,pixel,optical)*alpha,alpha);
 }
