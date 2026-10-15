@@ -285,7 +285,12 @@ test("mobile glass menu stays open while page scrolls and header stays visible",
  await expect(page.locator("[data-menu-backdrop]")).toHaveCSS("pointer-events","none");
  const before=await page.evaluate(()=>window.scrollY);
  const touch=await page.context().newCDPSession(page);
- await touch.send("Input.synthesizeScrollGesture",{x:24,y:600,yDistance:-420,speed:650,gestureSourceType:"touch"});
+ await touch.send("Input.dispatchTouchEvent",{type:"touchStart",touchPoints:[{x:24,y:600}]});
+ for(let step=1;step<=12;step++){
+  await touch.send("Input.dispatchTouchEvent",{type:"touchMove",touchPoints:[{x:24,y:600-step*32}]});
+  await page.waitForTimeout(16);
+ }
+ await touch.send("Input.dispatchTouchEvent",{type:"touchEnd",touchPoints:[]});
  await touch.detach();
  await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBeGreaterThan(before+100);
  await expect(page.locator("[data-menu-panel]")).toBeVisible();
