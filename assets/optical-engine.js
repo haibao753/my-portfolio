@@ -129,12 +129,12 @@ vec4 liquidPixel(){
  // Distance is expressed in CSS pixels so mobile and desktop match.
  vec2 lightDelta=(uv-pointerLightPosition)*size;
  float lightDistance=length(lightDelta);
- float pool=exp(-pow(lightDistance/85.,2.));
+ float pool=exp(-pow(lightDistance/65.,2.));
  vec3 pointerL=normalize(vec3(lightDelta*.018,1.4));
  vec3 pointerH=normalize(pointerL+V);
  float highlight=pow(max(dot(N,pointerH),0.),9.);
- float curvedResponse=.18+.82*bending;
- float pointerGlow=pointerLightActive*pool*(.11+.27*highlight)*curvedResponse;
+ float curvedResponse=.42+.58*bending;
+ float pointerGlow=pointerLightActive*pool*(.30+.62*highlight)*curvedResponse;
  pixel+=vec3(.96,.98,1.)*pointerGlow;
  float coverage=clamp(.5-sd,0.,1.);
  float alpha=mix(base.a, max(transmittedAlpha,reflected.a*reflectionMix)*coverage,optical);
@@ -146,6 +146,9 @@ vec4 liquidPixel(){
  // relied on to clip the WebGL framebuffer: it is always rectangular.
  float silhouette=1.-smoothstep(-.75,.75,sd);
  alpha*=silhouette;
+ // Preserve an emissive glint even over transparent reconstructed scenes.
+ float glintAlpha=pointerLightActive*pool*(.14+.25*bending)*silhouette;
+ alpha=max(alpha,glintAlpha);
  return vec4(mix(base.rgb,pixel,optical)*alpha,alpha);
 }
 vec2 sampleDirection(vec2 p,float eta){
