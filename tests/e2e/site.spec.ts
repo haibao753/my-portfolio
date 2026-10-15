@@ -617,3 +617,16 @@ test("optical engine changes actual RGB pixel positions, not merely CSS opacity"
  await page.waitForTimeout(150);
  expect(await sample()).not.toBe(plain);
 });
+
+test("optical engine ingests real portfolio photo pixels", async ({page}) => {
+ await page.goto("/experiments/optical-engine-v1.html");
+ await expect(page.locator("#status")).toContainText("WebGL 运行中");
+ await expect(page.locator("#reference")).toHaveAttribute("data-real-image","loaded");
+ const unique=await page.locator("#reference").evaluate((canvas:HTMLCanvasElement)=>{
+  const pixels=canvas.getContext("2d")!.getImageData(550,75,220,125).data;
+  const seen=new Set<string>();
+  for(let i=0;i<pixels.length;i+=64)seen.add(pixels[i]+","+pixels[i+1]+","+pixels[i+2]);
+  return seen.size;
+ });
+ expect(unique).toBeGreaterThan(60);
+});
