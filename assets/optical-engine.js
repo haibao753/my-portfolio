@@ -26,7 +26,11 @@ void main(){
  vec2 rUV=clamp(uv+displacement*1.012,0.,1.);
  vec2 gUV=clamp(uv+displacement,0.,1.);
  vec2 bUV=clamp(uv+displacement*.988,0.,1.);
- vec3 pixel=vec3(texture2D(scene,rUV).r,texture2D(scene,gUV).g,texture2D(scene,bUV).b);
+ vec4 sr=texture2D(scene,rUV);
+ vec4 sg=texture2D(scene,gUV);
+ vec4 sb=texture2D(scene,bUV);
+ vec3 pixel=vec3(sr.r,sg.g,sb.b);
+ float coverage=max(sr.a,max(sg.a,sb.a));
  vec2 q=abs(uv*2.-1.);
  float border=max(smoothstep(.73,1.,q.x),smoothstep(.57,1.,q.y));
  float cosine=clamp(1.-border*.85,0.,1.);
@@ -34,7 +38,10 @@ void main(){
  float fresnel=f0+(1.-f0)*pow(1.-cosine,5.);
  vec3 highlight=vec3(.98,.99,1.);
  vec3 result=mix(pixel,highlight,clamp(fresnel*reflectivity,0.,.30));
- gl_FragColor=vec4(mix(texture2D(scene,uv).rgb,result,optical),1.);
+ vec4 original=texture2D(scene,uv);
+ vec3 rgb=mix(original.rgb,result,optical);
+ float alpha=max(original.a,coverage*optical);
+ gl_FragColor=vec4(rgb*alpha,alpha);
 }`;
 export function setup(gl){
  const shader=(type,source)=>{const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s};
