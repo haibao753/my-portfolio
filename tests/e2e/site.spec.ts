@@ -516,3 +516,20 @@ test("reduced-motion mobile glass menu remains usable while the document scrolls
  await expect(panel).toBeHidden();
  await expect(toggle).toHaveAttribute("aria-expanded","false");
 });
+
+test("pixel optics laboratory draws a changing WebGL texture on scroll", async ({ page }) => {
+ await page.goto("/experiments/pixel-optics-lab.html");
+ await expect(page.locator("#glass")).toBeVisible();
+ await expect(page.locator("#scroll")).toBeVisible();
+ await expect(page.getByText("真实像素纹理驱动的玻璃边缘")).toBeVisible();
+ const available=await page.locator("#status").textContent();
+ if (!available?.includes("WebGL ·")) {
+  test.skip(true, "Browser runner has no WebGL context");
+  return;
+ }
+ const before=await page.locator("#glass").evaluate((c:HTMLCanvasElement)=>c.toDataURL());
+ await page.locator("#scroll").evaluate((el:HTMLElement)=>{el.scrollTop=110;el.dispatchEvent(new Event("scroll"))});
+ await page.waitForTimeout(150);
+ const after=await page.locator("#glass").evaluate((c:HTMLCanvasElement)=>c.toDataURL());
+ expect(after).not.toBe(before);
+});
