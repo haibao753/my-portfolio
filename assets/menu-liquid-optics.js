@@ -17,7 +17,7 @@ if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-
  let render;
  try{if(gl&&ctx)render=setup(gl)}catch{menu.dataset.menuOptics='fallback'}
  if(render&&ctx){
-  const pad=24;
+  const pad=72;
   const paint=()=>{
    if(menu.hidden||!menu.getClientRects().length||gl.isContextLost())return;
    const rect=menu.getBoundingClientRect(),width=Math.max(1,Math.round(rect.width)),height=Math.max(1,Math.round(rect.height));
@@ -67,8 +67,8 @@ if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-
    }
    const radius=parseFloat(getComputedStyle(menu).borderTopLeftRadius)||32;
    try{
-    render(scene,{liquid:1,optical:1,reflectivity:.86,strength:1.35,cornerRadius:radius,
-     bevelWidth:15,rimOnly:1,surfaceSize:[width,height],scenePadding:pad});
+    render(scene,{liquid:1,optical:1,reflectivity:.78,strength:1.25,cornerRadius:radius,
+     bevelWidth:19,reflectionReach:2.2,reflectionQuality:1,rimOnly:1,surfaceSize:[width,height],scenePadding:pad});
     menu.dataset.menuOptics='active';menu.dataset.menuOpticalSamples=String(count);
    }catch{menu.dataset.menuOptics='fallback'}
   };
