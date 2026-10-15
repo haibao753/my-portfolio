@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ExplorationDesk from '../../components/ExplorationDesk.astro';
+import {projects,contact} from '../../data/site';
+---
+<BaseLayout title="J.H. LAB — 随便走走 / Open Studio" description="一个可以探索、摆弄和偶遇新想法的个人实验室。">
+ <ExplorationDesk />
+ <section class="field-notes wrap" aria-labelledby="field-notes-title">
+  <header><p class="eyebrow">FIELD NOTES / 2026</p><h2 id="field-notes-title"><span data-locale="zh">逛累了，就坐一会儿。</span><span data-locale="en">Take a seat. Stay curious.</span></h2></header>
+  <div class="notes-copy"><p><span data-locale="zh">这里住着一个好奇心有点过剩的大学生。<br/>白天读世界，偶尔拆公式，也想把日常的光影装进一个能走进去的房间。</span><span data-locale="en">A university student lives here, with a little too much curiosity.<br/>Reading the world, taking equations apart, and finding a room for everyday light.</span></p><p class="notes-invitation"><span data-locale="zh">如果你也刚好有个没想明白的点子，欢迎来交换。</span><span data-locale="en">Have an idea you haven't figured out yet? Come swap notes.</span></p><a href={`mailto:${contact.email}`}>{contact.email} ↗</a><div class="wechat-line"><span>WECHAT / {contact.wechat}</span><button type="button" data-copy-wechat={contact.wechat} data-copied="false" aria-label="复制微信号"><span data-locale="zh">复制</span><span data-locale="en">Copy</span></button></div></div>
+ </section>
+ <nav class="all-paths wrap" aria-label="All exploration routes"><span class="eyebrow"><span data-locale="zh">所有入口都在这里</span><span data-locale="en">Every way in</span></span>{projects.map(p=><a href={p.href} target={p.href.startsWith('http')?'_blank':undefined} rel={p.href.startsWith('http')?'noopener noreferrer':undefined}><span data-locale="zh">{p.action.zh}</span><span data-locale="en">{p.action.en}</span> ↗</a>)}<a href="/"><span data-locale="zh">当前主站</span><span data-locale="en">Current homepage</span> ↗</a></nav>
+</BaseLayout>
+<style>
+ .field-notes{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;padding:115px 0 70px}.field-notes header .eyebrow{font:10px ui-monospace,monospace;letter-spacing:.12em}.field-notes h2{font-size:clamp(25px,3vw,42px);letter-spacing:-.065em;line-height:1.4;font-weight:600;margin-top:19px}.notes-copy{font-size:14px;line-height:2;color:var(--muted)}.notes-copy p{margin-bottom:15px}.notes-copy a{color:var(--fg);font-weight:600;display:inline-flex;align-items:center;min-height:44px}.notes-invitation{font-size:12px}.wechat-line{display:flex;align-items:center;gap:13px;font:10px ui-monospace,monospace;margin-top:5px}.wechat-line button{min-height:44px;padding:6px 10px;border:0;background:none;color:var(--muted);font-size:11px}.wechat-line button[data-copied="true"]{color:var(--accent)}.all-paths{display:flex;flex-wrap:wrap;align-items:center;gap:10px 23px;border-top:1px solid var(--stroke);padding-block:25px 55px}.all-paths .eyebrow{width:100%;margin-bottom:5px;font-size:10px}.all-paths a{font-size:11px;color:var(--muted);min-height:44px;display:inline-flex;align-items:center}.all-paths a:hover{color:var(--accent)}@media(max-width:760px){.field-notes{padding-top:62px;grid-template-columns:1fr;gap:10px;padding-bottom:30px}.field-notes h2{font-size:29px}.notes-copy{font-size:13px}.all-paths{gap:0 19px;padding-bottom:30px}}
+</style>
