@@ -18,6 +18,30 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
   if(shader){
    nav.dataset.liveOptics='on';
    const vectorCache=new WeakMap();
+   let previousPixels=null,previousWidth=0,previousHeight=0;
+   const changedRect=()=>{
+    const width=source.width,height=source.height;
+    const pixels=ctx.getImageData(0,0,width,height).data;
+    if(!previousPixels||previousWidth!==width||previousHeight!==height){
+     previousPixels=new Uint8Array(pixels);previousWidth=width;previousHeight=height;
+     return null;
+    }
+    let left=width,right=-1,top=height,bottom=-1;
+    for(let y=0;y<height;y++){
+     for(let x=0;x<width;x++){
+      const i=(y*width+x)*4;
+      if(pixels[i]!==previousPixels[i]||pixels[i+1]!==previousPixels[i+1]||
+         pixels[i+2]!==previousPixels[i+2]||pixels[i+3]!==previousPixels[i+3]){
+       if(x<left)left=x;if(x>right)right=x;
+       if(y<top)top=y;if(y>bottom)bottom=y;
+      }
+     }
+    }
+    previousPixels.set(pixels);
+    if(right<left)return {unchanged:true};
+    const rect={x:left,y:top,width:right-left+1,height:bottom-top+1};
+    return rect.width*rect.height>=width*height*.7?null:{dirtyRect:rect};
+   };
    let candidates=Array.from(root.querySelectorAll('*'));
    const glyphCache=new WeakMap();
    let glyphMeasurements=0,cacheHits=0;
@@ -178,7 +202,12 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     measuredEpoch=layoutEpoch;
     nav.dataset.opticalGlyphMeasures=String(glyphMeasurements);nav.dataset.opticalGlyphCacheHits=String(cacheHits);
     nav.dataset.opticalAlignmentX=String(offsetX.toFixed(2));nav.dataset.opticalAlignmentY=String(offsetY.toFixed(2));
-    try{shader(source,{strength:2,optical:1,reflectivity:.35});nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalGradients=String(gradients);nav.dataset.opticalVectors=String(vectors);nav.dataset.opticalError='';nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1)}catch{nav.dataset.opticalError='texture'}
+    try{const delta=changedRect();shader(source,{strength:2,optical:1,reflectivity:.35,...(delta||{})});
+    nav.dataset.opticalTextureFull=String(shader.stats.fullUploads);
+    nav.dataset.opticalTexturePartial=String(shader.stats.partialUploads);
+    nav.dataset.opticalTextureSkipped=String(shader.stats.skippedUploads);
+    nav.dataset.opticalUploadedPixels=String(shader.stats.uploadedPixels);
+    nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalGradients=String(gradients);nav.dataset.opticalVectors=String(vectors);nav.dataset.opticalError='';nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1)}catch{nav.dataset.opticalError='texture'}
    };
    let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
    addEventListener('scroll',schedule,{passive:true});
