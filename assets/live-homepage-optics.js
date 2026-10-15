@@ -53,9 +53,12 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
      const bg=style.backgroundImage;
      const m=bg&&bg.match(/^linear-gradient\(\s*(to right|to left|to bottom|to top)\s*,\s*(#[0-9a-f]{3,8}|rgb\([^)]*\))\s*,\s*(#[0-9a-f]{3,8}|rgb\([^)]*\))\s*\)$/i);
      if(m){
-      const gradient=ctx.createLinearGradient(r.left-nr.left,r.top-nr.top,
-       r.left-nr.left+(m[1]==='to right'?r.width:m[1]==='to left'?-r.width:0),
-       r.top-nr.top+(m[1]==='to bottom'?r.height:m[1]==='to top'?-r.height:0));
+      const x=r.left-nr.left,y=r.top-nr.top;
+      const gradient=ctx.createLinearGradient(
+       m[1]==='to left'?x+r.width:x,
+       m[1]==='to top'?y+r.height:y,
+       m[1]==='to left'?x:m[1]==='to right'?x+r.width:x,
+       m[1]==='to top'?y:m[1]==='to bottom'?y+r.height:y);
       gradient.addColorStop(0,m[2]);gradient.addColorStop(1,m[3]);ctx.fillStyle=gradient;
       ctx.fillRect(r.left-nr.left,r.top-nr.top,r.width,r.height);gradients++;
      }
