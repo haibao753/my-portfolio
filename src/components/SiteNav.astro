@@ -160,9 +160,9 @@ import {navigation} from "../data/site";
    // Elements are still not sampled as pixels; the edge impression is approximate.
    const elements=document.querySelectorAll<HTMLElement>("main h1,main h2,main h3,main h4,main p,main strong,main a,main img");
    const parseColor=(value:string)=>{
-    const match=value.match(/rgba?\\(\\s*(\\d+)[, ]+\\s*(\\d+)[, ]+\\s*(\\d+)/i);
+     const match=value.match(/[0-9]+/g);
     if(!match)return .4;
-    const [r,g,b]=match.slice(1,4).map(Number);
+     const [r,g,b]=match.slice(0,3).map(Number);
     return 1-(.2126*r+.7152*g+.0722*b)/255;
    };
    for(const el of elements){
