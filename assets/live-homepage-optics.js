@@ -29,6 +29,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     if(source.width!==w||source.height!==h){source.width=w;source.height=h;}
     ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);
     let elements=0,images=0,colors=0,gradients=0,vectors=0;
+    const offsetX=nr.left,offsetY=nr.top;
     const startScrollY=window.scrollY;
     const nearby=[];
     // Only objects crossing the navbar geometry are relevant; draw in document order.
@@ -112,6 +113,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
      }
     }
     if(Math.abs(window.scrollY-startScrollY)>2){schedule();return;}
+    nav.dataset.opticalAlignmentX=String(offsetX.toFixed(2));nav.dataset.opticalAlignmentY=String(offsetY.toFixed(2));
     try{shader(source,{strength:2,optical:1,reflectivity:.35});nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalGradients=String(gradients);nav.dataset.opticalVectors=String(vectors);nav.dataset.opticalError='';nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1)}catch{nav.dataset.opticalError='texture'}
    };
    let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
