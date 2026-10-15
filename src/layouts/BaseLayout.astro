@@ -106,7 +106,7 @@ const {title="J.H. LAB — 让好奇心成为作品",description="数学、AI、
    });
    // A viewport orientation change can restore desktop navigation mid-session.
    const desktopNav=window.matchMedia("(min-width: 1181px)");
-   desktopNav.addEventListener("change",e=>{if(e.matches)finishClose();});
+   desktopNav.addEventListener("change",e=>{if(e.matches){if(closeTimer!==undefined)clearTimeout(closeTimer);menu?.setAttribute("aria-expanded","false");root.removeAttribute("data-menu-open");finishClose();}});
    window.addEventListener("pageshow",()=>{if(menu?.getAttribute("aria-expanded")==="true")close();});
    const copy=document.querySelector<HTMLButtonElement>("[data-copy-wechat]");
    copy?.addEventListener("click",async()=>{
