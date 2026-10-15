@@ -92,3 +92,19 @@ test('multi-tap reflections preserve centre and alter detailed rim only',async({
  expect(result.multi[0]).toEqual(result.single[0]);
  expect(result.multi.slice(1).some((p:number[],i:number)=>p.some((v:number,j:number)=>v!==result.single[i+1][j]))).toBe(true);
 });
+
+test('rounded GPU silhouette stays transparent outside all four corners',async({page})=>{
+ await page.goto('/?opticalEngine=2');
+ const pixels=await page.evaluate(async()=>{
+  const path='/assets/optical-engine.js';const {setup}=await import(path);
+  const source=document.createElement('canvas');source.width=368;source.height=120;
+  const context=source.getContext('2d')!;context.fillStyle='#ff3434';context.fillRect(0,0,368,120);
+  const output=document.createElement('canvas');output.width=320;output.height=72;
+  const gl=output.getContext('webgl',{alpha:true,preserveDrawingBuffer:true})!;
+  setup(gl)(source,{liquid:1,optical:1,cornerRadius:30,scenePadding:24,surfaceSize:[320,72],bevelWidth:19});
+  const read=(x:number,y:number)=>{const p=new Uint8Array(4);gl.readPixels(x,71-y,1,1,gl.RGBA,gl.UNSIGNED_BYTE,p);return p[3]};
+  return {corners:[read(0,0),read(319,0),read(0,71),read(319,71)],centre:read(160,36)};
+ });
+ expect(pixels.corners).toEqual([0,0,0,0]);
+ expect(pixels.centre).toBeGreaterThan(0);
+});
