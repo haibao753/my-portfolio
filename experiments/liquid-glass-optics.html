@@ -15,7 +15,7 @@ canvas{display:block;width:100%;height:100%;touch-action:pan-y}
 .stage.no-webgl canvas{visibility:hidden}
 .stage.no-webgl .optic-menu{background:rgba(255,255,255,.17);backdrop-filter:blur(5px);border:2px solid #fffd;box-shadow:inset 0 2px 3px #fffa,0 12px 32px #18334c36}
 .stage:not(.no-webgl) .fallback{display:none}.controls{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:24px 0}
-.optic-menu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;justify-content:space-evenly;z-index:2;border-radius:40px;overflow:hidden;text-align:center}
+.optic-menu{position:absolute;left:50%;top:50%;width:52%;height:58%;transform:translate(-50%,-50%);display:flex;flex-direction:column;justify-content:space-evenly;z-index:2;border-radius:40px;overflow:auto;overscroll-behavior:contain;text-align:center}
 .optic-menu a{display:block;padding:4px;color:#172035;font-size:clamp(12px,2vw,17px);font-weight:700;text-shadow:0 1px 2px #fff9}
 .optic-menu a+a{border-top:1px solid #ffffff6e}
 .optic-menu a:focus-visible{outline:2px solid #075bcb;outline-offset:-3px}
