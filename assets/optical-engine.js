@@ -12,6 +12,7 @@ uniform float liquid;
 uniform float lensPower;
 uniform float shapeWobble;
 uniform float shapePhase;
+uniform float shapeMorph;
 uniform vec2 surfaceSize;
 uniform vec2 sceneSize;
 uniform float scenePadding;
@@ -25,9 +26,32 @@ vec4 sampleLiquidScene(vec2 coord){return texture2D(scene,clamp((coord*surfaceSi
 uniform float cornerRadius;
 uniform float bevelWidth;
 uniform vec2 lightDirection;
+float softUnion(float a,float b,float k){
+ float h=clamp(.5+.5*(b-a)/k,0.,1.);
+ return mix(b,a,h)-k*h*(1.-h);
+}
+// Bounded contour family in one fixed framebuffer. Blending distance fields
+// changes the silhouette and its optical normals together, without scaling
+// the scene texture or reallocating the canvas on each animation frame.
+float livingDistance(vec2 p,vec2 halfSize){
+ float r=min(halfSize.x,halfSize.y);
+ float circle=length(p)-r*.84;
+ float rail=r*.52;
+ vec2 capsulePoint=vec2(max(abs(p.x)-(halfSize.x*.91-rail),0.),p.y);
+ float capsule=length(capsulePoint)-rail;
+ float organic=length(p-vec2(-r*.15,-r*.08))-r*.65;
+ organic=softUnion(organic,length(p-vec2(r*.39,r*.32))-r*.47,r*.34);
+ organic=softUnion(organic,length(p-vec2(-r*.25,-r*.40))-r*.49,r*.30);
+ float cycle=mod(shapePhase,6.2831853)/2.0943951;
+ float blend=smoothstep(0.,1.,fract(cycle));
+ if(cycle<1.)return mix(circle,capsule,blend);
+ if(cycle<2.)return mix(capsule,organic,blend);
+ return mix(organic,circle,blend);
+}
 // Rounded-box SDF in CSS pixels. The optical thickness goes to zero at the
 // outer contour, with a circular meniscus over the inner bevel.
 float roundedDistance(vec2 p, vec2 halfSize, float radius){
+ if(shapeMorph>.999)return livingDistance(p,halfSize);
  float wobble=clamp(shapeWobble,0.,12.);
  halfSize-=vec2(wobble*1.1);
  radius=min(radius,min(halfSize.x,halfSize.y));
@@ -37,7 +61,8 @@ float roundedDistance(vec2 p, vec2 halfSize, float radius){
   float angle=atan(p.y,p.x);
   distance+=(sin(angle*3.+shapePhase)*.65+sin(angle*2.-shapePhase*.7)*.35)*wobble;
  }
- return distance;
+ if(shapeMorph<=0.)return distance;
+ return mix(distance,livingDistance(p,halfSize),clamp(shapeMorph,0.,1.));
 }
 vec4 liquidPixel(){
  vec2 size=max(surfaceSize,vec2(1.));
@@ -219,8 +244,8 @@ export function setup(gl){
  let active=tex,spare=alternate;
  let textureWidth=0,textureHeight=0;
  const stats={fullUploads:0,partialUploads:0,skippedUploads:0,uploadedPixels:0,gpuScrolls:0};
- const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','lensPower','shapeWobble','shapePhase','surfaceSize','sceneSize','scenePadding','rimOnly','reflectionReach','reflectionQuality','studioLight','pointerLightPosition','pointerLightActive','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
- const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,lensPower=0,shapeWobble=0,shapePhase=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,rimOnly=0,reflectionReach=1,reflectionQuality=0,studioLight=0,pointerLightPosition=[-5,-5],pointerLightActive=0,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
+ const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','lensPower','shapeWobble','shapePhase','shapeMorph','surfaceSize','sceneSize','scenePadding','rimOnly','reflectionReach','reflectionQuality','studioLight','pointerLightPosition','pointerLightActive','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
+ const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,lensPower=0,shapeWobble=0,shapePhase=0,shapeMorph=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,rimOnly=0,reflectionReach=1,reflectionQuality=0,studioLight=0,pointerLightPosition=[-5,-5],pointerLightActive=0,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
   gl.useProgram(program);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,active);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
   if(source.width!==textureWidth||source.height!==textureHeight){
    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);
@@ -278,6 +303,7 @@ export function setup(gl){
   gl.uniform1f(uniforms.lensPower,lensPower);
   gl.uniform1f(uniforms.shapeWobble,shapeWobble);
   gl.uniform1f(uniforms.shapePhase,shapePhase);
+  gl.uniform1f(uniforms.shapeMorph,shapeMorph);
   gl.uniform2f(uniforms.surfaceSize,...surfaceSize);
   gl.uniform2f(uniforms.sceneSize,source.width,source.height);
   gl.uniform1f(uniforms.scenePadding,scenePadding);

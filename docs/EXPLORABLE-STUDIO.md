@@ -24,8 +24,15 @@ aligned with the actual visible scene. Spectrum, photographs and typography are
 different plates; depth adjusts the bevel. Dragging and rotation work with mouse,
 touch and keyboard. Vertical phone gestures continue to scroll the document.
 
-Optional lensPower, shapeWobble and shapePhase extend the shared kernel for convex
-body magnification and a bounded, softly changing droplet contour. Defaults are
+All three silhouettes now cycle between a circle, a stretched capsule and a
+softly joined asymmetric droplet, with staggered phases over a roughly 14-second
+loop. The same blended distance field drives coverage, surface normals,
+refraction and reflection, so highlights follow the changing contour. Fixed
+framebuffers have room for the whole family; shape-only redraws reuse the scene
+texture. Pause freezes shape, drift and lighting on the same clock.
+
+Optional lensPower, shapeWobble, shapePhase and shapeMorph extend the shared kernel
+for convex magnification, gentle contour wobble and full silhouette morphing. Defaults are
 zero, preserving existing navigation optics. This remains an optical
 approximation over a controlled scene, not compositor capture or a fluid solver.
 

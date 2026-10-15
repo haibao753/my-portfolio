@@ -69,8 +69,8 @@ if(host){
   revision++;host.dataset.scene=preset;
  }
  function arrange(){
-  const slots=small.matches?[[.29,.30],[.72,.53],[.43,.80]]:[[.27,.42],[.72,.35],[.55,.77]];
-  const sizes=small.matches?[[190,130,65],[135,150,67],[185,76,38]]:[[316,190,90],[216,234,108],[358,110,54]];
+  const slots=small.matches?[[.29,.30],[.72,.53],[.43,.75]]:[[.27,.42],[.72,.35],[.55,.64]];
+ const sizes=small.matches?[[180,176,80],[150,168,72],[190,170,80]]:[[300,280,130],[252,270,120],[320,260,120]];
   lenses.forEach((lens,i)=>{
    [lens.w,lens.h,lens.radius]=sizes[i];lens.anchor=[slots[i][0],slots[i][1]];lens.rotation=[-18,21,9][i];lens.previous=null;
    lens.element.style.width=lens.w+'px';lens.element.style.height=lens.h+'px';lens.element.style.borderRadius=lens.radius+'px';
@@ -78,7 +78,7 @@ if(host){
    lens.source.width=lens.w+2*pad;lens.source.height=lens.h+2*pad;
   });
  }
- function motion(lens){return {x:Math.sin(elapsed*.43+lens.phase)*width*(small.matches?.045:.065),y:Math.sin(elapsed*.31+lens.phase*1.7)*height*.075,angle:Math.sin(elapsed*.36+lens.phase)*17}}
+ function motion(lens){return {x:Math.sin(elapsed*.43+lens.phase)*width*(small.matches?.045:.065),y:Math.sin(elapsed*.31+lens.phase*1.7)*height*.055,angle:Math.sin(elapsed*.36+lens.phase)*17}}
  function draw(){
   const started=performance.now();
   for(const lens of lenses){
@@ -97,7 +97,9 @@ if(host){
    }
    let light=[-5,-5],active=0;
    if(pointer){const a=-lens.angle*Math.PI/180,dx=pointer.x-lens.x,dy=pointer.y-lens.y;light=[.5+(dx*Math.cos(a)-dy*Math.sin(a))/lens.w,.5-(dx*Math.sin(a)+dy*Math.cos(a))/lens.h];active=light[0]>-.3&&light[0]<1.3&&light[1]>-.6&&light[1]<1.6?1:0}
-   lens.render(lens.source,{liquid:1,lensPower:.20,shapeWobble:lens.index===1?4:0,shapePhase:elapsed*.7,reflectivity:.88,strength:1.45,bevelWidth:Number(depth.value),reflectionReach:2.2,reflectionQuality:small.matches?0:1,studioLight:.85,lightDirection:[Math.cos(elapsed*.2)*.65,.75],surfaceSize:[lens.w,lens.h],scenePadding:pad,cornerRadius:lens.radius,pointerLightPosition:light,pointerLightActive:active,unchanged:!moved});
+   const shapePhase=(elapsed*.46+lens.phase)%(Math.PI*2);
+   lens.element.dataset.shapePhase=shapePhase.toFixed(4);
+   lens.render(lens.source,{liquid:1,lensPower:.20,shapeMorph:1,shapePhase,reflectivity:.88,strength:1.45,bevelWidth:Number(depth.value),reflectionReach:2.2,reflectionQuality:small.matches?0:1,studioLight:.85,lightDirection:[Math.cos(elapsed*.2)*.65,.75],surfaceSize:[lens.w,lens.h],scenePadding:pad,cornerRadius:lens.radius,pointerLightPosition:light,pointerLightActive:active,unchanged:!moved});
   }
   host.dataset.opticalFrames=String(Number(host.dataset.opticalFrames||0)+1);
   host.dataset.uploadedPixels=String(lenses.reduce((sum,lens)=>sum+(lens.render?.stats.uploadedPixels||0),0));
@@ -120,7 +122,7 @@ if(host){
  }));
  depth.addEventListener('input',queue);
  host.querySelector('[data-optical-remix]').addEventListener('click',()=>{
-  remix++;lenses.forEach((lens,i)=>{lens.anchor[0]=[.27,.72,.55][(i+remix)%3];lens.anchor[1]=small.matches?[.30,.53,.80][i]:[.35,.48,.74][(i+remix)%3];lens.rotation+=31;lens.previous=null});queue();
+  remix++;lenses.forEach((lens,i)=>{lens.anchor[0]=[.27,.72,.55][(i+remix)%3];lens.anchor[1]=small.matches?[.30,.53,.75][i]:[.34,.44,.64][(i+remix)%3];lens.rotation+=31;lens.previous=null});queue();
  });
  function coordinate(event){const r=stage.getBoundingClientRect();return {x:event.clientX-r.left,y:event.clientY-r.top}}
  lenses.forEach(lens=>{

@@ -10,16 +10,21 @@ test('free glass uses three GPU lenses and changes real scene pixels while drift
  await expect(host).toHaveAttribute('data-gpu-lenses','3');
  await expect.poll(async()=>Number(await host.getAttribute('data-optical-frames'))).toBeGreaterThan(2);
  const before=await pixelHash(page),position=await page.locator('[data-free-lens="0"]').getAttribute('style');
+ const phases=await page.locator('[data-free-lens]').evaluateAll(lenses=>lenses.map(lens=>Number((lens as HTMLElement).dataset.shapePhase)));
  await page.waitForTimeout(500);
  expect(await pixelHash(page)).not.toBe(before);
  expect(await page.locator('[data-free-lens="0"]').getAttribute('style')).not.toBe(position);
+ const later=await page.locator('[data-free-lens]').evaluateAll(lenses=>lenses.map(lens=>Number((lens as HTMLElement).dataset.shapePhase)));
+ expect(later.every((phase,i)=>phase!==phases[i])).toBe(true);
 });
 
 test('pause freezes motion, while background and thickness still change optical pixels',async({page})=>{
  await page.goto('/lab/');const host=page.locator('[data-liquid-atelier]');
  await page.locator('[data-optical-pause]').click();await expect(host).toHaveAttribute('data-motion','paused');
  await page.waitForTimeout(100);const frames=await host.getAttribute('data-optical-frames');
+ const phases=await page.locator('[data-free-lens]').evaluateAll(lenses=>lenses.map(lens=>(lens as HTMLElement).dataset.shapePhase));
  await page.waitForTimeout(250);expect(await host.getAttribute('data-optical-frames')).toBe(frames);
+ expect(await page.locator('[data-free-lens]').evaluateAll(lenses=>lenses.map(lens=>(lens as HTMLElement).dataset.shapePhase))).toEqual(phases);
  const original=await pixelHash(page);
  await page.locator('[data-optical-preset="type"]').click();await expect(host).toHaveAttribute('data-scene','type');
  await expect.poll(()=>pixelHash(page)).not.toBe(original);
@@ -83,4 +88,33 @@ test('optional convex optics magnify source pixels and animate a bounded droplet
   return {plain,convex,changed:a.reduce((n,v,i)=>n+(v!==b[i]?1:0),0),corners:[b[0],b[319],b[199*320],b[b.length-1]]};
  });
  expect(result.convex-result.plain).toBeGreaterThan(2);expect(result.changed).toBeGreaterThan(100);expect(result.corners).toEqual([0,0,0,0]);
+});
+
+test('morph changes actual GPU silhouette from circle to capsule to asymmetric drop without texture uploads',async({page})=>{
+ await page.goto('/');
+ const result=await page.evaluate(async()=>{
+  const path='/assets/optical-engine.js',module=await import(path),size=240;
+  const source=document.createElement('canvas');source.width=size;source.height=size;const ctx=source.getContext('2d')!;ctx.fillStyle='#8aaaff';ctx.fillRect(0,0,size,size);
+  const canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;const gl=canvas.getContext('webgl',{preserveDrawingBuffer:true})!,render=module.setup(gl);
+  const masks:number[][]=[];
+  const shapes=[0,Math.PI*2/3,Math.PI*4/3].map((phase,i)=>{
+   render(source,{liquid:1,shapeMorph:1,shapePhase:phase,surfaceSize:[size,size],unchanged:i>0});
+   const p=new Uint8Array(size*size*4);gl.readPixels(0,0,size,size,gl.RGBA,gl.UNSIGNED_BYTE,p);
+   let left=size,right=0,bottom=size,top=0,area=0,sumX=0,sumY=0,edge=0;const mask:number[]=[];
+   for(let y=0;y<size;y++)for(let x=0;x<size;x++){
+    const solid=p[(y*size+x)*4+3]>127;mask.push(Number(solid));
+    if(solid){left=Math.min(left,x);right=Math.max(right,x);bottom=Math.min(bottom,y);top=Math.max(top,y);area++;sumX+=x;sumY+=y}
+    if(x===0||y===0||x===size-1||y===size-1)edge+=p[(y*size+x)*4+3];
+   }
+   const asymmetry=mask.reduce((n,v,i)=>n+(v!==mask[Math.floor(i/size)*size+size-1-i%size]?1:0),0);
+   masks.push(mask);return {aspect:(right-left+1)/(top-bottom+1),area,cx:sumX/area,cy:sumY/area,asymmetry,edge};
+  });
+  return {shapes,changed:masks.slice(1).map(mask=>mask.reduce((n,v,i)=>n+(v!==masks[0][i]?1:0),0)),stats:render.stats};
+ });
+ expect(result.shapes[0].aspect).toBeCloseTo(1,1);
+ expect(result.shapes[1].aspect).toBeGreaterThan(1.65);
+ expect(result.shapes[0].asymmetry).toBe(0);expect(result.shapes[2].asymmetry).toBeGreaterThan(1500);
+ expect(result.changed.every(n=>n>4000)).toBe(true);
+ expect(result.shapes.every(shape=>shape.edge===0&&shape.area>15000)).toBe(true);
+ expect(result.stats.fullUploads).toBe(1);expect(result.stats.skippedUploads).toBe(2);
 });
