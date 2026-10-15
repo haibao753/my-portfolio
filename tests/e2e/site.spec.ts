@@ -803,3 +803,17 @@ test("optical glyph geometry cache survives scrolling and invalidates for text m
  await page.locator("#optical-cache-probe").evaluate(el=>{el.textContent="UPDATED OPTICAL TEXT"});
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-glyph-measures")||0)).toBeGreaterThan(0);
 });
+
+test("optical geometry cache reuses measured document bounds across scroll frames",async({page})=>{
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-refreshes")||0)).toBeGreaterThan(0);
+ await page.evaluate(()=>{dispatchEvent(new Event("scroll"))});
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-geometry-cache-hits")||0)).toBeGreaterThan(0);
+ const count=Number(await nav.getAttribute("data-optical-geometry-reads")||0);
+ const hits=Number(await nav.getAttribute("data-optical-geometry-cache-hits")||0);
+ expect(hits).toBeGreaterThan(count);
+ await page.evaluate(()=>{document.querySelector("main")!.style.paddingTop="7px";dispatchEvent(new Event("resize"))});
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-geometry-reads")||0)).toBeGreaterThan(0);
+});
