@@ -63,7 +63,7 @@ vec4 liquidPixel(){
  // normal. Mirrored UVs make actual scene geometry visible in the rim rather
  // than substituting a synthetic white specular stripe.
  float reflectionTravel=(2.5+width*.95)*bending;
- vec2 reflectedUV=clamp(uv-normal*reflectionTravel/size,0.,1.);
+ vec2 reflectedUV=uv+normal*reflectionTravel/size;
  vec4 reflected=sampleLiquidScene(reflectedUV);
  vec3 N=normalize(vec3(normal*slope,1.));
  float cosine=max(N.z,0.);
