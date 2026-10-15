@@ -775,10 +775,11 @@ test("live optical layer preserves transparent pixels outside reconstructed cont
  const state=await page.locator(".live-optical-layer").evaluate((canvas:HTMLCanvasElement)=>{
   const src=(canvas as HTMLCanvasElement&{opticalSource:HTMLCanvasElement}).opticalSource;
   const context=src.getContext("2d")!;
-  return {alpha:context.getContextAttributes()?.alpha??true,pixels:context.getImageData(0,0,src.width,src.height).data};
+  const pixels=context.getImageData(0,0,src.width,src.height).data;
+  let transparent=0;
+  for(let i=3;i<pixels.length;i+=4)if(pixels[i]===0)transparent++;
+  return {alpha:context.getContextAttributes()?.alpha??true,transparent};
  });
  expect(state.alpha).toBe(true);
- let transparent=0;
- for(let i=3;i<state.pixels.length;i+=4)if(state.pixels[i]===0)transparent++;
- expect(transparent).toBeGreaterThan(0);
+ expect(state.transparent).toBeGreaterThan(0);
 });
