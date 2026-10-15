@@ -12,6 +12,7 @@ uniform float liquid;
 uniform vec2 surfaceSize;
 uniform vec2 sceneSize;
 uniform float scenePadding;
+uniform float rimOnly;
 vec4 sampleLiquidScene(vec2 coord){return texture2D(scene,clamp((coord*surfaceSize+vec2(scenePadding))/max(sceneSize,vec2(1.)),0.,1.));}
 uniform float cornerRadius;
 uniform float bevelWidth;
@@ -76,6 +77,10 @@ vec4 liquidPixel(){
  pixel+=vec3(.96,.98,1.)*specular*bending*.085*reflectivity;
  float coverage=clamp(.5-sd,0.,1.);
  float alpha=mix(base.a, max(transmittedAlpha,reflected.a*reflectionMix)*coverage,optical);
+ // Detached menus only project the optically active curved rim. Their clear
+ // centre stays compositor-native instead of duplicating reconstructed DOM.
+ float edgeWeight=1.-smoothstep(2.,max(bevelWidth,3.)+5.,-sd);
+ alpha*=mix(1.,edgeWeight,rimOnly);
  return vec4(mix(base.rgb,pixel,optical)*alpha,alpha);
 }
 vec2 sampleDirection(vec2 p,float eta){
@@ -132,8 +137,8 @@ export function setup(gl){
  let active=tex,spare=alternate;
  let textureWidth=0,textureHeight=0;
  const stats={fullUploads:0,partialUploads:0,skippedUploads:0,uploadedPixels:0,gpuScrolls:0};
- const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','surfaceSize','sceneSize','scenePadding','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
- const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
+ const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','surfaceSize','sceneSize','scenePadding','rimOnly','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
+ const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,rimOnly=0,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
   gl.useProgram(program);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,active);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
   if(source.width!==textureWidth||source.height!==textureHeight){
    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);
@@ -191,6 +196,7 @@ export function setup(gl){
   gl.uniform2f(uniforms.surfaceSize,...surfaceSize);
   gl.uniform2f(uniforms.sceneSize,source.width,source.height);
   gl.uniform1f(uniforms.scenePadding,scenePadding);
+  gl.uniform1f(uniforms.rimOnly,rimOnly);
   gl.uniform1f(uniforms.cornerRadius,cornerRadius);
   gl.uniform1f(uniforms.bevelWidth,bevelWidth);
   gl.uniform2f(uniforms.lightDirection,...lightDirection);
