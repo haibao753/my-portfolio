@@ -556,3 +556,18 @@ test("shared RGB scene includes actual portfolio photo pixels without reupload o
  await page.locator("#viewport").evaluate((el:HTMLElement)=>{el.scrollTop=1350;el.dispatchEvent(new Event("scroll"))});
  await expect(page.locator("#status")).toContainText("WebGL");
 });
+
+test("shared RGB scene reuses GPU texture during scroll-only interaction", async ({page}) => {
+ await page.goto("/experiments/shared-scene-optics.html");
+ const status=page.locator("#status");
+ await expect(status).toContainText("GPU 上传");
+ const read=async()=>Number((await status.textContent())?.match(/GPU 上传 (\d+) 次/)?.[1]||0);
+ await page.waitForTimeout(200);
+ const initial=await read();
+ expect(initial).toBeGreaterThan(0);
+ for(const position of [180,420,680,920,1140]){
+  await page.locator("#viewport").evaluate((el:HTMLElement,y)=>{el.scrollTop=y;el.dispatchEvent(new Event("scroll"))},position);
+  await page.waitForTimeout(55);
+ }
+ expect(await read()).toBe(initial);
+});
