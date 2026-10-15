@@ -4,7 +4,7 @@
 (()=>{
 const viewport=document.querySelector('#viewport'),scene=document.querySelector('#scene'),rim=document.querySelector('#rim'),status=document.querySelector('#status'),power=document.querySelector('#power'),optics=document.querySelector('#optics');
 const context=scene.getContext('2d',{alpha:false});const gl=rim.getContext('webgl',{alpha:true,preserveDrawingBuffer:true,antialias:false});
-const height=1850;let width=0;let textureDirty=true;let textureUploads=0;
+const height=1850;let width=0;let textureDirty=true;let textureUploads=0;let homepageTitle='一些有趣的尝试。';let homepageLink='阅读每日简报 →';
 const svg='<svg xmlns="http://www.w3.org/2000/svg" width="240" height="130"><circle cx="120" cy="65" r="54" fill="#18b85a"/><path d="M35 65h170M120 8v114" stroke="#fff" stroke-width="10"/></svg>';
 const photo=new Image();photo.decoding='async';photo.src='/images/1.jpg';
 const vector=new Image();vector.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
@@ -13,12 +13,12 @@ function draw(){
  width=Math.max(260,Math.round(viewport.clientWidth));scene.width=width;scene.height=height;const c=context;
  c.fillStyle='#fff';c.fillRect(0,0,width,height);
  c.fillStyle='#16191f';c.font='800 44px system-ui';c.fillText('真实 RGB 折射',20,235,Math.max(100,width-40));
- c.fillStyle='#1769d2';c.font='700 29px system-ui';c.fillText('蓝色链接 / LINK',20,355,Math.max(100,width-40));
+ c.fillStyle='#1769d2';c.font='700 29px system-ui';c.fillText(homepageLink,20,355,Math.max(100,width-40));
  if(red.complete&&red.naturalWidth)c.drawImage(red,20,430,Math.min(240,width-40),130);
  else{c.fillStyle='#f02732';c.fillRect(20,430,Math.min(240,width-40),130)}
  const gradient=c.createLinearGradient(10,620,width-10,620);gradient.addColorStop(0,'#e83d9c');gradient.addColorStop(.5,'#4965ec');gradient.addColorStop(1,'#02cdb3');c.fillStyle=gradient;c.fillRect(20,625,width-40,145);
  if(vector.complete&&vector.naturalWidth)c.drawImage(vector,20,810,Math.min(240,width-40),130);
- c.fillStyle='#171717';c.font='850 42px system-ui';c.fillText('一些有趣的尝试。',20,1080,Math.max(100,width-40));
+ c.fillStyle='#171717';c.font='850 42px system-ui';c.fillText(homepageTitle,20,1080,Math.max(100,width-40));
  c.fillStyle='#73777d';c.font='24px system-ui';c.fillText('图片、颜色、渐变与 SVG',20,1200,Math.max(100,width-40));
  c.fillStyle='#f6a316';c.fillRect(20,1290,width-40,120);\n if(photo.complete&&photo.naturalWidth){const w=Math.min(width-40,540);const h=Math.min(280,w*photo.naturalHeight/photo.naturalWidth);c.drawImage(photo,20,1470,w,h)}\n else{c.fillStyle='#d6dce7';c.fillRect(20,1470,width-40,270)}\n textureDirty=true;
  render();
@@ -41,6 +41,6 @@ function render(){
  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);status.textContent='WebGL · 全场景 RGB 纹理取样 · GPU 上传 '+textureUploads+' 次';
 }
 let pending=false;function schedule(){if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;render()})}}
-viewport.addEventListener('scroll',schedule,{passive:true});power.addEventListener('input',schedule);optics.addEventListener('change',schedule);window.addEventListener('resize',draw);document.querySelector('#reset').addEventListener('click',()=>{viewport.scrollTop=0;schedule()});red.onload=draw;vector.onload=draw;photo.onload=draw;photo.onerror=draw;document.fonts?.ready.then(draw);draw();
+viewport.addEventListener('scroll',schedule,{passive:true});power.addEventListener('input',schedule);optics.addEventListener('change',schedule);window.addEventListener('resize',draw);document.querySelector('#reset').addEventListener('click',()=>{viewport.scrollTop=0;schedule()});red.onload=draw;vector.onload=draw;photo.onload=draw;photo.onerror=draw;document.fonts?.ready.then(draw);fetch('/').then(r=>{if(!r.ok)throw Error('homepage HTTP '+r.status);return r.text()}).then(html=>{const doc=new DOMParser().parseFromString(html,'text/html');const heading=doc.querySelector('.intro h2 [data-locale="zh"]')?.textContent?.trim();const link=doc.querySelector('.hero .secondary [data-locale="zh"]')?.textContent?.trim();if(heading)homepageTitle=heading;if(link)homepageLink=link;scene.dataset.source='homepage';scene.dataset.heading=homepageTitle;scene.dataset.link=homepageLink;draw()}).catch(()=>{scene.dataset.source='fallback';});draw();
 })();
 </script></body></html>
