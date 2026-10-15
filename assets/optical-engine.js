@@ -13,38 +13,67 @@ uniform vec2 surfaceSize;
 uniform float cornerRadius;
 uniform float bevelWidth;
 uniform vec2 lightDirection;
+// Rounded-box SDF in CSS pixels. The optical thickness goes to zero at the
+// outer contour, with a circular meniscus over the inner bevel.
+float roundedDistance(vec2 p, vec2 halfSize, float radius){
+ vec2 q=abs(p)-(halfSize-vec2(radius));
+ return length(max(q,0.))+min(max(q.x,q.y),0.)-radius;
+}
 vec4 liquidPixel(){
- // Signed distance and normals use CSS pixels, so a wide desktop bar and a
- // narrow mobile bar have the same meniscus instead of stretched UV edges.
- vec2 p=(uv-.5)*surfaceSize;
- float radius=min(cornerRadius,min(surfaceSize.x,surfaceSize.y)*.5);
- vec2 q=abs(p)-(surfaceSize*.5-vec2(radius));
- vec2 outside=max(q,0.);
- float distance=length(outside)+min(max(q.x,q.y),0.)-radius;
- vec2 normal=length(outside)>.0001?normalize(outside)*sign(p):
-  (q.x>q.y?vec2(sign(p.x),0.):vec2(0.,sign(p.y)));
- float rim=1.-smoothstep(0.,max(bevelWidth,1.),max(-distance,0.));
- // Inward sampling keeps all rays within the reconstructed scene. The clear
- // centre is unchanged; displacement and dispersion belong to the meniscus.
- vec2 bend=-normal*(6.*strength*rim)/surfaceSize;
- vec2 dispersion=normal*(.48*rim*strength)/surfaceSize;
- vec2 sampleUV=clamp(uv+bend,0.,1.);
- vec4 red=texture2D(scene,clamp(sampleUV+dispersion,0.,1.));
+ vec2 size=max(surfaceSize,vec2(1.));
+ vec2 p=(uv-.5)*size;
+ float radius=clamp(cornerRadius,1.,min(size.x,size.y)*.5);
+ vec2 halfSize=size*.5;
+ float sd=roundedDistance(p,halfSize,radius);
+ // SDF gradient provides a continuous outward normal across corners. Finite
+ // differences remove the hard switch at the corner-to-straight transition.
+ vec2 derivative=vec2(
+  roundedDistance(p+vec2(.5,0.),halfSize,radius)-roundedDistance(p-vec2(.5,0.),halfSize,radius),
+  roundedDistance(p+vec2(0.,.5),halfSize,radius)-roundedDistance(p-vec2(0.,.5),halfSize,radius));
+ vec2 normal=normalize(derivative+vec2(1.e-6));
+ float width=max(bevelWidth,2.);
+ float depth=clamp(-sd/width,0.,1.);
+ // Circular-section height: slope diverges as the surface approaches its rim.
+ // An epsilon keeps the limit smooth and finite at raster resolution.
+ float meniscus=1.-depth;
+ float slope=meniscus/sqrt(max(1.-meniscus*meniscus,.045));
+ float bending=slope/(1.+slope);
+ bending*=smoothstep(0.,1.2,-sd);
+ bending*=1.-smoothstep(.82,1.,depth);
+ // Thickness-induced refraction using Snell's law. Both directions are
+ // normal to the rounded contour; the centre remains undistorted.
+ float ior=1.48;
+ float incidence=atan(slope);
+ float transmitted=asin(clamp(sin(incidence)/ior,0.,.999));
+ float nonlinear=sin(incidence-transmitted);
+ float travel=(3.+width*.55)*strength*nonlinear*bending;
+ vec2 offset=-normal*travel/size;
+ vec2 sampleUV=clamp(uv+offset,0.,1.);
+ vec2 chromatic=normal*(.26*strength*bending)/size;
+ vec4 red=texture2D(scene,clamp(sampleUV+chromatic,0.,1.));
  vec4 green=texture2D(scene,sampleUV);
- vec4 blue=texture2D(scene,clamp(sampleUV-dispersion,0.,1.));
- vec3 pixel=vec3(red.r,green.g,blue.b);
- float coverage=max(red.a,max(green.a,blue.a));
- vec3 N=normalize(vec3(normal*rim*.92,1.));
- float f0=pow((1.48-1.)/(1.48+1.),2.);
- float fresnel=f0+(1.-f0)*pow(1.-N.z,5.);
- vec3 light=normalize(vec3(lightDirection, .42));
- float specular=pow(max(dot(N,normalize(light+vec3(0.,0.,1.))),0.),28.);
- float reflection=clamp((fresnel*rim*.65+specular*rim*.28)*reflectivity,0.,.24);
- pixel=mix(pixel,vec3(.97,.985,1.),reflection);
- float mask=clamp(.5-distance,0.,1.);
- vec4 original=texture2D(scene,uv);
- float alpha=mix(original.a,coverage*mask,optical);
- return vec4(mix(original.rgb,pixel,optical)*alpha,alpha);
+ vec4 blue=texture2D(scene,clamp(sampleUV-chromatic,0.,1.));
+ vec4 base=texture2D(scene,uv);
+ vec3 transmittedRGB=vec3(red.r,green.g,blue.b);
+ float transmittedAlpha=max(red.a,max(green.a,blue.a));
+ // Internal grazing reflection: look back into the source along the surface
+ // normal. Mirrored UVs make actual scene geometry visible in the rim rather
+ // than substituting a synthetic white specular stripe.
+ float reflectionTravel=(2.5+width*.95)*bending;
+ vec2 reflectedUV=clamp(uv-normal*reflectionTravel/size,0.,1.);
+ vec4 reflected=texture2D(scene,reflectedUV);
+ vec3 N=normalize(vec3(normal*slope,1.));
+ float cosine=max(N.z,0.);
+ float f0=pow((ior-1.)/(ior+1.),2.);
+ float fresnel=f0+(1.-f0)*pow(1.-cosine,5.);
+ float reflectionMix=clamp((fresnel*.82+.08*bending)*reflectivity,0.,.42);
+ vec3 pixel=mix(transmittedRGB,reflected.rgb,reflectionMix*reflected.a);
+ vec3 light=normalize(vec3(lightDirection,.7));
+ float specular=pow(max(dot(N,normalize(light+vec3(0.,0.,1.))),0.),26.);
+ pixel+=vec3(.96,.98,1.)*specular*bending*.085*reflectivity;
+ float coverage=clamp(.5-sd,0.,1.);
+ float alpha=mix(base.a, max(transmittedAlpha,reflected.a*reflectionMix)*coverage,optical);
+ return vec4(mix(base.rgb,pixel,optical)*alpha,alpha);
 }
 vec2 sampleDirection(vec2 p,float eta){
  vec2 q=p*2.-1.;
