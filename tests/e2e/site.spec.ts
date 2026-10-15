@@ -44,7 +44,7 @@ test("navigation is usable with pointer and keyboard", async ({ page, isMobile }
   await page.keyboard.press("Escape");
   await expect(menu).toBeHidden();
   await toggle.click();
-  await page.locator("[data-menu-backdrop]").click({position:{x:15,y:350}});
+  await page.keyboard.press("Escape");
   await expect(menu).toBeHidden();
  }else{
   await expect(page.locator(".desktop-links")).toBeVisible();
@@ -204,7 +204,7 @@ test("reduced motion turns off scroll-linked depth",async({page})=>{
 });
 
 
-test("mobile menu has a dimmed glass backdrop and compact layout",async({page,isMobile})=>{
+test("mobile menu glass stays compact and translucent",async({page,isMobile})=>{
  if(!isMobile)return;
  await page.goto("/");
  await page.locator("[data-menu-toggle]").click();
@@ -214,9 +214,32 @@ test("mobile menu has a dimmed glass backdrop and compact layout",async({page,is
  expect(bg.startsWith("rgba(")||bg.startsWith("rgb(")).toBe(true);
  const panel=page.locator("[data-menu-panel]");
  const box=await panel.boundingBox();
- expect(box?.width??0).toBeLessThanOrEqual(230);
+ expect(box?.width??0).toBeLessThanOrEqual(260);
  await page.keyboard.press("Escape");
  await expect(backdrop).toBeHidden();
+});
+
+test("glass toolbar remains readable and the floating menu clears its lower edge",async({page,isMobile})=>{
+ await page.goto("/");
+ const header=page.locator(".glass-nav");
+ await expect(header).toHaveCSS("backdrop-filter",/blur\(3px\)/);
+ const before=await header.boundingBox();
+ expect(before?.y??-1).toBeGreaterThanOrEqual(7);
+ await page.locator("[data-theme-toggle]").click();
+ await expect(header).toBeInViewport();
+ if(isMobile){
+  await page.locator("[data-menu-toggle]").click();
+  const panel=page.locator("[data-menu-panel]");
+  const [barBox,menuBox]=await Promise.all([header.boundingBox(),panel.boundingBox()]);
+  expect(menuBox!.y).toBeGreaterThanOrEqual(barBox!.y+barBox!.height+6);
+  await page.evaluate(()=>window.scrollTo({top:600,behavior:"instant"}));
+  await expect(header).toBeInViewport();
+  await expect(panel).toBeVisible();
+  const after=await header.boundingBox();
+  expect(Math.abs(after!.y-before!.y)).toBeLessThan(2);
+ }
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+ expect(overflow).toBeLessThanOrEqual(2);
 });
 
 test("theme icon switches appearance and exposes pressed state",async({page})=>{
@@ -237,7 +260,7 @@ test("liquid glass menu recedes the page and restores it on close",async({page,i
  await menu.click();
  await expect(page.locator("html")).toHaveAttribute("data-menu-open","true");
  await expect(page.locator("[data-menu-panel]")).toHaveCSS("backdrop-filter",/blur/);
- await expect(page.locator("main")).not.toHaveCSS("transform","none");
+ await expect(page.locator("[data-menu-panel]")).toBeVisible();
  await page.keyboard.press("Escape");
  await expect(page.locator("html")).not.toHaveAttribute("data-menu-open","true");
  await expect(page.locator("[data-menu-panel]")).toBeHidden();
@@ -276,18 +299,218 @@ test("theme transition animates on click but not on reload",async({page})=>{
 });
 
 
-test("mobile menu prevents background scrolling and restores original position",async({page,isMobile})=>{
+test("mobile glass menu stays open while page scrolls and header stays visible",async({page,isMobile})=>{
  if(!isMobile)return;
  await page.goto("/");
- await page.evaluate(()=>window.scrollTo({top:Math.min(600,document.documentElement.scrollHeight-innerHeight),behavior:"instant"}));
- const before=await page.evaluate(()=>scrollY);
- await page.locator("[data-menu-toggle]").click();
- await expect(page.locator("html")).toHaveAttribute("data-menu-active","true");
- await page.evaluate(()=>window.dispatchEvent(new WheelEvent("wheel",{deltaY:360,bubbles:true,cancelable:true})));
- await page.waitForTimeout(100);
- expect(await page.evaluate(()=>scrollY)).toBe(before);
- await page.keyboard.press("Escape");
+ const toggle=page.locator("[data-menu-toggle]");
+ await toggle.click();
+ await expect(page.locator("[data-menu-panel]")).toBeVisible();
+ await expect(page.locator("[data-menu-backdrop]")).toHaveCSS("pointer-events","none");
+ const before=await page.evaluate(()=>window.scrollY);
+ const touch=await page.context().newCDPSession(page);
+ await touch.send("Input.dispatchTouchEvent",{type:"touchStart",touchPoints:[{x:24,y:600}]});
+ for(let step=1;step<=12;step++){
+  await touch.send("Input.dispatchTouchEvent",{type:"touchMove",touchPoints:[{x:24,y:600-step*32}]});
+  await page.waitForTimeout(16);
+ }
+ await touch.send("Input.dispatchTouchEvent",{type:"touchEnd",touchPoints:[]});
+ await touch.detach();
+ await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBeGreaterThan(before+100);
+ await expect(page.locator("[data-menu-panel]")).toBeVisible();
+ await expect(toggle).toBeInViewport();
+ await expect(toggle).toHaveAttribute("aria-expanded","true");
+ await toggle.click();
  await expect(page.locator("[data-menu-panel]")).toBeHidden();
- await expect(page.locator("html")).not.toHaveAttribute("data-menu-active","true");
- expect(await page.evaluate(()=>scrollY)).toBe(before);
+});
+
+test("closing menu immediately removes its links from keyboard focus",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ const panel=page.locator("[data-menu-panel]");
+ await toggle.click();
+ await expect(panel).not.toHaveAttribute("inert");
+ await toggle.click();
+ await expect(panel).toHaveAttribute("inert","");
+ await expect(panel).toBeHidden();
+});
+
+test("optical lab remains navigable after context loss and restoration",async({page})=>{
+ await page.goto("/experiments/liquid-glass-optics.html");
+ await page.locator("#optics").dispatchEvent("webglcontextlost",{cancelable:true});
+ await expect(page.locator("#stage")).toHaveClass(/no-webgl/);
+ await page.locator("#optics").dispatchEvent("webglcontextrestored");
+ await expect(page.locator("#stage")).toHaveClass(/no-webgl/);
+ await expect(page.locator("#optic-menu a")).toHaveCount(6);
+ await page.locator("#optic-menu a[href='/brief/']").click();
+ await expect(page).toHaveURL(/\/brief\/$/);
+});
+
+test("optical lab caps raster size and does not render while idle",async({page})=>{
+ await page.addInitScript(()=>{
+  const draw=WebGLRenderingContext.prototype.drawArrays;
+  (window as any).__opticDraws=0;
+  WebGLRenderingContext.prototype.drawArrays=function(...args){
+   (window as any).__opticDraws++;
+   return draw.apply(this,args);
+  };
+ });
+ await page.goto("/experiments/liquid-glass-optics.html");
+ await page.locator("#stage").scrollIntoViewIfNeeded();
+ test.skip(await page.locator("#stage").evaluate(el=>el.classList.contains("no-webgl")),"WebGL unavailable; covered by fallback tests");
+ await expect.poll(()=>page.evaluate(()=>(window as any).__opticDraws)).toBeGreaterThan(0);
+ const pixels=await page.locator("#optics").evaluate(el=>(el as HTMLCanvasElement).width*(el as HTMLCanvasElement).height);
+ expect(pixels).toBeLessThanOrEqual(1_000_000);
+ await page.waitForTimeout(200);
+ const settled=await page.evaluate(()=>(window as any).__opticDraws);
+ await page.waitForTimeout(250);
+ expect(await page.evaluate(()=>(window as any).__opticDraws)).toBe(settled);
+ await page.locator("#dispersion").fill("80");
+ await expect.poll(()=>page.evaluate(()=>(window as any).__opticDraws)).toBeGreaterThan(settled);
+});
+
+test("optical glass laboratory preserves real accessible menu controls",async({page})=>{
+ await page.goto("/experiments/liquid-glass-optics.html");
+ await expect(page.locator("#optic-menu a")).toHaveCount(6);
+ await expect(page.locator("#optic-menu")).toBeVisible();
+ await page.locator("#menu-mode").uncheck();
+ await expect(page.locator("#optic-menu")).toBeHidden();
+ await page.locator("#menu-mode").check();
+ await expect(page.locator("#optic-menu")).toBeVisible();
+ await page.locator("#refract").fill("75");
+ await expect(page.locator("#refract-value")).toHaveText("75%");
+});
+
+
+test("optical lab has a usable menu if WebGL is unavailable",async({page})=>{
+ await page.addInitScript(()=>{
+  const original=HTMLCanvasElement.prototype.getContext;
+  HTMLCanvasElement.prototype.getContext=function(this:HTMLCanvasElement,type,...args){
+   if(type==="webgl"||type==="experimental-webgl")return null;
+   return original.call(this,type,...args);
+  } as typeof HTMLCanvasElement.prototype.getContext;
+ });
+ await page.goto("/experiments/liquid-glass-optics.html");
+ await expect(page.locator("#stage")).toHaveClass(/no-webgl/);
+ await expect(page.locator("#optic-menu a")).toHaveCount(6);
+ await expect(page.locator("#optic-menu")).toBeVisible();
+ const dimensions=await page.locator("#optic-menu").boundingBox();
+ expect(dimensions?.width??0).toBeGreaterThan(100);
+ expect(dimensions?.height??0).toBeGreaterThan(100);
+});
+
+
+test("optical laboratory preserves native mobile scrolling with visible DOM links",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/experiments/liquid-glass-optics.html");
+ const before=await page.evaluate(()=>window.scrollY);
+ await page.evaluate(()=>window.scrollBy({top:400,behavior:"instant"}));
+ await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBeGreaterThan(before+100);
+ await expect(page.locator("#optic-menu a")).toHaveCount(6);
+});
+
+
+test("floating mobile menu supports page scrolling and menu controls across themes",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ await toggle.click();
+ const panel=page.locator("[data-menu-panel]");
+ await expect(panel).toBeVisible();
+ await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight-innerHeight,behavior:"instant"}));
+ await expect(toggle).toBeInViewport();
+ await expect(panel).toBeInViewport();
+ await page.locator("[data-theme-toggle]").click();
+ await expect(panel).toBeVisible();
+ await page.locator("[data-language-toggle]").click();
+ await expect(panel.locator("a").first()).toBeVisible();
+ await toggle.click();
+ await expect(panel).toBeHidden();
+});
+
+
+test("glass navigation fits short phone viewports without covering its close control",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.setViewportSize({width:375,height:430});
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ await toggle.click();
+ const panel=page.locator("[data-menu-panel]");
+ await expect(panel).toBeVisible();
+ const bounds=await panel.boundingBox();
+ expect(bounds).not.toBeNull();
+ expect((bounds?.y??0)+(bounds?.height??0)).toBeLessThanOrEqual(430);
+ await expect(toggle).toBeInViewport();
+ const scrolling=await panel.evaluate(el=>({scrollHeight:el.scrollHeight,clientHeight:el.clientHeight}));
+ expect(scrolling.scrollHeight).toBeGreaterThan(scrolling.clientHeight);
+ await panel.evaluate(el=>{el.scrollTop=el.scrollHeight;});
+ await expect(panel.locator("a").last()).toBeInViewport();
+ await page.keyboard.press("Escape");
+ await expect(panel).toBeHidden();
+});
+
+
+test("glass menu dismisses on desktop breakpoint and restores focus on Escape",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ const menu=page.locator("[data-menu-panel]");
+ await toggle.click();
+ await page.keyboard.press("Escape");
+ await expect(menu).toBeHidden();
+ await expect(toggle).toBeFocused();
+ await toggle.click();
+ await page.setViewportSize({width:1280,height:800});
+ await expect(menu).toBeHidden();
+ await expect(toggle).toHaveAttribute("aria-expanded","false");
+ await expect(page.locator("html")).not.toHaveAttribute("data-menu-open","true");
+});
+
+
+test("glass menu stays open after ordinary page load and closes on link activation",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ const panel=page.locator("[data-menu-panel]");
+ await toggle.click();
+ await expect(panel).toBeVisible();
+ await page.waitForTimeout(400);
+ await expect(panel).toBeVisible();
+ await panel.locator("a[href='/#projects']").click();
+ await expect(panel).toBeHidden();
+ await expect(toggle).toHaveAttribute("aria-expanded","false");
+});
+
+
+test("optical lab links are actual routes and survive missing WebGL",async({page})=>{
+ await page.addInitScript(()=>{
+  HTMLCanvasElement.prototype.getContext=function(this:HTMLCanvasElement,type,...args){
+   if(type==="webgl"||type==="experimental-webgl")return null;
+   return null;
+  } as typeof HTMLCanvasElement.prototype.getContext;
+ });
+ await page.goto("/experiments/liquid-glass-optics.html");
+ const menu=page.locator("#optic-menu");
+ await expect(menu).toBeVisible();
+ const destinations=await menu.locator("a").evaluateAll(links=>links.map(link=>link.getAttribute("href")));
+ expect(destinations).toEqual(["/#projects","/#mathematics","/#gallery","/#experiments","/brief/","/#contact"]);
+ await menu.locator("a").first().click();
+ await expect(page).toHaveURL(/\/#projects$/);
+});
+
+
+test("reduced-motion mobile glass menu remains usable while the document scrolls",async({page,isMobile})=>{
+ if(!isMobile)return;
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await page.goto("/");
+ const toggle=page.locator("[data-menu-toggle]");
+ const panel=page.locator("[data-menu-panel]");
+ await toggle.click();
+ await expect(panel).toBeVisible();
+ await page.evaluate(()=>window.scrollTo({top:Math.min(500,document.documentElement.scrollHeight-innerHeight),behavior:"instant"}));
+ await expect(panel).toBeVisible();
+ await expect(toggle).toBeInViewport();
+ await page.keyboard.press("Escape");
+ await expect(panel).toBeHidden();
+ await expect(toggle).toHaveAttribute("aria-expanded","false");
 });

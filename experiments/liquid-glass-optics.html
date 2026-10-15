@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Liquid Glass 3.0 · Optical Lab | J.H. LAB</title>
+<style>
+:root{color-scheme:light dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f3f6fb;color:#172035}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#f3f6fb;color:#172035}
+header{padding:24px clamp(20px,5vw,62px);display:flex;justify-content:space-between;align-items:center;gap:12px}
+a{color:#145ba9;text-decoration:none}header strong{font-size:18px}
+article{max-width:1040px;margin:auto;padding:0 20px 70px}h1{font-size:clamp(30px,6vw,60px);line-height:1.08;letter-spacing:-.05em;margin:20px 0}
+p{line-height:1.7;color:#45546c;max-width:720px}
+.stage{position:relative;aspect-ratio:1.55;min-height:350px;border-radius:34px;overflow:hidden;box-shadow:0 22px 75px #263d6228;background:linear-gradient(135deg,#8ed2ff,#d39adf,#ffc28d);touch-action:pan-y}
+canvas{display:block;width:100%;height:100%;touch-action:pan-y}
+.fallback{display:none;position:absolute;inset:22% 22%;border-radius:60px;border:5px solid #fffd;background:#fff2;box-shadow:inset 0 4px 10px #fff9,0 16px 50px #2234;backdrop-filter:blur(4px)}
+.stage.no-webgl .fallback{display:block}
+.stage.no-webgl canvas{visibility:hidden}
+.stage.no-webgl .optic-menu{background:rgba(255,255,255,.17);backdrop-filter:blur(5px);border:2px solid #fffd;box-shadow:inset 0 2px 3px #fffa,0 12px 32px #18334c36}
+.stage:not(.no-webgl) .fallback{display:none}.controls{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:24px 0}
+.optic-menu{position:absolute;left:50%;top:50%;width:52%;height:58%;transform:translate(-50%,-50%);display:flex;flex-direction:column;justify-content:space-evenly;z-index:2;border-radius:40px;overflow:auto;overscroll-behavior:contain;text-align:center}
+.optic-menu a{display:block;padding:4px;color:#172035;font-size:clamp(12px,2vw,17px);font-weight:700;text-shadow:0 1px 2px #fff9}
+.optic-menu a+a{border-top:1px solid #ffffff6e}
+.optic-menu a:focus-visible{outline:2px solid #075bcb;outline-offset:-3px}
+.optic-menu[hidden]{display:none}
+label{display:flex;align-items:center;gap:10px;font-weight:650}input{accent-color:#1666da}
+small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:18px 22px;border-radius:20px}
+@media(max-width:650px){.stage{aspect-ratio:3/4}.controls{gap:14px}header{padding:18px 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header><strong>J.H. LAB / OPTICS</strong><a href="/">← 返回主页</a></header>
+<article><small>EXPERIMENT / 3.0</small><h1>不是磨砂玻璃，<br>而是光线被弯曲。</h1>
+<p>基于有向距离场（SDF）、法线梯度与多通道采样的实时折射实验。用鼠标或触控笔拖动玻璃体（手机可调节滑块），观察背景图案如何在边缘发生拉伸、变形和微弱色散。</p>
+<div class="stage" id="stage"><canvas id="optics" aria-label="实时液态玻璃折射实验"></canvas><div class="fallback" aria-hidden="true"></div><nav class="optic-menu" id="optic-menu" aria-label="液态玻璃导航演示"><a href="/#projects">作品</a><a href="/#mathematics">数学影像</a><a href="/#gallery">三维记忆</a><a href="/#experiments">交互几何</a><a href="/brief/">每日简报</a><a href="/#contact">联系</a></nav></div>
+<div class="controls"><label><input id="menu-mode" type="checkbox" checked> 显示真实 DOM 菜单</label><label>折射强度 <input id="refract" type="range" min="0" max="100" value="55"><output id="refract-value">55%</output></label>
+<label>色散程度 <input id="dispersion" type="range" min="0" max="100" value="35"><output id="dispersion-value">35%</output></label></div>
+<p class="note" id="principle">这是 WebGL 光学原型，不是直接采样真实网页 DOM：实验中的背景由着色器生成。真实链接和文字是独立的 DOM 层。分辨率限制为 1.5×、总像素不超过一百万；空闲时不连续渲染。无法使用 WebGL 或上下文丢失时显示 CSS 备用材质，链接仍可用。</p>
+<section class="note" style="margin-top:30px;min-height:75vh"><h2>滚动联动实验</h2><p>继续向下滑动，实验背景会随着页面位置改变。菜单为独立的真实 DOM 层，折射仅作用于着色器生成的图案，并不截取网页真实内容。</p><p>设计目标：让手势归页面、渲染由 requestAnimationFrame 合并处理；手机不连续运行渲染循环。</p></section>
+</article>
+<script>
+(() => {
+ const stage=document.querySelector('#stage'),canvas=document.querySelector('#optics'),menu=document.querySelector('#optic-menu');
+ document.querySelector('#menu-mode').addEventListener('change',e=>{menu.hidden=!e.target.checked;});
+ let lost=false;
+ canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();lost=true;stage.classList.add('no-webgl');});
+ // A restored WebGL context invalidates all old buffers/programs. Keep the
+ // accessible fallback until a reload instead of drawing with invalid handles.
+ canvas.addEventListener('webglcontextrestored',()=>{lost=true;stage.classList.add('no-webgl');});
+ const gl=canvas.getContext('webgl',{alpha:false,antialias:false,depth:false,stencil:false,powerPreference:'low-power',preserveDrawingBuffer:false});
+ if(!gl){stage.classList.add('no-webgl');return;}
+ const vert='attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+ const frag=`
+ precision mediump float;
+ uniform vec2 uRes,uCenter;uniform float uRefract,uDisp,uScroll;
+ float sdRoundRect(vec2 p,vec2 b,float r){vec2 q=abs(p)-b+r;return length(max(q,0.))-r+min(max(q.x,q.y),0.);}
+ vec3 scene(vec2 uv){
+   uv.y+=uScroll*.075;
+   vec3 c=mix(vec3(.22,.65,1.),vec3(.99,.38,.69),smoothstep(.03,.94,uv.x));
+   c=mix(c,vec3(1.,.82,.31),smoothstep(.25,1.1,uv.y)*.52);
+   vec2 q=uv*vec2(8.,7.);vec2 gv=abs(fract(q)-.5);
+   float line=1.-smoothstep(.009,.026,min(gv.x,gv.y));
+   c=mix(c,vec3(1.),line*.22);
+   float circle=length(uv-vec2(.28,.69));
+   c=mix(c,vec3(.09,.19,.52),1.-smoothstep(.11,.12,circle));
+   float orb=length(uv-vec2(.77,.32));c=mix(c,vec3(1.,.27,.12),1.-smoothstep(.11,.12,orb));
+   return c;
+ }
+ float field(vec2 p){
+   vec2 size=vec2(.26,.29);
+   return sdRoundRect(p-uCenter,size,.085);
+ }
+ void main(){
+   vec2 uv=gl_FragCoord.xy/uRes;
+   vec2 aspect=vec2(uRes.x/uRes.y,1.);
+   vec2 pos=uv*aspect;float d=field(pos);
+   // Most pixels are outside the lens. Avoid normals and four scene evaluations there.
+   if(d>.014){gl_FragColor=vec4(scene(uv),1.);return;}
+   vec2 e=vec2(.0025,0.);
+   vec2 normal=normalize(vec2(field(pos+e.xy)-field(pos-e.xy),field(pos+e.yx)-field(pos-e.yx))+.000001);
+   float inner=1.-smoothstep(-.02,.012,d);
+   float rim=exp(-pow(abs(d+.011)/.017,2.));
+   float bulge=smoothstep(-.27,-.005,d);
+   vec2 offset=normal*(.004+rim*.033+bulge*.012)*uRefract*inner;
+   vec2 sampling=uv-offset/aspect;
+   vec2 chrom=normal*.009*uDisp*rim/aspect;
+   vec3 untouched=scene(uv);
+   vec3 col=scene(sampling);
+   // Only split RGB channels where the rim actually makes dispersion visible.
+   if(uDisp>.001 && rim>.06){
+     col.r=scene(sampling+chrom).r;
+     col.b=scene(sampling-chrom).b;
+   }
+   col=mix(untouched,col,inner);
+   float topHighlight=pow(max(dot(normal,normalize(vec2(-.5,1.))),0.),4.);
+   col+=vec3(1.,.98,.95)*rim*(.26+.49*topHighlight)*inner;
+   col-=vec3(.08,.13,.23)*rim*.17*(1.-topHighlight);
+   col=mix(col,col+vec3(.18,.22,.25),inner*.08);
+   gl_FragColor=vec4(clamp(col,0.,1.),1.);
+ }
+ `;
+ const shaders=[];
+ const shader=(type,src)=>{const s=gl.createShader(type);shaders.push(s);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error('shader compilation failed');return s;};
+ let program;
+ try{program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vert));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,frag));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error('shader link');}
+ catch(e){shaders.forEach(s=>gl.deleteShader(s));if(program)gl.deleteProgram(program);stage.classList.add('no-webgl');return;}
+ shaders.forEach(s=>gl.deleteShader(s));
+ gl.useProgram(program);
+ const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+ const a=gl.getAttribLocation(program,'a');gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);
+ const resolution=gl.getUniformLocation(program,'uRes'),center=gl.getUniformLocation(program,'uCenter'),refract=gl.getUniformLocation(program,'uRefract'),disp=gl.getUniformLocation(program,'uDisp'),scrollUniform=gl.getUniformLocation(program,'uScroll');
+ let cx=.5,cy=.5,pending=false,dragging=false,inView=true,frame=0;
+ const controls=[['refract','refract-value'],['dispersion','dispersion-value']];
+ const draw=()=>{pending=false;if(lost||document.hidden||!inView)return;const rect=stage.getBoundingClientRect();
+ const marginX=Math.min(.49,(rect.height*.26+6)/Math.max(1,rect.width));cx=Math.min(1-marginX,Math.max(marginX,cx));
+ menu.style.width=(rect.height*.52)+'px';menu.style.height=(rect.height*.58)+'px';
+ menu.style.left=(cx*100)+'%';menu.style.top=((1-cy)*100)+'%';
+ const ratio=Math.min(devicePixelRatio||1,1.5,Math.sqrt(1000000/Math.max(1,rect.width*rect.height)));
+ const w=Math.max(1,Math.floor(rect.width*ratio)),h=Math.max(1,Math.floor(rect.height*ratio));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;gl.viewport(0,0,w,h);}
+ const aspect=w/h;gl.uniform2f(resolution,w,h);gl.uniform2f(center,cx*aspect,cy);gl.uniform1f(refract,Number(document.querySelector('#refract').value)/100);gl.uniform1f(scrollUniform,window.scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight));gl.uniform1f(disp,Number(document.querySelector('#dispersion').value)/100);gl.drawArrays(gl.TRIANGLES,0,6);};
+ const schedule=()=>{if(!pending&&!document.hidden&&inView&&!lost){pending=true;frame=requestAnimationFrame(draw);}};
+ for(const [id,out] of controls){document.getElementById(id).addEventListener('input',e=>{document.getElementById(out).textContent=e.target.value+'%';schedule();});}
+ const move=e=>{if(!dragging)return;const r=stage.getBoundingClientRect();const marginX=Math.min(.49,(r.height*.26+6)/r.width);cx=Math.min(1-marginX,Math.max(marginX,(e.clientX-r.left)/r.width));cy=Math.min(.69,Math.max(.31,1-(e.clientY-r.top)/r.height));schedule();};
+ canvas.addEventListener('pointerdown',e=>{
+  // A vertical swipe should continue scrolling the document. Only a deliberate
+  // mouse or pen drag manipulates the optical lens.
+  if(e.pointerType==='touch')return;
+  dragging=true;canvas.setPointerCapture(e.pointerId);move(e);
+ });
+ canvas.addEventListener('pointermove',move);
+ canvas.addEventListener('pointerup',()=>{dragging=false;});
+ canvas.addEventListener('pointercancel',()=>{dragging=false;});
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)schedule();});
+ window.addEventListener('scroll',schedule,{passive:true});
+ if('IntersectionObserver' in window){
+  new IntersectionObserver(entries=>{inView=entries[0]?.isIntersecting??false;if(inView)schedule();},{rootMargin:'180px'}).observe(stage);
+ }
+ new ResizeObserver(schedule).observe(stage);schedule();
+ window.addEventListener('pagehide',e=>{
+  if(e.persisted)return;
+  lost=true;cancelAnimationFrame(frame);gl.deleteBuffer(b);gl.deleteProgram(program);
+ },{once:true});
+})();
+</script></body></html>
