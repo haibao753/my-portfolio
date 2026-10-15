@@ -41,6 +41,12 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
    // Layout bounds remain stable while scrolling; remeasure on layout invalidation only.
    let geometryEpoch=-1,geometryReads=0,geometryCacheHits=0;
    const readBounds=(el)=>{
+    // Sticky/animated/transform-positioned elements cannot be inferred from scroll offsets.
+    const dynamic=(()=>{for(let p=el;p&&p!==root;p=p.parentElement){
+     const st=getComputedStyle(p);
+     if(st.position==='sticky'||st.transform!=='none'||st.animationName!=='none')return true;
+    }return false})();
+    if(dynamic){geometryReads++;return el.getBoundingClientRect()}
     const cached=geometryCache.get(el);
     if(cached&&cached.epoch===layoutEpoch){
      geometryCacheHits++;
