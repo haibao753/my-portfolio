@@ -4,6 +4,7 @@
  * visible DOM backgrounds, same-origin images and text in a padded 2D scene.
  */
 import {setup} from '/assets/optical-engine.js';
+import {glassPointerFor,subscribeGlassPointer} from '/assets/glass-pointer-light.js';
 const menu=document.querySelector('[data-menu-panel]');
 const root=document.querySelector('main');
 const params=new URLSearchParams(location.search);
@@ -18,6 +19,10 @@ if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-
  try{if(gl&&ctx)render=setup(gl)}catch{menu.dataset.menuOptics='fallback'}
  if(render&&ctx){
   const pad=72;
+  let sceneReady=false;
+  const options=()=>({liquid:1,optical:1,reflectivity:.78,strength:1.25,cornerRadius:parseFloat(getComputedStyle(menu).borderTopLeftRadius)||32,
+   bevelWidth:19,reflectionReach:2.2,reflectionQuality:1,studioLight:.48,lightDirection:[-.55,.85],rimOnly:1,
+   surfaceSize:[canvas.width,canvas.height],scenePadding:pad,...glassPointerFor(menu)});
   const paint=()=>{
    if(menu.hidden||!menu.getClientRects().length||gl.isContextLost())return;
    const rect=menu.getBoundingClientRect(),width=Math.max(1,Math.round(rect.width)),height=Math.max(1,Math.round(rect.height));
@@ -67,13 +72,16 @@ if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-
    }
    const radius=parseFloat(getComputedStyle(menu).borderTopLeftRadius)||32;
    try{
-    render(scene,{liquid:1,optical:1,reflectivity:.78,strength:1.25,cornerRadius:radius,
-     bevelWidth:19,reflectionReach:2.2,reflectionQuality:1,studioLight:.48,lightDirection:[-.55,.85],rimOnly:1,surfaceSize:[width,height],scenePadding:pad});
+    render(scene,options());sceneReady=true;
     menu.dataset.menuOptics='active';menu.dataset.menuOpticalSamples=String(count);
    }catch{menu.dataset.menuOptics='fallback'}
   };
   let scheduled=false;
   const schedule=()=>{if(!scheduled){scheduled=true;requestAnimationFrame(()=>{scheduled=false;paint()})}};
+  subscribeGlassPointer(()=>{
+   if(!sceneReady||menu.hidden||gl.isContextLost())return;
+   try{render(scene,{...options(),unchanged:true})}catch{menu.dataset.menuOptics='fallback'}
+  });
   const state=new MutationObserver(schedule);
   state.observe(menu,{attributes:true,attributeFilter:['hidden','class','style','data-closing']});
   addEventListener('scroll',schedule,{passive:true});
