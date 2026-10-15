@@ -902,7 +902,8 @@ test("damage compositor repaints only a small style region but falls back on str
 test("GPU scroll shift preserves image pixels while uploading only uncovered strip",async({page})=>{
  await page.goto("/experiments/optical-engine-v1.html");
  const result=await page.evaluate(async()=>{
-  const {setup}=await import("/assets/optical-engine.js");
+  const modulePath="/assets/optical-engine.js";
+  const {setup}=await import(modulePath);
   const canvas=document.createElement("canvas");canvas.width=64;canvas.height=48;
   const gl=canvas.getContext("webgl",{preserveDrawingBuffer:true,alpha:true})!;
   const render=setup(gl);
