@@ -8,7 +8,7 @@ if(!nav||!canvas)return;
 const gl=canvas.getContext('webgl',{alpha:true,premultipliedAlpha:false,antialias:false,preserveDrawingBuffer:true});
 if(!gl)return;
 const vs='attribute vec2 pos;varying vec2 uv;void main(){uv=vec2((pos.x+1.)*.5,(pos.y+1.)*.5);gl_Position=vec4(pos,0.,1.);}';
-const fs='precision mediump float;varying vec2 uv;uniform sampler2D scene;uniform float opacity;void main(){float x=clamp(uv.x+.0025*sin(uv.y*9.+uv.x*22.),0.,1.);float y=mix(.26,.88,uv.y);vec3 pixel=texture2D(scene,vec2(x,y)).rgb;float ink=clamp((.94-dot(pixel,vec3(.2126,.7152,.0722)))*2.3,0.,1.);float rim=pow(sin(3.14159265*uv.y),.6);gl_FragColor=vec4(vec3(.035,.05,.07),clamp(ink*rim*.92*opacity,0.,.90));}';
+const fs='precision mediump float;varying vec2 uv;uniform sampler2D scene;uniform float opacity;void main(){float x=clamp(uv.x+.002*sin(uv.y*8.+uv.x*11.),0.,1.);float sy=mix(.12,.91,uv.y);vec3 col=texture2D(scene,vec2(x,sy)).rgb;vec3 background=vec3(1.);vec3 absorption=clamp(background-col,0.,1.);float density=max(max(absorption.r,absorption.g),absorption.b);float meniscus=pow(sin(3.14159265*uv.y),1.35);float fresnel=pow(abs(uv.y-.5)*2.,2.);vec3 tinted=mix(col,vec3(.04,.06,.09),.10+.10*fresnel);float alpha=clamp(density*meniscus*(.76+.12*fresnel)*opacity,0.,.82);gl_FragColor=vec4(tinted,alpha);}';
 function compile(t,s){const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))throw Error('shader compile');return x}
 let program;
 try{program=gl.createProgram();gl.attachShader(program,compile(gl.VERTEX_SHADER,vs));gl.attachShader(program,compile(gl.FRAGMENT_SHADER,fs));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))return}catch{return}
@@ -24,7 +24,7 @@ function paint(){
  const rect=nav.getBoundingClientRect(),width=Math.max(1,Math.round(rect.width-20));
  const dpr=Math.min(devicePixelRatio||1,2);
  canvas.width=Math.round(width*dpr);canvas.height=Math.round(14*dpr);
- off.width=width;off.height=126;ctx.fillStyle='#fff';ctx.fillRect(0,0,width,112);
+ off.width=width;off.height=126;ctx.fillStyle='#fff';ctx.fillRect(0,0,width,126);
  let found=false;
  // Draw the actual browser-laid-out text fragments rather than guessing one line.
  // Range.getClientRects gives line geometry; individual glyph pixels are rasterized
@@ -57,14 +57,28 @@ function paint(){
    }
   }
  }
+ // Real source pixels for same-origin / CORS-approved image assets.
+ // Image.decode isn't awaited in a scroll frame: load events request a fresh frame.
+ for(const img of document.querySelectorAll('main img')){
+  const b=img.getBoundingClientRect();
+  if(b.bottom<rect.bottom-30||b.top>rect.bottom+96||b.right<rect.left||b.left>rect.right)continue;
+  if(!img.complete||!img.naturalWidth)continue;
+  const x=b.left-rect.left-10,y=b.top-rect.bottom+30;
+  try{
+   ctx.drawImage(img,x,y,b.width,b.height);
+   found=true;
+  }catch{
+   // A tainted source cannot be sampled by WebGL; ignore safely.
+  }
+ }
  gl.viewport(0,0,canvas.width,canvas.height);
  gl.bindTexture(gl.TEXTURE_2D,texture);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
- gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,off);
+ try{gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,off)}catch{return}
  gl.uniform1f(gl.getUniformLocation(program,'opacity'),found?1:0);
  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
 }
 function queue(){if(!scheduled){scheduled=true;requestAnimationFrame(paint)}}
 window.addEventListener('scroll',queue,{passive:true});window.addEventListener('resize',queue,{passive:true});
-document.fonts?.ready.then(queue);paint();
+document.fonts?.ready.then(queue);document.querySelectorAll('main img').forEach(img=>img.addEventListener('load',queue,{once:true}));paint();
 window.addEventListener('pagehide',()=>{gl.deleteTexture(texture);gl.deleteProgram(program)},{once:true});
 })();
