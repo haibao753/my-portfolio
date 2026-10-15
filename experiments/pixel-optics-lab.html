@@ -45,7 +45,7 @@ small{display:block;color:#68707a;line-height:1.6}
 <script>
 (()=>{
 const stage=document.getElementById('stage'),scroll=document.getElementById('scroll'),canvas=document.getElementById('glass'),status=document.getElementById('status'),range=document.getElementById('distortion'),compare=document.getElementById('compare');
-const gl=canvas.getContext('webgl',{alpha:true,antialias:false,premultipliedAlpha:false});
+const gl=canvas.getContext('webgl',{alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:true});
 if(!gl){status.textContent='WebGL 不可用，使用静态玻璃';canvas.style.background='rgba(245,248,251,.7)';return}
 const vertex='attribute vec2 p;varying vec2 v;void main(){v=(p+1.)*.5;gl_Position=vec4(p,0.,1.);}';
 const fragment=`precision mediump float;varying vec2 v;uniform sampler2D tex;uniform vec2 size;uniform float yOrigin;uniform float totalHeight;uniform float power;uniform float enabled;
