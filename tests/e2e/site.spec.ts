@@ -767,3 +767,18 @@ test("optical source preserves subregion positions after responsive nav offset",
  expect(result.green).toBeLessThan(80);
  expect(result.blue).toBeLessThan(100);
 });
+
+test("live optical layer preserves transparent pixels outside reconstructed content",async({page})=>{
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ const state=await page.locator(".live-optical-layer").evaluate((canvas:HTMLCanvasElement)=>{
+  const src=(canvas as HTMLCanvasElement&{opticalSource:HTMLCanvasElement}).opticalSource;
+  const context=src.getContext("2d")!;
+  return {alpha:context.getContextAttributes()?.alpha??true,pixels:context.getImageData(0,0,src.width,src.height).data};
+ });
+ expect(state.alpha).toBe(true);
+ let transparent=0;
+ for(let i=3;i<state.pixels.length;i+=4)if(state.pixels[i]===0)transparent++;
+ expect(transparent).toBeGreaterThan(0);
+});
