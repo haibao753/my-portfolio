@@ -3,6 +3,7 @@ import {navigation} from "../data/site";
 ---
 <header class="glass-nav">
  <span class="nav-rim-reflection" aria-hidden="true"></span>
+ <span class="nav-rim-dark" aria-hidden="true"></span>
  <div class="nav-inner wrap">
   <a href="/" class="brand" aria-label="J.H. LAB 首页"><span aria-hidden="true"></span></a>
   <nav class="desktop-links" aria-label="Main navigation">
@@ -119,29 +120,65 @@ import {navigation} from "../data/site";
   background:linear-gradient(90deg,transparent 2%,rgba(170,195,240,.1) 20%,rgba(226,240,255,.79) var(--rim-track),rgba(119,167,222,.25) 82%,transparent 98%);
  }
  @media(prefers-reduced-motion:reduce){.glass-nav .nav-rim-reflection{opacity:.25}}
+
+ /* Nine independently weighted dark reflections; driven by nearby text/image geometry. */
+ .glass-nav .nav-rim-dark{
+  position:absolute;inset:auto 18px -2px;height:7px;z-index:3;pointer-events:none;
+  display:grid;grid-template-columns:repeat(9,minmax(0,1fr));
+  border-radius:0 0 24px 24px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,black 45%,transparent);
+  mask-image:linear-gradient(to bottom,transparent,black 45%,transparent);
+ }
+ .glass-nav .nav-rim-dark span{
+  opacity:var(--dark-rim-opacity,0);
+  background:linear-gradient(to bottom,transparent 5%,rgba(18,22,30,.43) 65%,rgba(30,35,43,.19));
+  filter:blur(1.8px);
+ }
+ :global(html[data-theme="dark"]) .glass-nav .nav-rim-dark span{
+  background:linear-gradient(to bottom,transparent 5%,rgba(2,4,8,.8) 65%,rgba(2,4,8,.4));
+ }
 </style>
 
 <script>
- // A lightweight scroll-coupled light sweep, with no continuous animation loop.
- // The backdrop-filter already samples real page colors; this adds edge lighting only.
  const opticNav=document.querySelector<HTMLElement>(".glass-nav");
  if(opticNav){
   const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
+  const darkRim=opticNav.querySelector<HTMLElement>(".nav-rim-dark");
+  const bands=Array.from({length:9},()=>document.createElement("span"));
+  bands.forEach(b=>darkRim?.appendChild(b));
   let scheduled=false;
   const update=()=>{
    scheduled=false;
+   if(!darkRim)return;
    if(reduced.matches){
-    opticNav.style.setProperty("--rim-track","50%");
-    opticNav.style.setProperty("--rim-strength",".3");
+    bands.forEach(b=>b.style.setProperty("--dark-rim-opacity","0"));
     return;
    }
-   const y=window.scrollY||0;
-   const width=Math.max(1,opticNav.getBoundingClientRect().width);
-   const wave=(Math.sin(y/115)+Math.sin(y/257+.8))*.5;
-   const travel=50+wave*32;
-   const energy=.40+Math.min(.35,Math.abs(Math.sin(y/90))*.35);
-   opticNav.style.setProperty("--rim-track",travel.toFixed(2)+"%");
-   opticNav.style.setProperty("--rim-strength",energy.toFixed(3));
+   const rect=opticNav.getBoundingClientRect();
+   const strengths=new Array(9).fill(0);
+   const selectors="main h1,main h2,main h3,main h4,main p,main strong,main img,main svg,main .project-title";
+   for(const el of document.querySelectorAll<HTMLElement>(selectors)){
+    const box=el.getBoundingClientRect();
+    if(box.bottom<rect.bottom-12||box.top>rect.bottom+100)continue;
+    if(box.right<rect.left||box.left>rect.right)continue;
+    const style=getComputedStyle(el);
+    const isGraphic=el.matches("img,svg");
+    const color=style.color.match(/[\\d.]+/g)?.slice(0,3).map(Number)??[130,130,130];
+    // This estimates darkness from rendered element geometry, not actual pixel sampling.
+    const brightness=(color[0]*.2126+color[1]*.7152+color[2]*.0722)/255;
+    const darkness=isGraphic?.32:Math.max(0,Math.min(1,(.68-brightness)*1.6));
+    if(darkness<=0.08)continue;
+    const proximity=Math.max(0,1-Math.abs(box.top-rect.bottom+4)/104);
+    if(proximity<=0)continue;
+    const weight=darkness*proximity;
+    for(let i=0;i<9;i++){
+     const center=rect.left+(i+.5)*rect.width/9;
+     const overlap=center>=box.left-12&&center<=box.right+12;
+     if(overlap)strengths[i]=Math.max(strengths[i],weight);
+    }
+   }
+   bands.forEach((band,i)=>band.style.setProperty("--dark-rim-opacity",Math.min(.9,strengths[i]).toFixed(3)));
+   opticNav.style.setProperty("--rim-strength",".38");
   };
   const queue=()=>{if(!scheduled){scheduled=true;requestAnimationFrame(update)}};
   window.addEventListener("scroll",queue,{passive:true});
@@ -150,4 +187,3 @@ import {navigation} from "../data/site";
   update();
  }
 </script>
-
