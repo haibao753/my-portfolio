@@ -20,18 +20,30 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     if(glass.width!==Math.round(w*dpr)||glass.height!==Math.round(h*dpr)){glass.width=Math.round(w*dpr);glass.height=Math.round(h*dpr)}
     source.width=w;source.height=h;
     ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);
-    let elements=0;
+    let elements=0,images=0,colors=0;
+    const nearby=[];
     // Only objects crossing the navbar geometry are relevant; draw in document order.
     for(const el of root.querySelectorAll('*')){
-     if(elements>240)break;
      const r=el.getBoundingClientRect();
      if(r.right<nr.left||r.left>nr.right||r.bottom<nr.top-18||r.top>nr.bottom+18)continue;
      const style=getComputedStyle(el);
      if(style.display==='none'||style.visibility==='hidden'||Number(style.opacity)===0)continue;
+     nearby.push({el,r,style});
+    }
+    // Paint CSS color surfaces beneath media and text rather than painting over them.
+    for(const {el,r,style} of nearby){
+     if(el===root)continue;
+     const color=style.backgroundColor;
+     if(color&&color!=='transparent'&&color!=='rgba(0, 0, 0, 0)'){
+      ctx.fillStyle=color;ctx.fillRect(r.left-nr.left,r.top-nr.top,r.width,r.height);colors++;
+     }
+    }
+    for(const {el,r,style} of nearby){
+     if(elements>240)break;
      if(el instanceof HTMLImageElement&&el.complete&&el.naturalWidth){
       const url=new URL(el.currentSrc||el.src,location.href);
       if(url.origin===location.origin||url.protocol==='data:'){
-       try{ctx.drawImage(el,r.left-nr.left,r.top-nr.top,r.width,r.height);elements++}catch{}
+       try{ctx.drawImage(el,r.left-nr.left,r.top-nr.top,r.width,r.height);elements++;images++}catch{}
       }
      }
      for(const node of el.childNodes){
@@ -51,7 +63,7 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
       elements++;
      }
     }
-    try{shader(source,{strength:2,optical:1,reflectivity:.35});nav.dataset.opticalSamples=String(elements)}catch{nav.dataset.opticalError='texture'}
+    try{shader(source,{strength:2,optical:1,reflectivity:.35});nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors)}catch{nav.dataset.opticalError='texture'}
    };
    let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
    addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});
