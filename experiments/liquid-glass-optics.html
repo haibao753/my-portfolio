@@ -28,7 +28,7 @@ small{color:#52617a}.note{border:1px solid #dbe3ee;background:#ffffffb8;padding:
 <header><strong>J.H. LAB / OPTICS</strong><a href="/">← 返回主页</a></header>
 <article><small>EXPERIMENT / 3.0</small><h1>不是磨砂玻璃，<br>而是光线被弯曲。</h1>
 <p>基于有向距离场（SDF）、法线梯度与多通道采样的实时折射实验。用鼠标或触控笔拖动玻璃体（手机可调节滑块），观察背景图案如何在边缘发生拉伸、变形和微弱色散。</p>
-<div class="stage" id="stage"><canvas id="optics" aria-label="实时液态玻璃折射实验"></canvas><div class="fallback" aria-hidden="true"></div><nav class="optic-menu" id="optic-menu" aria-label="液态玻璃导航演示"><a href="#principle">作品</a><a href="#principle">数学影像</a><a href="#principle">三维记忆</a><a href="#principle">交互几何</a><a href="#principle">每日简报</a><a href="#principle">联系</a></nav></div>
+<div class="stage" id="stage"><canvas id="optics" aria-label="实时液态玻璃折射实验"></canvas><div class="fallback" aria-hidden="true"></div><nav class="optic-menu" id="optic-menu" aria-label="液态玻璃导航演示"><a href="/#projects">作品</a><a href="/#mathematics">数学影像</a><a href="/#gallery">三维记忆</a><a href="/#experiments">交互几何</a><a href="/brief/">每日简报</a><a href="/#contact">联系</a></nav></div>
 <div class="controls"><label><input id="menu-mode" type="checkbox" checked> 显示真实 DOM 菜单</label><label>折射强度 <input id="refract" type="range" min="0" max="100" value="55"><output id="refract-value">55%</output></label>
 <label>色散程度 <input id="dispersion" type="range" min="0" max="100" value="35"><output id="dispersion-value">35%</output></label></div>
 <p class="note" id="principle">这是 WebGL 光学原型，不是直接采样真实网页 DOM：实验中的背景由着色器生成。正式菜单仍需要保留真实链接、文字和触摸事件。移动端分辨率限制为 1.5×，不连续跑动画帧；无法使用 WebGL 时显示静态 CSS 备用材质。</p>
