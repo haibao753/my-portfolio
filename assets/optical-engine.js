@@ -51,14 +51,47 @@ export function setup(gl){
  const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
  const loc=gl.getAttribLocation(program,"position");gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
  const tex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tex);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+ // Two textures allow framebuffer-side scroll blits without readback.
+ const alternate=gl.createTexture();
+ gl.bindTexture(gl.TEXTURE_2D,alternate);
+ for(const p of [gl.TEXTURE_MIN_FILTER,gl.TEXTURE_MAG_FILTER])gl.texParameteri(gl.TEXTURE_2D,p,gl.LINEAR);
+ gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+ gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+ const copyFbo=gl.createFramebuffer(),readFbo=gl.createFramebuffer();
+ let active=tex,spare=alternate;
  let textureWidth=0,textureHeight=0;
- const stats={fullUploads:0,partialUploads:0,skippedUploads:0,uploadedPixels:0};
- const render=function(source,{strength=1,optical=1,reflectivity=1,dirtyRect=null,unchanged=false}={}){
-  gl.useProgram(program);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
+ const stats={fullUploads:0,partialUploads:0,skippedUploads:0,uploadedPixels:0,gpuScrolls:0};
+ const render=function(source,{strength=1,optical=1,reflectivity=1,dirtyRect=null,unchanged=false,scrollShift=null}={}){
+  gl.useProgram(program);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,active);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
   if(source.width!==textureWidth||source.height!==textureHeight){
    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);
    textureWidth=source.width;textureHeight=source.height;
    stats.fullUploads++;stats.uploadedPixels+=source.width*source.height;
+  }else if(scrollShift&&Number.isInteger(scrollShift.y)&&scrollShift.x===0&&Math.abs(scrollShift.y)<textureHeight){
+   const dy=scrollShift.y;
+   gl.bindFramebuffer(gl.FRAMEBUFFER,readFbo);
+   gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,active,0);
+   gl.bindTexture(gl.TEXTURE_2D,spare);
+   gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,textureWidth,textureHeight,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+   gl.bindFramebuffer(gl.FRAMEBUFFER,copyFbo);
+   gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,spare,0);
+   // WebGL1 copyTexSubImage2D copies from the bound framebuffer to bound texture.
+   gl.bindFramebuffer(gl.FRAMEBUFFER,readFbo);
+   gl.copyTexSubImage2D(gl.TEXTURE_2D,0,0,Math.max(dy,0),0,Math.max(-dy,0),textureWidth,textureHeight-Math.abs(dy));
+   const swap=active;active=spare;spare=swap;
+   gl.bindTexture(gl.TEXTURE_2D,active);
+   const patch=dirtyRect||{x:0,y:dy<0?textureHeight+dy:0,width:textureWidth,height:Math.abs(dy)};
+   const x=Math.max(0,Math.floor(patch.x)),y=Math.max(0,Math.floor(patch.y)),w=Math.min(textureWidth-x,Math.ceil(patch.width)),h=Math.min(textureHeight-y,Math.ceil(patch.height));
+   if(w>0&&h>0){
+    const pixels=source.getContext('2d').getImageData(x,y,w,h).data;
+    const bytes=new Uint8Array(pixels.length);
+    for(let row=0;row<h;row++)bytes.set(pixels.subarray(row*w*4,(row+1)*w*4),(h-row-1)*w*4);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);
+    gl.texSubImage2D(gl.TEXTURE_2D,0,x,textureHeight-y-h,w,h,gl.RGBA,gl.UNSIGNED_BYTE,bytes);
+    stats.partialUploads++;stats.uploadedPixels+=w*h;
+   }
+   stats.gpuScrolls++;
+   gl.bindFramebuffer(gl.FRAMEBUFFER,null);
   }else if(unchanged){
    stats.skippedUploads++;
   }else if(dirtyRect){
