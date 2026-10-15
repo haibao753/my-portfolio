@@ -52,7 +52,19 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
      if(el instanceof HTMLImageElement&&el.complete&&el.naturalWidth){
       const url=new URL(el.currentSrc||el.src,location.href);
       if(url.origin===location.origin||url.protocol==='data:'){
-       try{ctx.drawImage(el,r.left-nr.left,r.top-nr.top,r.width,r.height);elements++;images++}catch{}
+       try{
+        const fit=style.objectFit,iw=el.naturalWidth,ih=el.naturalHeight;
+        if(fit==='cover'||fit==='contain'){
+         const ratio=fit==='cover'?Math.max(r.width/iw,r.height/ih):Math.min(r.width/iw,r.height/ih);
+         const dw=iw*ratio,dh=ih*ratio;
+         const objectPos=style.objectPosition.split(' ');
+         const percent=(value)=>value?.endsWith('%')?parseFloat(value)/100:.5;
+         const px=percent(objectPos[0]),py=percent(objectPos[1]);
+         ctx.save();ctx.beginPath();ctx.rect(r.left-nr.left,r.top-nr.top,r.width,r.height);ctx.clip();
+         ctx.drawImage(el,r.left-nr.left+(r.width-dw)*px,r.top-nr.top+(r.height-dh)*py,dw,dh);ctx.restore();
+        }else{ctx.drawImage(el,r.left-nr.left,r.top-nr.top,r.width,r.height)}
+        elements++;images++;
+       }catch{}
       }
      }
      for(const node of el.childNodes){
