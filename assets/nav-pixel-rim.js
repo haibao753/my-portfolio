@@ -8,7 +8,7 @@ if(!nav||!canvas)return;
 const gl=canvas.getContext('webgl',{alpha:true,premultipliedAlpha:false,antialias:false,preserveDrawingBuffer:true});
 if(!gl)return;
 const vs='attribute vec2 pos;varying vec2 uv;void main(){uv=vec2((pos.x+1.)*.5,(pos.y+1.)*.5);gl_Position=vec4(pos,0.,1.);}';
-const fs='precision mediump float;varying vec2 uv;uniform sampler2D scene;uniform float opacity;void main(){float y=0.46+uv.y*.24;float twist=.008*sin(uv.x*38.+uv.y*9.)*uv.y;vec4 pixel=texture2D(scene,vec2(clamp(uv.x+twist,0.,1.),y));float ink=1.-dot(pixel.rgb,vec3(.2126,.7152,.0722));float edge=sin(uv.y*3.14159);gl_FragColor=vec4(vec3(.035,.05,.07),clamp(ink*edge*.82*opacity,0.,.80));}';
+const fs='precision mediump float;varying vec2 uv;uniform sampler2D scene;uniform float opacity;void main(){float x=clamp(uv.x+.0025*sin(uv.y*9.+uv.x*22.),0.,1.);float y=mix(.26,.88,uv.y);vec3 pixel=texture2D(scene,vec2(x,y)).rgb;float ink=clamp((.94-dot(pixel,vec3(.2126,.7152,.0722)))*2.3,0.,1.);float rim=pow(sin(3.14159265*uv.y),.6);gl_FragColor=vec4(vec3(.035,.05,.07),clamp(ink*rim*.92*opacity,0.,.90));}';
 function compile(t,s){const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))throw Error('shader compile');return x}
 let program;
 try{program=gl.createProgram();gl.attachShader(program,compile(gl.VERTEX_SHADER,vs));gl.attachShader(program,compile(gl.FRAGMENT_SHADER,fs));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))return}catch{return}
@@ -24,19 +24,38 @@ function paint(){
  const rect=nav.getBoundingClientRect(),width=Math.max(1,Math.round(rect.width-20));
  const dpr=Math.min(devicePixelRatio||1,2);
  canvas.width=Math.round(width*dpr);canvas.height=Math.round(14*dpr);
- off.width=width;off.height=112;ctx.fillStyle='#fff';ctx.fillRect(0,0,width,112);
+ off.width=width;off.height=126;ctx.fillStyle='#fff';ctx.fillRect(0,0,width,112);
  let found=false;
- for(const el of document.querySelectorAll('main h1,main h2,main h3,main .project-title')){
+ // Draw the actual browser-laid-out text fragments rather than guessing one line.
+ // Range.getClientRects gives line geometry; individual glyph pixels are rasterized
+ // into the texture before WebGL samples them. This is still a reconstruction.
+ const candidates=document.querySelectorAll('main h1,main h2,main h3,main h4,main p,main strong');
+ for(const el of candidates){
   const b=el.getBoundingClientRect();
-  if(b.bottom<rect.bottom-12||b.top>rect.bottom+75||b.right<rect.left||b.left>rect.right)continue;
-  const computed=getComputedStyle(el),size=parseFloat(computed.fontSize),words=el.textContent?.trim();
-  if(!words)continue;
-  ctx.font=computed.fontWeight+' '+size+'px '+computed.fontFamily;
-  ctx.fillStyle=computed.color;ctx.textAlign='left';ctx.textBaseline='alphabetic';
-  // Approximate the current rendered line; independent of page screenshot permissions.
-  const x=b.left-rect.left-10,y=b.top-rect.bottom+size+34;
-  ctx.save();ctx.beginPath();ctx.rect(0,0,width,112);ctx.clip();
-  ctx.fillText(words,x,y);ctx.restore();found=true;
+  if(b.bottom<rect.bottom-30||b.top>rect.bottom+95||b.right<rect.left||b.left>rect.right)continue;
+  const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
+  let node,lines=0;
+  while((node=walker.nextNode())&&lines<140){
+   const text=node.textContent;
+   if(!text||!text.trim())continue;
+   const parent=node.parentElement||el,style=getComputedStyle(parent);
+   if(style.visibility==='hidden'||style.display==='none')continue;
+   const size=parseFloat(style.fontSize);
+   if(!Number.isFinite(size)||size<8)continue;
+   const range=document.createRange();
+   for(let j=0;j<text.length&&lines<140;j++){
+    range.setStart(node,j);range.setEnd(node,j+1);
+    const glyph=range.getBoundingClientRect();
+    if(glyph.width<.05||glyph.bottom<rect.bottom-25||glyph.top>rect.bottom+95)continue;
+    const x=glyph.left-rect.left-10,y=glyph.top-rect.bottom+30;
+    ctx.font=style.fontStyle+' '+style.fontWeight+' '+size+'px '+style.fontFamily;
+    ctx.fillStyle=style.color;
+    ctx.textBaseline='top';ctx.textAlign='left';
+    // Keep line spacing and glyph positions from the browser's actual layout.
+    ctx.fillText(text[j],x,y);
+    found=true;lines++;
+   }
+  }
  }
  gl.viewport(0,0,canvas.width,canvas.height);
  gl.bindTexture(gl.TEXTURE_2D,texture);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
