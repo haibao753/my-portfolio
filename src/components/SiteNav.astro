@@ -121,21 +121,21 @@ import {navigation} from "../data/site";
  }
  @media(prefers-reduced-motion:reduce){.glass-nav .nav-rim-reflection{opacity:.25}}
 
- /* Nine independently weighted dark reflections; driven by nearby text/image geometry. */
+ /* Subtle, but visible dark ink in the glass's lower meniscus. */
  .glass-nav .nav-rim-dark{
-  position:absolute;inset:auto 18px -2px;height:7px;z-index:3;pointer-events:none;
-  display:grid;grid-template-columns:repeat(9,minmax(0,1fr));
-  border-radius:0 0 24px 24px;overflow:hidden;
-  -webkit-mask-image:linear-gradient(to bottom,transparent,black 45%,transparent);
-  mask-image:linear-gradient(to bottom,transparent,black 45%,transparent);
+  position:absolute;left:10px;right:10px;bottom:-2px;height:11px;z-index:3;
+  border-radius:0 0 24px 24px;display:grid;grid-template-columns:repeat(24,minmax(0,1fr));
+  overflow:hidden;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,black 32%,black 71%,transparent);
+  mask-image:linear-gradient(to bottom,transparent,black 32%,black 71%,transparent);
  }
  .glass-nav .nav-rim-dark span{
+  background:linear-gradient(to bottom,transparent,rgba(15,19,25,.82) 46%,rgba(15,19,25,.65) 80%,transparent);
   opacity:var(--dark-rim-opacity,0);
-  background:linear-gradient(to bottom,transparent 5%,rgba(18,22,30,.43) 65%,rgba(30,35,43,.19));
-  filter:blur(1.8px);
+  filter:blur(1px);
  }
  :global(html[data-theme="dark"]) .glass-nav .nav-rim-dark span{
-  background:linear-gradient(to bottom,transparent 5%,rgba(2,4,8,.8) 65%,rgba(2,4,8,.4));
+  background:linear-gradient(to bottom,transparent,rgba(0,0,0,.85) 46%,rgba(0,0,0,.7) 80%,transparent);
  }
 </style>
 
@@ -143,47 +143,68 @@ import {navigation} from "../data/site";
  const opticNav=document.querySelector<HTMLElement>(".glass-nav");
  if(opticNav){
   const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
-  const darkRim=opticNav.querySelector<HTMLElement>(".nav-rim-dark");
-  const bands=Array.from({length:9},()=>document.createElement("span"));
-  bands.forEach(b=>darkRim?.appendChild(b));
-  let scheduled=false;
-  const update=()=>{
-   scheduled=false;
-   if(!darkRim)return;
+  const rim=opticNav.querySelector<HTMLElement>(".nav-rim-dark");
+  const bands=Array.from({length:24},()=>document.createElement("span"));
+  bands.forEach(b=>rim?.appendChild(b));
+  let queued=false;
+  function paint(){
+   queued=false;
+   if(!rim)return;
    if(reduced.matches){
-    bands.forEach(b=>b.style.setProperty("--dark-rim-opacity","0"));
+    bands.forEach(b=>b.style.opacity="0");
     return;
    }
-   const rect=opticNav.getBoundingClientRect();
-   const strengths=new Array(9).fill(0);
-   const selectors="main h1,main h2,main h3,main h4,main p,main strong,main img,main svg,main .project-title";
-   for(const el of document.querySelectorAll<HTMLElement>(selectors)){
+   const nav=opticNav!.getBoundingClientRect();
+   const amounts=new Array(24).fill(0);
+   // Use real rendered text line boxes (Range), not a whole paragraph's bounds.
+   // Elements are still not sampled as pixels; the edge impression is approximate.
+   const elements=document.querySelectorAll<HTMLElement>("main h1,main h2,main h3,main h4,main p,main strong,main a,main img");
+   const parseColor=(value:string)=>{
+    const match=value.match(/rgba?\\(\\s*(\\d+)[, ]+\\s*(\\d+)[, ]+\\s*(\\d+)/i);
+    if(!match)return .4;
+    const [r,g,b]=match.slice(1,4).map(Number);
+    return 1-(.2126*r+.7152*g+.0722*b)/255;
+   };
+   for(const el of elements){
     const box=el.getBoundingClientRect();
-    if(box.bottom<rect.bottom-12||box.top>rect.bottom+100)continue;
-    if(box.right<rect.left||box.left>rect.right)continue;
-    const style=getComputedStyle(el);
-    const isGraphic=el.matches("img,svg");
-    const color=style.color.match(/[\\d.]+/g)?.slice(0,3).map(Number)??[130,130,130];
-    // This estimates darkness from rendered element geometry, not actual pixel sampling.
-    const brightness=(color[0]*.2126+color[1]*.7152+color[2]*.0722)/255;
-    const darkness=isGraphic?.32:Math.max(0,Math.min(1,(.68-brightness)*1.6));
-    if(darkness<=0.08)continue;
-    const proximity=Math.max(0,1-Math.abs(box.top-rect.bottom+4)/104);
-    if(proximity<=0)continue;
-    const weight=darkness*proximity;
-    for(let i=0;i<9;i++){
-     const center=rect.left+(i+.5)*rect.width/9;
-     const overlap=center>=box.left-12&&center<=box.right+12;
-     if(overlap)strengths[i]=Math.max(strengths[i],weight);
+    if(box.bottom<nav.bottom-18||box.top>nav.bottom+36||box.right<nav.left||box.left>nav.right)continue;
+    const isImage=el.tagName==="IMG";
+    const darkness=isImage?.38:Math.min(1,parseColor(getComputedStyle(el).color));
+    if(darkness<.22)continue;
+    const rects:DOMRect[]=[];
+    if(isImage)rects.push(box);
+    else{
+     const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
+     let node:Node|null;
+     while((node=walker.nextNode())){
+      if(!node.textContent?.trim())continue;
+      const range=document.createRange();
+      range.selectNodeContents(node);
+      rects.push(...Array.from(range.getClientRects()));
+      if(rects.length>60)break;
+     }
+    }
+    for(const textBox of rects){
+     if(textBox.bottom<nav.bottom-10||textBox.top>nav.bottom+23)continue;
+     const distance=Math.abs((textBox.top+textBox.bottom)/2-nav.bottom);
+     const intensity=darkness*Math.max(0,1-distance/38)*.95;
+     for(let i=0;i<amounts.length;i++){
+      const x=nav.left+(i+.5)*nav.width/amounts.length;
+      if(x>=textBox.left-6&&x<=textBox.right+6)amounts[i]=Math.max(amounts[i],intensity);
+     }
     }
    }
-   bands.forEach((band,i)=>band.style.setProperty("--dark-rim-opacity",Math.min(.9,strengths[i]).toFixed(3)));
-   opticNav.style.setProperty("--rim-strength",".38");
-  };
-  const queue=()=>{if(!scheduled){scheduled=true;requestAnimationFrame(update)}};
-  window.addEventListener("scroll",queue,{passive:true});
-  window.addEventListener("resize",queue,{passive:true});
-  reduced.addEventListener?.("change",queue);
-  update();
+   // Blend adjacent segments into a continuous reflection.
+   bands.forEach((band,i)=>{
+    const strength=(amounts[i]*.66+(amounts[i-1]||0)*.17+(amounts[i+1]||0)*.17);
+    band.style.opacity=Math.min(.95,strength).toFixed(3);
+   });
+   opticNav!.style.setProperty("--rim-strength",".24");
+  }
+  const schedule=()=>{if(!queued){queued=true;requestAnimationFrame(paint)}};
+  window.addEventListener("scroll",schedule,{passive:true});
+  window.addEventListener("resize",schedule,{passive:true});
+  reduced.addEventListener?.("change",schedule);
+  paint();
  }
 </script>
