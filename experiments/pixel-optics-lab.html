@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>J.H. LAB | Pixel Optics Lab</title>
+<style>
+:root{font-family:system-ui,"Noto Sans SC",sans-serif;color:#15191f;background:#f4f5f7}
+*{box-sizing:border-box}body{margin:0}header{padding:20px max(18px,4vw);display:flex;justify-content:space-between;align-items:center}a{color:inherit}
+main{max-width:1000px;margin:auto;padding:10px 16px 72px}
+h1{font-size:clamp(29px,5vw,52px);margin:16px 0 10px}p{line-height:1.6}
+.stage{position:relative;height:550px;border:1px solid #cbd0d6;border-radius:22px;overflow:hidden;background:#fff;touch-action:pan-y}
+.scroller{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.content{padding:170px 18px 480px;text-align:center}
+.content h2{font-size:clamp(38px,9vw,86px);line-height:1.2;margin:0 0 32px;font-weight:850;letter-spacing:-.07em}
+.content p{font-size:24px;color:#333}.content .panel{height:135px;margin:48px auto;max-width:600px;border-radius:18px;background:linear-gradient(120deg,#151a25,#516b94)}
+.glass{position:absolute;top:22px;left:12px;right:12px;height:84px;border-radius:28px;isolation:isolate;pointer-events:none;box-shadow:0 12px 24px #09101c22}
+.glass canvas{display:block;width:100%;height:100%;border-radius:inherit}
+.glass .label{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:18px;font-weight:750;text-shadow:0 1px 1px #fff9}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:18px 0}
+label{display:flex;align-items:center;gap:8px}button{padding:9px 14px;border:1px solid #b8c2ce;background:white;border-radius:12px;cursor:pointer}
+small{display:block;color:#68707a;line-height:1.6}
+#status{font-weight:650} .swatch{width:20px;height:20px;border-radius:5px;background:linear-gradient(120deg,#101820,#d5e5ff)}
+</style></head><body>
+<header><a href="/">← J.H. LAB</a><strong>Pixel Optics / 实验原型</strong></header>
+<main><h1>真实像素纹理驱动的玻璃边缘</h1>
+<p>在下方白色区域滚动，观察黑色文字靠近玻璃底沿时的<strong>倒置、压缩和色散</strong>。这是把相同场景画进离屏 Canvas，再把像素送入 WebGL 着色器的可验证实验；不是对任意网页 DOM 的实时截图。</p>
+<div class="controls">
+<label>折射强度 <input id="distortion" type="range" min="0" max="28" value="14"></label>
+<label><input id="compare" type="checkbox" checked> 启用像素折射</label>
+<button id="replay">重新从顶部滚动</button>
+<span id="status" aria-live="polite">初始化</span>
+</div>
+<section class="stage" id="stage">
+ <div class="scroller" id="scroll" tabindex="0" aria-label="可滚动的反射测试内容">
+  <div class="content" id="scene">
+   <h2>一些有趣的尝试。</h2>
+   <p>数学、资讯、影像和代码。</p>
+   <div class="panel" aria-hidden="true"></div>
+   <h2>PIXEL REFLECTION</h2>
+   <p>真实纹理采样，而不是纯 CSS 渐变。</p>
+  </div>
+ </div>
+ <div class="glass"><canvas id="glass" aria-label="动态折射玻璃像素测试"></canvas><div class="label"><span>J.H.</span><span>EN　☼　☰</span></div></div>
+</section>
+<small>实现说明：离屏场景含与展示区域一致的文字与背景，滚动位移同步映射到 WebGL 纹理。用于验证真实字形像素能否被扭曲、倒映；跨域图像、复杂 CSS、任意 DOM、视频像素暂不支持。失败时会显示安全的 CSS 玻璃备用层。支持系统减少动态效果。</small>
+</main>
+<script>
+(()=>{
+const stage=document.getElementById('stage'),scroll=document.getElementById('scroll'),canvas=document.getElementById('glass'),status=document.getElementById('status'),range=document.getElementById('distortion'),compare=document.getElementById('compare');
+const gl=canvas.getContext('webgl',{alpha:true,antialias:false,premultipliedAlpha:false});
+if(!gl){status.textContent='WebGL 不可用，使用静态玻璃';canvas.style.background='rgba(245,248,251,.7)';return}
+const vertex='attribute vec2 p;varying vec2 v;void main(){v=(p+1.)*.5;gl_Position=vec4(p,0.,1.);}';
+const fragment=`precision mediump float;varying vec2 v;uniform sampler2D tex;uniform vec2 size;uniform float yOrigin;uniform float totalHeight;uniform float power;uniform float enabled;
+void main(){
+ float d=1.-v.y; // bottom rim at d=0
+ float rim=exp(-pow(d/.11,2.));
+ float x=v.x;
+ float sx=x+power*rim*.003*sin(x*17.+.5);
+ float sceneY=yOrigin+(1.-v.y)*size.y;
+ // Below the rim, sample farther down then compress and invert the image vertically.
+ float reflectionY=yOrigin+size.y+6.+d*size.y*2.3;
+ float sampleY=mix(sceneY,reflectionY,rim*.92*enabled);
+ vec2 uv=vec2(clamp(sx,0.,1.),clamp(1.-sampleY/totalHeight,0.,1.));
+ vec4 pixel=texture2D(tex,uv);
+ float edge=exp(-pow(d/.058,2.));
+ vec3 glass=mix(pixel.rgb,vec3(.96,.978,1.),.50);
+ glass=mix(glass,pixel.rgb,edge*.88*enabled);
+ glass+=vec3(.04,.06,.09)*pow(1.-edge,3.);
+ glass-=vec3(.055,.035,.018)*edge;
+ gl_FragColor=vec4(clamp(glass,0.,1.),.90);
+}`;
+function shader(type,source){const sh=gl.createShader(type);gl.shaderSource(sh,source);gl.compileShader(sh);if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(sh));return sh}
+let program;try{program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vertex));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fragment));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));}catch(e){status.textContent='Shader 不兼容';return}
+gl.useProgram(program);const quad=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,quad);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);const attr=gl.getAttribLocation(program,'p');gl.enableVertexAttribArray(attr);gl.vertexAttribPointer(attr,2,gl.FLOAT,false,0,0);
+const tex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tex);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+let surface=document.createElement('canvas'),ctx=surface.getContext('2d');let drawWidth=0,drawHeight=0;
+function rebuild(){
+ const scene=document.getElementById('scene'),width=scroll.clientWidth;
+ drawWidth=Math.max(1,Math.round(width));drawHeight=Math.max(600,Math.min(2048,Math.round(scene.scrollHeight)));
+ surface.width=drawWidth;surface.height=drawHeight;
+ ctx.fillStyle='#fff';ctx.fillRect(0,0,drawWidth,drawHeight);
+ const base=scene.getBoundingClientRect(),nodes=scene.querySelectorAll('h2,p,.panel');
+ for(const node of nodes){
+  const b=node.getBoundingClientRect(),top=b.top-base.top;
+  if(node.classList.contains('panel')){const g=ctx.createLinearGradient(0,0,drawWidth,0);g.addColorStop(0,'#151a25');g.addColorStop(1,'#516b94');ctx.fillStyle=g;ctx.fillRect(b.left-base.left,top,b.width,b.height);continue}
+  const cs=getComputedStyle(node),size=parseFloat(cs.fontSize),lines=node.textContent.trim();
+  ctx.fillStyle=cs.color;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=cs.fontWeight+' '+size+'px '+cs.fontFamily;
+  // Fit long phrases within the mobile viewport similarly to the HTML typography.
+  const measured=ctx.measureText(lines).width;
+  const scale=Math.min(1,(drawWidth-24)/Math.max(1,measured));
+  ctx.save();ctx.translate(drawWidth/2,top+b.height/2);ctx.scale(scale,1);ctx.fillText(lines,0,0);ctx.restore();
+ }
+ gl.bindTexture(gl.TEXTURE_2D,tex);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,surface);
+ render();
+}
+function render(){
+ const rect=canvas.getBoundingClientRect();const dpr=Math.min(devicePixelRatio||1,2);
+ canvas.width=Math.round(rect.width*dpr);canvas.height=Math.round(rect.height*dpr);gl.viewport(0,0,canvas.width,canvas.height);
+ const contentTop=document.getElementById('scene').getBoundingClientRect().top;
+ const scrollerTop=scroll.getBoundingClientRect().top;
+ const headerTop=rect.top-scrollerTop;
+ gl.uniform2f(gl.getUniformLocation(program,'size'),rect.width,rect.height);
+ gl.uniform1f(gl.getUniformLocation(program,'yOrigin'),headerTop+scroll.scrollTop);
+ gl.uniform1f(gl.getUniformLocation(program,'totalHeight'),drawHeight);
+ gl.uniform1f(gl.getUniformLocation(program,'power'),Number(range.value));
+ gl.uniform1f(gl.getUniformLocation(program,'enabled'),compare.checked?1:0);
+ gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+ status.textContent='WebGL · 实时纹理反射';
+}
+let pending=false;function queue(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;render()})}
+scroll.addEventListener('scroll',queue,{passive:true});range.addEventListener('input',queue);compare.addEventListener('change',queue);
+document.getElementById('replay').addEventListener('click',()=>scroll.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'}));
+window.addEventListener('resize',rebuild,{passive:true});document.fonts.ready.then(rebuild);rebuild();
+})();
+</script></body></html>
