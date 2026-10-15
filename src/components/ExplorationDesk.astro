@@ -9,7 +9,7 @@ const questions=[{zh:'世界很大，从哪个问题开始？',en:'A big world. 
  <header class="desk-meta"><span>01 — SELECTED OBSESSIONS</span><span class="desk-counter"><span data-locale="zh">已探索</span><span data-locale="en">EXPLORED</span> <b data-clue-count>0</b> / 4</span></header>
  <div class="lab-desk" data-lab-stage>
   <div class="desk-title"><h2 id="worlds-title"><span data-locale="zh">世界，不止一种<br/><em>打开方式。</em></span><span data-locale="en">More than one way<br/><em>to see the world.</em></span></h2><p><span data-locale="zh">四个入口，没有标准路线。<br/>跟着你的好奇心走。</span><span data-locale="en">Four doors. No prescribed path.<br/>Follow your curiosity.</span></p></div>
-  {projects.map((project,index)=><article class:list={['lab-object','object-'+index]} data-lab-object data-clue={index} data-visited="false">
+  {projects.map((project,index)=><article id={project.id} class:list={['lab-object','object-'+index]} data-lab-object data-clue={index} data-visited="false">
    <button type="button" class="drag-grip" data-lab-drag data-zh={'移动'+names[index].zh+'，可用方向键'} data-en={'Move '+names[index].en+'; arrow keys also work'} aria-label={'移动'+names[index].zh+'，可用方向键'} aria-describedby="desk-drag-help">⠿</button>
    <a class="object-face" href={project.href} target={project.href.startsWith('http')?'_blank':undefined} rel={project.href.startsWith('http')?'noopener noreferrer':undefined} data-lab-open aria-controls="desk-discovery" aria-expanded="false">
     {index===0&&<div class="poster poster-world" aria-hidden="true"><span class="poster-index">THE DAILY PERSPECTIVE / 01</span><div class="world-globe"><i></i><i></i><i></i></div><strong>WORLD<br/><em>in motion.</em></strong><span class="poster-footer">A NEW DAY. A NEW QUESTION. <b>↗</b></span></div>}

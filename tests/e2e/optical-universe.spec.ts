@@ -11,6 +11,12 @@ test('universe renders a real lit sculpture and autonomously changes its pixels'
  const first=await hash(page);expect(first.area).toBeGreaterThan(5000);expect(first.bright).toBeGreaterThan(1000);
  await expect.poll(async()=>(await hash(page)).sum).not.toBe(first.sum);
  expect(await page.locator('h1').count()).toBe(1);expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(2);
+ for(const selector of ['.desktop-links a','.mobile-menu a']){
+  for(const link of await page.locator(selector).all()){
+   const href=await link.getAttribute('href');if(href?.startsWith('#'))expect(await page.locator(href).count()).toBe(1);
+  }
+ }
+ await expect(page.locator('.desktop-links a').first()).toHaveAttribute('href','#worlds');
  if(isMobile){
   const box=(await page.locator('[data-sculpture-touch]').boundingBox())!,x=box.x+box.width/2,y=box.y+box.height/2,before=await page.evaluate(()=>scrollY),touch=await page.context().newCDPSession(page);
   await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y}]});for(let i=1;i<=7;i++){await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x,y:y-i*24}]});await page.waitForTimeout(16)}await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await touch.detach();await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(before+70);

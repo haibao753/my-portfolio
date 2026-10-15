@@ -33,7 +33,7 @@ const canonicalURL=new URL(Astro.url.pathname,Astro.site);
  </head>
  <body class:list={{'immersive-world':immersive}}>
   <a href="#main" class="skip-link">跳过导航 / Skip navigation</a>
-  <SiteNav />
+  <SiteNav immersive={immersive} />
   <main id="main"><slot /></main>
   <footer class="site-footer wrap">
    <span>© {new Date().getFullYear()} J.H. LAB</span>

@@ -7,7 +7,7 @@ import {projects,contact} from '../../data/site';
 <BaseLayout immersive title="J.H. LAB — 让想象越界 / Beyond Ordinary" description="一个关于数学、代码与影像的异想空间。触碰液态雕塑，走进胡金海的世界。">
  <OpticalUniverse />
  <ExplorationDesk />
- <section class="field-notes wrap" aria-labelledby="field-notes-title">
+ <section class="field-notes wrap" id="contact" aria-labelledby="field-notes-title">
   <header><p class="eyebrow">LET'S MAKE SOMETHING UNEXPECTED.</p><h2 id="field-notes-title"><span data-locale="zh">下一次意外，<br/><em>一起发生。</em></span><span data-locale="en">The next happy accident.<br/><em>Let's make it happen.</em></span></h2></header>
   <div class="notes-copy"><p><span data-locale="zh">这里住着一个好奇心有点过剩的大学生。<br/>在数学、代码和影像之间，寻找一些新的可能。</span><span data-locale="en">A university student with a little too much curiosity.<br/>Finding new possibilities between mathematics, code and images.</span></p><p class="notes-invitation"><span data-locale="zh">如果你也有个还没被定义的点子，我们聊聊。</span><span data-locale="en">If your idea doesn't have a name yet, let's talk.</span></p><a href={`mailto:${contact.email}`}>{contact.email} ↗</a><div class="wechat-line"><span>WECHAT / {contact.wechat}</span><button type="button" data-copy-wechat={contact.wechat} data-copied="false" aria-label="复制微信号"><span data-locale="zh">复制</span><span data-locale="en">Copy</span></button></div></div>
  </section>
