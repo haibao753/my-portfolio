@@ -636,6 +636,7 @@ test("live homepage optics is opt-in and tracks actual DOM content during scroll
   dispatchEvent(new Event("scroll"));
  });
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-refreshes")||0)).toBeGreaterThan(0);
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-frame-ms")||0)).toBeGreaterThan(0);
  const debug=await nav.evaluate(el=>({samples:el.getAttribute("data-optical-samples"),nearby:el.getAttribute("data-optical-nearby"),refreshes:el.getAttribute("data-optical-refreshes"),error:el.getAttribute("data-optical-error"),rect:el.getBoundingClientRect().toJSON()}));
  console.log("OPTICAL MOBILE DIAGNOSTIC",JSON.stringify(debug));
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-samples")||0)).toBeGreaterThan(0);
