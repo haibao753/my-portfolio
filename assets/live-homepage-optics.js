@@ -38,6 +38,24 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
    let layoutEpoch=0,measuredEpoch=-1;
    const invalidateLayout=()=>{layoutEpoch++;schedule()};
    const geometryCache=new WeakMap();
+   // Layout bounds remain stable while scrolling; remeasure on layout invalidation only.
+   let geometryEpoch=-1,geometryReads=0,geometryCacheHits=0;
+   const readBounds=(el)=>{
+    const cached=geometryCache.get(el);
+    if(cached&&cached.epoch===layoutEpoch){
+     geometryCacheHits++;
+     return {left:cached.left-(cached.fixed?0:scrollX),right:cached.right-(cached.fixed?0:scrollX),
+       top:cached.top-(cached.fixed?0:scrollY),bottom:cached.bottom-(cached.fixed?0:scrollY),
+       width:cached.width,height:cached.height};
+    }
+    const r=el.getBoundingClientRect(),fixed=fixedPosition(el);
+    geometryReads++;
+    geometryCache.set(el,{epoch:layoutEpoch,fixed,
+      left:r.left+(fixed?0:scrollX),right:r.right+(fixed?0:scrollX),
+      top:r.top+(fixed?0:scrollY),bottom:r.bottom+(fixed?0:scrollY),
+      width:r.width,height:r.height});
+    return r;
+   };
    const observer=new MutationObserver(()=>{candidates=Array.from(root.querySelectorAll('*'));invalidateLayout()});
    observer.observe(root,{childList:true,subtree:true,characterData:true});
    const refresh=()=>{
@@ -51,17 +69,20 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
     const offsetX=nr.left,offsetY=nr.top;
     const startScrollY=window.scrollY;
     const nearby=[];
+    geometryReads=0;geometryCacheHits=0;
     const needsMeasurement=measuredEpoch!==layoutEpoch;
     if(needsMeasurement){glyphMeasurements=0;cacheHits=0;}
     // Only objects crossing the navbar geometry are relevant; draw in document order.
     for(const el of candidates){
-     const r=el.getBoundingClientRect();
+     const r=readBounds(el);
      if(r.right<nr.left||r.left>nr.right||r.bottom<nr.top-18||r.top>nr.bottom+18)continue;
      const style=getComputedStyle(el);
      if(style.display==='none'||style.visibility==='hidden'||Number(style.opacity)===0)continue;
      nearby.push({el,r,style});
     }
     nav.dataset.opticalNearby=String(nearby.length);
+    nav.dataset.opticalGeometryReads=String(geometryReads);
+    nav.dataset.opticalGeometryCacheHits=String(geometryCacheHits);
     // Paint CSS color surfaces beneath media and text rather than painting over them.
     for(const {el,r,style} of nearby){
      if(el===root)continue;
@@ -150,7 +171,12 @@ if(params.get('opticalEngine')==='1'&&!matchMedia('(prefers-reduced-motion: redu
    addEventListener('scroll',schedule,{passive:true});
    addEventListener('visibilitychange',()=>{if(!document.hidden)schedule()});addEventListener('resize',invalidateLayout,{passive:true});
    document.fonts?.ready.then(invalidateLayout);
-   root.querySelectorAll('img').forEach(img=>img.addEventListener('load',schedule));
+   root.querySelectorAll('img').forEach(img=>img.addEventListener('load',invalidateLayout));
+   // Content and font changes invalidate both text positions and element geometry.
+   const resizeObserver=new ResizeObserver(()=>invalidateLayout());
+   resizeObserver.observe(root);
+   // Width changes of the nav can move text even if the main element is unchanged.
+   resizeObserver.observe(nav);
    schedule();
   }
  }
