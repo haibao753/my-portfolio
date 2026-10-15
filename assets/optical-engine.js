@@ -14,6 +14,7 @@ uniform vec2 sceneSize;
 uniform float scenePadding;
 uniform float rimOnly;
 uniform float reflectionReach;
+uniform float reflectionQuality;
 vec4 sampleLiquidScene(vec2 coord){return texture2D(scene,clamp((coord*surfaceSize+vec2(scenePadding))/max(sceneSize,vec2(1.)),0.,1.));}
 uniform float cornerRadius;
 uniform float bevelWidth;
@@ -35,7 +36,16 @@ vec4 liquidPixel(){
  vec2 derivative=vec2(
   roundedDistance(p+vec2(.5,0.),halfSize,radius)-roundedDistance(p-vec2(.5,0.),halfSize,radius),
   roundedDistance(p+vec2(0.,.5),halfSize,radius)-roundedDistance(p-vec2(0.,.5),halfSize,radius));
- vec2 normal=normalize(derivative+vec2(1.e-6));
+ // Smooth the SDF gradient at adjacent tangential locations to avoid abrupt
+ // normal jumps where straight rails transition into rounded corners.
+ vec2 tangent=normalize(vec2(-derivative.y,derivative.x)+vec2(1.e-6));
+ vec2 d1=vec2(
+  roundedDistance(p+tangent*1.5+vec2(.5,0.),halfSize,radius)-roundedDistance(p+tangent*1.5-vec2(.5,0.),halfSize,radius),
+  roundedDistance(p+tangent*1.5+vec2(0.,.5),halfSize,radius)-roundedDistance(p+tangent*1.5-vec2(0.,.5),halfSize,radius));
+ vec2 d2=vec2(
+  roundedDistance(p-tangent*1.5+vec2(.5,0.),halfSize,radius)-roundedDistance(p-tangent*1.5-vec2(.5,0.),halfSize,radius),
+  roundedDistance(p-tangent*1.5+vec2(0.,.5),halfSize,radius)-roundedDistance(p-tangent*1.5-vec2(0.,.5),halfSize,radius));
+ vec2 normal=normalize(derivative*.6+(d1+d2)*.2+vec2(1.e-6));
  float width=max(bevelWidth,2.);
  float depth=clamp(-sd/width,0.,1.);
  // Circular-section height: slope diverges as the surface approaches its rim.
@@ -69,6 +79,18 @@ vec4 liquidPixel(){
  float reflectionTravel=(3.+width*1.55)*bending*reflectionReach;
  vec2 reflectedUV=uv+normal*reflectionTravel/size;
  vec4 reflected=sampleLiquidScene(reflectedUV);
+ // 5 taps along the local curved contour integrate real neighboring scene
+ // colors into a continuous reflection band. The inexpensive single-tap
+ // path remains available for reduced quality and A/B measurement.
+ if(reflectionQuality>.5){
+  vec2 tangentReflection=vec2(-normal.y,normal.x);
+  vec2 stepUV=tangentReflection*(1.25+3.5*bending)/size;
+  vec4 a=sampleLiquidScene(reflectedUV-stepUV*2.);
+  vec4 b=sampleLiquidScene(reflectedUV-stepUV);
+  vec4 d=sampleLiquidScene(reflectedUV+stepUV);
+  vec4 e=sampleLiquidScene(reflectedUV+stepUV*2.);
+  reflected=(a+4.*b+6.*reflected+4.*d+e)/16.;
+ }
  vec3 N=normalize(vec3(normal*slope,1.));
  float cosine=max(N.z,0.);
  float f0=pow((ior-1.)/(ior+1.),2.);
@@ -140,8 +162,8 @@ export function setup(gl){
  let active=tex,spare=alternate;
  let textureWidth=0,textureHeight=0;
  const stats={fullUploads:0,partialUploads:0,skippedUploads:0,uploadedPixels:0,gpuScrolls:0};
- const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','surfaceSize','sceneSize','scenePadding','rimOnly','reflectionReach','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
- const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,rimOnly=0,reflectionReach=1,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
+ const uniforms=Object.fromEntries(['scene','resolution','strength','optical','reflectivity','liquid','surfaceSize','sceneSize','scenePadding','rimOnly','reflectionReach','reflectionQuality','cornerRadius','bevelWidth','lightDirection'].map(name=>[name,gl.getUniformLocation(program,name)]));
+ const render=function(source,{strength=1,optical=1,reflectivity=1,liquid=0,surfaceSize=[source.width,source.height],cornerRadius=26,scenePadding=0,rimOnly=0,reflectionReach=1,reflectionQuality=0,bevelWidth=12,lightDirection=[-.55,.85],dirtyRect=null,unchanged=false,scrollShift=null}={}){
   gl.useProgram(program);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,active);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
   if(source.width!==textureWidth||source.height!==textureHeight){
    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);
@@ -201,6 +223,7 @@ export function setup(gl){
   gl.uniform1f(uniforms.scenePadding,scenePadding);
   gl.uniform1f(uniforms.rimOnly,rimOnly);
   gl.uniform1f(uniforms.reflectionReach,reflectionReach);
+  gl.uniform1f(uniforms.reflectionQuality,reflectionQuality);
   gl.uniform1f(uniforms.cornerRadius,cornerRadius);
   gl.uniform1f(uniforms.bevelWidth,bevelWidth);
   gl.uniform2f(uniforms.lightDirection,...lightDirection);
