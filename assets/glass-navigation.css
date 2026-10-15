@@ -623,3 +623,22 @@ html[data-theme="dark"] .site-menu-panel--floating{background:rgba(28,30,35,.52)
  }
  .glass-site-header .header-actions{gap:12px!important}
 }
+
+
+/* Optical rim cleanup — single curved highlight instead of 3 horizontal bands. */
+.site-header.glass-site-header{
+ border:0!important;
+ border-radius:0 0 22px 22px;
+ box-shadow:0 12px 28px rgba(12,18,28,.055),
+   inset 0 -1px 0 rgba(123,149,180,.12),
+   inset 0 1px 0 rgba(255,255,255,.25)!important;
+ overflow:visible;
+}
+.site-header.glass-site-header::before{
+ border-radius:inherit;
+ background:linear-gradient(180deg,rgba(255,255,255,.14),transparent 50%,rgba(124,170,221,.055))!important;
+}
+html[data-theme="dark"] .site-header.glass-site-header{
+ box-shadow:0 12px 28px rgba(0,0,0,.19),
+   inset 0 -1px 0 rgba(172,200,238,.12)!important;
+}
