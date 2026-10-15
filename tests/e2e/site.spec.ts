@@ -869,3 +869,32 @@ test("optical changed-pixel scan detects small transparent and opaque edits exac
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-uploaded-pixels")||0)).toBeGreaterThan(before);
  await expect.poll(async()=>Number(await nav.getAttribute("data-optical-diff-compared")||0)).toBeGreaterThan(0);
 });
+
+test("damage compositor repaints only a small style region but falls back on structural edits",async({page})=>{
+ await page.goto("/?opticalEngine=1");
+ const nav=page.locator(".glass-nav");
+ await expect(nav).toHaveAttribute("data-live-optics","on");
+ await page.evaluate(()=>{
+  const r=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  const box=document.createElement("div");box.id="damage-target";
+  box.style.cssText="position:fixed;left:"+Math.round(r.left+42)+"px;top:"+Math.round(r.top+14)+"px;width:22px;height:20px;background:rgb(232,26,40)";
+  document.querySelector("main")!.appendChild(box);
+  dispatchEvent(new Event("scroll"));
+ });
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-colors")||0)).toBeGreaterThan(0);
+ await page.evaluate(()=>{
+  document.querySelector<HTMLElement>("#damage-target")!.style.background="rgb(17,65,240)";
+ });
+ await expect(nav).toHaveAttribute("data-optical-damage-mode","partial");
+ const rgb=await page.locator(".live-optical-layer").evaluate((canvas:HTMLCanvasElement)=>{
+  const src=(canvas as HTMLCanvasElement&{opticalSource:HTMLCanvasElement}).opticalSource;
+  const r=document.querySelector(".glass-nav")!.getBoundingClientRect();
+  return Array.from(src.getContext("2d")!.getImageData(Math.round(51),Math.round(24),1,1).data).slice(0,3);
+ });
+ expect(rgb[2]).toBeGreaterThan(rgb[0]+100);
+ await page.evaluate(()=>{
+  const holder=document.createElement("p");holder.textContent="structure changed";
+  document.querySelector("main")!.appendChild(holder);
+ });
+ await expect(nav).toHaveAttribute("data-optical-damage-mode","full");
+});
