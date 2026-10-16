@@ -2,13 +2,15 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ExplorationDesk from '../../components/ExplorationDesk.astro';
 import OpticalUniverse from '../../components/OpticalUniverse.astro';
+import ScrollJourney from '../../components/ScrollJourney.astro';
 import {projects,contact} from '../../data/site';
 ---
 <BaseLayout immersive title="Hu Jinhai 的个人网站 / Math, Code & Images" description="Hu Jinhai 的个人网站：数学动画、交互几何实验、三维摄影空间与每日简报。看作品，也可以直接玩一个实验。">
  <OpticalUniverse />
  <ExplorationDesk />
- <section class="field-notes wrap" id="contact" aria-labelledby="field-notes-title">
-  <header><p class="eyebrow">ABOUT & CONTACT</p><h2 id="field-notes-title"><span data-locale="zh">想聊点什么？<br/><em>联系我。</em></span><span data-locale="en">Have something in mind?<br/><em>Let's talk.</em></span></h2></header>
+ <ScrollJourney />
+ <section class="field-notes wrap" id="contact" aria-labelledby="field-notes-title" data-reading-anchor>
+  <header data-reading-target><p class="eyebrow">ABOUT & CONTACT</p><h2 id="field-notes-title"><span data-locale="zh">想聊点什么？<br/><em>联系我。</em></span><span data-locale="en">Have something in mind?<br/><em>Let's talk.</em></span></h2></header>
   <div class="notes-copy"><p><span data-locale="zh">这里住着一个好奇心有点过剩的大学生。<br/>在数学、代码和影像之间，寻找一些新的可能。</span><span data-locale="en">A university student with a little too much curiosity.<br/>Finding new possibilities between mathematics, code and images.</span></p><p class="notes-invitation"><span data-locale="zh">如果你也有个还没被定义的点子，我们聊聊。</span><span data-locale="en">If your idea doesn't have a name yet, let's talk.</span></p><a href={`mailto:${contact.email}`}>{contact.email} ↗</a><div class="wechat-line"><span>WECHAT / {contact.wechat}</span><button type="button" data-copy-wechat={contact.wechat} data-copied="false" aria-label="复制微信号"><span data-locale="zh">复制</span><span data-locale="en">Copy</span></button></div></div>
  </section>
  <nav class="all-paths wrap" aria-label="All exploration routes"><span class="eyebrow"><span data-locale="zh">保持好奇，保持联结。</span><span data-locale="en">STAY CURIOUS. STAY CONNECTED.</span></span>{projects.map(p=><a href={p.href} target={p.href.startsWith('http')?'_blank':undefined} rel={p.href.startsWith('http')?'noopener noreferrer':undefined}><span data-locale="zh">{p.action.zh}</span><span data-locale="en">{p.action.en}</span> ↗</a>)}<a href="/lab/glass/"><span data-locale="zh">玻璃研究</span><span data-locale="en">Glass studies</span> ↗</a><a href="/"><span data-locale="zh">当前主站</span><span data-locale="en">Current homepage</span> ↗</a></nav>

@@ -1,0 +1,21 @@
+<nav class="reading-guide" data-scroll-journey data-guide-visible="false" aria-label="阅读导航 / Reading navigation" hidden>
+ <div class="reading-links">
+  <a href="#top" data-reading-chapter="0" aria-current="location"><b>01</b><span data-locale="zh">你好</span><span data-locale="en">HELLO</span></a>
+  <a href="#worlds" data-reading-chapter="1"><b>02</b><span data-locale="zh">作品</span><span data-locale="en">WORK</span></a>
+  <a href="#contact" data-reading-chapter="2"><b>03</b><span data-locale="zh">联系</span><span data-locale="en">CONTACT</span></a>
+  <span class="reading-percent" data-reading-percent aria-hidden="true">0%</span>
+ </div>
+ <div class="reading-track" aria-hidden="true"><span data-reading-fill></span></div>
+</nav>
+<script is:inline type="module" src="/assets/scroll-journey.js"></script>
+<style>
+ .reading-guide{position:fixed;bottom:20px;left:50%;z-index:200;width:min(390px,calc(100% - 28px));padding:7px 10px 12px;border:1px solid #cbd8ff36;border-radius:30px;background:#101622de;color:#eaf0ff;box-shadow:inset 0 1px 0 #ffffff20,0 10px 40px #0003;backdrop-filter:blur(16px);transform:translate(-50%,0);transition:opacity .2s,transform .2s,visibility .2s;isolation:isolate}
+ .reading-guide[hidden]{display:none}.reading-guide[data-guide-visible="false"]{opacity:0;visibility:hidden;transform:translate(-50%,15px);pointer-events:none}.reading-links{display:flex;align-items:center;gap:4px}.reading-links a{display:flex;align-items:center;justify-content:center;gap:9px;min-height:40px;flex:1;border-radius:23px;color:#b0b9cc;font:10px ui-monospace,monospace;letter-spacing:.03em}.reading-links b{font-size:8px;font-weight:400;opacity:.55}.reading-links a[aria-current]{background:#e4ffaf;color:#182119}.reading-links a:focus-visible{outline:2px solid #e4ffaf;outline-offset:2px}.reading-percent{width:37px;text-align:center;color:#afbdd6;font:9px ui-monospace,monospace}.reading-track{position:absolute;left:26px;right:26px;bottom:7px;height:1px;overflow:visible;background:#cbd8ff25}.reading-track>span{display:block;width:100%;height:100%;background:#dfff9e;transform:scaleX(0);transform-origin:left}.reading-track>span:after{content:'';position:absolute;right:0;top:-2px;width:5px;height:5px;border-radius:50%;background:#e5ffb3;box-shadow:0 0 9px #dfff9e}
+ :global([data-reading-motion="full"] [data-reading-target]){transform:translate3d(var(--reading-x,0px),var(--reading-y,0px),0) rotate(var(--reading-turn,0deg)) scale(var(--reading-scale,1));opacity:var(--reading-opacity,1)}
+ :global([data-reading-motion="full"] [data-reading-target]:focus-within),:global([data-reading-motion="full"] [data-lab-open]:focus [data-reading-target]){transform:none;opacity:1}
+ :global([data-reading-motion="full"] .universe-copy){transform:translate3d(0,var(--reading-copy-y,0px),0)}
+ :global(body.immersive-world .site-footer){padding-bottom:105px}
+ @media(min-width:1001px) and (prefers-reduced-motion:no-preference){:global([data-reading-motion="full"] .universe){min-height:calc(max(820px,100svh) + clamp(280px,48vh,520px))}:global([data-reading-motion="full"] .universe-plate){position:sticky;top:0}}
+ @media(max-width:760px){.reading-guide{bottom:12px;padding-top:5px;width:min(350px,calc(100% - 24px))}.reading-links{gap:2px}.reading-links a{font-size:9px;gap:7px}.reading-percent{font-size:8px;width:32px}}
+ @media(prefers-reduced-motion:reduce){.reading-guide{transition:none}}
+</style>

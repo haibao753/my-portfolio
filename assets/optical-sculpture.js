@@ -12,10 +12,11 @@ uniform float time;
 uniform float mode;
 uniform float shape;
 uniform float pulse;
+uniform float journey;
 mat2 turn(float a){return mat2(cos(a),-sin(a),sin(a),cos(a));}
 float smoothJoin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
 float field(vec3 p){
- p.xz=turn(time*.12+pointer.x*.20)*p.xz;
+ p.xz=turn(time*.12+pointer.x*.20+journey*1.15)*p.xz;
  p.yz=turn(-.36+pointer.y*.16)*p.yz;
  p.xy=turn(.50+sin(time*.21)*.14)*p.xy;
  float wave=sin(p.x*3.+time*.65)*sin(p.y*2.6-time*.42)*sin(p.z*3.1+time*.3)*.055;
@@ -24,7 +25,7 @@ float field(vec3 p){
  float orbit=length(vec2(length(q.xy)-.69,q.z))-.23;
  float joined=smoothJoin(ring,orbit,.24);
  float sphere=length(p*vec3(.88,1.04,1.))-1.02;
- float morph=.5+.5*sin(time*.24+shape*2.0944-1.2);
+ float morph=.5+.5*sin(time*.24+shape*2.0944-1.2+journey*3.4);
  return mix(joined,sphere,morph*.76)+wave+pulse*.05*sin(length(p.xy)*12.-time*5.);
 }
 vec3 normalAt(vec3 p){vec2 e=vec2(.003,0.);return normalize(vec3(field(p+e.xyy)-field(p-e.xyy),field(p+e.yxy)-field(p-e.yxy),field(p+e.yyx)-field(p-e.yyx)));}
@@ -42,7 +43,7 @@ vec3 environment(vec3 r){
 }
 vec3 plate(vec2 p){return texture2D(scene,clamp(crop.xy+p*crop.zw,vec2(.001),vec2(.999))).rgb;}
 void main(){
- vec2 p=(uv-.5)*vec2(size.x/size.y,1.)*3.25;
+ vec2 p=(uv-.5)*vec2(size.x/size.y,1.)*(3.25+journey*.65);
  vec3 origin=vec3(0.,0.,4.2),ray=normalize(vec3(p,-4.2));
  float travel=0.;vec3 hit=origin;
  for(int i=0;i<64;i++){hit=origin+ray*travel;float d=field(hit);if(d<.002||travel>6.5)break;travel+=d*.82;}
@@ -71,11 +72,11 @@ export function setupSculpture(gl){
  gl.useProgram(program);const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
  const position=gl.getAttribLocation(program,'position');gl.enableVertexAttribArray(position);gl.vertexAttribPointer(position,2,gl.FLOAT,false,0,0);
  const texture=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,texture);for(const name of [gl.TEXTURE_MIN_FILTER,gl.TEXTURE_MAG_FILTER])gl.texParameteri(gl.TEXTURE_2D,name,gl.LINEAR);for(const name of [gl.TEXTURE_WRAP_S,gl.TEXTURE_WRAP_T])gl.texParameteri(gl.TEXTURE_2D,name,gl.CLAMP_TO_EDGE);
- const u=Object.fromEntries(['scene','size','crop','pointer','time','mode','shape','pulse'].map(name=>[name,gl.getUniformLocation(program,name)]));let revision=-1;
+ const u=Object.fromEntries(['scene','size','crop','pointer','time','mode','shape','pulse','journey'].map(name=>[name,gl.getUniformLocation(program,name)]));let revision=-1;
  return (source,state)=>{
   gl.useProgram(program);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,texture);
   if(state.revision!==revision){gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);revision=state.revision;}
   gl.viewport(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight);gl.uniform1i(u.scene,0);gl.uniform2f(u.size,...state.size);gl.uniform4f(u.crop,...state.crop);gl.uniform2f(u.pointer,...state.pointer);
-  for(const name of ['time','mode','shape','pulse'])gl.uniform1f(u[name],state[name]);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+  for(const name of ['time','mode','shape','pulse','journey'])gl.uniform1f(u[name],state[name]??0);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
  };
 }

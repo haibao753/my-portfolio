@@ -10,6 +10,7 @@ if(host){
  let render=null;try{if(gl)render=setupSculpture(gl)}catch{}
  let mode=0,revision=0,elapsed=0,shape=0,targetShape=0,pulse=0,playing=!reduce.matches,visible=false,raf=0,last=0,width=1,height=1,interaction=0;
  let pointer=[0,0],targetPointer=[0,0],crop=[0,0,1,1],viewportSize=[1,1];
+ let journey=Number(host.dataset.universeScroll||0);
  const en=()=>document.documentElement.lang==='en';
  const state=()=>{
   host.dataset.universeGpu=String(!!render);host.dataset.universeMotion=playing&&render?'playing':'paused';host.dataset.universeMode=String(mode);
@@ -42,7 +43,7 @@ if(host){
   if(!render||!ctx||gl.isContextLost())return;
   const smoothing=1-Math.exp(-dt*3.5);pointer=pointer.map((v,i)=>v+(targetPointer[i]-v)*smoothing);
   shape+=(targetShape-shape)*(1-Math.exp(-dt*2.8));pulse*=Math.exp(-dt*1.5);
-  render(plate,{revision,time:elapsed,mode,shape,pulse,pointer,crop,size:viewportSize});
+  render(plate,{revision,time:elapsed,mode,shape,pulse,pointer,crop,size:viewportSize,journey:playing&&!reduce.matches?journey:0});
   host.dataset.universeFrames=String(Number(host.dataset.universeFrames||0)+1);host.dataset.universeTime=elapsed.toFixed(3);host.dataset.universeShape=shape.toFixed(3);
  }
  function allowed(){return visible&&!document.hidden&&playing&&render}
@@ -53,6 +54,7 @@ if(host){
  }
  function queue(){if(!raf&&visible&&!document.hidden)raf=requestAnimationFrame(now=>{last=0;tick(now)})}
  function stop(){if(raf)cancelAnimationFrame(raf);raf=0;last=0}
+ host.addEventListener('optical-scroll',event=>{journey=Math.max(0,Math.min(1,event.detail.progress));queue()});
  function resize(){
   width=stage.clientWidth;height=stage.clientHeight;const s=stage.getBoundingClientRect(),r=frameElement.getBoundingClientRect();viewportSize=[r.width,r.height];
   const quality=Math.min(1,(small.matches?400:680)/Math.max(r.width,r.height));canvas.width=Math.max(1,Math.round(r.width*quality));canvas.height=Math.max(1,Math.round(r.height*quality));

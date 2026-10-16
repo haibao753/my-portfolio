@@ -11,6 +11,16 @@ its palette controls are explicitly lighting controls. Project cards use
 functional names and explain that opening a card reveals details and its
 full-project link. The visual treatment remains the same optical composition.
 
+Native scrolling now controls a reversible reading journey. On wide screens the
+opening holds briefly while the actual optical shader turns, reshapes and draws
+back; phones retain the normal flowing opening. Project posters settle into
+place as they are read. A small glass navigation guide shows reading progress
+and links directly to the introduction, work and contact sections. Scroll work
+is event-driven and coalesced into one frame, with no wheel interception or idle
+animation loop. Reduced motion removes pinning and entrance transforms; pausing
+the sculpture also disables its scroll deformation. Without JavaScript the
+ordinary layout and all original project links remain available.
+
 The full-height opening combines original typography, an orbital light plate and
 a living three-dimensional optical sculpture. Its signed-distance field blends
 two joined rings with a soft body; a bounded ray march finds the surface and its
