@@ -1,8 +1,8 @@
 ---
 const profile="https://space.bilibili.com/1572685586";
 const videos=[
- {id:"mobius",category:"几何极限",title:"莫比乌斯带最短能有多短？一张纸，逼出 √3 的几何极限",file:"/videos/Video_1792127365800_461.mp4",duration:"04:47",symbol:"√3",bvid:"BV1BDpB6wEiJ"},
- {id:"group",category:"群论入门",title:"第01讲｜群的定义与例子",file:"/videos/Video_1792127358357_245.mp4",duration:"03:24",symbol:"G",bvid:"BV1LTa562Ehz"}
+ {id:"mobius",category:"几何极限",title:"莫比乌斯带最短能有多短？一张纸，逼出 √3 的几何极限",file:"/videos/Video_1792127365800_461.mp4",duration:"04:47",symbol:"√3",cover:"/videos/mobius-cover.jpg",bvid:"BV1BDpB6wEiJ"},
+ {id:"group",category:"群论入门",title:"第01讲｜群的定义与例子",file:"/videos/Video_1792127358357_245.mp4",duration:"03:24",symbol:"G",cover:"/videos/group-cover.jpg",bvid:"BV1LTa562Ehz"}
 ];
 ---
 <section class="bili-studio wrap" id="mathematics-video" aria-labelledby="bili-title">
@@ -23,8 +23,8 @@ const videos=[
    </div>
   </div>
   <div class="bili-playlist" aria-label="原创数学视频">
-   {videos.map((v,index)=><button type="button" class="bili-video-card" data-bili-featured={v.id} data-local-src={v.file} data-bili-id={v.bvid} data-video-title={v.title} aria-label={`播放：${v.title}`} aria-pressed="false">
-     <span class="bili-video-art" aria-hidden="true"><span class="bili-video-count">{String(index+1).padStart(2,"0")}</span><span class="bili-video-play">▶</span><span class="bili-video-symbol">{v.symbol}</span></span>
+   {videos.map((v,index)=><button type="button" class="bili-video-card" data-bili-featured={v.id} data-local-src={v.file} data-bili-id={v.bvid} data-video-title={v.title} data-video-poster={v.cover} aria-label={`播放：${v.title}`} aria-pressed="false">
+     <span class="bili-video-art" aria-hidden="true"><img class="bili-cover-img" src={v.cover} alt="" loading="lazy" decoding="async" width="960" height="720" onerror="this.hidden=true" /><span class="bili-video-count">{String(index+1).padStart(2,"0")}</span><span class="bili-video-play">▶</span><span class="bili-video-symbol">{v.symbol}</span></span>
      <span class="bili-video-info"><small>{v.category} · {v.duration}</small><strong>{v.title}</strong><span class="bili-video-action"><span data-locale="zh">站内播放 ▶</span><span data-locale="en">Play here ▶</span></span></span>
    </button>)}
   </div>
@@ -62,6 +62,7 @@ const videos=[
   video.controls=true;
   video.playsInline=true;
   video.preload="metadata";
+  video.poster=button.dataset.videoPoster||"";
   video.src=src;
   video.setAttribute("aria-label",button.dataset.videoTitle||"数学影像");
   video.addEventListener("error",()=>say("本站视频加载失败，可通过备用链接观看。","Video could not load. Use the original link."),{once:true});
@@ -91,7 +92,12 @@ const videos=[
  .bili-video-card{min-width:0;display:flex;align-items:stretch;gap:13px;text-align:left;color:var(--fg);background:var(--bg);border:1px solid var(--stroke);border-radius:18px;padding:10px;cursor:pointer;transition:border-color .25s ease,transform .25s ease,box-shadow .25s ease}
  .bili-video-card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
  .bili-video-art{position:relative;flex:0 0 36%;min-height:110px;display:grid;place-items:center;overflow:hidden;border-radius:12px;background:radial-gradient(ellipse at 30% 35%,rgba(145,194,255,.35),transparent 68%),linear-gradient(140deg,#0f233e,#27446b);color:#fff}
- .bili-video-symbol{font-size:48px;opacity:.55;font-family:Georgia,serif}
+ .bili-video-art .bili-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+ .bili-video-art .bili-cover-img[hidden]{display:none!important}
+ .bili-video-card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+ .bili-video-count{z-index:1;text-shadow:0 1px 4px #000;background:rgba(0,0,0,.45);border-radius:5px;padding:2px 5px}
+ .bili-video-play{z-index:1;box-shadow:0 1px 9px #0007}
+  .bili-video-symbol{font-size:48px;opacity:.55;font-family:Georgia,serif}
  .bili-video-count{position:absolute;top:8px;left:10px;font-size:11px;letter-spacing:.1em;opacity:.8}
  .bili-video-play{position:absolute;bottom:9px;right:9px;display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:rgba(255,255,255,.22);font-size:11px;padding-left:2px}
  .bili-video-info{min-width:0;display:flex;flex-direction:column;gap:7px;padding:3px 1px}
