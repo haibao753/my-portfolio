@@ -45,7 +45,7 @@ function draw(){
  const pos=positions(),aspect=w/h,scale=Math.min(w,h)*.72;
  projection=pos.map(([x,y,z])=>{const depth=zoom-z*.32;return [w/2+x*scale/depth,h/2-y*scale/depth,depth];});
  // The same perspective projection used for vertex rendering and hit testing.
- const matrix=new Float32Array([2*scale/w,0,0,zoom,0,2*scale/h,0,0,0,0,0,0,0,0,0,1]);
+ const matrix=new Float32Array([2*scale/w,0,0,0,0,2*scale/h,0,0,0,0,0,0,zoom,0,0,1]);
  const verts:number[]=[];
  const categoryGroup=new Map<string,number[]>();
  points.forEach((p,i)=>categoryGroup.set(p.topic,[...(categoryGroup.get(p.topic)||[]),i]));
