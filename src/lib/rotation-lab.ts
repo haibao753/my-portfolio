@@ -58,7 +58,8 @@ function draw(canvas:HTMLCanvasElement,m:Mat3){
  const bounds=canvas.getBoundingClientRect();
  const w=Math.max(1,bounds.width),h=Math.max(1,bounds.height);
  const dpr=Math.min(window.devicePixelRatio||1,1.5);
- canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+ const pixelW=Math.max(1,Math.round(w*dpr)),pixelH=Math.max(1,Math.round(h*dpr));
+ if(canvas.width!==pixelW||canvas.height!==pixelH){canvas.width=pixelW;canvas.height=pixelH;}
  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
  const size=Math.min(w,h)*.4;
  const project=(v:Vec3)=>{
@@ -100,7 +101,8 @@ function draw(canvas:HTMLCanvasElement,m:Mat3){
 function drawOverlay(canvas:HTMLCanvasElement,a:Mat3,b:Mat3){
  const ctx=canvas.getContext("2d");if(!ctx)return;
  const {width:w,height:h}=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,1.5);
- canvas.width=Math.max(1,Math.round(w*dpr));canvas.height=Math.max(1,Math.round(h*dpr));
+ const pixelW=Math.max(1,Math.round(w*dpr)),pixelH=Math.max(1,Math.round(h*dpr));
+ if(canvas.width!==pixelW||canvas.height!==pixelH){canvas.width=pixelW;canvas.height=pixelH;}
  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
  const size=Math.min(w,h)*.41;
  const project=(v:Vec3)=>{const p=view(v),k=3.1/(3.1-p[2]*.21);return [w*.5+p[0]*size*k,h*.5-p[1]*size*k] as const;};
