@@ -14,7 +14,7 @@ test("Knowledge Lab only features working experiments and connects to Lab 001",a
  await expect(page).toHaveURL(/\/lab\/$/);
 });
 
-test("Knowledge Lab mobile view is content-first and does not overflow",async({page})=>{
+test("Knowledge Lab mobile view is content-first and does not overflow",async({page},testInfo)=>{
  await page.setViewportSize({width:390,height:844});
  await page.goto("/lab/");
  const link=page.locator('a[href="/lab/rotation/"]');
@@ -24,7 +24,7 @@ test("Knowledge Lab mobile view is content-first and does not overflow",async({p
  expect(box!.y).toBeLessThan(844);
  const overflow=await page.evaluate(()=>({scrollWidth:document.documentElement.scrollWidth,innerWidth:window.innerWidth}));
  expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.innerWidth+1);
- await page.screenshot({path:"test-results/knowledge-lab-mobile.png",fullPage:true});
+ await page.screenshot({path:testInfo.outputPath("knowledge-lab-mobile.png"),fullPage:true});
 });
 
 test("Knowledge Lab is discoverable from homepage and readable in English and dark theme",async({page})=>{
