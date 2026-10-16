@@ -64,16 +64,16 @@ const videos=[
   const iframe=document.createElement("iframe");
   iframe.className="bili-iframe";
   iframe.title="Bilibili video "+bvid;
-  iframe.src="https://player.bilibili.com/player.html?bvid="+encodeURIComponent(bvid)+"&page=1&high_quality=1&danmaku=0";
+  iframe.src="https://player.bilibili.com/player.html?bvid="+encodeURIComponent(bvid)+"&p=1&isOutside=true&poster=1&autoplay=0&danmaku=0";
   iframe.setAttribute("allow","autoplay; fullscreen; picture-in-picture; encrypted-media");
   iframe.setAttribute("allowfullscreen","");
   iframe.setAttribute("loading","lazy");
-  iframe.referrerPolicy="strict-origin-when-cross-origin";
+  iframe.referrerPolicy="no-referrer";
   stage.replaceChildren(iframe);
   openLink.href="https://www.bilibili.com/video/"+encodeURIComponent(bvid);
   openLink.hidden=false;
   if(input)input.value=bvid;
-  say("播放器已加载。如果 B 站限制嵌入或要求登录，可使用下方原站链接。","Player loaded. If Bilibili blocks embedding or requires login, use the fallback link below.");
+  say("已尝试官方站外播放器；部分视频在第三方网站可能仍被 B 站限制。若显示无播放权限，请使用下方 B 站原始链接。","Official external player loaded. Playback may still be restricted by Bilibili; use the original link below if unavailable.");
  };
  form?.addEventListener("submit",e=>{e.preventDefault();play(input?.value||"");});
  document.querySelectorAll<HTMLButtonElement>("[data-bili-featured]").forEach(button=>{
