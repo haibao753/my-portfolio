@@ -44,7 +44,7 @@ test('liquid lighting redraws without re-uploading the scene and follows theme c
  await expect(page.locator('[data-theme-toggle]')).toHaveCSS('color','rgb(21, 32, 45)');
  await expect(page.locator('.brand')).toHaveCSS('color','rgb(21, 32, 45)');
  const box=(await nav.boundingBox())!;
- await page.mouse.move(box.x+box.width*.72,box.y+box.height*.4);
+ await page.evaluate(({x,y})=>dispatchEvent(new PointerEvent('pointerdown',{pointerType:'touch',pointerId:42,clientX:x,clientY:y,bubbles:true})),{x:box.x+box.width*.72,y:box.y+box.height*.4});
  await expect.poll(async()=>page.evaluate(async()=>{
   const {glassPointerFor}=await import(/* @vite-ignore */ '/assets/glass-pointer-light.js' as string);
   const nav=document.querySelector('.glass-nav')!;
@@ -52,9 +52,9 @@ test('liquid lighting redraws without re-uploading the scene and follows theme c
   return light.pointerLightActive===1&&Math.abs(light.pointerLightPosition[0]-.72)<.04;
  })).toBe(true);
  expect(Number(await nav.getAttribute('data-optical-uploaded-pixels'))).toBe(before);
- const uploads=Number(await nav.getAttribute('data-optical-texture-full'));
+ const refreshes=Number(await nav.getAttribute('data-optical-refreshes'));
  await page.locator('[data-theme-toggle]').click();
- await expect.poll(async()=>Number(await nav.getAttribute('data-optical-texture-full'))).toBeGreaterThan(uploads);
+ await expect.poll(async()=>Number(await nav.getAttribute('data-optical-refreshes'))).toBeGreaterThan(refreshes);
  await expect(page.locator('[data-theme-toggle]')).toHaveCSS('color','rgb(246, 248, 251)');
  await expect(page.locator('[data-theme-toggle]')).toBeVisible();
 });
