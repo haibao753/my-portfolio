@@ -24,6 +24,12 @@ test('control-free sculpture moves, flows in colour and cycles through three for
  expect(await canvas.getAttribute('data-frame')).toBe(frame);
  await object.press('Escape');
  await expect(sculpture).toHaveAttribute('data-motion','playing');
+ await canvas.evaluate((node:HTMLCanvasElement)=>{
+  const gl=node.getContext('webgl2')||node.getContext('webgl');
+  gl!.getExtension('WEBGL_lose_context')!.loseContext();
+ });
+ await expect(sculpture).toHaveAttribute('data-renderer','fallback');
+ await expect(sculpture.locator('.sculpture-fallback')).toHaveCSS('opacity','1');
 });
 
 test('reduced motion avoids WebGL while keeping direct and keyboard shape changes',async({page})=>{
@@ -55,4 +61,25 @@ test('offscreen decoration stops and live glass receives current sculpture pixel
  const frame=await canvas.getAttribute('data-frame');
  await page.waitForTimeout(350);
  expect(await canvas.getAttribute('data-frame')).toBe(frame);
+});
+
+test.describe('native vertical touch on the decorative object',()=>{
+ test.use({hasTouch:true});
+ test('scrolls the page without switching form',async({page})=>{
+  await page.goto('/');
+  const sculpture=page.locator('[data-curiosity]');
+  await expect(sculpture).toHaveAttribute('data-renderer','webgl');
+  const box=(await sculpture.boundingBox())!;
+  const startY=Math.min(box.y+box.height*.7,650),x=box.x+box.width*.5;
+  const before=await page.evaluate(()=>scrollY);
+  const touch=await page.context().newCDPSession(page);
+  await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y:startY}]});
+  for(let step=1;step<=10;step++){
+   await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x,y:startY-step*24}]});
+   await page.waitForTimeout(16);
+  }
+  await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await touch.detach();
+  await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(before+100);
+  await expect(sculpture).toHaveAttribute('data-form','0');
+ });
 });

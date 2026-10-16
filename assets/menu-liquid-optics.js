@@ -22,7 +22,7 @@ if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-
   const pad=72;
   let sceneReady=false;
    const mediaBase=document.createElement('canvas'),mediaBaseCtx=mediaBase.getContext('2d');
-   let mediaRect=null,paintScroll=NaN;
+   let mediaRect=null,paintScroll=NaN,hadMedia=false;
   const options=()=>({liquid:1,optical:1,reflectivity:.78,strength:1.25,cornerRadius:parseFloat(getComputedStyle(menu).borderTopLeftRadius)||32,
    bevelWidth:19,reflectionReach:2.2,reflectionQuality:1,studioLight:.48,lightDirection:[-.55,.85],rimOnly:1,
    surfaceSize:[canvas.width,canvas.height],scenePadding:pad,...glassPointerFor(menu)});
@@ -76,7 +76,8 @@ if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-
    const sampleRect={left,top,right:left+w,bottom:top+h,width:w,height:h};
    if(mediaBaseCtx){mediaBase.width=w;mediaBase.height=h;mediaBaseCtx.drawImage(scene,0,0)}
    mediaRect=sampleRect;paintScroll=scrollY;
-   paintSceneCanvases(ctx,sceneCanvases(root,sampleRect),sampleRect);
+   const currentMedia=sceneCanvases(root,sampleRect);hadMedia=currentMedia.length>0;
+   paintSceneCanvases(ctx,currentMedia,sampleRect);
    try{
     render(scene,options());sceneReady=true;
     menu.dataset.menuOptics='active';menu.dataset.menuOpticalSamples=String(count);
@@ -94,7 +95,8 @@ if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-
     if(!(canvas instanceof HTMLCanvasElement)||!root.contains(canvas))return;
     if(paintScroll!==scrollY){schedule();return;}
     const media=sceneCanvases(root,mediaRect);
-    if(!media.length)return;
+    if(!media.length){if(hadMedia){hadMedia=false;schedule()}return;}
+    hadMedia=true;
     ctx.clearRect(0,0,scene.width,scene.height);ctx.drawImage(mediaBase,0,0);paintSceneCanvases(ctx,media,mediaRect);
     try{render(scene,{...options(),dirtyRect:mediaDamage(media,mediaRect)});menu.dataset.menuMediaFrames=String(Number(menu.dataset.menuMediaFrames||0)+1)}catch{menu.dataset.menuOptics='fallback'}
    });
