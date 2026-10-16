@@ -4,6 +4,7 @@
  */
 import {setup} from '/assets/optical-engine.js';
 import {glassPointerFor,subscribeGlassPointer} from '/assets/glass-pointer-light.js';
+import {sceneCanvases,paintSceneCanvases,mediaDamage} from '/assets/scene-media.js';
 const params=new URLSearchParams(location.search);
 const requested=params.get('opticalEngine');
 const mode=requested===null?'2':requested;
@@ -41,7 +42,7 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
      // otherwise a dark photograph beside it can turn a white-background logo white.
      const sampleTarget=target.matches('.brand')?target.querySelector('span'):target;
      const r=sampleTarget.getBoundingClientRect();if(!r.width||!r.height)continue;
-     const x=Math.max(0,Math.floor(r.left-nr.left)),y=Math.max(0,Math.floor(r.top-nr.top));
+      const x=Math.max(0,Math.floor(r.left-nr.left)+overscan),y=Math.max(0,Math.floor(r.top-nr.top)+overscan);
      const w=Math.min(source.width-x,Math.ceil(r.width)),h=Math.min(source.height-y,Math.ceil(r.height));
      if(w<1||h<1)continue;
      const pixels=ctx.getImageData(x,y,w,h).data;
@@ -98,6 +99,8 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
    const oldBounds=new WeakMap();
    const stage=document.createElement('canvas');
    const stageCtx=stage.getContext('2d');
+    const mediaBase=document.createElement('canvas'),mediaBaseCtx=mediaBase.getContext('2d');
+    let mediaItems=[],mediaRect=null;
    const rectUnion=(a,b)=>({x:Math.min(a.x,b.x),y:Math.min(a.y,b.y),width:Math.max(a.x+a.width,b.x+b.width)-Math.min(a.x,b.x),height:Math.max(a.y+a.height,b.y+b.height)-Math.min(a.y,b.y)});
    const regionFor=(r,nr,pad=8)=>({x:Math.floor(r.left-nr.left-pad),y:Math.floor(r.top-nr.top-pad),width:Math.ceil(r.width+2*pad),height:Math.ceil(r.height+2*pad)});
    const clampRegion=(r,w,h)=>{const x=Math.max(0,r.x),y=Math.max(0,r.y);return {x,y,width:Math.max(0,Math.min(w,r.x+r.width)-x),height:Math.max(0,Math.min(h,r.y+r.height)-y)}};
@@ -184,6 +187,8 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
     const dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,nr.width),h=Math.max(1,nr.height);
     if(glass.width!==Math.round((w-2*overscan)*dpr)||glass.height!==Math.round((h-2*overscan)*dpr)){glass.width=Math.round((w-2*overscan)*dpr);glass.height=Math.round((h-2*overscan)*dpr)}
     if(source.width!==w||source.height!==h){source.width=w;source.height=h;}
+     const currentMedia=sceneCanvases(root,nr);
+     if(currentMedia.length||mediaItems.length)forceFull=true;
     const unchangedLayout=lastPaintEpoch===layoutEpoch&&lastPaintWidth===w&&lastPaintHeight===h;
     const sameScroll=lastPaintScrollX===window.scrollX&&lastPaintScrollY===window.scrollY;
     if(unchangedLayout&&sameScroll){
@@ -333,6 +338,12 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
      }
     }
     if(partial)ctx.restore();
+     mediaItems=currentMedia;mediaRect=currentMedia.length?nr:null;
+     if(currentMedia.length&&mediaBaseCtx){
+      mediaBase.width=w;mediaBase.height=h;
+      mediaBaseCtx.drawImage(source,0,0);
+      paintSceneCanvases(ctx,currentMedia,nr);
+     }
     if(liquid)updateInk();
     if(Math.abs(window.scrollY-startScrollY)>2){forceFull=true;schedule();return;}
     // A scrolled frame translates existing pixels: upload the whole shifted texture
@@ -358,6 +369,22 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
    };
    let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
    if(liquid)subscribeGlassPointer(schedule);
+    addEventListener('jhlab:scene-media',event=>{
+     if(document.hidden||gl.isContextLost()||glass.hidden||!mediaBaseCtx)return;
+     const canvas=event.detail?.canvas;
+     if(!(canvas instanceof HTMLCanvasElement)||!root.contains(canvas))return;
+     const navBounds=nav.getBoundingClientRect();
+     const rect={left:Math.floor(navBounds.left)-overscan,top:Math.floor(navBounds.top)-overscan,
+      right:Math.ceil(navBounds.right)+overscan,bottom:Math.ceil(navBounds.bottom)+overscan};
+     rect.width=rect.right-rect.left;rect.height=rect.bottom-rect.top;
+     const current=sceneCanvases(root,rect);
+     if(!current.length&&!mediaItems.length)return;
+     if(!current.length||!mediaRect||rect.left!==mediaRect.left||rect.top!==mediaRect.top||lastPaintScrollY!==scrollY||lastPaintScrollX!==scrollX){forceFull=true;invalidateLayout();return;}
+     // Reuse the static DOM raster. Only the intersecting media pixels are uploaded.
+     ctx.clearRect(0,0,source.width,source.height);ctx.drawImage(mediaBase,0,0);
+     paintSceneCanvases(ctx,current,rect);mediaItems=current;
+     try{updateInk();draw({dirtyRect:mediaDamage(current,rect)});nav.dataset.opticalMediaFrames=String(Number(nav.dataset.opticalMediaFrames||0)+1)}catch{fallback()}
+    });
    new MutationObserver(()=>{forceFull=true;invalidateLayout()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','data-theme-transition','lang']});
    addEventListener('scroll',schedule,{passive:true});
    addEventListener('visibilitychange',()=>{if(!document.hidden){forceFull=true;schedule()}});

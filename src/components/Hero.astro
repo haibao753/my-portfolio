@@ -1,7 +1,9 @@
 ---
 import SignatureMark from "./SignatureMark.astro";
+import CuriositySculpture from "./CuriositySculpture.astro";
 ---
 <section id="top" class="hero wrap">
+ <div class="hero-copy">
  <p class="eyebrow"><span data-locale="zh">独立创作 · 数学 · AI · 影像</span><span data-locale="en">Independent experiments · Math · AI · Art</span></p>
  <h1 class="hero-title"><span data-locale="zh"><span class="hero-title-line">让好奇心</span><span class="hero-title-line">成为作品。</span></span><span data-locale="en"><span class="hero-title-line">Make curiosity</span><span class="hero-title-line">visible.</span></span></h1>
  <p class="lead"><span data-locale="zh">这里没有标准答案，只有不断冒出来的新问题。用数学、代码与想象力，做一点有趣的东西。</span><span data-locale="en">No perfect answers, just interesting questions. A personal space for mathematics, code and imagination.</span></p>
@@ -10,17 +12,22 @@ import SignatureMark from "./SignatureMark.astro";
   <a class="secondary" href="/brief/"><span data-locale="zh">阅读每日简报 →</span><span data-locale="en">Daily Brief →</span></a>
  </div>
  <SignatureMark />
+ </div>
+ <CuriositySculpture />
 </section>
 <style>
- .hero{text-align:center;padding-top:clamp(58px,8vw,105px);padding-bottom:clamp(90px,11vw,165px);position:relative;isolation:isolate}
+ .hero{display:grid;grid-template-columns:1fr 1.16fr;align-items:center;gap:clamp(10px,2vw,30px);text-align:left;padding-top:clamp(44px,6vw,76px);padding-bottom:clamp(80px,8vw,125px);position:relative;isolation:isolate}
+ .hero-copy{min-width:0;position:relative;z-index:1}
  .hero .eyebrow{margin-bottom:22px}
- .hero h1{font-weight:750;letter-spacing:-.075em;line-height:1.14;font-size:clamp(53px,8vw,118px);margin:0 auto 20px}
+ .hero h1{font-weight:750;letter-spacing:-.075em;line-height:1.14;font-size:clamp(53px,6.6vw,96px);margin:0 0 22px}
  .hero-title-line{display:block;overflow:visible;white-space:nowrap}
  .hero-title [data-locale]{width:100%}
  .hero-title .hero-title-line:nth-child(2){margin-top:.018em}
  @media(max-width:500px){.hero-title{font-size:clamp(40px,10vw,56px)!important}.hero-title-line{white-space:normal}}
  .lead{font-size:clamp(15px,1.5vw,19px);line-height:1.9;color:var(--muted);max-width:650px;margin:0 auto}
- .actions{display:flex;justify-content:center;flex-wrap:wrap;gap:15px;margin-top:30px}
+ .actions{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:15px;margin-top:30px}
+ .hero-copy :global(.signature-host){justify-content:flex-start;margin-top:32px}
+ .hero-copy :global(.hero-autograph--pen){width:min(305px,90%)}
  .actions a{min-height:48px;border-radius:99px;padding:11px 24px;font-size:14px;display:inline-flex;align-items:center;justify-content:center;font-weight:600;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,background-color .25s ease}
  @media(hover:hover){.actions a:hover{transform:translateY(-3px)}.primary:hover{box-shadow:0 15px 32px rgba(5,103,222,.24)}.secondary:hover{background:var(--stroke)}}
  .actions a:active{transform:translateY(0) scale(.98)}
@@ -28,5 +35,6 @@ import SignatureMark from "./SignatureMark.astro";
  .primary{background:var(--accent);color:white;box-shadow:0 10px 23px rgba(5,103,222,.17)}
  .secondary{color:var(--accent)}
  html[data-theme="dark"] .signature{filter:invert(1)}
- @media(max-width:760px){.hero{padding-top:38px;padding-bottom:88px}.hero h1{font-size:clamp(46px,10vw,70px)}}
+ @media(min-width:761px) and (max-width:1000px){.hero{grid-template-columns:1fr 1fr;gap:0}.hero h1{font-size:clamp(48px,6.7vw,68px)}.actions{gap:6px}.actions a{padding-inline:17px}.lead{font-size:15px}}
+ @media(max-width:760px){.hero{grid-template-columns:1fr;text-align:center;gap:14px;padding-top:38px;padding-bottom:80px}.hero-copy{display:contents}.hero .eyebrow{grid-row:1;margin-bottom:0}.hero h1{grid-row:2;font-size:clamp(46px,10vw,70px);margin-bottom:0}.hero .lead{grid-row:3;margin-bottom:0;max-width:520px}.hero :global(.sculpture-stage){grid-row:4}.actions{grid-row:5;justify-content:center;margin-top:0}.hero-copy :global(.signature-host){grid-row:6;justify-content:center;margin-top:12px}.hero-copy :global(.hero-autograph--pen){width:min(270px,85%)}}
 </style>

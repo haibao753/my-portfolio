@@ -40,8 +40,7 @@ if(!failed){
 }
 if(!failed){
  const html=readFileSync(join("dist","index.html"),"utf8");
- const photo=html.match(/<div[^>]*class="photo-art"[\s\S]*?<\/div>/)?.[0]||"";
- const images=[...photo.matchAll(/<img\b[^>]*>/g)].map(match=>match[0]);
+ const images=[...html.matchAll(/<img\b[^>]*>/g)].map(match=>match[0]).filter(image=>image.includes("data-portfolio-photo"));
  if(images.length!==3||images.some(image=>!image.includes("srcset=")||!image.includes(".webp")||image.includes('/images/'))){
   console.error("Photo strip must contain three responsive optimized images");failed=true;
  }

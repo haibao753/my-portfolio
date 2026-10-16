@@ -15,13 +15,15 @@
     "deploy:preview:dry-run": "wrangler deploy --config wrangler.preview.jsonc --dry-run"
   },
   "dependencies": {
-    "astro": "^5.0.0"
+    "astro": "^5.0.0",
+    "three": "0.160.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
     "typescript": "^5.0.0",
     "@playwright/test": "^1.56.0",
     "@types/node": "^22.0.0",
+    "@types/three": "0.160.0",
     "wrangler": "^4.0.0"
   }
 }

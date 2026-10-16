@@ -1,71 +1,19 @@
 ---
-import { Image } from "astro:assets";
-import photo2 from "../../images/2.jpg";
-import photo4 from "../../images/4.jpg";
-import photo5 from "../../images/5.jpg";
+import AnimatedCover from "./AnimatedCover.astro";
 interface Props{index:number;href:string}
 const {index}=Astro.props;
 ---
 <div class:list={["visual",`visual-${index}`]}>
- {index===0&&<div class="world-art" aria-hidden="true"><span>J.H. / BRIEF</span><strong>WORLD<br/>IN FOCUS.</strong><small>EVERY DAY IS A NEW QUESTION</small></div>}
- {index===1&&<div class="math-art" aria-hidden="true">
-   <span class="math-label">x² + y² = cosh² z</span>
-   <svg viewBox="0 0 420 320" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.45" opacity=".72">
-    <ellipse cx="210" cy="83" rx="122" ry="46"/><ellipse cx="210" cy="130" rx="84" ry="31"/><ellipse cx="210" cy="193" rx="82" ry="32"/><ellipse cx="210" cy="249" rx="122" ry="44"/>
-    <path d="M88 83C138 119 138 218 88 249M332 83C282 119 282 218 332 249M210 37C210 93 210 236 210 293M148 45C178 116 178 231 148 286M272 45C242 116 242 231 272 286"/>
-   </g></svg><small>MATHEMATICS / MOVEMENT / VISUALIZATION</small>
-  </div>}
- {index===2&&<div class="photo-art" aria-hidden="true">{[photo2,photo4,photo5].map(photo=><Image src={photo} alt="" format="webp" quality={80} width={960} widths={[320,640,960]} sizes="(max-width: 600px) 34vw, (max-width: 900px) 18vw, 180px" loading="lazy" decoding="async" />)}</div>}
- {index===3&&<div class="geometry-art">
-   <div id="minimal-preview" aria-label="悬链面极小曲面：两端张开、中部收窄的三维曲面">
-    <div class="preview-fallback" aria-hidden="true">
-     <svg class="catenoid-illustration" viewBox="0 0 520 350" role="presentation" focusable="false">
-      <defs>
-       <linearGradient id="catenoid-surface" x1="0" x2="1" y1=".1" y2=".9"><stop offset="0" stop-color="#95d7ec"/><stop offset=".3" stop-color="#6aafd0"/><stop offset=".65" stop-color="#396f9f"/><stop offset="1" stop-color="#183c69"/></linearGradient>
-       <linearGradient id="catenoid-inner" x1=".1" y1="0" x2=".85" y2="1"><stop offset="0" stop-color="#1d456b"/><stop offset=".48" stop-color="#2e628c"/><stop offset="1" stop-color="#83c4dd"/></linearGradient>
-       <linearGradient id="catenoid-edge" x1="0" x2="1"><stop stop-color="#bff7fd"/><stop offset="1" stop-color="#3f91cc"/></linearGradient>
-      </defs>
-      <g transform="translate(0 -12)">
-       <ellipse cx="260" cy="306" rx="178" ry="19" fill="#386589" opacity=".12"/>
-       <path d="M90 99 C114 150 153 165 164 183 C175 209 122 251 83 266 C77 311 184 328 260 324 C345 328 438 307 437 266 C394 252 343 210 356 183 C367 162 409 148 430 99 Z" fill="url(#catenoid-surface)" opacity=".97"/>
-       <path d="M90 99 C111 149 166 176 169 190 C172 220 129 245 83 266 C143 302 199 300 260 299 C322 299 382 302 437 266 C394 246 348 220 351 190 C354 176 411 146 430 99" fill="none" stroke="#b4eff6" stroke-width="1.6" opacity=".8"/>
-       <ellipse cx="260" cy="99" rx="170" ry="50" fill="url(#catenoid-inner)" stroke="url(#catenoid-edge)" stroke-width="3"/>
-       <ellipse cx="260" cy="99" rx="135" ry="29" fill="#dceef5" opacity=".82"/>
-       <path d="M90 99 C115 151 164 167 164 183 C164 202 121 254 83 266" fill="none" stroke="#dbf9ff" stroke-width="2" opacity=".78"/>
-       <path d="M430 99 C403 151 356 167 356 183 C356 202 396 252 437 266" fill="none" stroke="#183b60" stroke-width="2" opacity=".65"/>
-       <ellipse cx="260" cy="266" rx="177" ry="57" fill="none" stroke="#408eb8" stroke-width="2" opacity=".55" stroke-dasharray="7 8"/>
-       <path d="M166 184 Q260 155 354 184" stroke="#e1faff" stroke-width="2" fill="none" opacity=".65"/>
-       <path d="M260 49V324M85 266H435" stroke="#427a9d" stroke-width=".8" stroke-dasharray="4 8" opacity=".22"/>
-      </g>
-     </svg>
-     <span class="geometry-formula">r(z) = a cosh(z / a)</span>
-    </div>
-   </div>
-   <span class="visual-label">CATENOID / MINIMAL SURFACE</span>
-  </div>}
+ {index===0&&<div class="world-art" aria-hidden="true"><span>J.H. LAB</span><strong><span data-locale="zh">读一点<br/>世界。</span><span data-locale="en">WORLD<br/>IN FOCUS.</span></strong><small><span data-locale="zh">每天，从一个新问题开始</span><span data-locale="en">A new question, every day</span></small></div>}
+ {index===1&&<AnimatedCover kind="mathematics" />}
+ {index===2&&<AnimatedCover kind="memory" />}
+ {index===3&&<AnimatedCover kind="geometry" />}
 </div>
-{index===3&&<script is:inline type="module" src="/assets/minimal-preview.js"></script>}
 <style>
  .visual{min-height:380px;border:1px solid var(--stroke);border-radius:22px;overflow:hidden;background:linear-gradient(135deg,#e6ebf0,#f8f9fb);box-shadow:var(--shadow-sm);display:grid;place-items:center;position:relative}
- .world-art{padding:42px;display:flex;flex-direction:column;justify-content:space-between;width:82%;height:290px;background:rgba(255,255,255,.90);color:#1d1d1f;border:1px solid rgba(24,29,37,.11);box-shadow:var(--shadow-md)}
- .world-art span,.world-art small,.math-art small{font:600 11px ui-monospace,monospace;letter-spacing:.12em}
- .world-art strong{font-size:clamp(38px,4vw,64px);line-height:1;letter-spacing:-.085em}
- .math-art{display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;color:#46657d;width:100%}
- .math-art svg{width:min(90%,390px);height:285px}
- .math-label{font:italic 21px Georgia,serif;color:#243e52}
- .math-art small{font-size:9px}
- .photo-art{display:grid;grid-template-columns:1fr 1.1fr 1fr;height:380px;gap:8px;padding:9px;width:100%;background:#e1e5e8}
- .photo-art img{width:100%;height:100%;object-fit:cover;min-width:0}
- .photo-art img:nth-child(2){transform:scaleY(.92)}
- .geometry-art{position:relative;width:100%;height:380px;display:grid;place-items:center;color:#5d7c8f}
- #minimal-preview{position:absolute;inset:0;overflow:hidden;pointer-events:none}
- .preview-fallback{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .28s ease;pointer-events:none}
- .preview-fallback svg{width:min(96%,540px);height:94%;max-height:100%;filter:drop-shadow(0 16px 20px rgba(33,83,125,.13))}
- .geometry-formula{position:absolute;left:19px;top:17px;color:#507c9a;font:italic clamp(12px,1.3vw,15px) Georgia,serif;letter-spacing:.02em}
- .geometry-art canvas{display:block}
- .geometry-art{isolation:isolate}
- .visual-label{position:absolute;bottom:17px;z-index:2;font:600 11px ui-monospace,monospace;letter-spacing:.15em;pointer-events:none}
- .visual-3{background:radial-gradient(circle,#fbfcfd,#dbe6ed)}
- @media(max-width:900px){.visual{min-height:300px}.photo-art,.geometry-art{height:300px}}
- @media(max-width:600px){.visual{min-height:230px}.world-art{height:200px;padding:24px}.world-art strong{font-size:34px}.math-art svg{height:175px}.math-label{font-size:17px}.photo-art,.geometry-art{height:230px}}
+ .world-art{padding:38px;display:flex;flex-direction:column;justify-content:space-between;width:82%;height:290px;background:rgba(255,255,255,.90);color:#1d1d1f;border:1px solid rgba(24,29,37,.11);box-shadow:var(--shadow-md)}
+ .world-art>span,.world-art small{font:600 10px ui-monospace,monospace;letter-spacing:.1em}
+ .world-art strong{font-size:clamp(37px,4vw,60px);line-height:1.15;letter-spacing:-.065em}
+ @media(max-width:900px){.visual{min-height:300px}}
+ @media(max-width:600px){.visual{min-height:245px}.world-art{height:210px;padding:23px}.world-art strong{font-size:36px}}
 </style>

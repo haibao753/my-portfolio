@@ -1,0 +1,49 @@
+---
+const stars=Array.from({length:100},(_,i)=>{
+ const a=i*2.39996323,r=122*Math.sqrt((i+.5)/100);
+ return {x:320+Math.cos(a)*r,y:258+Math.sin(a)*r*.86,r:1.1+(i%4)*.25};
+});
+---
+<div class="sculpture-stage" data-curiosity data-form="0" data-renderer="fallback">
+ <div class="sculpture-shadow" aria-hidden="true"></div>
+ <button class="sculpture-object" type="button" data-sculpture-object aria-label="可变几何装置。点击变换形态，按 Esc 暂停或继续运动。">
+  <svg class="sculpture-fallback" viewBox="0 0 640 550" aria-hidden="true" focusable="false">
+   <defs>
+    <linearGradient id="sculpture-satin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#86c4df"/><stop offset=".27" stop-color="#3d86b7"/><stop offset=".58" stop-color="#30538d"/><stop offset=".83" stop-color="#77a9d0"/><stop offset="1" stop-color="#ad99d0"/></linearGradient>
+    <linearGradient id="sculpture-inside"><stop stop-color="#223c66"/><stop offset=".6" stop-color="#477fa8"/><stop offset="1" stop-color="#a4d9e5"/></linearGradient>
+   </defs>
+   <g class="fallback-surface" transform="rotate(-16 320 265)">
+    <path d="M149 153C182 224 240 223 230 266S183 329 147 350C137 405 242 432 320 427C409 430 509 401 497 350C449 329 396 302 409 265S460 215 491 153Z" fill="url(#sculpture-satin)"/>
+    <ellipse cx="320" cy="153" rx="171" ry="57" fill="url(#sculpture-inside)" stroke="#9ed7e6" stroke-width="1.5"/>
+    <ellipse cx="320" cy="153" rx="138" ry="35" fill="var(--bg)"/>
+    <path d="M149 153C182 224 240 223 230 266S183 329 147 350M491 153C460 215 396 223 409 265S449 329 497 350" fill="none" stroke="#b3d9e5" stroke-width="1.2" opacity=".75"/>
+    <ellipse cx="320" cy="350" rx="175" ry="66" fill="none" stroke="#92b4d7" stroke-width="1" opacity=".45"/>
+   </g>
+   <g class="fallback-stars" fill="url(#sculpture-satin)">{stars.map(p=><circle cx={p.x} cy={p.y} r={p.r}/>)}</g>
+   <g class="fallback-flow" fill="none" stroke="url(#sculpture-satin)" stroke-width="1.3">{Array.from({length:12},(_,i)=><path d={`M${190+i*3} 385 C ${475-i*3} 365, ${160+i*4} 165, ${405+i*3} 125`}/>)}</g>
+  </svg>
+ </button>
+ <span class="sculpture-status" data-sculpture-status role="status" aria-live="polite"></span>
+</div>
+<script>
+ import {initCuriosity} from "../lib/curiosity";
+ initCuriosity();
+</script>
+<style>
+ .sculpture-stage{position:relative;isolation:isolate;width:100%;height:clamp(400px,43vw,570px);min-width:0}
+ .sculpture-stage::before{content:"";position:absolute;inset:12% 5% 13%;background:radial-gradient(ellipse,rgba(102,144,195,.045),transparent 66%);pointer-events:none}
+ .sculpture-shadow{position:absolute;left:18%;right:12%;bottom:9%;height:8%;background:var(--sculpture-shadow);filter:blur(13px);border-radius:50%;pointer-events:none}
+ .sculpture-object{position:absolute;inset:0;display:block;width:100%;height:100%;padding:0;border:0;border-radius:0;background:transparent;color:inherit;cursor:pointer;touch-action:pan-y;isolation:isolate}
+ .sculpture-object:focus-visible{outline:2px solid var(--accent);outline-offset:-12px;border-radius:28px}
+ .sculpture-object[data-dragging]{cursor:grabbing}
+ .sculpture-fallback{display:block;width:100%;height:100%;overflow:visible;transition:opacity .4s ease;animation:sculpture-still-life 17s ease-in-out infinite alternate;animation-play-state:var(--sculpture-play,paused)}
+ .sculpture-stage[data-renderer="webgl"] .sculpture-fallback{opacity:0;animation:none}
+ .sculpture-object :global(canvas){position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+ .fallback-stars,.fallback-flow{display:none}
+ [data-form="1"] .fallback-surface,[data-form="2"] .fallback-surface{display:none}
+ [data-form="1"] .fallback-stars,[data-form="2"] .fallback-flow{display:block}
+ .sculpture-status{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ @keyframes sculpture-still-life{from{transform:translateY(-4px) rotate(-2deg);filter:hue-rotate(0deg)}to{transform:translateY(5px) rotate(3deg);filter:hue-rotate(38deg)}}
+ @media(max-width:760px){.sculpture-stage{height:clamp(270px,68vw,380px);margin-block:-9px -5px}.sculpture-shadow{bottom:8%;left:22%;right:18%}}
+ @media(prefers-reduced-motion:reduce){.sculpture-fallback{animation:none;transition:none}}
+</style>
