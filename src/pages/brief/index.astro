@@ -162,4 +162,23 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .spatial-scene .spatial-label{margin:0}
  @media(max-width:760px){.spatial-viewport{height:52dvh;min-height:320px}.spatial-scene{left:8px;right:8px;bottom:8px;padding:12px}.spatial-scene strong{font-size:17px}}
 
+
+ /* Unobstructed graph: inspector docks below the canvas, not over it. */
+ #spatial-dialog{width:min(96vw,1040px);max-height:min(94dvh,850px);overflow:hidden}
+ .spatial-shell{display:flex;flex-direction:column;max-height:min(94dvh,850px);box-sizing:border-box}
+ .spatial-viewport{flex:1 1 auto;height:min(50dvh,500px);min-height:220px;overflow:hidden;display:flex;flex-direction:column}
+ .spatial-webgl{flex:1 1 auto;min-height:160px;height:auto;width:100%;display:block}
+ .spatial-scene{position:relative;left:auto;right:auto;bottom:auto;flex:0 0 auto;max-height:170px;overflow:auto;width:100%;box-sizing:border-box;border-radius:12px;padding:12px;box-shadow:none}
+ .spatial-scene strong{font-size:clamp(14px,2vw,18px);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .spatial-shell footer{flex:0 0 auto;padding-top:8px}
+ @media(max-width:760px){
+  #spatial-dialog{width:calc(100vw - 24px);max-height:88dvh}
+  .spatial-shell{padding:12px;max-height:88dvh}
+  .spatial-viewport{height:55dvh;min-height:250px}
+  .spatial-webgl{min-height:170px}
+  .spatial-scene{max-height:148px;padding:10px}
+  .spatial-scene strong{font-size:15px;-webkit-line-clamp:2}
+  .spatial-shell footer{padding-top:6px}
+ }
+
 </style>
