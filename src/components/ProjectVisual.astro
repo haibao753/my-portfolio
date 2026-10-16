@@ -17,13 +17,31 @@ const {index}=Astro.props;
   </div>}
  {index===2&&<div class="photo-art" aria-hidden="true">{[photo2,photo4,photo5].map(photo=><Image src={photo} alt="" format="webp" quality={80} width={960} widths={[320,640,960]} sizes="(max-width: 600px) 34vw, (max-width: 900px) 18vw, 180px" loading="lazy" decoding="async" />)}</div>}
  {index===3&&<div class="geometry-art">
-   <div id="minimal-preview" aria-label="极小曲面实时三维预览"><div class="preview-fallback" aria-hidden="true">
-    <svg viewBox="0 0 420 320" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.3" opacity=".68">
-     <ellipse cx="210" cy="78" rx="108" ry="42"/><ellipse cx="210" cy="120" rx="78" ry="27"/><ellipse cx="210" cy="200" rx="79" ry="27"/><ellipse cx="210" cy="247" rx="108" ry="42"/>
-     <path d="M102 78C141 116 141 209 102 247M318 78C279 116 279 209 318 247M210 36V289M156 48Q201 160 156 277M264 48Q219 160 264 277"/>
-    </g></svg>
-   </div></div>
-   <span class="visual-label">GEOMETRY / LAB</span>
+   <div id="minimal-preview" aria-label="悬链面极小曲面：两端张开、中部收窄的三维曲面">
+    <div class="preview-fallback" aria-hidden="true">
+     <svg class="catenoid-illustration" viewBox="0 0 520 350" role="presentation" focusable="false">
+      <defs>
+       <linearGradient id="catenoid-surface" x1="0" x2="1" y1=".1" y2=".9"><stop offset="0" stop-color="#95d7ec"/><stop offset=".3" stop-color="#6aafd0"/><stop offset=".65" stop-color="#396f9f"/><stop offset="1" stop-color="#183c69"/></linearGradient>
+       <linearGradient id="catenoid-inner" x1=".1" y1="0" x2=".85" y2="1"><stop offset="0" stop-color="#1d456b"/><stop offset=".48" stop-color="#2e628c"/><stop offset="1" stop-color="#83c4dd"/></linearGradient>
+       <linearGradient id="catenoid-edge" x1="0" x2="1"><stop stop-color="#bff7fd"/><stop offset="1" stop-color="#3f91cc"/></linearGradient>
+      </defs>
+      <g transform="translate(0 -12)">
+       <ellipse cx="260" cy="306" rx="178" ry="19" fill="#386589" opacity=".12"/>
+       <path d="M90 99 C114 150 153 165 164 183 C175 209 122 251 83 266 C77 311 184 328 260 324 C345 328 438 307 437 266 C394 252 343 210 356 183 C367 162 409 148 430 99 Z" fill="url(#catenoid-surface)" opacity=".97"/>
+       <path d="M90 99 C111 149 166 176 169 190 C172 220 129 245 83 266 C143 302 199 300 260 299 C322 299 382 302 437 266 C394 246 348 220 351 190 C354 176 411 146 430 99" fill="none" stroke="#b4eff6" stroke-width="1.6" opacity=".8"/>
+       <ellipse cx="260" cy="99" rx="170" ry="50" fill="url(#catenoid-inner)" stroke="url(#catenoid-edge)" stroke-width="3"/>
+       <ellipse cx="260" cy="99" rx="135" ry="29" fill="#dceef5" opacity=".82"/>
+       <path d="M90 99 C115 151 164 167 164 183 C164 202 121 254 83 266" fill="none" stroke="#dbf9ff" stroke-width="2" opacity=".78"/>
+       <path d="M430 99 C403 151 356 167 356 183 C356 202 396 252 437 266" fill="none" stroke="#183b60" stroke-width="2" opacity=".65"/>
+       <ellipse cx="260" cy="266" rx="177" ry="57" fill="none" stroke="#408eb8" stroke-width="2" opacity=".55" stroke-dasharray="7 8"/>
+       <path d="M166 184 Q260 155 354 184" stroke="#e1faff" stroke-width="2" fill="none" opacity=".65"/>
+       <path d="M260 49V324M85 266H435" stroke="#427a9d" stroke-width=".8" stroke-dasharray="4 8" opacity=".22"/>
+      </g>
+     </svg>
+     <span class="geometry-formula">r(z) = a cosh(z / a)</span>
+    </div>
+   </div>
+   <span class="visual-label">CATENOID / MINIMAL SURFACE</span>
   </div>}
 </div>
 {index===3&&<script is:inline type="module" src="/assets/minimal-preview.js"></script>}
@@ -41,9 +59,12 @@ const {index}=Astro.props;
  .photo-art img:nth-child(2){transform:scaleY(.92)}
  .geometry-art{position:relative;width:100%;height:380px;display:grid;place-items:center;color:#5d7c8f}
  #minimal-preview{position:absolute;inset:0;overflow:hidden;pointer-events:none}
- .preview-fallback{position:absolute;inset:0;display:grid;place-items:center}
- .preview-fallback svg{width:84%;height:85%}
- .visual-label{position:absolute;bottom:23px;font:600 11px ui-monospace,monospace;letter-spacing:.15em;pointer-events:none}
+ .preview-fallback{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .28s ease;pointer-events:none}
+ .preview-fallback svg{width:min(96%,540px);height:94%;max-height:100%;filter:drop-shadow(0 16px 20px rgba(33,83,125,.13))}
+ .geometry-formula{position:absolute;left:19px;top:17px;color:#507c9a;font:italic clamp(12px,1.3vw,15px) Georgia,serif;letter-spacing:.02em}
+ .geometry-art canvas{display:block}
+ .geometry-art{isolation:isolate}
+ .visual-label{position:absolute;bottom:17px;z-index:2;font:600 11px ui-monospace,monospace;letter-spacing:.15em;pointer-events:none}
  .visual-3{background:radial-gradient(circle,#fbfcfd,#dbe6ed)}
  @media(max-width:900px){.visual{min-height:300px}.photo-art,.geometry-art{height:300px}}
  @media(max-width:600px){.visual{min-height:230px}.world-art{height:200px;padding:24px}.world-art strong{font-size:34px}.math-art svg{height:175px}.math-label{font-size:17px}.photo-art,.geometry-art{height:230px}}
