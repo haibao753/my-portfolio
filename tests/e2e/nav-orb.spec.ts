@@ -56,3 +56,23 @@ test('Daily Brief desktop toolbar stays centered with actions at right edge',asy
  await page.evaluate(()=>window.scrollTo(0,0));
  await expect(header).toHaveAttribute('data-orb-closed','false');
 });
+
+test('Home and Daily Brief expanded logos share a common left alignment',async({page})=>{
+ for(const width of [1440,390]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/');
+  const home=await page.locator('.glass-nav .brand span').boundingBox();
+  expect(home).not.toBeNull();
+  await page.goto('/brief/');
+  const nav=page.locator('.glass-nav');
+  await expect(nav).toHaveAttribute('data-orb-ready','true');
+  const brief=await nav.locator('.brand span').boundingBox();
+  expect(brief).not.toBeNull();
+  expect(Math.abs(brief!.x-home!.x)).toBeLessThan(2);
+  await page.evaluate(()=>window.scrollTo(0,650));
+  await expect(nav).toHaveAttribute('data-orb-closed','true');
+  const orb=await nav.boundingBox();
+  const mark=await nav.locator('.brand span').boundingBox();
+  expect(Math.abs((orb!.x+orb!.width/2)-(mark!.x+mark!.width/2))).toBeLessThan(3);
+ }
+});
