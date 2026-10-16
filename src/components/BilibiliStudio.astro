@@ -42,7 +42,7 @@ const videos=[
  const play=async(button:HTMLButtonElement)=>{
   const src=button.dataset.localSrc||"";
   const bvid=button.dataset.biliId||"";
-  if(!stage||!originalLink||!/^\/videos\/[a-z0-9-]+\.mp4$/.test(src))return;
+  if(!stage||!originalLink||!/^\/videos\/[A-Za-z0-9_-]+\.mp4$/.test(src))return;
   // Prevent a nonexistent upload from replacing the player with a broken video.
   const request=++activeRequest;
   say("正在准备站内视频…","Preparing on-site video…");
