@@ -1,0 +1,190 @@
+import {test,expect} from "@playwright/test";
+
+test("Lab 001 shows noncommutative 3D rotations with consistent math",async({page})=>{
+ await page.goto("/lab/rotation/");
+ await expect(page.locator("#rotation-lab h1")).toBeVisible();
+ await expect(page.locator("#rotation-xy")).toBeVisible();
+ await expect(page.locator("#rotation-yx")).toBeVisible();
+ await expect(page.locator("#angle-x-value")).toHaveText("90°");
+ await expect(page.locator("#angle-y-value")).toHaveText("90°");
+ await expect(page.locator("#rotation-xy-vector")).toHaveText("(0.00, -1.00, 0.00)");
+ await expect(page.locator("#rotation-yx-vector")).toHaveText("(1.00, 0.00, 0.00)");
+ await expect(page.locator("#rotation-difference")).not.toHaveText("0.00");
+ await page.locator('[data-rotation-step="0"]').click();
+ await expect(page.locator("#rotation-xy-vector")).toHaveText("(0.00, 0.00, 1.00)");
+ await expect(page.locator("#rotation-yx-vector")).toHaveText("(0.00, 0.00, 1.00)");
+ await expect(page.locator("#rotation-difference")).toHaveText("0.00");
+ await page.locator('[data-rotation-step="1"]').click();
+ await expect(page.locator("#rotation-step-explanation")).toContainText("第一步");
+ await expect(page.locator("#rotation-difference")).not.toHaveText("0.00");
+ await page.locator('[data-rotation-step="2"]').click();
+ await expect(page.locator('[data-rotation-step="2"]')).toHaveAttribute("aria-pressed","true");
+ await page.locator("#rotation-overlay-toggle").click();
+ await expect(page.locator("#rotation-overlay-panel")).toBeVisible();
+ await expect(page.locator("#rotation-overlay-toggle")).toHaveAttribute("aria-expanded","true");
+ await page.locator("#rotation-overlay-toggle").click();
+ await expect(page.locator("#rotation-overlay-panel")).toBeHidden();
+ await page.locator("#angle-x").evaluate((el:HTMLInputElement)=>{el.value="0";el.dispatchEvent(new Event("input",{bubbles:true}));});
+ await expect(page.locator("#rotation-difference")).toHaveText("0.00");
+ await page.locator("#rotation-reset").click();
+ await expect(page.locator("#angle-x-value")).toHaveText("90°");
+ await expect(page.locator("#rotation-difference")).not.toHaveText("0.00");
+ await expect(page.locator('[data-rotation-step="2"]')).toHaveAttribute("aria-pressed","true");
+ await page.locator(".preset-details summary").click();
+ await expect(page.locator(".preset-details")).toHaveAttribute("open","");
+await page.locator('[data-rotation-preset="same"]').click();
+ await expect(page.locator("#angle-x-value")).toHaveText("0°");
+ await expect(page.locator("#rotation-difference")).toHaveText("0.00");
+ await page.locator('[data-rotation-preset="different"]').click();
+ await expect(page.locator("#angle-x-value")).toHaveText("90°");
+ await expect(page.locator("#rotation-difference")).not.toHaveText("0.00");
+});
+
+test("Lab 001 remains usable on a 390px phone and camera does not change math",async({page},testInfo)=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/lab/rotation/");
+ await expect(page.locator("#rotation-xy")).toBeVisible();
+ await expect(page.locator("#rotation-yx")).toBeVisible();
+ await page.locator("#rotation-overlay-toggle").click();
+ await expect(page.locator("#rotation-overlay")).toBeVisible();
+ const before=await page.locator("#rotation-xy-vector").textContent();
+ await page.locator("#rotation-camera-left").click();
+ await expect(page.locator("#rotation-xy-vector")).toHaveText(before||"");
+ const overlayBox=await page.locator("#rotation-overlay").boundingBox();
+ expect(overlayBox?.width).toBeGreaterThan(280);
+ const check=await page.evaluate(()=>({
+  body:document.documentElement.scrollWidth,viewport:window.innerWidth,
+  canvases:[...document.querySelectorAll<HTMLCanvasElement>("#rotation-lab canvas")].map(x=>x.getBoundingClientRect().width)
+ }));
+ expect(check.body).toBeLessThanOrEqual(check.viewport+1);
+ expect(check.canvases.every(w=>w>250&&w<check.viewport)).toBe(true);
+ // Keep stable visual baselines for mobile-first design review, not just green CI.
+ await page.locator(".compare-grid").screenshot({path:testInfo.outputPath("lab-001-mobile-comparison.png")});
+ await page.locator("#rotation-overlay-panel").screenshot({path:testInfo.outputPath("lab-001-mobile-overlay.png")});
+});
+
+test("Lab 001 explanation is available without canvas graphics",async({page})=>{
+ await page.addInitScript(()=>{
+  const native=HTMLCanvasElement.prototype.getContext;
+  HTMLCanvasElement.prototype.getContext=function(this:HTMLCanvasElement,type,...rest){
+   if(type==="2d")return null;
+   return native.call(this,type,...rest);
+  } as typeof HTMLCanvasElement.prototype.getContext;
+ });
+ await page.goto("/lab/rotation/");
+ await expect(page.locator("#rotation-xy-vector")).toHaveText("(0.00, -1.00, 0.00)");
+ await expect(page.locator("#rotation-yx-vector")).toHaveText("(1.00, 0.00, 0.00)");
+ await expect(page.locator("#rotation-note")).toContainText("旋转顺序");
+});
+
+test("Lab 001 bilingual, keyboard stage controls and reduced-motion experience",async({page})=>{
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await page.goto("/lab/rotation/");
+ const stage=page.locator('[data-rotation-step="0"]');
+ await stage.focus();await page.keyboard.press("Enter");
+ await expect(stage).toHaveAttribute("aria-pressed","true");
+ await page.locator("#rotation-overlay-toggle").click();
+ await expect(page.locator("#rotation-overlay")).toBeVisible();
+ await page.locator("[data-language-toggle]").click();
+ await expect(page.locator("#rotation-step-explanation")).toContainText("Start");
+ await page.locator('[data-rotation-step="2"]').click();
+ await expect(page.locator("#rotation-step-explanation")).toContainText("Step 2");
+});
+
+test("Lab 001 replays two mathematically valid stages and can be interrupted",async({page})=>{
+ const errors:string[]=[];
+ page.on("pageerror",error=>errors.push(error.message));
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/lab/rotation/");
+ const replay=page.locator("#rotation-replay");
+ const stop=page.locator("#rotation-stop");
+ await replay.click();
+ await expect(stop).toBeVisible();
+ await expect(page.locator('[data-rotation-step="0"]')).toHaveAttribute("aria-pressed","true");
+ await expect(page.locator('[data-rotation-step="2"]')).toHaveAttribute("aria-pressed","true",{timeout:8000});
+ await expect(stop).toBeHidden();
+ await expect(page.locator("#rotation-xy-vector")).toHaveText("(0.00, -1.00, 0.00)");
+ await expect(page.locator("#rotation-yx-vector")).toHaveText("(1.00, 0.00, 0.00)");
+ await replay.click();
+ await expect(stop).toBeVisible();
+ await stop.click();
+ await expect(stop).toBeHidden();
+ await expect(page.locator('[data-rotation-step="0"]')).toHaveAttribute("aria-pressed","true");
+ // A manual stage choice starts a new bounded animation, independent of the cancelled replay.
+ await page.locator('[data-rotation-step="1"]').click();
+ await expect(page.locator('[data-rotation-step="1"]')).toHaveAttribute("aria-pressed","true",{timeout:5000});
+ await page.locator("#rotation-reset").click();
+ await expect(page.locator('[data-rotation-step="2"]')).toHaveAttribute("aria-pressed","true");
+ expect(errors).toEqual([]);
+});
+
+test("Lab 001 honours reduced motion during replay",async({page})=>{
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await page.goto("/lab/rotation/");
+ await page.locator('[data-rotation-step="0"]').click();
+ await expect(page.locator("#rotation-difference")).toHaveText("0.00");
+ await page.locator("#rotation-replay").click();
+ await expect(page.locator('[data-rotation-step="2"]')).toHaveAttribute("aria-pressed","true");
+ await expect(page.locator("#rotation-stop")).toBeHidden();
+ await expect(page.locator("#rotation-xy-vector")).toHaveText("(0.00, -1.00, 0.00)");
+});
+
+test("Lab 001 keeps cube axes inside mobile canvases at extreme camera angles",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/lab/rotation/");
+ // Verify actual painted pixels stay clear of the edge, not just DOM bounding boxes.
+ const noClip=async()=>{
+  const data=await page.evaluate(()=>{
+   const ids=["rotation-xy","rotation-yx","rotation-overlay"];
+   return ids.map(id=>{
+    const canvas=document.getElementById(id) as HTMLCanvasElement;
+    const context=canvas.getContext("2d");
+    if(!context)return {id,interior:0,border:0};
+    const {width:w,height:h}=canvas;
+    const pixels=context.getImageData(0,0,w,h).data;
+    const inset=Math.min(18,Math.floor(Math.min(w,h)*.048));
+    let interior=0,border=0;
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+     const alpha=pixels[(y*w+x)*4+3];
+     if(alpha<24)continue;
+     if(x<inset||x>=w-inset||y<inset||y>=h-inset)border++;
+     else interior++;
+    }
+    return {id,interior,border};
+   });
+  });
+  for(const item of data){expect(item.interior, item.id+" was not drawn").toBeGreaterThan(1000);expect(item.border,item.id+" is clipped").toBe(0);}
+ };
+ await page.locator("#rotation-overlay-toggle").click();
+ await expect(page.locator("#rotation-overlay")).toBeVisible();
+ await noClip();
+ for(let i=0;i<4;i++)await page.locator("#rotation-camera-right").click();
+ await noClip();
+ await page.locator("#angle-x").evaluate((el:HTMLInputElement)=>{el.value="180";el.dispatchEvent(new Event("input",{bubbles:true}));});
+ await page.locator("#angle-y").evaluate((el:HTMLInputElement)=>{el.value="180";el.dispatchEvent(new Event("input",{bubbles:true}));});
+ await noClip();
+});
+
+test("Lab 001 mobile workbench keeps controls and comparison close without stacking cards",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/lab/rotation/");
+ const rail=page.locator("#rotation-comparison");
+ const a=page.locator(".outcome").first(),b=page.locator(".outcome").last();
+ const aBox=await a.boundingBox(),bBox=await b.boundingBox(),canvas=await page.locator("#rotation-xy").boundingBox();
+ expect(aBox).not.toBeNull();expect(bBox).not.toBeNull();expect(canvas).not.toBeNull();
+ expect(Math.abs(aBox!.y-bBox!.y)).toBeLessThan(2);
+ expect(canvas!.y,"first experiment needs to start in the first phone viewport").toBeLessThan(844);
+ expect((await rail.evaluate(el=>el.scrollWidth-el.clientWidth))).toBeGreaterThan(150);
+ await expect(page.locator('[data-rotation-view="0"]')).toHaveAttribute("aria-pressed","true");
+ await page.locator('[data-rotation-view="1"]').click();
+ await expect.poll(()=>rail.evaluate(el=>el.scrollLeft)).toBeGreaterThan(150);
+ await expect(page.locator('[data-rotation-view="1"]')).toHaveAttribute("aria-pressed","true");
+ await page.locator('[data-rotation-view="0"]').click();
+ await expect.poll(()=>rail.evaluate(el=>el.scrollLeft)).toBeLessThan(4);
+ await page.locator(".math-details summary").click();
+ await expect(page.locator(".math-details")).toHaveAttribute("open","");
+ await expect(page.locator(".math-line")).toBeVisible();
+ await page.locator(".math-details summary").click();
+ await expect(page.locator(".math-line")).toBeHidden();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(391);
+});
