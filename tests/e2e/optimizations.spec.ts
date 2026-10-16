@@ -74,3 +74,17 @@ test('runtime optical canvas stays out of layout and cannot grow the header', as
  await page.evaluate(()=>window.dispatchEvent(new Event('scroll')));
  await expect.poll(()=>nav.evaluate(el=>el.getBoundingClientRect().height)).toBeLessThan(100);
 });
+
+test('Daily Brief source disclosure expands inline without a paywall redirect',async({page})=>{
+ await page.goto('/brief/');
+ await expect(page.locator('.news-card').first()).toBeVisible();
+ const card=page.locator('.news-card').first();
+ const disclosure=card.locator('details.news-expanded');
+ await expect(disclosure).toBeVisible();
+ await expect(disclosure).not.toHaveAttribute('open','');
+ await disclosure.locator('summary').click();
+ await expect(disclosure).toHaveAttribute('open','');
+ await expect(card.locator('.news-disclosure-note')).toBeVisible();
+ await expect(page).toHaveURL(url=>url.pathname==='/brief/');
+ await expect(card.locator('.news-source a')).toHaveAttribute('target','_blank');
+});
