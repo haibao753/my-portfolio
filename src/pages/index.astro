@@ -15,6 +15,7 @@ import {projects,contact} from "../data/site";
    <p class="eyebrow"><span data-locale="zh">精选 / 2026</span><span data-locale="en">Selected / 2026</span></p>
    <h2 id="works-title"><span data-locale="zh">一些有趣的尝试。</span><span data-locale="en">Things worth exploring.</span></h2>
    <p><span data-locale="zh">数学、资讯、影像和代码，都是认识世界的不同方法。</span><span data-locale="en">Math, news, images and code are different ways of seeing the world.</span></p>
+   <a href="/lab/" class="lab-invite"><span data-locale="zh">进入知识实验室</span><span data-locale="en">Visit the Knowledge Lab</span> <span aria-hidden="true">↗</span></a>
   </div>
   <div class="projects">{projects.map((project,index)=><ProjectCard project={project} index={index} />)}</div>
  </section>
@@ -41,6 +42,8 @@ import {projects,contact} from "../data/site";
  <section class="finale wrap" aria-label="J.H. LAB"><FinaleArtwork /></section>
 </BaseLayout>
 <style>
+ .lab-invite{display:inline-flex;gap:11px;align-items:center;margin-top:4px;padding:9px 0;border-bottom:1px solid var(--fg);font-size:14px;font-weight:650;min-height:42px}
+ .lab-invite:hover{color:var(--accent)}
  .works{padding-bottom:110px}.intro{text-align:center;margin-bottom:60px}.intro h2{font-size:clamp(39px,5.5vw,74px);line-height:1.2;letter-spacing:-.065em;margin:16px 0}.intro>p:last-child{color:var(--muted);font-size:16px}
  .projects{display:grid;gap:clamp(32px,5vw,75px)}
  .contact{padding-block:clamp(90px,10vw,150px);display:grid;grid-template-columns:1.2fr 1fr;gap:50px;border-top:1px solid var(--stroke)}
