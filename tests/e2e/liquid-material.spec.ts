@@ -45,7 +45,12 @@ test('liquid lighting redraws without re-uploading the scene and follows theme c
  await expect(page.locator('.brand')).toHaveCSS('color','rgb(21, 32, 45)');
  const box=(await nav.boundingBox())!;
  await page.mouse.move(box.x+box.width*.72,box.y+box.height*.4);
- await expect.poll(()=>nav.evaluate(el=>(el as HTMLElement).style.getPropertyValue('--glass-light-x'))).toBe('72.0%');
+ await expect.poll(async()=>page.evaluate(async()=>{
+  const {glassPointerFor}=await import('/assets/glass-pointer-light.js');
+  const nav=document.querySelector('.glass-nav')!;
+  const light=glassPointerFor(nav);
+  return light.pointerLightActive===1&&Math.abs(light.pointerLightPosition[0]-.72)<.04;
+ })).toBe(true);
  expect(Number(await nav.getAttribute('data-optical-uploaded-pixels'))).toBe(before);
  const uploads=Number(await nav.getAttribute('data-optical-texture-full'));
  await page.locator('[data-theme-toggle]').click();
