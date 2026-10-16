@@ -3,22 +3,18 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 <BaseLayout title="全球资讯观察站 — J.H. LAB" description="每天以中文整理全球议题、人工智能与前沿科学资讯，保留可信的原始来源。">
  <section class="brief-hero wrap" id="top" aria-labelledby="brief-heading">
-  <p class="eyebrow"><span data-locale="zh">全球资讯 · 每日观察</span><span data-locale="en">GLOBAL OBSERVATIONS / DAILY</span></p>
-  <h1 id="brief-heading"><span data-locale="zh">全球资讯<br/>观察站</span><span data-locale="en">The World,<br/>in Focus.</span></h1>
-  <div class="hero-panel">
-   <p><span data-locale="zh"><strong>世界很大，值得仔细阅读。</strong>穿透日常信息流，连接中国与全球。每天追踪公共议题、AI 与科研进展，保留原始报道链接。</span>
-      <span data-locale="en"><strong>A wider view of the world.</strong> Selected global affairs, AI and scientific research, with source links. Article summaries remain in Chinese.</span></p>
-   <div class="issue-summary">
-    <span class="eyebrow"><span class="live-dot"></span><span data-locale="zh">本期简报</span><span data-locale="en">LATEST ISSUE</span></span>
-    <strong id="headlineDate">—</strong>
-    <small id="total" aria-live="polite">—</small>
+  <div class="brief-masthead">
+   <div><p class="eyebrow"><span data-locale="zh">J.H. LAB / 每日发现</span><span data-locale="en">J.H. LAB / DAILY DISCOVERIES</span></p>
+    <h1 id="brief-heading"><span data-locale="zh">今日值得读</span><span data-locale="en">Worth Reading Today</span></h1>
+   </div>
+   <div class="issue-summary" aria-label="当前简报">
+    <strong id="headlineDate">—</strong><small id="total" aria-live="polite">—</small>
    </div>
   </div>
-  <div class="hero-foot"><span><span data-locale="zh">每日更新 · 北京时间</span><span data-locale="en">Updated daily · Beijing time</span></span><a href="#issues-section"><span data-locale="zh">向下阅读 ↓</span><span data-locale="en">Explore ↓</span></a></div>
  </section>
  <section class="news wrap" id="issues-section" aria-labelledby="archive-heading">
   <div class="news-heading">
-   <div><p class="eyebrow"><span data-locale="zh">资讯归档</span><span data-locale="en">THE ARCHIVE</span></p><h2 id="archive-heading"><span data-locale="zh">每日观察。</span><span data-locale="en">Daily Observations.</span></h2></div>
+   <div><h2 id="archive-heading"><span data-locale="zh">全球精选</span><span data-locale="en">Global Highlights</span></h2></div>
    <p><span data-locale="zh">从事实出发，寻找理解事件的线索。按主题筛选，或者回看之前的期数。</span><span data-locale="en">Explore each day's selected stories by topic or date.</span></p>
   </div>
   <div class="toolbar">
@@ -90,4 +86,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .disclaimer{max-width:800px;color:var(--muted);font-size:12px;line-height:1.9;margin:55px 0 0}
  @media(max-width:980px){.stories{grid-template-columns:repeat(2,minmax(0,1fr))}}
  @media(max-width:760px){.date-controls{width:100%;justify-content:space-between}.date-picker{flex-wrap:wrap}.hero-panel{grid-template-columns:1fr;gap:22px}.issue-summary{border-left:0;border-top:1px solid var(--stroke);padding:22px 0 0}.news-heading{display:block}.news-heading>p{margin-top:18px}.stories{grid-template-columns:1fr}.news{padding-bottom:95px}}
+
+ /* The Astro route is the production page: a compact masthead puts news first. */
+ .brief-hero{padding-top:14px;padding-bottom:14px;border-bottom:1px solid var(--stroke)}
+ .brief-masthead{display:flex;justify-content:space-between;align-items:center;gap:20px}
+ .brief-hero .eyebrow{margin:0 0 4px;text-align:left}
+ .brief-hero h1{font-size:clamp(24px,3.4vw,40px);line-height:1.2;letter-spacing:-.055em;margin:0;text-align:left;font-weight:750}
+ .issue-summary{border-left:0;padding:0;gap:2px;align-items:flex-end;flex-shrink:0}
+ .issue-summary strong{font-size:14px;line-height:1.3}.issue-summary small{font-size:11px}
+ .news{padding-top:16px}.news-heading{margin:0 0 8px}.news-heading h2{font-size:clamp(18px,2.6vw,28px);margin:0}
+ .news-heading>p{display:none}.toolbar{padding:8px 0}.status{margin:10px 0;font-size:11px}
+ @media(max-width:760px){.brief-hero{padding-top:12px;padding-bottom:12px}.brief-hero h1{font-size:25px}.brief-hero .eyebrow{font-size:10px}.issue-summary strong{font-size:12px}.issue-summary small{font-size:10px}.news{padding-top:11px}.news-heading{margin-bottom:7px}.news-heading h2{font-size:19px}.date-controls{width:auto;justify-content:flex-start}.quick-dates{display:none}.date-picker{gap:5px}.date-picker>span{display:none}.date-picker select{min-height:35px;padding:5px 8px;font-size:11px}.toolbar{gap:7px;flex-direction:column;align-items:flex-start}.filters{gap:6px;max-height:38px;overflow:auto;flex-wrap:nowrap;width:100%;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}:global(.filter-chip){min-height:33px;padding:6px 11px;white-space:nowrap;font-size:11px}.stories{gap:12px}:global(.news-card){padding:18px}:global(.news-card h3){margin:10px 0 9px;font-size:21px}}
 </style>
