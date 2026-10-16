@@ -19,10 +19,14 @@ test('filtering preserves keyboard focus and follows the selected UI language', 
  await filter.press('Enter');
  await expect(filter).toBeFocused();
  await expect(filter).toHaveAttribute('aria-pressed', 'true');
- // After filtering down-page, the toolbar is intentionally an orb.
- // Expand it with the visible logo before using its language control.
- await page.locator('.glass-nav .brand').click();
- await expect.poll(async()=>page.locator('.glass-nav').getAttribute('data-orb-closed')).toBe('false');
+ // Filtering may or may not scroll enough to collapse the toolbar.
+ // Only click its logo when compact: in expanded state the logo links home.
+ const nav=page.locator('.glass-nav');
+ if(await nav.getAttribute('data-orb-closed')==='true'){
+  await nav.locator('.brand').click();
+  await expect(nav).toHaveAttribute('data-orb-closed','false');
+ }
+ await expect(page).toHaveURL(/\\/brief\\/?$/);
  await page.locator('[data-language-toggle]').click();
  await expect(page.locator('#tabs button').first()).toHaveText('All');
  await expect(page.locator('#status')).toContainText('Showing');
