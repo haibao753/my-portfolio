@@ -1,79 +1,31 @@
-/* Brief navigation: a single glass capsule morphs into a reachable logo orb.
-   Driven by scroll direction and a clamped, smoothed progress (0…1). */
-body:has(.issues-section) .site-header.glass-site-header.nav-orb-ready{
- position:fixed!important;
- top:max(10px,env(safe-area-inset-top))!important;
- left:clamp(10px,2.2vw,22px)!important;
- right:auto!important;
- margin:0!important;
- width:var(--orb-width,calc(100vw - 24px))!important;
- height:var(--orb-height,58px)!important;
- max-width:calc(100vw - 20px);
- border-radius:var(--orb-radius,30px)!important;
- overflow:hidden!important;
- transform:translateZ(0);
- will-change:width,height,border-radius;
- -webkit-backdrop-filter:blur(19px) saturate(1.36)!important;
- backdrop-filter:blur(19px) saturate(1.36)!important;
- box-shadow:0 12px 32px rgba(15,23,35,.13),inset 0 1px rgba(255,255,255,.62)!important;
+/* Active Astro navbar, optically continuous compact state */
+.glass-nav[data-orb-ready="true"]{
+ position:sticky;
+ margin-left:clamp(8px,1.2vw,18px);
+ width:calc((100% - 2 * clamp(8px,1.2vw,18px)) * (1 - var(--orb-progress,0)) + 54px * var(--orb-progress,0));
+ min-height:calc(58px - 4px * var(--orb-progress,0));
+ border-radius:calc(30px + 24px * var(--orb-progress,0))!important;
+ overflow:hidden;
+ transition:none;
 }
-body:has(.issues-section) .nav-orb-ready .header-row{
- position:relative!important;
- width:100%!important;
- max-width:none!important;
- min-width:0!important;
- height:100%!important;
- min-height:0!important;
- padding:0!important;
- display:flex!important;
- align-items:center!important;
- justify-content:space-between!important;
- gap:0!important;
+.glass-nav[data-orb-ready="true"] .nav-inner{
+ width:calc(100vw - 68px);
+ max-width:none;
+ min-height:calc(56px - 2px * var(--orb-progress,0));
+ padding-inline:11px;
+ display:flex;
+ justify-content:space-between;
 }
-body:has(.issues-section) .nav-orb-ready .logo--solo{
- position:relative;
- z-index:4;
- flex:0 0 54px!important;
- width:54px!important;
- height:100%!important;
- min-width:54px!important;
- min-height:0!important;
- display:grid!important;
- place-items:center!important;
- margin:0!important;
- opacity:1!important;
+.glass-nav[data-orb-ready="true"] .brand{width:44px;min-width:44px;justify-content:center;flex-shrink:0}
+.glass-nav[data-orb-ready="true"] :is(.desktop-links,.controls){
+ opacity:calc(1 - min(1,var(--orb-progress,0) * 2.5));
+ transform:translateX(calc(-20px * var(--orb-progress,0))) scale(calc(1 - .18 * var(--orb-progress,0)));
+ pointer-events:auto;
 }
-body:has(.issues-section) .nav-orb-ready .logo .logo-monogram{
- transform:translateY(.5px) scale(var(--orb-logo-scale,1))!important;
-}
-body:has(.issues-section) .nav-orb-ready .header-actions,
-body:has(.issues-section) .nav-orb-ready .glass-primary-nav{
- opacity:var(--orb-content-opacity,1)!important;
- transform:translateX(var(--orb-content-shift,0px)) scale(var(--orb-content-scale,1))!important;
- transform-origin:right center;
- transition:none!important;
-}
-body:has(.issues-section) .nav-orb-ready .header-actions{
- margin-right:clamp(8px,1.6vw,17px)!important;
- flex-shrink:0;
-}
-body:has(.issues-section) .nav-orb-ready .glass-primary-nav{
- margin-inline:auto!important;
-}
-body:has(.issues-section) .nav-orb-ready[data-orb-closed="true"] .header-actions,
-body:has(.issues-section) .nav-orb-ready[data-orb-closed="true"] .glass-primary-nav{
- visibility:hidden!important;
- pointer-events:none!important;
-}
-body:has(.issues-section) .nav-orb-ready .logo--solo:focus-visible{
- outline-offset:-4px!important;border-radius:999px!important;
-}
-body:has(.issues-section) .nav-orb-spacer{height:calc(58px + max(10px,env(safe-area-inset-top)));pointer-events:none}
+.glass-nav[data-orb-closed="true"] :is(.desktop-links,.controls){visibility:hidden;pointer-events:none}
+.glass-nav[data-orb-ready="true"] .desktop-links{margin-inline:auto}
+.glass-nav[data-orb-ready="true"] .controls{margin-left:auto}
 @media(max-width:760px){
- body:has(.issues-section) .site-header.glass-site-header.nav-orb-ready{--glass-bg:rgba(251,252,253,.32)}
+ .glass-nav[data-orb-ready="true"] .nav-inner{width:calc(100vw - 40px)}
 }
-@media(prefers-reduced-motion:reduce){
- body:has(.issues-section) .site-header.glass-site-header.nav-orb-ready{
-  will-change:auto!important;transition:none!important
- }
-}
+@media(prefers-reduced-motion:reduce){.glass-nav[data-orb-ready="true"]{will-change:auto}}
