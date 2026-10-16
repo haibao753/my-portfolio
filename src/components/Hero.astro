@@ -51,7 +51,7 @@ import CuriositySculpture from "./CuriositySculpture.astro";
      glyph.className = "hero-title-glyph";
      glyph.setAttribute("aria-hidden", "true");
      glyph.dataset.glyph = character;
-     const delay = beats[count] ?? beats[beats.length-1] + (count-beats.length+1)*110;
+     const delay = 220 + (beats[count] ?? beats[beats.length-1] + (count-beats.length+1)*110);
      glyph.style.setProperty("--glyph-delay", `${delay}ms`);
      // The occasional glint is a separate pseudo-element; final letters stay solid.
      if (count === 2 || count === 7 || count === 17) {
@@ -91,7 +91,7 @@ import CuriositySculpture from "./CuriositySculpture.astro";
  @keyframes hero-pixel-arrive{0%{opacity:0;transform:translate3d(0,8px,0) scale(.92);text-shadow:3px 0 var(--accent),-3px 0 #45cbd8}17%{opacity:.9;transform:translate3d(2px,-2px,0) scale(1.025)}30%{opacity:.07;transform:translate3d(-2px,1px,0)}48%{opacity:1;transform:translate3d(1px,-1px,0);text-shadow:-2px 0 #48c8dc}61%{opacity:.2;transform:translate3d(0,2px,0)}81%{opacity:1;transform:none;text-shadow:1px 0 var(--accent)}100%{opacity:1;transform:none;text-shadow:none}}
  @keyframes hero-pixel-ghost{0%,12%,35%,63%,100%{opacity:0;transform:translateX(0)}18%,52%,77%{opacity:.8;transform:translateX(3px)}}
  @keyframes hero-pixel-glint{0%,1.5%,3%,100%{opacity:0}1.8%,2.2%{opacity:.65}2.5%{opacity:.16}}
- @media(prefers-reduced-motion:reduce){.hero-title--pixels .hero-title-glyph{animation:none!important;opacity:1;transform:none}.hero-title-glyph::before,.hero-title-glyph::after{display:none!important}}
+ @media(prefers-reduced-motion:reduce){:global(.hero-title--pixels .hero-title-glyph){animation:none!important;opacity:1;transform:none}:global(.hero-title-glyph::before),:global(.hero-title-glyph::after){display:none!important}}
  .hero-title-line{display:block;overflow:visible;white-space:nowrap}
  .hero-title [data-locale]{width:100%}
  .hero-title .hero-title-line:nth-child(2){margin-top:.018em}
