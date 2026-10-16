@@ -162,6 +162,26 @@ function initialize(){
  let currentFrame:{a:Mat3;b:Mat3}|null=null;
  if(!first||!second||!ax||!ay||!xval||!yval||!v1||!v2||!difference||!note)return;
  const isEn=()=>document.documentElement.lang==="en";
+ // The mobile comparison is a horizontally scrollable native region, not an
+ // overlay or a second graphics pipeline. Buttons and swipes stay synchronized.
+ const comparison=root.querySelector<HTMLElement>("#rotation-comparison");
+ const viewButtons=[...root.querySelectorAll<HTMLButtonElement>("[data-rotation-view]")];
+ const markView=(index:number)=>viewButtons.forEach(button=>{
+  button.setAttribute("aria-pressed",String(Number(button.dataset.rotationView)===index));
+ });
+ viewButtons.forEach(button=>button.addEventListener("click",()=>{
+  const index=Number(button.dataset.rotationView);
+  markView(index);
+  if(comparison)comparison.scrollTo({
+   left:index===0?0:comparison.scrollWidth-comparison.clientWidth,
+   behavior:reduced.matches?"instant":"smooth"
+  });
+ }));
+ comparison?.addEventListener("scroll",()=>{
+  const end=comparison.scrollWidth-comparison.clientWidth;
+  if(end>3)markView(comparison.scrollLeft/end>.5?1:0);
+ },{passive:true});
+
  const updatePlaybackControls=()=>{
   if(stop)stop.hidden=!playing;
   replay?.setAttribute("aria-disabled",String(playing));
