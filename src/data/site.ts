@@ -30,8 +30,9 @@ export const projects: Project[] = [
     category:{zh:"02 / 数学影像",en:"02 / Mathematics"},
     title:{zh:"让抽象数学可见",en:"Making Math Visible"},
     description:{zh:"用 Manim 和影像，让数学、几何与算法中的奇妙结构动起来。",en:"Animations that bring mathematical structures, geometry and algorithms to life."},
-    href:"https://space.bilibili.com/1572685586",
-    action:{zh:"观看数学视频",en:"Watch the Videos"}
+    href:"/#mathematics-video",
+    action:{zh:"站内观看数学视频",en:"Watch Videos Here"},
+    extra:[{href:"https://space.bilibili.com/1572685586",label:{zh:"浏览 B 站全部投稿",en:"All videos on Bilibili"}}]
   },
   {
     id:"gallery",
