@@ -67,7 +67,13 @@ test('offscreen decoration stops and live glass receives current sculpture pixel
   scrollTo({top:scrollY+rect.top+30,behavior:'instant'});
  });
  await expect.poll(()=>page.locator('.glass-nav').getAttribute('data-optical-media-frames')).not.toBeNull();
- await page.locator('#projects').scrollIntoViewIfNeeded();
+ // The compact mobile hero can remain partly visible when #projects enters
+ // view. Test the actual offscreen condition, not an unrelated section position.
+ await page.evaluate(()=>{
+  const box=document.querySelector('[data-curiosity]')!.getBoundingClientRect();
+  scrollTo({top:scrollY+box.bottom+180,behavior:'instant'});
+ });
+ await expect.poll(()=>sculpture.evaluate(node=>node.getBoundingClientRect().bottom)).toBeLessThan(0);
  await expect(sculpture).toHaveAttribute('data-motion','sleeping');
  const canvas=sculpture.locator('canvas');
  await page.waitForTimeout(120);
