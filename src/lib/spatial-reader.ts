@@ -20,7 +20,7 @@ function init(){
  viewport.prepend(canvas);gl=canvas.getContext("webgl",{alpha:true,antialias:true,powerPreference:"low-power"});
  if(!gl){canvas.remove();canvas=null;return false;}
  try{
-  const vs=compile(gl,gl.VERTEX_SHADER,"attribute vec3 p; attribute float s; uniform mat4 m; varying float kind; void main(){ gl_Position=m*vec4(p,1.0); gl_PointSize=s; kind=s; }");
+  const vs=compile(gl,gl.VERTEX_SHADER,"attribute vec3 p; attribute float s; uniform mat4 m; varying float kind; void main(){ float depth=max(1.0,m[3][0]-p.z*.32); gl_Position=vec4(p.x*m[0][0]/depth,p.y*m[1][1]/depth,0.0,1.0); gl_PointSize=s; kind=s; }");
   const fs=compile(gl,gl.FRAGMENT_SHADER,"precision mediump float; varying float kind; void main(){ if(kind>1.0){ vec2 p=gl_PointCoord-.5; float d=length(p); if(d>.48)discard; gl_FragColor=vec4(.28,.52,.92,1.0-smoothstep(.28,.48,d)); }else{ gl_FragColor=vec4(.37,.52,.70,.42); }}");
   program=gl.createProgram();if(!program)throw Error("WebGL program unavailable");
   gl.attachShader(program,vs);gl.attachShader(program,fs);gl.linkProgram(program);
@@ -45,13 +45,13 @@ function draw(){
  const pos=positions(),aspect=w/h,scale=Math.min(w,h)*.72;
  projection=pos.map(([x,y,z])=>{const depth=zoom-z*.32;return [w/2+x*scale/depth,h/2-y*scale/depth,depth];});
  // The same perspective projection used for vertex rendering and hit testing.
- const matrix=new Float32Array([1/zoom/aspect,0,0,0,0,1/zoom,0,0,0,0,0,0,0,0,0,1]);
+ const matrix=new Float32Array([2*scale/w,0,0,zoom,0,2*scale/h,0,0,0,0,0,0,0,0,0,1]);
  const verts:number[]=[];
  const categoryGroup=new Map<string,number[]>();
  points.forEach((p,i)=>categoryGroup.set(p.topic,[...(categoryGroup.get(p.topic)||[]),i]));
- for(const ids of categoryGroup.values())for(let i=1;i<ids.length;i++){const a=pos[ids[i-1]],b=pos[ids[i]];verts.push(a[0],a[1],0,1,b[0],b[1],0,1);}
+ for(const ids of categoryGroup.values())for(let i=1;i<ids.length;i++){const a=pos[ids[i-1]],b=pos[ids[i]];verts.push(a[0],a[1],a[2],1,b[0],b[1],b[2],1);}
  const edgeCount=verts.length/4;
- for(let i=0;i<pos.length;i++){const p=pos[i];verts.push(p[0],p[1],0,i===selected?22*dpr:12*dpr);}
+ for(let i=0;i<pos.length;i++){const p=pos[i];verts.push(p[0],p[1],p[2],i===selected?22*dpr:12*dpr);}
  gl.useProgram(program);gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(verts),gl.DYNAMIC_DRAW);
  gl.vertexAttribPointer(positionLoc,3,gl.FLOAT,false,16,0);gl.enableVertexAttribArray(positionLoc);
  gl.vertexAttribPointer(sizeLoc,1,gl.FLOAT,false,16,12);gl.enableVertexAttribArray(sizeLoc);
