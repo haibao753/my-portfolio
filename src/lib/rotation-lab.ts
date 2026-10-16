@@ -61,7 +61,8 @@ function draw(canvas:HTMLCanvasElement,m:Mat3){
  const pixelW=Math.max(1,Math.round(w*dpr)),pixelH=Math.max(1,Math.round(h*dpr));
  if(canvas.width!==pixelW||canvas.height!==pixelH){canvas.width=pixelW;canvas.height=pixelH;}
  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
- const size=Math.min(w,h)*.4;
+ // Fit the full cube *and* its local axes/labels within a mobile canvas.
+ const size=Math.max(14,Math.min(w*.34,(h-60)/3.25));
  const project=(v:Vec3)=>{
   const p=view(v);const k=3.1/(3.1-p[2]*.21);
   return {x:w*.5+p[0]*size*k,y:h*.5-p[1]*size*k,z:p[2]};
@@ -84,7 +85,9 @@ function draw(canvas:HTMLCanvasElement,m:Mat3){
   const end=project(apply(m,axis));
   ctx.beginPath();ctx.moveTo(o.x,o.y);ctx.lineTo(end.x,end.y);ctx.lineWidth=2.8;ctx.strokeStyle=color;ctx.stroke();
   ctx.fillStyle=color;ctx.beginPath();ctx.arc(end.x,end.y,4,0,Math.PI*2);ctx.fill();
-  ctx.fillText(label,end.x+9,end.y-9);
+  const labelX=Math.max(18,Math.min(w-18,end.x+10));
+  const labelY=Math.max(16,Math.min(h-16,end.y-11));
+  ctx.fillText(label,labelX,labelY);
  }
  // Three labelled face-centre stickers stay on the cube; hide back-facing stickers.
  for(const [normal,label,fill] of [
@@ -104,7 +107,8 @@ function drawOverlay(canvas:HTMLCanvasElement,a:Mat3,b:Mat3){
  const pixelW=Math.max(1,Math.round(w*dpr)),pixelH=Math.max(1,Math.round(h*dpr));
  if(canvas.width!==pixelW||canvas.height!==pixelH){canvas.width=pixelW;canvas.height=pixelH;}
  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
- const size=Math.min(w,h)*.41;
+ // Overlay must reserve room for axis-tip arrows and labels on all sides.
+ const size=Math.max(14,Math.min(w*.32,(h-64)/3.35));
  const project=(v:Vec3)=>{const p=view(v),k=3.1/(3.1-p[2]*.21);return [w*.5+p[0]*size*k,h*.5-p[1]*size*k] as const;};
  const edges:[[number,number],...Array<[number,number]>]=[[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,6],[3,7],[4,5],[4,6],[5,7],[6,7]];
  // The outline of a cube can coincide after distinct 90-degree rotations
@@ -129,7 +133,9 @@ function drawOverlay(canvas:HTMLCanvasElement,a:Mat3,b:Mat3){
    ctx.closePath();ctx.fillStyle=color;ctx.fill();
    ctx.font="700 12px system-ui";ctx.textAlign="center";ctx.textBaseline="middle";
    const ox=series==="A"?-14:14,oy=series==="A"?-13:14;
-   ctx.fillText(series+"·"+label,tip[0]+ox,tip[1]+oy);
+   const lx=Math.max(24,Math.min(w-24,tip[0]+ox));
+   const ly=Math.max(16,Math.min(h-16,tip[1]+oy));
+   ctx.fillText(series+"·"+label,lx,ly);
   }
  }
 }
