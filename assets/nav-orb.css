@@ -1,31 +1,73 @@
-/* Active Astro navbar, optically continuous compact state */
+/* Small, fixed footprint while reading. Only transition at state changes:
+   no per-scroll layout/style invalidation or canvas resizing on each frame. */
 .glass-nav[data-orb-ready="true"]{
- position:sticky;
+ --orb-size:54px;
+ width:calc(100% - 2 * clamp(8px,1.2vw,18px));
+ height:58px;
+ min-height:58px;
  margin-left:clamp(8px,1.2vw,18px);
- width:calc((100% - 2 * clamp(8px,1.2vw,18px)) * (1 - var(--orb-progress,0)) + 54px * var(--orb-progress,0));
- min-height:calc(58px - 4px * var(--orb-progress,0));
- border-radius:calc(30px + 24px * var(--orb-progress,0))!important;
- overflow:hidden;
- transition:none;
+ border-radius:30px!important;
+ overflow:hidden!important;
+ transition:width 360ms cubic-bezier(.22,1,.36,1),border-radius 360ms cubic-bezier(.22,1,.36,1),box-shadow .36s ease!important;
+}
+.glass-nav[data-orb-ready="true"][data-orb-closed="true"]{
+ width:var(--orb-size);
+ border-radius:999px!important;
 }
 .glass-nav[data-orb-ready="true"] .nav-inner{
- width:calc(100vw - 68px);
- max-width:none;
- min-height:calc(56px - 2px * var(--orb-progress,0));
- padding-inline:11px;
- display:flex;
- justify-content:space-between;
+ position:relative!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:space-between!important;
+ gap:0!important;
+ width:calc(100vw - 2 * clamp(8px,1.2vw,18px))!important;
+ max-width:none!important;
+ height:56px!important;
+ min-height:56px!important;
+ margin:0!important;
+ padding:0!important;
 }
-.glass-nav[data-orb-ready="true"] .brand{width:44px;min-width:44px;justify-content:center;flex-shrink:0}
+.glass-nav[data-orb-ready="true"] .brand{
+ position:absolute!important;
+ top:0!important;left:0!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ box-sizing:border-box!important;
+ width:52px!important;min-width:52px!important;
+ height:56px!important;min-height:56px!important;
+ margin:0!important;padding:0!important;
+ transform:none!important;
+ flex:none!important;z-index:3;
+}
+.glass-nav[data-orb-ready="true"] .brand span{
+ margin:0!important;
+ transform:none!important;
+}
+.glass-nav[data-orb-ready="true"] .desktop-links{
+ margin-inline:auto!important;
+ padding-left:64px!important;
+}
+.glass-nav[data-orb-ready="true"] .controls{margin-left:auto!important;margin-right:13px!important}
 .glass-nav[data-orb-ready="true"] :is(.desktop-links,.controls){
- opacity:calc(1 - min(1,var(--orb-progress,0) * 2.5));
- transform:translateX(calc(-20px * var(--orb-progress,0))) scale(calc(1 - .18 * var(--orb-progress,0)));
- pointer-events:auto;
+ transition:opacity 180ms ease,transform 240ms ease!important;
 }
-.glass-nav[data-orb-closed="true"] :is(.desktop-links,.controls){visibility:hidden;pointer-events:none}
-.glass-nav[data-orb-ready="true"] .desktop-links{margin-inline:auto}
-.glass-nav[data-orb-ready="true"] .controls{margin-left:auto}
-@media(max-width:760px){
- .glass-nav[data-orb-ready="true"] .nav-inner{width:calc(100vw - 40px)}
+.glass-nav[data-orb-ready="true"][data-orb-closed="true"] :is(.desktop-links,.controls){
+ opacity:0!important;
+ transform:translateX(-14px) scale(.9)!important;
+ visibility:hidden!important;pointer-events:none!important;
 }
-@media(prefers-reduced-motion:reduce){.glass-nav[data-orb-ready="true"]{will-change:auto}}
+.glass-nav[data-orb-ready="true"][data-orb-closed="true"] .brand:focus-visible{
+ outline:2px solid var(--accent);outline-offset:-5px;border-radius:999px;
+}
+/* Avoid expensive DOM scene rasterization during nav width interpolation. Glass
+   remains translucent via browser compositor while GPU canvas is temporarily hidden. */
+.glass-nav[data-orb-transitioning="true"] .live-optical-layer,
+.glass-nav[data-orb-closed="true"] .live-optical-layer{
+ visibility:hidden!important;
+}
+@media(max-width:1180px){
+ .glass-nav[data-orb-ready="true"] .nav-inner{justify-content:flex-end!important}
+ .glass-nav[data-orb-ready="true"] .controls{margin-left:auto!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .glass-nav[data-orb-ready="true"],.glass-nav[data-orb-ready="true"] :is(.desktop-links,.controls){transition:none!important}
+}
