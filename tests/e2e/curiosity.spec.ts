@@ -1,8 +1,8 @@
 import {test,expect} from '@playwright/test';
 
-test('control-free sculpture moves, flows in colour and cycles through three forms',async({page})=>{
+test('control-free sculpture moves and flows in colour',async({page})=>{
  await page.goto('/');
- const sculpture=page.locator('[data-curiosity]'),object=sculpture.locator('button');
+ const sculpture=page.locator('[data-curiosity]');
  await expect(sculpture).toHaveAttribute('data-renderer','webgl');
  await expect(sculpture.locator('button')).toHaveCount(1);
  await expect(sculpture.locator('input')).toHaveCount(0);
@@ -12,10 +12,22 @@ test('control-free sculpture moves, flows in colour and cycles through three for
  await expect.poll(()=>canvas.getAttribute('data-colour-phase')).not.toBe(colour);
  await page.waitForTimeout(600);
  expect(Buffer.compare(still,await canvas.screenshot())).not.toBe(0);
+});
+
+test('direct clicks cycle through all three forms',async({page})=>{
+ await page.goto('/');
+ const sculpture=page.locator('[data-curiosity]'),object=sculpture.locator('button');
+ await expect(sculpture).toHaveAttribute('data-renderer','webgl');
  for(const form of ['1','2','0']){
   await object.click();
   await expect(sculpture).toHaveAttribute('data-form',form);
  }
+});
+
+test('motion can pause and lost WebGL retains a working static sculpture',async({page})=>{
+ await page.goto('/');
+ const sculpture=page.locator('[data-curiosity]'),object=sculpture.locator('button'),canvas=sculpture.locator('canvas');
+ await expect(sculpture).toHaveAttribute('data-renderer','webgl');
  await object.press('Escape');
  await expect(sculpture).toHaveAttribute('data-motion','paused');
  await page.waitForTimeout(80);
@@ -30,6 +42,7 @@ test('control-free sculpture moves, flows in colour and cycles through three for
  });
  await expect(sculpture).toHaveAttribute('data-renderer','fallback');
  await expect(sculpture.locator('.sculpture-fallback')).toHaveCSS('opacity','1');
+ await object.click();await expect(sculpture).toHaveAttribute('data-form','1');
 });
 
 test('reduced motion avoids WebGL while keeping direct and keyboard shape changes',async({page})=>{

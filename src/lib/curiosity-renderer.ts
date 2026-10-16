@@ -14,7 +14,8 @@ type OpticalCanvas=HTMLCanvasElement&{opticalFrame?:HTMLCanvasElement};
 
 export function createSculpture(host:HTMLElement):SculptureController{
  const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:"low-power"});
- renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
+ let pixelRatio=Math.min(devicePixelRatio||1,1.5);
+ renderer.setPixelRatio(pixelRatio);
  renderer.setClearColor(0,0);
  renderer.outputColorSpace=THREE.SRGBColorSpace;
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
@@ -102,10 +103,10 @@ export function createSculpture(host:HTMLElement):SculptureController{
  flowingColour(threadMaterial,true);
  const lines=new THREE.Mesh(threadGeometry,threadMaterial);lines.frustumCulled=false;group.add(lines);
  let form=0,star=0,flow=0,time=0,spin=0,velocity=0,pointerX=0,pointerY=0,targetX=0,targetY=0;
- let frame=0,last=0,playing=false,dragging=false,disposed=false,frames=0,statsAt=0,snapshotAt=0;
+ let frame=0,last=0,playing=false,dragging=false,disposed=false,frames=0,statsAt=0,snapshotAt=0,slowFrames=0;
  const snapshot=document.createElement("canvas"),snapshotContext=snapshot.getContext("2d");
  function shareOpticalFrame(){
-  if(!snapshotContext||playing&&time-snapshotAt<1/24)return;
+  if(!snapshotContext||playing&&time-snapshotAt<1/12)return;
   snapshotAt=time;
   const r=canvas.getBoundingClientRect();
   const overlaps=Array.from(document.querySelectorAll<HTMLElement>(".glass-nav,[data-menu-panel]:not([hidden])")).some(el=>{
@@ -158,7 +159,15 @@ export function createSculpture(host:HTMLElement):SculptureController{
  }
  function tick(stamp:number){
   frame=0;if(!playing||disposed)return;
-  const dt=last?Math.min(.05,(stamp-last)/1000):1/60;last=stamp;time+=dt;
+  const elapsed=last?(stamp-last)/1000:1/60;
+  // Keep the full satin material; scale only raster density on a slow GPU.
+  // This also leaves time for input and the site's separate glass renderer.
+  if(elapsed>.045)slowFrames++;else slowFrames=Math.max(0,slowFrames-1);
+  if(slowFrames>=7&&pixelRatio>.75){
+   pixelRatio=Math.max(.75,pixelRatio-.25);renderer.setPixelRatio(pixelRatio);slowFrames=0;
+   canvas.dataset.pixelRatio=pixelRatio.toFixed(2);
+  }
+  const dt=Math.min(.1,elapsed);last=stamp;time+=dt;
   const ease=1-Math.exp(-5.4*dt);
   star+=((form===1?1:0)-star)*ease;flow+=((form===2?1:0)-flow)*ease;
   pointerX+=(targetX-pointerX)*(1-Math.exp(-4*dt));pointerY+=(targetY-pointerY)*(1-Math.exp(-4*dt));
