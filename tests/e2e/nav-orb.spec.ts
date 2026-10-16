@@ -76,3 +76,23 @@ test('Home and Daily Brief expanded logos share a common left alignment',async({
   expect(Math.abs((orb!.x+orb!.width/2)-(mark!.x+mark!.width/2))).toBeLessThan(3);
  }
 });
+
+test('Brief-only admin regeneration link is reachable from menu without public AI trigger',async({page})=>{
+ for(const width of [1440,390]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/');
+  await expect(page.locator('[data-admin-brief-refresh]')).toHaveCount(0);
+  await page.goto('/brief/');
+  const button=page.locator('[data-menu-toggle]');
+  await expect(button).toBeVisible();
+  await button.click();
+  await expect(button).toHaveAttribute('aria-expanded','true');
+  const link=page.locator('[data-menu-panel] [data-admin-brief-refresh]');
+  await expect(link).toBeVisible();
+  await expect(link).toHaveAttribute('href','https://github.com/haibao753/daily-intelligence-brief/actions/workflows/manual-refresh.yml');
+  await expect(link).toHaveAttribute('target','_blank');
+  await expect(link).toHaveAttribute('rel',/noopener noreferrer/);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('[data-menu-panel]')).toBeHidden();
+ }
+});
