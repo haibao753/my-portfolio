@@ -126,6 +126,8 @@ function initialize(){
  const render=()=>{
   const x=Number(ax.value),y=Number(ay.value);
   xval.textContent=x+"°";yval.textContent=y+"°";
+  first.setAttribute("aria-label",isEn()?"3D cube after X then Y; drag to orbit":"先绕 X 后绕 Y 的立方体；拖动改变视角");
+  second.setAttribute("aria-label",isEn()?"3D cube after Y then X; drag to orbit":"先绕 Y 后绕 X 的立方体；拖动改变视角");
   const a=stepMatrix(x,y,"xy",stage),b=stepMatrix(x,y,"yx",stage);
   draw(first,a);draw(second,b);
   if(overlay&&!overlayPanel?.hidden)drawOverlay(overlay,a,b);
@@ -147,6 +149,11 @@ function initialize(){
  };
  ax.addEventListener("input",render);ay.addEventListener("input",render);
  root.querySelectorAll<HTMLButtonElement>("[data-rotation-step]").forEach(button=>button.addEventListener("click",()=>{stage=Number(button.dataset.rotationStep);render();}));
+ root.querySelectorAll<HTMLButtonElement>("[data-rotation-preset]").forEach(button=>button.addEventListener("click",()=>{
+  ax.value=button.dataset.rotationPreset==="same"?"0":"90";
+  ay.value="90";
+  stage=2;render();
+ }));
  overlayToggle?.addEventListener("click",()=>{
   if(!overlayPanel)return;
   overlayPanel.hidden=!overlayPanel.hidden;
