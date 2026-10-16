@@ -127,8 +127,8 @@ test('two owned videos are listed but never load on initial homepage render', as
 
 test('native video cards use uploaded assets when present and show honest fallback when missing',async({page})=>{
  const expected=[
-  ['mobius','/videos/mobius-shortest.mp4','BV1BDpB6wEiJ'],
-  ['group','/videos/group-definition.mp4','BV1LTa562Ehz']
+  ['mobius','/videos/Video_1792127365800_461.mp4','BV1BDpB6wEiJ'],
+  ['group','/videos/Video_1792127358357_245.mp4','BV1LTa562Ehz']
  ];
  await page.route('**/videos/*.mp4',route=>{
   if(route.request().method()==='HEAD')return route.fulfill({status:200,headers:{'content-type':'video/mp4'},body:''});
