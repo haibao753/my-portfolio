@@ -88,3 +88,29 @@ test('Daily Brief source disclosure expands inline without a paywall redirect',a
  await expect(page).toHaveURL(url=>url.pathname==='/brief/');
  await expect(card.locator('.news-source a')).toHaveAttribute('target','_blank');
 });
+
+test('three-day and seven-day filters aggregate issues and preserve single-date selection',async({page})=>{
+ const date=new Date();
+ const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(date);
+ const day=(offset:number)=>new Date(Date.parse(today+'T00:00:00Z')-offset*86400000).toISOString().slice(0,10);
+ const dates=Array.from({length:8},(_,i)=>day(i));
+ await page.route('**/brief/data/index.json',route=>route.fulfill({json:{dates}}));
+ for(const [i,d] of dates.entries()){
+  const item={category:i%2?'AI':'数学',source:'Test publisher',
+   published:d,title_zh:'测试新闻 '+i,summary_zh:'公开摘要 '+i,
+   why_zh:'研究意义',url:'https://example.org/story/'+i};
+  await page.route('**/brief/data/'+d+'.json',route=>route.fulfill({json:{date:d,items:[item]}}));
+ }
+ await page.goto('/brief/');
+ await expect(page.locator('.news-card')).toHaveCount(1);
+ await page.locator('#quick-dates [data-days="3"]').click();
+ await expect(page.locator('.news-card')).toHaveCount(3);
+ await expect(page.locator('#quick-dates [data-days="3"]')).toHaveAttribute('aria-pressed','true');
+ await page.locator('#quick-dates [data-days="7"]').click();
+ await expect(page.locator('.news-card')).toHaveCount(7);
+ await page.locator('#tabs button').nth(1).click();
+ await expect(page.locator('.news-card')).toHaveCount(4);
+ await page.locator('#issues').selectOption(day(2));
+ await expect(page.locator('.news-card')).toHaveCount(1);
+ await expect(page.locator('#quick-dates [data-days="7"]')).toHaveAttribute('aria-pressed','false');
+});
