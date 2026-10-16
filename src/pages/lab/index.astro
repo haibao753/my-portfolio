@@ -1,0 +1,96 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout title="知识实验室 — J.H. Lab" description="用可操作的数学、科学和算法实验，把抽象概念变成能够亲手验证的发现。">
+ <div class="lab-index wrap" id="top">
+  <header class="intro">
+   <div class="eyebrow">J.H. LAB / KNOWLEDGE LAB</div>
+   <h1><span data-locale="zh">把问题，<br/>交给实验。</span><span data-locale="en">Put the idea<br/>to the test.</span></h1>
+   <p><span data-locale="zh">不是看一个炫目的模型，而是亲手改变条件，观察差别，理解原理。</span><span data-locale="en">Change a condition, observe what changes, and discover why — by doing.</span></p>
+  </header>
+  <section class="lab-work" aria-labelledby="lab-first">
+   <div class="work-copy">
+    <p class="issue">001 <span aria-hidden="true">/</span> <span data-locale="zh">数学 · 三维几何</span><span data-locale="en">Mathematics · Spatial geometry</span></p>
+    <h2 id="lab-first"><span data-locale="zh">两次旋转，<br/>为什么顺序重要？</span><span data-locale="en">Two rotations.<br/>Does order matter?</span></h2>
+    <p class="work-description"><span data-locale="zh">同样是绕 X、Y 轴各旋转 90°，交换操作顺序，立方体却会指向不同方向。自己拖动、调节角度，观察这种不交换性。</span><span data-locale="en">Rotate 90° around X and Y. Switch the order and the cube ends up in a different orientation. Test it with real matrices and two interactive views.</span></p>
+    <a class="launch" href="/lab/rotation/"><span data-locale="zh">开始实验</span><span data-locale="en">Start the experiment</span><span aria-hidden="true">↗</span></a>
+   </div>
+   <div class="work-visual" aria-label="相同旋转角度下，两种顺序产生不同的正面方向">
+    <div class="visual-heading"><span>R<sub>Y</sub> · R<sub>X</sub></span><span>≠</span><span>R<sub>X</sub> · R<sub>Y</sub></span></div>
+    <div class="vector-comparison">
+     <div>
+      <p><span>A</span> X → Y</p>
+      <svg viewBox="0 0 180 145" aria-hidden="true">
+       <path d="M25 111H151M88 136V18" stroke="currentColor" stroke-opacity=".14" stroke-width="1.5"/>
+       <path d="M88 76V29" stroke="#4d80bd" stroke-width="6" stroke-linecap="round" opacity=".5"/>
+       <path d="M88 76L88 119" stroke="#4d80bd" stroke-width="7" stroke-linecap="round"/>
+       <circle cx="88" cy="76" r="5" fill="currentColor"/>
+       <path d="M77 111L88 125L99 111" fill="none" stroke="#4d80bd" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <strong>(0, −1, 0)</strong>
+     </div>
+     <div>
+      <p><span>B</span> Y → X</p>
+      <svg viewBox="0 0 180 145" aria-hidden="true">
+       <path d="M25 111H151M88 136V18" stroke="currentColor" stroke-opacity=".14" stroke-width="1.5"/>
+       <path d="M88 76H145" stroke="#c07f42" stroke-width="7" stroke-linecap="round"/>
+       <circle cx="88" cy="76" r="5" fill="currentColor"/>
+       <path d="M134 65L150 76L134 87" fill="none" stroke="#c07f42" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <strong>(1, 0, 0)</strong>
+     </div>
+    </div>
+    <p class="visual-caption"><span data-locale="zh">示意：初始 Z 方向的最终向量，X = Y = 90°</span><span data-locale="en">Initial Z direction after each sequence, X = Y = 90°</span></p>
+   </div>
+  </section>
+  <div class="lab-bottom">
+   <span><span data-locale="zh">一个问题，一个可验证的实验。</span><span data-locale="en">One question. One verifiable experiment.</span></span>
+   <a href="/brief/"><span data-locale="zh">返回每日观察</span><span data-locale="en">Explore the Daily Brief</span> ↗</a>
+  </div>
+ </div>
+</BaseLayout>
+<style>
+ .lab-index{max-width:1380px;padding-top:clamp(24px,5vw,58px);padding-bottom:clamp(48px,8vw,110px)}
+ .intro{padding-bottom:clamp(28px,5vw,54px);border-bottom:1px solid var(--stroke)}
+ .intro .eyebrow{font-size:11px;letter-spacing:.12em;margin-bottom:14px}
+ .intro h1{font-size:clamp(38px,7.4vw,95px);line-height:1.09;letter-spacing:-.068em;margin:0 0 15px;max-width:950px}
+ .intro p{font-size:clamp(14px,1.4vw,19px);line-height:1.7;color:var(--muted);max-width:650px;margin:0}
+ .lab-work{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(22px,6vw,90px);align-items:center;padding-block:clamp(23px,5vw,62px)}
+ .work-copy{min-width:0}
+ .issue{font-size:12px;font-weight:650;color:var(--muted);letter-spacing:.06em;margin-bottom:15px}
+ .issue span[aria-hidden]{margin-inline:7px}
+ .work-copy h2{font-size:clamp(32px,4.8vw,64px);line-height:1.16;letter-spacing:-.058em;margin:0 0 18px}
+ .work-description{color:var(--muted);font-size:clamp(14px,1.17vw,17px);line-height:1.9;max-width:590px;margin-bottom:25px}
+ .launch{display:inline-flex;align-items:center;gap:24px;min-height:48px;padding:10px 0;border-bottom:1px solid var(--fg);font-size:16px;font-weight:650}
+ .launch span[aria-hidden]{transition:transform .25s ease}
+ .launch:hover span[aria-hidden]{transform:translate(3px,-3px)}
+ .work-visual{background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:clamp(18px,3vw,30px);min-width:0}
+ .visual-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:clamp(16px,2vw,25px);font-weight:700;letter-spacing:-.04em}
+ .visual-heading span:nth-child(2){opacity:.45}
+ .vector-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}
+ .vector-comparison>div{text-align:center;min-width:0}
+ .vector-comparison p{display:flex;align-items:center;justify-content:center;gap:9px;font-size:12px;font-weight:650;margin:4px 0 0}
+ .vector-comparison p span{font-size:11px;color:var(--muted)}
+ .vector-comparison svg{display:block;width:100%;max-width:200px;height:auto;margin-inline:auto}
+ .vector-comparison strong{font-size:clamp(13px,1.5vw,18px);font-variant-numeric:tabular-nums}
+ .visual-caption{font-size:11px;color:var(--muted);line-height:1.6;text-align:center;margin:18px 0 0}
+ .lab-bottom{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--stroke);padding-top:21px;font-size:12px;color:var(--muted)}
+ .lab-bottom a{color:var(--fg);font-weight:600}
+ @media(max-width:760px){
+  .lab-index{width:calc(100% - 28px);padding-top:18px}
+  .intro{padding-bottom:19px}
+  .intro .eyebrow{font-size:10px;margin-bottom:9px}
+  .intro h1{font-size:clamp(38px,10vw,51px);margin-bottom:7px}
+  .intro p{font-size:12px;line-height:1.6}
+  .lab-work{grid-template-columns:1fr;gap:18px;padding-block:20px}
+  .issue{font-size:10px;margin-bottom:8px}
+  .work-copy h2{font-size:clamp(28px,7.5vw,39px);margin-bottom:10px}
+  .work-description{font-size:13px;line-height:1.7;margin-bottom:12px}
+  .launch{min-height:42px;font-size:14px}
+  .work-visual{padding:15px;border-radius:13px}
+  .visual-heading{font-size:17px}
+  .vector-comparison svg{max-height:130px}
+  .lab-bottom{font-size:11px}
+ }
+ @media(prefers-reduced-motion:reduce){.launch span[aria-hidden]{transition:none}}
+</style>
