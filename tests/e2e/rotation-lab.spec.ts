@@ -30,7 +30,9 @@ test("Lab 001 shows noncommutative 3D rotations with consistent math",async({pag
  await expect(page.locator("#angle-x-value")).toHaveText("90°");
  await expect(page.locator("#rotation-difference")).not.toHaveText("0.00");
  await expect(page.locator('[data-rotation-step="2"]')).toHaveAttribute("aria-pressed","true");
- await page.locator('[data-rotation-preset="same"]').click();
+ await page.locator(".preset-details summary").click();
+ await expect(page.locator(".preset-details")).toHaveAttribute("open","");
+await page.locator('[data-rotation-preset="same"]').click();
  await expect(page.locator("#angle-x-value")).toHaveText("0°");
  await expect(page.locator("#rotation-difference")).toHaveText("0.00");
  await page.locator('[data-rotation-preset="different"]').click();
@@ -161,4 +163,28 @@ test("Lab 001 keeps cube axes inside mobile canvases at extreme camera angles",a
  await page.locator("#angle-x").evaluate((el:HTMLInputElement)=>{el.value="180";el.dispatchEvent(new Event("input",{bubbles:true}));});
  await page.locator("#angle-y").evaluate((el:HTMLInputElement)=>{el.value="180";el.dispatchEvent(new Event("input",{bubbles:true}));});
  await noClip();
+});
+
+test("Lab 001 mobile workbench keeps controls and comparison close without stacking cards",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/lab/rotation/");
+ const rail=page.locator("#rotation-comparison");
+ const a=page.locator(".outcome").first(),b=page.locator(".outcome").last();
+ const aBox=await a.boundingBox(),bBox=await b.boundingBox(),canvas=await page.locator("#rotation-xy").boundingBox();
+ expect(aBox).not.toBeNull();expect(bBox).not.toBeNull();expect(canvas).not.toBeNull();
+ expect(Math.abs(aBox!.y-bBox!.y)).toBeLessThan(2);
+ expect(canvas!.y,"first experiment needs to start in the first phone viewport").toBeLessThan(844);
+ expect((await rail.evaluate(el=>el.scrollWidth-el.clientWidth))).toBeGreaterThan(150);
+ await expect(page.locator('[data-rotation-view="0"]')).toHaveAttribute("aria-pressed","true");
+ await page.locator('[data-rotation-view="1"]').click();
+ await expect.poll(()=>rail.evaluate(el=>el.scrollLeft)).toBeGreaterThan(150);
+ await expect(page.locator('[data-rotation-view="1"]')).toHaveAttribute("aria-pressed","true");
+ await page.locator('[data-rotation-view="0"]').click();
+ await expect.poll(()=>rail.evaluate(el=>el.scrollLeft)).toBeLessThan(4);
+ await page.locator(".math-details summary").click();
+ await expect(page.locator(".math-details")).toHaveAttribute("open","");
+ await expect(page.locator(".math-line")).toBeVisible();
+ await page.locator(".math-details summary").click();
+ await expect(page.locator(".math-line")).toBeHidden();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(391);
 });
