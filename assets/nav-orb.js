@@ -1,39 +1,46 @@
-/* Morph the active Astro glass navigation into a reachable logo orb. */
+/* Scroll direction controls a two-state glass toolbar. No per-scroll rAF style writes. */
 (()=>{
  "use strict";
- const init=()=>{
+ function init(){
+  if(!document.querySelector(".brief-hero"))return;
   const nav=document.querySelector(".glass-nav");
   if(!nav||nav.dataset.orbReady)return;
-  const brand=nav.querySelector(".brand"),links=nav.querySelector(".desktop-links"),controls=nav.querySelector(".controls"),menu=document.querySelector("[data-menu-toggle]");
+  const brand=nav.querySelector(".brand");
+  const links=nav.querySelector(".desktop-links");
+  const controls=nav.querySelector(".controls");
+  const menu=document.querySelector("[data-menu-toggle]");
   if(!brand)return;
   nav.dataset.orbReady="true";
-  const reduce=matchMedia("(prefers-reduced-motion: reduce)");
-  let p=0,target=0,raf=0,lastY=Math.max(0,scrollY),pinned=false;
-  const clamp=x=>Math.max(0,Math.min(1,x));
-  function paint(){
-   raf=0;p=reduce.matches?target:p+(target-p)*.24;
-   if(Math.abs(target-p)<.003)p=target;
-   const t=p*p*(3-2*p);
-   nav.style.setProperty("--orb-progress",String(t));
-   nav.dataset.orbClosed=String(t>.97);
-   if(links)links.inert=t>.97;
-   if(controls)controls.inert=t>.97;
-   if(p!==target)raf=requestAnimationFrame(paint);
+  let collapsed=false,pinned=false,lastY=Math.max(0,window.scrollY),directionTravel=0;
+  let transitionTimer=0;
+  function toggle(closed){
+   if(collapsed===closed)return;
+   collapsed=closed;
+   nav.dataset.orbTransitioning="true";
+   nav.dataset.orbClosed=String(closed);
+   if(links)links.inert=closed;
+   if(controls)controls.inert=closed;
+   clearTimeout(transitionTimer);
+   transitionTimer=setTimeout(()=>{delete nav.dataset.orbTransitioning},430);
   }
-  const request=()=>{if(!raf)raf=requestAnimationFrame(paint)};
-  function scrollUpdate(){
-   const y=Math.max(0,scrollY),dy=y-lastY;lastY=y;
-   if(y<16){target=0;pinned=false}
-   else if(menu?.getAttribute("aria-expanded")==="true"||pinned)target=0;
-   else if(Math.abs(dy)>.5)target=clamp(target+dy/115);
-   request();
+  function onScroll(){
+   const y=Math.max(0,window.scrollY),d=y-lastY;lastY=y;
+   if(y<25){pinned=false;directionTravel=0;toggle(false);return}
+   if(menu?.getAttribute("aria-expanded")==="true"||pinned){toggle(false);return}
+   if(d>1){directionTravel=Math.max(0,directionTravel)+d;if(y>100&&directionTravel>26){toggle(true);directionTravel=0}}
+   else if(d< -1){directionTravel=Math.min(0,directionTravel)+d;if(directionTravel< -35){toggle(false);directionTravel=0}}
   }
-  brand.addEventListener("click",e=>{if(p>.55){e.preventDefault();pinned=true;target=0;request()}});
-  document.addEventListener("pointerdown",e=>{if(pinned&&!nav.contains(e.target)){pinned=false;target=scrollY>120?1:0;request()}});
-  menu?.addEventListener("click",()=>{target=0;request()});
-  addEventListener("scroll",scrollUpdate,{passive:true});
-  reduce.addEventListener?.("change",request);
-  scrollUpdate();request();
- };
+  brand.addEventListener("click",e=>{
+   if(collapsed){e.preventDefault();pinned=true;toggle(false)}
+  });
+  document.addEventListener("pointerdown",e=>{
+   if(pinned&&!nav.contains(e.target)){pinned=false;if(window.scrollY>140)toggle(true)}
+  });
+  menu?.addEventListener("click",()=>{pinned=true;toggle(false)});
+  window.addEventListener("scroll",onScroll,{passive:true});
+  // Restore the correct state after back-forward cache and reload at a deep anchor.
+  if(window.scrollY>120)toggle(true);
+  addEventListener("pageshow",()=>{lastY=window.scrollY;if(lastY<25)toggle(false)});
+ }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();
