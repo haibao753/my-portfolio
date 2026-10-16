@@ -40,3 +40,12 @@ test("Knowledge Lab is discoverable from homepage and readable in English and da
  await expect(page.locator("html")).toHaveAttribute("data-theme","dark");
  await expect(page.locator('a[href="/lab/rotation/"]')).toBeVisible();
 });
+
+test("Knowledge Lab and published experiment are discoverable in sitemap",async({request})=>{
+ const response=await request.get("/sitemap.xml");
+ expect(response.ok()).toBe(true);
+ const xml=await response.text();
+ expect(xml).toContain("/lab/</loc>");
+ expect(xml).toContain("/lab/rotation/</loc>");
+ expect(xml).not.toContain("experimentalGraph");
+});
