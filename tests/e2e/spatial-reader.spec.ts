@@ -12,8 +12,8 @@ test("3D exploration is opt-in and returns to the selected article",async({page}
  await expect(dialog.locator("#spatial-state")).toContainText("2 /");
  await dialog.locator(".spatial-open-article").click();
  await expect(dialog).not.toBeVisible();
- await expect(page.locator(".news-card.is-reading").first()).toBeVisible();
- await expect(page.locator(".news-card .news-read-toggle").first()).toHaveAttribute("aria-expanded","true");
+ await expect(page.locator(".news-card.is-reading")).toHaveCount(1);
+ await expect(page.locator(".news-card.is-reading .news-read-toggle")).toHaveAttribute("aria-expanded","true");
 });
 test("3D dialog supports keyboard dismissal and restores focus",async({page})=>{
  await page.goto("/brief/");
