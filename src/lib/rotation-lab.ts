@@ -20,6 +20,12 @@ const multiply = (a:Mat3,b:Mat3):Mat3 => {
 };
 const composition = (x:number,y:number,order:Order):Mat3 =>
  order==="xy"?multiply(ry(y),rx(x)):multiply(rx(x),ry(y));
+const identity=():Mat3=>[[1,0,0],[0,1,0],[0,0,1]];
+const stepMatrix=(x:number,y:number,order:Order,stage:number):Mat3=>{
+ if(stage===0)return identity();
+ if(stage===1)return order==="xy"?rx(x):ry(y);
+ return composition(x,y,order);
+};
 const norm = (a:Mat3,b:Mat3):number =>
  Math.sqrt(a.reduce((sum,row,i)=>sum+row.reduce((s,v,j)=>s+(v-b[i][j])**2,0),0));
 const fmt=(v:number)=>Math.abs(v)<.005?"0.00":v.toFixed(2);
@@ -72,9 +78,34 @@ function draw(canvas:HTMLCanvasElement,m:Mat3){
   ctx.fillStyle=color;ctx.beginPath();ctx.arc(end.x,end.y,4,0,Math.PI*2);ctx.fill();
   ctx.fillText(label,end.x+9,end.y-9);
  }
- // White-bordered marker on the +Z face makes orientation visually testable.
- const front=project(apply(m,[0,0,.78]));ctx.beginPath();ctx.arc(front.x,front.y,7,0,Math.PI*2);
- ctx.fillStyle="#ffda72";ctx.fill();ctx.lineWidth=2;ctx.strokeStyle="#192e46";ctx.stroke();
+ // Three labelled face-centre stickers stay on the cube; hide back-facing stickers.
+ for(const [normal,label,fill] of [
+  [[1,0,0],"X","#ba5555"],[[0,1,0],"Y","#277f6b"],[[0,0,1],"Z","#dc9c35"]
+ ] as [Vec3,string,string][]){
+  if(view(apply(m,normal))[2]<=.08)continue;
+  const center=project(apply(m,normal.map(v=>v*.73) as Vec3));
+  ctx.beginPath();ctx.arc(center.x,center.y,12,0,Math.PI*2);
+  ctx.fillStyle=fill;ctx.fill();ctx.lineWidth=2;ctx.strokeStyle="#fff";ctx.stroke();
+  ctx.fillStyle="#fff";ctx.font="700 11px system-ui";ctx.fillText(label,center.x,center.y+.5);
+ }
+
+}
+function drawOverlay(canvas:HTMLCanvasElement,a:Mat3,b:Mat3){
+ const ctx=canvas.getContext("2d");if(!ctx)return;
+ const {width:w,height:h}=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,1.5);
+ canvas.width=Math.max(1,Math.round(w*dpr));canvas.height=Math.max(1,Math.round(h*dpr));
+ ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+ const size=Math.min(w,h)*.41;
+ const project=(v:Vec3)=>{const p=view(v),k=3.1/(3.1-p[2]*.21);return [w*.5+p[0]*size*k,h*.5-p[1]*size*k] as const;};
+ const edges:[[number,number],...Array<[number,number]>]=[[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,6],[3,7],[4,5],[4,6],[5,7],[6,7]];
+ for(const [m,color] of [[a,"#236ca9"],[b,"#cc7435"]] as [Mat3,string][]){
+  const pts=verts.map(v=>project(apply(m,v)));
+  ctx.lineWidth=2.5;ctx.lineJoin="round";ctx.strokeStyle=color;
+  for(const [i,j] of edges){ctx.beginPath();ctx.moveTo(...pts[i]);ctx.lineTo(...pts[j]);ctx.stroke();}
+  const tip=project(apply(m,[0,0,1.15]));const origin=project([0,0,0]);
+  ctx.beginPath();ctx.moveTo(...origin);ctx.lineTo(...tip);ctx.lineWidth=4;ctx.stroke();
+  ctx.beginPath();ctx.arc(...tip,5,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
+ }
 }
 function initialize(){
  const root=document.querySelector<HTMLElement>("#rotation-lab");if(!root)return;
@@ -85,22 +116,45 @@ function initialize(){
  const v1=root.querySelector<HTMLElement>("#rotation-xy-vector"),v2=root.querySelector<HTMLElement>("#rotation-yx-vector");
  const difference=root.querySelector<HTMLElement>("#rotation-difference");
  const note=root.querySelector<HTMLElement>("#rotation-note");
+ const stageNote=root.querySelector<HTMLElement>("#rotation-step-explanation");
+ const overlay=root.querySelector<HTMLCanvasElement>("#rotation-overlay");
+ const overlayPanel=root.querySelector<HTMLElement>("#rotation-overlay-panel");
+ const overlayToggle=root.querySelector<HTMLButtonElement>("#rotation-overlay-toggle");
+ let stage=2;
  if(!first||!second||!ax||!ay||!xval||!yval||!v1||!v2||!difference||!note)return;
  const isEn=()=>document.documentElement.lang==="en";
  const render=()=>{
   const x=Number(ax.value),y=Number(ay.value);
   xval.textContent=x+"°";yval.textContent=y+"°";
-  const a=composition(x,y,"xy"),b=composition(x,y,"yx");
+  const a=stepMatrix(x,y,"xy",stage),b=stepMatrix(x,y,"yx",stage);
   draw(first,a);draw(second,b);
+  if(overlay&&!overlayPanel?.hidden)drawOverlay(overlay,a,b);
+  root.querySelectorAll<HTMLButtonElement>("[data-rotation-step]").forEach(button=>{
+   button.setAttribute("aria-pressed",String(Number(button.dataset.rotationStep)===stage));
+  });
+  if(stageNote)stageNote.textContent=(isEn()
+   ?["Start: both cubes have the same orientation.","Step 1: left rotates around X, right around Y.","Step 2: left adds Y, right adds X. Compare their final orientations."][stage]
+   :["起点：两个立方体姿态完全相同。","第一步：左侧先绕 X 轴，右侧先绕 Y 轴。","第二步：左侧再绕 Y 轴，右侧再绕 X 轴。"][stage]);
   v1.textContent=fmtVec(apply(a,[0,0,1]));v2.textContent=fmtVec(apply(b,[0,0,1]));
   const d=norm(a,b);difference.textContent=fmt(d);
-  note.textContent=d<.0001
+  note.textContent=stage===0
+   ?(isEn()?"Both paths start from the same pose. Continue to the first rotation.":"两条路径从相同姿态出发。点击「第一次旋转」继续。")
+   :stage===1
+   ?(isEn()?"The paths now differ because you performed different first operations. Continue to test whether swapping both operations changes the final result.":"目前两侧做的是不同的第一次操作。继续完成第二次旋转，才能比较交换顺序的最终结果。")
+   :d<.0001
    ?(isEn()?"These settings produce the same orientation. Try two nonzero angles.":"当前角度下两种顺序结果相同。试试两个非零角度。")
-   :(isEn()?"Changing the order changes the 3D orientation. Compare the marked front face.":"交换旋转顺序会改变空间姿态。比较两个立方体的正面标记。");
+   :(isEn()?"Changing the order changes the final 3D orientation. Compare the labelled faces.":"交换旋转顺序改变了最终姿态。观察立方体上不同颜色的面标记。");
  };
  ax.addEventListener("input",render);ay.addEventListener("input",render);
+ root.querySelectorAll<HTMLButtonElement>("[data-rotation-step]").forEach(button=>button.addEventListener("click",()=>{stage=Number(button.dataset.rotationStep);render();}));
+ overlayToggle?.addEventListener("click",()=>{
+  if(!overlayPanel)return;
+  overlayPanel.hidden=!overlayPanel.hidden;
+  overlayToggle.setAttribute("aria-expanded",String(!overlayPanel.hidden));
+  render();
+ });
  root.querySelector<HTMLButtonElement>("#rotation-reset")?.addEventListener("click",()=>{
-  ax.value="90";ay.value="90";camera.yaw=.58;camera.pitch=-.31;render();});
+  ax.value="90";ay.value="90";camera.yaw=.58;camera.pitch=-.31;stage=2;render();});
  root.querySelector<HTMLButtonElement>("#rotation-camera-left")?.addEventListener("click",()=>{camera.yaw-=.24;render();});
  root.querySelector<HTMLButtonElement>("#rotation-camera-right")?.addEventListener("click",()=>{camera.yaw+=.24;render();});
  for(const canvas of [first,second]){
