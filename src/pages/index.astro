@@ -4,6 +4,7 @@ import Hero from "../components/Hero.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import MotionLayer from "../components/MotionLayer.astro";
 import FinaleArtwork from "../components/FinaleArtwork.astro";
+import BilibiliStudio from "../components/BilibiliStudio.astro";
 import {projects,contact} from "../data/site";
 ---
 <BaseLayout>
@@ -17,6 +18,7 @@ import {projects,contact} from "../data/site";
   </div>
   <div class="projects">{projects.map((project,index)=><ProjectCard project={project} index={index} />)}</div>
  </section>
+ <BilibiliStudio />
  <section class="contact wrap" id="contact">
   <div>
    <p class="eyebrow"><span data-locale="zh">说声你好</span><span data-locale="en">SAY HELLO</span></p>
