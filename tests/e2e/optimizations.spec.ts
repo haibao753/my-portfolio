@@ -26,7 +26,7 @@ test('filtering preserves keyboard focus and follows the selected UI language', 
   await nav.locator('.brand').click();
   await expect(nav).toHaveAttribute('data-orb-closed','false');
  }
- await expect(page).toHaveURL(/\\/brief\\/?$/);
+ await expect(page).toHaveURL(url=>url.pathname==='/brief/');
  await page.locator('[data-language-toggle]').click();
  await expect(page.locator('#tabs button').first()).toHaveText('All');
  await expect(page.locator('#status')).toContainText('Showing');
