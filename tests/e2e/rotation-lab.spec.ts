@@ -90,6 +90,8 @@ test("Lab 001 bilingual, keyboard stage controls and reduced-motion experience",
 });
 
 test("Lab 001 replays two mathematically valid stages and can be interrupted",async({page})=>{
+ const errors:string[]=[];
+ page.on("pageerror",error=>errors.push(error.message));
  await page.setViewportSize({width:390,height:844});
  await page.goto("/lab/rotation/");
  const replay=page.locator("#rotation-replay");
@@ -111,6 +113,7 @@ test("Lab 001 replays two mathematically valid stages and can be interrupted",as
  await expect(page.locator('[data-rotation-step="1"]')).toHaveAttribute("aria-pressed","true",{timeout:5000});
  await page.locator("#rotation-reset").click();
  await expect(page.locator('[data-rotation-step="2"]')).toHaveAttribute("aria-pressed","true");
+ expect(errors).toEqual([]);
 });
 
 test("Lab 001 honours reduced motion during replay",async({page})=>{
