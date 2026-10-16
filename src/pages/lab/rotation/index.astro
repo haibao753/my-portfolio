@@ -15,6 +15,11 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     <div class="slider-block"><label for="angle-x"><span data-locale="zh">绕 X 轴</span><span data-locale="en">Around X axis</span></label><output id="angle-x-value" for="angle-x">90°</output><input type="range" min="0" max="180" step="15" value="90" id="angle-x" aria-label="X axis angle" /></div>
     <div class="slider-block"><label for="angle-y"><span data-locale="zh">绕 Y 轴</span><span data-locale="en">Around Y axis</span></label><output id="angle-y-value" for="angle-y">90°</output><input type="range" min="0" max="180" step="15" value="90" id="angle-y" aria-label="Y axis angle" /></div>
    </div>
+   <div class="rotation-presets" role="group" aria-label="示例角度 / Example angles">
+    <span><span data-locale="zh">试一试：</span><span data-locale="en">Try:</span></span>
+    <button type="button" data-rotation-preset="different"><span data-locale="zh">90° + 90° · 结果不同</span><span data-locale="en">90° + 90° · Different</span></button>
+    <button type="button" data-rotation-preset="same"><span data-locale="zh">0° + 90° · 特殊重合</span><span data-locale="en">0° + 90° · Special case</span></button>
+   </div>
   </section>
   <section class="steps" aria-labelledby="steps-title">
    <div class="section-line"><h2 id="steps-title"><span data-locale="zh">分步观察</span><span data-locale="en">Walk through the rotation</span></h2></div>
@@ -52,6 +57,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
    <h2 id="result-title"><span data-locale="zh">为什么结果不同？</span><span data-locale="en">Why are they different?</span></h2>
    <p class="math-line">R<sub>Y</sub>(θ<sub>Y</sub>) R<sub>X</sub>(θ<sub>X</sub>) <span aria-label="通常不等于">≠</span> R<sub>X</sub>(θ<sub>X</sub>) R<sub>Y</sub>(θ<sub>Y</sub>)</p>
    <div class="result-metric"><span data-locale="zh">当前两种姿态的矩阵差距（Frobenius 范数）</span><span data-locale="en">Current orientation difference (Frobenius norm)</span><output id="rotation-difference" aria-live="polite">2.45</output></div>
+   <p class="metric-note"><span data-locale="zh">数值为 0 表示两种最终姿态完全相同；它不是角度差。</span><span data-locale="en">Zero means the final orientations agree; this is not an angle in degrees.</span></p>
    <p id="rotation-note" role="status" aria-live="polite">交换旋转顺序会改变空间姿态。比较两个立方体的正面标记。</p>
    <p class="explainer"><span data-locale="zh">三维旋转属于旋转群 SO(3)。矩阵作用在列向量上，右侧的操作先执行，因此「先 X 后 Y」对应 RY · RX。旋转的先后顺序通常不可交换；某些特殊角度（如其中一个为 0°）可能得到相同结果。</span><span data-locale="en">Three-dimensional rotations form SO(3). With column vectors, the rightmost matrix acts first: X then Y means RY · RX. Order generally matters, although special cases (such as a zero angle) can coincide.</span></p>
   </section>
@@ -88,6 +94,8 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
  .coordinates{border-top:1px solid var(--stroke);display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;padding:13px 20px;margin:0;font-size:12px;color:var(--muted)}
  .coordinates strong{color:var(--fg);font-variant-numeric:tabular-nums}
  .gesture-hint{font-size:12px;color:var(--muted);margin:14px 0 36px}
+ .rotation-presets{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:13px;font-size:12px;color:var(--muted)}
+ .rotation-presets button{padding:6px 11px;min-height:38px;border-radius:999px;font-size:11px}
  .steps{padding:0 0 25px}
  .step-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
  .step-buttons button{border-radius:10px;padding:12px 8px;font-weight:600;min-width:0;white-space:normal;line-height:1.35}
@@ -106,6 +114,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
  .result .eyebrow{font-size:11px}.math-line{font-size:clamp(16px,2.5vw,25px);margin:0 0 25px;white-space:normal;line-height:1.6}
  .result-metric{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:17px 0;border-top:1px solid var(--stroke);border-bottom:1px solid var(--stroke)}
  .result-metric output{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums}
+ .metric-note{color:var(--muted);font-size:12px;line-height:1.6}
  .result #rotation-note{font-weight:600;line-height:1.7}.explainer{color:var(--muted);line-height:1.85;font-size:14px}
  .lab-footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid var(--stroke);padding-top:25px;margin-top:50px;color:var(--muted);font-size:12px}
  .lab-footer a{color:var(--fg);text-decoration:none}
