@@ -6,9 +6,11 @@ test("3D exploration is opt-in and returns to the selected article",async({page}
  await page.locator("#spatial-open").click();
  const dialog=page.locator("#spatial-dialog");
  await expect(dialog).toBeVisible();
- await expect(dialog.locator(".spatial-node").first()).toBeVisible();
+ await expect(dialog.locator(".spatial-node")).toHaveCount(1);
+ const firstTitle=await dialog.locator(".spatial-node strong").textContent();
  await dialog.locator("[data-rotate='24']").click();
- await expect(dialog.locator("#spatial-scene")).toHaveAttribute("style",/rotateY/);
+ await expect(dialog.locator(".spatial-node")).toHaveCount(1);
+ await expect(dialog.locator(".spatial-node strong")).not.toHaveText(firstTitle||"");
  await dialog.locator(".spatial-node").first().click();
  await expect(dialog).not.toBeVisible();
  await expect(page.locator(".news-card.is-reading").first()).toBeVisible();
