@@ -3,7 +3,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import MotionLayer from "../components/MotionLayer.astro";
-import FinaleArtwork from "../components/FinaleArtwork.astro";
 import BilibiliStudio from "../components/BilibiliStudio.astro";
 import {projects,contact} from "../data/site";
 ---
@@ -38,7 +37,6 @@ import {projects,contact} from "../data/site";
    </div>
   </div>
  </section>
- <section class="finale wrap" aria-label="J.H. LAB"><FinaleArtwork /></section>
 </BaseLayout>
 <style>
  .works{padding-bottom:110px}.intro{text-align:center;margin-bottom:60px}.intro h2{font-size:clamp(39px,5.5vw,74px);line-height:1.2;letter-spacing:-.065em;margin:16px 0}.intro>p:last-child{color:var(--muted);font-size:16px}
@@ -65,6 +63,5 @@ import {projects,contact} from "../data/site";
  @media(hover:hover) and (pointer:fine){.contact-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:color-mix(in srgb,var(--fg) 20%,transparent)}.contact-card:hover .contact-action{transform:translate(3px,-3px)}.copy-control:hover{background:var(--card);box-shadow:var(--shadow-sm)}}
  @media(max-width:600px){.contact-links{gap:12px}.contact-card{padding:16px;min-height:94px;gap:12px}.contact-icon{height:42px;width:42px;flex-basis:42px;border-radius:12px}.contact-copy strong{font-size:14px}.copy-control{min-width:54px}}
  @media(prefers-reduced-motion:reduce){.contact-card,.contact-action,.copy-control{transition:none!important}}
- .finale{padding-bottom:clamp(70px,10vw,135px)}.finale img{width:100%;height:auto;display:block;border-radius:29px;background:var(--card)}
  @media(max-width:800px){.contact{grid-template-columns:1fr;gap:20px}}
 </style>
