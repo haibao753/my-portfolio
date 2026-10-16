@@ -23,6 +23,7 @@ import CuriositySculpture from "./CuriositySculpture.astro";
   const englishSteps = [0, 75, 165, 260, 670, 755, 825, 910, 990, 1410, 1495, 1585, 1675, 2135, 2210, 2285, 2370, 2480, 2980, 3060, 3140, 3250, 3650, 3740, 3830, 3970];
   let currentLanguage = "";
   function render() {
+   if (!headline) return;
    const language = document.documentElement.lang === "en" ? "en" : "zh";
    currentLanguage = language;
    headline.classList.remove("hero-title--pixels");
