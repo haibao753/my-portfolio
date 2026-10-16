@@ -26,7 +26,13 @@
   function onScroll(){
    const y=Math.max(0,window.scrollY),d=y-lastY;lastY=y;
    if(y<25){pinned=false;directionTravel=0;toggle(false);return}
-   if(menu?.getAttribute("aria-expanded")==="true"||pinned){toggle(false);return}
+   // Manual expansion only lasts until the visitor resumes downward reading.
+   // Keep the toolbar expanded while a menu is open.
+   if(menu?.getAttribute("aria-expanded")==="true"){toggle(false);return}
+   if(pinned){
+    if(d>1&&y>100){pinned=false;directionTravel=0}
+    else{toggle(false);return}
+   }
    if(d>1){directionTravel=Math.max(0,directionTravel)+d;if(y>100&&directionTravel>26){toggle(true);directionTravel=0}}
    else if(d< -1){directionTravel=Math.min(0,directionTravel)+d;if(directionTravel< -35){toggle(false);directionTravel=0}}
   }
