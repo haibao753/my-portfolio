@@ -115,45 +115,37 @@ test('three-day and seven-day filters aggregate issues and preserve single-date 
  await expect(page.locator('#quick-dates [data-days="7"]')).toHaveAttribute('aria-pressed','false');
 });
 
-test('homepage embeds validated Bilibili video without leaving the site',async({page})=>{
+
+test('two owned videos are listed but never load on initial homepage render', async ({page})=>{
  await page.goto('/');
- const link=page.locator('#mathematics .project-link');
- await expect(link).toHaveAttribute('href','/#mathematics-video');
+ await expect(page.locator('#mathematics .project-link')).toHaveAttribute('href','/#mathematics-video');
+ await expect(page.locator('[data-bili-featured]')).toHaveCount(2);
+ await expect(page.locator('video.bili-native-video')).toHaveCount(0);
  await expect(page.locator('iframe.bili-iframe')).toHaveCount(0);
  await expect(page.locator('a[href="https://space.bilibili.com/1572685586"]').first()).toBeAttached();
- const input=page.locator('#bili-video-input');
- const submit=page.locator('[data-bili-form] button[type="submit"]');
- await input.fill('not-a-video');
- await submit.click();
- await expect(page.locator('iframe.bili-iframe')).toHaveCount(0);
- await expect(page.locator('[data-bili-status]')).toContainText('请输入有效');
- await input.fill('https://www.bilibili.com/video/BV1xx411c7mD?p=1');
- await submit.click();
- const player=page.locator('iframe.bili-iframe');
- await expect(player).toHaveAttribute('src',/https:\/\/player\.bilibili\.com\/player\.html\?bvid=BV1xx411c7mD/);
- await expect(player).toHaveAttribute('loading','lazy');
- await expect(page.locator('[data-bili-open]')).toHaveAttribute('href','https://www.bilibili.com/video/BV1xx411c7mD');
- await expect(page).toHaveURL('/');
- await input.fill('https://evil.example/video/BV1xx411c7mD');
- await submit.click();
- await expect(page.locator('[data-bili-status]')).toContainText('请输入有效');
 });
 
-test('four featured Bilibili videos play inline with their verified BV IDs',async({page})=>{
- await page.goto('/');
+test('native video cards use uploaded assets when present and show honest fallback when missing',async({page})=>{
  const expected=[
-  ['mobius','BV1BDpB6wEiJ'],
-  ['group','BV1LTa562Ehz'],
-  ['evo','BV1jjWA6aECU'],
-  ['fourier','BV1s2a16nEbr']
+  ['mobius','/videos/mobius-shortest.mp4','BV1BDpB6wEiJ'],
+  ['group','/videos/group-definition.mp4','BV1LTa562Ehz']
  ];
- await expect(page.locator('[data-bili-featured]')).toHaveCount(4);
- for(const [key,bvid] of expected){
+ await page.route('**/videos/*.mp4',route=>{
+  if(route.request().method()==='HEAD')return route.fulfill({status:200,headers:{'content-type':'video/mp4'},body:''});
+  return route.fulfill({status:206,headers:{'content-type':'video/mp4'},body:''});
+ });
+ await page.goto('/');
+ for(const [key,path,bvid] of expected){
   const card=page.locator('[data-bili-featured="'+key+'"]');
   await card.click();
   await expect(card).toHaveAttribute('aria-pressed','true');
-  await expect(page.locator('iframe.bili-iframe')).toHaveAttribute('src',new RegExp('bvid='+bvid));
+  await expect(page.locator('video.bili-native-video')).toHaveAttribute('src',path);
   await expect(page.locator('[data-bili-open]')).toHaveAttribute('href','https://www.bilibili.com/video/'+bvid);
   await expect(page).toHaveURL('/');
  }
+ await page.unrouteAll({behavior:'wait'});
+ await page.route('**/videos/*.mp4',route=>route.fulfill({status:404,body:'missing'}));
+ await page.locator('[data-bili-featured="mobius"]').click();
+ await expect(page.locator('[data-bili-status]')).toContainText('原视频文件尚未部署');
+ await expect(page.locator('[data-bili-open]')).toHaveAttribute('href','https://www.bilibili.com/video/BV1BDpB6wEiJ');
 });
