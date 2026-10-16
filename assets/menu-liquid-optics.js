@@ -5,6 +5,7 @@
  */
 import {setup} from '/assets/optical-engine.js';
 import {glassPointerFor,subscribeGlassPointer} from '/assets/glass-pointer-light.js';
+import {sceneCanvases,paintSceneCanvases,mediaDamage} from '/assets/scene-media.js';
 const menu=document.querySelector('[data-menu-panel]');
 const root=document.querySelector('main');
 const params=new URLSearchParams(location.search);
@@ -20,6 +21,8 @@ if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-
  if(render&&ctx){
   const pad=72;
   let sceneReady=false;
+   const mediaBase=document.createElement('canvas'),mediaBaseCtx=mediaBase.getContext('2d');
+   let mediaRect=null,paintScroll=NaN,hadMedia=false;
   const options=()=>({liquid:1,optical:1,reflectivity:.78,strength:1.25,cornerRadius:parseFloat(getComputedStyle(menu).borderTopLeftRadius)||32,
    bevelWidth:19,reflectionReach:2.2,reflectionQuality:1,studioLight:.48,lightDirection:[-.55,.85],rimOnly:1,
    surfaceSize:[canvas.width,canvas.height],scenePadding:pad,...glassPointerFor(menu)});
@@ -70,7 +73,11 @@ if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-
     }
     count++;
    }
-   const radius=parseFloat(getComputedStyle(menu).borderTopLeftRadius)||32;
+   const sampleRect={left,top,right:left+w,bottom:top+h,width:w,height:h};
+   if(mediaBaseCtx){mediaBase.width=w;mediaBase.height=h;mediaBaseCtx.drawImage(scene,0,0)}
+   mediaRect=sampleRect;paintScroll=scrollY;
+   const currentMedia=sceneCanvases(root,sampleRect);hadMedia=currentMedia.length>0;
+   paintSceneCanvases(ctx,currentMedia,sampleRect);
    try{
     render(scene,options());sceneReady=true;
     menu.dataset.menuOptics='active';menu.dataset.menuOpticalSamples=String(count);
@@ -82,11 +89,23 @@ if(menu&&root&&params.get('opticalEngine')!=='0'&&!matchMedia('(prefers-reduced-
    if(!sceneReady||menu.hidden||gl.isContextLost())return;
    try{render(scene,{...options(),unchanged:true})}catch{menu.dataset.menuOptics='fallback'}
   });
+   addEventListener('jhlab:scene-media',event=>{
+    if(!sceneReady||menu.hidden||document.hidden||gl.isContextLost()||!mediaRect||!mediaBaseCtx)return;
+    const canvas=event.detail?.canvas;
+    if(!(canvas instanceof HTMLCanvasElement)||!root.contains(canvas))return;
+    if(paintScroll!==scrollY){schedule();return;}
+    const media=sceneCanvases(root,mediaRect);
+    if(!media.length){if(hadMedia){hadMedia=false;schedule()}return;}
+    hadMedia=true;
+    ctx.clearRect(0,0,scene.width,scene.height);ctx.drawImage(mediaBase,0,0);paintSceneCanvases(ctx,media,mediaRect);
+    try{render(scene,{...options(),dirtyRect:mediaDamage(media,mediaRect)});menu.dataset.menuMediaFrames=String(Number(menu.dataset.menuMediaFrames||0)+1)}catch{menu.dataset.menuOptics='fallback'}
+   });
   const state=new MutationObserver(schedule);
   state.observe(menu,{attributes:true,attributeFilter:['hidden','class','style','data-closing']});
   addEventListener('scroll',schedule,{passive:true});
   addEventListener('resize',schedule,{passive:true});
   new MutationObserver(schedule).observe(root,{subtree:true,childList:true,characterData:true});
+   new MutationObserver(schedule).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','lang']});
   const lost=()=>{menu.dataset.menuOptics='fallback';canvas.hidden=true};
   canvas.addEventListener('webglcontextlost',lost);
   matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',e=>{if(e.matches)lost()});

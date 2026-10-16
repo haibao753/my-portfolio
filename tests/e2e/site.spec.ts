@@ -138,7 +138,7 @@ test("handwritten signature runs once and native scrolling never snaps after rel
 
 test("cinematic motion reveals projects without hijacking native scrolling", async ({ page }) => {
  await page.goto("/");
- await expect(page.locator(".motion-progress")).toHaveCount(1);
+ await expect(page.locator(".motion-progress")).toHaveCount(0);
  const project=page.locator(".project").first();
  await project.scrollIntoViewIfNeeded();
  await expect(project).toHaveClass(/is-motion-revealed/);
@@ -148,8 +148,7 @@ test("cinematic motion reveals projects without hijacking native scrolling", asy
  await page.waitForTimeout(650);
  const after=await page.evaluate(()=>window.scrollY);
  expect(Math.abs(after-still)).toBeLessThanOrEqual(3);
- const progress=page.locator("[data-motion-progress]");
- await expect(progress).toHaveCSS("transform",/matrix/);
+ await expect(page.locator("[data-motion-progress]")).toHaveCount(0);
 });
 
 test("reduced motion keeps all project content visible", async ({page})=>{
