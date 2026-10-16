@@ -10,16 +10,28 @@ const stories=document.querySelector<HTMLElement>("#stories");
 const tabs=document.querySelector<HTMLElement>("#tabs");
 const issueSelect=document.querySelector<HTMLSelectElement>("#issues");
 const statusNode=document.querySelector<HTMLElement>("#status");
+const quickDates=document.querySelector<HTMLElement>("#quick-dates");
 const headline=document.querySelector<HTMLElement>("#headlineDate");
 const total=document.querySelector<HTMLElement>("#total");
-if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
- let current:BriefItem[]=[];
+if(stories&&tabs&&issueSelect&&quickDates&&statusNode&&headline&&total){
+ let current:(BriefItem & {issue_date?:string})[]=[];
+ let viewLabel="";
+ let availableDates:string[]=[];
+ let selectedRange=0;
  let loaded=false;
  let category="全部";
  let request=0;
  const root=document.documentElement;
  const t=(zh:string,en:string)=>root.lang==="en"?en:zh;
  const isDate=(date:string)=>/^\d{4}-\d{2}-\d{2}$/.test(date);
+ const todayBeijing=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Shanghai",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+ const recentDays=(date:string,days:number)=>{
+  const end=Date.parse(date+"T00:00:00Z");
+  const start=end-(days-1)*86400000;
+  return (d:string)=>{const ms=Date.parse(d+"T00:00:00Z");return ms>=start&&ms<=end};
+ };
+ const updateRangeButtons=()=>quickDates.querySelectorAll<HTMLButtonElement>("button[data-days]").forEach(button=>button.setAttribute("aria-pressed",String(Number(button.dataset.days)===selectedRange)));
+ const viewTitle=()=>selectedRange?t(`近${selectedRange===3?"三天":"一周"}`,`Last ${selectedRange} days`):viewLabel;
  const txt=(tag:string,value:string,cls?:string)=>{
   const el=document.createElement(tag);
   if(cls)el.className=cls;
@@ -38,7 +50,7 @@ if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
   for(const item of selection){
    const card=txt("article","","news-card");
    const meta=txt("div","","news-meta");
-   meta.append(txt("span",item.category||"其他","news-category"),txt("span",item.published||"时间未提供"));
+   meta.append(txt("span",item.category||"其他","news-category"),txt("span",item.issue_date||(item.published||"时间未提供")));
    card.append(meta,txt("h3",item.title_zh||"未命名资讯"),txt("p",item.summary_zh||""));
    if(item.why_zh){
     const reason=txt("p","","news-reason");
@@ -112,7 +124,7 @@ if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
    if(data.date!==date||!Array.isArray(data.items))throw Error("日报数据结构不符合预期");
    const fields=["category","source","published","url","title_zh","summary_zh","why_zh","details_zh","original_title"] as const;
    if(data.items.some(item=>!item||typeof item!=="object"||fields.some(key=>item[key]!==undefined&&typeof item[key]!=="string")))throw Error("日报条目结构不符合预期");
-   current=data.items;loaded=true;category="全部";
+   current=data.items;loaded=true;category="全部";selectedRange=0;viewLabel=date;updateRangeButtons();
    headline.textContent=date;
    total.textContent=t(`${current.length} 条精选`,`${current.length} selected stories`);
    renderTabs();render();
@@ -126,6 +138,61 @@ if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
    if(currentRequest===request)stories.setAttribute("aria-busy","false");
   }
  };
+ const loadRange=async(days:number)=>{
+  const currentRequest=++request;
+  controller?.abort();controller=new AbortController();
+  const signal=controller.signal;
+  selectedRange=days;updateRangeButtons();
+  const matching=availableDates.filter(recentDays(todayBeijing(),days));
+  loaded=false;current=[];category="全部";
+  tabs.replaceChildren();stories.replaceChildren();stories.setAttribute("aria-busy","true");
+  headline.textContent=viewTitle();total.textContent="—";
+  statusNode.textContent=t("正在汇总范围内的简报…","Loading recent issues…");
+  try{
+   if(!matching.length){
+    current=[];loaded=true;viewLabel=viewTitle();
+    total.textContent=t("0 条精选","0 selected stories");
+    renderTabs();render();
+    statusNode.textContent=t("所选日期范围内暂无已发布的简报","No published issues in this date range");
+    return;
+   }
+   const results=await Promise.allSettled(matching.map(async date=>{
+    const response=await fetch(`/brief/data/${date}.json`,{cache:"no-cache",signal});
+    if(!response.ok)throw Error(`HTTP ${response.status}`);
+    const issue=await response.json() as BriefIssue;
+    if(issue.date!==date||!Array.isArray(issue.items))throw Error("Invalid issue");
+    const keys=["category","source","published","url","title_zh","summary_zh","why_zh","details_zh","original_title"] as const;
+    if(issue.items.some(item=>!item||typeof item!=="object"||keys.some(key=>item[key]!==undefined&&typeof item[key]!=="string")))throw Error("Invalid stories");
+    return issue.items.map(item=>({...item,issue_date:date}));
+   }));
+   if(currentRequest!==request)return;
+   const success=results.filter((result):result is PromiseFulfilledResult<(BriefItem & {issue_date:string})[]>=>result.status==="fulfilled");
+   if(!success.length)throw Error("All matching issues failed");
+   // Preserve newest issue first, while deduplicating the same source URL.
+   const seen=new Set<string>();
+   current=success.flatMap(result=>result.value).filter(item=>{
+    const key=item.url||`${item.title_zh}|${item.source}`;
+    if(seen.has(key))return false;
+    seen.add(key);return true;
+   });
+   loaded=true;viewLabel=viewTitle();
+   total.textContent=t(`${current.length} 条精选`,`${current.length} selected stories`);
+   headline.textContent=viewLabel;
+   renderTabs();render();
+   if(success.length<matching.length)statusNode.textContent+=t(` · ${matching.length-success.length} 期加载失败`,` · ${matching.length-success.length} issue(s) unavailable`);
+  }catch{
+   if(currentRequest!==request)return;
+   current=[];loaded=false;
+   tabs.replaceChildren();
+   stories.replaceChildren(txt("div",t("近期简报暂时无法加载，请重试。","Recent issues are unavailable. Try again."),"news-empty"));
+   statusNode.textContent=t("范围加载失败，请重试或选择具体日期。","Range loading failed. Try again or choose a date.");
+  }finally{
+   if(currentRequest===request)stories.setAttribute("aria-busy","false");
+  }
+ };
+ quickDates.querySelectorAll<HTMLButtonElement>("button[data-days]").forEach(button=>{
+  button.addEventListener("click",()=>void loadRange(Number(button.dataset.days)));
+ });
  const initialize=async()=>{
   try{
    const response=await fetch("/brief/data/index.json",{cache:"no-cache"});
@@ -138,6 +205,7 @@ if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
     stories.replaceChildren(txt("div",t("观察站已经就绪，等待首期日报发布。","Ready for the first Daily Brief."),"news-empty"));
     statusNode.textContent=t("尚无归档数据","No archived issues yet");return;
    }
+   availableDates=dates;
    for(const date of dates){
     const option=txt("option",date) as HTMLOptionElement;
     option.value=date;issueSelect.append(option);
@@ -153,6 +221,7 @@ if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
   tabs.setAttribute("aria-label",t("内容分类","Story categories"));
   issueSelect.setAttribute("aria-label",t("选择历史日期","Choose an issue date"));
   if(loaded){
+   headline.textContent=viewTitle();
    total.textContent=t(`${current.length} 条精选`,`${current.length} selected stories`);
    renderTabs();render();
   }
