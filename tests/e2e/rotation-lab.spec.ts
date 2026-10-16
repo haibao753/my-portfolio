@@ -30,6 +30,12 @@ test("Lab 001 shows noncommutative 3D rotations with consistent math",async({pag
  await expect(page.locator("#angle-x-value")).toHaveText("90°");
  await expect(page.locator("#rotation-difference")).not.toHaveText("0.00");
  await expect(page.locator('[data-rotation-step="2"]')).toHaveAttribute("aria-pressed","true");
+ await page.locator('[data-rotation-preset="same"]').click();
+ await expect(page.locator("#angle-x-value")).toHaveText("0°");
+ await expect(page.locator("#rotation-difference")).toHaveText("0.00");
+ await page.locator('[data-rotation-preset="different"]').click();
+ await expect(page.locator("#angle-x-value")).toHaveText("90°");
+ await expect(page.locator("#rotation-difference")).not.toHaveText("0.00");
 });
 
 test("Lab 001 remains usable on a 390px phone and camera does not change math",async({page})=>{
