@@ -35,3 +35,24 @@ test('Daily Brief orb respects reduced motion',async({page})=>{
  await expect.poll(async()=>header.getAttribute('data-orb-closed')).toBe('true');
  await expect(header.locator('.brand')).toBeVisible();
 });
+
+test('Daily Brief desktop toolbar stays centered with actions at right edge',async({page})=>{
+ await page.setViewportSize({width:1440,height:900});
+ await page.goto('/brief/');
+ const header=page.locator('.glass-nav');
+ await expect(header).toHaveAttribute('data-orb-ready','true');
+ const nav=await header.boundingBox();
+ const links=await header.locator('.desktop-links').boundingBox();
+ const controls=await header.locator('.controls').boundingBox();
+ expect(nav).not.toBeNull();
+ expect(links).not.toBeNull();
+ expect(controls).not.toBeNull();
+ expect(Math.abs((links!.x+links!.width/2)-(nav!.x+nav!.width/2))).toBeLessThan(24);
+ expect(nav!.x+nav!.width-(controls!.x+controls!.width)).toBeLessThan(35);
+ expect(controls!.x).toBeGreaterThan(links!.x+links!.width);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ await page.evaluate(()=>window.scrollTo(0,700));
+ await expect(header).toHaveAttribute('data-orb-closed','true');
+ await page.evaluate(()=>window.scrollTo(0,0));
+ await expect(header).toHaveAttribute('data-orb-closed','false');
+});
