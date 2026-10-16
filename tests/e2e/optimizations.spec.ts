@@ -138,3 +138,22 @@ test('homepage embeds validated Bilibili video without leaving the site',async({
  await submit.click();
  await expect(page.locator('[data-bili-status]')).toContainText('请输入有效');
 });
+
+test('four featured Bilibili videos play inline with their verified BV IDs',async({page})=>{
+ await page.goto('/');
+ const expected=[
+  ['mobius','BV1BDpB6wEiJ'],
+  ['group','BV1LTa562Ehz'],
+  ['evo','BV1jjWA6aECU'],
+  ['fourier','BV1s2a16nEbr']
+ ];
+ await expect(page.locator('[data-bili-featured]')).toHaveCount(4);
+ for(const [key,bvid] of expected){
+  const card=page.locator('[data-bili-featured="'+key+'"]');
+  await card.click();
+  await expect(card).toHaveAttribute('aria-pressed','true');
+  await expect(page.locator('iframe.bili-iframe')).toHaveAttribute('src',new RegExp('bvid='+bvid));
+  await expect(page.locator('[data-bili-open]')).toHaveAttribute('href','https://www.bilibili.com/video/'+bvid);
+  await expect(page).toHaveURL('/');
+ }
+});
