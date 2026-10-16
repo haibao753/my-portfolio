@@ -11,9 +11,7 @@ import {projects,contact} from "../data/site";
  <Hero />
  <section class="works wrap" id="projects" aria-labelledby="works-title">
   <div class="intro">
-   <p class="eyebrow"><span data-locale="zh">精选 / 2026</span><span data-locale="en">Selected / 2026</span></p>
    <h2 id="works-title"><span data-locale="zh">一些有趣的尝试。</span><span data-locale="en">Things worth exploring.</span></h2>
-   <p><span data-locale="zh">数学、资讯、影像和代码，都是认识世界的不同方法。</span><span data-locale="en">Math, news, images and code are different ways of seeing the world.</span></p>
   </div>
   <div class="projects">{projects.map((project,index)=><ProjectCard project={project} index={index} />)}</div>
  </section>
