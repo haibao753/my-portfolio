@@ -5,57 +5,51 @@ const scene=document.querySelector<HTMLElement>("#spatial-scene");
 const close=document.querySelector<HTMLButtonElement>("#spatial-close");
 const status=document.querySelector<HTMLElement>("#spatial-state");
 const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
-let angle=0,tilt=-9,startX:number|null=null,lastFocus:HTMLElement|null=null;
-function transform(){
+let startX:number|null=null,lastFocus:HTMLElement|null=null;
+let items:HTMLElement[]=[];
+let selected=0;
+function show(){
  if(!scene)return;
- scene.style.transform=reduced.matches?"none":`rotateX(${tilt}deg) rotateY(${angle}deg)`;
-}
-function render(){
- if(!scene)return;
- const cards=[...document.querySelectorAll<HTMLElement>("#stories .news-card")].slice(0,9);
  scene.replaceChildren();
- if(!cards.length){if(status)status.textContent="暂无可探索的新闻";return;}
- if(status)status.textContent=`探索 ${cards.length} 个主题；选择节点进入正文`;
- const count=cards.length;
- cards.forEach((card,i)=>{
-  const button=document.createElement("button");
-  button.type="button";button.className="spatial-node";
-  const title=card.querySelector("h3")?.textContent?.trim()||"未命名资讯";
-  const category=card.querySelector(".news-category")?.textContent?.trim()||"探索";
-  const label=document.createElement("span");label.className="spatial-label";label.textContent=category;
-  const heading=document.createElement("strong");heading.textContent=title;
-  button.append(label,heading);
-  const theta=2*Math.PI*i/count;
-  const radius=count===1?0:Math.min(250,120+count*12);
-  const x=Math.sin(theta)*radius,y=Math.cos(theta*2)*Math.min(62,count*8),z=Math.cos(theta)*radius;
-  button.style.setProperty("--x",x.toFixed(1)+"px");
-  button.style.setProperty("--y",y.toFixed(1)+"px");
-  button.style.setProperty("--z",z.toFixed(1)+"px");
-  button.addEventListener("click",()=>{
-   dialog?.close();card.scrollIntoView({behavior:reduced.matches?"instant":"smooth",block:"center"});
-   const reveal=card.querySelector<HTMLButtonElement>(".news-read-toggle");
-   if(reveal?.getAttribute("aria-expanded")==="false")reveal.click();
-   reveal?.focus({preventScroll:true});
-  });
-  scene.append(button);
+ const card=items[selected];
+ if(!card){if(status)status.textContent="暂无可探索的新闻";return;}
+ const button=document.createElement("button");
+ button.type="button";
+ button.className="spatial-node";
+ const label=document.createElement("span");label.className="spatial-label";
+ label.textContent=card.querySelector(".news-category")?.textContent||"探索";
+ const title=document.createElement("strong");title.textContent=card.querySelector("h3")?.textContent||"未命名资讯";
+ const excerpt=document.createElement("span");excerpt.className="spatial-excerpt";
+ excerpt.textContent=card.querySelector(".news-summary")?.textContent||"";
+ button.append(label,title,excerpt);
+ button.addEventListener("click",()=>{
+  dialog?.close();
+  card.scrollIntoView({behavior:reduced.matches?"instant":"smooth",block:"center"});
+  const reveal=card.querySelector<HTMLButtonElement>(".news-read-toggle");
+  if(reveal?.getAttribute("aria-expanded")==="false")reveal.click();
+  reveal?.focus({preventScroll:true});
  });
- transform();
+ scene.append(button);
+ if(status)status.textContent=(selected+1)+" / "+items.length+" · "+label.textContent;
+}
+function move(step:number){
+ if(!items.length)return;
+ selected=(selected+step+items.length)%items.length;
+ show();
 }
 open?.addEventListener("click",()=>{
- if(!dialog||!scene)return;
+ if(!dialog)return;
+ items=[...document.querySelectorAll<HTMLElement>("#stories .news-card")].slice(0,24);
+ selected=0;
  lastFocus=document.activeElement instanceof HTMLElement?document.activeElement:open;
- render();dialog.showModal();close?.focus();
+ show();dialog.showModal();close?.focus();
 });
 close?.addEventListener("click",()=>dialog?.close());
 dialog?.addEventListener("close",()=>lastFocus?.focus({preventScroll:true}));
-dialog?.addEventListener("click",event=>{if(event.target===dialog)dialog.close();});
-dialog?.querySelectorAll<HTMLButtonElement>("[data-rotate]").forEach(button=>button.addEventListener("click",()=>{
- angle+=Number(button.dataset.rotate||"0");transform();
-}));
-scene?.addEventListener("pointerdown",e=>{if(e.target===scene)startX=e.clientX;});
-scene?.addEventListener("pointerup",e=>{if(startX===null)return;angle=Math.max(-1080,Math.min(1080,angle+(e.clientX-startX)*.35));startX=null;transform();});
-dialog?.addEventListener("keydown",e=>{
- if(e.key==="ArrowLeft"||e.key==="ArrowRight"){angle+=e.key==="ArrowLeft"?-18:18;transform();}
-});
-reduced.addEventListener?.("change",transform);
+dialog?.addEventListener("click",e=>{if(e.target===dialog)dialog.close();});
+dialog?.querySelectorAll<HTMLButtonElement>("[data-rotate]").forEach(button=>button.addEventListener("click",()=>move(Number(button.dataset.rotate)<0?-1:1)));
+const viewport=document.querySelector<HTMLElement>(".spatial-viewport");
+viewport?.addEventListener("touchstart",e=>{startX=e.touches[0]?.clientX??null;},{passive:true});
+viewport?.addEventListener("touchend",e=>{if(startX===null)return;const end=e.changedTouches[0]?.clientX??startX;const distance=end-startX;startX=null;if(Math.abs(distance)>45)move(distance<0?1:-1);},{passive:true});
+dialog?.addEventListener("keydown",e=>{if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();move(e.key==="ArrowLeft"?-1:1);}});
 export {};
