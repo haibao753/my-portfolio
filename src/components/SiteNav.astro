@@ -1,7 +1,8 @@
 ---
 import {navigation} from "../data/site";
+const isBrief = Astro.url.pathname === "/brief/" || Astro.url.pathname === "/brief";
 ---
-<header class="glass-nav" data-native-optics="full-scene">
+<header class:list={["glass-nav", {"brief-admin-nav": isBrief}]} data-native-optics="full-scene">
  <span class="native-optic-edge native-optic-top" aria-hidden="true"></span>
  <span class="native-optic-edge native-optic-bottom" aria-hidden="true"></span>
  <span class="native-optic-edge native-optic-left" aria-hidden="true"></span>
@@ -25,6 +26,9 @@ import {navigation} from "../data/site";
  {navigation.map(item=><a href={item.href}>
   <span data-locale="zh">{item.label.zh}</span><span data-locale="en">{item.label.en}</span>
  </a>)}
+ {isBrief && <a class="admin-brief-refresh" data-admin-brief-refresh href="https://github.com/haibao753/daily-intelligence-brief/actions/workflows/manual-refresh.yml" target="_blank" rel="noopener noreferrer" aria-label="管理员刷新简报（需要 GitHub 仓库权限）">
+   <span data-locale="zh">↻ 管理员刷新简报 ↗</span><span data-locale="en">↻ Regenerate brief (owner) ↗</span>
+ </a>}
 </nav>
 <style>
  .glass-nav{position:sticky;top:max(8px,env(safe-area-inset-top));z-index:110;margin:8px clamp(8px,1.2vw,18px) 0;border:1px solid var(--optic-glass-rim);border-radius:26px;background:var(--optic-glass-fill);-webkit-backdrop-filter:var(--optic-glass-filter);backdrop-filter:var(--optic-glass-filter);box-shadow:0 10px 32px rgba(9,14,26,.12),var(--optic-glass-edge);isolation:isolate}
@@ -60,6 +64,14 @@ import {navigation} from "../data/site";
  :global(html[data-theme="dark"]) .theme-glyph svg{transform:rotate(-15deg)}
 
  .controls [data-menu-toggle]{display:none}
+ /* Only the Daily Brief exposes its menu on desktop; the link still relies
+    on GitHub permissions and never invokes a public paid-generation API. */
+ .brief-admin-nav .controls [data-menu-toggle]{display:flex;align-items:center;justify-content:center}
+ .mobile-menu .admin-brief-refresh{
+  margin-top:8px;border-top:1px solid var(--stroke);border-bottom:0;
+  color:var(--accent);font-weight:700;
+ }
+ .mobile-menu .admin-brief-refresh:focus-visible{outline-offset:-3px}
  .hamburger{display:flex;flex-direction:column;align-items:center;gap:4px}
  .hamburger i{display:block;width:17px;height:1.5px;border-radius:2px;background:currentColor}
  .menu-backdrop{position:fixed;inset:0;z-index:99;background:rgba(9,13,20,.09);pointer-events:none}
