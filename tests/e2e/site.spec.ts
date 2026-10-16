@@ -40,7 +40,7 @@ test("dark theme and bilingual interface persist after a reload", async ({ page 
  await expect(page.locator("html")).toHaveAttribute("data-theme","dark");
  await page.locator("[data-language-toggle]").click();
  await expect(page.locator("html")).toHaveAttribute("lang","en");
- await expect(page.locator(".hero h1").getByText("Make curiosity")).toBeVisible();
+ await expect(page.locator(".hero h1").getByText("Make something")).toBeVisible();
  await page.reload();
  await expect(page.locator("html")).toHaveAttribute("data-theme","dark");
  await expect(page.locator("html")).toHaveAttribute("lang","en");
@@ -160,18 +160,10 @@ test("reduced motion keeps all project content visible", async ({page})=>{
  await expect(page.locator("h1")).toBeVisible();
 });
 
-test("laboratory finale is animated only while visible and respects reduced motion",async({page})=>{
+test("obsolete finale artwork is removed from the homepage",async({page})=>{
  await page.goto("/");
- const finale=page.locator("[data-lab-finale]");
- await expect(finale).toHaveCount(1);
- await finale.scrollIntoViewIfNeeded();
- await expect(finale.locator("animateMotion")).toHaveCount(2);
- await page.waitForTimeout(180);
- const running=await finale.evaluate((svg:SVGSVGElement)=>svg.animationsPaused());
- expect(running).toBe(false);
- await page.emulateMedia({reducedMotion:"reduce"});
- await expect.poll(()=>finale.evaluate((svg:SVGSVGElement)=>svg.animationsPaused())).toBe(true);
- await expect(page.locator(".finale")).toHaveCSS("opacity","1");
+ await expect(page.locator(".finale")).toHaveCount(0);
+ await expect(page.locator(".hero-autograph--pen")).toBeVisible();
 });
 
 test("editorial hero lines and responsive navigation remain readable",async({page,isMobile})=>{
@@ -997,4 +989,31 @@ test("real browser DOM RGB agrees with the optical source for a known opaque pat
   return {actual:[a[0],a[1],a[2]],optical:[b[0],b[1],b[2]],error:Math.max(Math.abs(a[0]-b[0]),Math.abs(a[1]-b[1]),Math.abs(a[2]-b[2]))};
  },screenshot.toString("base64"));
  expect(result.error).toBeLessThan(12);
+});
+
+test("sci-fi headline uses visible pixel animation and non-linear character spacing",async({page})=>{
+ await page.goto("/");
+ const glyphs=page.locator('.hero-title [data-locale="zh"] .hero-title-glyph');
+ await expect(glyphs).toHaveCount(9);
+ const data=await glyphs.evaluateAll(nodes=>nodes.map(node=>{
+  const style=getComputedStyle(node);
+  return {animation:style.animationName,delay:parseFloat(style.animationDelay)};
+ }));
+ expect(data.every(item=>item.animation.includes("hero-pixel-arrive"))).toBeTruthy();
+ const gaps=data.slice(1).map((item,index)=>Math.round((item.delay-data[index].delay)*1000));
+ expect(Math.min(...gaps)).toBeLessThanOrEqual(100);
+ expect(Math.max(...gaps)).toBeGreaterThanOrEqual(400);
+ await expect(page.locator('.hero-title [data-locale="zh"]')).toHaveAttribute("aria-label","做一些有趣的事情。");
+ await page.locator("[data-language-toggle]").click();
+ await expect(page.locator("html")).toHaveAttribute("lang","en");
+ await expect.poll(()=>page.locator('.hero-title [data-locale="en"] .hero-title-glyph').count()).toBeGreaterThan(15);
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+ expect(overflow).toBeLessThanOrEqual(2);
+});
+
+test("reduced-motion headline remains readable without split glyph animations",async({page})=>{
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await page.goto("/");
+ await expect(page.locator(".hero-title .hero-title-glyph")).toHaveCount(0);
+ await expect(page.locator(".hero-title")).toContainText("做一些有趣的事情。");
 });
