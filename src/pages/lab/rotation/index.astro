@@ -16,6 +16,15 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     <div class="slider-block"><label for="angle-y"><span data-locale="zh">绕 Y 轴</span><span data-locale="en">Around Y axis</span></label><output id="angle-y-value" for="angle-y">90°</output><input type="range" min="0" max="180" step="15" value="90" id="angle-y" aria-label="Y axis angle" /></div>
    </div>
   </section>
+  <section class="steps" aria-labelledby="steps-title">
+   <div class="section-line"><h2 id="steps-title"><span data-locale="zh">分步观察</span><span data-locale="en">Walk through the rotation</span></h2></div>
+   <div class="step-buttons" role="group" aria-label="旋转步骤 / Rotation stages">
+    <button type="button" data-rotation-step="0" aria-pressed="false"><span data-locale="zh">① 初始</span><span data-locale="en">① Start</span></button>
+    <button type="button" data-rotation-step="1" aria-pressed="false"><span data-locale="zh">② 第一次旋转</span><span data-locale="en">② First rotation</span></button>
+    <button type="button" data-rotation-step="2" aria-pressed="true"><span data-locale="zh">③ 完成旋转</span><span data-locale="en">③ Both rotations</span></button>
+   </div>
+   <p id="rotation-step-explanation" class="step-explanation" role="status" aria-live="polite"><span data-locale="zh">第二步：左侧再绕 Y 轴，右侧再绕 X 轴。</span><span data-locale="en">Step 2: left adds Y, right adds X.</span></p>
+  </section>
   <section aria-labelledby="comparison-title">
    <div class="section-line"><h2 id="comparison-title"><span data-locale="zh">交换顺序，观察差别</span><span data-locale="en">Swap the order</span></h2><div class="camera-buttons"><button id="rotation-camera-left" type="button" aria-label="向左转动观察视角">↶</button><button id="rotation-camera-right" type="button" aria-label="向右转动观察视角">↷</button></div></div>
    <div class="compare-grid">
@@ -30,13 +39,19 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
      <p class="coordinates"><span data-locale="zh">初始正面 Z 轴指向</span><span data-locale="en">Resulting front Z vector</span> <strong id="rotation-yx-vector">(1.00, 0.00, 0.00)</strong></p>
     </section>
    </div>
+   <button id="rotation-overlay-toggle" type="button" class="overlay-toggle" aria-controls="rotation-overlay-panel" aria-expanded="false"><span data-locale="zh">叠影对比两种姿态</span><span data-locale="en">Overlay both orientations</span> <span aria-hidden="true">↗</span></button>
+   <div id="rotation-overlay-panel" class="overlay-panel" hidden>
+    <p class="overlay-legend"><span class="legend-blue"><span data-locale="zh">蓝：先 X 后 Y</span><span data-locale="en">Blue: X then Y</span></span><span class="legend-orange"><span data-locale="zh">橙：先 Y 后 X</span><span data-locale="en">Orange: Y then X</span></span></p>
+    <canvas id="rotation-overlay" width="720" height="380" role="img" aria-label="蓝色与橙色两个旋转姿态的重叠线框"></canvas>
+    <p class="overlay-caption"><span data-locale="zh">两个线框共用同一观察视角。完全重合时没有姿态差异；它们分开时说明顺序会影响结果。</span><span data-locale="en">Both wireframes share the same camera. Overlap means the orientations agree; divergence reveals the effect of order.</span></p>
+   </div>
    <p class="gesture-hint"><span data-locale="zh">拖动任一立方体可同时改变两边观察角度；立方体本身的旋转结果不会改变。</span><span data-locale="en">Drag either cube to change both camera views; the underlying rotations do not change.</span></p>
   </section>
   <section class="result" aria-labelledby="result-title">
    <p class="eyebrow">WHAT YOU DISCOVER</p>
    <h2 id="result-title"><span data-locale="zh">为什么结果不同？</span><span data-locale="en">Why are they different?</span></h2>
    <p class="math-line">R<sub>Y</sub>(θ<sub>Y</sub>) R<sub>X</sub>(θ<sub>X</sub>) <span aria-label="通常不等于">≠</span> R<sub>X</sub>(θ<sub>X</sub>) R<sub>Y</sub>(θ<sub>Y</sub>)</p>
-   <div class="result-metric"><span data-locale="zh">两种旋转矩阵的差距（Frobenius 范数）</span><span data-locale="en">Matrix difference (Frobenius norm)</span><output id="rotation-difference" aria-live="polite">2.45</output></div>
+   <div class="result-metric"><span data-locale="zh">当前两种姿态的矩阵差距（Frobenius 范数）</span><span data-locale="en">Current orientation difference (Frobenius norm)</span><output id="rotation-difference" aria-live="polite">2.45</output></div>
    <p id="rotation-note" role="status" aria-live="polite">交换旋转顺序会改变空间姿态。比较两个立方体的正面标记。</p>
    <p class="explainer"><span data-locale="zh">三维旋转属于旋转群 SO(3)。矩阵作用在列向量上，右侧的操作先执行，因此「先 X 后 Y」对应 RY · RX。旋转的先后顺序通常不可交换；某些特殊角度（如其中一个为 0°）可能得到相同结果。</span><span data-locale="en">Three-dimensional rotations form SO(3). With column vectors, the rightmost matrix acts first: X then Y means RY · RX. Order generally matters, although special cases (such as a zero angle) can coincide.</span></p>
   </section>
@@ -48,10 +63,10 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 </script>
 <style>
  .rotation-lab{max-width:1120px;margin:0 auto;padding:clamp(22px,5vw,65px) 0 90px}
- .lab-head{margin:0 0 clamp(30px,5vw,65px)}
+ .lab-head{margin:0 0 clamp(22px,3vw,44px)}
  .lab-head .eyebrow{font-size:11px;letter-spacing:.14em}
  .back-link{display:inline-block;margin:9px 0 24px;color:var(--muted);font-size:13px;text-decoration:none}
- h1{font-size:clamp(38px,7vw,88px);line-height:1.08;letter-spacing:-.065em;margin:0 0 18px}
+ h1{font-size:clamp(34px,5.6vw,66px);line-height:1.08;letter-spacing:-.065em;margin:0 0 18px}
  .lead{max-width:700px;font-size:clamp(15px,1.8vw,21px);line-height:1.8;color:var(--muted);margin:0}
  .control-area{padding:22px 0 32px;border-top:1px solid var(--stroke)}
  .section-line{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px}
@@ -73,6 +88,19 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
  .coordinates{border-top:1px solid var(--stroke);display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;padding:13px 20px;margin:0;font-size:12px;color:var(--muted)}
  .coordinates strong{color:var(--fg);font-variant-numeric:tabular-nums}
  .gesture-hint{font-size:12px;color:var(--muted);margin:14px 0 36px}
+ .steps{padding:0 0 25px}
+ .step-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ .step-buttons button{border-radius:10px;padding:12px 8px;font-weight:600;min-width:0;white-space:normal;line-height:1.35}
+ .step-buttons button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+ .step-explanation{font-size:13px;color:var(--muted);min-height:1.6em;margin:12px 0 0}
+ .overlay-toggle{display:block;width:100%;border-radius:12px;padding:12px 16px;text-align:left;font-weight:600;margin:16px 0}
+ .overlay-toggle[aria-expanded="true"]{border-color:var(--accent)}
+ .overlay-panel{background:var(--card);border:1px solid var(--stroke);border-radius:14px;overflow:hidden}
+ .overlay-panel[hidden]{display:none!important}
+ .overlay-panel canvas{display:block;width:100%;height:clamp(240px,36vw,380px)}
+ .overlay-legend{display:flex;flex-wrap:wrap;gap:12px 22px;margin:0;padding:15px 18px 0;font-size:12px;font-weight:600}
+ .legend-blue{color:#236ca9}.legend-orange{color:#b8682d}
+ .overlay-caption{padding:0 18px 16px;margin:0;color:var(--muted);font-size:12px;line-height:1.7}
  .result{border-top:1px solid var(--stroke);padding-top:30px;max-width:820px}
  .result h2{font-size:clamp(28px,3.6vw,44px);letter-spacing:-.04em;margin:3px 0 18px}
  .result .eyebrow{font-size:11px}.math-line{font-size:clamp(16px,2.5vw,25px);margin:0 0 25px;white-space:normal;line-height:1.6}
@@ -81,6 +109,6 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
  .result #rotation-note{font-weight:600;line-height:1.7}.explainer{color:var(--muted);line-height:1.85;font-size:14px}
  .lab-footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid var(--stroke);padding-top:25px;margin-top:50px;color:var(--muted);font-size:12px}
  .lab-footer a{color:var(--fg);text-decoration:none}
- @media(max-width:760px){.rotation-lab{width:calc(100% - 28px);padding-top:18px}.sliders,.compare-grid{grid-template-columns:1fr}.compare-grid{gap:11px}.slider-block{padding:13px 16px}.outcome canvas{height:245px}.control-area{padding-top:15px}.lab-head{margin-bottom:35px}.outcome-header{padding:13px 15px 0}.coordinates{padding:12px 15px}.result-metric{align-items:flex-start;flex-direction:column;gap:4px}.lab-footer{font-size:11px}}
+ @media(max-width:760px){.rotation-lab{width:calc(100% - 28px);padding-top:18px}.sliders,.compare-grid{grid-template-columns:1fr}.compare-grid{gap:11px}.slider-block{padding:13px 16px}.outcome canvas{height:245px}.control-area{padding-top:15px}.lab-head{margin-bottom:35px}.outcome-header{padding:13px 15px 0}.coordinates{padding:12px 15px}.result-metric{align-items:flex-start;flex-direction:column;gap:4px}.step-buttons{gap:6px}.step-buttons button{font-size:11px;padding:10px 3px}.overlay-panel canvas{height:260px}.lab-footer{font-size:11px}}
  @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
