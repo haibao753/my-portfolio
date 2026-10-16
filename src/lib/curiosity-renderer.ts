@@ -67,7 +67,7 @@ export function createSculpture(host:HTMLElement):SculptureController{
   return mix(d,a,smoothstep(3.,4.,p));
  }
  `;
- function flowingColour(material:THREE.Material,emissive=false){
+ function flowingColour(material:THREE.Material,emissive=false,particles=false){
   material.onBeforeCompile=shader=>{
    shader.uniforms.uJhTime=timeUniform;shader.uniforms.uJhDark=darkUniform;
    shader.vertexShader=shader.vertexShader.replace("#include <common>","#include <common>\nvarying vec2 vJhUv;")
@@ -79,21 +79,24 @@ export function createSculpture(host:HTMLElement):SculptureController{
      float glint=pow(.5+.5*sin(vJhUv.x*6.5-vJhUv.y*4.5-uJhTime*.85),22.);
      diffuseColor.rgb*=tint*(1.+glint*.30);`);
    if(emissive)shader.fragmentShader=shader.fragmentShader.replace("#include <emissivemap_fragment>","#include <emissivemap_fragment>\ntotalEmissiveRadiance+=tint*glint*.12;");
+   if(particles)shader.fragmentShader=shader.fragmentShader.replace("#include <map_particle_fragment>",`#include <map_particle_fragment>
+    vec2 disc=gl_PointCoord*2.-1.;
+    float radius=length(disc);
+    if(radius>1.)discard;
+    float dome=sqrt(max(0.,1.-radius*radius));
+    diffuseColor.a*=1.-smoothstep(.68,1.,radius);
+    diffuseColor.rgb*=.62+.38*dome;
+    diffuseColor.rgb+=vec3(pow(max(dot(normalize(vec3(disc,dome)),normalize(vec3(-.4,.5,1.))),0.),18.)*.27);`);
   };
-  material.customProgramCacheKey=()=>"jh-flowing-colour-"+emissive;
+  material.customProgramCacheKey=()=>"jh-flowing-colour-"+emissive+"-"+particles;
  }
  const satin=new THREE.MeshStandardMaterial({color:0xffffff,metalness:.24,roughness:.36,side:THREE.DoubleSide,transparent:true});
  flowingColour(satin,true);
  const surface=new THREE.Mesh(geometry,satin);surface.frustumCulled=false;group.add(surface);
  const wireMaterial=new THREE.MeshBasicMaterial({color:0xb8d9ed,wireframe:true,transparent:true,opacity:.11,depthWrite:false});
  const wire=new THREE.Mesh(geometry,wireMaterial);wire.scale.setScalar(1.001);wire.frustumCulled=false;group.add(wire);
- const dot=document.createElement("canvas");dot.width=32;dot.height=32;
- const dotContext=dot.getContext("2d")!;const gradient=dotContext.createRadialGradient(16,16,2,16,16,16);
- gradient.addColorStop(0,"rgba(255,255,255,1)");gradient.addColorStop(.58,"rgba(255,255,255,.98)");gradient.addColorStop(1,"rgba(255,255,255,0)");
- dotContext.fillStyle=gradient;dotContext.fillRect(0,0,32,32);
- const dotMap=new THREE.CanvasTexture(dot);
- const pointMaterial=new THREE.PointsMaterial({color:0xffffff,size:.035,map:dotMap,transparent:true,opacity:.04,depthWrite:false,sizeAttenuation:true});
- flowingColour(pointMaterial);
+ const pointMaterial=new THREE.PointsMaterial({color:0xffffff,size:.035,transparent:true,opacity:.04,depthWrite:false,sizeAttenuation:true});
+ flowingColour(pointMaterial,false,true);
  const points=new THREE.Points(pointGeometry,pointMaterial);points.frustumCulled=false;group.add(points);
  const threadMaterial=new THREE.MeshStandardMaterial({color:0xffffff,metalness:.2,roughness:.4,transparent:true,opacity:0,side:THREE.DoubleSide});
  flowingColour(threadMaterial,true);
@@ -183,6 +186,6 @@ export function createSculpture(host:HTMLElement):SculptureController{
   beginDrag(){dragging=true;velocity=0},
   drag(dx,seconds){spin+=dx*.007;velocity=Math.max(-2.3,Math.min(2.3,dx*.007/seconds));if(!playing)draw()},
   endDrag(){dragging=false},
-  dispose(){disposed=true;playing=false;cancelAnimationFrame(frame);resizeObserver.disconnect();geometry.dispose();pointGeometry.dispose();threadGeometry.dispose();satin.dispose();wireMaterial.dispose();pointMaterial.dispose();threadMaterial.dispose();dotMap.dispose();renderer.dispose();canvas.remove()}
+  dispose(){disposed=true;playing=false;cancelAnimationFrame(frame);resizeObserver.disconnect();geometry.dispose();pointGeometry.dispose();threadGeometry.dispose();satin.dispose();wireMaterial.dispose();pointMaterial.dispose();threadMaterial.dispose();renderer.dispose();canvas.remove()}
  };
 }
