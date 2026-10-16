@@ -26,6 +26,13 @@ const stepMatrix=(x:number,y:number,order:Order,stage:number):Mat3=>{
  if(stage===1)return order==="xy"?rx(x):ry(y);
  return composition(x,y,order);
 };
+// Physically valid intermediate orientations. A segment is either the first
+// or second fixed-world-axis operation. Never linearly interpolate matrix cells.
+const partialStep=(x:number,y:number,order:Order,segment:0|1,amount:number):Mat3=>{
+ const t=Math.max(0,Math.min(1,amount));
+ if(segment===0)return order==="xy"?rx(x*t):ry(y*t);
+ return order==="xy"?multiply(ry(y*t),rx(x)):multiply(rx(x*t),ry(y));
+};
 const norm = (a:Mat3,b:Mat3):number =>
  Math.sqrt(a.reduce((sum,row,i)=>sum+row.reduce((s,v,j)=>s+(v-b[i][j])**2,0),0));
 const fmt=(v:number)=>Math.abs(v)<.005?"0.00":v.toFixed(2);
@@ -120,9 +127,24 @@ function initialize(){
  const overlay=root.querySelector<HTMLCanvasElement>("#rotation-overlay");
  const overlayPanel=root.querySelector<HTMLElement>("#rotation-overlay-panel");
  const overlayToggle=root.querySelector<HTMLButtonElement>("#rotation-overlay-toggle");
+ const replay=root.querySelector<HTMLButtonElement>("#rotation-replay");
+ const stop=root.querySelector<HTMLButtonElement>("#rotation-stop");
+ const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
  let stage=2;
+ let generation=0;
+ let stopSegment:(()=>void)|null=null;
+ let playing=false;
+ let currentFrame:{a:Mat3;b:Mat3}|null=null;
  if(!first||!second||!ax||!ay||!xval||!yval||!v1||!v2||!difference||!note)return;
  const isEn=()=>document.documentElement.lang==="en";
+ const updatePlaybackControls=()=>{
+  if(stop)stop.hidden=!playing;
+  replay?.setAttribute("aria-disabled",String(playing));
+ };
+ const paint=(a:Mat3,b:Mat3)=>{
+  currentFrame={a,b};
+  paint(a,b);
+ };
  const render=()=>{
   const x=Number(ax.value),y=Number(ay.value);
   xval.textContent=x+"°";yval.textContent=y+"°";
@@ -147,9 +169,75 @@ function initialize(){
    ?(isEn()?"These settings produce the same orientation. Try two nonzero angles.":"当前角度下两种顺序结果相同。试试两个非零角度。")
    :(isEn()?"Changing the order changes the final 3D orientation. Compare the labelled faces.":"交换旋转顺序改变了最终姿态。观察立方体上不同颜色的面标记。");
  };
- ax.addEventListener("input",render);ay.addEventListener("input",render);
- root.querySelectorAll<HTMLButtonElement>("[data-rotation-step]").forEach(button=>button.addEventListener("click",()=>{stage=Number(button.dataset.rotationStep);render();}));
+ // Cancel outstanding frames and pending asynchronous steps before another
+ // user action changes the target. No idle animation loop is ever scheduled.
+ const cancel=()=>{
+  generation++;
+  stopSegment?.();
+  stopSegment=null;
+  playing=false;
+  updatePlaybackControls();
+ };
+ const animateSegment=(segment:0|1,forward:boolean):Promise<boolean>=>new Promise(resolve=>{
+  let start:number|null=null,raf=0,finished=false;
+  const finish=(ok:boolean)=>{
+   if(finished)return;
+   finished=true;
+   if(raf)cancelAnimationFrame(raf);
+   stopSegment=null;
+   resolve(ok);
+  };
+  stopSegment=()=>finish(false);
+  const tick=(time:number)=>{
+   if(finished)return;
+   if(start===null)start=time;
+   const progress=Math.min(1,(time-start)/660);
+   const eased=progress*progress*(3-2*progress);
+   const amount=forward?eased:1-eased;
+   const x=Number(ax.value),y=Number(ay.value);
+   paint(partialStep(x,y,"xy",segment,amount),partialStep(x,y,"yx",segment,amount));
+   if(progress<1)raf=requestAnimationFrame(tick);
+   else finish(true);
+  };
+  raf=requestAnimationFrame(tick);
+ });
+ const goTo=async(target:number)=>{
+  cancel();
+  if(reduced.matches){stage=target;render();return;}
+  const token=generation;
+  while(stage!==target){
+   const forward=target>stage;
+   const segment=(forward?stage:stage-1) as 0|1;
+   if(!await animateSegment(segment,forward) || token!==generation)return;
+   stage+=forward?1:-1;
+   render();
+  }
+ };
+ const play=async()=>{
+  cancel();
+  stage=0;render();
+  if(reduced.matches){stage=2;render();return;}
+  const token=generation;
+  playing=true;
+  updatePlaybackControls();
+  for(const segment of [0,1] as const){
+   if(!await animateSegment(segment,true)||token!==generation)return;
+   stage=segment+1;
+   render();
+  }
+  if(token===generation){
+   playing=false;
+   updatePlaybackControls();
+  }
+ };
+ const interrupt=()=>{cancel();render();};
+ replay?.addEventListener("click",()=>{if(!playing)void play();});
+ stop?.addEventListener("click",interrupt);
+ ax.addEventListener("input",()=>{cancel();render();});
+ ay.addEventListener("input",()=>{cancel();render();});
+ root.querySelectorAll<HTMLButtonElement>("[data-rotation-step]").forEach(button=>button.addEventListener("click",()=>{void goTo(Number(button.dataset.rotationStep));}));
  root.querySelectorAll<HTMLButtonElement>("[data-rotation-preset]").forEach(button=>button.addEventListener("click",()=>{
+  cancel();
   ax.value=button.dataset.rotationPreset==="same"?"0":"90";
   ay.value="90";
   stage=2;render();
@@ -158,12 +246,12 @@ function initialize(){
   if(!overlayPanel)return;
   overlayPanel.hidden=!overlayPanel.hidden;
   overlayToggle.setAttribute("aria-expanded",String(!overlayPanel.hidden));
-  render();
+  if(currentFrame)paint(currentFrame.a,currentFrame.b);else render();
  });
  root.querySelector<HTMLButtonElement>("#rotation-reset")?.addEventListener("click",()=>{
-  ax.value="90";ay.value="90";camera.yaw=.58;camera.pitch=-.31;stage=2;render();});
- root.querySelector<HTMLButtonElement>("#rotation-camera-left")?.addEventListener("click",()=>{camera.yaw-=.24;render();});
- root.querySelector<HTMLButtonElement>("#rotation-camera-right")?.addEventListener("click",()=>{camera.yaw+=.24;render();});
+  cancel();ax.value="90";ay.value="90";camera.yaw=.58;camera.pitch=-.31;stage=2;render();});
+ root.querySelector<HTMLButtonElement>("#rotation-camera-left")?.addEventListener("click",()=>{camera.yaw-=.24;if(currentFrame)paint(currentFrame.a,currentFrame.b);else render();});
+ root.querySelector<HTMLButtonElement>("#rotation-camera-right")?.addEventListener("click",()=>{camera.yaw+=.24;if(currentFrame)paint(currentFrame.a,currentFrame.b);else render();});
  for(const canvas of [first,second]){
   let pointer:{id:number;x:number;y:number}|null=null;
   canvas.addEventListener("pointerdown",event=>{
@@ -173,13 +261,25 @@ function initialize(){
   canvas.addEventListener("pointermove",event=>{
    if(!pointer||event.pointerId!==pointer.id)return;
    camera.yaw+=(event.clientX-pointer.x)*.009;camera.pitch=Math.max(-1.2,Math.min(1.2,camera.pitch+(event.clientY-pointer.y)*.007));
-   pointer.x=event.clientX;pointer.y=event.clientY;render();
+   pointer.x=event.clientX;pointer.y=event.clientY;
+   if(currentFrame)paint(currentFrame.a,currentFrame.b);else render();
   });
   const end=()=>{pointer=null;};
   canvas.addEventListener("pointerup",end);canvas.addEventListener("pointercancel",end);
  }
- const resizer=new ResizeObserver(render);resizer.observe(first);resizer.observe(second);
- new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+ const resizer=new ResizeObserver(()=>{
+  if(currentFrame)paint(currentFrame.a,currentFrame.b);else render();
+ });
+ resizer.observe(first);resizer.observe(second);
+ new MutationObserver(()=>{
+  if(playing)updatePlaybackControls();
+  render();
+ }).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+ reduced.addEventListener?.("change",()=>{
+  if(reduced.matches){cancel();render();}
+ });
+ document.addEventListener("visibilitychange",()=>{if(document.hidden){cancel();render();}});
+ updatePlaybackControls();
  render();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initialize,{once:true});else initialize();
