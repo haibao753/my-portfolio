@@ -14,64 +14,84 @@ import CuriositySculpture from "./CuriositySculpture.astro";
  <CuriositySculpture />
 </section>
 <script>
- // Deterministic uneven rhythm: rapid clusters separated by deliberate pauses.
- // Animate DOM text instead of a canvas so the headline remains selectable and indexable.
+ // Each glyph materializes on a deliberately non-linear signal clock.
+ // The original HTML stays readable when scripts are disabled.
  const headline = document.querySelector<HTMLElement>(".hero-title");
  if (headline) {
-  const timings = [0, 125, 205, 460, 535, 605, 930, 1020, 1160, 1500, 1575, 1670, 1940, 2045, 2170, 2490, 2590, 2680];
-  let replayTimer: number | undefined;
-  const render = () => {
-   const locale = document.documentElement.lang === "en" ? "en" : "zh";
-   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-   headline.querySelectorAll<HTMLElement>("[data-locale]").forEach(group => {
-    // Always restore text before re-splitting to avoid nested animation wrappers.
-    group.querySelectorAll<HTMLElement>(".hero-title-line").forEach(line => {
-     const original = line.dataset.originalText || line.textContent || "";
-     line.dataset.originalText = original;
-     line.textContent = original;
-    });
-    group.removeAttribute("aria-label");
-   });
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  const chineseBeats = [0, 95, 175, 660, 740, 830, 1540, 1620, 2190];
+  const englishSteps = [0, 75, 165, 260, 670, 755, 825, 910, 990, 1410, 1495, 1585, 1675, 2135, 2210, 2285, 2370, 2480, 2980, 3060, 3140, 3250, 3650, 3740, 3830, 3970];
+  let currentLanguage = "";
+  function render() {
+   const language = document.documentElement.lang === "en" ? "en" : "zh";
+   currentLanguage = language;
    headline.classList.remove("hero-title--pixels");
-   if (reduced) return;
-   const group = headline.querySelector<HTMLElement>(`[data-locale="${locale}"]`);
-   if (!group) return;
-   const lines = Array.from(group.querySelectorAll<HTMLElement>(".hero-title-line"));
-   group.setAttribute("aria-label", lines.map(line => line.textContent || "").join(locale === "zh" ? "" : " "));
-   let index = 0;
-   lines.forEach(line => {
-    const chars = Array.from(line.textContent || "");
-    const fragment = document.createDocumentFragment();
-    chars.forEach(char => {
-     const span = document.createElement("span");
-     span.className = "hero-title-glyph";
-     span.setAttribute("aria-hidden", "true");
-     span.style.setProperty("--glyph-delay", `${timings[index] ?? timings[timings.length - 1] + (index - timings.length + 1) * 115}ms`);
-     span.textContent = char === " " ? "\u00a0" : char;
-     fragment.appendChild(span);
-     index++;
-    });
-    line.replaceChildren(fragment);
+   headline.querySelectorAll<HTMLElement>(".hero-title-line").forEach(line => {
+    const original = line.dataset.originalText ?? line.textContent ?? "";
+    line.dataset.originalText = original;
+    line.textContent = original;
    });
-   // Force restart when switching languages without moving layout or touching unrelated elements.
+   headline.querySelectorAll<HTMLElement>("[data-locale]").forEach(group => group.removeAttribute("aria-label"));
+   if (reducedMotion.matches) return;
+
+   const active = headline.querySelector<HTMLElement>(`[data-locale="${language}"]`);
+   if (!active) return;
+   const lines = Array.from(active.querySelectorAll<HTMLElement>(".hero-title-line"));
+   active.setAttribute("aria-label", lines.map(line => line.textContent ?? "").join(language === "zh" ? "" : " "));
+   const beats = language === "zh" ? chineseBeats : englishSteps;
+   let count = 0;
+   for (const line of lines) {
+    const fragment = document.createDocumentFragment();
+    for (const character of Array.from(line.textContent ?? "")) {
+     if (character === " ") {
+      fragment.appendChild(document.createTextNode(" "));
+      continue;
+     }
+     const glyph = document.createElement("span");
+     glyph.className = "hero-title-glyph";
+     glyph.setAttribute("aria-hidden", "true");
+     glyph.dataset.glyph = character;
+     const delay = beats[count] ?? beats[beats.length-1] + (count-beats.length+1)*110;
+     glyph.style.setProperty("--glyph-delay", `${delay}ms`);
+     // The occasional glint is a separate pseudo-element; final letters stay solid.
+     if (count === 2 || count === 7 || count === 17) {
+      glyph.dataset.glint = "";
+      glyph.style.setProperty("--glint-delay", `${delay + 4600 + (count%3)*2100}ms`);
+     }
+     glyph.textContent = character;
+     fragment.appendChild(glyph);
+     count++;
+    }
+    line.replaceChildren(fragment);
+   }
+   // Reflow only once per run to reliably restart even after restoring from bfcache.
    void headline.offsetWidth;
    headline.classList.add("hero-title--pixels");
-  };
+  }
+
   render();
-  window.addEventListener("jhlab:language", () => {
-   window.clearTimeout(replayTimer);
-   replayTimer = window.setTimeout(render, 0);
+  // Language changes are owned by BaseLayout, which updates html.lang directly.
+  const observer = new MutationObserver(() => {
+   const next = document.documentElement.lang === "en" ? "en" : "zh";
+   if (next !== currentLanguage) render();
   });
-  window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", render);
+  observer.observe(document.documentElement, {attributes:true,attributeFilter:["lang"]});
+  reducedMotion.addEventListener("change", render);
+  addEventListener("pageshow", event => { if (event.persisted) render(); });
  }
 </script>
 <style>
  .hero{display:grid;grid-template-columns:1fr 1.16fr;align-items:center;gap:clamp(10px,2vw,30px);text-align:left;padding-top:clamp(44px,6vw,76px);padding-bottom:clamp(80px,8vw,125px);position:relative;isolation:isolate}
  .hero-copy{min-width:0;position:relative;z-index:1}
  .hero h1{font-weight:750;letter-spacing:-.075em;line-height:1.14;font-size:clamp(53px,6.6vw,96px);margin:0 0 22px}
- .hero-title--pixels .hero-title-glyph{display:inline-block;opacity:0;animation:pixel-signal-in 480ms steps(5,end) var(--glyph-delay) backwards;animation-fill-mode:forwards}
- @keyframes pixel-signal-in{0%{opacity:0;filter:blur(3px);transform:translateY(5px) scale(.92);text-shadow:2px 0 var(--accent),-2px 0 rgba(58,203,218,.55)}28%{opacity:.65;filter:blur(1px);transform:translateY(-2px) scale(1.025)}44%{opacity:.12;filter:blur(2px);transform:translateY(2px)}72%{opacity:.9;filter:blur(0);transform:translateY(0)}100%{opacity:1;filter:none;transform:none;text-shadow:none}}
- @media(prefers-reduced-motion:reduce){.hero-title--pixels .hero-title-glyph{animation:none;opacity:1;filter:none;transform:none}}
+ /* Pixel-coded reveal: flicker, tiny stepped displacement, then perfectly legible text. */
+ .hero-title--pixels .hero-title-glyph{position:relative;display:inline-block;opacity:0;animation:hero-pixel-arrive 540ms steps(6,end) var(--glyph-delay) both}
+ .hero-title--pixels .hero-title-glyph::before{content:attr(data-glyph);position:absolute;inset:0;pointer-events:none;opacity:0;color:var(--accent);text-shadow:2px 0 #39d4eb,-2px 0 rgba(86,142,253,.7);clip-path:inset(15% 0 43% 0);animation:hero-pixel-ghost 540ms steps(5,end) var(--glyph-delay) both}
+ .hero-title--pixels .hero-title-glyph[data-glint]::after{content:attr(data-glyph);position:absolute;inset:0;pointer-events:none;color:var(--accent);opacity:0;clip-path:inset(42% 0 48% 0);animation:hero-pixel-glint 10s linear var(--glint-delay) infinite}
+ @keyframes hero-pixel-arrive{0%{opacity:0;transform:translate3d(0,8px,0) scale(.92);text-shadow:3px 0 var(--accent),-3px 0 #45cbd8}17%{opacity:.9;transform:translate3d(2px,-2px,0) scale(1.025)}30%{opacity:.07;transform:translate3d(-2px,1px,0)}48%{opacity:1;transform:translate3d(1px,-1px,0);text-shadow:-2px 0 #48c8dc}61%{opacity:.2;transform:translate3d(0,2px,0)}81%{opacity:1;transform:none;text-shadow:1px 0 var(--accent)}100%{opacity:1;transform:none;text-shadow:none}}
+ @keyframes hero-pixel-ghost{0%,12%,35%,63%,100%{opacity:0;transform:translateX(0)}18%,52%,77%{opacity:.8;transform:translateX(3px)}}
+ @keyframes hero-pixel-glint{0%,1.5%,3%,100%{opacity:0}1.8%,2.2%{opacity:.65}2.5%{opacity:.16}}
+ @media(prefers-reduced-motion:reduce){.hero-title--pixels .hero-title-glyph{animation:none!important;opacity:1;transform:none}.hero-title-glyph::before,.hero-title-glyph::after{display:none!important}}
  .hero-title-line{display:block;overflow:visible;white-space:nowrap}
  .hero-title [data-locale]{width:100%}
  .hero-title .hero-title-line:nth-child(2){margin-top:.018em}
