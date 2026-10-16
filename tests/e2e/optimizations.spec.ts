@@ -19,13 +19,10 @@ test('filtering preserves keyboard focus and follows the selected UI language', 
  await filter.press('Enter');
  await expect(filter).toBeFocused();
  await expect(filter).toHaveAttribute('aria-pressed', 'true');
- // Filtering may or may not scroll enough to collapse the toolbar.
- // Only click its logo when compact: in expanded state the logo links home.
- const nav=page.locator('.glass-nav');
- if(await nav.getAttribute('data-orb-closed')==='true'){
-  await nav.locator('.brand').click();
-  await expect(nav).toHaveAttribute('data-orb-closed','false');
- }
+ // Scrolling back to the top restores the full toolbar without following
+ // the brand's home link. This works whether filtering collapsed it or not.
+ await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+ await expect.poll(async()=>page.locator('.glass-nav').evaluate(el=>el.getBoundingClientRect().width)).toBeGreaterThan(200);
  await expect(page).toHaveURL(url=>url.pathname==='/brief/');
  await page.locator('[data-language-toggle]').click();
  await expect(page.locator('#tabs button').first()).toHaveText('All');
