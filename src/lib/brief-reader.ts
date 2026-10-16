@@ -44,7 +44,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&statusNode&&headline&&total){
  };
  const render=()=>{
   const selection=current.filter(x=>category==="全部"||(x.category||"其他")===category);
-  statusNode.textContent=t(`显示 ${selection.length} 条`,`${selection.length} stories`);
+  statusNode.textContent=t(`显示 ${selection.length} 条`,`Showing ${selection.length} stories`);
   const fragment=document.createDocumentFragment();
   if(!selection.length)fragment.append(txt("div",t("暂无对应资讯。请切换分类或日期。","No stories here. Choose another category or date."),"news-empty"));
   for(const item of selection){
