@@ -89,6 +89,10 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 /* Transparent editorial provenance: old archives gracefully omit these fields. */
 .evidence-line{display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 15px}.evidence-pill{border:1px solid var(--line);padding:4px 9px;border-radius:999px;font-size:10px;color:var(--muted)}
 .story details{margin:12px 0 0;border-top:1px solid var(--line);padding-top:12px;font-size:12px;color:var(--muted)}.story summary{cursor:pointer;color:var(--ink);font-weight:600;list-style-position:inside}.story details p{margin-top:11px}.coverage-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.coverage-links a{font-size:11px;text-decoration:underline;text-underline-offset:3px}.story .feedback{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.story .feedback button{font-size:11px;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:999px;padding:5px 10px}.story .feedback button[aria-pressed="true"]{background:var(--ink);color:var(--page)}.feedback-note{font-size:10px;color:var(--soft)}
+
+/* Read-first landing: brief content must appear in the initial mobile viewport. */
+.hero{padding:24px 0 16px}.hero-top{font-size:10px}.hero h1{font-size:clamp(28px,4vw,44px);line-height:1.2;letter-spacing:-.055em;margin:12px 0 14px}.hero-body{display:flex;align-items:center;gap:20px;justify-content:space-between}.hero-description{font-size:12px;line-height:1.7;max-width:570px}.hero-description .brief-long-intro{display:none}.issue-summary{min-width:auto;border-left:0;padding:0;gap:3px;align-self:center}.issue-summary #headlineDate{font-size:14px;font-weight:650}.issue-summary #total{font-size:11px}.issue-intro{display:none}.issues-section{padding-top:22px}.section-heading{margin-bottom:13px}.section-heading h2{font-size:clamp(22px,3vw,34px);margin:4px 0 0}.section-heading .hint{display:none}.toolbar{padding:9px 0}.status{margin:10px 0 14px}
+@media(max-width:700px){.hero{padding:19px 0 12px}.hero-top .right{display:none}.hero h1{font-size:30px;line-height:1.25;margin:9px 0}.hero-body{display:flex;align-items:center;gap:10px}.hero-description{display:none}.issue-summary{border:0;margin:0;padding:0;align-self:center;text-align:right}.issue-summary .label{font-size:9px}.issue-summary #headlineDate{font-size:13px}.issue-summary #total{font-size:10px}.issues-section{padding-top:17px}.section-heading{margin-bottom:9px}.section-heading h2{font-size:23px}.small-label{font-size:9px}.status{font-size:10px;margin:9px 0}.story{padding:21px 0}.story h2{font-size:21px;margin:12px 0}}
 </style>
 <link rel="stylesheet" href="/assets/nav-controls.css">
 <link rel="stylesheet" href="/assets/brand-identity.css?v=1">
@@ -138,9 +142,9 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(
 <main class="wrap">
 <section class="hero" aria-labelledby="hero-title">
 <div class="hero-top"><span class="small-label mono" data-i18n="brief.kicker">全球资讯观察站</span><span class="right mono" data-i18n="brief.topRight">每日观察 · 2026</span></div>
-<h1 id="hero-title" data-i18n="brief.heading">全球资讯<br>观察站</h1>
+<h1 id="hero-title">每日精选 · 全球观察</h1>
 <div class="hero-body">
-<p class="hero-description" data-i18n="brief.desc"><strong>世界很大，值得仔细阅读。</strong><br>穿透日常信息流，连接中国与全球。每日追踪公共议题、前沿科研与技术变化，以中文提供有背景的简报，并保留原始报道的链接。</p>
+<p class="hero-description"><strong>世界很大，值得仔细阅读。</strong><span class="brief-long-intro"> 每日追踪值得思考的全球变化与前沿发现。</span></p>
 <div class="issue-summary"><span class="label mono"><span class="live-dot"></span><span data-i18n="brief.current">本期简报</span></span><span id="headlineDate">等待首期发布</span><span id="total">— 条精选</span></div>
 </div>
 <div class="issue-intro mono"><span data-i18n="brief.schedule">计划每天北京时间 09:00 更新</span><span data-i18n="brief.scroll">向下阅读 ↓</span></div>
