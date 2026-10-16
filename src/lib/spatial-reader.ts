@@ -6,6 +6,10 @@ const viewport=document.querySelector<HTMLElement>(".spatial-viewport");
 const scene=document.querySelector<HTMLElement>("#spatial-scene");
 const status=document.querySelector<HTMLElement>("#spatial-state");
 const reduced=matchMedia("(prefers-reduced-motion: reduce)");
+// Experimental opt-in only, pending a meaningful, evidence-backed knowledge graph.
+if(new URLSearchParams(location.search).get("experimentalGraph")==="1"){
+ document.querySelector<HTMLElement>("#spatial-experiment")?.removeAttribute("hidden");
+}
 type Point={x:number;y:number;z:number;topic:string;title:string;article:HTMLElement};
 let points:Point[]=[],selected=0,yaw=.48,pitch=.22,zoom=3.5,gl:WebGLRenderingContext|null=null,canvas:HTMLCanvasElement|null=null;
 let program:WebGLProgram|null=null,buffer:WebGLBuffer|null=null,positionLoc=-1,sizeLoc=-1,projectionLoc:WebGLUniformLocation|null=null;
