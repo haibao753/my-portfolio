@@ -1,5 +1,7 @@
 ---
 import {navigation} from "../data/site";
+const {immersive=false}=Astro.props;
+const destination=(href:string)=>immersive&&href.startsWith('/#')?(href==='/#projects'?'#worlds':href.slice(1)):href;
 ---
 <header class="glass-nav" data-native-optics="full-scene">
  <span class="native-optic-edge native-optic-top" aria-hidden="true"></span>
@@ -9,7 +11,7 @@ import {navigation} from "../data/site";
  <div class="nav-inner wrap">
   <a href="/" class="brand" aria-label="J.H. LAB 首页"><span aria-hidden="true"></span></a>
   <nav class="desktop-links" aria-label="Main navigation">
-   {navigation.map(item=><a href={item.href}>
+   {navigation.map(item=><a href={destination(item.href)}>
     <span data-locale="zh">{item.label.zh}</span><span data-locale="en">{item.label.en}</span>
    </a>)}
   </nav>
@@ -22,7 +24,7 @@ import {navigation} from "../data/site";
 </header>
 <div data-menu-backdrop class="menu-backdrop" hidden></div>
 <nav id="mobile-navigation" data-menu-panel class="mobile-menu" aria-label="Mobile navigation" hidden>
- {navigation.map(item=><a href={item.href}>
+ {navigation.map(item=><a href={destination(item.href)}>
   <span data-locale="zh">{item.label.zh}</span><span data-locale="en">{item.label.en}</span>
  </a>)}
 </nav>

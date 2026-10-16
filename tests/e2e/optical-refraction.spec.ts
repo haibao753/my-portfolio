@@ -65,10 +65,15 @@ test('navigation keeps a distant sampling margin for the thicker meniscus',async
  const sizes=await nav.evaluate(el=>{
   const canvas=el.querySelector('.live-optical-layer') as HTMLCanvasElement;
   const source=(canvas as HTMLCanvasElement & {opticalSource:HTMLCanvasElement}).opticalSource;
-  return {scene:[source.width,source.height],surface:[canvas.width,canvas.height]};
+  const bounds=el.getBoundingClientRect();
+  return {scene:[source.width,source.height],surface:[bounds.width,bounds.height]};
  });
- expect(sizes.scene[0]).toBeGreaterThan(sizes.surface[0]);
- expect(sizes.scene[1]).toBeGreaterThan(sizes.surface[1]);
+ // The input scene is in CSS pixels; the WebGL framebuffer also includes DPR.
+ // Verify the actual 72px sampling margin on each side in one coordinate space.
+ for(let axis=0;axis<2;axis++){
+  expect(sizes.scene[axis]-sizes.surface[axis]).toBeGreaterThanOrEqual(144);
+  expect(sizes.scene[axis]-sizes.surface[axis]).toBeLessThan(146);
+ }
 });
 
 test('multi-tap reflections preserve centre and alter detailed rim only',async({page})=>{

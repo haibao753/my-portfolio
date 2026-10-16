@@ -17,7 +17,7 @@ if(['0','1','2'].includes(requested))document.querySelectorAll('a[href]').forEac
   target.searchParams.set('opticalEngine',requested);link.href=target.href;
  }
 });
-if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+if(['1','2'].includes(mode)&&!document.body.classList.contains('immersive-world')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
  const nav=document.querySelector('.glass-nav'),root=document.querySelector('main');
  if(nav&&root){
   const glass=document.createElement('canvas');glass.className='live-optical-layer';glass.setAttribute('aria-hidden','true');

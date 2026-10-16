@@ -916,6 +916,7 @@ test("damage compositor repaints only a small style region but falls back on str
  await page.goto("/?opticalEngine=1");
  const nav=page.locator(".glass-nav");
  await expect(nav).toHaveAttribute("data-live-optics","on");
+ await isolateOpticalScene(page);
  await page.evaluate(()=>{
   const r=document.querySelector(".glass-nav")!.getBoundingClientRect();
   const box=document.createElement("div");box.id="damage-target";
@@ -934,11 +935,14 @@ test("damage compositor repaints only a small style region but falls back on str
   return Array.from(src.getContext("2d")!.getImageData(Math.round(51),Math.round(24),1,1).data).slice(0,3);
  });
  expect(rgb[2]).toBeGreaterThan(rgb[0]+100);
+ const fullFrames=Number(await nav.getAttribute("data-optical-damage-full-fallbacks")||0);
  await page.evaluate(()=>{
   const holder=document.createElement("p");holder.textContent="structure changed";
   document.querySelector("main")!.appendChild(holder);
  });
- await expect(nav).toHaveAttribute("data-optical-damage-mode","full");
+ // A later paint may already be partial again. Verify that the required full
+ // structural repaint occurred rather than polling for a one-frame state.
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-damage-full-fallbacks")||0)).toBeGreaterThan(fullFrames);
 });
 
 test("GPU scroll shift preserves image pixels while uploading only uncovered strip",async({page})=>{
