@@ -114,3 +114,27 @@ test('three-day and seven-day filters aggregate issues and preserve single-date 
  await expect(page.locator('.news-card')).toHaveCount(1);
  await expect(page.locator('#quick-dates [data-days="7"]')).toHaveAttribute('aria-pressed','false');
 });
+
+test('homepage embeds validated Bilibili video without leaving the site',async({page})=>{
+ await page.goto('/');
+ const link=page.locator('#mathematics .project-link');
+ await expect(link).toHaveAttribute('href','/#mathematics-video');
+ await expect(page.locator('iframe.bili-iframe')).toHaveCount(0);
+ await expect(page.locator('a[href="https://space.bilibili.com/1572685586"]').first()).toBeAttached();
+ const input=page.locator('#bili-video-input');
+ const submit=page.locator('[data-bili-form] button[type="submit"]');
+ await input.fill('not-a-video');
+ await submit.click();
+ await expect(page.locator('iframe.bili-iframe')).toHaveCount(0);
+ await expect(page.locator('[data-bili-status]')).toContainText('请输入有效');
+ await input.fill('https://www.bilibili.com/video/BV1xx411c7mD?p=1');
+ await submit.click();
+ const player=page.locator('iframe.bili-iframe');
+ await expect(player).toHaveAttribute('src',/https:\/\/player\.bilibili\.com\/player\.html\?bvid=BV1xx411c7mD/);
+ await expect(player).toHaveAttribute('loading','lazy');
+ await expect(page.locator('[data-bili-open]')).toHaveAttribute('href','https://www.bilibili.com/video/BV1xx411c7mD');
+ await expect(page).toHaveURL('/');
+ await input.fill('https://evil.example/video/BV1xx411c7mD');
+ await submit.click();
+ await expect(page.locator('[data-bili-status]')).toContainText('请输入有效');
+});
