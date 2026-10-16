@@ -17,7 +17,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
    <div><h2 id="archive-heading"><span data-locale="zh">全球精选</span><span data-locale="en">Global Highlights</span></h2></div>
    <p><span data-locale="zh">从事实出发，寻找理解事件的线索。按主题筛选，或者回看之前的期数。</span><span data-locale="en">Explore each day's selected stories by topic or date.</span></p>
   </div>
-  <div class="explore-bar"><button id="spatial-open" type="button" aria-haspopup="dialog">◈ <span data-locale="zh">探索空间</span><span data-locale="en">Explore in 3D</span> ↗</button></div>
+  <div class="explore-bar" id="spatial-experiment" hidden><button id="spatial-open" type="button" aria-haspopup="dialog">◈ <span data-locale="zh">探索空间</span><span data-locale="en">Explore in 3D</span> ↗</button></div>
   <div class="toolbar">
    <div class="filters" id="tabs" role="group" aria-label="内容分类"></div>
    <div class="date-controls" aria-label="日期范围筛选">
@@ -133,6 +133,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  @media(prefers-reduced-motion:reduce){:global(.news-card){transition:none}}
 
 
+ .explore-bar[hidden]{display:none!important}
  .explore-bar{display:flex;justify-content:flex-end;padding:0 0 3px}
  .explore-bar button{cursor:pointer;border:0;background:transparent;color:var(--fg);font:inherit;font-size:12px;min-height:36px;padding:5px 2px}
  .explore-bar button:hover{text-decoration:underline;text-underline-offset:5px}
