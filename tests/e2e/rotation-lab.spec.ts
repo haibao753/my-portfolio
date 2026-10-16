@@ -126,3 +126,39 @@ test("Lab 001 honours reduced motion during replay",async({page})=>{
  await expect(page.locator("#rotation-stop")).toBeHidden();
  await expect(page.locator("#rotation-xy-vector")).toHaveText("(0.00, -1.00, 0.00)");
 });
+
+test("Lab 001 keeps cube axes inside mobile canvases at extreme camera angles",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/lab/rotation/");
+ // Verify actual painted pixels stay clear of the edge, not just DOM bounding boxes.
+ const noClip=async()=>{
+  const data=await page.evaluate(()=>{
+   const ids=["rotation-xy","rotation-yx","rotation-overlay"];
+   return ids.map(id=>{
+    const canvas=document.getElementById(id) as HTMLCanvasElement;
+    const context=canvas.getContext("2d");
+    if(!context)return {id,interior:0,border:0};
+    const {width:w,height:h}=canvas;
+    const pixels=context.getImageData(0,0,w,h).data;
+    const inset=Math.min(18,Math.floor(Math.min(w,h)*.048));
+    let interior=0,border=0;
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+     const alpha=pixels[(y*w+x)*4+3];
+     if(alpha<24)continue;
+     if(x<inset||x>=w-inset||y<inset||y>=h-inset)border++;
+     else interior++;
+    }
+    return {id,interior,border};
+   });
+  });
+  for(const item of data){expect(item.interior, item.id+" was not drawn").toBeGreaterThan(1000);expect(item.border,item.id+" is clipped").toBe(0);}
+ };
+ await page.locator("#rotation-overlay-toggle").click();
+ await expect(page.locator("#rotation-overlay")).toBeVisible();
+ await noClip();
+ for(let i=0;i<4;i++)await page.locator("#rotation-camera-right").click();
+ await noClip();
+ await page.locator("#angle-x").evaluate((el:HTMLInputElement)=>{el.value="180";el.dispatchEvent(new Event("input",{bubbles:true}));});
+ await page.locator("#angle-y").evaluate((el:HTMLInputElement)=>{el.value="180";el.dispatchEvent(new Event("input",{bubbles:true}));});
+ await noClip();
+});
