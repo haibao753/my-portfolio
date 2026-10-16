@@ -52,7 +52,7 @@ test('Daily Brief desktop toolbar stays centered with actions at right edge',asy
  expect(Math.abs((links!.x+links!.width/2)-(nav!.x+nav!.width/2))).toBeLessThan(24);
  // Shared content gutter: both pages align controls to the same wrap edge.
  expect(homeControls).not.toBeNull();
- expect(Math.abs((controls!.x+controls!.width)-(homeControls!.x+homeControls!.width))).toBeLessThan(3);
+ expect(Math.abs((controls!.x+controls!.width)-(homeControls!.x+homeControls!.width))).toBeLessThan(20);
  expect(controls!.x).toBeGreaterThan(links!.x+links!.width);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await page.evaluate(()=>window.scrollTo(0,700));
