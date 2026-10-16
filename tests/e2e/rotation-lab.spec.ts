@@ -50,6 +50,9 @@ test("Lab 001 remains usable on a 390px phone and camera does not change math",a
  }));
  expect(check.body).toBeLessThanOrEqual(check.viewport+1);
  expect(check.canvases.every(w=>w>250&&w<check.viewport)).toBe(true);
+ // Keep stable visual baselines for mobile-first design review, not just green CI.
+ await page.locator(".compare-grid").screenshot({path:"test-results/lab-001-mobile-comparison.png"});
+ await page.locator("#rotation-overlay-panel").screenshot({path:"test-results/lab-001-mobile-overlay.png"});
 });
 
 test("Lab 001 explanation is available without canvas graphics",async({page})=>{
