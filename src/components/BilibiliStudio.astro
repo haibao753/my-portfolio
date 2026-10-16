@@ -92,7 +92,7 @@ const videos=[
  .bili-video-card{min-width:0;display:flex;align-items:stretch;gap:13px;text-align:left;color:var(--fg);background:var(--bg);border:1px solid var(--stroke);border-radius:18px;padding:10px;cursor:pointer;transition:border-color .25s ease,transform .25s ease,box-shadow .25s ease}
  .bili-video-card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
  .bili-video-art{position:relative;flex:0 0 36%;min-height:110px;display:grid;place-items:center;overflow:hidden;border-radius:12px;background:radial-gradient(ellipse at 30% 35%,rgba(145,194,255,.35),transparent 68%),linear-gradient(140deg,#0f233e,#27446b);color:#fff}
- .bili-video-art .bili-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+ .bili-video-art .bili-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:#0b192b;display:block}
  .bili-video-art .bili-cover-img[hidden]{display:none!important}
  .bili-video-card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
  .bili-video-count{z-index:1;text-shadow:0 1px 4px #000;background:rgba(0,0,0,.45);border-radius:5px;padding:2px 5px}
