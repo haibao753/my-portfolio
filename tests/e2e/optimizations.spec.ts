@@ -80,6 +80,9 @@ test('Daily Brief source disclosure expands inline without a paywall redirect',a
  await expect(page.locator('.news-card').first()).toBeVisible();
  const card=page.locator('.news-card').first();
  const disclosure=card.locator('details.news-expanded');
+ await expect(disclosure).not.toBeVisible();
+ await card.locator(".news-read-toggle").click();
+ await expect(card.locator(".news-read-toggle")).toHaveAttribute("aria-expanded","true");
  await expect(disclosure).toBeVisible();
  await expect(disclosure).not.toHaveAttribute('open','');
  await disclosure.locator('summary').click();
