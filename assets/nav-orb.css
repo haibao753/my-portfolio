@@ -84,3 +84,43 @@
 @media(prefers-reduced-motion:reduce){
  .glass-nav[data-orb-ready="true"],.glass-nav[data-orb-ready="true"] :is(.desktop-links,.controls){transition:none!important}
 }
+
+/* Expanded brief header follows the exact shared .wrap grid used on home.
+   Do not make the brand an absolute child until the orb is fully compact. */
+@media (min-width:1181px){
+ .glass-nav[data-orb-ready="true"]:not([data-orb-closed="true"]) .nav-inner{
+   width:min(var(--wide),calc(100% - 48px))!important;
+   max-width:var(--wide)!important;
+   margin-inline:auto!important;
+   grid-template-columns:minmax(60px,1fr) auto minmax(125px,1fr)!important;
+ }
+}
+.glass-nav[data-orb-ready="true"]:not([data-orb-closed="true"]) .nav-inner{
+ width:min(var(--wide),calc(100% - 48px))!important;
+ margin-inline:auto!important;
+ padding:0!important;
+}
+.glass-nav[data-orb-ready="true"]:not([data-orb-closed="true"]) .brand{
+ position:relative!important;
+ left:auto!important;top:auto!important;
+ width:auto!important;min-width:44px!important;
+ height:auto!important;min-height:44px!important;
+ display:flex!important;justify-content:flex-start!important;
+ align-items:center!important;
+}
+.glass-nav[data-orb-ready="true"]:not([data-orb-closed="true"]) .brand span{
+ margin:0!important;
+}
+.glass-nav[data-orb-ready="true"][data-orb-closed="true"] .nav-inner{
+ width:100%!important;max-width:none!important;margin:0!important;
+}
+@media (max-width:1180px){
+ .glass-nav[data-orb-ready="true"]:not([data-orb-closed="true"]) .nav-inner{
+  width:calc(100% - 48px)!important;
+ }
+}
+@media (max-width:760px){
+ .glass-nav[data-orb-ready="true"]:not([data-orb-closed="true"]) .nav-inner{
+  width:calc(100% - 24px)!important;
+ }
+}
