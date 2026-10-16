@@ -28,7 +28,7 @@ export function createSculpture(host:HTMLElement):SculptureController{
  const rim=new THREE.PointLight(0xd4c5ff,12,14);rim.position.set(2.8,1.8,3);scene.add(rim);
  const columns=56,rows=26,count=(columns+1)*(rows+1);
  const positions=new Float32Array(count*3),uvs=new Float32Array(count*2),basis=new Float32Array(count*11);
- const triangles:number[]=[],threads:number[]=[];
+ const triangles:number[]=[];
  for(let j=0;j<=rows;j++)for(let i=0;i<=columns;i++){
   const n=j*(columns+1)+i,u=-Math.PI+i/columns*Math.PI*2,v=-1.1+j/rows*2.2,k=n*11;
   const lat=Math.acos(1-2*(n+.5)/count),lon=n*2.3999632297;
@@ -37,7 +37,6 @@ export function createSculpture(host:HTMLElement):SculptureController{
    1.72*Math.sin(lat)*Math.cos(lon),1.72*Math.cos(lat),1.72*Math.sin(lat)*Math.sin(lon),u,v],k);
   uvs[n*2]=i/columns;uvs[n*2+1]=j/rows;
   if(i<columns&&j<rows){const a=n,b=a+columns+1;triangles.push(a,b,a+1,b,b+1,a+1)}
-  if(i<columns&&j%2===0)threads.push(n,n+1);
  }
  const geometry=new THREE.BufferGeometry();
  const position=new THREE.BufferAttribute(positions,3);position.setUsage(THREE.DynamicDrawUsage);
@@ -90,7 +89,7 @@ export function createSculpture(host:HTMLElement):SculptureController{
  const wire=new THREE.Mesh(geometry,wireMaterial);wire.scale.setScalar(1.001);wire.frustumCulled=false;group.add(wire);
  const dot=document.createElement("canvas");dot.width=32;dot.height=32;
  const dotContext=dot.getContext("2d")!;const gradient=dotContext.createRadialGradient(16,16,2,16,16,16);
- gradient.addColorStop(0,"rgba(255,255,255,1)");gradient.addColorStop(.4,"rgba(255,255,255,.9)");gradient.addColorStop(1,"rgba(255,255,255,0)");
+ gradient.addColorStop(0,"rgba(255,255,255,1)");gradient.addColorStop(.58,"rgba(255,255,255,.98)");gradient.addColorStop(1,"rgba(255,255,255,0)");
  dotContext.fillStyle=gradient;dotContext.fillRect(0,0,32,32);
  const dotMap=new THREE.CanvasTexture(dot);
  const pointMaterial=new THREE.PointsMaterial({color:0xffffff,size:.035,map:dotMap,transparent:true,opacity:.04,depthWrite:false,sizeAttenuation:true});
@@ -179,7 +178,7 @@ export function createSculpture(host:HTMLElement):SculptureController{
  return {
   setForm(value,immediate=false){form=value;if(immediate||!playing){star=form===1?1:0;flow=form===2?1:0;draw()}},
   setPlaying(value){if(disposed||canvas.hidden)return;playing=value;cancelAnimationFrame(frame);frame=0;last=0;if(playing)frame=requestAnimationFrame(tick)},
-  setDark(value){darkUniform.value=value?1:0;wireMaterial.color.setHex(value?0xc9e7ff:0xb2d4e8);draw()},
+  setDark(value){darkUniform.value=value?1:0;wireMaterial.color.setHex(value?0xc9e7ff:0xb2d4e8);pointMaterial.color.setHex(value?0xffffff:0x9cb4cf);draw()},
   setPointer(x,y){targetX=Math.max(-1,Math.min(1,x));targetY=Math.max(-1,Math.min(1,y));if(!playing){pointerX=targetX;pointerY=targetY;draw()}},
   beginDrag(){dragging=true;velocity=0},
   drag(dx,seconds){spin+=dx*.007;velocity=Math.max(-2.3,Math.min(2.3,dx*.007/seconds));if(!playing)draw()},
