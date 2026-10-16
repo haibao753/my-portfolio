@@ -32,13 +32,6 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
-      - name: Resolve four Bilibili sharing URLs
-        run: |
-          for entry in 'mobius cspbBeL' 'group xAzwvFm' 'evo 5pBJzVE' 'fourier XvJTdsx'; do
-            set -- $entry
-            printf 'BILIBILI_RESOLVE %s ' "$1"
-            curl -L -sS -o /dev/null -w '%{url_effective}\\n' --connect-timeout 7 --max-time 15 "https://b23.tv/$2" || true
-          done
       - name: Type check
         run: npm run check
       - name: Guard experimental default Worker deployment
