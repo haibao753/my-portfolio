@@ -88,3 +88,38 @@ test("Lab 001 bilingual, keyboard stage controls and reduced-motion experience",
  await page.locator('[data-rotation-step="2"]').click();
  await expect(page.locator("#rotation-step-explanation")).toContainText("Step 2");
 });
+
+test("Lab 001 replays two mathematically valid stages and can be interrupted",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/lab/rotation/");
+ const replay=page.locator("#rotation-replay");
+ const stop=page.locator("#rotation-stop");
+ await replay.click();
+ await expect(stop).toBeVisible();
+ await expect(page.locator('[data-rotation-step="0"]')).toHaveAttribute("aria-pressed","true");
+ await expect(page.locator('[data-rotation-step="2"]')).toHaveAttribute("aria-pressed","true",{timeout:8000});
+ await expect(stop).toBeHidden();
+ await expect(page.locator("#rotation-xy-vector")).toHaveText("(0.00, -1.00, 0.00)");
+ await expect(page.locator("#rotation-yx-vector")).toHaveText("(1.00, 0.00, 0.00)");
+ await replay.click();
+ await expect(stop).toBeVisible();
+ await stop.click();
+ await expect(stop).toBeHidden();
+ await expect(page.locator('[data-rotation-step="0"]')).toHaveAttribute("aria-pressed","true");
+ // A manual stage choice starts a new bounded animation, independent of the cancelled replay.
+ await page.locator('[data-rotation-step="1"]').click();
+ await expect(page.locator('[data-rotation-step="1"]')).toHaveAttribute("aria-pressed","true",{timeout:5000});
+ await page.locator("#rotation-reset").click();
+ await expect(page.locator('[data-rotation-step="2"]')).toHaveAttribute("aria-pressed","true");
+});
+
+test("Lab 001 honours reduced motion during replay",async({page})=>{
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await page.goto("/lab/rotation/");
+ await page.locator('[data-rotation-step="0"]').click();
+ await expect(page.locator("#rotation-difference")).toHaveText("0.00");
+ await page.locator("#rotation-replay").click();
+ await expect(page.locator('[data-rotation-step="2"]')).toHaveAttribute("aria-pressed","true");
+ await expect(page.locator("#rotation-stop")).toBeHidden();
+ await expect(page.locator("#rotation-xy-vector")).toHaveText("(0.00, -1.00, 0.00)");
+});
