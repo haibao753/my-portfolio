@@ -6,7 +6,6 @@
 type Vec3 = [number, number, number];
 type Mat3 = [Vec3, Vec3, Vec3];
 type Order = "xy" | "yx";
-const identity = ():Mat3 => [[1,0,0],[0,1,0],[0,0,1]];
 const radians = (deg:number) => deg*Math.PI/180;
 const rx = (deg:number):Mat3 => {const c=Math.cos(radians(deg)),s=Math.sin(radians(deg));return [[1,0,0],[0,c,-s],[0,s,c]];};
 const ry = (deg:number):Mat3 => {const c=Math.cos(radians(deg)),s=Math.sin(radians(deg));return [[c,0,s],[0,1,0],[-s,0,c]];};
