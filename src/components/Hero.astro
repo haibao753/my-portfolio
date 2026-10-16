@@ -15,11 +15,66 @@ import CuriositySculpture from "./CuriositySculpture.astro";
  </div>
  <CuriositySculpture />
 </section>
+<script>
+ // Deterministic uneven rhythm: rapid clusters separated by deliberate pauses.
+ // Animate DOM text instead of a canvas so the headline remains selectable and indexable.
+ const headline = document.querySelector<HTMLElement>(".hero-title");
+ if (headline) {
+  const timings = [0, 125, 205, 460, 535, 605, 930, 1020, 1160, 1500, 1575, 1670, 1940, 2045, 2170, 2490, 2590, 2680];
+  let replayTimer: number | undefined;
+  const render = () => {
+   const locale = document.documentElement.lang === "en" ? "en" : "zh";
+   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+   headline.querySelectorAll<HTMLElement>("[data-locale]").forEach(group => {
+    // Always restore text before re-splitting to avoid nested animation wrappers.
+    group.querySelectorAll<HTMLElement>(".hero-title-line").forEach(line => {
+     const original = line.dataset.originalText || line.textContent || "";
+     line.dataset.originalText = original;
+     line.textContent = original;
+    });
+    group.removeAttribute("aria-label");
+   });
+   headline.classList.remove("hero-title--pixels");
+   if (reduced) return;
+   const group = headline.querySelector<HTMLElement>(`[data-locale="${locale}"]`);
+   if (!group) return;
+   const lines = Array.from(group.querySelectorAll<HTMLElement>(".hero-title-line"));
+   group.setAttribute("aria-label", lines.map(line => line.textContent || "").join(locale === "zh" ? "" : " "));
+   let index = 0;
+   lines.forEach(line => {
+    const chars = Array.from(line.textContent || "");
+    const fragment = document.createDocumentFragment();
+    chars.forEach(char => {
+     const span = document.createElement("span");
+     span.className = "hero-title-glyph";
+     span.setAttribute("aria-hidden", "true");
+     span.style.setProperty("--glyph-delay", `${timings[index] ?? timings[timings.length - 1] + (index - timings.length + 1) * 115}ms`);
+     span.textContent = char === " " ? "\u00a0" : char;
+     fragment.appendChild(span);
+     index++;
+    });
+    line.replaceChildren(fragment);
+   });
+   // Force restart when switching languages without moving layout or touching unrelated elements.
+   void headline.offsetWidth;
+   headline.classList.add("hero-title--pixels");
+  };
+  render();
+  window.addEventListener("jhlab:language", () => {
+   window.clearTimeout(replayTimer);
+   replayTimer = window.setTimeout(render, 0);
+  });
+  window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", render);
+ }
+</script>
 <style>
  .hero{display:grid;grid-template-columns:1fr 1.16fr;align-items:center;gap:clamp(10px,2vw,30px);text-align:left;padding-top:clamp(44px,6vw,76px);padding-bottom:clamp(80px,8vw,125px);position:relative;isolation:isolate}
  .hero-copy{min-width:0;position:relative;z-index:1}
  .hero .eyebrow{margin-bottom:22px}
  .hero h1{font-weight:750;letter-spacing:-.075em;line-height:1.14;font-size:clamp(53px,6.6vw,96px);margin:0 0 22px}
+ .hero-title--pixels .hero-title-glyph{display:inline-block;opacity:0;animation:pixel-signal-in 480ms steps(5,end) var(--glyph-delay) backwards;animation-fill-mode:forwards}
+ @keyframes pixel-signal-in{0%{opacity:0;filter:blur(3px);transform:translateY(5px) scale(.92);text-shadow:2px 0 var(--accent),-2px 0 rgba(58,203,218,.55)}28%{opacity:.65;filter:blur(1px);transform:translateY(-2px) scale(1.025)}44%{opacity:.12;filter:blur(2px);transform:translateY(2px)}72%{opacity:.9;filter:blur(0);transform:translateY(0)}100%{opacity:1;filter:none;transform:none;text-shadow:none}}
+ @media(prefers-reduced-motion:reduce){.hero-title--pixels .hero-title-glyph{animation:none;opacity:1;filter:none;transform:none}}
  .hero-title-line{display:block;overflow:visible;white-space:nowrap}
  .hero-title [data-locale]{width:100%}
  .hero-title .hero-title-line:nth-child(2){margin-top:.018em}
