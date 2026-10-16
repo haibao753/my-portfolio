@@ -114,11 +114,12 @@ test("legacy experimental routes and published JSON remain available", async ({ 
  expect(Array.isArray(index.dates)).toBeTruthy();
 });
 
-test("handwritten signature runs once and native scrolling never snaps after release", async ({ page }) => {
+test("signature is fully rendered at first paint and native scrolling never snaps", async ({ page }) => {
  await page.goto("/");
  const signature=page.locator(".hero-autograph--pen");
  await expect(signature).toBeVisible();
- await expect(signature).toHaveClass(/is-pen-finished/,{timeout:25_000});
+ await expect(signature).toHaveAttribute("data-signature-animation","static");
+ await expect(signature).toHaveClass(/is-pen-finished/);
  await expect(signature.locator(".hero-autograph__finish")).toHaveCSS("opacity","1");
  // Scroll by a native instant position change: a delayed chapter snap must not take over.
  await page.evaluate(()=>{
@@ -1001,8 +1002,10 @@ test("sci-fi headline uses visible pixel animation and non-linear character spac
  }));
  expect(data.every(item=>item.animation.includes("hero-pixel-arrive"))).toBeTruthy();
  const gaps=data.slice(1).map((item,index)=>Math.round((item.delay-data[index].delay)*1000));
- expect(Math.min(...gaps)).toBeLessThanOrEqual(100);
- expect(Math.max(...gaps)).toBeGreaterThanOrEqual(400);
+ expect(Math.min(...gaps)).toBeLessThanOrEqual(35);
+ expect(Math.max(...gaps)).toBeGreaterThanOrEqual(100);
+ // The scan is intentionally short, never a multi-second invisible title.
+ expect(Math.max(...data.map(item=>item.delay))).toBeLessThan(1.0);
  await expect(page.locator('.hero-title [data-locale="zh"]')).toHaveAttribute("aria-label","做一些有趣的事情。");
  await page.locator("[data-language-toggle]").click();
  await expect(page.locator("html")).toHaveAttribute("lang","en");
