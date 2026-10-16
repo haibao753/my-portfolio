@@ -19,6 +19,10 @@ test('Daily Brief navigation morphs to logo orb and expands again',async({page})
  await expect(header.locator('.brand')).toBeVisible();
  await header.locator('.brand').click();
  await expect.poll(async()=>Number.parseFloat(await header.evaluate(el=>getComputedStyle(el).width))).toBeGreaterThan(200);
+ // Regression: scrolling down again after tapping the orb must re-collapse it.
+ await page.evaluate(()=>window.scrollBy(0,150));
+ await expect(header).toHaveAttribute('data-orb-closed','true');
+ await expect.poll(async()=>Number.parseFloat(await header.evaluate(el=>getComputedStyle(el).width))).toBeLessThan(65);
  await page.evaluate(()=>window.scrollTo(0,0));
  await expect(header).toHaveAttribute('data-orb-closed','false');
 });
