@@ -85,9 +85,9 @@ import CuriositySculpture from "./CuriositySculpture.astro";
  .hero-copy{min-width:0;position:relative;z-index:1}
  .hero h1{font-weight:750;letter-spacing:-.075em;line-height:1.14;font-size:clamp(53px,6.6vw,96px);margin:0 0 22px}
  /* Pixel-coded reveal: flicker, tiny stepped displacement, then perfectly legible text. */
- .hero-title--pixels .hero-title-glyph{position:relative;display:inline-block;opacity:0;animation:hero-pixel-arrive 540ms steps(6,end) var(--glyph-delay) both}
- .hero-title--pixels .hero-title-glyph::before{content:attr(data-glyph);position:absolute;inset:0;pointer-events:none;opacity:0;color:var(--accent);text-shadow:2px 0 #39d4eb,-2px 0 rgba(86,142,253,.7);clip-path:inset(15% 0 43% 0);animation:hero-pixel-ghost 540ms steps(5,end) var(--glyph-delay) both}
- .hero-title--pixels .hero-title-glyph[data-glint]::after{content:attr(data-glyph);position:absolute;inset:0;pointer-events:none;color:var(--accent);opacity:0;clip-path:inset(42% 0 48% 0);animation:hero-pixel-glint 10s linear var(--glint-delay) infinite}
+ :global(.hero-title--pixels .hero-title-glyph){position:relative;display:inline-block;opacity:0;animation:hero-pixel-arrive 540ms steps(6,end) var(--glyph-delay) both}
+ :global(.hero-title--pixels .hero-title-glyph::before){content:attr(data-glyph);position:absolute;inset:0;pointer-events:none;opacity:0;color:var(--accent);text-shadow:2px 0 #39d4eb,-2px 0 rgba(86,142,253,.7);clip-path:inset(15% 0 43% 0);animation:hero-pixel-ghost 540ms steps(5,end) var(--glyph-delay) both}
+ :global(.hero-title--pixels .hero-title-glyph[data-glint]::after){content:attr(data-glyph);position:absolute;inset:0;pointer-events:none;color:var(--accent);opacity:0;clip-path:inset(42% 0 48% 0);animation:hero-pixel-glint 10s linear var(--glint-delay) infinite}
  @keyframes hero-pixel-arrive{0%{opacity:0;transform:translate3d(0,8px,0) scale(.92);text-shadow:3px 0 var(--accent),-3px 0 #45cbd8}17%{opacity:.9;transform:translate3d(2px,-2px,0) scale(1.025)}30%{opacity:.07;transform:translate3d(-2px,1px,0)}48%{opacity:1;transform:translate3d(1px,-1px,0);text-shadow:-2px 0 #48c8dc}61%{opacity:.2;transform:translate3d(0,2px,0)}81%{opacity:1;transform:none;text-shadow:1px 0 var(--accent)}100%{opacity:1;transform:none;text-shadow:none}}
  @keyframes hero-pixel-ghost{0%,12%,35%,63%,100%{opacity:0;transform:translateX(0)}18%,52%,77%{opacity:.8;transform:translateX(3px)}}
  @keyframes hero-pixel-glint{0%,1.5%,3%,100%{opacity:0}1.8%,2.2%{opacity:.65}2.5%{opacity:.16}}
