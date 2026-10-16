@@ -170,3 +170,34 @@ test('video modal offers fallback on a missing original without trapping visitor
  await page.locator('[data-bili-close]').click();
  await expect(page.locator('[data-bili-dialog]')).toBeHidden();
 });
+
+test('geometry card has a complete catenoid fallback on mobile and when WebGL is unavailable',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/');
+ const card=page.locator('.visual-3');
+ await card.scrollIntoViewIfNeeded();
+ const preview=page.locator('#minimal-preview');
+ await expect(preview).toBeVisible();
+ await expect(preview).toHaveAttribute('data-geometry-state','fallback');
+ const figure=preview.locator('.catenoid-illustration');
+ await expect(figure).toBeVisible();
+ await expect(figure.locator('path[fill="url(#catenoid-surface)"]')).toHaveCount(1);
+ const box=await figure.boundingBox();
+ const host=await preview.boundingBox();
+ expect(box).not.toBeNull();expect(host).not.toBeNull();
+ expect(box!.width).toBeGreaterThan(180);
+ expect(box!.x).toBeGreaterThanOrEqual(host!.x-1);
+ expect(box!.x+box!.width).toBeLessThanOrEqual(host!.x+host!.width+1);
+ await expect(preview.locator('canvas')).toHaveCount(0);
+});
+
+test('geometry SVG stays visible when remote Three.js import fails',async({page})=>{
+ await page.route('https://unpkg.com/three@*/build/three.module.js',route=>route.abort());
+ await page.goto('/');
+ const preview=page.locator('#minimal-preview');
+ await preview.scrollIntoViewIfNeeded();
+ await expect(preview.locator('.catenoid-illustration')).toBeVisible();
+ await expect.poll(async()=>preview.getAttribute('data-geometry-state')).toBe('fallback');
+ await expect(preview.locator('.preview-fallback')).toHaveCSS('opacity','1');
+});
