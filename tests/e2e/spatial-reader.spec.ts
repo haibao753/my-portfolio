@@ -24,3 +24,19 @@ test("3D dialog supports keyboard dismissal and restores focus",async({page})=>{
  await expect(page.locator("#spatial-dialog")).not.toBeVisible();
  await expect(open).toBeFocused();
 });
+
+test("WebGL scene and article inspector never overlap on mobile",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/brief/");
+ await expect(page.locator(".news-card").first()).toBeVisible();
+ await page.locator("#spatial-open").click();
+ const viewport=page.locator(".spatial-viewport");
+ const inspector=page.locator("#spatial-scene");
+ await expect(viewport).toBeVisible();
+ await expect(inspector).toBeVisible();
+ const v=await viewport.boundingBox(),i=await inspector.boundingBox();
+ expect(v).not.toBeNull();expect(i).not.toBeNull();
+ expect(i!.y).toBeGreaterThanOrEqual(v!.y+v!.height-1);
+ expect(v!.height).toBeGreaterThanOrEqual(200);
+ await expect(inspector.locator(".spatial-open-article")).toBeVisible();
+});
