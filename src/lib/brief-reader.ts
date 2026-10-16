@@ -2,6 +2,7 @@
 interface BriefItem {
  category?: string;source?: string;published?: string;url?: string;
  title_zh?: string;summary_zh?: string;why_zh?: string;
+ details_zh?: string;original_title?: string;
 }
 interface BriefIssue {date?:string;items?:BriefItem[]}
 interface BriefIndex {dates?:string[]}
@@ -43,6 +44,27 @@ if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
     const reason=txt("p","","news-reason");
     reason.append(txt("b",t("为什么值得关注　","Why it matters　")),document.createTextNode(item.why_zh));
     card.append(reason);
+   }
+   // The original publisher may be paywalled. Show only our grounded,
+   // editorially transformed explanation here—not the copyrighted full text.
+   const hasExtra=Boolean(item.details_zh||item.original_title);
+   if(hasExtra){
+    const disclosure=document.createElement("details");
+    disclosure.className="news-expanded";
+    const toggle=document.createElement("summary");
+    toggle.textContent=t("展开原文信息与详细解读 ↓","Expand source info and analysis ↓");
+    disclosure.append(toggle);
+    if(item.original_title){
+     const original=txt("p","","news-original-title");
+     original.append(txt("b",t("原文标题：","Source headline: ")),document.createTextNode(item.original_title));
+     disclosure.append(original);
+    }
+    if(item.details_zh){
+     disclosure.append(txt("h4",t("站内详细解读","Extended analysis")));
+     disclosure.append(txt("p",item.details_zh));
+    }
+    disclosure.append(txt("p",t("根据公开标题与摘要进行中文整理，不是原文全文。受限于来源信息，部分细节可能无法验证。","Editorial interpretation of public headlines and excerpts; not the complete original article."),"news-disclosure-note"));
+    card.append(disclosure);
    }
    const foot=txt("div","","news-source");
    foot.append(txt("span",item.source||"原始来源"));
@@ -88,7 +110,7 @@ if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
    const data=await response.json() as BriefIssue;
    if(currentRequest!==request)return;
    if(data.date!==date||!Array.isArray(data.items))throw Error("日报数据结构不符合预期");
-   const fields=["category","source","published","url","title_zh","summary_zh","why_zh"] as const;
+   const fields=["category","source","published","url","title_zh","summary_zh","why_zh","details_zh","original_title"] as const;
    if(data.items.some(item=>!item||typeof item!=="object"||fields.some(key=>item[key]!==undefined&&typeof item[key]!=="string")))throw Error("日报条目结构不符合预期");
    current=data.items;loaded=true;category="全部";
    headline.textContent=date;
