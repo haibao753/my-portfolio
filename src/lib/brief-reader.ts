@@ -44,14 +44,25 @@ if(stories&&tabs&&issueSelect&&quickDates&&statusNode&&headline&&total){
  };
  const render=()=>{
   const selection=current.filter(x=>category==="全部"||(x.category||"其他")===category);
-  statusNode.textContent=t(`本期收录 ${current.length} 条 · 当前显示 ${selection.length} 条 · 重大事项请核对原始报道`,`${current.length} stories in this issue · Showing ${selection.length} · Verify important claims at the source`);
+  statusNode.textContent=t(`显示 ${selection.length} 条`,`${selection.length} stories`);
   const fragment=document.createDocumentFragment();
   if(!selection.length)fragment.append(txt("div",t("暂无对应资讯。请切换分类或日期。","No stories here. Choose another category or date."),"news-empty"));
   for(const item of selection){
    const card=txt("article","","news-card");
    const meta=txt("div","","news-meta");
    meta.append(txt("span",item.category||"其他","news-category"),txt("span",item.issue_date||(item.published||"时间未提供")));
-   card.append(meta,txt("h3",item.title_zh||"未命名资讯"),txt("p",item.summary_zh||""));
+   const heading=txt("h3",item.title_zh||"未命名资讯");
+   const summary=txt("p",item.summary_zh||"","news-summary");
+   card.append(meta,heading,summary);
+   const expand=txt("button",t("展开阅读 ↓","Read more ↓"),"news-read-toggle") as HTMLButtonElement;
+   expand.type="button";
+   expand.setAttribute("aria-expanded","false");
+   expand.addEventListener("click",()=>{
+    const open=card.classList.toggle("is-reading");
+    expand.setAttribute("aria-expanded",String(open));
+    expand.textContent=open?t("收起 ↑","Show less ↑"):t("展开阅读 ↓","Read more ↓");
+   });
+   card.append(expand);
    if(item.why_zh){
     const reason=txt("p","","news-reason");
     reason.append(txt("b",t("为什么值得关注　","Why it matters　")),document.createTextNode(item.why_zh));
