@@ -38,6 +38,8 @@ test('Daily Brief orb respects reduced motion',async({page})=>{
 
 test('Daily Brief desktop toolbar stays centered with actions at right edge',async({page})=>{
  await page.setViewportSize({width:1440,height:900});
+ await page.goto('/');
+ const homeControls=await page.locator('.glass-nav .controls').boundingBox();
  await page.goto('/brief/');
  const header=page.locator('.glass-nav');
  await expect(header).toHaveAttribute('data-orb-ready','true');
@@ -48,7 +50,9 @@ test('Daily Brief desktop toolbar stays centered with actions at right edge',asy
  expect(links).not.toBeNull();
  expect(controls).not.toBeNull();
  expect(Math.abs((links!.x+links!.width/2)-(nav!.x+nav!.width/2))).toBeLessThan(24);
- expect(nav!.x+nav!.width-(controls!.x+controls!.width)).toBeLessThan(35);
+ // Shared content gutter: both pages align controls to the same wrap edge.
+ expect(homeControls).not.toBeNull();
+ expect(Math.abs((controls!.x+controls!.width)-(homeControls!.x+homeControls!.width))).toBeLessThan(3);
  expect(controls!.x).toBeGreaterThan(links!.x+links!.width);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await page.evaluate(()=>window.scrollTo(0,700));
