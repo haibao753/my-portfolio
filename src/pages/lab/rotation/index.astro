@@ -50,9 +50,9 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
    </div>
    <button id="rotation-overlay-toggle" type="button" class="overlay-toggle" aria-controls="rotation-overlay-panel" aria-expanded="false"><span data-locale="zh">叠影对比两种姿态</span><span data-locale="en">Overlay both orientations</span> <span aria-hidden="true">↗</span></button>
    <div id="rotation-overlay-panel" class="overlay-panel" hidden>
-    <p class="overlay-legend"><span class="legend-blue"><span data-locale="zh">蓝：先 X 后 Y</span><span data-locale="en">Blue: X then Y</span></span><span class="legend-orange"><span data-locale="zh">橙：先 Y 后 X</span><span data-locale="en">Orange: Y then X</span></span></p>
-    <canvas id="rotation-overlay" width="720" height="380" role="img" aria-label="蓝色与橙色两个旋转姿态的重叠线框"></canvas>
-    <p class="overlay-caption"><span data-locale="zh">两个线框共用同一观察视角。完全重合时没有姿态差异；它们分开时说明顺序会影响结果。</span><span data-locale="en">Both wireframes share the same camera. Overlap means the orientations agree; divergence reveals the effect of order.</span></p>
+    <p class="overlay-legend"><span class="legend-blue"><span data-locale="zh">蓝 A：先 X 后 Y</span><span data-locale="en">Blue A: X then Y</span></span><span class="legend-orange"><span data-locale="zh">橙 B：先 Y 后 X</span><span data-locale="en">Orange B: Y then X</span></span></p>
+    <canvas id="rotation-overlay" width="720" height="380" role="img" aria-label="蓝色 A 与橙色 B 的旋转坐标轴对比：Z 为实线，X 为虚线；外框仅用于辅助观察"></canvas>
+    <p class="overlay-caption"><span data-locale="zh">正方体具有旋转对称性，因此外轮廓重合也可能是不同姿态。请比较蓝 A、橙 B 的实线 Z 轴与虚线 X 轴方向：两组方向一致，最终姿态才一致。</span><span data-locale="en">A cube is symmetric: overlapping outlines can still represent different orientations. Compare solid Z and dashed X axes for blue A versus orange B to determine whether the orientations actually agree.</span></p>
    </div>
    <p class="gesture-hint"><span data-locale="zh">旋转操作围绕固定的世界 X、Y 轴；面上的彩色 X／Y／Z 标记跟着立方体运动。拖动只改变观察视角，不会改变实验结果。</span><span data-locale="en">Operations rotate around fixed world X and Y axes. Colored X/Y/Z stickers move with the cube. Dragging changes only the shared camera, not the experiment.</span></p>
   </section>
