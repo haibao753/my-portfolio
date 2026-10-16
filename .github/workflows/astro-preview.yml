@@ -32,6 +32,18 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
+      - name: Check public Bilibili video metadata
+        run: |
+          python3 - <<'PY'
+          import json,urllib.request
+          for name,bvid in [('mobius','BV1BDpB6wEiJ'),('group','BV1LTa562Ehz'),('evo','BV1jjWA6aECU'),('fourier','BV1s2a16nEbr')]:
+              req=urllib.request.Request('https://api.bilibili.com/x/web-interface/view?bvid='+bvid,headers={'User-Agent':'Mozilla/5.0','Referer':'https://www.bilibili.com/'})
+              try:
+                  with urllib.request.urlopen(req,timeout=8) as resp: data=json.load(resp)
+                  v=data.get('data') or {}
+                  print('BILIBILI_META',name,'code',data.get('code'),'aid',v.get('aid'),'cid',v.get('cid'),'rights',v.get('rights'))
+              except Exception as exc: print('BILIBILI_META',name,'error',type(exc).__name__)
+          PY
       - name: Type check
         run: npm run check
       - name: Guard experimental default Worker deployment
