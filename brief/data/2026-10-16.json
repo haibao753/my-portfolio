@@ -6,64 +6,109 @@
       "category": "中国观察",
       "source": "国际媒体中国就业与社会",
       "published": "2026-10-16",
-      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBxRXpCU1gzMC0xX0pWWFRYcnNoMGkyNHpSd2NYcG82dDdmRkJLTk1USVItVWpxcnZvLWhCRXNjS0lkZkVXcjEweDZmY0lNcE94WmRTYUVCemtDTkF3cXdPTXVKbWpoQVROenAwZVpYakhuZExlUm1zME9tckpfZw?oc=5",
-      "title_zh": "亚太地区被敦促为人工智能时代做好劳动力准备",
-      "summary_zh": "据中国日报报道，亚太地区相关方面呼吁各国提前调整劳动力技能结构，以应对人工智能对就业岗位的冲击。报道聚焦政策层面的应对建议，但未披露具体国家、行业或量化目标。",
-      "why_zh": "与一般AI产业新闻不同，该条关注AI对亚太劳动力市场的结构性影响及政策应对，对关注就业与教育的大学生有直接参考价值。"
-    },
-    {
-      "category": "中国观察",
-      "source": "国际媒体中国就业与社会",
-      "published": "2026-10-16",
-      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5GeWZMRWRDaXRtT0JoTm1HdkpEVzdBa2s0ekVoLThIX2Y5SlR6ZlVhUVVjNEdkOFc0eGt4XzZ0cnR1V2xzVnRKX2kzeFJES3Iwc2pkUnFqM0UtVzlIdWs0Q2xrS1Q?oc=5",
-      "title_zh": "投出150份申请零回复：中国青年在AI冲击下求职受挫",
-      "summary_zh": "韩国媒体아시아경제报道称，有中国青年投递约150份求职申请却未获任何回复，并将此与人工智能对入门级岗位的替代联系起来，受访者表达出悲观情绪。该报道为单一媒体叙事，具体样本与统计方法未在摘要中说明。",
-      "why_zh": "该条从个体求职经历切入AI对青年就业的挤压，与宏观政策报道形成互补，但需注意其个案性质，不宜当作整体就业数据。"
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPcVIzNGJpMW82N0l5M29uMmVnZ3k2WjBHeVIyQUZrQ1hjZ0drZnhTeTQ3ZVJTSDlnUUJLSEJ2QUdTYTNfUi1OSExQMWU4NURiSEFoRGZ3UXUwVzIyT1hzVWVyN3JQUjhBY3pTUXBzWDJtWkdNbGRGanVXRXJvdloyU2VhSXZGeWh1WTF2UDJlaE0?oc=5",
+      "title_zh": "地图：2026年欧洲各国青年失业率一览",
+      "summary_zh": "Visual Capitalist以地图形式呈现2026年欧洲各国青年失业率数据，便于横向比较不同国家的就业形势。该条目仅提供标题与来源，未包含具体数值或统计口径，需查阅原文获取完整数据。",
+      "why_zh": "以可视化方式呈现欧洲青年就业结构差异，对关注高校就业与劳动力市场的读者有参照价值，而非单纯新闻热点。"
     },
     {
       "category": "中国观察",
       "source": "国际媒体中国报道",
       "published": "2026-10-15",
-      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQeWJ1NnRwZDl4SDFkeHVFU2ptc2x1aG1zbnE0Y1JOWHhBb1dmOGg5eW1FU0NKMVpFeDNmb0VVWWhRUlYtdEdYaTR2RGJ5S3paRGFuZDJQZmJjSGtLbHJ1YVpGTjhxSjl0R1VfeUNHNEh0OV9pQV82eUZNZjJDYk0tZWJDbkZsaVk2MnlZRzF1R015VjhtaU9XQVF4eXNHTG03dUhBQTFiNTVraDhBdW1YT2dLMVBJX01mcG1DT256SnV0NTRKRnQzWFFyQQ?oc=5",
-      "title_zh": "地方政府转向风险投资：中国产业投资体系中的KPI再平衡",
-      "summary_zh": "亚洲协会刊文分析中国地方政府在产业投资中角色转变，从传统补贴与招商引资转向以风险投资方式介入，并讨论考核指标（KPI）体系随之调整。文章聚焦制度设计层面的变化，具体案例与数据需查阅原文。",
-      "why_zh": "该条揭示中国产业政策工具与地方考核机制的深层变化，不同于一般经济新闻，对理解政府引导基金与创新投资逻辑有启发。"
-    },
-    {
-      "category": "数学",
-      "source": "arXiv math.ST",
-      "published": "2026-10-15",
-      "url": "https://arxiv.org/abs/2610.19207",
-      "title_zh": "自适应分层审计下预算受限文档选择的覆盖遗憾有限样本认证",
-      "summary_zh": "一篇arXiv统计学论文研究在查询分布未知时，预算受限地选取文档片段（如检索增强生成系统的知识库）会损失多少期望查询覆盖。作者构造了有限样本、分布无关的覆盖遗憾上置信界，为文档选择提供统计保证。",
-      "why_zh": "该研究将统计推断引入RAG知识库选择问题，为AI检索系统提供可认证的覆盖保证，兼具数学严谨性与工程应用潜力。"
-    },
-    {
-      "category": "数学",
-      "source": "arXiv math.ST",
-      "published": "2026-10-15",
-      "url": "https://arxiv.org/abs/2610.19208",
-      "title_zh": "多指标约束下的逐点极小极大下界：未知方向的代价",
-      "summary_zh": "arXiv新论文研究随机设计、非高斯噪声下的非参数回归，回归函数为多指标形式F(x)=f(Θx)，链接函数属于各向异性Hölder类，矩阵Θ行正交但未知。作者证明在固定点估计F时，极小极大风险存在下界，量化了未知方向带来的额外代价。",
-      "why_zh": "为多指标模型估计给出理论下界，揭示未知方向对收敛速率的影响，对高维统计与机器学习理论研究者有参考意义。"
-    },
-    {
-      "category": "AI",
-      "source": "Hugging Face",
-      "published": "2026-10-16",
-      "url": "https://huggingface.co/blog/nvidia/scaling-indic-pretraining",
-      "title_zh": "扩展印度语言预训练：2.8万亿token与开放数据生成流水线",
-      "summary_zh": "Hugging Face发布一项面向印度语言的大规模预训练工作，使用2.8万亿token，并提供开放的数据生成流水线。该工作旨在缓解印度语言语料稀缺问题，具体模型规模、评测结果及数据许可细节需查阅原文确认。",
-      "why_zh": "以开放流水线推动低资源语言预训练，对多语言模型与数据工程实践者有直接借鉴价值。"
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOVXNOWDhBN21BeVNKUVBoT0dPZldqU2o1Yi0wYVRQTUhBbkZ2MmFzWnlVYnJsdEZ4R1hPcERHc2lPdGNzdGdoX3ZmbXlMdG9MZGdHa3g3bFRUUzh3cTdhQU9tVUtYNG5haGxSaFA0NHRTUlFRMmtYRmlkYjdWQlFmb2NRZWVfTlUzaEN6SmlwYmQ3b3lUSHpDRHA0T3JUeHk1RjVpNEcxWi1qYWNid0NBRm1Tbw?oc=5",
+      "title_zh": "陆克文：特朗普与习近平峰会后，美中进入“相对稳定模式”",
+      "summary_zh": "亚洲协会刊发陆克文对特朗普与习近平峰会后美中关系的评估，认为两国进入“相对稳定模式”。该表述属其个人分析判断，具体峰会成果与政策细节需以官方信息为准。",
+      "why_zh": "提供美中关系走向的一种专业解读视角，有助于理解大国互动对经济与留学环境的潜在影响，而非简单转述官方表态。"
     },
     {
       "category": "科学研究",
       "source": "Nature Machine Learning",
       "published": "2026-10-15",
-      "url": "https://www.nature.com/articles/s41593-026-02470-2",
-      "title_zh": "基于时空AI建模发育中人脑的基因调控与变异效应：Seal方法",
-      "summary_zh": "Nature Machine Learning刊发研究，提出Seal方法，利用时空AI建模发育中人脑的基因调控与变异效应。该工作将空间与时间维度纳入模型，用于解析脑发育过程中的调控机制及遗传变异影响，具体数据规模与验证结果需参见论文。",
-      "why_zh": "将时空建模引入人脑发育遗传调控，连接AI与计算生物学，对关注交叉方法的研究者有启发。"
+      "url": "https://www.nature.com/articles/d41586-026-03194-w",
+      "title_zh": "arXiv对抗AI灌水：限制预印本投稿能否奏效？",
+      "summary_zh": "Nature Machine Learning讨论arXiv面临AI生成低质论文激增的问题，以及通过限制预印本投稿数量来应对的可行性。文章聚焦学术出版生态与质量控制，具体政策效果尚待观察。",
+      "why_zh": "触及AI时代学术诚信与预印本平台治理的核心争议，对关注机器学习科研生态的读者具有直接参考意义。"
+    },
+    {
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-10-15",
+      "url": "https://www.theregister.com/offbeat/2026/10/15/give-him-a-hand-dev-publishes-25-year-old-palm-os-tools-to-github/5303443",
+      "title_zh": "伸出援手：开发者将25年前的Palm OS工具发布到GitHub",
+      "summary_zh": "开发者Aaron Ardiri在发现仍有爱好者持续改进Palm OS应用后，公开了自己尘封多年的开发档案并发布至GitHub。该举动为复古平台保存了珍贵的历史代码与工具资源。",
+      "why_zh": "展现个人开发者对老旧平台的开源保存实践，对关注软件考古、开源社区与开发者文化的读者有独特启发。"
+    },
+    {
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-10-16",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQVXBWNjFqUEdsUjVLeVFmOTJvLXNrZ2dKMEhvYUFNUzlIdUxBOEtoQjFGZE1GNjBJUWE1eWE4Q01Yd29mLTlKYU5kTUtSMzRqMHd1ZnVsR3NjZ2xPOERYbUJjeU0zVU5QS2E1ODZKcElYSktfbDdJMjh0VTAxWlpmekpNbF9uRU5vYWZPUkJlOFdySVBOal8xRFZncw?oc=5",
+      "title_zh": "台积电第三季度净利润创纪录达7630亿新台币",
+      "summary_zh": "据韩国经济日报报道，台积电公布第三季度财报，净利润达到7630亿新台币，创下历史新高。该业绩反映全球AI芯片需求持续强劲，先进制程产能利用率维持高位。具体营收与毛利率等细节未在摘要中披露。",
+      "why_zh": "台积电业绩是全球AI算力投资周期的关键风向标，涉及半导体供应链与中国台湾地区经济，对理解科技产业走势有实质参考价值。"
+    },
+    {
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-16",
+      "url": "https://arxiv.org/abs/2610.20798",
+      "title_zh": "异方差下稠密高维Huber回归的精确渐近理论",
+      "summary_zh": "一篇arXiv统计学论文研究比例渐近框架下异方差线性模型中的Huber回归，给出了Huber估计量经验分布的精确渐近刻画，由三个标量参数决定其一阶中心与渐近方差。该结果为高维稳健回归的推断提供了理论工具。",
+      "why_zh": "高维稳健回归的精确渐近理论属数学统计前沿，对理解机器学习中抗异常值方法的理论基础有直接启发，非普通应用类资讯。"
+    },
+    {
+      "category": "AI",
+      "source": "Hugging Face",
+      "published": "2026-10-15",
+      "url": "https://huggingface.co/blog/ibm-granite/granite-switch-4-1",
+      "title_zh": "Granite Switch 4.1：单一端点实现对话、决策与语音",
+      "summary_zh": "Hugging Face发布Granite Switch 4.1模型，宣称可通过单一端点同时支持对话、决策与语音功能。摘要未提供模型规模、基准测试或开源许可等细节，具体能力与性能有待进一步验证。",
+      "why_zh": "多模态统一端点模型是AI Agent架构的重要方向，若属实可简化部署流程，但信息有限，需谨慎看待其实际能力。"
+    },
+    {
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-10-15",
+      "url": "https://arstechnica.com/gadgets/2026/10/kde-turns-30-with-plasma-6-8-remote-upgrades-and-an-x11-farewell/",
+      "title_zh": "KDE迎来30周年，发布Plasma 6.8并告别X11",
+      "summary_zh": "据Ars Technica报道，KDE桌面环境庆祝成立30周年，发布Plasma 6.8版本，引入远程升级功能，并正式告别X11转向Wayland。报道还提到相关纪念影片。具体技术变更细节未在摘要中展开。",
+      "why_zh": "X11向Wayland的迁移是Linux桌面生态的结构性转折，对开发者与开源社区有长期影响，非普通版本更新资讯。"
+    },
+    {
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-16",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPNE0xUktiMWVWdmZQb3d4S1NUeVFRVjZMT2NDbGd0YVhaR2t2a2MtcFRTcjlyTzc4bklPbjJ1LVY3cjZCUzlfbEFRbDk4aWN5N3V4QmQ4bFNWSW8yM2N1djZXcGNReDhnS2hEYkthcGxYdWpWUmhBRDRtNkEtVlFEWHhSU05Nam0ya0lqYzl3?oc=5",
+      "title_zh": "青年就业减少14.7万，整体就业市场仍在增长",
+      "summary_zh": "据韩国《朝鲜日报》报道，中国青年就业人数下降14.7万，而整体就业市场同期保持增长。该报道未在摘要中提供统计口径、年龄段定义或数据来源细节，具体背景需进一步核实。",
+      "why_zh": "青年就业与整体就业走势分化，涉及中国经济政策与高校就业议题，对关注就业形势的读者有直接参考价值。"
+    },
+    {
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-16",
+      "url": "https://arxiv.org/abs/2610.20944",
+      "title_zh": "因子辅助密度估计：当环境维度带来oracle速率",
+      "summary_zh": "arXiv新论文研究高维因子模型下的密度估计，提出非迭代方法FADE，对潜因子得分的谱估计应用核密度估计。摘要指出得分代理变量存在依赖且不服从潜密度，标准核密度方法需调整。",
+      "why_zh": "高维统计与机器学习交叉的数学新进展，涉及oracle速率这一理论核心问题，对关注统计学习理论的读者有启发。"
+    },
+    {
+      "category": "AI",
+      "source": "Hugging Face",
+      "published": "2026-10-15",
+      "url": "https://huggingface.co/blog/meta-muse-spark-open",
+      "title_zh": "Meta发布开放权重前沿多模态混合专家模型Muse Spark Open",
+      "summary_zh": "据Hugging Face信息，Meta发布名为Muse Spark Open的开放权重前沿多模态混合专家模型。候选条目未提供模型参数规模、评测结果或许可证细节，具体能力需查阅官方发布。",
+      "why_zh": "开放权重多模态大模型是AI社区关注焦点，涉及模型开放策略与前沿能力，对开发者和研究者有实际意义。"
+    },
+    {
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-10-15",
+      "url": "https://www.technologyreview.com/2026/10/15/1146755/the-download-reviving-frozen-pig-kidneys-boosting-nuclear-power/",
+      "title_zh": "今日速览：冷冻猪肾脏复活与核能推进",
+      "summary_zh": "MIT Technology Review每日通讯提到，被冷却至-150°C并冷冻数月的猪肾脏已成功复活；同时涉及核能发展相关话题。摘要未给出研究团队、发表期刊或具体技术细节。",
+      "why_zh": "器官冷冻保存与核能是生物医学和能源领域的实质进展，不同于普通科技快讯，对关注科研前沿的读者有价值。"
     }
   ]
 }
