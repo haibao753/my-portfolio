@@ -19,6 +19,10 @@ test('filtering preserves keyboard focus and follows the selected UI language', 
  await filter.press('Enter');
  await expect(filter).toBeFocused();
  await expect(filter).toHaveAttribute('aria-pressed', 'true');
+ // After filtering down-page, the toolbar is intentionally an orb.
+ // Expand it with the visible logo before using its language control.
+ await page.locator('.glass-nav .brand').click();
+ await expect.poll(async()=>page.locator('.glass-nav').getAttribute('data-orb-closed')).toBe('false');
  await page.locator('[data-language-toggle]').click();
  await expect(page.locator('#tabs button').first()).toHaveText('All');
  await expect(page.locator('#status')).toContainText('Showing');
