@@ -31,7 +31,7 @@ test('world modes, touch and keyboard create visible new compositions while paus
  await page.locator('button[data-universe-mode="1"]').click();await expect(host).toHaveAttribute('data-universe-mode','1');await expect.poll(async()=>(await hash(page)).sum).not.toBe(original.sum);
  const prism=await hash(page);await page.locator('button[data-universe-mode="2"]').click();await expect.poll(async()=>(await hash(page)).sum).not.toBe(prism.sum);
  const touch=page.locator('[data-sculpture-touch]');await touch.focus();await page.keyboard.press('Enter');await expect(host).toHaveAttribute('data-universe-interactions','1');await expect(page.locator('[data-universe-feedback]')).not.toBeEmpty();
- await page.locator('[data-language-toggle]').click();await expect(page.locator('[data-universe-pause-label]')).toHaveText('Resume animation');await expect(page.locator('h1')).toContainText('Jinhai Hu');
+ await page.locator('[data-language-toggle]').click();await expect(page.locator('[data-universe-pause-label]')).toHaveText('Resume animation');await expect(page.locator('h1')).toContainText('Hu Jinhai');
 });
 
 test('reduced motion and offscreen scenes stop the render loop',async({page})=>{

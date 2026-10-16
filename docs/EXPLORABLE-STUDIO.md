@@ -1,4 +1,4 @@
-# Jinhai Hu — independent portfolio preview
+# Hu Jinhai — independent portfolio preview
 
 Open `/lab/` on the branch preview. The production homepage and existing routes
 remain available. This draft awaits visual review before homepage promotion.
