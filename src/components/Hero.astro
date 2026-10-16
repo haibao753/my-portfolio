@@ -52,12 +52,12 @@ import CuriositySculpture from "./CuriositySculpture.astro";
      glyph.className = "hero-title-glyph";
      glyph.setAttribute("aria-hidden", "true");
      glyph.dataset.glyph = character;
-     const delay = 220 + (beats[count] ?? beats[beats.length-1] + (count-beats.length+1)*110);
+     const delay = 50 + Math.round((beats[count] ?? beats[beats.length-1] + (count-beats.length+1)*110)*.2);
      glyph.style.setProperty("--glyph-delay", `${delay}ms`);
      // The occasional glint is a separate pseudo-element; final letters stay solid.
      if (count === 2 || count === 7 || count === 17) {
       glyph.dataset.glint = "";
-      glyph.style.setProperty("--glint-delay", `${delay + 4600 + (count%3)*2100}ms`);
+      glyph.style.setProperty("--glint-delay", `${delay + 3500 + (count%3)*2100}ms`);
      }
      glyph.textContent = character;
      fragment.appendChild(glyph);
@@ -86,10 +86,17 @@ import CuriositySculpture from "./CuriositySculpture.astro";
  .hero-copy{min-width:0;position:relative;z-index:1}
  .hero h1{font-weight:750;letter-spacing:-.075em;line-height:1.14;font-size:clamp(53px,6.6vw,96px);margin:0 0 22px}
  /* Pixel-coded reveal: flicker, tiny stepped displacement, then perfectly legible text. */
- :global(.hero-title--pixels .hero-title-glyph){position:relative;display:inline-block;opacity:0;animation:hero-pixel-arrive 540ms steps(6,end) var(--glyph-delay) both}
+ :global(.hero-title--pixels .hero-title-glyph){position:relative;display:inline-block;opacity:1;animation:hero-pixel-arrive 420ms steps(6,end) var(--glyph-delay) both}
  :global(.hero-title--pixels .hero-title-glyph::before){content:attr(data-glyph);position:absolute;inset:0;pointer-events:none;opacity:0;color:var(--accent);text-shadow:2px 0 #39d4eb,-2px 0 rgba(86,142,253,.7);clip-path:inset(15% 0 43% 0);animation:hero-pixel-ghost 540ms steps(5,end) var(--glyph-delay) both}
  :global(.hero-title--pixels .hero-title-glyph[data-glint]::after){content:attr(data-glyph);position:absolute;inset:0;pointer-events:none;color:var(--accent);opacity:0;clip-path:inset(42% 0 48% 0);animation:hero-pixel-glint 10s linear var(--glint-delay) infinite}
- @keyframes hero-pixel-arrive{0%{opacity:0;transform:translate3d(0,8px,0) scale(.92);text-shadow:3px 0 var(--accent),-3px 0 #45cbd8}17%{opacity:.9;transform:translate3d(2px,-2px,0) scale(1.025)}30%{opacity:.07;transform:translate3d(-2px,1px,0)}48%{opacity:1;transform:translate3d(1px,-1px,0);text-shadow:-2px 0 #48c8dc}61%{opacity:.2;transform:translate3d(0,2px,0)}81%{opacity:1;transform:none;text-shadow:1px 0 var(--accent)}100%{opacity:1;transform:none;text-shadow:none}}
+ /* Signal glints without ever showing an incomplete headline. */
+ @keyframes hero-pixel-arrive{
+  0%{opacity:1;transform:none;text-shadow:none}
+  19%{opacity:1;transform:translate3d(1px,-3px,0);text-shadow:2px 0 var(--accent),-2px 0 #45cbd8}
+  38%{opacity:.83;transform:translate3d(-1px,1px,0);text-shadow:-1px 0 #48c8dc}
+  65%{opacity:1;transform:translate3d(0,-1px,0);text-shadow:1px 0 var(--accent)}
+  100%{opacity:1;transform:none;text-shadow:none}
+ }
  @keyframes hero-pixel-ghost{0%,12%,35%,63%,100%{opacity:0;transform:translateX(0)}18%,52%,77%{opacity:.8;transform:translateX(3px)}}
  @keyframes hero-pixel-glint{0%,1.5%,3%,100%{opacity:0}1.8%,2.2%{opacity:.65}2.5%{opacity:.16}}
  @media(prefers-reduced-motion:reduce){:global(.hero-title--pixels .hero-title-glyph){animation:none!important;opacity:1;transform:none}:global(.hero-title-glyph::before),:global(.hero-title-glyph::after){display:none!important}}
@@ -108,5 +115,16 @@ import CuriositySculpture from "./CuriositySculpture.astro";
  .secondary{color:var(--accent)}
  html[data-theme="dark"] .signature{filter:invert(1)}
  @media(min-width:761px) and (max-width:1000px){.hero{grid-template-columns:1fr 1fr;gap:0}.hero h1{font-size:clamp(48px,6.7vw,68px)}.actions{gap:6px}.actions a{padding-inline:17px}}
- @media(max-width:760px){.hero{grid-template-columns:1fr;text-align:center;gap:14px;padding-top:38px;padding-bottom:80px}.hero-copy{display:contents}.hero h1{grid-row:1;font-size:clamp(46px,10vw,70px);margin-bottom:0}.hero :global(.sculpture-stage){grid-row:2}.actions{grid-row:3;justify-content:center;margin-top:0}.hero-copy :global(.signature-host){grid-row:4;justify-content:center;margin-top:12px}.hero-copy :global(.hero-autograph--pen){width:min(270px,85%)}}
+ /* A complete mobile scene is visible from the first frame. */
+ @media(max-width:760px){
+  .hero{grid-template-columns:minmax(0,1fr);text-align:center;gap:10px;padding-top:clamp(18px,4vw,28px);padding-bottom:clamp(36px,7vw,60px)}
+  .hero-copy{display:contents}
+  .hero h1{grid-row:1;font-size:clamp(40px,10vw,56px);margin-bottom:4px}
+  .actions{grid-row:2;justify-content:center;gap:8px;margin-top:0}
+  .actions a{min-height:44px;padding:8px 13px;font-size:12px}
+  .hero :global(.sculpture-stage){grid-row:3}
+  .hero-copy :global(.signature-host){grid-row:4;justify-content:center;margin-top:0}
+  .hero-copy :global(.hero-autograph--pen){width:min(180px,54vw)}
+ }
+
 </style>

@@ -5,6 +5,9 @@
  "use strict";
  const root=document.querySelector(".hero-autograph--pen");
  if(!root)return;
+ // The public homepage uses a finished signature at first paint: no long pen
+ // sequence that looks like an unfinished reveal. Preserve opt-in renderer.
+ if(root.dataset.signatureAnimation==="static"){root.classList.add("is-pen-finished");return;}
  const strokes=[...root.querySelectorAll(".signature-pen-stroke")];
  const finish=root.querySelector(".hero-autograph__finish");
  if(!strokes.length||!finish)return;
