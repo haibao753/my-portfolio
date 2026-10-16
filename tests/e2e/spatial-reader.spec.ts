@@ -24,3 +24,18 @@ test("3D dialog supports keyboard dismissal and restores focus",async({page})=>{
  await expect(page.locator("#spatial-dialog")).not.toBeVisible();
  await expect(open).toBeFocused();
 });
+
+test("3D canvas remains unobstructed by the article inspector on mobile",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/brief/");
+ await expect(page.locator(".news-card").first()).toBeVisible();
+ await page.locator("#spatial-open").click();
+ const canvas=page.locator(".spatial-webgl");
+ const inspector=page.locator("#spatial-scene");
+ await expect(canvas).toBeVisible();
+ await expect(inspector).toBeVisible();
+ const c=await canvas.boundingBox(),i=await inspector.boundingBox();
+ expect(c).not.toBeNull();expect(i).not.toBeNull();
+ expect(c!.height).toBeGreaterThan(150);
+ expect(i!.y).toBeGreaterThanOrEqual(c!.y+c!.height-1);
+});
