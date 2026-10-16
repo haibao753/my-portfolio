@@ -36,7 +36,7 @@ test("Lab 001 remains usable on a 390px phone and camera does not change math",a
 test("Lab 001 explanation is available without canvas graphics",async({page})=>{
  await page.addInitScript(()=>{
   const native=HTMLCanvasElement.prototype.getContext;
-  HTMLCanvasElement.prototype.getContext=function(type,...rest){
+  HTMLCanvasElement.prototype.getContext=function(this:HTMLCanvasElement,type,...rest){
    if(type==="2d")return null;
    return native.call(this,type,...rest);
   } as typeof HTMLCanvasElement.prototype.getContext;
