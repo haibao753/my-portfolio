@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "date": "2026-10-16",
+  "items": [
+    {
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-16",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBxRXpCU1gzMC0xX0pWWFRYcnNoMGkyNHpSd2NYcG82dDdmRkJLTk1USVItVWpxcnZvLWhCRXNjS0lkZkVXcjEweDZmY0lNcE94WmRTYUVCemtDTkF3cXdPTXVKbWpoQVROenAwZVpYakhuZExlUm1zME9tckpfZw?oc=5",
+      "title_zh": "亚太地区被敦促为人工智能时代做好劳动力准备",
+      "summary_zh": "据中国日报报道，亚太地区相关方面呼吁各国提前调整劳动力技能结构，以应对人工智能对就业岗位的冲击。报道聚焦政策层面的应对建议，但未披露具体国家、行业或量化目标。",
+      "why_zh": "与一般AI产业新闻不同，该条关注AI对亚太劳动力市场的结构性影响及政策应对，对关注就业与教育的大学生有直接参考价值。"
+    },
+    {
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-16",
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5GeWZMRWRDaXRtT0JoTm1HdkpEVzdBa2s0ekVoLThIX2Y5SlR6ZlVhUVVjNEdkOFc0eGt4XzZ0cnR1V2xzVnRKX2kzeFJES3Iwc2pkUnFqM0UtVzlIdWs0Q2xrS1Q?oc=5",
+      "title_zh": "投出150份申请零回复：中国青年在AI冲击下求职受挫",
+      "summary_zh": "韩国媒体아시아경제报道称，有中国青年投递约150份求职申请却未获任何回复，并将此与人工智能对入门级岗位的替代联系起来，受访者表达出悲观情绪。该报道为单一媒体叙事，具体样本与统计方法未在摘要中说明。",
+      "why_zh": "该条从个体求职经历切入AI对青年就业的挤压，与宏观政策报道形成互补，但需注意其个案性质，不宜当作整体就业数据。"
+    },
+    {
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-10-15",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQeWJ1NnRwZDl4SDFkeHVFU2ptc2x1aG1zbnE0Y1JOWHhBb1dmOGg5eW1FU0NKMVpFeDNmb0VVWWhRUlYtdEdYaTR2RGJ5S3paRGFuZDJQZmJjSGtLbHJ1YVpGTjhxSjl0R1VfeUNHNEh0OV9pQV82eUZNZjJDYk0tZWJDbkZsaVk2MnlZRzF1R015VjhtaU9XQVF4eXNHTG03dUhBQTFiNTVraDhBdW1YT2dLMVBJX01mcG1DT256SnV0NTRKRnQzWFFyQQ?oc=5",
+      "title_zh": "地方政府转向风险投资：中国产业投资体系中的KPI再平衡",
+      "summary_zh": "亚洲协会刊文分析中国地方政府在产业投资中角色转变，从传统补贴与招商引资转向以风险投资方式介入，并讨论考核指标（KPI）体系随之调整。文章聚焦制度设计层面的变化，具体案例与数据需查阅原文。",
+      "why_zh": "该条揭示中国产业政策工具与地方考核机制的深层变化，不同于一般经济新闻，对理解政府引导基金与创新投资逻辑有启发。"
+    },
+    {
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-15",
+      "url": "https://arxiv.org/abs/2610.19207",
+      "title_zh": "自适应分层审计下预算受限文档选择的覆盖遗憾有限样本认证",
+      "summary_zh": "一篇arXiv统计学论文研究在查询分布未知时，预算受限地选取文档片段（如检索增强生成系统的知识库）会损失多少期望查询覆盖。作者构造了有限样本、分布无关的覆盖遗憾上置信界，为文档选择提供统计保证。",
+      "why_zh": "该研究将统计推断引入RAG知识库选择问题，为AI检索系统提供可认证的覆盖保证，兼具数学严谨性与工程应用潜力。"
+    },
+    {
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-15",
+      "url": "https://arxiv.org/abs/2610.19208",
+      "title_zh": "多指标约束下的逐点极小极大下界：未知方向的代价",
+      "summary_zh": "arXiv新论文研究随机设计、非高斯噪声下的非参数回归，回归函数为多指标形式F(x)=f(Θx)，链接函数属于各向异性Hölder类，矩阵Θ行正交但未知。作者证明在固定点估计F时，极小极大风险存在下界，量化了未知方向带来的额外代价。",
+      "why_zh": "为多指标模型估计给出理论下界，揭示未知方向对收敛速率的影响，对高维统计与机器学习理论研究者有参考意义。"
+    },
+    {
+      "category": "AI",
+      "source": "Hugging Face",
+      "published": "2026-10-16",
+      "url": "https://huggingface.co/blog/nvidia/scaling-indic-pretraining",
+      "title_zh": "扩展印度语言预训练：2.8万亿token与开放数据生成流水线",
+      "summary_zh": "Hugging Face发布一项面向印度语言的大规模预训练工作，使用2.8万亿token，并提供开放的数据生成流水线。该工作旨在缓解印度语言语料稀缺问题，具体模型规模、评测结果及数据许可细节需查阅原文确认。",
+      "why_zh": "以开放流水线推动低资源语言预训练，对多语言模型与数据工程实践者有直接借鉴价值。"
+    },
+    {
+      "category": "科学研究",
+      "source": "Nature Machine Learning",
+      "published": "2026-10-15",
+      "url": "https://www.nature.com/articles/s41593-026-02470-2",
+      "title_zh": "基于时空AI建模发育中人脑的基因调控与变异效应：Seal方法",
+      "summary_zh": "Nature Machine Learning刊发研究，提出Seal方法，利用时空AI建模发育中人脑的基因调控与变异效应。该工作将空间与时间维度纳入模型，用于解析脑发育过程中的调控机制及遗传变异影响，具体数据规模与验证结果需参见论文。",
+      "why_zh": "将时空建模引入人脑发育遗传调控，连接AI与计算生物学，对关注交叉方法的研究者有启发。"
+    }
+  ]
+}
