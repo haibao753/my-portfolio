@@ -28,6 +28,10 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     <button type="button" data-rotation-step="1" aria-pressed="false"><span data-locale="zh">② 第一次旋转</span><span data-locale="en">② First rotation</span></button>
     <button type="button" data-rotation-step="2" aria-pressed="true"><span data-locale="zh">③ 完成旋转</span><span data-locale="en">③ Both rotations</span></button>
    </div>
+   <div class="playback-controls" role="group" aria-label="连续旋转演示 / Rotation playback">
+    <button id="rotation-replay" type="button"><span aria-hidden="true">▶</span> <span data-locale="zh">播放两次旋转</span><span data-locale="en">Play both rotations</span></button>
+    <button id="rotation-stop" type="button" hidden><span aria-hidden="true">■</span> <span data-locale="zh">停止演示</span><span data-locale="en">Stop animation</span></button>
+   </div>
    <p id="rotation-step-explanation" class="step-explanation" role="status" aria-live="polite"><span data-locale="zh">第二步：左侧再绕 Y 轴，右侧再绕 X 轴。</span><span data-locale="en">Step 2: left adds Y, right adds X.</span></p>
   </section>
   <section aria-labelledby="comparison-title">
@@ -100,7 +104,12 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
  .step-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
  .step-buttons button{border-radius:10px;padding:12px 8px;font-weight:600;min-width:0;white-space:normal;line-height:1.35}
  .step-buttons button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
- .step-explanation{font-size:13px;color:var(--muted);min-height:1.6em;margin:12px 0 0}
+ .playback-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+ .playback-controls button{border-radius:11px;font-weight:600;padding:8px 14px}
+ .playback-controls button[hidden]{display:none!important}
+ .playback-controls #rotation-replay{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+ .playback-controls #rotation-replay[aria-disabled="true"]{opacity:.6;cursor:default}
+  .step-explanation{font-size:13px;color:var(--muted);min-height:1.6em;margin:12px 0 0}
  .overlay-toggle{display:block;width:100%;border-radius:12px;padding:12px 16px;text-align:left;font-weight:600;margin:16px 0}
  .overlay-toggle[aria-expanded="true"]{border-color:var(--accent)}
  .overlay-panel{background:var(--card);border:1px solid var(--stroke);border-radius:14px;overflow:hidden}
