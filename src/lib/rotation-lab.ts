@@ -107,13 +107,30 @@ function drawOverlay(canvas:HTMLCanvasElement,a:Mat3,b:Mat3){
  const size=Math.min(w,h)*.41;
  const project=(v:Vec3)=>{const p=view(v),k=3.1/(3.1-p[2]*.21);return [w*.5+p[0]*size*k,h*.5-p[1]*size*k] as const;};
  const edges:[[number,number],...Array<[number,number]>]=[[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,6],[3,7],[4,5],[4,6],[5,7],[6,7]];
- for(const [m,color] of [[a,"#236ca9"],[b,"#cc7435"]] as [Mat3,string][]){
+ // The outline of a cube can coincide after distinct 90-degree rotations
+ // because the cube has rotational symmetries. Distinguish *oriented frames*:
+ // the directions of both local X and local Z determine an SO(3) orientation.
+ for(const [m,color,series] of [[a,"#236ca9","A"],[b,"#cc7435","B"]] as [Mat3,string,string][]){
   const pts=verts.map(v=>project(apply(m,v)));
-  ctx.lineWidth=2.5;ctx.lineJoin="round";ctx.strokeStyle=color;
+  ctx.lineJoin="round";ctx.strokeStyle=color;ctx.lineWidth=1.4;ctx.globalAlpha=.28;
   for(const [i,j] of edges){ctx.beginPath();ctx.moveTo(...pts[i]);ctx.lineTo(...pts[j]);ctx.stroke();}
-  const tip=project(apply(m,[0,0,1.15]));const origin=project([0,0,0]);
-  ctx.beginPath();ctx.moveTo(...origin);ctx.lineTo(...tip);ctx.lineWidth=4;ctx.stroke();
-  ctx.beginPath();ctx.arc(...tip,5,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
+  ctx.globalAlpha=1;
+  const origin=project([0,0,0]);
+  for(const [axis,label] of [[[1,0,0],"X"],[[0,0,1],"Z"]] as [Vec3,string][]){
+   const tip=project(apply(m,axis.map(v=>v*1.24) as Vec3));
+   const dx=tip[0]-origin[0],dy=tip[1]-origin[1],len=Math.max(1,Math.hypot(dx,dy));
+   const ux=dx/len,uy=dy/len,px=-uy,py=ux;
+   ctx.beginPath();ctx.moveTo(...origin);ctx.lineTo(...tip);
+   ctx.strokeStyle=color;ctx.lineWidth=label==="Z"?4:2.5;
+   ctx.setLineDash(label==="X"?[6,4]:[]);ctx.stroke();ctx.setLineDash([]);
+   ctx.beginPath();ctx.moveTo(tip[0],tip[1]);
+   ctx.lineTo(tip[0]-ux*11+px*5,tip[1]-uy*11+py*5);
+   ctx.lineTo(tip[0]-ux*11-px*5,tip[1]-uy*11-py*5);
+   ctx.closePath();ctx.fillStyle=color;ctx.fill();
+   ctx.font="700 12px system-ui";ctx.textAlign="center";ctx.textBaseline="middle";
+   const ox=series==="A"?-14:14,oy=series==="A"?-13:14;
+   ctx.fillText(series+"·"+label,tip[0]+ox,tip[1]+oy);
+  }
  }
 }
 function initialize(){
