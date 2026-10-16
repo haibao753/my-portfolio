@@ -47,7 +47,7 @@ if(stories&&tabs&&issueSelect&&statusNode&&headline&&total){
    }
    // The original publisher may be paywalled. Show only our grounded,
    // editorially transformed explanation here—not the copyrighted full text.
-   const hasExtra=Boolean(item.details_zh||item.original_title);
+   const hasExtra=true;
    if(hasExtra){
     const disclosure=document.createElement("details");
     disclosure.className="news-expanded";
