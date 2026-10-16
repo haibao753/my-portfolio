@@ -97,4 +97,36 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .news{padding-top:16px}.news-heading{margin:0 0 8px}.news-heading h2{font-size:clamp(18px,2.6vw,28px);margin:0}
  .news-heading>p{display:none}.toolbar{padding:8px 0}.status{margin:10px 0;font-size:11px}
  @media(max-width:760px){.brief-hero{padding-top:12px;padding-bottom:12px}.brief-hero h1{font-size:25px}.brief-hero .eyebrow{font-size:10px}.issue-summary strong{font-size:12px}.issue-summary small{font-size:10px}.news{padding-top:11px}.news-heading{margin-bottom:7px}.news-heading h2{font-size:19px}.date-controls{width:auto;justify-content:flex-start}.quick-dates{display:flex}.date-picker{gap:5px}.date-picker>span{display:none}.date-picker select{min-height:35px;padding:5px 8px;font-size:11px}.toolbar{gap:7px;flex-direction:column;align-items:flex-start}.filters{gap:6px;max-height:38px;overflow:auto;flex-wrap:nowrap;width:100%;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}:global(.filter-chip){min-height:33px;padding:6px 11px;white-space:nowrap;font-size:11px}.stories{gap:12px}:global(.news-card){padding:18px}:global(.news-card h3){margin:10px 0 9px;font-size:21px}}
+
+ /* Editorial flow: wider content, restrained chrome, progressively revealed details. */
+ .brief-hero.wrap,.news.wrap{width:min(1560px,calc(100% - 48px));max-width:none}
+ .news-heading{display:none}
+ .news{padding-top:8px}
+ .toolbar{border-top:0;border-bottom:1px solid var(--stroke)}
+ .stories{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 30px}
+ :global(.news-card){border:0;border-top:1px solid var(--stroke);box-shadow:none;border-radius:0;background:transparent;padding:26px 3px 35px;transition:background-color .3s ease,opacity .3s ease}
+ :global(.news-card h3){font-size:clamp(23px,2.4vw,35px);margin:13px 0 13px;line-height:1.35}
+ :global(.news-card .news-summary){font-size:clamp(14px,1.1vw,16px);line-height:1.88;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:8px}
+ :global(.news-card .news-reason),:global(.news-card .news-expanded){display:none}
+ :global(.news-card.is-reading .news-summary){display:block;overflow:visible}
+ :global(.news-card.is-reading .news-reason){display:block}
+ :global(.news-card.is-reading .news-expanded){display:block}
+ :global(.news-read-toggle){align-self:flex-start;border:0;background:none;color:var(--accent);font:inherit;font-size:12px;padding:8px 0;cursor:pointer}
+ :global(.news-read-toggle:focus-visible){outline:2px solid var(--accent);outline-offset:3px}
+ :global(.news-source){margin-top:8px;border:0;padding:8px 0 0}
+ .disclaimer{margin-top:32px;border-top:1px solid var(--stroke);padding-top:18px;font-size:11px;opacity:.75}
+ @media(max-width:760px){
+  .brief-hero.wrap,.news.wrap{width:calc(100% - 28px)}
+  .brief-hero{padding-block:8px}
+  .news{padding-top:4px;padding-bottom:70px}
+  .stories{grid-template-columns:minmax(0,1fr);gap:0}
+  :global(.news-card){padding:21px 2px 27px;min-width:0}
+  :global(.news-card h3){font-size:clamp(23px,6vw,29px);line-height:1.36}
+  :global(.news-card .news-summary){font-size:15px;-webkit-line-clamp:2}
+  .status{margin:7px 0;font-size:10px}
+  .toolbar{padding:6px 0}
+  .date-controls{align-self:flex-end}
+ }
+ @media(prefers-reduced-motion:reduce){:global(.news-card){transition:none}}
+
 </style>
