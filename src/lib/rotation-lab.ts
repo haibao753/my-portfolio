@@ -162,7 +162,8 @@ function initialize(){
  };
  const paint=(a:Mat3,b:Mat3)=>{
   currentFrame={a,b};
-  paint(a,b);
+  draw(first,a);draw(second,b);
+  if(overlay&&!overlayPanel?.hidden)drawOverlay(overlay,a,b);
  };
  const render=()=>{
   const x=Number(ax.value),y=Number(ay.value);
@@ -170,8 +171,7 @@ function initialize(){
   first.setAttribute("aria-label",isEn()?"3D cube after X then Y; drag to orbit":"先绕 X 后绕 Y 的立方体；拖动改变视角");
   second.setAttribute("aria-label",isEn()?"3D cube after Y then X; drag to orbit":"先绕 Y 后绕 X 的立方体；拖动改变视角");
   const a=stepMatrix(x,y,"xy",stage),b=stepMatrix(x,y,"yx",stage);
-  draw(first,a);draw(second,b);
-  if(overlay&&!overlayPanel?.hidden)drawOverlay(overlay,a,b);
+  paint(a,b);
   root.querySelectorAll<HTMLButtonElement>("[data-rotation-step]").forEach(button=>{
    button.setAttribute("aria-pressed",String(Number(button.dataset.rotationStep)===stage));
   });
