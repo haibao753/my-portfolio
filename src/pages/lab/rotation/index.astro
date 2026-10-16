@@ -54,7 +54,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     <canvas id="rotation-overlay" width="720" height="380" role="img" aria-label="蓝色 A 与橙色 B 的旋转坐标轴对比：Z 为实线，X 为虚线；外框仅用于辅助观察"></canvas>
     <p class="overlay-caption"><span data-locale="zh">正方体具有旋转对称性，因此外轮廓重合也可能是不同姿态。请比较蓝 A、橙 B 的实线 Z 轴与虚线 X 轴方向：两组方向一致，最终姿态才一致。</span><span data-locale="en">A cube is symmetric: overlapping outlines can still represent different orientations. Compare solid Z and dashed X axes for blue A versus orange B to determine whether the orientations actually agree.</span></p>
    </div>
-   <p class="gesture-hint"><span data-locale="zh">旋转操作围绕固定的世界 X、Y 轴；面上的彩色 X／Y／Z 标记跟着立方体运动。拖动只改变观察视角，不会改变实验结果。</span><span data-locale="en">Operations rotate around fixed world X and Y axes. Colored X/Y/Z stickers move with the cube. Dragging changes only the shared camera, not the experiment.</span></p>
+   <p class="gesture-hint"><span data-locale="zh">操作按固定的世界 X、Y 轴进行；画面中的彩色箭头和面标记代表立方体自身的局部坐标轴，会随物体转动。拖动只改变两侧共同的观察视角。</span><span data-locale="en">Operations use fixed world X and Y axes. The colored arrows and face markers show the cube’s local axes, so they rotate with the object. Dragging changes only the shared camera.</span></p>
   </section>
   <section class="result" aria-labelledby="result-title">
    <p class="eyebrow">WHAT YOU DISCOVER</p>
