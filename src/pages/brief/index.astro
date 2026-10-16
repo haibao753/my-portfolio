@@ -30,7 +30,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   </div>
   <p class="status" id="status" role="status" aria-live="polite"><span data-locale="zh">正在载入每日简报…</span><span data-locale="en">Loading Daily Brief…</span></p>
   <div id="stories" class="stories" aria-live="off"></div>
-  <dialog id="spatial-dialog" aria-labelledby="spatial-heading" aria-describedby="spatial-state"><div class="spatial-shell"><header><h2 id="spatial-heading"><span data-locale="zh">知识空间</span><span data-locale="en">Knowledge Space</span></h2><button id="spatial-close" type="button" aria-label="关闭探索空间">×</button></header><p id="spatial-state" role="status">选择一个节点展开阅读</p><div class="spatial-viewport"><div id="spatial-scene" class="spatial-scene" aria-label="新闻主题节点"></div></div><footer><button type="button" data-rotate="-24" aria-label="向左旋转">←</button><span>拖动背景旋转 · 点击节点阅读</span><button type="button" data-rotate="24" aria-label="向右旋转">→</button></footer></div></dialog>
+  <dialog id="spatial-dialog" aria-labelledby="spatial-heading" aria-describedby="spatial-state"><div class="spatial-shell"><header><h2 id="spatial-heading"><span data-locale="zh">知识空间</span><span data-locale="en">Knowledge Space</span></h2><button id="spatial-close" type="button" aria-label="关闭探索空间">×</button></header><p id="spatial-state" role="status">选择一个节点展开阅读</p><div class="spatial-viewport" aria-label="可拖动的三维知识网络"></div><div id="spatial-scene" class="spatial-scene" aria-label="所选新闻详情"></div><footer><button type="button" data-rotate="-24" aria-label="向左旋转">←</button><span>拖动背景旋转 · 点击节点阅读</span><button type="button" data-rotate="24" aria-label="向右旋转">→</button></footer></div></dialog>
   <noscript><p>启用 JavaScript 以浏览与筛选每日简报。 / Enable JavaScript to browse and filter Daily Brief.</p></noscript>
   <p class="disclaimer"><span data-locale="zh">简报以 AI 辅助整理公开资讯，仅供信息参考，并非独立事实核查。重要结论请核对原始来源。</span><span data-locale="en">AI-assisted editorial summaries, not independent fact-checking. Verify important claims against original sources.</span></p>
  </section>
@@ -162,4 +162,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .spatial-scene .spatial-label{margin:0}
  @media(max-width:760px){.spatial-viewport{height:52dvh;min-height:320px}.spatial-scene{left:8px;right:8px;bottom:8px;padding:12px}.spatial-scene strong{font-size:17px}}
 
+
+/* Fixed architecture: visualization and inspector occupy separate grid rows. */
+.spatial-shell{display:flex;flex-direction:column;max-height:90dvh;min-height:0}
+.spatial-viewport{height:clamp(220px,42dvh,440px);min-height:0;flex-shrink:1;border-radius:14px}
+.spatial-scene{position:relative;inset:auto;width:100%;height:auto;max-height:23dvh;overflow:auto;flex-shrink:0;box-sizing:border-box;margin-top:8px;pointer-events:auto;box-shadow:none;border-radius:12px;padding:12px 14px;gap:5px}
+.spatial-scene strong{font-size:clamp(14px,2vw,19px);line-height:1.35}
+.spatial-shell footer{flex-shrink:0;margin-top:8px}
+@media(max-width:760px){.spatial-shell{max-height:88dvh}.spatial-viewport{height:clamp(210px,37dvh,390px);min-height:0}.spatial-scene{position:relative;inset:auto;width:100%;max-height:20dvh;margin-top:7px;padding:10px 12px}.spatial-scene strong{font-size:15px}.spatial-shell footer{margin-top:6px}}
 </style>
