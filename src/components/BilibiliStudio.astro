@@ -1,8 +1,8 @@
 ---
 const profile="https://space.bilibili.com/1572685586";
 const videos=[
- {id:"mobius",category:"几何极限",title:"莫比乌斯带最短能有多短？一张纸，逼出 √3 的几何极限",file:"/videos/Video_1792127365800_461.mp4",duration:"04:47",symbol:"√3",cover:"/videos/Image_1792128445417_362.jpg",bvid:"BV1BDpB6wEiJ"},
- {id:"group",category:"群论入门",title:"第01讲｜群的定义与例子",file:"/videos/Video_1792127358357_245.mp4",duration:"03:24",symbol:"G",cover:"/videos/Image_1792128356424_594.jpg",bvid:"BV1LTa562Ehz"}
+ {id:"mobius",category:"几何极限",title:"莫比乌斯带最短能有多短？一张纸，逼出 √3 的几何极限",file:"/videos/Video_1792127365800_461.mp4",duration:"04:47",cover:"/videos/Image_1792128445417_362.jpg",bvid:"BV1BDpB6wEiJ"},
+ {id:"group",category:"群论入门",title:"第01讲｜群的定义与例子",file:"/videos/Video_1792127358357_245.mp4",duration:"03:24",cover:"/videos/Image_1792128356424_594.jpg",bvid:"BV1LTa562Ehz"}
 ];
 ---
 <section class="bili-studio wrap" id="mathematics-video" aria-labelledby="bili-title">
@@ -10,107 +10,147 @@ const videos=[
   <div>
    <p class="eyebrow"><span data-locale="zh">数学影像 / 站内放映</span><span data-locale="en">MATHEMATICS / WATCH HERE</span></p>
    <h2 id="bili-title"><span data-locale="zh">让数学，在这里播放。</span><span data-locale="en">Watch mathematics in motion.</span></h2>
-   <p><span data-locale="zh">两部原创数学视频，直接在 J.H. LAB 播放。无第三方播放器限制，支持全屏和进度控制。</span><span data-locale="en">Two original math videos, played right here with native video controls.</span></p>
+   <p><span data-locale="zh">挑选一部作品，封面会展开为播放器。原生播放、全屏与进度控制，无需离开本站。</span><span data-locale="en">Select a film to expand the cover into an on-site player.</span></p>
   </div>
   <a class="bili-profile" href={profile} target="_blank" rel="noopener noreferrer"><span data-locale="zh">全部 B 站作品 ↗</span><span data-locale="en">All videos on Bilibili ↗</span></a>
  </div>
- <div class="bili-shell">
-  <div class="bili-stage" data-bili-stage>
-   <div class="bili-placeholder" data-bili-placeholder>
-    <span class="bili-play-mark" aria-hidden="true">▶</span>
-    <strong><span data-locale="zh">选择下方视频，开始观看</span><span data-locale="en">Choose a video to play</span></strong>
-    <small><span data-locale="zh">点击后才加载视频，节省流量</span><span data-locale="en">Video loads only after selection</span></small>
+ <div class="bili-gallery" aria-label="原创数学视频">
+  {videos.map(v=><button type="button" class="bili-film" data-bili-featured={v.id} data-local-src={v.file} data-bili-id={v.bvid} data-video-title={v.title} data-video-poster={v.cover} aria-label={`播放：${v.title}`}>
+   <span class="bili-film-image"><img src={v.cover} alt="" loading="lazy" decoding="async" width="960" height="720"/><span class="bili-film-play" aria-hidden="true">▶</span><span class="bili-film-duration">{v.duration}</span></span>
+   <span class="bili-film-copy"><span class="bili-film-category">{v.category}</span><strong>{v.title}</strong><span class="bili-film-cta"><span data-locale="zh">点击观看</span><span data-locale="en">Watch film</span><span aria-hidden="true"> ↗</span></span></span>
+  </button>)}
+ </div>
+ <dialog class="bili-dialog" data-bili-dialog aria-label="站内视频播放器">
+  <div class="bili-dialog-surface" data-bili-surface>
+   <div class="bili-dialog-top">
+    <strong data-bili-heading></strong>
+    <button class="bili-close" type="button" data-bili-close aria-label="关闭播放器"><span aria-hidden="true">×</span></button>
+   </div>
+   <div class="bili-player" data-bili-player></div>
+   <div class="bili-dialog-bottom">
+    <p data-bili-status role="status" aria-live="polite"></p>
+    <a data-bili-open href={profile} target="_blank" rel="noopener noreferrer"><span data-locale="zh">在 B 站查看 ↗</span><span data-locale="en">Open on Bilibili ↗</span></a>
    </div>
   </div>
-  <div class="bili-playlist" aria-label="原创数学视频">
-   {videos.map((v,index)=><button type="button" class="bili-video-card" data-bili-featured={v.id} data-local-src={v.file} data-bili-id={v.bvid} data-video-title={v.title} data-video-poster={v.cover} aria-label={`播放：${v.title}`} aria-pressed="false">
-     <span class="bili-video-art" aria-hidden="true"><img class="bili-cover-img" src={v.cover} alt="" loading="lazy" decoding="async" width="960" height="720" onerror="this.hidden=true" /><span class="bili-video-count">{String(index+1).padStart(2,"0")}</span><span class="bili-video-play">▶</span><span class="bili-video-symbol">{v.symbol}</span></span>
-     <span class="bili-video-info"><small>{v.category} · {v.duration}</small><strong>{v.title}</strong><span class="bili-video-action"><span data-locale="zh">站内播放 ▶</span><span data-locale="en">Play here ▶</span></span></span>
-   </button>)}
-  </div>
-  <div class="bili-controls">
-   <p class="bili-status" data-bili-status role="status" aria-live="polite"><span data-locale="zh">选择视频后开始播放。如果视频尚未上传，会显示提示和备用链接。</span><span data-locale="en">Select a video to watch. Missing uploads are reported clearly.</span></p>
-   <a class="bili-open" data-bili-open href={profile} target="_blank" rel="noopener noreferrer" hidden><span data-locale="zh">在 B 站观看此视频 ↗</span><span data-locale="en">Watch this video on Bilibili ↗</span></a>
-  </div>
- </div>
+ </dialog>
 </section>
 <script>
- const stage=document.querySelector<HTMLElement>("[data-bili-stage]");
+ const dialog=document.querySelector<HTMLDialogElement>("[data-bili-dialog]");
+ const surface=document.querySelector<HTMLElement>("[data-bili-surface]");
+ const player=document.querySelector<HTMLElement>("[data-bili-player]");
+ const heading=document.querySelector<HTMLElement>("[data-bili-heading]");
  const status=document.querySelector<HTMLElement>("[data-bili-status]");
  const originalLink=document.querySelector<HTMLAnchorElement>("[data-bili-open]");
+ const closeButton=document.querySelector<HTMLButtonElement>("[data-bili-close]");
+ const cards=[...document.querySelectorAll<HTMLButtonElement>("[data-bili-featured]")];
+ const reduced=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
  const say=(zh:string,en:string)=>{if(status)status.textContent=document.documentElement.lang==="en"?en:zh;};
+ let requestId=0;
+ let origin:HTMLButtonElement|null=null;
+ let activeAnimation:Animation|null=null;
+ const transition=async(opening:boolean)=>{
+  if(!dialog||!surface||!origin||reduced())return;
+  activeAnimation?.cancel();
+  const target=origin.querySelector<HTMLElement>(".bili-film-image")||origin;
+  const from=target.getBoundingClientRect();
+  const to=surface.getBoundingClientRect();
+  if(!from.width||!from.height||!to.width||!to.height)return;
+  const dx=from.left+from.width/2-(to.left+to.width/2);
+  const dy=from.top+from.height/2-(to.top+to.height/2);
+  const sx=from.width/to.width,sy=from.height/to.height;
+  const keyframes=opening?[
+   {transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`,opacity:.75,borderRadius:"26px"},
+   {transform:"translate(0,0) scale(1)",opacity:1,borderRadius:"20px"}
+  ]:[
+   {transform:"translate(0,0) scale(1)",opacity:1,borderRadius:"20px"},
+   {transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`,opacity:.65,borderRadius:"26px"}
+  ];
+  const animation=surface.animate(keyframes,{duration:opening?460:300,easing:"cubic-bezier(.2,.8,.2,1)"});
+  activeAnimation=animation;
+  try{await animation.finished}catch{/* interrupted by another action */}
+  if(activeAnimation===animation)activeAnimation=null;
+ };
+ const close=async()=>{
+  if(!dialog?.open)return;
+  ++requestId;
+  const v=player?.querySelector("video");if(v){v.pause();v.removeAttribute("src");v.load();}
+  await transition(false);
+  if(dialog.open)dialog.close();
+  player?.replaceChildren();
+  origin?.focus({preventScroll:true});
+  origin=null;
+ };
  const play=async(button:HTMLButtonElement)=>{
   const src=button.dataset.localSrc||"";
-  const bvid=button.dataset.biliId||"";
-  if(!stage||!originalLink||!/^\/videos\/[A-Za-z0-9_-]+\.mp4$/.test(src))return;
-  // Prevent a nonexistent upload from replacing the player with a broken video.
-  const request=++activeRequest;
-  say("正在准备站内视频…","Preparing on-site video…");
-  originalLink.href="https://www.bilibili.com/video/"+encodeURIComponent(bvid);
-  originalLink.hidden=false;
+  if(!dialog||!player||!surface||!originalLink||!/^\/videos\/[A-Za-z0-9_-]+\.mp4$/.test(src))return;
+  const token=++requestId;
+  origin=button;
+  heading!.textContent=button.dataset.videoTitle||"数学影像";
+  originalLink.href="https://www.bilibili.com/video/"+encodeURIComponent(button.dataset.biliId||"");
+  const poster=button.dataset.videoPoster||"";
+  const pending=document.createElement("div");
+  pending.className="bili-player-poster";
+  const image=document.createElement("img");image.src=poster;image.alt="";pending.append(image);
+  player.replaceChildren(pending);
+  if(!dialog.open)dialog.showModal();
+  void transition(true);
+  say("正在加载视频…","Loading video…");
   try{
    const response=await fetch(src,{method:"HEAD",cache:"no-store"});
-   if(request!==activeRequest)return;
+   if(token!==requestId||!dialog.open)return;
    if(!response.ok||!response.headers.get("content-type")?.includes("video"))throw Error("asset unavailable");
   }catch{
-   if(request!==activeRequest)return;
-   say("原视频文件尚未部署到本站。请先上传 MP4；目前可通过备用链接在 B 站观看。","The original MP4 has not been deployed yet. Upload it first, or use the Bilibili link.");
+   if(token!==requestId||!dialog.open)return;
+   say("视频暂时无法加载，请尝试稍后重试或打开 B 站备用链接。","Video unavailable. Try later or use the Bilibili link.");
    return;
   }
+  if(token!==requestId||!dialog.open)return;
   const video=document.createElement("video");
   video.className="bili-native-video";
-  video.controls=true;
-  video.playsInline=true;
-  video.preload="metadata";
-  video.poster=button.dataset.videoPoster||"";
-  video.src=src;
+  video.controls=true;video.playsInline=true;video.preload="metadata";
+  video.poster=poster;video.src=src;
   video.setAttribute("aria-label",button.dataset.videoTitle||"数学影像");
-  video.addEventListener("error",()=>say("本站视频加载失败，可通过备用链接观看。","Video could not load. Use the original link."),{once:true});
-  stage.replaceChildren(video);
-  document.querySelectorAll<HTMLButtonElement>("[data-bili-featured]").forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
-  say("正在站内播放原始视频。","Playing the original video here.");
-  void video.play().catch(()=>{say("请点击播放器中央的播放按钮开始观看。","Press play on the video to begin.");});
-  stage.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth",block:"center"});
+  video.addEventListener("error",()=>say("视频加载失败，请使用备用链接。","Playback failed. Use the backup link."),{once:true});
+  player.replaceChildren(video);
+  say("正在站内播放","Playing on-site");
+  void video.play().catch(()=>say("请点击播放按钮开始观看。","Press play to watch."));
  };
- let activeRequest=0;
- document.querySelectorAll<HTMLButtonElement>("[data-bili-featured]").forEach(button=>button.addEventListener("click",()=>void play(button)));
+ cards.forEach(button=>button.addEventListener("click",()=>void play(button)));
+ closeButton?.addEventListener("click",()=>void close());
+ dialog?.addEventListener("click",e=>{if(e.target===dialog)void close();});
+ dialog?.addEventListener("cancel",e=>{e.preventDefault();void close();});
 </script>
 <style>
  .bili-studio{padding-bottom:clamp(90px,10vw,145px);scroll-margin-top:100px}
- .bili-intro{display:flex;align-items:end;justify-content:space-between;gap:30px;margin:0 0 24px}
+ .bili-intro{display:flex;align-items:end;justify-content:space-between;gap:30px;margin:0 0 28px}
  .bili-intro h2{font-size:clamp(30px,4.8vw,60px);letter-spacing:-.06em;line-height:1.22;margin:12px 0 15px}
  .bili-intro p:last-child{max-width:680px;color:var(--muted);line-height:1.9;font-size:14px;margin-bottom:0}
  .bili-profile{color:var(--accent);font-size:13px;font-weight:700;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
- .bili-shell{overflow:hidden;border:1px solid var(--stroke);border-radius:var(--radius);box-shadow:var(--shadow-md);background:var(--card)}
- .bili-stage{aspect-ratio:16/9;position:relative;width:100%;overflow:hidden;background:linear-gradient(140deg,#101e35,#263a53 54%,#0a111d)}
- .bili-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;color:#f5f7ff;padding:24px}
- .bili-placeholder strong{font-size:clamp(19px,2.1vw,29px);font-weight:650}
- .bili-placeholder small{font-size:12px;color:#c9d7ee}
- .bili-play-mark{display:grid;place-items:center;border:1px solid rgba(255,255,255,.45);border-radius:50%;width:74px;height:74px;background:rgba(255,255,255,.12);font-size:26px;padding-left:5px}
- .bili-stage :global(.bili-native-video){position:absolute;inset:0;width:100%;height:100%;background:#060a11}
- .bili-playlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding:clamp(16px,2.5vw,28px) clamp(16px,3vw,30px) 0}
- .bili-video-card{min-width:0;display:flex;align-items:stretch;gap:13px;text-align:left;color:var(--fg);background:var(--bg);border:1px solid var(--stroke);border-radius:18px;padding:10px;cursor:pointer;transition:border-color .25s ease,transform .25s ease,box-shadow .25s ease}
- .bili-video-card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
- .bili-video-art{position:relative;flex:0 0 36%;min-height:110px;display:grid;place-items:center;overflow:hidden;border-radius:12px;background:radial-gradient(ellipse at 30% 35%,rgba(145,194,255,.35),transparent 68%),linear-gradient(140deg,#0f233e,#27446b);color:#fff}
- .bili-video-art .bili-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:#0b192b;display:block}
- .bili-video-art .bili-cover-img[hidden]{display:none!important}
- .bili-video-card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
- .bili-video-count{z-index:1;text-shadow:0 1px 4px #000;background:rgba(0,0,0,.45);border-radius:5px;padding:2px 5px}
- .bili-video-play{z-index:1;box-shadow:0 1px 9px #0007}
-  .bili-video-symbol{font-size:48px;opacity:.55;font-family:Georgia,serif}
- .bili-video-count{position:absolute;top:8px;left:10px;font-size:11px;letter-spacing:.1em;opacity:.8}
- .bili-video-play{position:absolute;bottom:9px;right:9px;display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:rgba(255,255,255,.22);font-size:11px;padding-left:2px}
- .bili-video-info{min-width:0;display:flex;flex-direction:column;gap:7px;padding:3px 1px}
- .bili-video-info small{font-size:11px;color:var(--muted)}
- .bili-video-info strong{font-size:clamp(13px,1.18vw,16px);line-height:1.55;font-weight:650}
- .bili-video-action{font-size:12px;color:var(--accent);font-weight:650;margin-top:auto}
- @media(hover:hover){.bili-video-card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:var(--shadow-sm)}}
- @media(max-width:800px){.bili-playlist{grid-template-columns:1fr}}
- @media(max-width:500px){.bili-video-art{flex-basis:33%;min-height:120px}.bili-video-info strong{font-size:13px}}
- @media(prefers-reduced-motion:reduce){.bili-video-card{transition:none!important}}
- .bili-controls{padding:clamp(18px,3vw,30px);display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between}
- .bili-status{font-size:12px;color:var(--muted);line-height:1.65;margin:0}
- .bili-open{font-size:13px;font-weight:650;color:var(--accent);white-space:nowrap}
- .bili-open[hidden]{display:none!important}
- @media(max-width:650px){.bili-intro{display:block}.bili-profile{margin-top:10px}.bili-shell{border-radius:22px}}
+ .bili-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.7vw,32px)}
+ .bili-film{display:flex;flex-direction:column;text-align:left;min-width:0;overflow:hidden;padding:0;border:1px solid var(--stroke);border-radius:24px;background:var(--card);color:var(--fg);cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease,border-color .35s ease}
+ .bili-film-image{position:relative;width:100%;aspect-ratio:4/3;display:block;background:#0b192b;overflow:hidden}
+ .bili-film-image img{width:100%;height:100%;display:block;object-fit:cover}
+ .bili-film-play{position:absolute;inset:0;margin:auto;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.6);backdrop-filter:blur(10px);font-size:23px;color:white;padding-left:3px;opacity:0;transform:scale(.85);transition:opacity .3s ease,transform .3s ease}
+ .bili-film-duration{position:absolute;right:13px;bottom:12px;background:#07101ecc;color:white;font-size:12px;padding:5px 9px;border-radius:7px}
+ .bili-film-copy{display:flex;flex-direction:column;gap:10px;padding:clamp(16px,2.5vw,25px)}
+ .bili-film-category{font-size:12px;color:var(--muted)}
+ .bili-film-copy strong{font-size:clamp(17px,1.8vw,23px);line-height:1.5;letter-spacing:-.02em}
+ .bili-film-cta{font-size:13px;color:var(--accent);font-weight:700;margin-top:5px}
+ .bili-film:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+ @media(hover:hover){.bili-film:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);border-color:var(--accent)}.bili-film:hover .bili-film-play{opacity:1;transform:scale(1)}}
+ .bili-dialog{position:fixed;inset:0;width:min(94vw,1120px);max-width:none;max-height:calc(100dvh - 28px);margin:auto;padding:0;border:0;border-radius:20px;background:transparent;color:var(--fg);overflow:visible}
+ .bili-dialog::backdrop{background:rgba(5,10,20,.78);backdrop-filter:blur(13px)}
+ .bili-dialog-surface{width:100%;overflow:hidden;border-radius:20px;background:var(--card);box-shadow:0 35px 100px #0008;transform-origin:center center;will-change:transform}
+ .bili-dialog-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px}
+ .bili-dialog-top strong{font-size:clamp(13px,1.4vw,17px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .bili-close{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--stroke);color:var(--fg);background:var(--bg);font-size:26px;line-height:1;cursor:pointer}
+ .bili-player{aspect-ratio:16/9;background:#080e1b;position:relative}
+ .bili-player :global(.bili-native-video){width:100%;height:100%;position:absolute;inset:0;background:#05080e;object-fit:contain}
+ .bili-player :global(.bili-player-poster){position:absolute;inset:0;display:grid;place-items:center;background:#080e1b}
+ .bili-player :global(.bili-player-poster img){width:100%;height:100%;object-fit:contain}
+ .bili-dialog-bottom{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:12px 18px;min-height:48px}
+ .bili-dialog-bottom p{margin:0;color:var(--muted);font-size:12px}
+ .bili-dialog-bottom a{white-space:nowrap;color:var(--accent);font-size:12px;font-weight:650}
+ @media(max-width:760px){.bili-intro{display:block}.bili-profile{margin-top:10px}.bili-gallery{grid-template-columns:1fr}.bili-film-play{opacity:1;transform:scale(1);width:52px;height:52px}.bili-dialog{width:96vw;max-height:calc(100dvh - 16px)}.bili-dialog-top{padding:10px 12px}.bili-dialog-bottom{padding:10px 12px}}
+ @media(prefers-reduced-motion:reduce){.bili-film,.bili-film-play{transition:none!important}}
 </style>
