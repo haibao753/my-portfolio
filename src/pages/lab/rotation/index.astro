@@ -45,7 +45,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     <canvas id="rotation-overlay" width="720" height="380" role="img" aria-label="蓝色与橙色两个旋转姿态的重叠线框"></canvas>
     <p class="overlay-caption"><span data-locale="zh">两个线框共用同一观察视角。完全重合时没有姿态差异；它们分开时说明顺序会影响结果。</span><span data-locale="en">Both wireframes share the same camera. Overlap means the orientations agree; divergence reveals the effect of order.</span></p>
    </div>
-   <p class="gesture-hint"><span data-locale="zh">拖动任一立方体可同时改变两边观察角度；立方体本身的旋转结果不会改变。</span><span data-locale="en">Drag either cube to change both camera views; the underlying rotations do not change.</span></p>
+   <p class="gesture-hint"><span data-locale="zh">旋转操作围绕固定的世界 X、Y 轴；面上的彩色 X／Y／Z 标记跟着立方体运动。拖动只改变观察视角，不会改变实验结果。</span><span data-locale="en">Operations rotate around fixed world X and Y axes. Colored X/Y/Z stickers move with the cube. Dragging changes only the shared camera, not the experiment.</span></p>
   </section>
   <section class="result" aria-labelledby="result-title">
    <p class="eyebrow">WHAT YOU DISCOVER</p>
