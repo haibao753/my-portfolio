@@ -1,12 +1,18 @@
 ---
 const profile="https://space.bilibili.com/1572685586";
+const videos=[
+ {id:"mobius",category:"几何极限",title:"莫比乌斯带最短能有多短？一张纸，逼出 √3 的几何极限",short:"https://b23.tv/cspbBeL",bvid:""},
+ {id:"group",category:"群论入门",title:"第01讲｜群的定义与例子",short:"https://b23.tv/xAzwvFm",bvid:""},
+ {id:"evo",category:"人工智能",title:"让大模型进化出「什么算有趣」——EvoAbstract 拆解",short:"https://b23.tv/5pBJzVE",bvid:""},
+ {id:"fourier",category:"数学可视化",title:"让旋转开始合奏——傅里叶变换",short:"https://b23.tv/XvJTdsx",bvid:""}
+];
 ---
 <section class="bili-studio wrap" id="mathematics-video" aria-labelledby="bili-title">
  <div class="bili-intro">
   <div>
    <p class="eyebrow"><span data-locale="zh">数学影像 / 站内放映</span><span data-locale="en">MATHEMATICS / WATCH HERE</span></p>
    <h2 id="bili-title"><span data-locale="zh">让数学，在这里播放。</span><span data-locale="en">Watch mathematics in motion.</span></h2>
-   <p><span data-locale="zh">无需离开 J.H. LAB。输入一个 B 站视频的 BV 号或原始视频链接，即可直接在网页里观看。</span><span data-locale="en">Watch here without leaving J.H. LAB. Paste a Bilibili BV ID or full video URL to start.</span></p>
+   <p><span data-locale="zh">从四部精选作品开始，点击视频卡片即可在本页播放；也可以输入其他视频的 BV 号。</span><span data-locale="en">Start with four featured videos, or paste another Bilibili BV ID.</span></p>
   </div>
   <a class="bili-profile" href={profile} target="_blank" rel="noopener noreferrer"><span data-locale="zh">全部 B 站作品 ↗</span><span data-locale="en">All videos on Bilibili ↗</span></a>
  </div>
@@ -17,6 +23,12 @@ const profile="https://space.bilibili.com/1572685586";
     <strong><span data-locale="zh">视频将在这里播放</span><span data-locale="en">Your video plays here</span></strong>
     <small><span data-locale="zh">播放器按需加载，不影响主页首屏速度</span><span data-locale="en">Loads only when you choose a video</span></small>
    </div>
+  </div>
+  <div class="bili-playlist" aria-label="精选 Bilibili 视频">
+   {videos.map((v,index)=><button type="button" class="bili-video-card" data-bili-featured={v.id} data-bili-id={v.bvid} aria-label={`播放：${v.title}`}>
+     <span class="bili-video-art" aria-hidden="true"><span class="bili-video-count">{String(index+1).padStart(2,"0")}</span><span class="bili-video-play">▶</span><span class="bili-video-symbol">{["∫", "G", "✳", "∑"][index]}</span></span>
+     <span class="bili-video-info"><small>{v.category}</small><strong>{v.title}</strong><span class="bili-video-action">站内播放 <span aria-hidden="true">↗</span></span></span>
+   </button>)}
   </div>
   <form class="bili-form" data-bili-form>
    <label for="bili-video-input"><span data-locale="zh">B 站视频链接 / BV 号</span><span data-locale="en">Video URL / BV ID</span></label>
@@ -64,6 +76,13 @@ const profile="https://space.bilibili.com/1572685586";
   say("播放器已加载。如果 B 站限制嵌入或要求登录，可使用下方原站链接。","Player loaded. If Bilibili blocks embedding or requires login, use the fallback link below.");
  };
  form?.addEventListener("submit",e=>{e.preventDefault();play(input?.value||"");});
+ document.querySelectorAll<HTMLButtonElement>("[data-bili-featured]").forEach(button=>{
+  button.addEventListener("click",()=>{
+   const bvid=button.dataset.biliId;
+   if(bvid){play(bvid);document.querySelectorAll("[data-bili-featured]").forEach(card=>card.setAttribute("aria-pressed",String(card===button)));stage?.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth",block:"center"});}
+   else say("正在确认视频 BV 号，暂时请使用卡片对应的 B 站分享链接。","Video ID not yet available.");
+  });
+ });
  const query=new URLSearchParams(location.search).get("bvid");
  if(query&&input){input.value=query;play(query);}
 </script>
@@ -80,6 +99,21 @@ const profile="https://space.bilibili.com/1572685586";
  .bili-placeholder small{font-size:12px;color:#c9d7ee}
  .bili-play-mark{display:grid;place-items:center;border:1px solid rgba(255,255,255,.45);border-radius:50%;width:74px;height:74px;background:rgba(255,255,255,.12);font-size:26px;padding-left:5px}
  .bili-stage :global(.bili-iframe){position:absolute;inset:0;width:100%;height:100%;border:0}
+ .bili-playlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding:clamp(16px,2.5vw,28px) clamp(16px,3vw,30px) 0}
+ .bili-video-card{min-width:0;display:flex;align-items:stretch;gap:13px;text-align:left;color:var(--fg);background:var(--bg);border:1px solid var(--stroke);border-radius:18px;padding:10px;cursor:pointer;transition:border-color .25s ease,transform .25s ease,box-shadow .25s ease}
+ .bili-video-card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+ .bili-video-art{position:relative;flex:0 0 36%;min-height:110px;display:grid;place-items:center;overflow:hidden;border-radius:12px;background:radial-gradient(ellipse at 30% 35%,rgba(145,194,255,.35),transparent 68%),linear-gradient(140deg,#0f233e,#27446b);color:#fff}
+ .bili-video-symbol{font-size:56px;opacity:.42;font-family:Georgia,serif}
+ .bili-video-count{position:absolute;top:8px;left:10px;font-size:11px;letter-spacing:.1em;opacity:.8}
+ .bili-video-play{position:absolute;bottom:9px;right:9px;display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:rgba(255,255,255,.22);font-size:11px;padding-left:2px}
+ .bili-video-info{min-width:0;display:flex;flex-direction:column;gap:7px;padding:3px 1px}
+ .bili-video-info small{font-size:11px;color:var(--muted)}
+ .bili-video-info strong{font-size:clamp(13px,1.18vw,16px);line-height:1.55;font-weight:650}
+ .bili-video-action{font-size:12px;color:var(--accent);font-weight:650;margin-top:auto}
+ @media(hover:hover){.bili-video-card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:var(--shadow-sm)}}
+ @media(max-width:800px){.bili-playlist{grid-template-columns:1fr}}
+ @media(max-width:500px){.bili-video-art{flex-basis:33%;min-height:120px}.bili-video-info strong{font-size:13px}}
+ @media(prefers-reduced-motion:reduce){.bili-video-card{transition:none!important}}
  .bili-form{padding:clamp(18px,3vw,30px);display:grid;gap:12px}
  .bili-form label{font-size:13px;font-weight:650}
  .bili-form-row{display:flex;gap:10px}
