@@ -934,11 +934,14 @@ test("damage compositor repaints only a small style region but falls back on str
   return Array.from(src.getContext("2d")!.getImageData(Math.round(51),Math.round(24),1,1).data).slice(0,3);
  });
  expect(rgb[2]).toBeGreaterThan(rgb[0]+100);
+ const fullBefore=Number(await nav.getAttribute("data-optical-damage-full-fallbacks")||0);
  await page.evaluate(()=>{
   const holder=document.createElement("p");holder.textContent="structure changed";
   document.querySelector("main")!.appendChild(holder);
  });
- await expect(nav).toHaveAttribute("data-optical-damage-mode","full");
+ // A later partial paint may follow the full invalidation; assert that a
+ // full fallback actually occurred instead of sampling only the last frame.
+ await expect.poll(async()=>Number(await nav.getAttribute("data-optical-damage-full-fallbacks")||0)).toBeGreaterThan(fullBefore);
 });
 
 test("GPU scroll shift preserves image pixels while uploading only uncovered strip",async({page})=>{
