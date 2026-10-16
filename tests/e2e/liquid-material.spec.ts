@@ -46,7 +46,7 @@ test('liquid lighting redraws without re-uploading the scene and follows theme c
  const box=(await nav.boundingBox())!;
  await page.mouse.move(box.x+box.width*.72,box.y+box.height*.4);
  await expect.poll(async()=>page.evaluate(async()=>{
-  const {glassPointerFor}=await import('/assets/glass-pointer-light.js');
+  const {glassPointerFor}=await import(/* @vite-ignore */ '/assets/glass-pointer-light.js' as string);
   const nav=document.querySelector('.glass-nav')!;
   const light=glassPointerFor(nav);
   return light.pointerLightActive===1&&Math.abs(light.pointerLightPosition[0]-.72)<.04;
