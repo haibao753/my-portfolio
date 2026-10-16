@@ -156,7 +156,7 @@ test('two user-provided video covers appear on cards and native player',async({p
   return route.fulfill({status:206,headers:{'content-type':'video/mp4'},body:''});
  });
  await page.goto('/');
- const mapping=[['mobius','mobius-cover.jpg'],['group','group-cover.jpg']] as const;
+ const mapping=[['mobius','Image_1792128445417_362.jpg'],['group','Image_1792128356424_594.jpg']] as const;
  for(const [key,filename] of mapping){
   const card=page.locator('[data-bili-featured="'+key+'"]');
   await expect(card.locator('img.bili-cover-img')).toHaveAttribute('src','/videos/'+filename);
