@@ -9,17 +9,20 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
    <h1><span data-locale="zh">先转 X，再转 Y。<br/>结果会一样吗？</span><span data-locale="en">Rotate X, then Y.<br/>Does order matter?</span></h1>
    <p class="lead"><span data-locale="zh">三维旋转不满足交换律。不要先相信这句话——试着自己交换操作顺序。</span><span data-locale="en">3D rotations do not generally commute. Don't take our word for it — swap the order and see.</span></p>
   </header>
+  <div class="workbench-controls">
   <section class="control-area" aria-labelledby="control-title">
    <div class="section-line"><h2 id="control-title"><span data-locale="zh">设置两个旋转</span><span data-locale="en">Set two rotations</span></h2><button id="rotation-reset" type="button"><span data-locale="zh">重置实验</span><span data-locale="en">Reset</span> ↺</button></div>
    <div class="sliders">
     <div class="slider-block"><label for="angle-x"><span data-locale="zh">绕 X 轴</span><span data-locale="en">Around X axis</span></label><output id="angle-x-value" for="angle-x">90°</output><input type="range" min="0" max="180" step="15" value="90" id="angle-x" aria-label="X axis angle" /></div>
     <div class="slider-block"><label for="angle-y"><span data-locale="zh">绕 Y 轴</span><span data-locale="en">Around Y axis</span></label><output id="angle-y-value" for="angle-y">90°</output><input type="range" min="0" max="180" step="15" value="90" id="angle-y" aria-label="Y axis angle" /></div>
    </div>
-   <div class="rotation-presets" role="group" aria-label="示例角度 / Example angles">
-    <span><span data-locale="zh">试一试：</span><span data-locale="en">Try:</span></span>
+   <details class="preset-details">
+    <summary><span data-locale="zh">试试特殊角度</span><span data-locale="en">Try a special case</span><span aria-hidden="true"> ▾</span></summary>
+    <div class="rotation-presets" role="group" aria-label="示例角度 / Example angles">
     <button type="button" data-rotation-preset="different"><span data-locale="zh">90° + 90° · 结果不同</span><span data-locale="en">90° + 90° · Different</span></button>
     <button type="button" data-rotation-preset="same"><span data-locale="zh">0° + 90° · 特殊重合</span><span data-locale="en">0° + 90° · Special case</span></button>
-   </div>
+    </div>
+   </details>
   </section>
   <section class="steps" aria-labelledby="steps-title">
    <div class="section-line"><h2 id="steps-title"><span data-locale="zh">分步观察</span><span data-locale="en">Walk through the rotation</span></h2></div>
@@ -34,9 +37,14 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
    </div>
    <p id="rotation-step-explanation" class="step-explanation" role="status" aria-live="polite"><span data-locale="zh">第二步：左侧再绕 Y 轴，右侧再绕 X 轴。</span><span data-locale="en">Step 2: left adds Y, right adds X.</span></p>
   </section>
-  <section aria-labelledby="comparison-title">
+  </div>
+  <section class="comparison" aria-labelledby="comparison-title">
    <div class="section-line"><h2 id="comparison-title"><span data-locale="zh">交换顺序，观察差别</span><span data-locale="en">Swap the order</span></h2><div class="camera-buttons"><button id="rotation-camera-left" type="button" aria-label="向左转动观察视角">↶</button><button id="rotation-camera-right" type="button" aria-label="向右转动观察视角">↷</button></div></div>
-   <div class="compare-grid">
+   <div class="mobile-view-tabs" role="group" aria-label="选择对比结果 / Choose comparison view">
+    <button type="button" data-rotation-view="0" aria-pressed="true"><span data-locale="zh">A · 先 X 后 Y</span><span data-locale="en">A · X then Y</span></button>
+    <button type="button" data-rotation-view="1" aria-pressed="false"><span data-locale="zh">B · 先 Y 后 X</span><span data-locale="en">B · Y then X</span></button>
+   </div>
+   <div class="compare-grid" id="rotation-comparison" role="region" tabindex="0" aria-label="旋转结果对比，手机端可左右滑动 / Swipe between two rotation results">
     <section class="outcome" aria-labelledby="order-xy-title">
      <div class="outcome-header"><span class="number">01</span><h3 id="order-xy-title"><span data-locale="zh">先 X，后 Y</span><span data-locale="en">X first, then Y</span></h3></div>
      <canvas id="rotation-xy" width="480" height="340" role="img" aria-label="先绕X轴后绕Y轴旋转后的立方体，可拖动改变观察角度"><span data-locale="zh">浏览器无法显示三维画布，请查看下方坐标结果。</span><span data-locale="en">Canvas unavailable; read the coordinates below.</span></canvas>
@@ -48,6 +56,21 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
      <p class="coordinates"><span data-locale="zh">初始正面 Z 轴指向</span><span data-locale="en">Resulting front Z vector</span> <strong id="rotation-yx-vector">(1.00, 0.00, 0.00)</strong></p>
     </section>
    </div>
+   <section class="result" aria-labelledby="result-title">
+    <div class="result-head">
+     <h2 id="result-title"><span data-locale="zh">对比结果</span><span data-locale="en">The result</span></h2>
+     <div class="result-metric"><span data-locale="zh">姿态差距</span><span data-locale="en">Difference</span><output id="rotation-difference" aria-live="polite">2.45</output></div>
+    </div>
+    <p id="rotation-note" role="status" aria-live="polite">交换旋转顺序会改变空间姿态。</p>
+    <details class="math-details">
+     <summary><span data-locale="zh">为什么会这样？展开数学解释</span><span data-locale="en">Why? Read the mathematics</span><span aria-hidden="true"> ↓</span></summary>
+     <div class="math-detail-content">
+      <p class="math-line">R<sub>Y</sub>(θ<sub>Y</sub>) R<sub>X</sub>(θ<sub>X</sub>) <span aria-label="通常不等于">≠</span> R<sub>X</sub>(θ<sub>X</sub>) R<sub>Y</sub>(θ<sub>Y</sub>)</p>
+      <p class="metric-note"><span data-locale="zh">数值为 0 表示两种最终姿态完全相同；它不是角度差。</span><span data-locale="en">Zero means the final orientations agree; this is not an angle in degrees.</span></p>
+      <p class="explainer"><span data-locale="zh">三维旋转属于旋转群 SO(3)。矩阵作用在列向量上，右侧的操作先执行，因此「先 X 后 Y」对应 RY · RX。旋转的先后顺序通常不可交换；某些特殊角度（如其中一个为 0°）可能得到相同结果。</span><span data-locale="en">Three-dimensional rotations form SO(3). With column vectors, the rightmost matrix acts first: X then Y means RY · RX. Order generally matters, although special cases (such as a zero angle) can coincide.</span></p>
+     </div>
+    </details>
+   </section>
    <button id="rotation-overlay-toggle" type="button" class="overlay-toggle" aria-controls="rotation-overlay-panel" aria-expanded="false"><span data-locale="zh">叠影对比两种姿态</span><span data-locale="en">Overlay both orientations</span> <span aria-hidden="true">↗</span></button>
    <div id="rotation-overlay-panel" class="overlay-panel" hidden>
     <p class="overlay-legend"><span class="legend-blue"><span data-locale="zh">蓝 A：先 X 后 Y</span><span data-locale="en">Blue A: X then Y</span></span><span class="legend-orange"><span data-locale="zh">橙 B：先 Y 后 X</span><span data-locale="en">Orange B: Y then X</span></span></p>
@@ -55,15 +78,6 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     <p class="overlay-caption"><span data-locale="zh">正方体具有旋转对称性，因此外轮廓重合也可能是不同姿态。请比较蓝 A、橙 B 的实线 Z 轴与虚线 X 轴方向：两组方向一致，最终姿态才一致。</span><span data-locale="en">A cube is symmetric: overlapping outlines can still represent different orientations. Compare solid Z and dashed X axes for blue A versus orange B to determine whether the orientations actually agree.</span></p>
    </div>
    <p class="gesture-hint"><span data-locale="zh">操作按固定的世界 X、Y 轴进行；画面中的彩色箭头和面标记代表立方体自身的局部坐标轴，会随物体转动。拖动只改变两侧共同的观察视角。</span><span data-locale="en">Operations use fixed world X and Y axes. The colored arrows and face markers show the cube’s local axes, so they rotate with the object. Dragging changes only the shared camera.</span></p>
-  </section>
-  <section class="result" aria-labelledby="result-title">
-   <p class="eyebrow">WHAT YOU DISCOVER</p>
-   <h2 id="result-title"><span data-locale="zh">为什么结果不同？</span><span data-locale="en">Why are they different?</span></h2>
-   <p class="math-line">R<sub>Y</sub>(θ<sub>Y</sub>) R<sub>X</sub>(θ<sub>X</sub>) <span aria-label="通常不等于">≠</span> R<sub>X</sub>(θ<sub>X</sub>) R<sub>Y</sub>(θ<sub>Y</sub>)</p>
-   <div class="result-metric"><span data-locale="zh">当前两种姿态的矩阵差距（Frobenius 范数）</span><span data-locale="en">Current orientation difference (Frobenius norm)</span><output id="rotation-difference" aria-live="polite">2.45</output></div>
-   <p class="metric-note"><span data-locale="zh">数值为 0 表示两种最终姿态完全相同；它不是角度差。</span><span data-locale="en">Zero means the final orientations agree; this is not an angle in degrees.</span></p>
-   <p id="rotation-note" role="status" aria-live="polite">交换旋转顺序会改变空间姿态。比较两个立方体的正面标记。</p>
-   <p class="explainer"><span data-locale="zh">三维旋转属于旋转群 SO(3)。矩阵作用在列向量上，右侧的操作先执行，因此「先 X 后 Y」对应 RY · RX。旋转的先后顺序通常不可交换；某些特殊角度（如其中一个为 0°）可能得到相同结果。</span><span data-locale="en">Three-dimensional rotations form SO(3). With column vectors, the rightmost matrix acts first: X then Y means RY · RX. Order generally matters, although special cases (such as a zero angle) can coincide.</span></p>
   </section>
   <footer class="lab-footer"><a href="/brief/"><span data-locale="zh">← 回到日常阅读</span><span data-locale="en">← Return to reading</span></a><span>J.H. LAB / EXPERIMENT 001</span></footer>
  </article>
@@ -129,4 +143,66 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
  .lab-footer a{color:var(--fg);text-decoration:none}
  @media(max-width:760px){.rotation-lab{width:calc(100% - 28px);padding-top:18px}.sliders,.compare-grid{grid-template-columns:1fr}.compare-grid{gap:11px}.slider-block{padding:13px 16px}.outcome canvas{height:245px}.control-area{padding-top:15px}.lab-head{margin-bottom:35px}.outcome-header{padding:13px 15px 0}.coordinates{padding:12px 15px}.result-metric{align-items:flex-start;flex-direction:column;gap:4px}.step-buttons{gap:6px}.step-buttons button{font-size:11px;padding:10px 3px}.overlay-panel canvas{height:260px}.lab-footer{font-size:11px}}
  @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+ /* Compact mobile workbench: reveal mathematics only after users interact. */
+ .preset-details{margin-top:8px}
+ .preset-details summary{cursor:pointer;font-size:12px;color:var(--muted);width:max-content;max-width:100%;min-height:32px;padding:7px 0;list-style:none}
+ .preset-details summary::-webkit-details-marker{display:none}
+ .preset-details summary:focus-visible,.math-details summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+ .rotation-presets{margin-top:5px;margin-bottom:5px}
+ .comparison{min-width:0}
+ .mobile-view-tabs{display:none}
+ .result{max-width:none;margin-top:14px;padding-top:13px}
+ .result-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
+ .result-head h2{font-size:clamp(18px,2.5vw,26px);letter-spacing:-.02em;margin:0}
+ .result-metric{display:flex;align-items:center;gap:12px;padding:0;border:0;font-size:12px;white-space:nowrap}
+ .result-metric output{font-size:clamp(23px,3vw,31px)}
+ .result #rotation-note{font-size:13px;margin:8px 0 10px;line-height:1.65;font-weight:500}
+ .math-details{border-top:1px solid var(--stroke);padding-top:4px}
+ .math-details summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-size:12px;color:var(--muted);list-style:none}
+ .math-details summary::-webkit-details-marker{display:none}
+ .math-detail-content{padding:6px 0 12px;max-width:820px}
+ .math-detail-content .math-line{margin:0 0 12px}
+ .overlay-toggle{margin:10px 0}
+ @media(max-width:760px){
+  .rotation-lab{padding-top:10px;padding-bottom:45px}
+  .lab-head{margin-bottom:13px}
+  .lab-head .eyebrow{font-size:10px;margin:0}
+  .back-link{margin:5px 0 8px;font-size:11px}
+  h1{font-size:clamp(28px,7.5vw,33px);line-height:1.14;margin:0 0 7px}
+  .lead{font-size:12px;line-height:1.55}
+  .control-area{padding:10px 0 9px}
+  .section-line{margin-bottom:7px}
+  .section-line h2{font-size:16px}
+  .sliders{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .slider-block{padding:9px 9px 6px;border-radius:10px;gap:4px 5px}
+  .slider-block label,.slider-block output{font-size:11px}
+  .slider-block input{min-width:0;min-height:29px;margin:0}
+  .steps{padding:4px 0 10px}
+  .steps .section-line{display:none}
+  .step-buttons{gap:5px}
+  .step-buttons button{min-height:36px;padding:6px 2px;font-size:10px}
+  .playback-controls{margin-top:7px}
+  .playback-controls button{min-height:36px;font-size:11px;padding:5px 10px}
+  .step-explanation{font-size:11px;line-height:1.5;margin:7px 0 0;min-height:0}
+  .comparison>.section-line{margin-bottom:4px}
+  .camera-buttons button{min-height:36px;min-width:36px;font-size:18px}
+  .mobile-view-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:4px 0 7px}
+  .mobile-view-tabs button{min-width:0;min-height:36px;font-size:11px;padding:6px 3px;border-radius:10px}
+  .mobile-view-tabs button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  .compare-grid{display:flex;gap:10px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-padding-inline:0;padding-bottom:3px;scrollbar-width:thin}
+  .outcome{flex:0 0 calc(100% - 28px);scroll-snap-align:start;border-radius:14px}
+  .outcome canvas{height:205px}
+  .outcome-header{padding:10px 12px 0}
+  .outcome h3{font-size:16px}
+  .coordinates{font-size:11px;padding:8px 12px;min-height:32px}
+  .gesture-hint{margin:7px 0 20px;font-size:11px;line-height:1.5}
+  .result{margin-top:9px;padding-top:10px}
+  .result-head h2{font-size:17px}
+  .result-metric{gap:6px;font-size:11px}
+  .result-metric output{font-size:23px}
+  .result #rotation-note{font-size:12px;margin:5px 0 8px}
+  .overlay-toggle{font-size:12px;min-height:40px;padding:7px 12px}
+  .lab-footer{margin-top:24px}
+ }
 </style>
