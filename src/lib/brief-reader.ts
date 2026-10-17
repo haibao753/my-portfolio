@@ -22,6 +22,7 @@ const quickDates=document.querySelector<HTMLElement>("#quick-dates");
 const editionControls=document.querySelector<HTMLElement>("#edition-controls");
 const headline=document.querySelector<HTMLElement>("#headlineDate");
 const total=document.querySelector<HTMLElement>("#total");
+const expandedTotal=document.querySelector<HTMLElement>("#expanded-total");
 const filterDock=document.querySelector<HTMLElement>("#brief-filter");
 const filterToggle=document.querySelector<HTMLButtonElement>("#filter-toggle");
 const filterDetails=document.querySelector<HTMLElement>("#filter-details");
@@ -48,11 +49,12 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  };
  const setFilterOpen=(open:boolean)=>{
   filterDock.dataset.expanded=String(open);
-  filterDock.parentElement?.classList.toggle("filter-is-open",open);
+  // The glass panel is absolutely anchored; opening must never reflow the title or article list.
   filterToggle.setAttribute("aria-expanded",String(open));
   filterToggle.setAttribute("aria-label",open?t("收起筛选栏","Collapse filters"):t("展开筛选栏","Expand filters"));
   filterDetails.setAttribute("aria-hidden",String(!open));
   filterDetails.toggleAttribute("inert",!open);
+  filterDock.classList.toggle("has-open-popover",open);
  };
  const openFilterAt=(group:HTMLElement)=>{
   setFilterOpen(true);
@@ -141,6 +143,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   statusNode.textContent=t(`显示 ${selection.length} 条`,`Showing ${selection.length} stories`);
   statusNode.classList.add("is-summary");
   total.textContent=String(selection.length);
+  if(expandedTotal)expandedTotal.textContent=total.textContent;
   updateCompact();
   const fragment=document.createDocumentFragment();
   if(!selection.length)fragment.append(txt("div",t("暂无对应资讯。请切换分类或日期。","No stories here. Choose another category or date."),"news-empty"));
@@ -225,7 +228,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   controller?.abort();controller=new AbortController();
   loaded=false;
   statusNode.classList.remove("is-summary");
-  current=[];tabs.replaceChildren();stories.replaceChildren();total.textContent="—";
+  current=[];tabs.replaceChildren();stories.replaceChildren();total.textContent="—";if(expandedTotal)expandedTotal.textContent="—";
   headline.textContent=date;
   stories.setAttribute("aria-busy","true");
   statusNode.textContent=t(`正在加载 ${date}…`,`Loading ${date}…`);
@@ -241,10 +244,11 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
    current=data.items;loaded=true;category="全部";selectedRange=0;selectedEdition="all";viewLabel=date;updateRangeButtons();updateEditionButtons();
    headline.textContent=date;
    total.textContent=String(current.length);
+   if(expandedTotal)expandedTotal.textContent=total.textContent;
    renderTabs();render();
   }catch(error){
    if(currentRequest!==request)return;
-   current=[];total.textContent="—";
+   current=[];total.textContent="—";if(expandedTotal)expandedTotal.textContent="—";
    headline.textContent=date;
    tabs.replaceChildren();stories.replaceChildren(txt("div",t("这期内容暂时无法加载，请稍后重试。","This issue is unavailable. Please try again shortly."),"news-empty"));
    statusNode.textContent=t("加载失败，请切换日期或刷新重试。","Unable to load. Choose another date or refresh to retry.");
@@ -260,12 +264,12 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   const matching=availableDates.filter(recentDays(todayBeijing(),days));
   loaded=false;current=[];category="全部";statusNode.classList.remove("is-summary");
   tabs.replaceChildren();stories.replaceChildren();stories.setAttribute("aria-busy","true");
-  headline.textContent=viewTitle();total.textContent="—";
+  headline.textContent=viewTitle();total.textContent="—";if(expandedTotal)expandedTotal.textContent="—";
   statusNode.textContent=t("正在汇总范围内的简报…","Loading recent issues…");
   try{
    if(!matching.length){
     current=[];loaded=true;viewLabel=viewTitle();
-    total.textContent="0";
+    total.textContent="0";if(expandedTotal)expandedTotal.textContent="0";
     renderTabs();render();
     statusNode.textContent=t("所选日期范围内暂无已发布的简报","No published issues in this date range");
     return;
@@ -291,6 +295,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
    });
    loaded=true;viewLabel=viewTitle();
    total.textContent=String(current.length);
+   if(expandedTotal)expandedTotal.textContent=total.textContent;
    headline.textContent=viewLabel;
    renderTabs();render();
    if(success.length<matching.length){
