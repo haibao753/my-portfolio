@@ -241,6 +241,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
    if(viewingLatest){
     issueSelect.value=dates[0];
     await load(dates[0]);
+    if(!loaded)manifestStamp=""; // Retry if manifest arrived before the article could load.
    }else{
     if(dates.includes(priorSelection))issueSelect.value=priorSelection;
     if(selectedRange>0)await loadRange(selectedRange);
