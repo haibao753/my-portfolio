@@ -22,7 +22,13 @@ const quickDates=document.querySelector<HTMLElement>("#quick-dates");
 const editionControls=document.querySelector<HTMLElement>("#edition-controls");
 const headline=document.querySelector<HTMLElement>("#headlineDate");
 const total=document.querySelector<HTMLElement>("#total");
-if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline&&total){
+const filterDock=document.querySelector<HTMLElement>("#brief-filter");
+const filterToggle=document.querySelector<HTMLButtonElement>("#filter-toggle");
+const filterDetails=document.querySelector<HTMLElement>("#filter-details");
+const categoryCompact=document.querySelector<HTMLButtonElement>("#compact-category");
+const rangeCompact=document.querySelector<HTMLButtonElement>("#compact-range");
+const editionCompact=document.querySelector<HTMLButtonElement>("#compact-edition");
+if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline&&total&&filterDock&&filterToggle&&filterDetails&&categoryCompact&&rangeCompact&&editionCompact){
  let current:(BriefItem & {issue_date?:string})[]=[];
  let viewLabel="";
  let availableDates:string[]=[];
@@ -39,6 +45,38 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   const end=Date.parse(date+"T00:00:00Z");
   const start=end-(days-1)*86400000;
   return (d:string)=>{const ms=Date.parse(d+"T00:00:00Z");return ms>=start&&ms<=end};
+ };
+ const setFilterOpen=(open:boolean)=>{
+  filterDock.dataset.expanded=String(open);
+  filterToggle.setAttribute("aria-expanded",String(open));
+  filterToggle.setAttribute("aria-label",open?t("收起筛选栏","Collapse filters"):t("展开筛选栏","Expand filters"));
+  filterDetails.setAttribute("aria-hidden",String(!open));
+  filterDetails.toggleAttribute("inert",!open);
+ };
+ const openFilterAt=(group:HTMLElement)=>{
+  setFilterOpen(true);
+  const active=group.querySelector<HTMLButtonElement>('button[aria-pressed="true"]')||group.querySelector<HTMLButtonElement>("button");
+  active?.focus({preventScroll:true});
+ };
+ filterToggle.addEventListener("click",()=>setFilterOpen(filterDock.dataset.expanded!=="true"));
+ categoryCompact.addEventListener("click",()=>openFilterAt(tabs));
+ rangeCompact.addEventListener("click",()=>openFilterAt(quickDates));
+ editionCompact.addEventListener("click",()=>openFilterAt(editionControls));
+ document.addEventListener("keydown",(event)=>{
+  if(event.key==="Escape"&&filterDock.dataset.expanded==="true"){
+   setFilterOpen(false);filterToggle.focus({preventScroll:true});
+  }
+ });
+ document.addEventListener("pointerdown",(event)=>{
+  if(filterDock.dataset.expanded==="true"&&!filterDock.contains(event.target as Node))setFilterOpen(false);
+ });
+ const updateCompact=()=>{
+  categoryCompact.textContent=category==="全部"?t("全部","All"):category;
+  rangeCompact.textContent=selectedRange===3?t("近三天","3 days"):selectedRange===7?t("近一周","7 days"):t("当天","Day");
+  editionCompact.textContent=selectedEdition==="morning"?t("早报","AM"):selectedEdition==="evening"?t("晚报","PM"):t("全部刊期","Both");
+  categoryCompact.setAttribute("aria-label",t(`分类：${category}；展开分类筛选`,`Category: ${category}; open filters`));
+  rangeCompact.setAttribute("aria-label",t(`时间范围：${rangeCompact.textContent}；展开筛选`,`Date range: ${rangeCompact.textContent}; open filters`));
+  editionCompact.setAttribute("aria-label",t(`刊期：${editionCompact.textContent}；展开筛选`,`Edition: ${editionCompact.textContent}; open filters`));
  };
  const updateRangeButtons=()=>quickDates.querySelectorAll<HTMLButtonElement>("button[data-days]").forEach(button=>button.setAttribute("aria-pressed",String(Number(button.dataset.days)===selectedRange)));
  const updateEditionButtons=()=>editionControls.querySelectorAll<HTMLButtonElement>("button[data-edition]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.edition===selectedEdition)));
@@ -100,6 +138,9 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  const render=()=>{
   const selection=current.filter(x=>(category==="全部"||(x.category||"其他")===category) && (selectedEdition==="all"||x.edition===selectedEdition));
   statusNode.textContent=t(`显示 ${selection.length} 条`,`Showing ${selection.length} stories`);
+  statusNode.classList.add("is-summary");
+  total.textContent=String(selection.length);
+  updateCompact();
   const fragment=document.createDocumentFragment();
   if(!selection.length)fragment.append(txt("div",t("暂无对应资讯。请切换分类或日期。","No stories here. Choose another category or date."),"news-empty"));
   for(const item of selection){
@@ -107,7 +148,8 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
    if(item.focus)card.classList.add("is-focus");
    const meta=txt("div","","news-meta");
    const slot=item.edition==="morning"?t("早报","AM"):item.edition==="evening"?t("晚报","PM"):"";
-   const stamp=item.issue_date||(item.published||"时间未提供");
+   const fullStamp=item.issue_date||(item.published||"时间未提供");
+   const stamp=/^\d{4}-\d{2}-\d{2}/.test(fullStamp)?fullStamp.slice(5,10):fullStamp;
    meta.append(txt("span",(researchReady(item.research)?t("◇ 论文精读 · ","◇ Paper study · "):item.focus?t("✦ 重点 · ","✦ Focus · "):"")+(item.category||"其他"),"news-category"),txt("span",slot?slot+" · "+stamp:stamp));
    const heading=txt("h3",item.title_zh||"未命名资讯");
    const summary=txt("p",item.summary_zh||"","news-summary");
@@ -181,6 +223,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   const currentRequest=++request;
   controller?.abort();controller=new AbortController();
   loaded=false;
+  statusNode.classList.remove("is-summary");
   current=[];tabs.replaceChildren();stories.replaceChildren();total.textContent="—";
   headline.textContent=date;
   stories.setAttribute("aria-busy","true");
@@ -196,7 +239,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
    if(data.items.some(item=>!item||typeof item!=="object"||fields.some(key=>item[key]!==undefined&&typeof item[key]!=="string")))throw Error("日报条目结构不符合预期");
    current=data.items;loaded=true;category="全部";selectedRange=0;selectedEdition="all";viewLabel=date;updateRangeButtons();updateEditionButtons();
    headline.textContent=date;
-   total.textContent=t(`${current.length} 条精选`,`${current.length} selected stories`);
+   total.textContent=String(current.length);
    renderTabs();render();
   }catch(error){
    if(currentRequest!==request)return;
@@ -214,14 +257,14 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   const signal=controller.signal;
   selectedRange=days;selectedEdition="all";updateRangeButtons();updateEditionButtons();
   const matching=availableDates.filter(recentDays(todayBeijing(),days));
-  loaded=false;current=[];category="全部";
+  loaded=false;current=[];category="全部";statusNode.classList.remove("is-summary");
   tabs.replaceChildren();stories.replaceChildren();stories.setAttribute("aria-busy","true");
   headline.textContent=viewTitle();total.textContent="—";
   statusNode.textContent=t("正在汇总范围内的简报…","Loading recent issues…");
   try{
    if(!matching.length){
     current=[];loaded=true;viewLabel=viewTitle();
-    total.textContent=t("0 条精选","0 selected stories");
+    total.textContent="0";
     renderTabs();render();
     statusNode.textContent=t("所选日期范围内暂无已发布的简报","No published issues in this date range");
     return;
@@ -246,10 +289,13 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
     seen.add(key);return true;
    });
    loaded=true;viewLabel=viewTitle();
-   total.textContent=t(`${current.length} 条精选`,`${current.length} selected stories`);
+   total.textContent=String(current.length);
    headline.textContent=viewLabel;
    renderTabs();render();
-   if(success.length<matching.length)statusNode.textContent+=t(` · ${matching.length-success.length} 期加载失败`,` · ${matching.length-success.length} issue(s) unavailable`);
+   if(success.length<matching.length){
+    statusNode.classList.remove("is-summary");
+    statusNode.textContent=t(`有 ${matching.length-success.length} 期加载失败，请稍后重试。`,`${matching.length-success.length} issue(s) failed to load. Please retry.`);
+   }
   }catch{
    if(currentRequest!==request)return;
    current=[];loaded=false;
@@ -264,7 +310,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   button.addEventListener("click",()=>{selectedEdition=button.dataset.edition||"all";updateEditionButtons();render();});
  });
   quickDates.querySelectorAll<HTMLButtonElement>("button[data-days]").forEach(button=>{
-  button.addEventListener("click",()=>void loadRange(Number(button.dataset.days)));
+  button.addEventListener("click",()=>Number(button.dataset.days)===0?void load(issueSelect.value):void loadRange(Number(button.dataset.days)));
  });
  let manifestStamp="";
  const refreshManifest=async(initial=false)=>{
@@ -287,12 +333,13 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
     statusNode.textContent=t("尚无归档数据","No archived issues yet");return;
    }
    for(const date of dates){
-    const option=txt("option",date) as HTMLOptionElement;
-    option.value=date;issueSelect.append(option);
+    const option=txt("option",date.slice(5)) as HTMLOptionElement;
+    option.value=date;option.title=date;issueSelect.append(option);
    }
    if(viewingLatest){
     issueSelect.value=dates[0];
-    await load(dates[0]);
+    if(initial&&dates.length>1&&recentDays(todayBeijing(),3)(dates[0]))await loadRange(3);
+    else await load(dates[0]);
     if(!loaded)manifestStamp=""; // Retry if manifest arrived before the article could load.
    }else{
     if(dates.includes(priorSelection))issueSelect.value=priorSelection;
@@ -314,9 +361,10 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   issueSelect.setAttribute("aria-label",t("选择历史日期","Choose an issue date"));
   if(loaded){
    headline.textContent=viewTitle();
-   total.textContent=t(`${current.length} 条精选`,`${current.length} selected stories`);
    renderTabs();render();
   }
+  updateCompact();
+  setFilterOpen(filterDock.dataset.expanded==="true");
  };
  new MutationObserver(refreshLanguage).observe(root,{attributes:true,attributeFilter:["lang"]});
  refreshLanguage();
