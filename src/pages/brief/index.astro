@@ -238,7 +238,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .compact-chip{min-height:35px;max-width:130px;padding:7px 11px;border:0;border-radius:999px;background:transparent;color:var(--muted);font-size:12px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .compact-chip.is-current{color:var(--fg);background:color-mix(in srgb,var(--fg) 10%,transparent)}
  .brief-count{display:inline-flex;align-items:center;flex:0 0 auto;color:var(--muted);padding:0 7px;font-size:12px;font-weight:550;font-variant-numeric:tabular-nums}
- .brief-filter-toggle{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:color-mix(in srgb,var(--fg) 7%,transparent);color:var(--fg)}
+ .brief-filter-toggle{position:relative;display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:color-mix(in srgb,var(--fg) 7%,transparent);color:var(--fg)}
  .brief-filter-toggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .32s cubic-bezier(.22,1,.36,1)}
  .brief-filter[data-expanded="true"] .brief-filter-toggle svg{transform:rotate(180deg)}
  /* Overlay is anchored to the right edge and does NOT resize or reflow the masthead. */
@@ -253,9 +253,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   overflow-y:auto;overscroll-behavior:contain;max-height:min(70dvh,585px);
   transition:opacity .23s ease,transform .36s cubic-bezier(.22,1,.36,1),visibility 0s linear .36s
  }
- .brief-filter-details::before{inset:0;z-index:-1;background:radial-gradient(ellipse 76% 33% at 34% 0%,rgba(255,255,255,.38),transparent 93%),linear-gradient(126deg,rgba(255,255,255,.11),transparent 49%)}
- .brief-filter-details::after{inset:1px;z-index:-1;border:1px solid rgba(255,255,255,.20);box-shadow:inset 0 1px rgba(255,255,255,.68),inset 0 -1px rgba(133,179,239,.15)}
+ .brief-filter-details::before{inset:0;z-index:0;background:radial-gradient(ellipse 76% 33% at 34% 0%,rgba(255,255,255,.38),transparent 93%),linear-gradient(126deg,rgba(255,255,255,.11),transparent 49%)}
+ .brief-filter-details::after{inset:1px;z-index:0;border:1px solid rgba(255,255,255,.20);box-shadow:inset 0 1px rgba(255,255,255,.68),inset 0 -1px rgba(133,179,239,.15)}
  .brief-filter[data-expanded="true"] .brief-filter-details{visibility:visible;pointer-events:auto;opacity:1;transform:translate3d(0,0,0) scale(1);transition:opacity .24s ease,transform .38s cubic-bezier(.22,1,.36,1),visibility 0s}
+ .brief-filter-details > *{position:relative;z-index:1}
  .filter-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:1px 2px 13px}
  .filter-panel-caption{font-size:13px;font-weight:720;letter-spacing:-.01em;color:var(--fg)}
  .filter-expanded-meta{display:flex;gap:3px;align-items:center;color:var(--muted);font-size:11px;font-variant-numeric:tabular-nums}
@@ -294,7 +295,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .compact-date select{width:78px;max-width:78px;min-height:37px;padding:8px 21px 8px 11px;font-size:12px}
   .compact-date svg{right:5px;width:10px}
   .brief-filter-toggle{flex-basis:36px;width:36px;height:36px;background:transparent}
-  .brief-filter-toggle::before{content:"";position:absolute;width:1px;height:19px;transform:translateX(-18px);background:color-mix(in srgb,var(--stroke) 72%,transparent)}
+  .brief-filter-toggle::before{content:"";position:absolute;left:0;top:50%;width:1px;height:19px;transform:translateY(-50%);background:color-mix(in srgb,var(--stroke) 72%,transparent)}
   .brief-filter-details{right:0;top:calc(100% + 10px);padding:16px 17px 17px;border-radius:26px;max-height:min(67dvh,550px)}
   .brief-filter :global(.filter-chip),.brief-filter .quick-dates button,.brief-filter .edition-controls button{min-height:38px;font-size:12px;padding:9px 13px}
  }
