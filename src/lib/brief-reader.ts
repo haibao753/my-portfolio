@@ -48,6 +48,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  };
  const setFilterOpen=(open:boolean)=>{
   filterDock.dataset.expanded=String(open);
+  filterDock.parentElement?.classList.toggle("filter-is-open",open);
   filterToggle.setAttribute("aria-expanded",String(open));
   filterToggle.setAttribute("aria-label",open?t("收起筛选栏","Collapse filters"):t("展开筛选栏","Expand filters"));
   filterDetails.setAttribute("aria-hidden",String(!open));
