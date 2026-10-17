@@ -81,6 +81,7 @@ test("daily brief loads published JSON, renders sources, and filters by category
  await expect(page.locator("#headlineDate")).toContainText(/\d{4}-\d{2}-\d{2}/);
  const article=page.locator("#stories .news-card").first();
  await expect(article.locator(".news-source a")).toHaveAttribute("rel",/noopener/);
+ await page.locator("#filter-toggle").click();
  const tabs=page.locator("#tabs button");
  expect(await tabs.count()).toBeGreaterThan(1);
  await tabs.nth(1).click();
