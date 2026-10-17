@@ -13,6 +13,7 @@ test("morning and evening filters distinguish same-day editions",async({page})=>
  await page.goto("/brief/");
  await expect(page.locator("#stories .news-card")).toHaveCount(2);
  await expect(page.locator("#stories .news-card.is-focus")).toHaveCount(1);
+ await page.locator("#filter-toggle").click();
  await page.locator('[data-edition="evening"]').click();
  await expect(page.locator("#stories .news-card")).toHaveCount(1);
  await expect(page.locator("#stories")).toContainText("晚间人工智能");
