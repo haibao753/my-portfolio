@@ -239,3 +239,65 @@ test("glass overlay masks the underlying articles in light and dark modes",async
   await page.locator("#filter-toggle").click();
  }
 });
+
+test("search finds Chinese headlines, source names and original titles while preserving filter combination",async({page})=>{
+ await fakeArchive(page);
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/brief/");
+ await expect(page.locator("#stories .news-card")).toHaveCount(4);
+ await page.locator("#filter-toggle").click();
+ const search=page.locator("#brief-search");
+ await expect(search).toBeVisible();
+ await search.fill("晚间");
+ await expect(page.locator("#stories .news-card")).toHaveCount(1);
+ await expect(page.locator("#expanded-total")).toHaveText("1");
+ await expect(page.locator("#stories")).toContainText("晚间开源研究");
+ await search.fill("PsyPost");
+ await expect(page.locator("#stories .news-card")).toHaveCount(1);
+ await expect(page.locator("#stories")).toContainText("研究依恋类型");
+ await page.locator('[data-edition="evening"]').click();
+ await expect(page.locator("#stories .news-card")).toHaveCount(0);
+ await expect(page.locator(".news-empty")).toContainText("没有找到匹配");
+ await page.locator('[data-edition="all"]').click();
+ await expect(page.locator("#stories .news-card")).toHaveCount(1);
+ await page.locator("#brief-search-clear").click();
+ await expect(search).toHaveValue("");
+ await expect(page.locator("#stories .news-card")).toHaveCount(4);
+ await expect(page.locator("#brief-search-clear")).toBeHidden();
+});
+
+test("new intimacy and design topics are visible before first publication and work with search",async({page})=>{
+ await fakeArchive(page);
+ await page.setViewportSize({width:360,height:780});
+ await page.goto("/brief/");
+ await page.locator("#filter-toggle").click();
+ await expect(page.locator("#tabs button").filter({hasText:"亲密关系"})).toHaveCount(1);
+ await expect(page.locator("#tabs button").filter({hasText:"设计学"})).toHaveCount(1);
+ await page.locator("#tabs button").filter({hasText:"设计学"}).click();
+ await expect(page.locator("#stories .news-card")).toHaveCount(0);
+ await expect(page.locator(".news-empty")).toContainText("暂无该话题");
+ await page.locator("#tabs button").filter({hasText:"全部"}).click();
+ await expect(page.locator("#stories .news-card")).toHaveCount(4);
+});
+
+test("search works with IME, Escape-to-clear and language switching",async({page})=>{
+ await fakeArchive(page);
+ await page.goto("/brief/");
+ await page.locator("#filter-date").click();
+ const search=page.locator("#brief-search");
+ await search.fill("科技");
+ await expect(page.locator("#stories .news-card")).toHaveCount(1);
+ await search.press("Escape");
+ await expect(search).toHaveValue("");
+ await expect(page.locator("#filter-details")).toBeVisible();
+ await expect(page.locator("#stories .news-card")).toHaveCount(4);
+ await page.locator("[data-language-toggle]").click();
+ await expect(search).toHaveAttribute("placeholder",/Title/);
+ // Tapping the navigation outside the panel dismisses it; reopen deliberately.
+ if(await page.locator("#filter-toggle").getAttribute("aria-expanded")==="false")
+  await page.locator("#filter-toggle").click();
+ await expect(page.locator("#filter-details")).toBeVisible();
+ await search.fill("PsyPost");
+ await expect(search).toHaveValue("PsyPost");
+ await expect(page.locator("#stories .news-card")).toHaveCount(1);
+});

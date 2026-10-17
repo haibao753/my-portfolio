@@ -24,6 +24,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <span class="filter-panel-caption"><span data-locale="zh">筛选资讯</span><span data-locale="en">Refine reading</span></span>
       <span class="filter-expanded-meta" aria-live="polite" aria-atomic="true"><span id="expanded-total">—</span><span data-locale="zh"> 条精选</span><span data-locale="en"> selected</span></span>
      </div>
+     <div class="filter-search" role="search" aria-label="搜索简报内容">
+      <label class="filter-group-label" for="brief-search"><span data-locale="zh">搜索当前简报</span><span data-locale="en">Search loaded issues</span></label>
+      <div class="filter-search-box">
+       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
+       <input id="brief-search" type="search" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="标题、摘要、来源、关键词…" aria-label="搜索已加载资讯的标题、摘要、正文和来源" />
+       <button id="brief-search-clear" class="filter-search-clear" type="button" aria-label="清空搜索" hidden>×</button>
+      </div>
+     </div>
      <div class="filter-group filter-date-group">
       <span class="filter-group-label"><span data-locale="zh">选择日期</span><span data-locale="en">Issue date</span></span>
       <div class="filter-date-options" id="date-options" role="group" aria-label="归档日期"></div>
@@ -399,5 +407,20 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  @media(prefers-reduced-motion:reduce){
   .brief-filter-scrim,.brief-filter .filter-date-options button{transition:none!important}
  }
+
+
+ /* Query editor: quiet and readable within the dense optical panel. */
+ .filter-search{padding:1px 2px 16px}
+ .filter-search .filter-group-label{margin:0 0 9px 3px}
+ .filter-search-box{display:flex;align-items:center;gap:9px;min-height:45px;padding:0 13px;border:1px solid rgba(35,44,59,.16);border-radius:15px;background:rgba(255,255,255,.78);transition:border-color .18s ease,box-shadow .18s ease}
+ .filter-search-box:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent)}
+ .filter-search-box svg{flex:0 0 17px;width:17px;height:17px;fill:none;stroke:var(--muted);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+ .filter-search-box input{display:block;min-width:0;flex:1;width:100%;padding:11px 0;border:0;outline:0;background:transparent;color:var(--fg);font:inherit;font-size:13px;font-weight:520;line-height:1.5;appearance:none;-webkit-appearance:none}
+ .filter-search-box input::placeholder{color:var(--muted);opacity:.74}
+ .filter-search-box input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+ .brief-filter .filter-search-clear{display:grid;place-items:center;width:27px;height:27px;flex:0 0 27px;border:0;background:color-mix(in srgb,var(--fg) 7%,transparent);color:var(--fg);border-radius:50%;font-size:18px;line-height:1}
+ .brief-filter .filter-search-clear[hidden]{display:none!important}
+ :root[data-theme="dark"] .filter-search-box{background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.17)}
+ @media(prefers-reduced-motion:reduce){.filter-search-box{transition:none}}
 
 </style>
