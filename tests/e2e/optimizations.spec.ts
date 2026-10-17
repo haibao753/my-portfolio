@@ -14,6 +14,7 @@ test('photo strip uses decoded responsive WebP images instead of full originals'
 test('filtering preserves keyboard focus and follows the selected UI language', async ({ page }) => {
  await page.goto('/brief/');
  await expect(page.locator('.news-card').first()).toBeVisible();
+ await page.locator('#filter-toggle').click();
  const filter = page.locator('#tabs button').nth(1);
  await filter.focus();
  await filter.press('Enter');
@@ -105,7 +106,8 @@ test('three-day and seven-day filters aggregate issues and preserve single-date 
   await page.route('**/brief/data/'+d+'.json',route=>route.fulfill({json:{date:d,items:[item]}}));
  }
  await page.goto('/brief/');
- await expect(page.locator('.news-card')).toHaveCount(1);
+ await expect(page.locator('.news-card')).toHaveCount(3);
+ await page.locator('#filter-toggle').click();
  await page.locator('#quick-dates [data-days="3"]').click();
  await expect(page.locator('.news-card')).toHaveCount(3);
  await expect(page.locator('#quick-dates [data-days="3"]')).toHaveAttribute('aria-pressed','true');
