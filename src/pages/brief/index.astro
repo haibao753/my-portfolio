@@ -10,7 +10,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     <div class="brief-filter-bar">
      <button type="button" id="filter-date" class="compact-date" aria-controls="filter-details" aria-expanded="false" aria-label="打开日期与筛选选项">
       <span id="filter-date-value" aria-hidden="true">-- --</span>
-      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
      </button>
      <button type="button" id="compact-category" class="compact-chip is-current" aria-controls="filter-details" aria-label="展开分类筛选">全部</button>
      <button type="button" id="compact-range" class="compact-chip" aria-controls="filter-details" aria-label="展开时间范围筛选">当天</button>
@@ -352,8 +351,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   border:0;border-radius:999px;background:transparent;color:var(--fg);
   font-size:13px;font-weight:690;font-variant-numeric:tabular-nums;white-space:nowrap;
  }
- .brief-filter .compact-date svg{position:static;transform:none;flex:0 0 12px;width:12px;height:12px}
- .brief-filter .compact-date[aria-expanded="true"] svg{transform:rotate(180deg)}
+ 
+
  .brief-filter #issues{display:none!important}
  .brief-filter .filter-date-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;max-height:150px;overflow-y:auto;overscroll-behavior:contain;padding:2px}
  .brief-filter .filter-date-options button{
@@ -393,7 +392,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  }
  @media(max-width:760px){
   .brief-filter .compact-date{min-height:37px;padding:8px 7px 8px 12px;font-size:12px;gap:7px}
-  .brief-filter .compact-date svg{flex-basis:11px;width:11px;height:11px}
+
   .brief-filter-details{max-height:min(70dvh,580px);padding:16px 17px 19px}
  }
  @media(max-width:355px){.brief-filter .compact-date{padding-inline:8px 5px}}
