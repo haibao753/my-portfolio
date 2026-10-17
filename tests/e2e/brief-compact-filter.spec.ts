@@ -38,6 +38,9 @@ test("compact filter uses one masthead row, no duplicate year or status",async({
  await expect(page.locator("#filter-toggle")).toHaveAttribute("aria-expanded","false");
  await expect(page.locator("#total")).toHaveText("4");
  await expect(page.locator("#issues")).toHaveValue("2026-10-17");
+ await expect(page.locator("#issues")).toBeHidden();
+ await expect(page.locator("#filter-date")).toBeVisible();
+ await expect(page.locator("#filter-date-value")).toHaveText("10-17");
  await expect(page.locator("#issues option").first()).toHaveText("10-17");
  await expect(page.locator("#filter-details")).not.toBeVisible();
  await expect(page.locator("#status")).toHaveClass(/is-summary/);
@@ -80,7 +83,8 @@ test("expansion reveals working category, date range and edition, with live resu
  await page.keyboard.press("Escape");
  await expect(page.locator("#filter-toggle")).toHaveAttribute("aria-expanded","false");
  await expect(page.locator("#filter-toggle")).toBeFocused();
- await page.locator("#issues").selectOption("2026-10-17");
+ await page.locator("#filter-date").click();
+ await page.locator('#date-options [data-date="2026-10-17"]').click();
  await expect(page.locator("#stories .news-card")).toHaveCount(2);
  await expect(page.locator("#total")).toHaveText("2");
 });
@@ -115,7 +119,8 @@ test("mobile capsule is ONLY date and toggle at 320, 360 and 390px",async({page}
   await expect(page.locator("#compact-range")).toBeHidden();
   await expect(page.locator("#compact-category")).toBeHidden();
   await expect(page.locator(".brief-count")).toBeHidden();
-  await expect(page.locator("#issues")).toBeVisible();
+  await expect(page.locator("#filter-date")).toBeVisible();
+  await expect(page.locator("#issues")).toBeHidden();
   await expect(page.locator("#filter-toggle")).toBeVisible();
   const sizes=await page.evaluate(()=>{
    const title=document.querySelector("#brief-heading")!.getBoundingClientRect();
@@ -184,4 +189,53 @@ test("glass popover provides all filters and keyboard dismissal at phone width",
  await page.keyboard.press("Escape");
  await expect(page.locator("#filter-toggle")).toHaveAttribute("aria-expanded","false");
  await expect(page.locator("#filter-toggle")).toBeFocused();
+});
+
+test("single in-page date picker never invokes the Android native select",async({page})=>{
+ await fakeArchive(page);
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/brief/");
+ await expect(page.locator("#stories .news-card")).toHaveCount(4);
+ await expect(page.locator("#issues")).toBeHidden();
+ await page.locator("#filter-date").click();
+ await expect(page.locator("#date-options")).toBeVisible();
+ await expect(page.locator('#date-options [data-date="2026-10-17"]')).toHaveAttribute("aria-pressed","true");
+ await page.locator('#date-options [data-date="2026-10-16"]').click();
+ await expect(page.locator("#stories .news-card")).toHaveCount(1);
+ await expect(page.locator("#filter-date-value")).toHaveText("10-16");
+ await expect(page.locator('#date-options [data-date="2026-10-16"]')).toHaveAttribute("aria-pressed","true");
+ await expect(page.locator("#expanded-total")).toHaveText("1");
+ await page.locator('[data-days="3"]').click();
+ await expect(page.locator("#stories .news-card")).toHaveCount(4);
+ await page.locator('#date-options [data-date="2026-10-17"]').click();
+ await expect(page.locator("#stories .news-card")).toHaveCount(2);
+ await expect(page.locator("#filter-date-value")).toHaveText("10-17");
+ await page.keyboard.press("Escape");
+ await expect(page.locator("#filter-details")).not.toBeVisible();
+});
+test("glass overlay masks the underlying articles in light and dark modes",async({page})=>{
+ await fakeArchive(page);
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/brief/");
+ for(const dark of [false,true]){
+  await page.evaluate((mode)=>{
+   document.documentElement.dataset.theme=mode?"dark":"light";
+  },dark);
+  await page.locator("#filter-toggle").click();
+  await expect(page.locator("#filter-details")).toBeVisible();
+  const measured=await page.locator("#filter-details").evaluate(el=>{
+   const css=getComputedStyle(el);
+   const rgba=css.backgroundColor.match(/[\d.]+/g)?.map(Number)||[];
+   const rect=el.getBoundingClientRect();
+   const story=document.querySelector("#stories .news-card")!.getBoundingClientRect();
+   return {alpha:rgba.length===4?rgba[3]:1,color:css.color,bg:css.backgroundColor,
+    intersectsStory:rect.bottom>story.top,opacity:css.opacity,
+    readable:css.visibility==="visible",scrim:getComputedStyle(document.querySelector("#brief-filter-scrim")!).opacity};
+  });
+  expect(measured.alpha).toBeGreaterThanOrEqual(.94);
+  expect(measured.readable).toBe(true);
+  expect(measured.intersectsStory).toBe(true);
+  expect(Number(measured.scrim)).toBeGreaterThan(.08);
+  await page.locator("#filter-toggle").click();
+ }
 });
