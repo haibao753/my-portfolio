@@ -82,6 +82,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   }
  });
  document.addEventListener("pointerdown",(event)=>{
+  if(event.target===filterScrim)return; // Close on click, not pointerdown, to prevent tap-through.
   if(filterDock.dataset.expanded==="true"&&!filterDock.contains(event.target as Node))setFilterOpen(false);
  });
  const updateCompact=()=>{
