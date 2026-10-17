@@ -22,21 +22,24 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
      </button>
     </div>
     <div class="brief-filter-details" id="filter-details" inert aria-hidden="true">
-     <div class="filter-expanded-meta" aria-hidden="true"><span id="expanded-total">—</span><span data-locale="zh"> 条精选</span><span data-locale="en"> selected</span></div>
-     <div class="filter-detail-row">
-      <span class="filter-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11V5a2 2 0 0 1 2-2h6l10 10a2 2 0 0 1 0 3l-5 5a2 2 0 0 1-3 0L3 11Z"/><circle cx="7.5" cy="7.5" r="1"/></svg></span>
+     <div class="filter-panel-head">
+      <span class="filter-panel-caption"><span data-locale="zh">筛选资讯</span><span data-locale="en">Refine reading</span></span>
+      <span class="filter-expanded-meta" aria-live="polite" aria-atomic="true"><span id="expanded-total">—</span><span data-locale="zh"> 条精选</span><span data-locale="en"> selected</span></span>
+     </div>
+     <div class="filter-group">
+      <span class="filter-group-label"><span data-locale="zh">内容分类</span><span data-locale="en">Topics</span></span>
       <div class="filters" id="tabs" role="group" aria-label="内容分类"></div>
      </div>
-     <div class="filter-detail-row">
-      <span class="filter-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+     <div class="filter-group">
+      <span class="filter-group-label"><span data-locale="zh">时间范围</span><span data-locale="en">Period</span></span>
       <div class="quick-dates" id="quick-dates" role="group" aria-label="快捷日期范围">
        <button type="button" data-days="0" aria-pressed="true"><span data-locale="zh">当天</span><span data-locale="en">This day</span></button>
        <button type="button" data-days="3" aria-pressed="false"><span data-locale="zh">近三天</span><span data-locale="en">Last 3 days</span></button>
        <button type="button" data-days="7" aria-pressed="false"><span data-locale="zh">近一周</span><span data-locale="en">Last 7 days</span></button>
       </div>
      </div>
-     <div class="filter-detail-row">
-      <span class="filter-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+     <div class="filter-group">
+      <span class="filter-group-label"><span data-locale="zh">刊期</span><span data-locale="en">Edition</span></span>
       <div class="edition-controls" id="edition-controls" role="group" aria-label="早报晚报">
        <button type="button" data-edition="all" aria-pressed="true"><span data-locale="zh">全部刊期</span><span data-locale="en">Both</span></button>
        <button type="button" data-edition="morning" aria-pressed="false"><span data-locale="zh">早报</span><span data-locale="en">AM</span></button>
@@ -207,104 +210,108 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 .spatial-shell footer{flex-shrink:0;margin-top:8px}
 @media(max-width:760px){.spatial-shell{max-height:88dvh}.spatial-viewport{height:clamp(210px,37dvh,390px);min-height:0}.spatial-scene{position:relative;inset:auto;width:100%;max-height:20dvh;margin-top:7px;padding:10px 12px}.spatial-scene strong{font-size:15px}.spatial-shell footer{margin-top:6px}}
  
- /* Editorial control dock — collapsed is precisely one masthead line. */
+ /* J.H. LAB | optical reading controls — single, cohesive component */
  .brief-hero.wrap,.news.wrap{width:min(1560px,calc(100% - 48px));max-width:none}
- .brief-hero{border:0!important;padding:12px 0 15px!important}
- .brief-masthead{display:flex;align-items:flex-start;gap:clamp(12px,2.5vw,36px);justify-content:space-between}
- .brief-hero h1{flex-shrink:0;font-size:clamp(27px,3.1vw,43px);line-height:1.14;letter-spacing:-.062em;margin:0;padding-top:4px;white-space:nowrap}
- .brief-visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
- .brief-filter{min-width:0;max-width:100%;width:max-content;flex:0 1 auto;padding:4px 5px;border:1px solid var(--stroke);border-radius:23px;background:color-mix(in srgb,var(--card) 88%,transparent);box-shadow:0 6px 23px #0000000a, inset 0 1px 0 #ffffff80;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:box-shadow .26s ease,border-radius .26s ease}
- .brief-filter[data-expanded="true"]{width:min(670px,100%);box-shadow:0 15px 40px #00000012,inset 0 1px 0 #ffffff80}
- .brief-filter-bar{display:flex;align-items:center;justify-content:flex-end;gap:5px;min-width:0;white-space:nowrap}
- .brief-filter button,.brief-filter select{font-family:inherit;cursor:pointer;touch-action:manipulation}
+ .brief-hero{position:relative;z-index:25;border:0!important;padding:12px 0 17px!important}
+ .brief-masthead{display:flex;align-items:center;justify-content:space-between;gap:clamp(8px,2.2vw,30px)}
+ .brief-hero h1{flex:0 0 auto;white-space:nowrap;margin:0;padding:0;font-size:clamp(26px,3.1vw,43px);font-weight:760;line-height:1.13;letter-spacing:-.066em}
+ .brief-visually-hidden{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+ .brief-filter{
+  position:relative;z-index:2;isolation:isolate;display:block;flex:0 1 auto;width:max-content;min-width:0;max-width:100%;
+  padding:4px;border:1px solid var(--optic-glass-rim,var(--stroke));border-radius:999px;
+  background:var(--optic-glass-fill,var(--card));
+  -webkit-backdrop-filter:var(--optic-glass-filter,blur(20px) saturate(160%));
+  backdrop-filter:var(--optic-glass-filter,blur(20px) saturate(160%));
+  box-shadow:0 7px 25px rgba(9,14,26,.07),var(--optic-glass-edge,none);
+  transition:box-shadow .3s ease,border-color .3s ease
+ }
+ .brief-filter[data-expanded="true"]{box-shadow:0 11px 32px rgba(9,14,26,.12),var(--optic-glass-edge,none)}
+ .brief-filter::before,.brief-filter::after,.brief-filter-details::before,.brief-filter-details::after{content:"";position:absolute;pointer-events:none;border-radius:inherit}
+ .brief-filter::before{inset:0;z-index:-1;background:radial-gradient(ellipse 90% 70% at 28% 0,rgba(255,255,255,.30),transparent 82%),linear-gradient(110deg,transparent 28%,rgba(255,255,255,.09) 43%,transparent 60%)}
+ .brief-filter::after{inset:1px;z-index:-1;border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px rgba(255,255,255,.52),inset 0 -1px rgba(133,179,239,.12)}
+ .brief-filter-bar{display:flex;align-items:center;gap:5px;white-space:nowrap;justify-content:flex-end;min-width:0}
+ .brief-filter button,.brief-filter select{font:inherit;cursor:pointer;touch-action:manipulation}
  .brief-filter button:focus-visible,.brief-filter select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
- .compact-date{position:relative;min-width:0;flex-shrink:0;display:flex;align-items:center}
- .compact-date select{appearance:none;-webkit-appearance:none;min-height:36px;max-width:104px;border-radius:100px;border:1px solid var(--stroke);background:var(--card);color:var(--fg);padding:5px 28px 5px 12px;font-size:12px;font-weight:650}
- .compact-date svg{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.8;pointer-events:none;color:var(--muted)}
- .compact-chip{font-size:12px;font-weight:650;min-height:36px;padding:5px 11px;line-height:1;border:1px solid var(--stroke);border-radius:999px;background:var(--card);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- .compact-chip.is-current{background:var(--fg);border-color:var(--fg);color:var(--bg);max-width:130px}
- .brief-count{display:inline-flex;align-items:center;flex-shrink:0;padding:0 7px;color:var(--muted);font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums}
- .brief-filter-toggle{width:36px;height:36px;flex-shrink:0;display:grid;place-items:center;border:1px solid var(--stroke);background:var(--card);color:var(--fg);border-radius:999px}
- .brief-filter-toggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .28s ease}
+ .compact-date{position:relative;display:flex;align-items:center;min-width:0;flex:0 0 auto}
+ .compact-date select{appearance:none;-webkit-appearance:none;min-height:36px;max-width:105px;padding:7px 27px 7px 14px;border:0;border-radius:999px;background:transparent;color:var(--fg);font-size:13px;font-weight:670;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+ .compact-date svg{position:absolute;top:50%;right:10px;transform:translateY(-50%);width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.65;pointer-events:none;color:var(--muted)}
+ .compact-chip{min-height:35px;max-width:130px;padding:7px 11px;border:0;border-radius:999px;background:transparent;color:var(--muted);font-size:12px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .compact-chip.is-current{color:var(--fg);background:color-mix(in srgb,var(--fg) 10%,transparent)}
+ .brief-count{display:inline-flex;align-items:center;flex:0 0 auto;color:var(--muted);padding:0 7px;font-size:12px;font-weight:550;font-variant-numeric:tabular-nums}
+ .brief-filter-toggle{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:color-mix(in srgb,var(--fg) 7%,transparent);color:var(--fg)}
+ .brief-filter-toggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .32s cubic-bezier(.22,1,.36,1)}
  .brief-filter[data-expanded="true"] .brief-filter-toggle svg{transform:rotate(180deg)}
- .brief-filter-details{max-height:0;overflow:hidden;opacity:0;visibility:hidden;pointer-events:none;transition:max-height .3s cubic-bezier(.21,.84,.26,1),opacity .18s ease,visibility 0s linear .3s}
- .brief-filter[data-expanded="true"] .brief-filter-details{max-height:min(75dvh,620px);overflow-y:auto;opacity:1;visibility:visible;pointer-events:auto;transition:max-height .38s cubic-bezier(.21,.84,.26,1),opacity .26s ease}
- .filter-detail-row{display:flex;align-items:flex-start;gap:13px;margin:0 12px;padding:13px 0;border-top:1px solid var(--stroke)}
- .filter-detail-row:first-child{margin-top:10px}
- .filter-detail-icon{width:21px;height:21px;flex:0 0 21px;display:grid;place-items:center;margin-top:8px;color:var(--muted)}
- .filter-detail-icon svg{width:19px;height:19px;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;fill:none}
- .brief-filter .filters{flex-wrap:wrap;width:auto;max-height:none;overflow:visible;gap:7px}
- .brief-filter :global(.filter-chip),.brief-filter .quick-dates button,.brief-filter .edition-controls button{font-size:12px;line-height:1.2;min-height:35px;padding:7px 12px;white-space:nowrap;background:var(--card);border:1px solid var(--stroke);border-radius:999px;color:var(--muted);font-weight:650}
- .brief-filter :global(.filter-chip[aria-pressed="true"]),.brief-filter .quick-dates button[aria-pressed="true"],.brief-filter .edition-controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
- .brief-filter .quick-dates,.brief-filter .edition-controls{display:flex;flex-wrap:wrap;gap:7px}
- .status.is-summary{position:absolute;width:1px;height:1px;margin:0;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ /* Overlay is anchored to the right edge and does NOT resize or reflow the masthead. */
+ .brief-filter-details{
+  position:absolute;right:0;top:calc(100% + 11px);width:min(390px,calc(100vw - 28px));max-width:calc(100vw - 28px);
+  box-sizing:border-box;padding:17px 17px 18px;border-radius:28px;
+  border:1px solid var(--optic-glass-rim,var(--stroke));background:var(--optic-glass-fill,var(--card));
+  -webkit-backdrop-filter:var(--optic-glass-filter,blur(30px) saturate(160%));
+  backdrop-filter:var(--optic-glass-filter,blur(30px) saturate(160%));
+  box-shadow:0 20px 55px rgba(9,14,26,.14),var(--optic-glass-edge,none);
+  opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,-9px,0) scale(.968);transform-origin:95% 0;
+  overflow-y:auto;overscroll-behavior:contain;max-height:min(70dvh,585px);
+  transition:opacity .23s ease,transform .36s cubic-bezier(.22,1,.36,1),visibility 0s linear .36s
+ }
+ .brief-filter-details::before{inset:0;z-index:-1;background:radial-gradient(ellipse 76% 33% at 34% 0%,rgba(255,255,255,.38),transparent 93%),linear-gradient(126deg,rgba(255,255,255,.11),transparent 49%)}
+ .brief-filter-details::after{inset:1px;z-index:-1;border:1px solid rgba(255,255,255,.20);box-shadow:inset 0 1px rgba(255,255,255,.68),inset 0 -1px rgba(133,179,239,.15)}
+ .brief-filter[data-expanded="true"] .brief-filter-details{visibility:visible;pointer-events:auto;opacity:1;transform:translate3d(0,0,0) scale(1);transition:opacity .24s ease,transform .38s cubic-bezier(.22,1,.36,1),visibility 0s}
+ .filter-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:1px 2px 13px}
+ .filter-panel-caption{font-size:13px;font-weight:720;letter-spacing:-.01em;color:var(--fg)}
+ .filter-expanded-meta{display:flex;gap:3px;align-items:center;color:var(--muted);font-size:11px;font-variant-numeric:tabular-nums}
+ .filter-group{padding:13px 2px 14px;border-top:1px solid color-mix(in srgb,var(--stroke) 70%,transparent)}
+ .filter-group:last-child{padding-bottom:1px}
+ .filter-group-label{display:block;margin:0 0 11px 3px;font-size:11px;font-weight:600;letter-spacing:.055em;color:var(--muted)}
+ .brief-filter .filters,.brief-filter .quick-dates,.brief-filter .edition-controls{display:flex;flex-wrap:wrap;gap:8px;max-height:none;overflow:visible;width:100%}
+ .brief-filter :global(.filter-chip),.brief-filter .quick-dates button,.brief-filter .edition-controls button{
+  min-height:37px;padding:8px 13px;border:1px solid color-mix(in srgb,var(--stroke) 75%,transparent);
+  border-radius:999px;background:color-mix(in srgb,var(--card) 42%,transparent);color:var(--fg);
+  font-size:12px;font-weight:610;line-height:1.15;white-space:nowrap;
+  transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease
+ }
+ .brief-filter :global(.filter-chip[aria-pressed="true"]),.brief-filter .quick-dates button[aria-pressed="true"],.brief-filter .edition-controls button[aria-pressed="true"]{
+  background:color-mix(in srgb,var(--fg) 87%,var(--card));color:var(--bg);
+  border-color:transparent;box-shadow:0 3px 8px rgba(8,14,24,.12),inset 0 1px rgba(255,255,255,.16)
+ }
+ @media(hover:hover){.brief-filter .quick-dates button:hover,.brief-filter .edition-controls button:hover,.brief-filter :global(.filter-chip:hover){transform:translateY(-1px);border-color:var(--fg)}}
+ .brief-filter[data-expanded="true"] .filter-group{animation:filter-group-reveal .36s both cubic-bezier(.22,1,.36,1)}
+ .brief-filter[data-expanded="true"] .filter-group:nth-child(3){animation-delay:35ms}
+ .brief-filter[data-expanded="true"] .filter-group:nth-child(4){animation-delay:65ms}
+ @keyframes filter-group-reveal{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+ .status.is-summary{position:absolute;width:1px;height:1px;overflow:hidden;margin:0;padding:0;clip-path:inset(50%);white-space:nowrap}
  .news{padding-top:2px!important}
- /* Narrow widths only hide the least-essential edition preview, not the state itself. */
  @media(max-width:950px){#compact-edition{display:none}}
- @media(max-width:380px){#compact-range{display:none}}
  @media(max-width:760px){
   .brief-hero.wrap,.news.wrap{width:calc(100% - 28px)}
   .brief-hero{padding:10px 0 13px!important}
-  .brief-masthead{gap:7px;align-items:flex-start}
-  .brief-masthead.filter-is-open{flex-wrap:wrap}
-  .brief-masthead.filter-is-open .brief-filter{flex:0 0 100%;width:100%;order:2}
-  .brief-hero h1{font-size:clamp(21px,6.8vw,26px);padding-top:6px;line-height:1.1;letter-spacing:-.07em}
-  .brief-filter{border-radius:19px;padding:3px;flex:1 1 0;width:0}
-  .brief-filter[data-expanded="true"]{flex:1 1 0;width:0}
-  .brief-filter-bar{gap:2px}
-  .compact-date select{font-size:11px;max-width:70px;min-height:32px;padding:4px 17px 4px 7px}
+  .brief-masthead{gap:9px;align-items:center;flex-wrap:nowrap}
+  .brief-hero h1{flex:0 0 auto;font-size:clamp(21px,6.8vw,27px);line-height:1.12;letter-spacing:-.07em}
+  /* Exactly two controls: the native date selector and the expansion chevron.
+     They share one optical shell; no clipped '全部/近三天' mini buttons. */
+  .brief-filter{flex:0 0 auto;width:auto;min-width:0;padding:3px 4px;border-radius:999px}
+  .brief-filter :is(#compact-category,#compact-range,#compact-edition,.brief-count){display:none!important}
+  .brief-filter-bar{gap:0}
+  .compact-date select{width:78px;max-width:78px;min-height:37px;padding:8px 21px 8px 11px;font-size:12px}
   .compact-date svg{right:5px;width:10px}
-  .compact-chip{font-size:11px;min-height:32px;padding:5px 7px;max-width:48px}
-  #compact-range{padding-inline:6px;max-width:48px}
-  .brief-filter-toggle{height:32px;width:30px}
-  .brief-count{font-size:11px;padding:0 2px}
-  .brief-count-suffix{display:none}
-  .filter-detail-row{gap:8px;margin:0 7px;padding:10px 0}
-  .filter-detail-row:first-child{margin-top:9px}
-  .filter-detail-icon{width:17px;flex-basis:17px}
-  .filter-detail-icon svg{width:16px;height:16px}
-  .brief-filter .filters{gap:5px;flex-wrap:wrap;max-height:none;overflow:visible}
-  .brief-filter :global(.filter-chip),.brief-filter .quick-dates button,.brief-filter .edition-controls button{font-size:11px;min-height:33px;padding:6px 9px}
-  .brief-filter[data-expanded="true"]{position:relative}
-  .stories{margin-top:2px}
+  .brief-filter-toggle{flex-basis:36px;width:36px;height:36px;background:transparent}
+  .brief-filter-toggle::before{content:"";position:absolute;width:1px;height:19px;transform:translateX(-18px);background:color-mix(in srgb,var(--stroke) 72%,transparent)}
+  .brief-filter-details{right:0;top:calc(100% + 10px);padding:16px 17px 17px;border-radius:26px;max-height:min(67dvh,550px)}
+  .brief-filter :global(.filter-chip),.brief-filter .quick-dates button,.brief-filter .edition-controls button{min-height:38px;font-size:12px;padding:9px 13px}
  }
- @media(max-width:380px){
+ @media(max-width:355px){
   .brief-hero h1{font-size:20px}
-  .brief-filter{padding:2px}
-  .compact-chip{padding-inline:6px;max-width:40px}
-  .compact-date select{max-width:70px;padding-left:5px}
-  .brief-count{padding-inline:1px}
-  .brief-filter-toggle{width:29px;height:31px}
+  .compact-date select{width:72px;max-width:72px;padding-left:8px}
+  .brief-masthead{gap:6px}
+  .brief-filter-details{width:calc(100vw - 24px);max-width:calc(100vw - 24px)}
  }
-
- /* Share the navigation bar's real optical material tokens instead of painting an unrelated white card. */
- .brief-filter{border-color:var(--optic-glass-rim,var(--stroke));background:var(--optic-glass-fill,var(--card));box-shadow:0 10px 32px rgba(9,14,26,.10),var(--optic-glass-edge,none);backdrop-filter:var(--optic-glass-filter,blur(24px) saturate(160%));-webkit-backdrop-filter:var(--optic-glass-filter,blur(24px) saturate(160%));position:relative;isolation:isolate}
- .brief-filter::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:radial-gradient(ellipse 80% 45% at 32% 0,rgba(255,255,255,.30),transparent 85%),linear-gradient(110deg,transparent 31%,rgba(255,255,255,.09) 44%,transparent 60%)}
- .brief-filter::after{content:"";position:absolute;inset:1px;z-index:-1;pointer-events:none;border-radius:inherit;border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px rgba(255,255,255,.55),inset 0 -1px rgba(133,179,239,.16)}
- .filter-expanded-meta{display:none;color:var(--muted);font-size:12px;justify-content:flex-end;padding:12px 13px 7px;font-variant-numeric:tabular-nums}
- @media(max-width:760px){
-  /* Phone: exactly TWO collapsed controls; no hidden chips stealing width. */
-  .brief-filter:not([data-expanded="true"]) :is(#compact-category,#compact-range,#compact-edition,.brief-count){display:none!important}
-  .brief-filter[data-expanded="true"] :is(#compact-category,#compact-range,#compact-edition,.brief-count){display:none!important}
-  .brief-filter,.brief-filter[data-expanded="true"]{flex:0 0 auto;width:auto;max-width:100%;min-width:0;padding:4px;border-radius:22px}
-  .brief-filter-bar{gap:6px;justify-content:flex-end}
-  .compact-date{flex:0 0 auto}
-  .compact-date select{width:82px;max-width:82px;min-height:35px;font-size:12px;padding:6px 22px 6px 10px}
-  .compact-date svg{right:8px}
-  .brief-filter-toggle{width:35px;height:35px;flex:0 0 35px}
-  .brief-filter[data-expanded="true"]{width:100%;flex:0 0 100%;border-radius:25px}
-  .brief-filter[data-expanded="true"] .brief-filter-bar{justify-content:space-between}
-  .brief-filter[data-expanded="true"] .compact-date select{width:100px;max-width:100px}
-  .brief-filter[data-expanded="true"] .filter-expanded-meta{display:flex}
-  .brief-masthead.filter-is-open .brief-filter{width:100%;flex:0 0 100%}
+ @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .brief-filter,.brief-filter-details{background:var(--card)}
  }
- @media(max-width:380px){
-  .brief-filter{padding:3px}
-  .brief-filter .compact-date select{width:75px;max-width:75px;min-height:34px;padding-left:8px}
-  .brief-filter-toggle{width:34px;height:34px;flex-basis:34px}
+ @media(prefers-reduced-transparency:reduce){
+  .brief-filter,.brief-filter-details{background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none}
  }
- @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.brief-filter{background:var(--card)}}
- @media(prefers-reduced-transparency:reduce){.brief-filter{background:var(--card);backdrop-filter:none;-webkit-backdrop-filter:none}}
- @media(prefers-reduced-motion:reduce){.brief-filter,.brief-filter-details,.brief-filter-toggle svg{transition:none!important}}
+ @media(prefers-reduced-motion:reduce){
+  .brief-filter,.brief-filter-details,.brief-filter-toggle svg,.brief-filter .filter-group,.brief-filter :global(.filter-chip){transition:none!important;animation:none!important}
+ }
 
 </style>
