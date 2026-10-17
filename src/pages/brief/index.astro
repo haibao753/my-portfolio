@@ -25,6 +25,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
      <button type="button" data-days="3" aria-pressed="false"><span data-locale="zh">近三天</span><span data-locale="en">Last 3 days</span></button>
      <button type="button" data-days="7" aria-pressed="false"><span data-locale="zh">近一周</span><span data-locale="en">Last 7 days</span></button>
     </div>
+    <div class="edition-controls" id="edition-controls" role="group" aria-label="早报晚报">
+     <button type="button" data-edition="all" aria-pressed="true"><span data-locale="zh">全部刊期</span><span data-locale="en">Both</span></button>
+     <button type="button" data-edition="morning" aria-pressed="false"><span data-locale="zh">早报</span><span data-locale="en">AM</span></button>
+     <button type="button" data-edition="evening" aria-pressed="false"><span data-locale="zh">晚报</span><span data-locale="en">PM</span></button>
+    </div>
     <label class="date-picker"><span data-locale="zh">日期 / 期数</span><span data-locale="en">ISSUE DATE</span><select id="issues" aria-label="选择历史日期"></select></label>
    </div>
   </div>
@@ -66,6 +71,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .quick-dates button{border:1px solid var(--stroke);background:var(--card);color:var(--muted);border-radius:999px;min-height:42px;padding:8px 13px;font-size:12px;font-weight:650;cursor:pointer;white-space:nowrap}
  .quick-dates button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
  .quick-dates button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+ .edition-controls{display:flex;gap:5px;align-items:center}
+ .edition-controls button{border:1px solid var(--stroke);background:var(--card);color:var(--muted);border-radius:999px;min-height:42px;padding:8px 12px;font-size:12px;font-weight:650;cursor:pointer;white-space:nowrap}
+ .edition-controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+ .edition-controls button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
  .date-picker{display:flex;align-items:center;gap:13px;font-size:12px;color:var(--muted)}
  .date-picker select{background:var(--card);color:var(--fg);border:1px solid var(--stroke);border-radius:13px;min-height:43px;padding:8px 12px;font:inherit}
  .status{font-size:12px;color:var(--muted);margin:25px 0}
@@ -99,7 +108,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .issue-summary strong{font-size:14px;line-height:1.3}.issue-summary small{font-size:11px}
  .news{padding-top:16px}.news-heading{margin:0 0 8px}.news-heading h2{font-size:clamp(18px,2.6vw,28px);margin:0}
  .news-heading>p{display:none}.toolbar{padding:8px 0}.status{margin:10px 0;font-size:11px}
- @media(max-width:760px){.brief-hero{padding-top:12px;padding-bottom:12px}.brief-hero h1{font-size:25px}.brief-hero .eyebrow{font-size:10px}.issue-summary strong{font-size:12px}.issue-summary small{font-size:10px}.news{padding-top:11px}.news-heading{margin-bottom:7px}.news-heading h2{font-size:19px}.date-controls{width:auto;justify-content:flex-start}.quick-dates{display:flex}.date-picker{gap:5px}.date-picker>span{display:none}.date-picker select{min-height:35px;padding:5px 8px;font-size:11px}.toolbar{gap:7px;flex-direction:column;align-items:flex-start}.filters{gap:6px;max-height:38px;overflow:auto;flex-wrap:nowrap;width:100%;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}:global(.filter-chip){min-height:33px;padding:6px 11px;white-space:nowrap;font-size:11px}.stories{gap:12px}:global(.news-card){padding:18px}:global(.news-card h3){margin:10px 0 9px;font-size:21px}}
+ @media(max-width:760px){.brief-hero{padding-top:12px;padding-bottom:12px}.brief-hero h1{font-size:25px}.brief-hero .eyebrow{font-size:10px}.issue-summary strong{font-size:12px}.issue-summary small{font-size:10px}.news{padding-top:11px}.news-heading{margin-bottom:7px}.news-heading h2{font-size:19px}.date-controls{width:auto;justify-content:flex-start}.quick-dates{display:flex}.edition-controls button{min-height:35px;padding:5px 10px;font-size:11px}.date-picker{gap:5px}.date-picker>span{display:none}.date-picker select{min-height:35px;padding:5px 8px;font-size:11px}.toolbar{gap:7px;flex-direction:column;align-items:flex-start}.filters{gap:6px;max-height:38px;overflow:auto;flex-wrap:nowrap;width:100%;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}:global(.filter-chip){min-height:33px;padding:6px 11px;white-space:nowrap;font-size:11px}.stories{gap:12px}:global(.news-card){padding:18px}:global(.news-card h3){margin:10px 0 9px;font-size:21px}}
 
  /* Editorial flow: wider content, restrained chrome, progressively revealed details. */
  .brief-hero.wrap,.news.wrap{width:min(1560px,calc(100% - 48px));max-width:none}
