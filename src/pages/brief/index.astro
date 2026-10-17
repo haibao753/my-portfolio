@@ -238,7 +238,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .brief-filter .quick-dates,.brief-filter .edition-controls{display:flex;flex-wrap:wrap;gap:7px}
  .status.is-summary{position:absolute;width:1px;height:1px;margin:0;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
  .news{padding-top:2px!important}
- @media(max-width:950px){.compact-edition,.compact-range{display:none}}
+ /* Narrow widths only hide the least-essential edition preview, not the state itself. */
+ @media(max-width:950px){#compact-edition{display:none}}
+ @media(max-width:380px){#compact-range{display:none}}
  @media(max-width:760px){
   .brief-hero.wrap,.news.wrap{width:calc(100% - 28px)}
   .brief-hero{padding:10px 0 13px!important}
@@ -248,11 +250,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .brief-hero h1{font-size:clamp(21px,6.8vw,26px);padding-top:6px;line-height:1.1;letter-spacing:-.07em}
   .brief-filter{border-radius:19px;padding:3px;flex:1 1 0;width:0}
   .brief-filter[data-expanded="true"]{flex:1 1 0;width:0}
-  .brief-filter-bar{gap:3px}
-  .compact-date select{font-size:11px;max-width:76px;min-height:32px;padding:4px 18px 4px 6px}
+  .brief-filter-bar{gap:2px}
+  .compact-date select{font-size:11px;max-width:70px;min-height:32px;padding:4px 17px 4px 7px}
   .compact-date svg{right:5px;width:10px}
-  .compact-chip{font-size:11px;min-height:32px;padding:5px 8px;max-width:53px}
-  .brief-filter-toggle{height:32px;width:32px}
+  .compact-chip{font-size:11px;min-height:32px;padding:5px 7px;max-width:48px}
+  #compact-range{padding-inline:6px;max-width:48px}
+  .brief-filter-toggle{height:32px;width:30px}
   .brief-count{font-size:11px;padding:0 2px}
   .brief-count-suffix{display:none}
   .filter-detail-row{gap:8px;margin:0 7px;padding:10px 0}
