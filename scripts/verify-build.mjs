@@ -9,6 +9,7 @@ const paths=[
  "dist/experiments/minimal-surfaces-classical.html",
  "dist/experiments/minimal-surfaces-periodic.html",
  "dist/experiments/liquid-glass-optics.html",
+ "dist/experiments/floating-isle-3d.html",
  "dist/assets/jh-orbit.svg",
  "dist/assets/jhlab-signature.svg",
  "dist/images/1.jpg"
@@ -51,7 +52,7 @@ if(!failed){
    console.error("Incorrect production canonical or sharing URL:",path);failed=true;
   }
  }
- for(const url of ["/brief/","https://space.bilibili.com/1572685586","https://zhengyifan.win/","/experiments/minimal-surfaces-classical.html","/experiments/minimal-surfaces-periodic.html","https://entropy-sandbox.pages.dev/"]){
+ for(const url of ["/brief/","https://space.bilibili.com/1572685586","https://zhengyifan.win/","/experiments/minimal-surfaces-classical.html","/experiments/minimal-surfaces-periodic.html","/experiments/floating-isle-3d.html","https://entropy-sandbox.pages.dev/"]){
   // Astro may serialize or escape attributes; check URL presence.
   if(!html.includes(url)){console.error("Missing portfolio URL:",url);failed=true;}
  }

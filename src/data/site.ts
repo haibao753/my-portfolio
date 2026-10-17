@@ -46,10 +46,11 @@ export const projects: Project[] = [
     id:"experiments",
     category:{zh:"04 / 交互几何",en:"04 / Interactive Geometry"},
     title:{zh:"让几何成为可以触碰的世界",en:"Geometry You Can Touch"},
-    description:{zh:"探索极小曲面与交互计算，用代码让想象变得可见。",en:"Play with minimal surfaces, geometry and interactive computing."},
+    description:{zh:"探索极小曲面、程序化 3D 与交互计算，用代码让想象变得可见。",en:"Play with minimal surfaces, procedural 3D and interactive computing."},
     href:"/experiments/minimal-surfaces-classical.html",
     action:{zh:"探索经典极小曲面",en:"Classical Minimal Surfaces"},
     extra:[
+      {href:"/experiments/floating-isle-3d.html",label:{zh:"云海浮岛（3D）",en:"Floating Isle (3D)"}},
       {href:"/experiments/minimal-surfaces-periodic.html",label:{zh:"周期极小曲面",en:"Periodic Surfaces"}},
       {href:"https://entropy-sandbox.pages.dev/",label:{zh:"熵与空间沙盒",en:"Entropy Sandbox"}}
     ]
