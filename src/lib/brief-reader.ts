@@ -49,11 +49,12 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  };
  const setFilterOpen=(open:boolean)=>{
   filterDock.dataset.expanded=String(open);
-  filterDock.parentElement?.classList.toggle("filter-is-open",open);
+  // The glass panel is absolutely anchored; opening must never reflow the title or article list.
   filterToggle.setAttribute("aria-expanded",String(open));
   filterToggle.setAttribute("aria-label",open?t("收起筛选栏","Collapse filters"):t("展开筛选栏","Expand filters"));
   filterDetails.setAttribute("aria-hidden",String(!open));
   filterDetails.toggleAttribute("inert",!open);
+  filterDock.classList.toggle("has-open-popover",open);
  };
  const openFilterAt=(group:HTMLElement)=>{
   setFilterOpen(true);
