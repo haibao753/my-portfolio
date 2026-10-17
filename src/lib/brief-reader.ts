@@ -1,9 +1,16 @@
 /* J.H. LAB / Daily Brief reader — shared page, unchanged public JSON schema. */
+interface ResearchSection {text?:string; evidence_ids?:string[]}
+interface ResearchDossier {
+ status?:string;material_scope?:string;review_status?:string;source_url?:string;
+ pages_read?:number;pages_total?:number;
+ citations?:Array<{id?:string;page?:number}>;
+ sections?:Record<string,ResearchSection>;
+}
 interface BriefItem {
  edition?: "morning"|"evening"; focus?: boolean;
  category?: string;source?: string;published?: string;url?: string;
  title_zh?: string;summary_zh?: string;why_zh?: string;
- details_zh?: string;original_title?: string;
+ details_zh?: string;original_title?: string;research?:ResearchDossier;
 }
 interface BriefIssue {date?:string;items?:BriefItem[]}
 interface BriefIndex {dates?:string[];updated_at?:string}
@@ -46,6 +53,50 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   try{const u=new URL(candidate);return ["https:","http:"].includes(u.protocol)?u.href:null}
   catch{return null}
  };
+ const researchReady=(d:ResearchDossier|undefined)=>{
+  if(!d||d.status!=="partial_pdf_text"||!d.sections||!Array.isArray(d.citations))return false;
+  try{
+   const url=new URL(d.source_url||"");
+   return url.protocol==="https:" && ["arxiv.org","www.arxiv.org"].includes(url.hostname)
+    && url.pathname.startsWith("/pdf/") && url.pathname.length>5
+    && !url.search && !url.username && !url.password && !url.port;
+  }catch{return false}
+ };
+ const makeResearch=(d:ResearchDossier)=>{
+  const panel=txt("section","","news-research");
+  panel.setAttribute("aria-label",t("论文证据解读","Evidence-led paper reading"));
+  panel.append(txt("h4",t("论文研究档案 · 原始 PDF 页码可追溯","Paper research dossier · PDF page references")));
+  panel.append(txt("p",d.material_scope||"PDF 文本部分阅读","news-research-scope"));
+  const labels:Record<string,[string,string]>={
+   question:["研究问题","Research question"],method:["方法与关键思想","Method"],
+   findings:["论文报告的发现","Reported findings"],limitations:["局限与尚未证实的部分","Limitations"],
+   replication:["学习与复现路线","Learning / replication"]
+  };
+  const pages=new Map<string,number>();
+  for(const c of d.citations||[]){
+   if(typeof c.id==="string"&&c.id.startsWith("E")&&/^[0-9]{1,2}$/.test(c.id.slice(1))&&Number.isInteger(c.page)
+    && Number(c.page)<=Number(d.pages_total||0))pages.set(c.id,c.page as number);
+  }
+  for(const [key,names] of Object.entries(labels)){
+   const part=d.sections?.[key];
+   if(!part||typeof part.text!=="string"||!part.text.trim())continue;
+   const section=txt("div","","news-research-part");
+   section.append(txt("h5",t(names[0],names[1])),txt("p",part.text));
+   const cites=txt("div","","news-research-citations");
+   cites.append(txt("span",t("核对论文：","Source pages: ")));
+   for(const id of part.evidence_ids||[]){
+    const number=pages.get(id);if(number===undefined)continue;
+    const link=txt("a",t(`第${number}页`,`p. ${number}`)) as HTMLAnchorElement;
+    link.href=(d.source_url||"")+"#page="+number;
+    link.rel="noopener noreferrer";link.target="_blank";
+    link.setAttribute("aria-label",t(`在原始 PDF 中查看第${number}页`,`Open original PDF page ${number}`));
+    cites.append(link);
+   }
+   section.append(cites);panel.append(section);
+  }
+  panel.append(txt("p",d.review_status||t("AI 根据部分论文文本归纳，尚未经独立核验。","AI reading of partial PDF text; not independently verified."),"news-disclosure-note"));
+  return panel;
+ };
  const render=()=>{
   const selection=current.filter(x=>(category==="全部"||(x.category||"其他")===category) && (selectedEdition==="all"||x.edition===selectedEdition));
   statusNode.textContent=t(`显示 ${selection.length} 条`,`Showing ${selection.length} stories`);
@@ -57,7 +108,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
    const meta=txt("div","","news-meta");
    const slot=item.edition==="morning"?t("早报","AM"):item.edition==="evening"?t("晚报","PM"):"";
    const stamp=item.issue_date||(item.published||"时间未提供");
-   meta.append(txt("span",(item.focus?t("✦ 重点 · ","✦ Focus · "):"")+(item.category||"其他"),"news-category"),txt("span",slot?slot+" · "+stamp:stamp));
+   meta.append(txt("span",(researchReady(item.research)?t("◇ 论文精读 · ","◇ Paper study · "):item.focus?t("✦ 重点 · ","✦ Focus · "):"")+(item.category||"其他"),"news-category"),txt("span",slot?slot+" · "+stamp:stamp));
    const heading=txt("h3",item.title_zh||"未命名资讯");
    const summary=txt("p",item.summary_zh||"","news-summary");
    card.append(meta,heading,summary);
@@ -93,7 +144,8 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
      disclosure.append(txt("h4",t("站内详细解读","Extended analysis")));
      disclosure.append(txt("p",item.details_zh));
     }
-    disclosure.append(txt("p",t("根据公开标题与摘要进行中文整理，不是原文全文。受限于来源信息，部分细节可能无法验证。","Editorial interpretation of public headlines and excerpts; not the complete original article."),"news-disclosure-note"));
+    if(researchReady(item.research))disclosure.append(makeResearch(item.research!));
+    disclosure.append(txt("p",t("一般摘要依据公开标题、摘要整理；研究档案仅取部分可读取 PDF 文本，不等于独立验证或阅读全文。","News summary uses available excerpts; research dossier uses partial PDF text, not independent verification or full-paper review."),"news-disclosure-note"));
     card.append(disclosure);
    }
    const foot=txt("div","","news-source");
