@@ -17,6 +17,10 @@ interface BriefIndex {dates?:string[];updated_at?:string}
 const stories=document.querySelector<HTMLElement>("#stories");
 const tabs=document.querySelector<HTMLElement>("#tabs");
 const issueSelect=document.querySelector<HTMLSelectElement>("#issues");
+const dateButton=document.querySelector<HTMLButtonElement>("#filter-date");
+const dateLabel=document.querySelector<HTMLElement>("#filter-date-value");
+const dateOptions=document.querySelector<HTMLElement>("#date-options");
+const filterScrim=document.querySelector<HTMLElement>("#brief-filter-scrim");
 const statusNode=document.querySelector<HTMLElement>("#status");
 const quickDates=document.querySelector<HTMLElement>("#quick-dates");
 const editionControls=document.querySelector<HTMLElement>("#edition-controls");
@@ -29,7 +33,7 @@ const filterDetails=document.querySelector<HTMLElement>("#filter-details");
 const categoryCompact=document.querySelector<HTMLButtonElement>("#compact-category");
 const rangeCompact=document.querySelector<HTMLButtonElement>("#compact-range");
 const editionCompact=document.querySelector<HTMLButtonElement>("#compact-edition");
-if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline&&total&&filterDock&&filterToggle&&filterDetails&&categoryCompact&&rangeCompact&&editionCompact){
+if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline&&total&&filterDock&&filterToggle&&filterDetails&&categoryCompact&&rangeCompact&&editionCompact&&dateButton&&dateLabel&&dateOptions&&filterScrim){
  let current:(BriefItem & {issue_date?:string})[]=[];
  let viewLabel="";
  let availableDates:string[]=[];
@@ -51,6 +55,8 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   filterDock.dataset.expanded=String(open);
   // The glass panel is absolutely anchored; opening must never reflow the title or article list.
   filterToggle.setAttribute("aria-expanded",String(open));
+  dateButton.setAttribute("aria-expanded",String(open));
+  filterScrim.classList.toggle("is-open",open);
   filterToggle.setAttribute("aria-label",open?t("收起筛选栏","Collapse filters"):t("展开筛选栏","Expand filters"));
   filterDetails.setAttribute("aria-hidden",String(!open));
   filterDetails.toggleAttribute("inert",!open);
@@ -62,6 +68,11 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   active?.focus({preventScroll:true});
  };
  filterToggle.addEventListener("click",()=>setFilterOpen(filterDock.dataset.expanded!=="true"));
+ dateButton.addEventListener("click",()=>{
+  if(filterDock.dataset.expanded==="true"){setFilterOpen(false);return;}
+  openFilterAt(dateOptions);
+ });
+ filterScrim.addEventListener("click",()=>setFilterOpen(false));
  categoryCompact.addEventListener("click",()=>openFilterAt(tabs));
  rangeCompact.addEventListener("click",()=>openFilterAt(quickDates));
  editionCompact.addEventListener("click",()=>openFilterAt(editionControls));
@@ -74,12 +85,36 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   if(filterDock.dataset.expanded==="true"&&!filterDock.contains(event.target as Node))setFilterOpen(false);
  });
  const updateCompact=()=>{
+  dateLabel.textContent=(issueSelect.value||availableDates[0]||"").slice(5)||"-- --";
+  dateButton.setAttribute("aria-label",t(`日期：${issueSelect.value||"未选择"}；打开筛选`,`Date: ${issueSelect.value||"not selected"}; open filters`));
   categoryCompact.textContent=category==="全部"?t("全部","All"):category;
   rangeCompact.textContent=selectedRange===3?t("近三天","3 days"):selectedRange===7?t("近一周","7 days"):t("当天","Day");
   editionCompact.textContent=selectedEdition==="morning"?t("早报","AM"):selectedEdition==="evening"?t("晚报","PM"):t("全部刊期","Both");
   categoryCompact.setAttribute("aria-label",t(`分类：${category}；展开分类筛选`,`Category: ${category}; open filters`));
   rangeCompact.setAttribute("aria-label",t(`时间范围：${rangeCompact.textContent}；展开筛选`,`Date range: ${rangeCompact.textContent}; open filters`));
   editionCompact.setAttribute("aria-label",t(`刊期：${editionCompact.textContent}；展开筛选`,`Edition: ${editionCompact.textContent}; open filters`));
+ };
+ const updateDateButtons=()=>{
+  dateOptions.querySelectorAll<HTMLButtonElement>("button[data-date]").forEach(button=>{
+   const selected=button.dataset.date===issueSelect.value;
+   button.setAttribute("aria-pressed",String(selected));
+   if(selected)button.setAttribute("aria-current","date");else button.removeAttribute("aria-current");
+  });
+  dateLabel.textContent=issueSelect.value?issueSelect.value.slice(5):"-- --";
+ };
+ const renderDateButtons=()=>{
+  const nodes=document.createDocumentFragment();
+  for(const date of availableDates){
+   const button=document.createElement("button");
+   button.type="button";button.dataset.date=date;button.textContent=date.slice(5);
+   button.title=date;
+   button.setAttribute("aria-label",t(`查看 ${date} 的简报`,`Read the issue for ${date}`));
+   button.addEventListener("click",()=>{
+    issueSelect.value=date;updateDateButtons();void load(date);
+   });
+   nodes.append(button);
+  }
+  dateOptions.replaceChildren(nodes);updateDateButtons();
  };
  const updateRangeButtons=()=>quickDates.querySelectorAll<HTMLButtonElement>("button[data-days]").forEach(button=>button.setAttribute("aria-pressed",String(Number(button.dataset.days)===selectedRange)));
  const updateEditionButtons=()=>editionControls.querySelectorAll<HTMLButtonElement>("button[data-edition]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.edition===selectedEdition)));
@@ -241,7 +276,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
    if(data.date!==date||!Array.isArray(data.items))throw Error("日报数据结构不符合预期");
    const fields=["category","source","published","url","title_zh","summary_zh","why_zh","details_zh","original_title"] as const;
    if(data.items.some(item=>!item||typeof item!=="object"||fields.some(key=>item[key]!==undefined&&typeof item[key]!=="string")))throw Error("日报条目结构不符合预期");
-   current=data.items;loaded=true;category="全部";selectedRange=0;selectedEdition="all";viewLabel=date;updateRangeButtons();updateEditionButtons();
+   current=data.items;loaded=true;category="全部";selectedRange=0;selectedEdition="all";viewLabel=date;updateRangeButtons();updateEditionButtons();updateDateButtons();
    headline.textContent=date;
    total.textContent=String(current.length);
    if(expandedTotal)expandedTotal.textContent=total.textContent;
@@ -342,6 +377,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
     const option=txt("option",date.slice(5)) as HTMLOptionElement;
     option.value=date;option.title=date;issueSelect.append(option);
    }
+   renderDateButtons();
    if(viewingLatest){
     issueSelect.value=dates[0];
     if(initial&&dates.length>1&&recentDays(todayBeijing(),3)(dates[0]))await loadRange(3);
@@ -349,6 +385,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
     if(!loaded)manifestStamp=""; // Retry if manifest arrived before the article could load.
    }else{
     if(dates.includes(priorSelection))issueSelect.value=priorSelection;
+    updateDateButtons();
     if(selectedRange>0)await loadRange(selectedRange);
    }
   }catch(error){
@@ -357,14 +394,15 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
    statusNode.textContent=t("归档暂时无法加载，请刷新重试。","Archive unavailable. Refresh to retry.");
   }
  };
- issueSelect.addEventListener("change",()=>void load(issueSelect.value));
+ issueSelect.addEventListener("change",()=>{updateDateButtons();void load(issueSelect.value)});
  const checkForUpdates=()=>{if(!document.hidden)void refreshManifest();};
  window.addEventListener("focus",checkForUpdates);
  document.addEventListener("visibilitychange",checkForUpdates);
  window.setInterval(checkForUpdates,10*60*1000);
  const refreshLanguage=()=>{
   tabs.setAttribute("aria-label",t("内容分类","Story categories"));
-  issueSelect.setAttribute("aria-label",t("选择历史日期","Choose an issue date"));
+  issueSelect.setAttribute("aria-label",t("当前归档日期（内部同步）","Current issue date (internal sync)"));
+  renderDateButtons();
   if(loaded){
    headline.textContent=viewTitle();
    renderTabs();render();
