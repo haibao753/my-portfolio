@@ -8,11 +8,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
    <div class="brief-filter" id="brief-filter" data-expanded="false" aria-label="简报筛选">
     <span id="headlineDate" class="brief-visually-hidden" aria-live="off"></span>
     <div class="brief-filter-bar">
-     <label class="compact-date">
-      <span class="brief-visually-hidden"><span data-locale="zh">选择简报日期</span><span data-locale="en">Choose issue date</span></span>
-      <select id="issues" aria-label="选择历史日期"></select>
+     <button type="button" id="filter-date" class="compact-date" aria-controls="filter-details" aria-expanded="false" aria-label="打开日期与筛选选项">
+      <span id="filter-date-value" aria-hidden="true">-- --</span>
       <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
-     </label>
+     </button>
      <button type="button" id="compact-category" class="compact-chip is-current" aria-controls="filter-details" aria-label="展开分类筛选">全部</button>
      <button type="button" id="compact-range" class="compact-chip" aria-controls="filter-details" aria-label="展开时间范围筛选">当天</button>
      <button type="button" id="compact-edition" class="compact-chip" aria-controls="filter-details" aria-label="展开刊期筛选">全部刊期</button>
@@ -25,6 +24,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
      <div class="filter-panel-head">
       <span class="filter-panel-caption"><span data-locale="zh">筛选资讯</span><span data-locale="en">Refine reading</span></span>
       <span class="filter-expanded-meta" aria-live="polite" aria-atomic="true"><span id="expanded-total">—</span><span data-locale="zh"> 条精选</span><span data-locale="en"> selected</span></span>
+     </div>
+     <div class="filter-group filter-date-group">
+      <span class="filter-group-label"><span data-locale="zh">选择日期</span><span data-locale="en">Issue date</span></span>
+      <div class="filter-date-options" id="date-options" role="group" aria-label="归档日期"></div>
+      <select id="issues" hidden tabindex="-1" aria-hidden="true" aria-label="当前归档日期"></select>
      </div>
      <div class="filter-group">
       <span class="filter-group-label"><span data-locale="zh">内容分类</span><span data-locale="en">Topics</span></span>
@@ -50,6 +54,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
    </div>
   </div>
  </section>
+ <div class="brief-filter-scrim" id="brief-filter-scrim" aria-hidden="true"></div>
  <section class="news wrap" id="issues-section" aria-labelledby="brief-heading">
   <div class="explore-bar" id="spatial-experiment" hidden><button id="spatial-open" type="button" aria-haspopup="dialog">◈ <span data-locale="zh">探索空间</span><span data-locale="en">Explore in 3D</span> ↗</button></div>
   <p class="status" id="status" role="status" aria-live="polite"><span data-locale="zh">正在载入每日简报…</span><span data-locale="en">Loading Daily Brief…</span></p>
@@ -313,6 +318,82 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  }
  @media(prefers-reduced-motion:reduce){
   .brief-filter,.brief-filter-details,.brief-filter-toggle svg,.brief-filter .filter-group,.brief-filter :global(.filter-chip){transition:none!important;animation:none!important}
+ }
+
+
+ /* The popover is a legible surface first, an optical surface second.
+    Do not reuse the translucent nav fill here: dense type behind the panel
+    remained readable through its previous 3px blur. */
+ .brief-filter-details{
+  background:rgba(250,250,249,.965);
+  -webkit-backdrop-filter:blur(30px) saturate(135%);
+  backdrop-filter:blur(30px) saturate(135%);
+  border-color:rgba(255,255,255,.83);
+  box-shadow:0 28px 72px rgba(18,24,36,.19),0 4px 16px rgba(18,24,36,.07),
+   inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px rgba(135,160,187,.14);
+  isolation:isolate;z-index:50
+ }
+ .brief-filter-details::before{
+  z-index:0;
+  background:linear-gradient(145deg,rgba(255,255,255,.24),transparent 45%),
+    radial-gradient(ellipse 100% 30% at 35% 0,rgba(255,255,255,.32),transparent 80%)
+ }
+ .brief-filter-details::after{z-index:0;border-color:rgba(255,255,255,.62)}
+ .brief-filter-details > *{position:relative;z-index:1}
+ .brief-filter-scrim{
+  position:fixed;inset:0;z-index:20;pointer-events:none;opacity:0;visibility:hidden;
+  background:rgba(20,24,32,.14);
+  transition:opacity .24s ease,visibility 0s linear .24s
+ }
+ .brief-filter-scrim.is-open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .24s ease,visibility 0s}
+ .brief-filter .compact-date{
+  appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  flex:0 0 auto;min-height:36px;padding:7px 10px 7px 13px;
+  border:0;border-radius:999px;background:transparent;color:var(--fg);
+  font-size:13px;font-weight:690;font-variant-numeric:tabular-nums;white-space:nowrap;
+ }
+ .brief-filter .compact-date svg{position:static;transform:none;flex:0 0 12px;width:12px;height:12px}
+ .brief-filter .compact-date[aria-expanded="true"] svg{transform:rotate(180deg)}
+ .brief-filter #issues{display:none!important}
+ .brief-filter .filter-date-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;max-height:150px;overflow-y:auto;overscroll-behavior:contain;padding:2px}
+ .brief-filter .filter-date-options button{
+  min-width:0;min-height:40px;padding:8px 4px;
+  border:1px solid rgba(35,44,59,.10);border-radius:13px;
+  background:rgba(255,255,255,.65);color:var(--fg);
+  font-size:13px;font-weight:630;font-variant-numeric:tabular-nums;
+  transition:background .16s ease,border-color .16s ease,transform .16s ease
+ }
+ .brief-filter .filter-date-options button[aria-pressed="true"]{
+  background:var(--fg);color:var(--bg);border-color:var(--fg);box-shadow:0 2px 8px rgba(25,30,42,.14)
+ }
+ .brief-filter .filter-group{border-top-color:rgba(35,44,59,.10)}
+ .brief-filter :global(.filter-chip),.brief-filter .quick-dates button,.brief-filter .edition-controls button{
+  background:rgba(255,255,255,.66);border-color:rgba(35,44,59,.13)
+ }
+ :root[data-theme="dark"] .brief-filter-details{
+  background:rgba(30,32,38,.975);
+  border-color:rgba(229,235,245,.20);
+  box-shadow:0 28px 72px rgba(0,0,0,.55),inset 0 1px rgba(255,255,255,.14)
+ }
+ :root[data-theme="dark"] .brief-filter-details::before{
+  background:linear-gradient(125deg,rgba(255,255,255,.035),transparent 58%)
+ }
+ :root[data-theme="dark"] .brief-filter-details::after{border-color:rgba(255,255,255,.09)}
+ :root[data-theme="dark"] .brief-filter .filter-date-options button,
+ :root[data-theme="dark"] .brief-filter :global(.filter-chip),
+ :root[data-theme="dark"] .brief-filter .quick-dates button,
+ :root[data-theme="dark"] .brief-filter .edition-controls button{
+  background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.12)
+ }
+ :root[data-theme="dark"] .brief-filter .filter-date-options button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+ @media(max-width:760px){
+  .brief-filter .compact-date{min-height:37px;padding:8px 7px 8px 12px;font-size:12px;gap:7px}
+  .brief-filter .compact-date svg{flex-basis:11px;width:11px;height:11px}
+  .brief-filter-details{max-height:min(70dvh,580px);padding:16px 17px 19px}
+ }
+ @media(max-width:355px){.brief-filter .compact-date{padding-inline:8px 5px}}
+ @media(prefers-reduced-motion:reduce){
+  .brief-filter-scrim,.brief-filter .filter-date-options button{transition:none!important}
  }
 
 </style>
