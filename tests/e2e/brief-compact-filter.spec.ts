@@ -100,3 +100,25 @@ test("compact filter at 360px has visible toggle and stays within viewport",asyn
  await expect(page.locator("#stories .news-card")).toHaveCount(2);
  await expect(page.locator("#total")).toHaveText("2");
 });
+
+test("responsive compact state avoids overflow and preserves time-range cue",async({page})=>{
+ await fakeArchive(page);
+ for(const width of [360,390]){
+  await page.setViewportSize({width,height:844});
+  await page.goto("/brief/");
+  await expect(page.locator("#brief-filter")).toHaveAttribute("data-expanded","false");
+  await expect(page.locator("#compact-edition")).toBeHidden();
+  if(width===360)await expect(page.locator("#compact-range")).toBeHidden();
+  else await expect(page.locator("#compact-range")).toBeVisible();
+  const boxes=await page.evaluate(()=>{
+   const title=document.querySelector("#brief-heading")!.getBoundingClientRect();
+   const dock=document.querySelector("#brief-filter")!.getBoundingClientRect();
+   const right=document.querySelector("#filter-toggle")!.getBoundingClientRect();
+   return {headingRight:title.right,dockLeft:dock.left,toggleRight:right.right,viewport:document.documentElement.clientWidth,
+    documentWidth:document.documentElement.scrollWidth};
+  });
+  expect(boxes.headingRight).toBeLessThan(boxes.dockLeft+2);
+  expect(boxes.toggleRight).toBeLessThanOrEqual(boxes.viewport);
+  expect(boxes.documentWidth).toBeLessThanOrEqual(boxes.viewport+2);
+ }
+});
