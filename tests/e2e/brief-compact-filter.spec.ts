@@ -293,6 +293,11 @@ test("search works with IME, Escape-to-clear and language switching",async({page
  await expect(page.locator("#stories .news-card")).toHaveCount(4);
  await page.locator("[data-language-toggle]").click();
  await expect(search).toHaveAttribute("placeholder",/Title/);
+ // Tapping the navigation outside the panel dismisses it; reopen deliberately.
+ if(await page.locator("#filter-toggle").getAttribute("aria-expanded")==="false")
+  await page.locator("#filter-toggle").click();
+ await expect(page.locator("#filter-details")).toBeVisible();
  await search.fill("PsyPost");
+ await expect(search).toHaveValue("PsyPost");
  await expect(page.locator("#stories .news-card")).toHaveCount(1);
 });
