@@ -385,7 +385,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  :root[data-theme="dark"] .brief-filter .edition-controls button{
   background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.12)
  }
- :root[data-theme="dark"] .brief-filter .filter-date-options button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+ :root[data-theme="dark"] .brief-filter .filter-date-options button[aria-pressed="true"],
+ :root[data-theme="dark"] .brief-filter :global(.filter-chip[aria-pressed="true"]),
+ :root[data-theme="dark"] .brief-filter .quick-dates button[aria-pressed="true"],
+ :root[data-theme="dark"] .brief-filter .edition-controls button[aria-pressed="true"]{
+  background:var(--fg);color:var(--bg);border-color:var(--fg)
+ }
  @media(max-width:760px){
   .brief-filter .compact-date{min-height:37px;padding:8px 7px 8px 12px;font-size:12px;gap:7px}
   .brief-filter .compact-date svg{flex-basis:11px;width:11px;height:11px}
