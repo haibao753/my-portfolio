@@ -279,7 +279,9 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  searchInput.addEventListener("input",updateSearch);
  searchInput.addEventListener("keydown",event=>{
   if(event.key==="Escape"&&searchInput.value){
-   event.stopPropagation();searchInput.value="";updateSearch();
+   // Prevent the native search-input Escape clear from racing a fresh query.
+   event.preventDefault();event.stopPropagation();
+   searchInput.value="";updateSearch();
   }
  });
  searchClear.addEventListener("click",()=>{
