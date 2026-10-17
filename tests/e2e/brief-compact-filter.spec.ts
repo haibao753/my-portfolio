@@ -60,11 +60,14 @@ test("expansion reveals working category, date range and edition, with live resu
  await expect(page.locator("#stories .news-card")).toHaveCount(4);
  await page.locator("#filter-toggle").click();
  await expect(page.locator("#filter-details")).toBeVisible();
+ await expect(page.locator(".filter-expanded-meta")).toBeVisible();
+ await expect(page.locator("#expanded-total")).toHaveText("4");
  await expect(page.locator("#filter-toggle")).toHaveAttribute("aria-expanded","true");
  await expect(page.locator("#filter-details")).not.toHaveAttribute("inert");
  await page.locator('[data-edition="evening"]').click();
  await expect(page.locator("#stories .news-card")).toHaveCount(1);
  await expect(page.locator("#total")).toHaveText("1");
+ await expect(page.locator("#expanded-total")).toHaveText("1");
  await expect(page.locator("#stories")).toContainText("晚间开源研究");
  await page.locator('[data-edition="all"]').click();
  await page.locator("#tabs button").filter({hasText:"数学"}).click();
@@ -72,7 +75,7 @@ test("expansion reveals working category, date range and edition, with live resu
  await expect(page.locator("#total")).toHaveText("1");
  await page.locator("#filter-toggle").click();
  await expect(page.locator("#filter-details")).not.toBeVisible();
- await page.locator("#compact-category").click();
+ await page.locator("#filter-toggle").click();
  await expect(page.locator("#filter-details")).toBeVisible();
  await page.keyboard.press("Escape");
  await expect(page.locator("#filter-toggle")).toHaveAttribute("aria-expanded","false");
@@ -108,8 +111,10 @@ test("responsive compact state avoids overflow and preserves time-range cue",asy
   await page.goto("/brief/");
   await expect(page.locator("#brief-filter")).toHaveAttribute("data-expanded","false");
   await expect(page.locator("#compact-edition")).toBeHidden();
-  if(width===360)await expect(page.locator("#compact-range")).toBeHidden();
-  else await expect(page.locator("#compact-range")).toBeVisible();
+  await expect(page.locator("#compact-range")).toBeHidden();
+  await expect(page.locator("#compact-category")).toBeHidden();
+  await expect(page.locator(".brief-count")).toBeHidden();
+  await expect(page.locator("#issues")).toBeVisible();
   const boxes=await page.evaluate(()=>{
    const title=document.querySelector("#brief-heading")!.getBoundingClientRect();
    const dock=document.querySelector("#brief-filter")!.getBoundingClientRect();
