@@ -33,7 +33,9 @@ const filterDetails=document.querySelector<HTMLElement>("#filter-details");
 const categoryCompact=document.querySelector<HTMLButtonElement>("#compact-category");
 const rangeCompact=document.querySelector<HTMLButtonElement>("#compact-range");
 const editionCompact=document.querySelector<HTMLButtonElement>("#compact-edition");
-if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline&&total&&filterDock&&filterToggle&&filterDetails&&categoryCompact&&rangeCompact&&editionCompact&&dateButton&&dateLabel&&dateOptions&&filterScrim){
+const searchInput=document.querySelector<HTMLInputElement>("#brief-search");
+const searchClear=document.querySelector<HTMLButtonElement>("#brief-search-clear");
+if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline&&total&&filterDock&&filterToggle&&filterDetails&&categoryCompact&&rangeCompact&&editionCompact&&dateButton&&dateLabel&&dateOptions&&filterScrim&&searchInput&&searchClear){
  let current:(BriefItem & {issue_date?:string})[]=[];
  let viewLabel="";
  let availableDates:string[]=[];
@@ -41,6 +43,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  let loaded=false;
  let category="全部";
  let selectedEdition="all";
+ let query="";
  let request=0;
  const root=document.documentElement;
  const t=(zh:string,en:string)=>root.lang==="en"?en:zh;
@@ -174,15 +177,24 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   panel.append(txt("p",d.review_status||t("AI 根据部分论文文本归纳，尚未经独立核验。","AI reading of partial PDF text; not independently verified."),"news-disclosure-note"));
   return panel;
  };
+ const normalizeSearch=(value:string)=>value.normalize("NFKC").toLocaleLowerCase().replace(/\s+/g," ").trim();
+ const matchesQuery=(item:BriefItem)=>{
+  if(!query)return true;
+  const fields=[item.title_zh,item.original_title,item.summary_zh,item.why_zh,item.details_zh,item.source,item.category,
+   ...Object.values(item.research?.sections||{}).map(section=>section?.text)];
+  return normalizeSearch(fields.filter((v):v is string=>typeof v==="string").join(" ")).includes(query);
+ };
  const render=()=>{
-  const selection=current.filter(x=>(category==="全部"||(x.category||"其他")===category) && (selectedEdition==="all"||x.edition===selectedEdition));
+  const selection=current.filter(x=>(category==="全部"||(x.category||"其他")===category) && (selectedEdition==="all"||x.edition===selectedEdition) && matchesQuery(x));
   statusNode.textContent=t(`显示 ${selection.length} 条`,`Showing ${selection.length} stories`);
   statusNode.classList.add("is-summary");
   total.textContent=String(selection.length);
   if(expandedTotal)expandedTotal.textContent=total.textContent;
   updateCompact();
   const fragment=document.createDocumentFragment();
-  if(!selection.length)fragment.append(txt("div",t("暂无对应资讯。请切换分类或日期。","No stories here. Choose another category or date."),"news-empty"));
+  if(!selection.length)fragment.append(txt("div",query?
+    t("没有找到匹配的资讯。试试其他关键词或调整日期范围。","No matches. Try another keyword or date range."):
+    t("当前日期范围暂无该话题的资讯，可试试近一周或其他分类。","No stories for this topic in the selected dates. Try last week or another topic."),"news-empty"));
   for(const item of selection){
    const card=txt("article","","news-card");
    if(item.focus)card.classList.add("is-focus");
@@ -243,7 +255,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   stories.replaceChildren(fragment);
  };
  const renderTabs=()=>{
-  const names=["全部",...new Set(current.map(x=>x.category||"其他"))];
+  const names=["全部",...new Set([...current.map(x=>x.category||"其他"),"亲密关系","设计学"])];
   const fragment=document.createDocumentFragment();
   for(const name of names){
    const button=txt("button",name==="全部"?t("全部","All"):name,"filter-chip") as HTMLButtonElement;
@@ -258,6 +270,22 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   }
   tabs.replaceChildren(fragment);
  };
+
+ const updateSearch=()=>{
+  query=normalizeSearch(searchInput.value).slice(0,120);
+  searchClear.hidden=!searchInput.value;
+  if(loaded)render();
+ };
+ searchInput.addEventListener("input",updateSearch);
+ searchInput.addEventListener("keydown",event=>{
+  if(event.key==="Escape"&&searchInput.value){
+   event.stopPropagation();searchInput.value="";updateSearch();
+  }
+ });
+ searchClear.addEventListener("click",()=>{
+  searchInput.value="";updateSearch();
+  searchInput.focus({preventScroll:true});
+ });
  let controller:AbortController|undefined;
  const load=async(date:string)=>{
   const currentRequest=++request;
@@ -402,6 +430,9 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  window.setInterval(checkForUpdates,10*60*1000);
  const refreshLanguage=()=>{
   tabs.setAttribute("aria-label",t("内容分类","Story categories"));
+  searchInput.placeholder=t("标题、摘要、来源、关键词…","Title, summary, source, keyword…");
+  searchInput.setAttribute("aria-label",t("搜索已加载简报的标题、摘要、来源及解读","Search titles, summaries, sources and analysis in loaded issues"));
+  searchClear.setAttribute("aria-label",t("清空搜索","Clear search"));
   issueSelect.setAttribute("aria-label",t("当前归档日期（内部同步）","Current issue date (internal sync)"));
   renderDateButtons();
   if(loaded){
