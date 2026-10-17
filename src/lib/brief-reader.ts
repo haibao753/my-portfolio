@@ -6,7 +6,7 @@ interface BriefItem {
  details_zh?: string;original_title?: string;
 }
 interface BriefIssue {date?:string;items?:BriefItem[]}
-interface BriefIndex {dates?:string[]}
+interface BriefIndex {dates?:string[];updated_at?:string}
 const stories=document.querySelector<HTMLElement>("#stories");
 const tabs=document.querySelector<HTMLElement>("#tabs");
 const issueSelect=document.querySelector<HTMLSelectElement>("#issues");
@@ -214,30 +214,48 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   quickDates.querySelectorAll<HTMLButtonElement>("button[data-days]").forEach(button=>{
   button.addEventListener("click",()=>void loadRange(Number(button.dataset.days)));
  });
- const initialize=async()=>{
+ let manifestStamp="";
+ const refreshManifest=async(initial=false)=>{
   try{
    const response=await fetch("/brief/data/index.json",{cache:"no-cache"});
    if(!response.ok)throw Error(`HTTP ${response.status}`);
    const index=await response.json() as BriefIndex;
    if(!Array.isArray(index.dates))throw Error("归档索引结构不符合预期");
    const dates=[...new Set(index.dates.filter(date=>typeof date==="string"&&isDate(date)))].sort().reverse();
+   const stamp=(index.updated_at||"")+"|"+dates.join(",");
+   if(!initial&&stamp===manifestStamp)return;
+   const previousNewest=availableDates[0];
+   const priorSelection=issueSelect.value;
+   const viewingLatest=initial||(selectedRange===0&&priorSelection===previousNewest);
+   manifestStamp=stamp;
+   availableDates=dates;
    issueSelect.replaceChildren();
    if(!dates.length){
     stories.replaceChildren(txt("div",t("观察站已经就绪，等待首期日报发布。","Ready for the first Daily Brief."),"news-empty"));
     statusNode.textContent=t("尚无归档数据","No archived issues yet");return;
    }
-   availableDates=dates;
    for(const date of dates){
     const option=txt("option",date) as HTMLOptionElement;
     option.value=date;issueSelect.append(option);
    }
-   issueSelect.addEventListener("change",()=>void load(issueSelect.value));
-   await load(dates[0]);
+   if(viewingLatest){
+    issueSelect.value=dates[0];
+    await load(dates[0]);
+   }else{
+    if(dates.includes(priorSelection))issueSelect.value=priorSelection;
+    if(selectedRange>0)await loadRange(selectedRange);
+   }
   }catch(error){
+   if(!initial)return;
    stories.replaceChildren(txt("div",t("暂时无法获取资讯，请稍后重试。","Stories are unavailable. Please try again shortly."),"news-empty"));
    statusNode.textContent=t("归档暂时无法加载，请刷新重试。","Archive unavailable. Refresh to retry.");
   }
  };
+ issueSelect.addEventListener("change",()=>void load(issueSelect.value));
+ const checkForUpdates=()=>{if(!document.hidden)void refreshManifest();};
+ window.addEventListener("focus",checkForUpdates);
+ document.addEventListener("visibilitychange",checkForUpdates);
+ window.setInterval(checkForUpdates,10*60*1000);
  const refreshLanguage=()=>{
   tabs.setAttribute("aria-label",t("内容分类","Story categories"));
   issueSelect.setAttribute("aria-label",t("选择历史日期","Choose an issue date"));
@@ -249,7 +267,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  };
  new MutationObserver(refreshLanguage).observe(root,{attributes:true,attributeFilter:["lang"]});
  refreshLanguage();
- void initialize();
+ void refreshManifest(true);
 }
 
 export {};
