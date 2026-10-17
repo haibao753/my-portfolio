@@ -4,35 +4,50 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 <BaseLayout title="全球资讯观察站 — J.H. LAB" description="每天以中文整理全球议题、人工智能与前沿科学资讯，保留可信的原始来源。">
  <section class="brief-hero wrap" id="top" aria-labelledby="brief-heading">
   <div class="brief-masthead">
-   <div><p class="eyebrow"><span data-locale="zh">J.H. LAB / 每日发现</span><span data-locale="en">J.H. LAB / DAILY DISCOVERIES</span></p>
-    <h1 id="brief-heading"><span data-locale="zh">今日值得读</span><span data-locale="en">Worth Reading Today</span></h1>
-   </div>
-   <div class="issue-summary" aria-label="当前简报">
-    <strong id="headlineDate">—</strong><small id="total" aria-live="polite">—</small>
+   <h1 id="brief-heading"><span data-locale="zh">今日值得读</span><span data-locale="en">Worth Reading Today</span></h1>
+   <div class="brief-filter" id="brief-filter" data-expanded="false" aria-label="简报筛选">
+    <span id="headlineDate" class="brief-visually-hidden" aria-live="off"></span>
+    <div class="brief-filter-bar">
+     <label class="compact-date">
+      <span class="brief-visually-hidden"><span data-locale="zh">选择简报日期</span><span data-locale="en">Choose issue date</span></span>
+      <select id="issues" aria-label="选择历史日期"></select>
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
+     </label>
+     <button type="button" id="compact-category" class="compact-chip is-current" aria-controls="filter-details" aria-label="展开分类筛选">全部</button>
+     <button type="button" id="compact-range" class="compact-chip" aria-controls="filter-details" aria-label="展开时间范围筛选">当天</button>
+     <button type="button" id="compact-edition" class="compact-chip" aria-controls="filter-details" aria-label="展开刊期筛选">全部刊期</button>
+     <span class="brief-count" aria-live="polite" aria-atomic="true"><span id="total">—</span><span class="brief-count-suffix" data-locale="zh"> 条精选</span><span class="brief-count-suffix" data-locale="en"> selected</span></span>
+     <button type="button" class="brief-filter-toggle" id="filter-toggle" aria-expanded="false" aria-controls="filter-details" aria-label="展开筛选栏">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
+     </button>
+    </div>
+    <div class="brief-filter-details" id="filter-details" inert aria-hidden="true">
+     <div class="filter-detail-row">
+      <span class="filter-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11V5a2 2 0 0 1 2-2h6l10 10a2 2 0 0 1 0 3l-5 5a2 2 0 0 1-3 0L3 11Z"/><circle cx="7.5" cy="7.5" r="1"/></svg></span>
+      <div class="filters" id="tabs" role="group" aria-label="内容分类"></div>
+     </div>
+     <div class="filter-detail-row">
+      <span class="filter-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+      <div class="quick-dates" id="quick-dates" role="group" aria-label="快捷日期范围">
+       <button type="button" data-days="0" aria-pressed="true"><span data-locale="zh">当天</span><span data-locale="en">This day</span></button>
+       <button type="button" data-days="3" aria-pressed="false"><span data-locale="zh">近三天</span><span data-locale="en">Last 3 days</span></button>
+       <button type="button" data-days="7" aria-pressed="false"><span data-locale="zh">近一周</span><span data-locale="en">Last 7 days</span></button>
+      </div>
+     </div>
+     <div class="filter-detail-row">
+      <span class="filter-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <div class="edition-controls" id="edition-controls" role="group" aria-label="早报晚报">
+       <button type="button" data-edition="all" aria-pressed="true"><span data-locale="zh">全部刊期</span><span data-locale="en">Both</span></button>
+       <button type="button" data-edition="morning" aria-pressed="false"><span data-locale="zh">早报</span><span data-locale="en">AM</span></button>
+       <button type="button" data-edition="evening" aria-pressed="false"><span data-locale="zh">晚报</span><span data-locale="en">PM</span></button>
+      </div>
+     </div>
+    </div>
    </div>
   </div>
  </section>
- <section class="news wrap" id="issues-section" aria-labelledby="archive-heading">
-  <div class="news-heading">
-   <div><h2 id="archive-heading"><span data-locale="zh">全球精选</span><span data-locale="en">Global Highlights</span></h2></div>
-   <p><span data-locale="zh">从事实出发，寻找理解事件的线索。按主题筛选，或者回看之前的期数。</span><span data-locale="en">Explore each day's selected stories by topic or date.</span></p>
-  </div>
+ <section class="news wrap" id="issues-section" aria-labelledby="brief-heading">
   <div class="explore-bar" id="spatial-experiment" hidden><button id="spatial-open" type="button" aria-haspopup="dialog">◈ <span data-locale="zh">探索空间</span><span data-locale="en">Explore in 3D</span> ↗</button></div>
-  <div class="toolbar">
-   <div class="filters" id="tabs" role="group" aria-label="内容分类"></div>
-   <div class="date-controls" aria-label="日期范围筛选">
-    <div class="quick-dates" id="quick-dates" role="group" aria-label="快捷日期范围">
-     <button type="button" data-days="3" aria-pressed="false"><span data-locale="zh">近三天</span><span data-locale="en">Last 3 days</span></button>
-     <button type="button" data-days="7" aria-pressed="false"><span data-locale="zh">近一周</span><span data-locale="en">Last 7 days</span></button>
-    </div>
-    <div class="edition-controls" id="edition-controls" role="group" aria-label="早报晚报">
-     <button type="button" data-edition="all" aria-pressed="true"><span data-locale="zh">全部刊期</span><span data-locale="en">Both</span></button>
-     <button type="button" data-edition="morning" aria-pressed="false"><span data-locale="zh">早报</span><span data-locale="en">AM</span></button>
-     <button type="button" data-edition="evening" aria-pressed="false"><span data-locale="zh">晚报</span><span data-locale="en">PM</span></button>
-    </div>
-    <label class="date-picker"><span data-locale="zh">日期 / 期数</span><span data-locale="en">ISSUE DATE</span><select id="issues" aria-label="选择历史日期"></select></label>
-   </div>
-  </div>
   <p class="status" id="status" role="status" aria-live="polite"><span data-locale="zh">正在载入每日简报…</span><span data-locale="en">Loading Daily Brief…</span></p>
   <div id="stories" class="stories" aria-live="off"></div>
   <dialog id="spatial-dialog" aria-labelledby="spatial-heading" aria-describedby="spatial-state"><div class="spatial-shell"><header><h2 id="spatial-heading"><span data-locale="zh">知识空间</span><span data-locale="en">Knowledge Space</span></h2><button id="spatial-close" type="button" aria-label="关闭探索空间">×</button></header><p id="spatial-state" role="status">选择一个节点展开阅读</p><div class="spatial-viewport" aria-label="可拖动的三维知识网络"></div><div id="spatial-scene" class="spatial-scene" aria-label="所选新闻详情"></div><footer><button type="button" data-rotate="-24" aria-label="向左旋转">←</button><span>拖动背景旋转 · 点击节点阅读</span><button type="button" data-rotate="24" aria-label="向右旋转">→</button></footer></div></dialog>
@@ -190,4 +205,71 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 .spatial-scene strong{font-size:clamp(14px,2vw,19px);line-height:1.35}
 .spatial-shell footer{flex-shrink:0;margin-top:8px}
 @media(max-width:760px){.spatial-shell{max-height:88dvh}.spatial-viewport{height:clamp(210px,37dvh,390px);min-height:0}.spatial-scene{position:relative;inset:auto;width:100%;max-height:20dvh;margin-top:7px;padding:10px 12px}.spatial-scene strong{font-size:15px}.spatial-shell footer{margin-top:6px}}
+ 
+ /* Editorial control dock — collapsed is precisely one masthead line. */
+ .brief-hero.wrap,.news.wrap{width:min(1560px,calc(100% - 48px));max-width:none}
+ .brief-hero{border:0!important;padding:12px 0 15px!important}
+ .brief-masthead{display:flex;align-items:flex-start;gap:clamp(12px,2.5vw,36px);justify-content:space-between}
+ .brief-hero h1{flex-shrink:0;font-size:clamp(27px,3.1vw,43px);line-height:1.14;letter-spacing:-.062em;margin:0;padding-top:4px;white-space:nowrap}
+ .brief-visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+ .brief-filter{min-width:0;max-width:100%;width:max-content;flex:0 1 auto;padding:4px 5px;border:1px solid var(--stroke);border-radius:23px;background:color-mix(in srgb,var(--card) 88%,transparent);box-shadow:0 6px 23px #0000000a, inset 0 1px 0 #ffffff80;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:box-shadow .26s ease,border-radius .26s ease}
+ .brief-filter[data-expanded="true"]{width:min(670px,100%);box-shadow:0 15px 40px #00000012,inset 0 1px 0 #ffffff80}
+ .brief-filter-bar{display:flex;align-items:center;justify-content:flex-end;gap:5px;min-width:0;white-space:nowrap}
+ .brief-filter button,.brief-filter select{font-family:inherit;cursor:pointer;touch-action:manipulation}
+ .brief-filter button:focus-visible,.brief-filter select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+ .compact-date{position:relative;min-width:0;flex-shrink:0;display:flex;align-items:center}
+ .compact-date select{appearance:none;-webkit-appearance:none;min-height:36px;max-width:104px;border-radius:100px;border:1px solid var(--stroke);background:var(--card);color:var(--fg);padding:5px 28px 5px 12px;font-size:12px;font-weight:650}
+ .compact-date svg{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.8;pointer-events:none;color:var(--muted)}
+ .compact-chip{font-size:12px;font-weight:650;min-height:36px;padding:5px 11px;line-height:1;border:1px solid var(--stroke);border-radius:999px;background:var(--card);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .compact-chip.is-current{background:var(--fg);border-color:var(--fg);color:var(--bg);max-width:130px}
+ .brief-count{display:inline-flex;align-items:center;flex-shrink:0;padding:0 7px;color:var(--muted);font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums}
+ .brief-filter-toggle{width:36px;height:36px;flex-shrink:0;display:grid;place-items:center;border:1px solid var(--stroke);background:var(--card);color:var(--fg);border-radius:999px}
+ .brief-filter-toggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .28s ease}
+ .brief-filter[data-expanded="true"] .brief-filter-toggle svg{transform:rotate(180deg)}
+ .brief-filter-details{max-height:0;overflow:hidden;opacity:0;visibility:hidden;pointer-events:none;transition:max-height .3s cubic-bezier(.21,.84,.26,1),opacity .18s ease,visibility 0s linear .3s}
+ .brief-filter[data-expanded="true"] .brief-filter-details{max-height:460px;opacity:1;visibility:visible;pointer-events:auto;transition:max-height .38s cubic-bezier(.21,.84,.26,1),opacity .26s ease}
+ .filter-detail-row{display:flex;align-items:flex-start;gap:13px;margin:0 12px;padding:13px 0;border-top:1px solid var(--stroke)}
+ .filter-detail-row:first-child{margin-top:10px}
+ .filter-detail-icon{width:21px;height:21px;flex:0 0 21px;display:grid;place-items:center;margin-top:8px;color:var(--muted)}
+ .filter-detail-icon svg{width:19px;height:19px;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;fill:none}
+ .brief-filter .filters{flex-wrap:wrap;width:auto;max-height:none;overflow:visible;gap:7px}
+ .brief-filter :global(.filter-chip),.brief-filter .quick-dates button,.brief-filter .edition-controls button{font-size:12px;line-height:1.2;min-height:35px;padding:7px 12px;white-space:nowrap;background:var(--card);border:1px solid var(--stroke);border-radius:999px;color:var(--muted);font-weight:650}
+ .brief-filter :global(.filter-chip[aria-pressed="true"]),.brief-filter .quick-dates button[aria-pressed="true"],.brief-filter .edition-controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+ .brief-filter .quick-dates,.brief-filter .edition-controls{display:flex;flex-wrap:wrap;gap:7px}
+ .status.is-summary{position:absolute;width:1px;height:1px;margin:0;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ .news{padding-top:2px!important}
+ @media(max-width:950px){.compact-edition,.compact-range{display:none}}
+ @media(max-width:760px){
+  .brief-hero.wrap,.news.wrap{width:calc(100% - 28px)}
+  .brief-hero{padding:10px 0 13px!important}
+  .brief-masthead{gap:7px;align-items:flex-start}
+  .brief-hero h1{font-size:clamp(21px,6.8vw,26px);padding-top:6px;line-height:1.1;letter-spacing:-.07em}
+  .brief-filter{border-radius:19px;padding:3px;flex:1 1 0;width:0}
+  .brief-filter[data-expanded="true"]{flex:1 1 0;width:0}
+  .brief-filter-bar{gap:3px}
+  .compact-date select{font-size:11px;max-width:76px;min-height:32px;padding:4px 18px 4px 6px}
+  .compact-date svg{right:5px;width:10px}
+  .compact-chip{font-size:11px;min-height:32px;padding:5px 8px;max-width:53px}
+  .brief-filter-toggle{height:32px;width:32px}
+  .brief-count{font-size:11px;padding:0 2px}
+  .brief-count-suffix{display:none}
+  .filter-detail-row{gap:8px;margin:0 7px;padding:10px 0}
+  .filter-detail-row:first-child{margin-top:9px}
+  .filter-detail-icon{width:17px;flex-basis:17px}
+  .filter-detail-icon svg{width:16px;height:16px}
+  .brief-filter .filters{gap:5px;flex-wrap:wrap;max-height:none;overflow:visible}
+  .brief-filter :global(.filter-chip),.brief-filter .quick-dates button,.brief-filter .edition-controls button{font-size:11px;min-height:33px;padding:6px 9px}
+  .brief-filter[data-expanded="true"]{position:relative}
+  .stories{margin-top:2px}
+ }
+ @media(max-width:380px){
+  .brief-hero h1{font-size:20px}
+  .brief-filter{padding:2px}
+  .compact-chip{padding-inline:6px;max-width:40px}
+  .compact-date select{max-width:70px;padding-left:5px}
+  .brief-count{padding-inline:1px}
+  .brief-filter-toggle{width:29px;height:31px}
+ }
+ @media(prefers-reduced-motion:reduce){.brief-filter,.brief-filter-details,.brief-filter-toggle svg{transition:none!important}}
+
 </style>
