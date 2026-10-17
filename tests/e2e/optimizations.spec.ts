@@ -56,11 +56,12 @@ test('a failed issue request clears stale cards and exposes a recoverable error'
  const dates = await page.locator('#issues option').evaluateAll(options => options.map(option => (option as HTMLOptionElement).value));
  expect(dates.length).toBeGreaterThan(1);
  await page.route(`**/brief/data/${dates[1]}.json`, route => route.fulfill({ status: 503, body: 'unavailable' }));
- await page.locator('#issues').selectOption(dates[1]);
+ await page.locator('#filter-date').click();
+ await page.locator(`#date-options [data-date="${dates[1]}"]`).click();
  await expect(page.locator('.news-card')).toHaveCount(0);
  await expect(page.locator('#status')).toContainText('加载失败');
  await expect(page.locator('#stories')).toHaveAttribute('aria-busy', 'false');
- await page.locator('#issues').selectOption(dates[0]);
+ await page.locator(`#date-options [data-date="${dates[0]}"]`).click();
  await expect(page.locator('.news-card').first()).toBeVisible();
 });
 
@@ -115,7 +116,7 @@ test('three-day and seven-day filters aggregate issues and preserve single-date 
  await expect(page.locator('.news-card')).toHaveCount(7);
  await page.locator('#tabs button').nth(1).click();
  await expect(page.locator('.news-card')).toHaveCount(4);
- await page.locator('#issues').selectOption(day(2));
+ await page.locator(`#date-options [data-date="${day(2)}"]`).click();
  await expect(page.locator('.news-card')).toHaveCount(1);
  await expect(page.locator('#quick-dates [data-days="7"]')).toHaveAttribute('aria-pressed','false');
 });
