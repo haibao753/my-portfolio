@@ -2,6 +2,8 @@ import {test,expect} from '@playwright/test';
 
 test('Daily Brief navigation morphs to logo orb and expands again',async({page})=>{
  await page.goto('/brief/');
+ // The brief articles load asynchronously; wait until the page can actually scroll.
+ await expect(page.locator('#stories .news-card').first()).toBeVisible();
  const header=page.locator('.glass-nav');
  await expect(header).toHaveAttribute('data-orb-ready','true');
  await expect(header.locator('.brand')).toBeVisible();
@@ -30,6 +32,8 @@ test('Daily Brief navigation morphs to logo orb and expands again',async({page})
 test('Daily Brief orb respects reduced motion',async({page})=>{
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.goto('/brief/');
+ // The brief articles load asynchronously; wait until the page can actually scroll.
+ await expect(page.locator('#stories .news-card').first()).toBeVisible();
  const header=page.locator('.glass-nav');
  await page.evaluate(()=>window.scrollTo(0,650));
  await expect.poll(async()=>header.getAttribute('data-orb-closed')).toBe('true');
@@ -41,6 +45,8 @@ test('Daily Brief desktop toolbar stays centered with actions at right edge',asy
  await page.goto('/');
  const homeControls=await page.locator('.glass-nav .controls').boundingBox();
  await page.goto('/brief/');
+ // The brief articles load asynchronously; wait until the page can actually scroll.
+ await expect(page.locator('#stories .news-card').first()).toBeVisible();
  const header=page.locator('.glass-nav');
  await expect(header).toHaveAttribute('data-orb-ready','true');
  const nav=await header.boundingBox();
@@ -68,6 +74,8 @@ test('Home and Daily Brief expanded logos share a common left alignment',async({
   const home=await page.locator('.glass-nav .brand span').boundingBox();
   expect(home).not.toBeNull();
   await page.goto('/brief/');
+ // The brief articles load asynchronously; wait until the page can actually scroll.
+ await expect(page.locator('#stories .news-card').first()).toBeVisible();
   const nav=page.locator('.glass-nav');
   await expect(nav).toHaveAttribute('data-orb-ready','true');
   const brief=await nav.locator('.brand span').boundingBox();
@@ -87,6 +95,8 @@ test('Brief-only admin regeneration link is reachable from menu without public A
   await page.goto('/');
   await expect(page.locator('[data-admin-brief-refresh]')).toHaveCount(0);
   await page.goto('/brief/');
+ // The brief articles load asynchronously; wait until the page can actually scroll.
+ await expect(page.locator('#stories .news-card').first()).toBeVisible();
   const button=page.locator('[data-menu-toggle]');
   await expect(button).toBeVisible();
   await button.click();
