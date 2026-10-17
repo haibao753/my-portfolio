@@ -1,5 +1,6 @@
 /* J.H. LAB / Daily Brief reader — shared page, unchanged public JSON schema. */
 interface BriefItem {
+ edition?: "morning"|"evening"; focus?: boolean;
  category?: string;source?: string;published?: string;url?: string;
  title_zh?: string;summary_zh?: string;why_zh?: string;
  details_zh?: string;original_title?: string;
@@ -11,15 +12,17 @@ const tabs=document.querySelector<HTMLElement>("#tabs");
 const issueSelect=document.querySelector<HTMLSelectElement>("#issues");
 const statusNode=document.querySelector<HTMLElement>("#status");
 const quickDates=document.querySelector<HTMLElement>("#quick-dates");
+const editionControls=document.querySelector<HTMLElement>("#edition-controls");
 const headline=document.querySelector<HTMLElement>("#headlineDate");
 const total=document.querySelector<HTMLElement>("#total");
-if(stories&&tabs&&issueSelect&&quickDates&&statusNode&&headline&&total){
+if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline&&total){
  let current:(BriefItem & {issue_date?:string})[]=[];
  let viewLabel="";
  let availableDates:string[]=[];
  let selectedRange=0;
  let loaded=false;
  let category="全部";
+ let selectedEdition="all";
  let request=0;
  const root=document.documentElement;
  const t=(zh:string,en:string)=>root.lang==="en"?en:zh;
@@ -31,6 +34,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&statusNode&&headline&&total){
   return (d:string)=>{const ms=Date.parse(d+"T00:00:00Z");return ms>=start&&ms<=end};
  };
  const updateRangeButtons=()=>quickDates.querySelectorAll<HTMLButtonElement>("button[data-days]").forEach(button=>button.setAttribute("aria-pressed",String(Number(button.dataset.days)===selectedRange)));
+ const updateEditionButtons=()=>editionControls.querySelectorAll<HTMLButtonElement>("button[data-edition]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.edition===selectedEdition)));
  const viewTitle=()=>selectedRange?t(`近${selectedRange===3?"三天":"一周"}`,`Last ${selectedRange} days`):viewLabel;
  const txt=(tag:string,value:string,cls?:string)=>{
   const el=document.createElement(tag);
@@ -43,14 +47,17 @@ if(stories&&tabs&&issueSelect&&quickDates&&statusNode&&headline&&total){
   catch{return null}
  };
  const render=()=>{
-  const selection=current.filter(x=>category==="全部"||(x.category||"其他")===category);
+  const selection=current.filter(x=>(category==="全部"||(x.category||"其他")===category) && (selectedEdition==="all"||x.edition===selectedEdition));
   statusNode.textContent=t(`显示 ${selection.length} 条`,`Showing ${selection.length} stories`);
   const fragment=document.createDocumentFragment();
   if(!selection.length)fragment.append(txt("div",t("暂无对应资讯。请切换分类或日期。","No stories here. Choose another category or date."),"news-empty"));
   for(const item of selection){
    const card=txt("article","","news-card");
+   if(item.focus)card.classList.add("is-focus");
    const meta=txt("div","","news-meta");
-   meta.append(txt("span",item.category||"其他","news-category"),txt("span",item.issue_date||(item.published||"时间未提供")));
+   const slot=item.edition==="morning"?t("早报","AM"):item.edition==="evening"?t("晚报","PM"):"";
+   const stamp=item.issue_date||(item.published||"时间未提供");
+   meta.append(txt("span",(item.focus?t("✦ 重点 · ","✦ Focus · "):"")+(item.category||"其他"),"news-category"),txt("span",slot?slot+" · "+stamp:stamp));
    const heading=txt("h3",item.title_zh||"未命名资讯");
    const summary=txt("p",item.summary_zh||"","news-summary");
    card.append(meta,heading,summary);
@@ -135,7 +142,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&statusNode&&headline&&total){
    if(data.date!==date||!Array.isArray(data.items))throw Error("日报数据结构不符合预期");
    const fields=["category","source","published","url","title_zh","summary_zh","why_zh","details_zh","original_title"] as const;
    if(data.items.some(item=>!item||typeof item!=="object"||fields.some(key=>item[key]!==undefined&&typeof item[key]!=="string")))throw Error("日报条目结构不符合预期");
-   current=data.items;loaded=true;category="全部";selectedRange=0;viewLabel=date;updateRangeButtons();
+   current=data.items;loaded=true;category="全部";selectedRange=0;selectedEdition="all";viewLabel=date;updateRangeButtons();updateEditionButtons();
    headline.textContent=date;
    total.textContent=t(`${current.length} 条精选`,`${current.length} selected stories`);
    renderTabs();render();
@@ -153,7 +160,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&statusNode&&headline&&total){
   const currentRequest=++request;
   controller?.abort();controller=new AbortController();
   const signal=controller.signal;
-  selectedRange=days;updateRangeButtons();
+  selectedRange=days;selectedEdition="all";updateRangeButtons();updateEditionButtons();
   const matching=availableDates.filter(recentDays(todayBeijing(),days));
   loaded=false;current=[];category="全部";
   tabs.replaceChildren();stories.replaceChildren();stories.setAttribute("aria-busy","true");
@@ -201,7 +208,10 @@ if(stories&&tabs&&issueSelect&&quickDates&&statusNode&&headline&&total){
    if(currentRequest===request)stories.setAttribute("aria-busy","false");
   }
  };
- quickDates.querySelectorAll<HTMLButtonElement>("button[data-days]").forEach(button=>{
+ editionControls.querySelectorAll<HTMLButtonElement>("button[data-edition]").forEach(button=>{
+  button.addEventListener("click",()=>{selectedEdition=button.dataset.edition||"all";updateEditionButtons();render();});
+ });
+  quickDates.querySelectorAll<HTMLButtonElement>("button[data-days]").forEach(button=>{
   button.addEventListener("click",()=>void loadRange(Number(button.dataset.days)));
  });
  const initialize=async()=>{
