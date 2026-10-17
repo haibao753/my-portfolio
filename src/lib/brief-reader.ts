@@ -58,7 +58,8 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   try{
    const url=new URL(d.source_url||"");
    return url.protocol==="https:" && ["arxiv.org","www.arxiv.org"].includes(url.hostname)
-    && /^\\/pdf\\/(?:\\d{4}\\.\\d{4,5}|[a-z-]+(?:\\.[A-Z]{2})?\\/\\d{7})(?:v\\d+)?$/i.test(url.pathname);
+    && url.pathname.startsWith("/pdf/") && url.pathname.length>5
+    && !url.search && !url.username && !url.password && !url.port;
   }catch{return false}
  };
  const makeResearch=(d:ResearchDossier)=>{
@@ -73,7 +74,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   };
   const pages=new Map<string,number>();
   for(const c of d.citations||[]){
-   if(typeof c.id==="string"&&/^E\\d{1,2}$/.test(c.id)&&Number.isInteger(c.page)&&Number(c.page)>=1
+   if(typeof c.id==="string"&&c.id.startsWith("E")&&/^[0-9]{1,2}$/.test(c.id.slice(1))&&Number.isInteger(c.page)
     && Number(c.page)<=Number(d.pages_total||0))pages.set(c.id,c.page as number);
   }
   for(const [key,names] of Object.entries(labels)){
