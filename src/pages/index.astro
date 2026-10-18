@@ -4,7 +4,7 @@ import Hero from "../components/Hero.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import MotionLayer from "../components/MotionLayer.astro";
 import BilibiliStudio from "../components/BilibiliStudio.astro";
-import {projects,contact} from "../data/site";
+import {projects,contact,experiments} from "../data/site";
 ---
 <BaseLayout>
  <MotionLayer />
@@ -12,7 +12,8 @@ import {projects,contact} from "../data/site";
  <section class="works wrap" id="projects" aria-labelledby="works-title">
   <div class="intro">
    <h2 id="works-title"><span data-locale="zh">一些有趣的尝试。</span><span data-locale="en">Things worth exploring.</span></h2>
-   <a class="lab-invite" href="/lab/"><span data-locale="zh">进入知识实验室</span><span data-locale="en">Visit the Knowledge Lab</span> <span aria-hidden="true">↗</span></a>
+   <p class="intro-note"><span data-locale="zh">四个长期项目，一条每天更新的阅读线，三个可以亲手操作的实验。</span><span data-locale="en">Four long-running projects, a daily reading line, and three experiments you can actually operate.</span></p>
+   <a class="lab-invite" href="/lab/"><span data-locale="zh">进入实验目录 · {experiments.length} 个实验</span><span data-locale="en">Browse the experiment index · {experiments.length} experiments</span> <span aria-hidden="true">↗</span></a>
   </div>
   <div class="projects">{projects.map((project,index)=><ProjectCard project={project} index={index} />)}</div>
  </section>
@@ -40,7 +41,7 @@ import {projects,contact} from "../data/site";
 <style>
   .lab-invite{display:inline-flex;align-items:center;gap:10px;margin-top:4px;min-height:44px;padding:9px 0;border-bottom:1px solid var(--fg);font-size:14px;font-weight:650}
  .lab-invite:hover{color:var(--accent)}
- .works{padding-bottom:110px}.intro{text-align:center;margin-bottom:60px}.intro h2{font-size:clamp(39px,5.5vw,74px);line-height:1.2;letter-spacing:-.065em;margin:16px 0}.intro>p:last-child{color:var(--muted);font-size:16px}
+ .works{padding-bottom:110px}.intro{text-align:center;margin-bottom:60px}.intro h2{font-size:clamp(39px,5.5vw,74px);line-height:1.2;letter-spacing:-.065em;margin:16px 0}.intro-note{color:var(--muted);font-size:clamp(13px,1.2vw,15px);line-height:1.8;max-width:640px;margin:0 auto 18px;text-wrap:balance}
  .projects{display:grid;gap:clamp(32px,5vw,75px)}
  .contact{padding-block:clamp(90px,10vw,150px);display:grid;grid-template-columns:1.2fr 1fr;gap:50px;border-top:1px solid var(--stroke)}
  .contact h2{font-size:clamp(42px,5vw,76px);letter-spacing:-.065em;line-height:1.2;margin:20px 0}
