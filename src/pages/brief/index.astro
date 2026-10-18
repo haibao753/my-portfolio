@@ -22,7 +22,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     <div class="brief-filter-details" id="filter-details" inert aria-hidden="true">
      <div class="filter-panel-head">
       <span class="filter-panel-caption"><span data-locale="zh">筛选资讯</span><span data-locale="en">Refine reading</span></span>
-      <span class="filter-expanded-meta" aria-live="polite" aria-atomic="true"><span id="expanded-total">—</span><span data-locale="zh"> 条精选</span><span data-locale="en"> selected</span></span>
+      <span class="filter-panel-actions"><span class="filter-expanded-meta" aria-live="polite" aria-atomic="true"><span id="expanded-total">—</span><span data-locale="zh"> 条精选</span><span data-locale="en"> selected</span></span><button type="button" id="filter-reset" class="filter-reset"><span data-locale="zh">重置</span><span data-locale="en">Reset</span></button></span>
      </div>
      <div class="filter-search" role="search" aria-label="搜索简报内容">
       <label class="filter-group-label" for="brief-search"><span data-locale="zh">搜索当前简报</span><span data-locale="en">Search loaded issues</span></label>
@@ -30,6 +30,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
        <input id="brief-search" type="search" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="标题、摘要、来源、关键词…" aria-label="搜索已加载资讯的标题、摘要、正文和来源" />
        <button id="brief-search-clear" class="filter-search-clear" type="button" aria-label="清空搜索" hidden>×</button>
+      </div>
+      <div class="filter-search-scope">
+       <span id="search-scope" class="search-scope-text" aria-live="polite"><span data-locale="zh">范围：当前已加载的简报</span><span data-locale="en">Scope: loaded issues</span></span>
+       <button id="brief-search-all" class="search-all-button" type="button" hidden><span data-locale="zh">搜索全部归档</span><span data-locale="en">Search all issues</span> ↗</button>
       </div>
      </div>
      <div class="filter-group filter-date-group">
@@ -108,8 +112,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .edition-controls button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
  .date-picker{display:flex;align-items:center;gap:13px;font-size:12px;color:var(--muted)}
  .date-picker select{background:var(--card);color:var(--fg);border:1px solid var(--stroke);border-radius:13px;min-height:43px;padding:8px 12px;font:inherit}
- .status{font-size:12px;color:var(--muted);margin:25px 0}
- .stories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,27px)}
+ .status{font-size:12px;color:var(--muted);margin:25px 0} .stories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,27px)}
  :global(.news-card){min-width:0;display:flex;flex-direction:column;padding:clamp(20px,2.5vw,32px);border:1px solid var(--stroke);border-radius:22px;background:var(--card);box-shadow:var(--shadow-sm)}
  :global(.news-meta){display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted)}
  :global(.news-category){color:var(--accent);font-weight:650}
@@ -291,7 +294,35 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .brief-filter[data-expanded="true"] .filter-group:nth-child(3){animation-delay:35ms}
  .brief-filter[data-expanded="true"] .filter-group:nth-child(4){animation-delay:65ms}
  @keyframes filter-group-reveal{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
- .status.is-summary{position:absolute;width:1px;height:1px;overflow:hidden;margin:0;padding:0;clip-path:inset(50%);white-space:nowrap}
+ .status.is-summary{position:static;width:auto;height:auto;overflow:visible;margin:8px 0 3px;padding:0;clip-path:none;white-space:normal;min-height:17px;line-height:1.5;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+ .news .status{margin:8px 0 3px}
+ .filter-panel-actions{display:flex;align-items:center;gap:10px}
+ .filter-reset{border:1px solid var(--stroke);background:transparent;color:var(--fg);border-radius:999px;padding:5px 10px;min-height:30px;font-size:11px;font-weight:620;cursor:pointer}
+ .filter-reset:hover{border-color:var(--fg)}
+ .filter-search-scope{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:7px;flex-wrap:wrap}
+ .search-scope-text{font-size:10px;color:var(--muted);line-height:1.5}
+ .search-all-button{border:0;border-bottom:1px solid var(--accent);background:transparent;color:var(--accent);font:inherit;font-size:10px;font-weight:650;min-height:28px;padding:3px 0;cursor:pointer}
+ .search-all-button[hidden]{display:none!important}
+ /* The list keeps its own height while data arrives: skeleton cards share the
+    real cards' border rhythm, so the status line below never jumps. */
+ .news-skeleton{min-width:0;padding:26px 3px 35px;border-top:1px solid var(--stroke);display:flex;flex-direction:column;gap:10px}
+ .news-skeleton span{display:block;border-radius:7px;background:linear-gradient(90deg,color-mix(in srgb,var(--fg) 5%,transparent),color-mix(in srgb,var(--fg) 10%,transparent),color-mix(in srgb,var(--fg) 5%,transparent));background-size:220% 100%;animation:skeleton-shift 1.5s ease-in-out infinite alternate}
+ .news-skeleton span:nth-child(1){height:10px;width:46%}
+ .news-skeleton span:nth-child(2){height:26px;width:92%}
+ .news-skeleton span:nth-child(3){height:15px;width:84%}
+ .news-skeleton span:nth-child(4){height:15px;width:76%}
+ @keyframes skeleton-shift{from{background-position:0% 0}to{background-position:100% 0}}
+ @media(max-width:760px){.news-skeleton{padding:20px 2px 26px}.news-skeleton span:nth-child(2){height:22px}}
+ /* Reading expands from the card itself; no separate page or floating sheet. */
+ :global(.news-reading){display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--motion-card) var(--ease-editorial);}
+ :global(.news-reading-inner){overflow:hidden;min-height:0}
+ :global(.news-card.is-reading .news-reading){grid-template-rows:1fr}
+ :global(.news-reading[aria-hidden="true"] .news-reading-inner){visibility:hidden}
+ :global(.news-card.is-reading .news-reading[aria-hidden="false"] .news-reading-inner){visibility:visible}
+ :global(.news-card .news-reading .news-reason),:global(.news-card.is-reading .news-reading .news-reason){display:block}
+ :global(.news-card .news-reading .news-expanded),:global(.news-card.is-reading .news-reading .news-expanded){display:block}
+ :global(.news-empty-retry){margin-top:14px;border:1px solid var(--stroke);background:var(--card);color:var(--fg);border-radius:999px;min-height:40px;padding:8px 16px;font:inherit;font-size:12px;font-weight:650;cursor:pointer}
+ @media(prefers-reduced-motion:reduce){:global(.news-reading){transition:none}.news-skeleton span{animation:none}}
  .news{padding-top:2px!important}
  @media(max-width:950px){#compact-edition{display:none}}
  @media(max-width:760px){
