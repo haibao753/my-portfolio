@@ -1,0 +1,71 @@
+{
+ "area": "brief",
+ "date": "2026-10-18",
+ "chrome": "HeadlessChrome/155.0.8059.82",
+ "repo": "my-portfolio main @ 677b476",
+ "viewports": ["390x844", "430x932", "768x1024", "1440x900"],
+ "cls": {
+  "d1440": 0.2182, "m390": 0.1759, "m430": 0.1602, "t768": 0.1886,
+  "attribution": {
+   "d1440": [{"t": 847, "v": 0.0547, "src": "late nav-orb.css shifts #main/brand/desktop-links/#brief-filter by 12px"}, {"t": 1068, "v": 0.0003, "src": "toolbar compact chip text width growth 437->447px"}, {"t": 1758, "v": 0.1632, "src": "77 cards inserted + #status removed from flow: .disclaimer/.site-footer pushed out of viewport"}],
+   "m390": [{"t": 2280, "v": 0.1749, "src": ".disclaimer + .site-footer pushed out of viewport by data render"}]
+  }
+ },
+ "lcp": {"d1440_ms": 1792, "m390_ms": 2300, "element": "H3 (first article title, data-driven)", "cold_cache_m390_ms": 11724},
+ "long_tasks": {"d1440": [{"d": 477, "t": 1284}, {"d": 82, "t": 681}, {"d": 63, "t": 1762}], "m390": [{"d": 485, "t": 1797}, {"d": 69, "t": 1784}], "search_input_sync_ms": 6.1},
+ "network": {"warm_load_d1440_ms": 850, "ttfb_ms": 220, "bundle_resources": 17, "json_waterfall": {"index.json": 208, "2026-10-18.json": 210, "2026-10-17.json": 224, "2026-10-16.json": 212}},
+ "layout": {
+  "horizontal_overflow": "none (scrollWidth==innerWidth at all 4 viewports)",
+  "mobile_toolbar_390": {"filter-date": "51x37 visible", "filter-toggle": "36x36 visible", "compact-category/range/edition/.brief-count": "display:none"},
+  "desktop_toolbar_1440": {"filter-date": "58x36", "compact-category": "54x40", "compact-range": "70x40", "compact-edition": "86x40", "brief-count": "63x19", "filter-toggle": "36x36"},
+  "panel_open_does_not_reflow": {"m390_hero_before_after": "identical {x:14,y:66,w:362,h:68}", "d1440_panel_rect": "390x585 @ y=138, bottom 723 < 900", "m390_panel_rect": "362x580 @ y=130, bottom 710 < 844", "panel_scrollable": true}
+ },
+ "filters": {
+  "default_view": "auto-loads last 3 days (77 cards) on 2026-10-18; 3 date JSON fetched in parallel; 5 archived dates available",
+  "combo_before_range_click": {"topic": "国际科技 (18)", "edition": "AM (12)"},
+  "combo_after_range_click": {"total": 77, "category": "All", "edition": "Both", "range": "3 days", "verdict": "range silently resets topic+edition"},
+  "date_change_resets": "load() resets category/range/edition (brief-reader.ts L310)"
+ },
+ "search": {
+  "debounce": "none; synchronous updateSearch -> render",
+  "input_to_render_ms": 6.1,
+  "query_研究": {"total": 25, "cards": 25, "expected_from_json": 25},
+  "fields": ["title_zh", "original_title", "summary_zh", "why_zh", "details_zh", "source", "category", "research.sections[].text"],
+  "scope": "current loaded range only (77 cards / 3 issues); index.json lists 5 dates; no cross-archive search",
+  "scope_indicator": "only inside collapsed panel label '搜索当前简报 / Search loaded issues'",
+  "special_chars": {"<script>": {"cards": 0, "empty_state": "No matches. Try another keyword or date range.", "xss": false}},
+  "clear": "clear button appears/hides correctly; restores 77 cards"
+ },
+ "data_states": {
+  "loading": "status '正在加载…' + aria-busy=true + total '—'; no skeleton",
+  "empty_date": "not reproducible with live data",
+  "no_filter_result": "distinct .news-empty copy for query vs topic/date",
+  "network_failure": {"method": "Network.setBlockedURLs('*brief/data/*')", "status": "Archive unavailable. Refresh to retry.", "stories": "Stories are unavailable. Please try again shortly.", "total": "—", "retry_buttons": 0, "tabs": 0, "date_buttons": 0, "console_errors": 0},
+  "parse_failure": "source-read only (catch branch), not injected"
+ },
+ "article": {
+  "hierarchy": ["meta category/edition/date", "h3 title", "summary", "read toggle", "why", "details (collapsed: original title/extended analysis/research)", "source + original link"],
+  "expand": {"height_px": [367, 509], "aria_expanded": true, "label": "Show less ↑", "second_level_details_collapsed": true},
+  "focus_scroll_management": "none on expand/collapse"
+ },
+ "spatial_3d": {
+  "entry": "hidden by default (#spatial-experiment hidden; display:none); only visible with ?experimentalGraph=1",
+  "dialog": {"modal": true, "size": "1040x697 @ (200,102) at d1440", "nodes": 30, "inspector_first": "开源项目 Esp32sim：在浏览器中运行 ESP32 固件", "canvas": "webgl present", "focus_restore_on_close": "spatial-open"},
+  "node_data_quote": "theta=i*2.399963229728653; rad=.35+1.35*Math.sqrt((i+.5)/count); x=Math.cos(theta)*rad; y=(i%5-2)*.24; z=Math.sin(theta)*rad; topic=article.querySelector('.news-category').textContent",
+  "semantics": {"position": "index only (golden-angle spiral), not topic/keyword/time", "color": "fixed shader vec4(.28,.52,.92) points / vec4(.37,.52,.70,.42) edges; only selected size 12 vs 22", "edges": "consecutive same-topic DOM neighbors only"},
+  "drag_bug": {"gesture": "pointerdown -> +60px move -> pointerup", "selection_before": "2 / 30", "selection_after": "14 / 30", "cause": "pointerup hit-test without drag threshold"},
+  "zoom": "wheel only (2..6, step .22); no pinch handlers",
+  "reset_view": "no control; rotate buttons also change selection",
+  "reduced_motion": "source has reduce CSS branch; emulation sampling failed in this session"
+ },
+ "console": {"errors": 0, "exceptions": 0, "failed_requests_normal": 0},
+ "evidence": {
+  "report": "audit/evidence/brief/report.md",
+  "probe": ["audit/evidence/brief/probe-d1440-light-zh.json", "audit/evidence/brief/probe-m390-light-zh.json"],
+  "interactions": "audit/evidence/brief/fast-interactions.json",
+  "visual": "audit/evidence/brief/fast-visual.json",
+  "screenshots": ["audit/evidence/brief/fast-3d-dialog.jpg", "audit/evidence/brief/fast-panel-open.jpg", "audit/evidence/brief/fast-search.jpg", "audit/evidence/brief/fast-network-fail.jpg", "audit/evidence/brief/fast-m390-panel-dark-rm.jpg", "audit/brief-{m390,m430,t768,d1440}/initial.jpg|full.jpg|dark.jpg|mid-scroll.jpg"],
+  "baseline_metrics": ["audit/brief-m390/metrics.json", "audit/brief-m430/metrics.json", "audit/brief-t768/metrics.json", "audit/brief-d1440/metrics.json"],
+  "live_html": "audit/evidence/brief/live-brief.html"
+ }
+}
