@@ -3,71 +3,31 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Three.js · 极小曲面 Minimal Surfaces</title>
+<title>周期极小曲面 · J.H. Lab</title>
 <style>
-  :root { color-scheme: light; }
+  :root { color-scheme: light dark; }
   * { box-sizing: border-box; }
-  html, body {
-    margin: 0; height: 100%; overflow: hidden;
-    background: #eef1f5;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-  }
-  canvas { display: block; }
-
-  #panel {
-    position: fixed; left: 18px; top: 18px;
-    width: 220px; padding: 13px 14px 15px;
-    background: rgba(255, 255, 255, 0.88);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 13px;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
-    user-select: none;
-  }
-  #panel h1 {
-    margin: 0 0 10px; font-size: 11px; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    color: #4a6fa5;
-  }
-  .btn {
-    display: block; width: 100%; text-align: left;
-    margin: 4px 0; padding: 7px 10px;
-    font-size: 12.5px; font-family: inherit;
-    color: #4a5568; background: rgba(0, 0, 0, 0.025);
-    border: 1px solid transparent; border-radius: 8px;
-    cursor: pointer; transition: background .16s, color .16s, border-color .16s;
-  }
-  .btn:hover { background: rgba(74, 111, 165, 0.1); color: #1a365d; }
-  .btn.active {
-    background: rgba(74, 111, 165, 0.14);
-    border-color: rgba(74, 111, 165, 0.32);
-    color: #1a365d;
-  }
-  #hint {
-    position: fixed; left: 0; right: 0; bottom: 14px;
-    text-align: center; font-size: 11px; letter-spacing: .08em;
-    color: #8a9bb5; pointer-events: none;
-  }
-  #loading {
-    position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);
-    font-size: 13px; color: #7d9cc4; letter-spacing: .1em;
-    transition: opacity .4s;
-  }
-  #loading.hide { opacity: 0; pointer-events: none; }
+  html, body { margin:0; height:100%; overflow:hidden; background:var(--lab-bg);
+    font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC","PingFang SC",sans-serif; }
+  canvas { display:block; }
 </style>
-<link rel="stylesheet" href="/assets/transitions.css">
-<link rel="stylesheet" href="/assets/experiment-exit.css">
+<link rel="stylesheet" href="/assets/lab-workspace.css">
+<script defer src="/assets/lab-workspace.js"></script>
 </head>
-<body class="experiment-light">
-<a class="experiment-exit" href="/#computing" aria-label="返回 J.H. Lab 的交互计算实验" title="返回作品列表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7"/></svg><span>返回作品列表</span></a>
+<body data-lab-experiment="periodic">
 
 <div id="panel">
-  <h1>Minimal Surfaces</h1>
+  <h1>MINIMAL SURFACES · 003</h1>
   <div id="buttons"></div>
 </div>
-<div id="hint">拖拽旋转 · 滚轮缩放</div>
-<div id="loading">生成曲面中…</div>
+<div class="lab-dock" aria-live="off">
+  <p class="dock-kicker">WHAT YOU ARE SEEING</p>
+  <h2 data-lab-surface>Gyroid</h2>
+  <p data-lab-description>Gyroid 是一种三周期极小曲面：每个周期内它在三个方向上都弯曲，却保持平均曲率为零。</p>
+  <p class="dock-eq" data-lab-equation>sin x cos y + sin y cos z + sin z cos x = 0</p>
+  <p><span data-lab-status role="status">曲面已就绪</span> · 切换左侧名称比较不同周期曲面。</p>
+</div>
+<div id="hint">拖拽旋转 · 滚轮 / 双指缩放</div>
 
 <script type="importmap">
 {
@@ -79,22 +39,33 @@
 </script>
 
 <script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+let THREE, OrbitControls;
+try {
+  THREE = await import('three');
+  ({ OrbitControls } = await import('three/addons/controls/OrbitControls.js'));
+} catch (error) {
+  console.error('Three.js failed to load', error);
+  window.LabWorkspace?.fail('Three.js 资源加载失败（unpkg CDN）。请检查网络后重试，或返回实验室。');
+  throw error;
+}
+if (!document.createElement('canvas').getContext('webgl2') && !document.createElement('canvas').getContext('webgl')) {
+  window.LabWorkspace?.fail('浏览器未启用 WebGL，无法显示三维曲面。你可以返回实验室，或在支持 WebGL 的设备上打开。');
+  throw new Error('WebGL unavailable');
+}
 
 /* ============================================================
    1. 基础场景
    ============================================================ */
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.LabWorkspace?.maxDpr || 1.75));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.1;
 renderer.shadowMap.enabled = false;
+renderer.setClearColor(0x000000, 0);
 document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color('#eef1f5');
 
 const camera = new THREE.PerspectiveCamera(
   42, window.innerWidth / window.innerHeight, 0.1, 100
@@ -104,11 +75,19 @@ camera.position.set(3.6, 2.8, 4.6);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.06;
-controls.autoRotate = true;
+controls.autoRotate = !window.LabWorkspace?.reduced;
 controls.autoRotateSpeed = 0.9;
 controls.minDistance = 2.2;
 controls.maxDistance = 16;
 controls.target.set(0, 0, 0);
+window.addEventListener('jhlab:reset-view', () => {
+  camera.position.set(3.6, 2.8, 4.6);
+  controls.target.set(0, 0, 0);
+  controls.update();
+});
+window.addEventListener('jhlab:reduced-motion', event => {
+  controls.autoRotate = !event.detail;
+});
 
 /* ============================================================
    2. 环境贴图（渐变画布 → 金属/玻璃反射）
@@ -418,7 +397,7 @@ let intro = 1;
 
 function buildSurface(index) {
   const def = SURFACES[index];
-  const geometry = extractGeometry(def, 48);
+  const geometry = extractGeometry(def, RESOLUTION);
 
   if (mesh) {
     mesh.geometry.dispose();
@@ -435,13 +414,31 @@ function buildSurface(index) {
   geometry.translate(-center.x, -center.y, -center.z);
 
   intro = 0;
+  syncSurfaceCopy(def.name);
 }
 
 /* ============================================================
    8. UI
    ============================================================ */
 const buttonsEl = document.getElementById('buttons');
-const loadingEl = document.getElementById('loading');
+const dockSurface = document.querySelector('[data-lab-surface]');
+const dockDescription = document.querySelector('[data-lab-description]');
+const dockEquation = document.querySelector('[data-lab-equation]');
+const dockStatus = document.querySelector('[data-lab-status]');
+const SURFACE_COPY = {
+  'Gyroid': { description: 'Gyroid 是一种三周期极小曲面：在每个周期内它向三个方向弯曲，却处处平均曲率为零。', equation: 'sin x cos y + sin y cos z + sin z cos x = 0' },
+  'Schwarz P': { description: 'Schwarz P（原始曲面）是最早被描述的三周期极小曲面之一，形状接近肥皂膜在立方格中的平衡面。', equation: 'cos x + cos y + cos z = 0' },
+  'Schwarz D': { description: 'Schwarz D（菱形曲面）与 P 曲面互为共轭；它的对称性与金刚石结构中的界面相关。', equation: 'sin x sin y sin z + sin x cos y cos z + cos x sin y cos z + cos x cos y sin z = 0' },
+  'Neovius': { description: 'Neovius 曲面是另一种三周期极小曲面，具有更复杂的孔洞结构。', equation: '3(cos x + cos y + cos z) + 4 cos x cos y cos z = 0' }
+};
+const syncSurfaceCopy = (name) => {
+  const copy = SURFACE_COPY[name] || { description: '三周期极小曲面：在三个方向上周期重复，且平均曲率为零。', equation: '' };
+  if (dockSurface) dockSurface.textContent = name;
+  if (dockDescription) dockDescription.textContent = copy.description;
+  if (dockEquation) dockEquation.textContent = copy.equation;
+};
+const setStatus = (text) => { if (dockStatus) dockStatus.textContent = text; };
+const RESOLUTION = matchMedia('(max-width: 760px)').matches ? 38 : 48;
 
 SURFACES.forEach((def, i) => {
   const btn = document.createElement('button');
@@ -453,14 +450,19 @@ SURFACES.forEach((def, i) => {
     btn.classList.add('active');
     currentIndex = i;
 
-    loadingEl.classList.remove('hide');
-    loadingEl.style.opacity = '1';
+    setStatus('正在生成 ' + SURFACES[i].name + '…');
 
     // 让 UI 先更新，再执行耗时计算
     setTimeout(() => {
-      buildSurface(i);
-      loadingEl.style.opacity = '0';
-    }, 20);
+      try {
+        buildSurface(i);
+        setStatus('曲面已就绪');
+      } catch (error) {
+        console.error('Surface build failed', error);
+        setStatus('生成失败，请重试');
+        window.LabWorkspace?.fail('曲面几何生成失败。请刷新重试；你的浏览器可能不支持所需的 WebGL 功能。');
+      }
+    }, 30);
   });
   buttonsEl.appendChild(btn);
 });
@@ -469,10 +471,11 @@ SURFACES.forEach((def, i) => {
    9. 动画循环
    ============================================================ */
 const clock = new THREE.Clock();
-let initialLoad = true;
+let firstFrame = true;
 
 function animate() {
   requestAnimationFrame(animate);
+  if (document.hidden) return;
 
   const dt = Math.min(clock.getDelta(), 0.05);
 
@@ -487,17 +490,23 @@ function animate() {
   controls.update();
   renderer.render(scene, camera);
 
-  if (initialLoad && mesh) {
-    initialLoad = false;
-    loadingEl.classList.add('hide');
+  if (firstFrame) {
+    firstFrame = false;
+    window.LabWorkspace?.ready('曲面已就绪');
   }
 }
 
-// 首次生成
+// 首次生成：先让加载界面绘制出来，再执行同步几何计算。
 setTimeout(() => {
-  buildSurface(0);
-  animate();
-}, 50);
+  try {
+    buildSurface(0);
+    setStatus('曲面已就绪');
+    animate();
+  } catch (error) {
+    console.error('Initial surface build failed', error);
+    window.LabWorkspace?.fail('曲面几何生成失败。请刷新重试；你的浏览器可能不支持所需的 WebGL 功能。');
+  }
+}, 60);
 
 /* ============================================================
    10. 自适应
@@ -512,6 +521,6 @@ window.addEventListener('resize', () => {
   renderer.setSize(w, h);
 });
 </script>
-<script defer src="/assets/transitions.js"></script>
+
 </body>
 </html>
