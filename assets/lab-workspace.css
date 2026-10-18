@@ -1,0 +1,119 @@
+/* J.H. Lab experiment workspace chrome — shared by the legacy Three.js pages.
+   Keeps their rendering code intact while giving them the site's navigation,
+   theme, loading and accessibility shell. */
+
+:root{
+ --lab-bg:#eef1f5;
+ --lab-fg:#1d1d1f;
+ --lab-muted:#5d6875;
+ --lab-panel:rgba(255,255,255,.86);
+ --lab-panel-solid:#fbfcfe;
+ --lab-stroke:rgba(25,27,35,.10);
+ --lab-accent:#086bdf;
+ --lab-shadow:0 12px 36px rgba(22,32,46,.12);
+ --lab-radius:16px;
+ --lab-ease:cubic-bezier(.22,1,.36,1);
+ --lab-duration:400ms;
+ color-scheme:light;
+}
+:root[data-theme="dark"]{
+ --lab-bg:#0b0d11;
+ --lab-fg:#f6f6f7;
+ --lab-muted:#9aa3ae;
+ --lab-panel:rgba(24,27,33,.84);
+ --lab-panel-solid:#1a1d23;
+ --lab-stroke:rgba(255,255,255,.14);
+ --lab-accent:#8ab9ff;
+ --lab-shadow:0 16px 46px rgba(0,0,0,.5);
+ color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--lab-bg);color:var(--lab-fg);
+ font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC","PingFang SC",sans-serif}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--lab-accent);outline-offset:3px}
+:root[data-theme="dark"] body.experiment-dark,
+:root[data-theme="light"] body.experiment-light{background:var(--lab-bg)}
+
+/* Header */
+.lab-chrome{position:fixed;z-index:40;top:12px;left:12px;right:12px;display:flex;align-items:center;gap:10px;
+ padding:8px 10px;border:1px solid var(--lab-stroke);border-radius:18px;background:var(--lab-panel);
+ backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);
+ box-shadow:0 6px 24px rgba(18,28,42,.08);min-height:52px}
+.lab-chrome .lab-back{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:6px 11px;
+ border-radius:999px;border:1px solid transparent;font-size:12px;font-weight:620;color:var(--lab-muted);white-space:nowrap}
+.lab-chrome .lab-back:hover{color:var(--lab-fg);border-color:var(--lab-stroke);background:color-mix(in srgb,var(--lab-fg) 5%,transparent)}
+.lab-chrome .lab-title{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.lab-chrome .lab-title small{font-size:9px;letter-spacing:.12em;color:var(--lab-muted);text-transform:uppercase}
+.lab-chrome .lab-title strong{font-size:13px;font-weight:680;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lab-chrome .lab-actions{display:flex;align-items:center;gap:6px}
+.lab-chrome button{min-height:38px;padding:6px 12px;border-radius:999px;border:1px solid var(--lab-stroke);
+ background:transparent;color:var(--lab-fg);font-size:11px;font-weight:620;white-space:nowrap;
+ transition:border-color 150ms ease,background-color 150ms ease}
+.lab-chrome button:hover{border-color:var(--lab-fg);background:color-mix(in srgb,var(--lab-fg) 5%,transparent)}
+.lab-help{position:fixed;z-index:45;top:76px;right:12px;width:min(330px,calc(100vw - 24px));padding:15px 16px;
+ border:1px solid var(--lab-stroke);border-radius:16px;background:var(--lab-panel-solid);box-shadow:var(--lab-shadow);
+ font-size:12px;line-height:1.75;color:var(--lab-muted)}
+.lab-help[hidden]{display:none!important}
+.lab-help strong{display:block;color:var(--lab-fg);font-size:13px;margin-bottom:6px}
+.lab-help ul{margin:0;padding-left:17px;display:grid;gap:3px}
+.lab-help p{margin:8px 0 0;font-size:11px;line-height:1.65}
+.lab-help kbd{font:inherit;font-size:10px;border:1px solid var(--lab-stroke);border-bottom-width:2px;border-radius:5px;padding:1px 5px}
+
+/* Loading and failure */
+.lab-loading{position:fixed;z-index:60;inset:0;display:grid;place-items:center;background:color-mix(in srgb,var(--lab-bg) 72%,transparent);
+ backdrop-filter:blur(3px);transition:opacity 260ms ease,visibility 0s linear 260ms}
+.lab-loading.is-hidden{opacity:0;visibility:hidden;pointer-events:none;transition:opacity 260ms ease,visibility 0s}
+.lab-loading-card{width:min(360px,calc(100vw - 40px));padding:22px 22px 20px;border-radius:18px;border:1px solid var(--lab-stroke);
+ background:var(--lab-panel-solid);box-shadow:var(--lab-shadow);text-align:center}
+.lab-loading-card strong{display:block;font-size:14px;color:var(--lab-fg);margin-bottom:6px}
+.lab-loading-card p{margin:0;font-size:12px;line-height:1.7;color:var(--lab-muted)}
+.lab-loading-bar{position:relative;height:3px;margin:14px 0 4px;border-radius:2px;background:color-mix(in srgb,var(--lab-fg) 10%,transparent);overflow:hidden}
+.lab-loading-bar::after{content:"";position:absolute;inset:0;width:38%;border-radius:2px;background:var(--lab-accent);
+ animation:lab-loading-slide 1.2s ease-in-out infinite alternate}
+@keyframes lab-loading-slide{from{transform:translateX(-12%)}to{transform:translateX(172%)}}
+.lab-loading-card button{margin-top:14px;min-height:40px;padding:8px 16px;border-radius:999px;border:1px solid var(--lab-stroke);
+ background:var(--lab-fg);color:var(--lab-bg);font-size:12px;font-weight:650}
+.lab-loading-card button[hidden]{display:none!important}
+
+/* Shared side panels (surface list / parameters / explanation) */
+#panel,.lab-dock{position:fixed;z-index:30;border:1px solid var(--lab-stroke)!important;border-radius:var(--lab-radius)!important;
+ background:var(--lab-panel)!important;color:var(--lab-fg)!important;backdrop-filter:blur(14px) saturate(150%)!important;
+ -webkit-backdrop-filter:blur(14px) saturate(150%)!important;box-shadow:var(--lab-shadow)!important}
+#panel{left:12px!important;top:76px!important;width:min(244px,calc(100vw - 24px))!important;padding:13px!important;user-select:none}
+#panel h1{color:var(--lab-muted)!important;font-size:9px!important;letter-spacing:.16em!important;margin:0 0 9px!important}
+#panel .btn{min-height:40px;margin:4px 0;padding:9px 11px;border-radius:9px!important;border:1px solid transparent!important;
+ background:color-mix(in srgb,var(--lab-fg) 4%,transparent)!important;color:var(--lab-fg)!important;font-size:12.5px!important;text-align:left}
+#panel .btn:hover{background:color-mix(in srgb,var(--lab-accent) 12%,transparent)!important}
+#panel .btn.active{border-color:var(--lab-accent)!important;background:color-mix(in srgb,var(--lab-accent) 15%,transparent)!important}
+#sliderWrap label{display:block;font-size:11px;color:var(--lab-muted);margin-bottom:6px;line-height:1.5}
+#sliderWrap input[type=range]{width:100%;min-height:32px;accent-color:var(--lab-accent)}
+#sliderValue{display:inline-block;margin-left:6px;color:var(--lab-accent);font-variant-numeric:tabular-nums;font-weight:650}
+.lab-dock{left:12px;bottom:12px;width:min(320px,calc(100vw - 24px));padding:13px 15px}
+.lab-dock h2{margin:0 0 5px;font-size:13px;font-weight:680;color:var(--lab-fg)}
+.lab-dock .dock-kicker{font-size:9px;letter-spacing:.14em;color:var(--lab-accent);margin:0 0 4px;text-transform:uppercase}
+.lab-dock p{margin:0;font-size:11px;line-height:1.7;color:var(--lab-muted)}
+.lab-dock .dock-eq{margin:8px 0 0;font-size:12px;color:var(--lab-fg);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+#hint{position:fixed;z-index:20;left:50%;bottom:12px;transform:translateX(-50%);text-align:center;font-size:10px;
+ letter-spacing:.05em;color:var(--lab-muted);pointer-events:none;background:color-mix(in srgb,var(--lab-panel) 80%,transparent);
+ border:1px solid var(--lab-stroke);border-radius:999px;padding:5px 12px;backdrop-filter:blur(8px);white-space:nowrap}
+#loading{display:none!important}
+
+@media(max-width:760px){
+ .lab-chrome{top:8px;left:8px;right:8px;padding:6px 8px;gap:6px;min-height:48px;border-radius:15px}
+ .lab-chrome .lab-title small{display:none}
+ .lab-chrome .lab-title strong{font-size:12px}
+ .lab-chrome button{padding:5px 9px;font-size:10px;min-height:36px}
+ .lab-chrome .lab-back{padding:5px 8px;font-size:10px}
+ .lab-help{top:64px;right:8px}
+ #panel{left:8px!important;top:66px!important;width:min(214px,calc(100vw - 16px))!important;max-height:46dvh;overflow:auto;padding:10px!important}
+ #panel .btn{min-height:40px;font-size:11.5px!important;padding:8px 9px}
+ .lab-dock{left:8px;bottom:8px;width:calc(100vw - 16px);padding:10px 12px;max-height:24dvh;overflow:auto}
+ .lab-dock p{font-size:10px;line-height:1.55}
+ #hint{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+ .lab-loading-bar::after{animation:none;width:100%}
+}
