@@ -1,0 +1,130 @@
+{
+ "area": "lab / rotation / minimal-surfaces",
+ "date": "2026-10-18T18:40+08:00",
+ "chrome": "155.0.8059.82 HeadlessChrome",
+ "live": "https://hujinhai.com",
+ "source": "my-portfolio main 677b476",
+ "rotation_desktop_1440x900": {
+  "syncMatrix": {
+   "pairs_tested": 10,
+   "all_match_independent_quaternion_reference": true,
+   "examples": {
+    "0/0": { "vxy": "(0.00, 0.00, 1.00)", "vyx": "(0.00, 0.00, 1.00)", "diff": "0.00" },
+    "0/90": { "vxy": "(1.00, 0.00, 0.00)", "vyx": "(1.00, 0.00, 0.00)", "diff": "0.00" },
+    "90/90": { "vxy": "(0.00, -1.00, 0.00)", "vyx": "(1.00, 0.00, 0.00)", "diff": "2.45" },
+    "180/90": { "vxy": "(-1.00, 0.00, 0.00)", "vyx": "(1.00, 0.00, 0.00)", "diff": "2.83" },
+    "180/180": { "vxy": "(0.00, 0.00, 1.00)", "vyx": "(0.00, 0.00, 1.00)", "diff": "0.00" },
+    "15/15": { "vxy": "(0.25, -0.26, 0.93)", "vyx": "(0.26, -0.25, 0.93)", "diff": "0.10" },
+    "45/30": { "vxy": "(0.35, -0.71, 0.61)", "vyx": "(0.50, -0.61, 0.61)", "diff": "0.56" },
+    "30/60": { "vxy": "(0.75, -0.50, 0.43)", "vyx": "(0.87, -0.25, 0.43)", "diff": "0.73" },
+    "120/150": { "vxy": "(-0.25, -0.87, 0.43)", "vyx": "(0.50, 0.75, 0.43)", "diff": "2.59" }
+   }
+  },
+  "difference_metric": {
+   "definition": "Frobenius norm of difference of two 3x3 rotation matrices",
+   "range_observed": [0, 2.83],
+   "unit": null,
+   "explanation_location": "collapsed <details>; detailsOpen=false by default",
+   "output_accessible_name": null,
+   "max_at": "180/90 (2.83)",
+   "zero_cases": ["0/0", "0/90", "90/0", "180/180"]
+  },
+  "input_latency_ms": { "dom": { "min": 0.5, "median": 0.8, "max": 1.1 }, "to_next_rAF": { "min": 2, "median": 16.6, "max": 17.2 }, "samples": 20 },
+  "playback": {
+   "segment_ms": 660,
+   "dom_values_unchanged_during_first_segment": "t=251..585ms still (0.00,0.00,1.00)/0.00/step0 text",
+   "first_update_at_ms": 669,
+   "second_update_at_ms": 1422,
+   "stop_mid_260ms_result": "reverts to stage 0 start pose",
+   "param_change_mid_animation": "cancels animation, stop hidden, stage stays at current step, no stacking",
+   "rapid_clicks": { "final_pressed": "true,false,false", "stop_hidden": true, "console_errors": 0 }
+  },
+  "overlay": { "non_empty_pixels": 4120, "canvas_css": [1118, 380], "panel_h": 453, "aria_expanded_toggle_ok": true },
+  "camera_drag": { "camera_button_changed_pixels": true, "drag_changed_pixels": true, "page_scrollY": 0, "canvas_touch_action": "none" },
+  "keyboard": { "tab_stops_to_step_buttons": 18, "focus_outline": "solid 2px rgb(128,181,255)", "arrow_key_slider": true },
+  "theme": { "dark_card_bg": "rgb(32,33,38)", "canvas_pixels_identical_across_theme": true, "surface_label_contrast_dark": { "X_#b34f52": 3.18, "Y_#2d806e": 3.39, "Z_#315fa8": 2.55 }, "wcag_aa_small_text": 4.5 },
+  "i18n": { "body_locale_switches": true, "html_lang_after_toggle": "en", "camera_aria_still_zh": true, "overlay_aria_still_zh": true, "slider_aria_always_en": true }
+ },
+ "lab_index": {
+  "viewport": "1440x900",
+  "links_to_rotation": ["/lab/rotation/"],
+  "links_to_minimal_surfaces": [],
+  "homepage_experiment_links": ["/experiments/minimal-surfaces-classical.html", "/experiments/minimal-surfaces-periodic.html"],
+  "homepage_rotation_links": [],
+  "homepage_lab_links": ["/lab/"],
+  "hashtag_computing_exists_on_home": false,
+  "console_errors": 0,
+  "cls": 0,
+  "docHeight": 1215
+ },
+ "legacy_pages": {
+  "periodic": {
+   "htmlLang": "zh-CN",
+   "title": "Three.js · 极小曲面 Minimal Surfaces",
+   "metaDescription": false,
+   "themeToggle": false,
+   "langToggle": false,
+   "siteNav": false,
+   "skipLink": false,
+   "exit": { "href": "/#computing", "text": "返回作品列表", "size": [131, 44] },
+   "panel": { "x": 18, "y": 18, "w": 220, "h": 199 },
+   "buttons_height_px": [32, 32, 32, 32],
+   "canvas_aria": null,
+   "canvas_role": null,
+   "hint": "拖拽旋转 · 滚轮缩放",
+   "hint_mentions_pinch": false,
+   "math_explanation_text": false,
+   "ignores_stored_theme_dark": true,
+   "ignores_stored_locale_en": true,
+   "body_bg": "rgb(238, 241, 245)",
+   "reduced_motion_matches": true,
+   "auto_rotate_under_reduced_motion": true,
+   "reduced_motion_frame_hashes": ["0ae62e8d2f45", "93707bbf9468"],
+   "cdn": ["https://unpkg.com/three@0.160.0/build/three.module.js", "https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js"],
+   "cold_page_load_event_ms": 9121,
+   "loading": { "text": "生成曲面中…", "visible_ms_sampled_after_page_start": "1964-6742 continuously visible in sample window", "timeout_or_error_path": false },
+   "surface_switch_loading_visible_ms": [1993, 4237, 4399],
+   "surface_switch_active_matches_last_click": true,
+   "rapid_12_clicks": { "elapsed_ms": 3391, "active": "Neovius", "loading_opacity": "0", "console_errors": 0 }
+  },
+  "classical": {
+   "htmlLang": "zh-CN",
+   "title": "Three.js · 极小曲面 Minimal Surfaces",
+   "hasResetView": false,
+   "hasMathExplanation": false,
+   "hint": "拖拽旋转 · 滚轮缩放",
+   "slider": {
+    "id": "tSlider",
+    "visible_after_bonnet_select": true,
+    "has_output_element": false,
+    "label_for_attribute": null,
+    "aria_label": null,
+    "current_value_readout": null,
+    "input_to_rebuild_ms": [4.9, 4.5, 5.3, 5.6, 7.2]
+   },
+   "button_heights_px": [34, 34, 34, 34, 50],
+   "exit_href": "/#computing",
+   "canvas_role_or_aria": null,
+   "console_errors": 0
+  }
+ },
+ "baseline_capture": {
+  "lab": { "d1440": { "nav_ms": 4621, "lcp_ms": 2044, "cls": 0 }, "m390": { "nav_ms": 2729, "lcp_ms": 1376, "cls": 0 }, "t768": { "nav_ms": 2947, "lcp_ms": 1264, "cls": 0 } },
+  "rotation": { "d1440": { "nav_ms": 3242, "lcp_ms": 1492, "cls": 0, "docH": 1983 }, "m390": { "nav_ms": 3472, "lcp_ms": 1904, "cls": 0, "docH": 1376 }, "m430": { "nav_ms": 3307, "lcp_ms": 1496, "cls": 0, "docH": 1364 } },
+  "classical": { "d1440": { "nav_ms": 2558, "lcp_ms": 1300, "cls": 0 }, "m430": { "nav_ms": 2412, "lcp_ms": 1132, "cls": 0 }, "t768": { "nav_ms": 2737, "lcp_ms": 1468, "cls": 0 }, "m390": { "nav_ms": 21913, "lcp_ms": 0, "note": "cold load with 4 concurrent audit jobs, contended; not a baseline" } },
+  "periodic": { "d1440": { "nav_ms": 1959, "lcp_ms": 724, "cls": 0 }, "m430": { "nav_ms": 4759, "lcp_ms": 3448, "cls": 0 }, "t768": { "nav_ms": 3720, "lcp_ms": 2396, "cls": 0 }, "m390": { "nav_ms": 12545, "lcp_ms": 0, "note": "cold load contested" } }
+ },
+ "rotation_mobile_layout": {
+  "m390": { "docHeight": 1376, "documentScrollWidth": 390, "second_outcome_card_offscreen_right_px": 692, "comparison_overflow_x": "auto scroll-snap container", "page_level_horizontal_overflow": false },
+  "m430": { "docHeight": 1364, "documentScrollWidth": 430, "second_outcome_card_offscreen_right_px": 772 }
+ },
+ "coverage_gaps": [
+  "CDN blocked / WebGL unavailable / WEBGL_lose_context scenarios not completed (CDP timeouts under concurrent audit load)",
+  "rotation touch-drag-vs-page-scroll and 200% zoom not measured",
+  "rotation reduced-motion not measured directly",
+  "heap/long-task/dispose lifecycle not measured (probe interrupted)",
+  "weak-network throttling not completed",
+  "dark-theme canvas label contrast computed from browser bg + source hex, not pixel-sampled",
+  "shared-Chrome localStorage contaminated with jhlab-locale=en, jhlab-theme=dark"
+ ]
+}

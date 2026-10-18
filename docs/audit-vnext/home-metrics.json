@@ -1,0 +1,5379 @@
+{
+ "startedAt": "2026-10-18T09:59:34.612Z",
+ "sections": {
+  "heroM390": {
+   "res": {
+    "navMs": 5108,
+    "settleMs": 5114,
+    "settled": {
+     "lcp": 3468,
+     "lcpEl": "H2.",
+     "cls": 0,
+     "shifts": [],
+     "longTasks": [
+      {
+       "d": 489,
+       "t": 1470.8999999761581
+      },
+      {
+       "d": 68,
+       "t": 3745
+      },
+      {
+       "d": 75,
+       "t": 3819.899999976158
+      },
+      {
+       "d": 317,
+       "t": 4815.399999976158
+      },
+      {
+       "d": 99,
+       "t": 5132.5
+      }
+     ],
+     "domContentLoaded": 3739.199999988079,
+     "load": 3741,
+     "ttfb": 1341.800000011921,
+     "paints": {
+      "first-paint": 3468,
+      "first-contentful-paint": 3468
+     },
+     "resourceCount": 16,
+     "resources": [
+      {
+       "name": "https://hujinhai.com/assets/signature-pen.js",
+       "duration": 1879,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/cdn-cgi/speculation",
+       "duration": 1511,
+       "size": 451,
+       "type": "other"
+      },
+      {
+       "name": "https://hujinhai.com/assets/live-homepage-optics.js",
+       "duration": 1507,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/CuriositySculpture.astro_astro_type_script_index_0_lang.CDPZr9BY.js",
+       "duration": 1507,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/assets/menu-liquid-optics.js",
+       "duration": 1504,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/index.BK_aAOHY.css",
+       "duration": 1503,
+       "size": 300,
+       "type": "link"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/index.D-ZHv_Tx.css",
+       "duration": 1501,
+       "size": 300,
+       "type": "link"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/curiosity-renderer.D3-gsXsy.js",
+       "duration": 654,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/cdn-cgi/rum?",
+       "duration": 291,
+       "size": 300,
+       "type": "xmlhttprequest"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/5.DuDSPGP4_Z1EyTR6.webp",
+       "duration": 252,
+       "size": 300,
+       "type": "img"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/4.C5T9hmJF_ZbEVYP.webp",
+       "duration": 249,
+       "size": 300,
+       "type": "img"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/2.CPcsTQJs_1cr0aa.webp",
+       "duration": 249,
+       "size": 300,
+       "type": "img"
+      },
+      {
+       "name": "https://hujinhai.com/assets/glass-pointer-light.js",
+       "duration": 247,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/assets/scene-media.js",
+       "duration": 247,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/assets/optical-engine.js",
+       "duration": 246,
+       "size": 300,
+       "type": "script"
+      }
+     ],
+     "docHeight": 5274,
+     "viewport": {
+      "w": 390,
+      "h": 844
+     },
+     "scrollWidth": 390,
+     "counters": {
+      "Frames": 5,
+      "Nodes": 1073,
+      "LayoutCount": 47,
+      "RecalcStyleCount": 77,
+      "ScriptDuration": 0.975,
+      "TaskDuration": 3.38,
+      "JSHeapUsedSize": 3902888
+     }
+    },
+    "hero": {
+     "navStart": 1792317574803,
+     "lang": "en",
+     "titleText": "Make something\ninteresting.",
+     "h1": {
+      "x": 18,
+      "y": 84,
+      "width": 354,
+      "height": 91.90625,
+      "top": 84,
+      "right": 372,
+      "bottom": 175.90625,
+      "left": 18
+     },
+     "actions": {
+      "x": 18,
+      "y": 189.90625,
+      "width": 354,
+      "height": 44,
+      "top": 189.90625,
+      "right": 372,
+      "bottom": 233.90625,
+      "left": 18
+     },
+     "sculpture": {
+      "x": 18,
+      "y": 235.90625,
+      "width": 354,
+      "height": 253.5,
+      "top": 235.90625,
+      "right": 372,
+      "bottom": 489.40625,
+      "left": 18
+     },
+     "signature": {
+      "x": 18,
+      "y": 489.40625,
+      "width": 354,
+      "height": 45.96875,
+      "top": 489.40625,
+      "right": 372,
+      "bottom": 535.375,
+      "left": 18
+     },
+     "glyphs": 25,
+     "glyphFont": "40px",
+     "anims": 59,
+     "samples": [
+      {
+       "t": 1471,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 192,
+          "height": 46,
+          "top": 150.4375,
+          "right": 200,
+          "bottom": 196.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 150.4375,
+          "width": 96,
+          "height": 46,
+          "top": 150.4375,
+          "right": 296,
+          "bottom": 196.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 371.03125,
+          "height": 92,
+          "top": 150.4375,
+          "right": 379.03125,
+          "bottom": 242.4375,
+          "left": 8
+         }
+        }
+       ],
+       "actions": {
+        "y": 263.875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 412.390625,
+        "h": 25
+       },
+       "scrollW": 1008,
+       "innerW": 1008,
+       "docH": 7530
+      },
+      {
+       "t": 1961,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 192,
+          "height": 46,
+          "top": 150.4375,
+          "right": 200,
+          "bottom": 196.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 150.4375,
+          "width": 96,
+          "height": 46,
+          "top": 150.4375,
+          "right": 296,
+          "bottom": 196.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 371.03125,
+          "height": 92,
+          "top": 150.4375,
+          "right": 379.03125,
+          "bottom": 242.4375,
+          "left": 8
+         }
+        }
+       ],
+       "actions": {
+        "y": 263.875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 412.390625,
+        "h": 25
+       },
+       "scrollW": 1008,
+       "innerW": 1008,
+       "docH": 7530
+      },
+      {
+       "t": 2069,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 192,
+          "height": 46,
+          "top": 150.4375,
+          "right": 200,
+          "bottom": 196.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 150.4375,
+          "width": 96,
+          "height": 46,
+          "top": 150.4375,
+          "right": 296,
+          "bottom": 196.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 371.03125,
+          "height": 92,
+          "top": 150.4375,
+          "right": 379.03125,
+          "bottom": 242.4375,
+          "left": 8
+         }
+        }
+       ],
+       "actions": {
+        "y": 263.875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 412.390625,
+        "h": 25
+       },
+       "scrollW": 1008,
+       "innerW": 1008,
+       "docH": 7530
+      },
+      {
+       "t": 2162,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 192,
+          "height": 46,
+          "top": 150.4375,
+          "right": 200,
+          "bottom": 196.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 150.4375,
+          "width": 96,
+          "height": 46,
+          "top": 150.4375,
+          "right": 296,
+          "bottom": 196.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 371.03125,
+          "height": 92,
+          "top": 150.4375,
+          "right": 379.03125,
+          "bottom": 242.4375,
+          "left": 8
+         }
+        }
+       ],
+       "actions": {
+        "y": 263.875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 412.390625,
+        "h": 25
+       },
+       "scrollW": 1008,
+       "innerW": 1008,
+       "docH": 7530
+      },
+      {
+       "t": 2260,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 192,
+          "height": 46,
+          "top": 150.4375,
+          "right": 200,
+          "bottom": 196.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 150.4375,
+          "width": 96,
+          "height": 46,
+          "top": 150.4375,
+          "right": 296,
+          "bottom": 196.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 371.03125,
+          "height": 92,
+          "top": 150.4375,
+          "right": 379.03125,
+          "bottom": 242.4375,
+          "left": 8
+         }
+        }
+       ],
+       "actions": {
+        "y": 263.875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 412.390625,
+        "h": 25
+       },
+       "scrollW": 1008,
+       "innerW": 1008,
+       "docH": 7530
+      },
+      {
+       "t": 2366,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 192,
+          "height": 46,
+          "top": 150.4375,
+          "right": 200,
+          "bottom": 196.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 150.4375,
+          "width": 96,
+          "height": 46,
+          "top": 150.4375,
+          "right": 296,
+          "bottom": 196.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 371.03125,
+          "height": 92,
+          "top": 150.4375,
+          "right": 379.03125,
+          "bottom": 242.4375,
+          "left": 8
+         }
+        }
+       ],
+       "actions": {
+        "y": 263.875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 412.390625,
+        "h": 25
+       },
+       "scrollW": 1008,
+       "innerW": 1008,
+       "docH": 7530
+      },
+      {
+       "t": 2458,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 192,
+          "height": 46,
+          "top": 150.4375,
+          "right": 200,
+          "bottom": 196.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 150.4375,
+          "width": 96,
+          "height": 46,
+          "top": 150.4375,
+          "right": 296,
+          "bottom": 196.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 371.03125,
+          "height": 92,
+          "top": 150.4375,
+          "right": 379.03125,
+          "bottom": 242.4375,
+          "left": 8
+         }
+        }
+       ],
+       "actions": {
+        "y": 263.875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 412.390625,
+        "h": 25
+       },
+       "scrollW": 1008,
+       "innerW": 1008,
+       "docH": 7530
+      },
+      {
+       "t": 2565,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 192,
+          "height": 46,
+          "top": 150.4375,
+          "right": 200,
+          "bottom": 196.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 150.4375,
+          "width": 96,
+          "height": 46,
+          "top": 150.4375,
+          "right": 296,
+          "bottom": 196.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 371.03125,
+          "height": 92,
+          "top": 150.4375,
+          "right": 379.03125,
+          "bottom": 242.4375,
+          "left": 8
+         }
+        }
+       ],
+       "actions": {
+        "y": 263.875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 412.390625,
+        "h": 25
+       },
+       "scrollW": 1008,
+       "innerW": 1008,
+       "docH": 7530
+      },
+      {
+       "t": 2664,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 192,
+          "height": 46,
+          "top": 150.4375,
+          "right": 200,
+          "bottom": 196.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 150.4375,
+          "width": 96,
+          "height": 46,
+          "top": 150.4375,
+          "right": 296,
+          "bottom": 196.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 371.03125,
+          "height": 92,
+          "top": 150.4375,
+          "right": 379.03125,
+          "bottom": 242.4375,
+          "left": 8
+         }
+        }
+       ],
+       "actions": {
+        "y": 263.875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 412.390625,
+        "h": 25
+       },
+       "scrollW": 1008,
+       "innerW": 1008,
+       "docH": 7530
+      },
+      {
+       "t": 2769,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 192,
+          "height": 46,
+          "top": 150.4375,
+          "right": 200,
+          "bottom": 196.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 150.4375,
+          "width": 96,
+          "height": 46,
+          "top": 150.4375,
+          "right": 296,
+          "bottom": 196.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 371.03125,
+          "height": 92,
+          "top": 150.4375,
+          "right": 379.03125,
+          "bottom": 242.4375,
+          "left": 8
+         }
+        }
+       ],
+       "actions": {
+        "y": 263.875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 412.390625,
+        "h": 25
+       },
+       "scrollW": 1008,
+       "innerW": 1008,
+       "docH": 7530
+      },
+      {
+       "t": 2866,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 192,
+          "height": 46,
+          "top": 150.4375,
+          "right": 200,
+          "bottom": 196.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 150.4375,
+          "width": 96,
+          "height": 46,
+          "top": 150.4375,
+          "right": 296,
+          "bottom": 196.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 8,
+          "y": 150.4375,
+          "width": 371.03125,
+          "height": 92,
+          "top": 150.4375,
+          "right": 379.03125,
+          "bottom": 242.4375,
+          "left": 8
+         }
+        }
+       ],
+       "actions": {
+        "y": 263.875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 412.390625,
+        "h": 25
+       },
+       "scrollW": 1008,
+       "innerW": 1008,
+       "docH": 7530
+      },
+      {
+       "t": 3382,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 18,
+          "y": 84,
+          "width": 354,
+          "height": 45.59375,
+          "top": 84,
+          "right": 372,
+          "bottom": 129.59375,
+          "left": 18
+         }
+        }
+       ],
+       "actions": {
+        "y": 189.90625,
+        "h": 44
+       },
+       "sculpture": {
+        "y": 235.90625,
+        "h": 253.5
+       },
+       "scrollW": 390,
+       "innerW": 390,
+       "docH": 5274
+      },
+      {
+       "t": 3457,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 18,
+          "y": 84,
+          "width": 354,
+          "height": 45.59375,
+          "top": 84,
+          "right": 372,
+          "bottom": 129.59375,
+          "left": 18
+         }
+        }
+       ],
+       "actions": {
+        "y": 189.90625,
+        "h": 44
+       },
+       "sculpture": {
+        "y": 235.90625,
+        "h": 253.5
+       },
+       "scrollW": 390,
+       "innerW": 390,
+       "docH": 5274
+      },
+      {
+       "t": 3560,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 18,
+          "y": 84,
+          "width": 354,
+          "height": 45.59375,
+          "top": 84,
+          "right": 372,
+          "bottom": 129.59375,
+          "left": 18
+         }
+        }
+       ],
+       "actions": {
+        "y": 189.90625,
+        "h": 44
+       },
+       "sculpture": {
+        "y": 235.90625,
+        "h": 253.5
+       },
+       "scrollW": 390,
+       "innerW": 390,
+       "docH": 5274
+      },
+      {
+       "t": 3814,
+       "glyphs": 25,
+       "opacityMin": 1,
+       "opacityFull": 25,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 18,
+          "y": 84,
+          "width": 354,
+          "height": 45.59375,
+          "top": 84,
+          "right": 372,
+          "bottom": 129.59375,
+          "left": 18
+         }
+        }
+       ],
+       "actions": {
+        "y": 189.90625,
+        "h": 44
+       },
+       "sculpture": {
+        "y": 235.90625,
+        "h": 253.5
+       },
+       "scrollW": 390,
+       "innerW": 390,
+       "docH": 5274
+      }
+     ],
+     "scrollW": 390,
+     "innerW": 390
+    },
+    "shots": [
+     "C:\\Users\\34123\\Desktop\\harness\\web_design\\audit\\evidence\\home\\hero\\reveal-m390\\settled.jpg",
+     "C:\\Users\\34123\\Desktop\\harness\\web_design\\audit\\evidence\\home\\hero\\reveal-m390\\settled-full.jpg"
+    ],
+    "samples": [
+     {
+      "t": 1471,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 192,
+         "height": 46,
+         "top": 150.4375,
+         "right": 200,
+         "bottom": 196.4375,
+         "left": 8
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 200,
+         "y": 150.4375,
+         "width": 96,
+         "height": 46,
+         "top": 150.4375,
+         "right": 296,
+         "bottom": 196.4375,
+         "left": 200
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 371.03125,
+         "height": 92,
+         "top": 150.4375,
+         "right": 379.03125,
+         "bottom": 242.4375,
+         "left": 8
+        }
+       }
+      ],
+      "actions": {
+       "y": 263.875,
+       "h": 48
+      },
+      "sculpture": {
+       "y": 412.390625,
+       "h": 25
+      },
+      "scrollW": 1008,
+      "innerW": 1008,
+      "docH": 7530
+     },
+     {
+      "t": 1961,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 192,
+         "height": 46,
+         "top": 150.4375,
+         "right": 200,
+         "bottom": 196.4375,
+         "left": 8
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 200,
+         "y": 150.4375,
+         "width": 96,
+         "height": 46,
+         "top": 150.4375,
+         "right": 296,
+         "bottom": 196.4375,
+         "left": 200
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 371.03125,
+         "height": 92,
+         "top": 150.4375,
+         "right": 379.03125,
+         "bottom": 242.4375,
+         "left": 8
+        }
+       }
+      ],
+      "actions": {
+       "y": 263.875,
+       "h": 48
+      },
+      "sculpture": {
+       "y": 412.390625,
+       "h": 25
+      },
+      "scrollW": 1008,
+      "innerW": 1008,
+      "docH": 7530
+     },
+     {
+      "t": 2069,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 192,
+         "height": 46,
+         "top": 150.4375,
+         "right": 200,
+         "bottom": 196.4375,
+         "left": 8
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 200,
+         "y": 150.4375,
+         "width": 96,
+         "height": 46,
+         "top": 150.4375,
+         "right": 296,
+         "bottom": 196.4375,
+         "left": 200
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 371.03125,
+         "height": 92,
+         "top": 150.4375,
+         "right": 379.03125,
+         "bottom": 242.4375,
+         "left": 8
+        }
+       }
+      ],
+      "actions": {
+       "y": 263.875,
+       "h": 48
+      },
+      "sculpture": {
+       "y": 412.390625,
+       "h": 25
+      },
+      "scrollW": 1008,
+      "innerW": 1008,
+      "docH": 7530
+     },
+     {
+      "t": 2162,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 192,
+         "height": 46,
+         "top": 150.4375,
+         "right": 200,
+         "bottom": 196.4375,
+         "left": 8
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 200,
+         "y": 150.4375,
+         "width": 96,
+         "height": 46,
+         "top": 150.4375,
+         "right": 296,
+         "bottom": 196.4375,
+         "left": 200
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 371.03125,
+         "height": 92,
+         "top": 150.4375,
+         "right": 379.03125,
+         "bottom": 242.4375,
+         "left": 8
+        }
+       }
+      ],
+      "actions": {
+       "y": 263.875,
+       "h": 48
+      },
+      "sculpture": {
+       "y": 412.390625,
+       "h": 25
+      },
+      "scrollW": 1008,
+      "innerW": 1008,
+      "docH": 7530
+     },
+     {
+      "t": 2260,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 192,
+         "height": 46,
+         "top": 150.4375,
+         "right": 200,
+         "bottom": 196.4375,
+         "left": 8
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 200,
+         "y": 150.4375,
+         "width": 96,
+         "height": 46,
+         "top": 150.4375,
+         "right": 296,
+         "bottom": 196.4375,
+         "left": 200
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 371.03125,
+         "height": 92,
+         "top": 150.4375,
+         "right": 379.03125,
+         "bottom": 242.4375,
+         "left": 8
+        }
+       }
+      ],
+      "actions": {
+       "y": 263.875,
+       "h": 48
+      },
+      "sculpture": {
+       "y": 412.390625,
+       "h": 25
+      },
+      "scrollW": 1008,
+      "innerW": 1008,
+      "docH": 7530
+     },
+     {
+      "t": 2366,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 192,
+         "height": 46,
+         "top": 150.4375,
+         "right": 200,
+         "bottom": 196.4375,
+         "left": 8
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 200,
+         "y": 150.4375,
+         "width": 96,
+         "height": 46,
+         "top": 150.4375,
+         "right": 296,
+         "bottom": 196.4375,
+         "left": 200
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 371.03125,
+         "height": 92,
+         "top": 150.4375,
+         "right": 379.03125,
+         "bottom": 242.4375,
+         "left": 8
+        }
+       }
+      ],
+      "actions": {
+       "y": 263.875,
+       "h": 48
+      },
+      "sculpture": {
+       "y": 412.390625,
+       "h": 25
+      },
+      "scrollW": 1008,
+      "innerW": 1008,
+      "docH": 7530
+     },
+     {
+      "t": 2458,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 192,
+         "height": 46,
+         "top": 150.4375,
+         "right": 200,
+         "bottom": 196.4375,
+         "left": 8
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 200,
+         "y": 150.4375,
+         "width": 96,
+         "height": 46,
+         "top": 150.4375,
+         "right": 296,
+         "bottom": 196.4375,
+         "left": 200
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 371.03125,
+         "height": 92,
+         "top": 150.4375,
+         "right": 379.03125,
+         "bottom": 242.4375,
+         "left": 8
+        }
+       }
+      ],
+      "actions": {
+       "y": 263.875,
+       "h": 48
+      },
+      "sculpture": {
+       "y": 412.390625,
+       "h": 25
+      },
+      "scrollW": 1008,
+      "innerW": 1008,
+      "docH": 7530
+     },
+     {
+      "t": 2565,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 192,
+         "height": 46,
+         "top": 150.4375,
+         "right": 200,
+         "bottom": 196.4375,
+         "left": 8
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 200,
+         "y": 150.4375,
+         "width": 96,
+         "height": 46,
+         "top": 150.4375,
+         "right": 296,
+         "bottom": 196.4375,
+         "left": 200
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 371.03125,
+         "height": 92,
+         "top": 150.4375,
+         "right": 379.03125,
+         "bottom": 242.4375,
+         "left": 8
+        }
+       }
+      ],
+      "actions": {
+       "y": 263.875,
+       "h": 48
+      },
+      "sculpture": {
+       "y": 412.390625,
+       "h": 25
+      },
+      "scrollW": 1008,
+      "innerW": 1008,
+      "docH": 7530
+     },
+     {
+      "t": 2664,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 192,
+         "height": 46,
+         "top": 150.4375,
+         "right": 200,
+         "bottom": 196.4375,
+         "left": 8
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 200,
+         "y": 150.4375,
+         "width": 96,
+         "height": 46,
+         "top": 150.4375,
+         "right": 296,
+         "bottom": 196.4375,
+         "left": 200
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 371.03125,
+         "height": 92,
+         "top": 150.4375,
+         "right": 379.03125,
+         "bottom": 242.4375,
+         "left": 8
+        }
+       }
+      ],
+      "actions": {
+       "y": 263.875,
+       "h": 48
+      },
+      "sculpture": {
+       "y": 412.390625,
+       "h": 25
+      },
+      "scrollW": 1008,
+      "innerW": 1008,
+      "docH": 7530
+     },
+     {
+      "t": 2769,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 192,
+         "height": 46,
+         "top": 150.4375,
+         "right": 200,
+         "bottom": 196.4375,
+         "left": 8
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 200,
+         "y": 150.4375,
+         "width": 96,
+         "height": 46,
+         "top": 150.4375,
+         "right": 296,
+         "bottom": 196.4375,
+         "left": 200
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 371.03125,
+         "height": 92,
+         "top": 150.4375,
+         "right": 379.03125,
+         "bottom": 242.4375,
+         "left": 8
+        }
+       }
+      ],
+      "actions": {
+       "y": 263.875,
+       "h": 48
+      },
+      "sculpture": {
+       "y": 412.390625,
+       "h": 25
+      },
+      "scrollW": 1008,
+      "innerW": 1008,
+      "docH": 7530
+     },
+     {
+      "t": 2866,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 192,
+         "height": 46,
+         "top": 150.4375,
+         "right": 200,
+         "bottom": 196.4375,
+         "left": 8
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 200,
+         "y": 150.4375,
+         "width": 96,
+         "height": 46,
+         "top": 150.4375,
+         "right": 296,
+         "bottom": 196.4375,
+         "left": 200
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 8,
+         "y": 150.4375,
+         "width": 371.03125,
+         "height": 92,
+         "top": 150.4375,
+         "right": 379.03125,
+         "bottom": 242.4375,
+         "left": 8
+        }
+       }
+      ],
+      "actions": {
+       "y": 263.875,
+       "h": 48
+      },
+      "sculpture": {
+       "y": 412.390625,
+       "h": 25
+      },
+      "scrollW": 1008,
+      "innerW": 1008,
+      "docH": 7530
+     },
+     {
+      "t": 3382,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 0,
+         "y": 0,
+         "width": 0,
+         "height": 0,
+         "top": 0,
+         "right": 0,
+         "bottom": 0,
+         "left": 0
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 0,
+         "y": 0,
+         "width": 0,
+         "height": 0,
+         "top": 0,
+         "right": 0,
+         "bottom": 0,
+         "left": 0
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 18,
+         "y": 84,
+         "width": 354,
+         "height": 45.59375,
+         "top": 84,
+         "right": 372,
+         "bottom": 129.59375,
+         "left": 18
+        }
+       }
+      ],
+      "actions": {
+       "y": 189.90625,
+       "h": 44
+      },
+      "sculpture": {
+       "y": 235.90625,
+       "h": 253.5
+      },
+      "scrollW": 390,
+      "innerW": 390,
+      "docH": 5274
+     },
+     {
+      "t": 3457,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 0,
+         "y": 0,
+         "width": 0,
+         "height": 0,
+         "top": 0,
+         "right": 0,
+         "bottom": 0,
+         "left": 0
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 0,
+         "y": 0,
+         "width": 0,
+         "height": 0,
+         "top": 0,
+         "right": 0,
+         "bottom": 0,
+         "left": 0
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 18,
+         "y": 84,
+         "width": 354,
+         "height": 45.59375,
+         "top": 84,
+         "right": 372,
+         "bottom": 129.59375,
+         "left": 18
+        }
+       }
+      ],
+      "actions": {
+       "y": 189.90625,
+       "h": 44
+      },
+      "sculpture": {
+       "y": 235.90625,
+       "h": 253.5
+      },
+      "scrollW": 390,
+      "innerW": 390,
+      "docH": 5274
+     },
+     {
+      "t": 3560,
+      "glyphs": 0,
+      "opacityMin": null,
+      "opacityFull": 0,
+      "anims": 0,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 0,
+         "y": 0,
+         "width": 0,
+         "height": 0,
+         "top": 0,
+         "right": 0,
+         "bottom": 0,
+         "left": 0
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 0,
+         "y": 0,
+         "width": 0,
+         "height": 0,
+         "top": 0,
+         "right": 0,
+         "bottom": 0,
+         "left": 0
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 18,
+         "y": 84,
+         "width": 354,
+         "height": 45.59375,
+         "top": 84,
+         "right": 372,
+         "bottom": 129.59375,
+         "left": 18
+        }
+       }
+      ],
+      "actions": {
+       "y": 189.90625,
+       "h": 44
+      },
+      "sculpture": {
+       "y": 235.90625,
+       "h": 253.5
+      },
+      "scrollW": 390,
+      "innerW": 390,
+      "docH": 5274
+     },
+     {
+      "t": 3814,
+      "glyphs": 25,
+      "opacityMin": 1,
+      "opacityFull": 25,
+      "anims": 53,
+      "cls": 0,
+      "lines": [
+       {
+        "text": "做一些有趣的",
+        "r": {
+         "x": 0,
+         "y": 0,
+         "width": 0,
+         "height": 0,
+         "top": 0,
+         "right": 0,
+         "bottom": 0,
+         "left": 0
+        }
+       },
+       {
+        "text": "事情。",
+        "r": {
+         "x": 0,
+         "y": 0,
+         "width": 0,
+         "height": 0,
+         "top": 0,
+         "right": 0,
+         "bottom": 0,
+         "left": 0
+        }
+       },
+       {
+        "text": "Make something",
+        "r": {
+         "x": 18,
+         "y": 84,
+         "width": 354,
+         "height": 45.59375,
+         "top": 84,
+         "right": 372,
+         "bottom": 129.59375,
+         "left": 18
+        }
+       }
+      ],
+      "actions": {
+       "y": 189.90625,
+       "h": 44
+      },
+      "sculpture": {
+       "y": 235.90625,
+       "h": 253.5
+      },
+      "scrollW": 390,
+      "innerW": 390,
+      "docH": 5274
+     }
+    ]
+   },
+   "frameCount": 74,
+   "frames": [
+    {
+     "i": 0,
+     "ts": 1792317574813,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-000-t1792317574813.jpg",
+     "t": 31
+    },
+    {
+     "i": 1,
+     "ts": 1792317578268,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-001-t1792317578268.jpg",
+     "t": 3486
+    },
+    {
+     "i": 2,
+     "ts": 1792317578592,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-002-t1792317578592.jpg",
+     "t": 3810
+    },
+    {
+     "i": 3,
+     "ts": 1792317578766,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-003-t1792317578766.jpg",
+     "t": 3984
+    },
+    {
+     "i": 4,
+     "ts": 1792317578814,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-004-t1792317578814.jpg",
+     "t": 4032
+    },
+    {
+     "i": 5,
+     "ts": 1792317578985,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-005-t1792317578985.jpg",
+     "t": 4203
+    },
+    {
+     "i": 6,
+     "ts": 1792317579185,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-006-t1792317579185.jpg",
+     "t": 4403
+    },
+    {
+     "i": 7,
+     "ts": 1792317579202,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-007-t1792317579202.jpg",
+     "t": 4420
+    },
+    {
+     "i": 8,
+     "ts": 1792317579254,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-008-t1792317579254.jpg",
+     "t": 4472
+    },
+    {
+     "i": 9,
+     "ts": 1792317579330,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-009-t1792317579330.jpg",
+     "t": 4548
+    },
+    {
+     "i": 10,
+     "ts": 1792317579450,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-010-t1792317579450.jpg",
+     "t": 4668
+    },
+    {
+     "i": 11,
+     "ts": 1792317579467,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-011-t1792317579467.jpg",
+     "t": 4685
+    },
+    {
+     "i": 12,
+     "ts": 1792317579483,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-012-t1792317579483.jpg",
+     "t": 4701
+    },
+    {
+     "i": 13,
+     "ts": 1792317579606,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-013-t1792317579606.jpg",
+     "t": 4824
+    },
+    {
+     "i": 14,
+     "ts": 1792317579923,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-014-t1792317579923.jpg",
+     "t": 5141
+    },
+    {
+     "i": 15,
+     "ts": 1792317580210,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-015-t1792317580210.jpg",
+     "t": 5428
+    },
+    {
+     "i": 16,
+     "ts": 1792317580311,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-016-t1792317580311.jpg",
+     "t": 5529
+    },
+    {
+     "i": 17,
+     "ts": 1792317580349,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-017-t1792317580349.jpg",
+     "t": 5567
+    },
+    {
+     "i": 18,
+     "ts": 1792317580461,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-018-t1792317580461.jpg",
+     "t": 5679
+    },
+    {
+     "i": 19,
+     "ts": 1792317580501,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-019-t1792317580501.jpg",
+     "t": 5719
+    },
+    {
+     "i": 20,
+     "ts": 1792317580680,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-020-t1792317580680.jpg",
+     "t": 5898
+    },
+    {
+     "i": 21,
+     "ts": 1792317580639,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-021-t1792317580639.jpg",
+     "t": 5857
+    },
+    {
+     "i": 22,
+     "ts": 1792317580699,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-022-t1792317580699.jpg",
+     "t": 5917
+    },
+    {
+     "i": 23,
+     "ts": 1792317580762,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-023-t1792317580762.jpg",
+     "t": 5980
+    },
+    {
+     "i": 24,
+     "ts": 1792317580781,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-024-t1792317580781.jpg",
+     "t": 5999
+    },
+    {
+     "i": 25,
+     "ts": 1792317580905,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-025-t1792317580905.jpg",
+     "t": 6123
+    },
+    {
+     "i": 26,
+     "ts": 1792317581045,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-026-t1792317581045.jpg",
+     "t": 6263
+    },
+    {
+     "i": 27,
+     "ts": 1792317581161,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-027-t1792317581161.jpg",
+     "t": 6379
+    },
+    {
+     "i": 28,
+     "ts": 1792317581294,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-028-t1792317581294.jpg",
+     "t": 6512
+    },
+    {
+     "i": 29,
+     "ts": 1792317581313,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-029-t1792317581313.jpg",
+     "t": 6531
+    },
+    {
+     "i": 30,
+     "ts": 1792317581414,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-030-t1792317581414.jpg",
+     "t": 6632
+    },
+    {
+     "i": 31,
+     "ts": 1792317581444,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-031-t1792317581444.jpg",
+     "t": 6662
+    },
+    {
+     "i": 32,
+     "ts": 1792317581462,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-032-t1792317581462.jpg",
+     "t": 6680
+    },
+    {
+     "i": 33,
+     "ts": 1792317581491,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-033-t1792317581491.jpg",
+     "t": 6709
+    },
+    {
+     "i": 34,
+     "ts": 1792317581497,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-034-t1792317581497.jpg",
+     "t": 6715
+    },
+    {
+     "i": 35,
+     "ts": 1792317581529,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-035-t1792317581529.jpg",
+     "t": 6747
+    },
+    {
+     "i": 36,
+     "ts": 1792317581584,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-036-t1792317581584.jpg",
+     "t": 6802
+    },
+    {
+     "i": 37,
+     "ts": 1792317581617,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-037-t1792317581617.jpg",
+     "t": 6835
+    },
+    {
+     "i": 38,
+     "ts": 1792317581595,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-038-t1792317581595.jpg",
+     "t": 6813
+    },
+    {
+     "i": 39,
+     "ts": 1792317581718,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-039-t1792317581718.jpg",
+     "t": 6936
+    },
+    {
+     "i": 40,
+     "ts": 1792317581756,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-040-t1792317581756.jpg",
+     "t": 6974
+    },
+    {
+     "i": 41,
+     "ts": 1792317581729,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-041-t1792317581729.jpg",
+     "t": 6947
+    },
+    {
+     "i": 42,
+     "ts": 1792317581883,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-042-t1792317581883.jpg",
+     "t": 7101
+    },
+    {
+     "i": 43,
+     "ts": 1792317581895,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-043-t1792317581895.jpg",
+     "t": 7113
+    },
+    {
+     "i": 44,
+     "ts": 1792317581913,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-044-t1792317581913.jpg",
+     "t": 7131
+    },
+    {
+     "i": 45,
+     "ts": 1792317581930,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-045-t1792317581930.jpg",
+     "t": 7148
+    },
+    {
+     "i": 46,
+     "ts": 1792317581994,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-046-t1792317581994.jpg",
+     "t": 7212
+    },
+    {
+     "i": 47,
+     "ts": 1792317582083,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-047-t1792317582083.jpg",
+     "t": 7301
+    },
+    {
+     "i": 48,
+     "ts": 1792317582052,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-048-t1792317582052.jpg",
+     "t": 7270
+    },
+    {
+     "i": 49,
+     "ts": 1792317582018,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-049-t1792317582018.jpg",
+     "t": 7236
+    },
+    {
+     "i": 50,
+     "ts": 1792317582144,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-050-t1792317582144.jpg",
+     "t": 7362
+    },
+    {
+     "i": 51,
+     "ts": 1792317582160,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-051-t1792317582160.jpg",
+     "t": 7378
+    },
+    {
+     "i": 52,
+     "ts": 1792317582182,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-052-t1792317582182.jpg",
+     "t": 7400
+    },
+    {
+     "i": 53,
+     "ts": 1792317582305,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-053-t1792317582305.jpg",
+     "t": 7523
+    },
+    {
+     "i": 54,
+     "ts": 1792317582349,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-054-t1792317582349.jpg",
+     "t": 7567
+    },
+    {
+     "i": 55,
+     "ts": 1792317582323,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-055-t1792317582323.jpg",
+     "t": 7541
+    },
+    {
+     "i": 56,
+     "ts": 1792317582445,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-056-t1792317582445.jpg",
+     "t": 7663
+    },
+    {
+     "i": 57,
+     "ts": 1792317582461,
+     "w": 390,
+     "h": 844,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-057-t1792317582461.jpg",
+     "t": 7679
+    },
+    {
+     "i": 58,
+     "ts": 1792317582680,
+     "w": 390,
+     "h": 5274,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-058-t1792317582680.jpg",
+     "t": 7898
+    },
+    {
+     "i": 59,
+     "ts": 1792317582743,
+     "w": 390,
+     "h": 5274,
+     "file": "audit/evidence/home/hero/reveal-m390/frame-059-t1792317582743.jpg",
+     "t": 7961
+    }
+   ],
+   "console": [],
+   "errors": [],
+   "failed": []
+  },
+  "heroD1440": {
+   "res": {
+    "navMs": 2572,
+    "settled": {
+     "lcp": 1228,
+     "lcpEl": "SPAN.hero-title-line",
+     "cls": 0,
+     "shifts": [],
+     "longTasks": [
+      {
+       "d": 318,
+       "t": 354.60000002384186
+      },
+      {
+       "d": 80,
+       "t": 1568.1000000238419
+      },
+      {
+       "d": 50,
+       "t": 1668.5
+      },
+      {
+       "d": 272,
+       "t": 2736.7000000476837
+      }
+     ],
+     "domContentLoaded": 1566,
+     "load": 1567,
+     "ttfb": 214.5,
+     "paints": {
+      "first-paint": 1228,
+      "first-contentful-paint": 1228
+     },
+     "resourceCount": 17,
+     "resources": [
+      {
+       "name": "https://hujinhai.com/_astro/curiosity-renderer.D3-gsXsy.js",
+       "duration": 691,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/assets/signature-pen.js",
+       "duration": 622,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/CuriositySculpture.astro_astro_type_script_index_0_lang.CDPZr9BY.js",
+       "duration": 390,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/assets/menu-liquid-optics.js",
+       "duration": 389,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/index.D-ZHv_Tx.css",
+       "duration": 386,
+       "size": 300,
+       "type": "link"
+      },
+      {
+       "name": "https://hujinhai.com/assets/live-homepage-optics.js",
+       "duration": 386,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/index.BK_aAOHY.css",
+       "duration": 380,
+       "size": 300,
+       "type": "link"
+      },
+      {
+       "name": "https://hujinhai.com/cdn-cgi/rum?",
+       "duration": 358,
+       "size": 300,
+       "type": "xmlhttprequest"
+      },
+      {
+       "name": "https://hujinhai.com/assets/scene-media.js",
+       "duration": 340,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/5.DuDSPGP4_Z1EyTR6.webp",
+       "duration": 334,
+       "size": 300,
+       "type": "img"
+      },
+      {
+       "name": "https://hujinhai.com/assets/glass-pointer-light.js",
+       "duration": 332,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/2.CPcsTQJs_1cr0aa.webp",
+       "duration": 326,
+       "size": 300,
+       "type": "img"
+      },
+      {
+       "name": "https://hujinhai.com/_astro/4.C5T9hmJF_ZbEVYP.webp",
+       "duration": 326,
+       "size": 300,
+       "type": "img"
+      },
+      {
+       "name": "https://hujinhai.com/assets/optical-engine.js",
+       "duration": 325,
+       "size": 300,
+       "type": "script"
+      },
+      {
+       "name": "https://hujinhai.com/cdn-cgi/speculation",
+       "duration": 268,
+       "size": 451,
+       "type": "other"
+      }
+     ],
+     "docHeight": 5140,
+     "viewport": {
+      "w": 1440,
+      "h": 900
+     },
+     "scrollWidth": 1440,
+     "counters": {
+      "Frames": 6,
+      "Nodes": 1231,
+      "LayoutCount": 48,
+      "RecalcStyleCount": 84,
+      "ScriptDuration": 0.398,
+      "TaskDuration": 2.461,
+      "JSHeapUsedSize": 5350812
+     }
+    },
+    "hero": {
+     "titleText": "Make something\ninteresting.",
+     "h1": {
+      "x": 115,
+      "y": 228.828125,
+      "width": 546.84375,
+      "height": 218.390625,
+      "top": 228.828125,
+      "right": 661.84375,
+      "bottom": 447.21875,
+      "left": 115
+     },
+     "actions": {
+      "x": 115,
+      "y": 477.21875,
+      "width": 546.84375,
+      "height": 48,
+      "top": 477.21875,
+      "right": 661.84375,
+      "bottom": 525.21875,
+      "left": 115
+     },
+     "sculpture": {
+      "x": 690.640625,
+      "y": 154,
+      "width": 634.359375,
+      "height": 570,
+      "top": 154,
+      "right": 1325,
+      "bottom": 724,
+      "left": 690.640625
+     },
+     "glyphs": 25,
+     "samples": [
+      {
+       "t": 355,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 102.4375,
+          "width": 192,
+          "height": 46,
+          "top": 102.4375,
+          "right": 200,
+          "bottom": 148.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 102.4375,
+          "width": 96,
+          "height": 46,
+          "top": 102.4375,
+          "right": 296,
+          "bottom": 148.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 296,
+          "y": 102.4375,
+          "width": 258.359375,
+          "height": 46,
+          "top": 102.4375,
+          "right": 554.359375,
+          "bottom": 148.4375,
+          "left": 296
+         }
+        }
+       ],
+       "actions": {
+        "y": 169.875,
+        "h": 24
+       },
+       "sculpture": {
+        "y": 562.59375,
+        "h": 25
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 10667
+      },
+      {
+       "t": 676,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 8,
+          "y": 102.4375,
+          "width": 192,
+          "height": 46,
+          "top": 102.4375,
+          "right": 200,
+          "bottom": 148.4375,
+          "left": 8
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 200,
+          "y": 102.4375,
+          "width": 96,
+          "height": 46,
+          "top": 102.4375,
+          "right": 296,
+          "bottom": 148.4375,
+          "left": 200
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 296,
+          "y": 102.4375,
+          "width": 258.359375,
+          "height": 46,
+          "top": 102.4375,
+          "right": 554.359375,
+          "bottom": 148.4375,
+          "left": 296
+         }
+        }
+       ],
+       "actions": {
+        "y": 169.875,
+        "h": 24
+       },
+       "sculpture": {
+        "y": 562.59375,
+        "h": 25
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 10667
+      },
+      {
+       "t": 1142,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 1159,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 1249,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 1353,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 1457,
+       "glyphs": 0,
+       "opacityMin": null,
+       "opacityFull": 0,
+       "anims": 0,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 1654,
+       "glyphs": 25,
+       "opacityMin": 1,
+       "opacityFull": 25,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 1765,
+       "glyphs": 25,
+       "opacityMin": 1,
+       "opacityFull": 25,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 1870,
+       "glyphs": 25,
+       "opacityMin": 0.971667,
+       "opacityFull": 24,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 2092,
+       "glyphs": 25,
+       "opacityMin": 0.83,
+       "opacityFull": 19,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 2188,
+       "glyphs": 25,
+       "opacityMin": 0.886667,
+       "opacityFull": 18,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 2249,
+       "glyphs": 25,
+       "opacityMin": 0.83,
+       "opacityFull": 21,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 2407,
+       "glyphs": 25,
+       "opacityMin": 0.83,
+       "opacityFull": 20,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 2541,
+       "glyphs": 25,
+       "opacityMin": 0.83,
+       "opacityFull": 20,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 2574,
+       "glyphs": 25,
+       "opacityMin": 0.83,
+       "opacityFull": 21,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 2679,
+       "glyphs": 25,
+       "opacityMin": 0.83,
+       "opacityFull": 21,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 3048,
+       "glyphs": 25,
+       "opacityMin": 1,
+       "opacityFull": 25,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 3150,
+       "glyphs": 25,
+       "opacityMin": 1,
+       "opacityFull": 25,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 3263,
+       "glyphs": 25,
+       "opacityMin": 1,
+       "opacityFull": 25,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 3349,
+       "glyphs": 25,
+       "opacityMin": 1,
+       "opacityFull": 25,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 3459,
+       "glyphs": 25,
+       "opacityMin": 1,
+       "opacityFull": 25,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 3555,
+       "glyphs": 25,
+       "opacityMin": 1,
+       "opacityFull": 25,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      },
+      {
+       "t": 3658,
+       "glyphs": 25,
+       "opacityMin": 1,
+       "opacityFull": 25,
+       "anims": 53,
+       "cls": 0,
+       "lines": [
+        {
+         "text": "做一些有趣的",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "事情。",
+         "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+         }
+        },
+        {
+         "text": "Make something",
+         "r": {
+          "x": 115,
+          "y": 228.828125,
+          "width": 546.84375,
+          "height": 108.34375,
+          "top": 228.828125,
+          "right": 661.84375,
+          "bottom": 337.171875,
+          "left": 115
+         }
+        }
+       ],
+       "actions": {
+        "y": 477.21875,
+        "h": 48
+       },
+       "sculpture": {
+        "y": 154,
+        "h": 570
+       },
+       "scrollW": 1440,
+       "innerW": 1440,
+       "docH": 5140
+      }
+     ],
+     "scrollW": 1440,
+     "innerW": 1440,
+     "docH": 5140
+    },
+    "shots": [
+     "C:\\Users\\34123\\Desktop\\harness\\web_design\\audit\\evidence\\home\\hero\\reveal-d1440\\settled.jpg"
+    ]
+   },
+   "frameCount": 71,
+   "frames": [
+    {
+     "i": 0,
+     "ts": 1792317583521,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-000-t1792317583521.jpg",
+     "t": 29
+    },
+    {
+     "i": 1,
+     "ts": 1792317584739,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-001-t1792317584739.jpg",
+     "t": 1247
+    },
+    {
+     "i": 2,
+     "ts": 1792317585114,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-002-t1792317585114.jpg",
+     "t": 1622
+    },
+    {
+     "i": 3,
+     "ts": 1792317585314,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-003-t1792317585314.jpg",
+     "t": 1822
+    },
+    {
+     "i": 4,
+     "ts": 1792317585306,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-004-t1792317585306.jpg",
+     "t": 1814
+    },
+    {
+     "i": 5,
+     "ts": 1792317585327,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-005-t1792317585327.jpg",
+     "t": 1835
+    },
+    {
+     "i": 6,
+     "ts": 1792317585696,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-006-t1792317585696.jpg",
+     "t": 2204
+    },
+    {
+     "i": 7,
+     "ts": 1792317585728,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-007-t1792317585728.jpg",
+     "t": 2236
+    },
+    {
+     "i": 8,
+     "ts": 1792317585752,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-008-t1792317585752.jpg",
+     "t": 2260
+    },
+    {
+     "i": 9,
+     "ts": 1792317586078,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-009-t1792317586078.jpg",
+     "t": 2586
+    },
+    {
+     "i": 10,
+     "ts": 1792317585963,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-010-t1792317585963.jpg",
+     "t": 2471
+    },
+    {
+     "i": 11,
+     "ts": 1792317586101,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-011-t1792317586101.jpg",
+     "t": 2609
+    },
+    {
+     "i": 12,
+     "ts": 1792317586267,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-012-t1792317586267.jpg",
+     "t": 2775
+    },
+    {
+     "i": 13,
+     "ts": 1792317586286,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-013-t1792317586286.jpg",
+     "t": 2794
+    },
+    {
+     "i": 14,
+     "ts": 1792317586300,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-014-t1792317586300.jpg",
+     "t": 2808
+    },
+    {
+     "i": 15,
+     "ts": 1792317586315,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-015-t1792317586315.jpg",
+     "t": 2823
+    },
+    {
+     "i": 16,
+     "ts": 1792317586334,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-016-t1792317586334.jpg",
+     "t": 2842
+    },
+    {
+     "i": 17,
+     "ts": 1792317586354,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-017-t1792317586354.jpg",
+     "t": 2862
+    },
+    {
+     "i": 18,
+     "ts": 1792317586366,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-018-t1792317586366.jpg",
+     "t": 2874
+    },
+    {
+     "i": 19,
+     "ts": 1792317586385,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-019-t1792317586385.jpg",
+     "t": 2893
+    },
+    {
+     "i": 20,
+     "ts": 1792317586400,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-020-t1792317586400.jpg",
+     "t": 2908
+    },
+    {
+     "i": 21,
+     "ts": 1792317586429,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-021-t1792317586429.jpg",
+     "t": 2937
+    },
+    {
+     "i": 22,
+     "ts": 1792317586440,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-022-t1792317586440.jpg",
+     "t": 2948
+    },
+    {
+     "i": 23,
+     "ts": 1792317586467,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-023-t1792317586467.jpg",
+     "t": 2975
+    },
+    {
+     "i": 24,
+     "ts": 1792317586473,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-024-t1792317586473.jpg",
+     "t": 2981
+    },
+    {
+     "i": 25,
+     "ts": 1792317586487,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-025-t1792317586487.jpg",
+     "t": 2995
+    },
+    {
+     "i": 26,
+     "ts": 1792317586502,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-026-t1792317586502.jpg",
+     "t": 3010
+    },
+    {
+     "i": 27,
+     "ts": 1792317586519,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-027-t1792317586519.jpg",
+     "t": 3027
+    },
+    {
+     "i": 28,
+     "ts": 1792317586535,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-028-t1792317586535.jpg",
+     "t": 3043
+    },
+    {
+     "i": 29,
+     "ts": 1792317586551,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-029-t1792317586551.jpg",
+     "t": 3059
+    },
+    {
+     "i": 30,
+     "ts": 1792317586586,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-030-t1792317586586.jpg",
+     "t": 3094
+    },
+    {
+     "i": 31,
+     "ts": 1792317586605,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-031-t1792317586605.jpg",
+     "t": 3113
+    },
+    {
+     "i": 32,
+     "ts": 1792317586619,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-032-t1792317586619.jpg",
+     "t": 3127
+    },
+    {
+     "i": 33,
+     "ts": 1792317586651,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-033-t1792317586651.jpg",
+     "t": 3159
+    },
+    {
+     "i": 34,
+     "ts": 1792317586667,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-034-t1792317586667.jpg",
+     "t": 3175
+    },
+    {
+     "i": 35,
+     "ts": 1792317586683,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-035-t1792317586683.jpg",
+     "t": 3191
+    },
+    {
+     "i": 36,
+     "ts": 1792317586700,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-036-t1792317586700.jpg",
+     "t": 3208
+    },
+    {
+     "i": 37,
+     "ts": 1792317586717,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-037-t1792317586717.jpg",
+     "t": 3225
+    },
+    {
+     "i": 38,
+     "ts": 1792317586733,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-038-t1792317586733.jpg",
+     "t": 3241
+    },
+    {
+     "i": 39,
+     "ts": 1792317586750,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-039-t1792317586750.jpg",
+     "t": 3258
+    },
+    {
+     "i": 40,
+     "ts": 1792317586767,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-040-t1792317586767.jpg",
+     "t": 3275
+    },
+    {
+     "i": 41,
+     "ts": 1792317586783,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-041-t1792317586783.jpg",
+     "t": 3291
+    },
+    {
+     "i": 42,
+     "ts": 1792317586799,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-042-t1792317586799.jpg",
+     "t": 3307
+    },
+    {
+     "i": 43,
+     "ts": 1792317586816,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-043-t1792317586816.jpg",
+     "t": 3324
+    },
+    {
+     "i": 44,
+     "ts": 1792317586856,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-044-t1792317586856.jpg",
+     "t": 3364
+    },
+    {
+     "i": 45,
+     "ts": 1792317586866,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-045-t1792317586866.jpg",
+     "t": 3374
+    },
+    {
+     "i": 46,
+     "ts": 1792317586874,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-046-t1792317586874.jpg",
+     "t": 3382
+    },
+    {
+     "i": 47,
+     "ts": 1792317586886,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-047-t1792317586886.jpg",
+     "t": 3394
+    },
+    {
+     "i": 48,
+     "ts": 1792317586903,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-048-t1792317586903.jpg",
+     "t": 3411
+    },
+    {
+     "i": 49,
+     "ts": 1792317586917,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-049-t1792317586917.jpg",
+     "t": 3425
+    },
+    {
+     "i": 50,
+     "ts": 1792317586944,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-050-t1792317586944.jpg",
+     "t": 3452
+    },
+    {
+     "i": 51,
+     "ts": 1792317586956,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-051-t1792317586956.jpg",
+     "t": 3464
+    },
+    {
+     "i": 52,
+     "ts": 1792317586969,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-052-t1792317586969.jpg",
+     "t": 3477
+    },
+    {
+     "i": 53,
+     "ts": 1792317586996,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-053-t1792317586996.jpg",
+     "t": 3504
+    },
+    {
+     "i": 54,
+     "ts": 1792317587008,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-054-t1792317587008.jpg",
+     "t": 3516
+    },
+    {
+     "i": 55,
+     "ts": 1792317587034,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-055-t1792317587034.jpg",
+     "t": 3542
+    },
+    {
+     "i": 56,
+     "ts": 1792317587051,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-056-t1792317587051.jpg",
+     "t": 3559
+    },
+    {
+     "i": 57,
+     "ts": 1792317587067,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-057-t1792317587067.jpg",
+     "t": 3575
+    },
+    {
+     "i": 58,
+     "ts": 1792317587084,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-058-t1792317587084.jpg",
+     "t": 3592
+    },
+    {
+     "i": 59,
+     "ts": 1792317587111,
+     "w": 1440,
+     "h": 900,
+     "file": "audit/evidence/home/hero/reveal-d1440/frame-059-t1792317587111.jpg",
+     "t": 3619
+    }
+   ]
+  },
+  "refresh": [
+   {
+    "kind": "initial",
+    "navMs": 4619,
+    "lcp": 3420,
+    "lcpEl": "H2.",
+    "cls": 0,
+    "shifts": [],
+    "longTasks": [
+     {
+      "d": 88,
+      "t": 2823.400000035763
+     },
+     {
+      "d": 52,
+      "t": 2933.699999988079
+     },
+     {
+      "d": 401,
+      "t": 3017.400000035763
+     },
+     {
+      "d": 279,
+      "t": 4314.699999988079
+     }
+    ],
+    "domContentLoaded": 3005.400000035763,
+    "load": 3006.699999988079,
+    "ttfb": 266.60000002384186,
+    "paints": {
+     "first-paint": 3420,
+     "first-contentful-paint": 3420
+    },
+    "resourceCount": 16,
+    "resources": [
+     {
+      "name": "https://hujinhai.com/assets/signature-pen.js",
+      "duration": 1863,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/index.BK_aAOHY.css",
+      "duration": 1546,
+      "size": 300,
+      "type": "link"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/index.D-ZHv_Tx.css",
+      "duration": 1545,
+      "size": 300,
+      "type": "link"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/CuriositySculpture.astro_astro_type_script_index_0_lang.CDPZr9BY.js",
+      "duration": 1542,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/live-homepage-optics.js",
+      "duration": 1541,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/menu-liquid-optics.js",
+      "duration": 1539,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/2.CPcsTQJs_1cr0aa.webp",
+      "duration": 477,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/4.C5T9hmJF_ZbEVYP.webp",
+      "duration": 477,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/5.DuDSPGP4_Z1EyTR6.webp",
+      "duration": 477,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/curiosity-renderer.D3-gsXsy.js",
+      "duration": 438,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/glass-pointer-light.js",
+      "duration": 316,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/scene-media.js",
+      "duration": 316,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/optical-engine.js",
+      "duration": 314,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/cdn-cgi/rum?",
+      "duration": 298,
+      "size": 300,
+      "type": "xmlhttprequest"
+     },
+     {
+      "name": "https://hujinhai.com/cdn-cgi/speculation",
+      "duration": 232,
+      "size": 451,
+      "type": "other"
+     }
+    ],
+    "docHeight": 5274,
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "scrollWidth": 390,
+    "counters": {
+     "Frames": 5,
+     "Nodes": 1073,
+     "LayoutCount": 52,
+     "RecalcStyleCount": 59,
+     "ScriptDuration": 0.318,
+     "TaskDuration": 2.068,
+     "JSHeapUsedSize": 3951408
+    }
+   },
+   {
+    "kind": "reload1",
+    "loadMs": 1603,
+    "lcp": 976,
+    "lcpEl": "H2.",
+    "cls": 0,
+    "shifts": [],
+    "longTasks": [
+     {
+      "d": 56,
+      "t": 1442.6000000238419
+     },
+     {
+      "d": 181,
+      "t": 2450.100000023842
+     }
+    ],
+    "domContentLoaded": 1501.300000011921,
+    "load": 1501.800000011921,
+    "ttfb": 340.30000001192093,
+    "paints": {
+     "first-paint": 976,
+     "first-contentful-paint": 976
+    },
+    "resourceCount": 18,
+    "resources": [
+     {
+      "name": "https://hujinhai.com/_astro/curiosity-renderer.D3-gsXsy.js",
+      "duration": 943,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/cdn-cgi/rum?",
+      "duration": 906,
+      "size": 300,
+      "type": "xmlhttprequest"
+     },
+     {
+      "name": "https://hujinhai.com/assets/jh-orbit.svg",
+      "duration": 844,
+      "size": 300,
+      "type": "other"
+     },
+     {
+      "name": "https://hujinhai.com/assets/signature-pen.js",
+      "duration": 768,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/5.DuDSPGP4_Z1EyTR6.webp",
+      "duration": 761,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/2.CPcsTQJs_1cr0aa.webp",
+      "duration": 750,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/4.C5T9hmJF_ZbEVYP.webp",
+      "duration": 750,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/cdn-cgi/speculation",
+      "duration": 414,
+      "size": 451,
+      "type": "other"
+     },
+     {
+      "name": "https://hujinhai.com/assets/scene-media.js",
+      "duration": 396,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/glass-pointer-light.js",
+      "duration": 388,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/optical-engine.js",
+      "duration": 387,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/menu-liquid-optics.js",
+      "duration": 291,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/CuriositySculpture.astro_astro_type_script_index_0_lang.CDPZr9BY.js",
+      "duration": 291,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/live-homepage-optics.js",
+      "duration": 290,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/index.D-ZHv_Tx.css",
+      "duration": 285,
+      "size": 300,
+      "type": "link"
+     }
+    ],
+    "docHeight": 5274,
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "scrollWidth": 390,
+    "counters": {
+     "Frames": 9,
+     "Nodes": 2138,
+     "LayoutCount": 56,
+     "RecalcStyleCount": 83,
+     "ScriptDuration": 0.276,
+     "TaskDuration": 1.238,
+     "JSHeapUsedSize": 6534840
+    },
+    "heroState": {
+     "glyphs": 25,
+     "text": "Make something\ninteresting.",
+     "cls": 0,
+     "lcp": 976,
+     "lcpEl": "H2."
+    }
+   },
+   {
+    "kind": "reload2",
+    "loadMs": 2115,
+    "lcp": 856,
+    "lcpEl": "H2.",
+    "cls": 0,
+    "shifts": [],
+    "longTasks": [
+     {
+      "d": 53,
+      "t": 1973.8999999761581
+     },
+     {
+      "d": 98,
+      "t": 2033
+     },
+     {
+      "d": 282,
+      "t": 2302.7999999523163
+     },
+     {
+      "d": 127,
+      "t": 2585.5
+     },
+     {
+      "d": 60,
+      "t": 2909.899999976158
+     }
+    ],
+    "domContentLoaded": 2029.0999999642372,
+    "load": 2029.5,
+    "ttfb": 377.5,
+    "paints": {
+     "first-paint": 856,
+     "first-contentful-paint": 856
+    },
+    "resourceCount": 18,
+    "resources": [
+     {
+      "name": "https://hujinhai.com/assets/signature-pen.js",
+      "duration": 1259,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/5.DuDSPGP4_Z1EyTR6.webp",
+      "duration": 1256,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/4.C5T9hmJF_ZbEVYP.webp",
+      "duration": 1250,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/2.CPcsTQJs_1cr0aa.webp",
+      "duration": 1239,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/assets/scene-media.js",
+      "duration": 1069,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/glass-pointer-light.js",
+      "duration": 1021,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/optical-engine.js",
+      "duration": 1015,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/jh-orbit.svg",
+      "duration": 673,
+      "size": 300,
+      "type": "other"
+     },
+     {
+      "name": "https://hujinhai.com/cdn-cgi/rum?",
+      "duration": 312,
+      "size": 300,
+      "type": "xmlhttprequest"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/curiosity-renderer.D3-gsXsy.js",
+      "duration": 271,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/CuriositySculpture.astro_astro_type_script_index_0_lang.CDPZr9BY.js",
+      "duration": 225,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/live-homepage-optics.js",
+      "duration": 219,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/menu-liquid-optics.js",
+      "duration": 218,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/index.D-ZHv_Tx.css",
+      "duration": 214,
+      "size": 300,
+      "type": "link"
+     },
+     {
+      "name": "https://hujinhai.com/cdn-cgi/speculation",
+      "duration": 211,
+      "size": 451,
+      "type": "other"
+     }
+    ],
+    "docHeight": 5274,
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "scrollWidth": 390,
+    "counters": {
+     "Frames": 11,
+     "Nodes": 3200,
+     "LayoutCount": 44,
+     "RecalcStyleCount": 59,
+     "ScriptDuration": 0.485,
+     "TaskDuration": 1.442,
+     "JSHeapUsedSize": 3352392
+    },
+    "heroState": {
+     "glyphs": 25,
+     "text": "Make something\ninteresting.",
+     "cls": 0,
+     "lcp": 856,
+     "lcpEl": "H2."
+    }
+   },
+   {
+    "kind": "reload3",
+    "loadMs": 2679,
+    "lcp": 0,
+    "lcpEl": null,
+    "cls": 0,
+    "shifts": [],
+    "longTasks": [],
+    "domContentLoaded": 1915.8999999761581,
+    "load": 2636.199999988079,
+    "ttfb": 268.89999997615814,
+    "paints": {},
+    "resourceCount": 17,
+    "resources": [
+     {
+      "name": "https://hujinhai.com/_astro/5.DuDSPGP4_Z1EyTR6.webp",
+      "duration": 1591,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/2.CPcsTQJs_1cr0aa.webp",
+      "duration": 1296,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/4.C5T9hmJF_ZbEVYP.webp",
+      "duration": 1296,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/assets/signature-pen.js",
+      "duration": 1016,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/live-homepage-optics.js",
+      "duration": 856,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/menu-liquid-optics.js",
+      "duration": 853,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/CuriositySculpture.astro_astro_type_script_index_0_lang.CDPZr9BY.js",
+      "duration": 733,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/scene-media.js",
+      "duration": 560,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/jh-orbit.svg",
+      "duration": 533,
+      "size": 300,
+      "type": "other"
+     },
+     {
+      "name": "https://hujinhai.com/cdn-cgi/speculation",
+      "duration": 372,
+      "size": 451,
+      "type": "other"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/index.BK_aAOHY.css",
+      "duration": 369,
+      "size": 300,
+      "type": "link"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/index.D-ZHv_Tx.css",
+      "duration": 364,
+      "size": 300,
+      "type": "link"
+     },
+     {
+      "name": "https://hujinhai.com/assets/optical-engine.js",
+      "duration": 280,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/glass-pointer-light.js",
+      "duration": 279,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/cdn-cgi/rum?",
+      "duration": 252,
+      "size": 300,
+      "type": "xmlhttprequest"
+     }
+    ],
+    "docHeight": 5274,
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "scrollWidth": 390,
+    "counters": {
+     "Frames": 6,
+     "Nodes": 2109,
+     "LayoutCount": 5,
+     "RecalcStyleCount": 7,
+     "ScriptDuration": 0.056,
+     "TaskDuration": 0.173,
+     "JSHeapUsedSize": 4570328
+    },
+    "heroState": {
+     "glyphs": 25,
+     "text": "Make something\ninteresting.",
+     "cls": 0,
+     "lcp": 0,
+     "lcpEl": null
+    }
+   }
+  ],
+  "nojsm390": {
+   "error": "Error: CDP timeout: Runtime.evaluate\n    at Timeout._onTimeout (file:///C:/Users/34123/Desktop/harness/web_design/_dsh/cdp.mjs:69:69)\n    at listOnTimeout (node:internal/timers:605:17)\n    at process.processTimers (node:internal/timers:541:7)"
+  },
+  "nojsd1440": {
+   "error": "Error: eval error: TypeError: Failed to execute 'getComputedStyle' on 'Window': parameter 1 is not of type 'Element'.\n    at <anonymous>:11:26\n    at <anonymous>:17:7\n    at evaluate (file:///C:/Users/34123/Desktop/harness/web_design/_dsh/cdp.mjs:121:33)\n    at async file:///C:/Users/34123/Desktop/harness/web_design/_dsh/home-hero.mjs:134:18"
+  },
+  "reducedMotion": {
+   "error": "Error: eval error: TypeError: Failed to execute 'getComputedStyle' on 'Window': parameter 1 is not of type 'Element'.\n    at <anonymous>:1:366\n    at <anonymous>:1:556\n    at evaluate (file:///C:/Users/34123/Desktop/harness/web_design/_dsh/cdp.mjs:121:33)\n    at async file:///C:/Users/34123/Desktop/harness/web_design/_dsh/home-hero.mjs:169:19"
+  },
+  "themeLang": {
+   "base": {
+    "lcp": 17104,
+    "lcpEl": "H2.",
+    "cls": 0,
+    "shifts": [],
+    "longTasks": [
+     {
+      "d": 222,
+      "t": 17499.400000035763
+     }
+    ],
+    "domContentLoaded": 17408.900000035763,
+    "load": 17410.80000001192,
+    "ttfb": 16299.100000023842,
+    "paints": {
+     "first-paint": 17104,
+     "first-contentful-paint": 17104
+    },
+    "resourceCount": 15,
+    "resources": [
+     {
+      "name": "https://hujinhai.com/cdn-cgi/rum?",
+      "duration": 1579,
+      "size": 300,
+      "type": "xmlhttprequest"
+     },
+     {
+      "name": "https://hujinhai.com/assets/signature-pen.js",
+      "duration": 885,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/cdn-cgi/speculation",
+      "duration": 449,
+      "size": 451,
+      "type": "other"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/index.D-ZHv_Tx.css",
+      "duration": 416,
+      "size": 300,
+      "type": "link"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/CuriositySculpture.astro_astro_type_script_index_0_lang.CDPZr9BY.js",
+      "duration": 416,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/menu-liquid-optics.js",
+      "duration": 415,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/live-homepage-optics.js",
+      "duration": 415,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/index.BK_aAOHY.css",
+      "duration": 414,
+      "size": 300,
+      "type": "link"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/4.C5T9hmJF_ZbEVYP.webp",
+      "duration": 299,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/2.CPcsTQJs_1cr0aa.webp",
+      "duration": 298,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/_astro/5.DuDSPGP4_Z1EyTR6.webp",
+      "duration": 284,
+      "size": 300,
+      "type": "img"
+     },
+     {
+      "name": "https://hujinhai.com/assets/scene-media.js",
+      "duration": 281,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/glass-pointer-light.js",
+      "duration": 272,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://hujinhai.com/assets/optical-engine.js",
+      "duration": 271,
+      "size": 300,
+      "type": "script"
+     },
+     {
+      "name": "https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092",
+      "duration": 6,
+      "size": 0,
+      "type": "script"
+     }
+    ],
+    "docHeight": 5274,
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "scrollWidth": 390,
+    "counters": {
+     "Frames": 7,
+     "Nodes": 1096,
+     "LayoutCount": 77,
+     "RecalcStyleCount": 92,
+     "ScriptDuration": 0.341,
+     "TaskDuration": 0.98,
+     "JSHeapUsedSize": 6896752
+    }
+   },
+   "state0": {
+    "theme": "dark",
+    "lang": "en",
+    "bg": "rgb(19, 20, 23)",
+    "cls": 0,
+    "h1": "Make something\ninteresting.",
+    "docH": 5274
+   },
+   "dark": {
+    "theme": "light",
+    "bg": "rgb(247, 247, 245)",
+    "cls": 0,
+    "pressed": "false"
+   },
+   "during": {
+    "lang": "zh-CN",
+    "glyphs": 9,
+    "text": "做一些有趣的\n事情。",
+    "btn": "EN",
+    "navFirst": " 作品Works "
+   },
+   "en": {
+    "lang": "zh-CN",
+    "theme": "light",
+    "h1Text": "做一些有趣的\n事情。",
+    "glyphs": 9,
+    "glyphTexts": "做一些有趣的事情。",
+    "ariaLabel": null,
+    "h1": {
+     "x": 18,
+     "y": 84,
+     "width": 354,
+     "height": 91.90625,
+     "top": 84,
+     "right": 372,
+     "bottom": 175.90625,
+     "left": 18
+    },
+    "cls": 0.014190276768248663,
+    "docH": 5140,
+    "scrollW": 390,
+    "innerW": 390
+   },
+   "backZh": {
+    "lang": "en",
+    "h1Text": "Make something\ninteresting.",
+    "glyphs": 25,
+    "cls": 0.028380553536497325,
+    "docH": 5274
+   },
+   "end": {
+    "cls": 0.028380553536497325,
+    "lcp": 17104,
+    "shifts": [
+     {
+      "v": 0.014190276768248663,
+      "t": 20929.900000035763
+     },
+     {
+      "v": 0.014190276768248663,
+      "t": 22430.80000001192
+     }
+    ]
+   },
+   "shots": [
+    "C:\\Users\\34123\\Desktop\\harness\\web_design\\audit\\evidence\\home\\theme-lang\\m390-zh-light.jpg",
+    "C:\\Users\\34123\\Desktop\\harness\\web_design\\audit\\evidence\\home\\theme-lang\\m390-zh-dark.jpg",
+    "C:\\Users\\34123\\Desktop\\harness\\web_design\\audit\\evidence\\home\\theme-lang\\m390-en-dark.jpg",
+    "C:\\Users\\34123\\Desktop\\harness\\web_design\\audit\\evidence\\home\\theme-lang\\m390-zh-dark-back.jpg"
+   ],
+   "errors": []
+  }
+ }
+}
