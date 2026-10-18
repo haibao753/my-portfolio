@@ -1,19 +1,193 @@
 ---
+import type {Project} from "../data/site";
 import AnimatedCover from "./AnimatedCover.astro";
-interface Props{index:number;href:string}
+interface Props{index:number;project:Project}
 const {index}=Astro.props;
 ---
 <div class:list={["visual",`visual-${index}`]}>
- {index===0&&<div class="world-art" aria-hidden="true"><span>J.H. LAB</span><strong><span data-locale="zh">读一点<br/>世界。</span><span data-locale="en">WORLD<br/>IN FOCUS.</span></strong><small><span data-locale="zh">每天，从一个新问题开始</span><span data-locale="en">A new question, every day</span></small></div>}
- {index===1&&<AnimatedCover kind="mathematics" />}
- {index===2&&<AnimatedCover kind="memory" />}
- {index===3&&<AnimatedCover kind="geometry" />}
+ {index===0&&<div class="world-panel" aria-hidden="true">
+  <header class="world-head"><span>J.H. LAB / DAILY BRIEF</span><span class="world-live"><i></i><span data-locale="zh">每日更新</span><span data-locale="en">DAILY</span></span></header>
+  <strong class="world-title"><span data-locale="zh">读一点<br/>世界。</span><span data-locale="en">WORLD<br/>IN FOCUS.</span></strong>
+  <div class="world-stream">
+   <div class="stream-row"><span class="stream-index">01</span><span class="stream-topic"><span data-locale="zh">国际科技</span><span data-locale="en">Global tech</span></span><span class="stream-note">AI · 芯片 · 航天</span></div>
+   <div class="stream-row"><span class="stream-index">02</span><span class="stream-topic"><span data-locale="zh">科学研究</span><span data-locale="en">Science</span></span><span class="stream-note">论文 · 复现 · 证据</span></div>
+   <div class="stream-row"><span class="stream-index">03</span><span class="stream-topic"><span data-locale="zh">中国观察</span><span data-locale="en">China watch</span></span><span class="stream-note">公共议题 · 社会</span></div>
+   <div class="stream-row"><span class="stream-index">04</span><span class="stream-topic"><span data-locale="zh">心理学</span><span data-locale="en">Psychology</span></span><span class="stream-note">行为 · 认知 · 关系</span></div>
+  </div>
+  <footer class="world-foot"><span><span data-locale="zh">AI 辅助整理 · 保留原始来源</span><span data-locale="en">AI-assisted · sources kept</span></span><span class="world-cursor" aria-hidden="true"></span></footer>
+ </div>}
+ {index===1&&<figure class="math-film" aria-hidden="true">
+  <img src="/videos/Image_1792128445417_362.jpg" alt="" width="960" height="720" loading="lazy" decoding="async" />
+  <span class="math-play">▶</span>
+  <figcaption>
+   <span class="math-kicker"><span data-locale="zh">站内放映 · 04:47 · 莫比乌斯带</span><span data-locale="en">ON-SITE FILM · 04:47 · MÖBIUS</span></span>
+  </figcaption>
+ </figure>}
+ {index===2&&<div class="memory-frame" aria-hidden="true">
+  <AnimatedCover kind="memory" />
+  <span class="memory-badge">↗ <span data-locale="zh">站外影像馆 · zhengyifan.win</span><span data-locale="en">EXTERNAL GALLERY · zhengyifan.win</span></span>
+ </div>}
+ {index===3&&<div class="geometry-lab" aria-hidden="true">
+  <div class="geometry-head"><span>BONNET FAMILY / u,v</span><output data-geometry-t>t = 0.32</output></div>
+  <canvas data-geometry-canvas width="640" height="420"></canvas>
+  <p class="geometry-hint"><span data-locale="zh">移动指针改变参数 t · 悬链面 ↔ 螺旋面</span><span data-locale="en">Move the pointer to change t · catenoid ↔ helicoid</span></p>
+ </div>}
 </div>
+<script>
+ const canvas=document.querySelector<HTMLCanvasElement>("[data-geometry-canvas]");
+ if(canvas){
+  const ctx=canvas.getContext("2d");
+  const holder=canvas.closest<HTMLElement>(".geometry-lab");
+  const output=document.querySelector<HTMLOutputElement>("[data-geometry-t]");
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)");
+  const dark=()=>document.documentElement.dataset.theme==="dark";
+  let t=.32,yaw=.62,pitch=.4,visible=false,raf=0,dragging=false,lastPointer=0,width=0,height=0,dpr=1;
+  const clamp=(v:number,min:number,max:number)=>Math.max(min,Math.min(max,v));
+  const surface=(u:number,v:number,tv:number)=>{
+   const c=Math.cos(tv*Math.PI/2),s=Math.sin(tv*Math.PI/2);
+   return [
+    c*Math.sinh(v)*Math.sin(u)+s*Math.cosh(v)*Math.cos(u),
+    -c*Math.sinh(v)*Math.cos(u)+s*Math.cosh(v)*Math.sin(u),
+    c*u+s*v
+   ];
+  };
+  const project=(p:number[])=>{
+   const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+   const x=cy*p[0]+sy*p[2];
+   const z=-sy*p[0]+cy*p[2];
+   const y=cp*p[1]-sp*z;
+   const depth=3.4+z*.16;
+   const scale=Math.min(width,height)*.78/Math.max(1.15,depth);
+   return [width/2+x*scale,height/2-y*scale];
+  };
+  const draw=()=>{
+   if(!ctx||!width||!height)return;
+   ctx.setTransform(dpr,0,0,dpr,0,0);
+   ctx.clearRect(0,0,width,height);
+   const ink=dark()?[190,220,250]:[43,84,138];
+   const accent=dark()?[150,198,255]:[8,107,223];
+   ctx.lineWidth=1;
+   for(let i=0;i<=9;i++){
+    const u=(i/9)*Math.PI*2;
+    ctx.beginPath();
+    for(let j=0;j<=26;j++){
+     const v=-1.55+(j/26)*3.1;
+     const p=project(surface(u,v,t));
+     if(j===0)ctx.moveTo(p[0],p[1]);else ctx.lineTo(p[0],p[1]);
+    }
+    ctx.strokeStyle=`rgba(${ink.join(",")},${i%3===0?.58:.3})`;
+    ctx.stroke();
+   }
+   for(let i=0;i<=11;i++){
+    const v=-1.55+(i/11)*3.1;
+    ctx.beginPath();
+    for(let j=0;j<=30;j++){
+     const u=(j/30)*Math.PI*2;
+     const p=project(surface(u,v,t));
+     if(j===0)ctx.moveTo(p[0],p[1]);else ctx.lineTo(p[0],p[1]);
+    }
+    ctx.strokeStyle=`rgba(${accent.join(",")},${i===5||i===6?.62:.24})`;
+    ctx.stroke();
+   }
+   // A small axis cross anchors the wireframe without visual noise.
+   const o=project([0,0,0]),ax=project([1.35,0,0]),ay=project([0,1.35,0]);
+   ctx.lineWidth=1.4;ctx.strokeStyle=`rgba(${accent.join(",")},.45)`;
+   ctx.beginPath();ctx.moveTo(o[0],o[1]);ctx.lineTo(ax[0],ax[1]);ctx.stroke();
+   ctx.beginPath();ctx.moveTo(o[0],o[1]);ctx.lineTo(ay[0],ay[1]);ctx.stroke();
+  };
+  const resize=()=>{
+   const rect=canvas.getBoundingClientRect();
+   dpr=Math.min(devicePixelRatio||1,1.5);
+   width=Math.max(1,Math.round(rect.width));
+   height=Math.max(1,Math.round(rect.height));
+   canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
+   draw();
+  };
+  const tick=()=>{
+   raf=0;
+   if(!visible||reduce.matches)return;
+   yaw+=.0028;
+   draw();
+   raf=requestAnimationFrame(tick);
+  };
+  const start=()=>{if(!raf&&visible&&!reduce.matches)raf=requestAnimationFrame(tick)};
+  const stop=()=>{if(raf){cancelAnimationFrame(raf);raf=0}};
+  const setT=(next:number)=>{
+   t=clamp(next,0,1);
+   if(output)output.textContent="t = "+t.toFixed(2);
+   draw();
+  };
+  canvas.addEventListener("pointermove",event=>{
+   const rect=canvas.getBoundingClientRect();
+   if(dragging||performance.now()-lastPointer>90){
+    lastPointer=performance.now();
+    setT((event.clientX-rect.left)/Math.max(1,rect.width));
+   }
+  },{passive:true});
+  canvas.addEventListener("pointerdown",event=>{dragging=true;canvas.setPointerCapture(event.pointerId)});
+  canvas.addEventListener("pointerup",()=>{dragging=false});
+  canvas.addEventListener("pointercancel",()=>{dragging=false});
+  canvas.addEventListener("pointerleave",()=>{dragging=false});
+  new ResizeObserver(resize).observe(canvas);
+  if(holder){
+   new IntersectionObserver(entries=>{
+    visible=entries.some(entry=>entry.isIntersecting);
+    if(visible)start();else stop();
+   },{rootMargin:"120px"}).observe(holder);
+  }
+  reduce.addEventListener?.("change",()=>{if(reduce.matches)stop();else start()});
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)stop();else start()});
+  resize();
+  setT(.32);
+ }
+</script>
 <style>
- .visual{min-height:380px;border:1px solid var(--stroke);border-radius:22px;overflow:hidden;background:linear-gradient(135deg,#e6ebf0,#f8f9fb);box-shadow:var(--shadow-sm);display:grid;place-items:center;position:relative}
- .world-art{padding:38px;display:flex;flex-direction:column;justify-content:space-between;width:82%;height:290px;background:rgba(255,255,255,.90);color:#1d1d1f;border:1px solid rgba(24,29,37,.11);box-shadow:var(--shadow-md)}
- .world-art>span,.world-art small{font:600 10px ui-monospace,monospace;letter-spacing:.1em}
- .world-art strong{font-size:clamp(37px,4vw,60px);line-height:1.15;letter-spacing:-.065em}
- @media(max-width:900px){.visual{min-height:300px}}
- @media(max-width:600px){.visual{min-height:245px}.world-art{height:210px;padding:23px}.world-art strong{font-size:36px}}
+ .visual{position:relative;min-height:390px;border:1px solid var(--stroke);border-radius:22px;overflow:hidden;background:linear-gradient(135deg,#e6ebf0,#f8f9fb);box-shadow:var(--shadow-sm);display:grid;place-items:center;isolation:isolate}
+ :global(html[data-theme="dark"]) .visual{background:linear-gradient(135deg,#1b2028,#101318)}
+ /* 01 — reading: typographic index with a quiet data stream */
+ .world-panel{width:min(86%,430px);padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;gap:clamp(14px,2.4vw,26px);background:var(--card);color:var(--fg);border:1px solid var(--stroke);border-radius:16px;box-shadow:var(--shadow-md);transform:rotate(-.6deg)}
+ .world-head,.world-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;font:600 9px/1.4 ui-monospace,"SFMono-Regular",monospace;letter-spacing:.1em;color:var(--muted)}
+ .world-live{display:inline-flex;align-items:center;gap:5px;color:var(--accent)}
+ .world-live i{width:5px;height:5px;border-radius:50%;background:currentColor;animation:world-pulse 2.8s ease-in-out infinite}
+ .world-title{font-size:clamp(34px,4.2vw,52px);line-height:1.02;letter-spacing:-.065em;font-weight:750}
+ .world-stream{display:grid;gap:0;border-top:1px solid var(--stroke)}
+ .stream-row{display:grid;grid-template-columns:24px minmax(0,1fr) auto;align-items:baseline;gap:8px;padding:7px 0;border-bottom:1px solid var(--stroke);font-size:10px;color:var(--muted);transition:color var(--motion-hover) ease,padding-left var(--motion-hover) var(--ease-editorial)}
+ .stream-index{font:600 9px ui-monospace,monospace;color:var(--accent)}
+ .stream-topic{color:var(--fg);font-weight:650;font-size:11px}
+ .stream-note{font-size:9px;letter-spacing:.02em;text-align:right}
+ .world-foot{padding-top:2px;letter-spacing:.04em;text-transform:none;font:500 9px/1.5 system-ui}
+ .world-cursor{width:26px;height:9px;border-bottom:1px solid var(--accent);opacity:.7}
+ @media(hover:hover) and (pointer:fine){
+  .world-panel:hover .stream-row{padding-left:4px}
+  .world-panel:hover .stream-row:nth-child(2){transition-delay:30ms}
+  .world-panel:hover .stream-row:nth-child(3){transition-delay:60ms}
+  .world-panel:hover .stream-row:nth-child(4){transition-delay:90ms}
+ }
+ @keyframes world-pulse{0%,100%{opacity:.35;transform:scale(.85)}40%{opacity:1;transform:scale(1)}}
+ /* 02 — motion: a real film poster, not a generic gradient */
+ .math-film{position:relative;width:100%;height:100%;min-height:390px;margin:0;overflow:hidden;background:#071322}
+ .math-film img{width:100%;height:100%;min-height:390px;object-fit:cover;display:block;transition:transform 700ms var(--ease-editorial),filter var(--motion-card) ease}
+ .math-film::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,12,24,.06),rgba(5,12,24,.12) 45%,rgba(5,12,24,.72));pointer-events:none}
+ .math-play{position:absolute;z-index:2;left:50%;top:42%;translate:-50% -50%;width:58px;height:58px;display:grid;place-items:center;padding-left:3px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.16);backdrop-filter:blur(8px);color:#fff;font-size:17px;transition:transform var(--motion-card) var(--ease-spring),background-color var(--motion-hover) ease}
+ .math-film figcaption{position:absolute;z-index:2;left:18px;right:18px;bottom:16px;color:#eef4ff;display:flex;flex-direction:column;gap:5px}
+ .math-kicker{font:600 9px/1.4 ui-monospace,monospace;letter-spacing:.12em;opacity:.72}
+ .math-film figcaption strong{font-size:clamp(17px,2vw,24px);line-height:1.35;letter-spacing:-.025em;text-wrap:balance}
+ .math-eq{position:absolute;right:0;bottom:2px;font-size:clamp(28px,3.2vw,42px);font-weight:700;line-height:1;color:#bff4d8;opacity:.9}
+ @media(hover:hover) and (pointer:fine){.math-film:hover img{transform:scale(1.035);filter:saturate(1.05)}.math-film:hover .math-play{transform:translate(-50%,-50%) scale(1.08);background:rgba(255,255,255,.24)}}
+ /* 03 — photography: images lead, destination is explicit */
+ .memory-frame{position:relative;width:100%;height:100%;min-height:390px;display:grid;place-items:center;padding:16px}
+ .memory-frame :global(.animated-cover){width:100%;height:clamp(330px,34vw,400px);border-radius:14px;box-shadow:var(--shadow-md)}
+ .memory-badge{position:absolute;left:26px;bottom:26px;display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;background:color-mix(in srgb,var(--card) 86%,transparent);backdrop-filter:blur(8px);border:1px solid var(--stroke);color:var(--fg);font-size:10px;font-weight:650;letter-spacing:.03em}
+ /* 04 — geometry: a genuinely draggable wireframe */
+ .geometry-lab{position:relative;width:100%;height:100%;min-height:390px;display:flex;flex-direction:column;padding:16px 16px 12px;background:radial-gradient(ellipse at 50% 42%,#22364c,#0b1420 76%)}
+ :global(html[data-theme="light"]) .geometry-lab{background:radial-gradient(ellipse at 50% 42%,#eef4fb,#dae5f0 78%)}
+ .geometry-head{display:flex;align-items:center;justify-content:space-between;gap:10px;font:600 9px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:#8fb4d8}
+ :global(html[data-theme="light"]) .geometry-head{color:#4b6d91}
+ .geometry-head output{font-size:11px;color:inherit}
+ .geometry-lab canvas{display:block;width:100%;height:100%;flex:1;min-height:280px;touch-action:pan-y;cursor:ew-resize}
+ .geometry-hint{margin:2px 0 0;font-size:9px;line-height:1.5;letter-spacing:.03em;color:#8fb4d8;text-align:center}
+ :global(html[data-theme="light"]) .geometry-hint{color:#4b6d91}
+ @media(max-width:900px){.visual{min-height:310px}.math-film,.math-film img,.memory-frame,.geometry-lab{min-height:310px}.world-panel{width:min(92%,400px);gap:16px}}
+ @media(max-width:600px){.visual{min-height:250px;border-radius:18px}.math-film,.math-film img,.memory-frame,.geometry-lab{min-height:250px}.world-panel{padding:18px;gap:12px;width:92%}.world-title{font-size:34px}.stream-note{display:none}.memory-frame :global(.animated-cover){height:230px}.memory-badge{left:16px;bottom:16px;font-size:9px}.math-play{width:48px;height:48px;font-size:15px}.math-film figcaption{left:14px;right:14px;bottom:12px}.geometry-head{font-size:8px}.geometry-hint{font-size:8px}}
+ @media(prefers-reduced-motion:reduce){.world-live i{animation:none}.math-film img,.math-play{transition:none!important}}
 </style>

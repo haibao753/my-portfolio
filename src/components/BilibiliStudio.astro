@@ -91,7 +91,9 @@ const videos=[
   const pending=document.createElement("div");
   pending.className="bili-player-poster";
   const image=document.createElement("img");image.src=poster;image.alt="";pending.append(image);
+  const loading=document.createElement("span");loading.className="bili-loading";loading.setAttribute("aria-hidden","true");pending.append(loading);
   player.replaceChildren(pending);
+  player.setAttribute("aria-busy","true");
   if(!dialog.open)dialog.showModal();
   void transition(true);
   say("正在加载视频…","Loading video…");
@@ -110,7 +112,8 @@ const videos=[
   video.controls=true;video.playsInline=true;video.preload="metadata";
   video.poster=poster;video.src=src;
   video.setAttribute("aria-label",button.dataset.videoTitle||"数学影像");
-  video.addEventListener("error",()=>say("视频加载失败，请使用备用链接。","Playback failed. Use the backup link."),{once:true});
+  video.addEventListener("loadeddata",()=>player.setAttribute("aria-busy","false"),{once:true});
+  video.addEventListener("error",()=>{player.setAttribute("aria-busy","false");say("视频加载失败，请使用备用链接。","Playback failed. Use the backup link.")},{once:true});
   player.replaceChildren(video);
   say("正在站内播放","Playing on-site");
   void video.play().catch(()=>say("请点击播放按钮开始观看。","Press play to watch."));
@@ -148,9 +151,12 @@ const videos=[
  .bili-player :global(.bili-native-video){width:100%;height:100%;position:absolute;inset:0;background:#05080e;object-fit:contain}
  .bili-player :global(.bili-player-poster){position:absolute;inset:0;display:grid;place-items:center;background:#080e1b}
  .bili-player :global(.bili-player-poster img){width:100%;height:100%;object-fit:contain}
+ .bili-player :global(.bili-loading){position:absolute;left:50%;bottom:18px;width:26px;height:26px;margin-left:-13px;border-radius:50%;border:2px solid rgba(255,255,255,.28);border-top-color:#fff;animation:bili-spin .8s linear infinite;pointer-events:none}
+ .bili-player[aria-busy="false"] :global(.bili-loading){display:none}
+ @keyframes bili-spin{to{transform:rotate(360deg)}}
  .bili-dialog-bottom{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:12px 18px;min-height:48px}
  .bili-dialog-bottom p{margin:0;color:var(--muted);font-size:12px}
  .bili-dialog-bottom a{white-space:nowrap;color:var(--accent);font-size:12px;font-weight:650}
- @media(max-width:760px){.bili-intro{display:block}.bili-profile{margin-top:10px}.bili-gallery{grid-template-columns:1fr}.bili-film-play{opacity:1;transform:scale(1);width:52px;height:52px}.bili-dialog{width:96vw;max-height:calc(100dvh - 16px)}.bili-dialog-top{padding:10px 12px}.bili-dialog-bottom{padding:10px 12px}}
- @media(prefers-reduced-motion:reduce){.bili-film,.bili-film-play{transition:none!important}}
+ @media(max-width:760px){.bili-intro{display:block}.bili-profile{margin-top:10px}.bili-gallery{grid-template-columns:1fr}.bili-film-play{opacity:1;transform:scale(1);width:52px;height:52px}.bili-dialog{width:96vw;max-height:calc(100dvh - 16px)}.bili-dialog-top{padding:10px 12px}.bili-dialog-top strong{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.4}.bili-dialog-bottom{padding:10px 12px}}
+ @media(prefers-reduced-motion:reduce){.bili-film,.bili-film-play{transition:none!important}.bili-player :global(.bili-loading){animation:none!important;border-top-color:rgba(255,255,255,.28)}}
 </style>
