@@ -5,6 +5,19 @@
 > 本地验证：`npx astro check` 0 errors / 0 warnings；`npm run build` 成功；共享 headless Chrome CDP 交互探针；本地 `astro preview`。
 > 性能数字均为本机 CDP 测量，不是线上承诺；线上部署未执行（等待授权）。
 
+## PR（堆叠，按序合并）
+
+| Phase | PR | Head → Base |
+|---|---|---|
+| 0 现场审查 | [#40](https://github.com/haibao753/my-portfolio/pull/40) | `vnext/phase-0-audit` → `main` |
+| 1 设计系统 | [#41](https://github.com/haibao753/my-portfolio/pull/41) | `vnext/phase-1-design-system` → `phase-0-audit` |
+| 2 首页 | [#42](https://github.com/haibao753/my-portfolio/pull/42) | `vnext/phase-2-homepage` → `phase-1-design-system` |
+| 3 简报 | [#43](https://github.com/haibao753/my-portfolio/pull/43) | `vnext/phase-3-brief` → `phase-2-homepage` |
+| 4 知识探索 | [#44](https://github.com/haibao753/my-portfolio/pull/44) | `vnext/phase-4-knowledge` → `phase-3-brief` |
+| 5 实验统一 | [#45](https://github.com/haibao753/my-portfolio/pull/45) | `vnext/phase-5-surfaces` → `phase-4-knowledge` |
+
+> 合并顺序：40 → 41 → 42 → 43 → 44 → 45。各 PR base 为上一阶段分支；合并后可对 `main` 再做一次最终回归。
+
 ## 0. 结论
 
 - **Phase 0 的问题清单已按序落地**：CLS 的主要来源、筛选状态互斥、3D 无入口/无语义、旋转实验的教学缺口、极小曲面脱离站点外壳与死锚点，均有对应代码修改与浏览器复核。
@@ -46,7 +59,7 @@
   - 首次加载使用与卡片同节奏的 skeleton；`#status` 不再绝对定位，首屏 CLS 来源消除。
   - 移动端顶栏保持“日期 + 展开”两个控件；结果计数与范围显示在状态行（不再只在展开面板里）。
 - 阅读展开：外层改为 `grid-template-rows` 空间展开动画；展开/关闭时保持触发按钮焦点；原文信息与论文研究档案仍在展开区内（保留既有 research 渲染与安全校验）。
-- 实测（本地 cold-ish, m390）：`CLS 0`、0 layout shift、77 卡正常；搜索即时输入 400ms 内更新（含防抖）；范围+话题组合保留；断网重试后可恢复；无 console 错误。
+- 实测（本地 cold-ish, m390/d1440）：**CLS 0（m390）/ 0.0056（d1440）**（首屏预留 stories 高度，disclaimer/footer 不再进入首屏后位移）；0 大 layout shift、68–77 卡正常；搜索即时输入 400ms 内更新（含防抖）；范围+话题组合保留；断网重试后可恢复；无 console 错误。
 
 ### Phase 4 — 知识探索（`vnext/phase-4-knowledge`）
 - `spatial-reader.ts` 重写：
@@ -76,8 +89,8 @@
 
 | 指标/页面 | Before（Phase 0） | After（本地 vNext） |
 |---|---|---|
-| `/brief/` CLS | 0.16–0.80（冷/热） | **0**（0 layout-shift，m390/d1440） |
-| `/brief/` 首屏状态 | 数据后到 + 状态行脱离文档流 | skeleton + 固定状态行；77 卡正常 |
+| `/brief/` CLS | 0.16–0.80（冷/热） | **0.0056（d1440）/ 0（m390）**；skeleton + 首屏高度预留 |
+| `/brief/` 首屏状态 | 数据后到 + 状态行脱离文档流 | 固定状态行 + skeleton；footer/disclaimer 首屏不再位移 |
 | `/#` 首页 | LCP 0.72–0.84s，CLS 0 | LCP 0.5–0.9s 级（本地），CLS 0；四卡新视觉 |
 | `/lab/rotation/` | 画布首屏不可见 | 画布出现在首屏（top≈338px @1440×900），无 CLS |
 | minimal surfaces | 无加载/失败兜底，死锚点 | 明确 loading/ready/fail/retry；ready 0.8–1.7s（本地） |

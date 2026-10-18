@@ -317,8 +317,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .search-scope-text{font-size:10px;color:var(--muted);line-height:1.5}
  .search-all-button{border:0;border-bottom:1px solid var(--accent);background:transparent;color:var(--accent);font:inherit;font-size:10px;font-weight:650;min-height:28px;padding:3px 0;cursor:pointer}
  .search-all-button[hidden]{display:none!important}
- /* The list keeps its own height while data arrives: skeleton cards share the
-    real cards' border rhythm, so the status line below never jumps. */
+ /* Reserve the first viewport before data arrives. Without this the footer and
+   disclaimer are briefly visible at ~420px and are then pushed far below the
+   fold when the issue renders — measured as CLS 0.16 on desktop. */
+.stories{min-height:max(360px,calc(100svh - 190px))}
  .news-skeleton{min-width:0;padding:26px 3px 35px;border-top:1px solid var(--stroke);display:flex;flex-direction:column;gap:10px}
  .news-skeleton span{display:block;border-radius:7px;background:linear-gradient(90deg,color-mix(in srgb,var(--fg) 5%,transparent),color-mix(in srgb,var(--fg) 10%,transparent),color-mix(in srgb,var(--fg) 5%,transparent));background-size:220% 100%;animation:skeleton-shift 1.5s ease-in-out infinite alternate}
  .news-skeleton span:nth-child(1){height:10px;width:46%}
