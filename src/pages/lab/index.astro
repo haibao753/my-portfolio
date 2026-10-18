@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import {experiments} from "../../data/site";
 ---
 <BaseLayout title="知识实验室 — J.H. Lab" description="用可操作的数学、科学和算法实验，把抽象概念变成能够亲手验证的发现。">
  <div class="lab-index wrap" id="top">
@@ -43,6 +44,30 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     <p class="visual-caption"><span data-locale="zh">示意：初始 Z 方向的最终向量，X = Y = 90°</span><span data-locale="en">Initial Z direction after each sequence, X = Y = 90°</span></p>
    </div>
   </section>
+  <section class="experiment-directory" aria-labelledby="directory-title">
+   <div class="directory-head">
+    <p class="eyebrow">EXPERIMENT DIRECTORY / 003</p>
+    <h2 id="directory-title"><span data-locale="zh">全部实验</span><span data-locale="en">All experiments</span></h2>
+    <p><span data-locale="zh">三个实验，都可自由操作。参数改变时，图形、矩阵与解释一起更新。</span><span data-locale="en">Three experiments you can operate freely. Geometry, matrices and explanations update together.</span></p>
+   </div>
+   <ol class="directory-list">
+    {experiments.map(experiment=><li>
+     <a href={experiment.href}>
+      <span class="directory-index" aria-hidden="true">{experiment.index}</span>
+      <span class="directory-copy">
+       <strong><span data-locale="zh">{experiment.title.zh}</span><span data-locale="en">{experiment.title.en}</span></strong>
+       <small><span data-locale="zh">{experiment.subtitle.zh}</span><span data-locale="en">{experiment.subtitle.en}</span></small>
+      </span>
+      <span class="directory-meta">
+       <span data-locale="zh">{experiment.kind==="interactive"?"站内交互":"三维渲染"}</span><span data-locale="en">{experiment.kind==="interactive"?"INTERACTIVE":"3D RENDER"}</span>
+       <span data-locale="zh">{experiment.duration.zh}</span><span data-locale="en">{experiment.duration.en}</span>
+      </span>
+      <span class="directory-arrow" aria-hidden="true">↗</span>
+     </a>
+    </li>)}
+   </ol>
+   <p class="directory-note"><span data-locale="zh">极小曲面实验为站内独立页面，已统一返回入口与主题；每日简报则提供另一种「探索空间」的阅读方式。</span><span data-locale="en">The minimal-surface experiments are on-site pages with a unified return path and theme; the Daily Brief offers a different, spatial way to explore stories.</span></p>
+  </section>
   <div class="lab-bottom">
    <span><span data-locale="zh">一个问题，一个可验证的实验。</span><span data-locale="en">One question. One verifiable experiment.</span></span>
    <a href="/brief/"><span data-locale="zh">返回每日观察</span><span data-locale="en">Explore the Daily Brief</span> ↗</a>
@@ -76,6 +101,23 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .visual-caption{font-size:11px;color:var(--muted);line-height:1.6;text-align:center;margin:18px 0 0}
  .lab-bottom{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--stroke);padding-top:21px;font-size:12px;color:var(--muted)}
  .lab-bottom a{color:var(--fg);font-weight:600}
+ .experiment-directory{padding-block:clamp(30px,5vw,58px);border-top:1px solid var(--stroke)}
+ .directory-head{display:grid;gap:8px;max-width:720px;margin-bottom:22px}
+ .directory-head .eyebrow{font-size:10px;letter-spacing:.12em;margin:0}
+ .directory-head h2{font-size:clamp(26px,3.4vw,42px);line-height:1.15;letter-spacing:-.05em;margin:0}
+ .directory-head p{font-size:13px;line-height:1.8;color:var(--muted);margin:0}
+ .directory-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--stroke)}
+ .directory-list li{border-bottom:1px solid var(--stroke)}
+ .directory-list a{display:grid;grid-template-columns:40px minmax(0,1fr) auto 18px;align-items:center;gap:clamp(10px,2vw,24px);min-height:86px;padding:14px 4px;color:var(--fg);transition:padding-left var(--motion-hover) var(--ease-editorial),background-color var(--motion-hover) ease}
+ .directory-index{font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.08em}
+ .directory-copy{display:flex;flex-direction:column;gap:4px;min-width:0}
+ .directory-copy strong{font-size:clamp(16px,1.8vw,21px);font-weight:650;letter-spacing:-.02em;line-height:1.4}
+ .directory-copy small{font-size:12px;color:var(--muted);line-height:1.5}
+ .directory-meta{display:flex;flex-direction:column;align-items:flex-end;gap:5px;font-size:10px;color:var(--muted);text-align:right;letter-spacing:.04em;white-space:nowrap}
+ .directory-meta span:first-child{color:var(--accent);font-weight:650;letter-spacing:.08em}
+ .directory-arrow{color:var(--muted);transition:transform var(--motion-hover) var(--ease-editorial),color var(--motion-hover) ease}
+ @media(hover:hover) and (pointer:fine){.directory-list a:hover{padding-left:12px;background:color-mix(in srgb,var(--fg) 3%,transparent)}.directory-list a:hover .directory-arrow{transform:translate(2px,-2px);color:var(--accent)}}
+ .directory-note{margin:16px 0 0;font-size:11px;line-height:1.7;color:var(--muted);max-width:800px}
  @media(max-width:760px){
   .lab-index{width:calc(100% - 28px);padding-top:18px}
   .intro{padding-bottom:19px}
@@ -90,6 +132,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .work-visual{padding:15px;border-radius:13px}
   .visual-heading{font-size:17px}
   .vector-comparison svg{max-height:130px}
+  .experiment-directory{padding-block:24px}
+  .directory-list a{grid-template-columns:30px minmax(0,1fr) 16px;min-height:72px;gap:8px;padding:11px 2px}
+  .directory-meta{display:none}
+  .directory-copy strong{font-size:15px}
+  .directory-copy small{font-size:11px}
   .lab-bottom{font-size:11px}
  }
  @media(prefers-reduced-motion:reduce){.launch span[aria-hidden]{transition:none}}
