@@ -1,4 +1,4 @@
-/* Small, fixed footprint while reading. Only transition at state changes:
+﻿/* Small, fixed footprint while reading. Only transition at state changes:
    no per-scroll layout/style invalidation or canvas resizing on each frame. */
 .glass-nav[data-orb-ready="true"]{
  --orb-size:54px;
@@ -23,8 +23,7 @@
  width:100%!important;
  box-sizing:border-box!important;
  max-width:100%!important;
- height:56px!important;
- min-height:56px!important;
+ height:calc(var(--nav-height,58px) - 2px)!important;min-height:calc(var(--nav-height,58px) - 2px)!important;
  margin:0!important;
  padding:0!important;
 }
@@ -34,7 +33,7 @@
  display:flex!important;align-items:center!important;justify-content:center!important;
  box-sizing:border-box!important;
  width:52px!important;min-width:52px!important;
- height:56px!important;min-height:56px!important;
+ height:calc(var(--nav-height,58px) - 2px)!important;min-height:calc(var(--nav-height,58px) - 2px)!important;
  margin:0!important;padding:0!important;
  transform:none!important;
  flex:none!important;z-index:3;
@@ -124,3 +123,4 @@
   width:calc(100% - 24px)!important;
  }
 }
+

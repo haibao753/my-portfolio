@@ -40,6 +40,7 @@ const canonicalURL=new URL(Astro.url.pathname,Astro.site);
    <a href="#top"><span data-locale="zh">返回顶部 ↑</span><span data-locale="en">Back to top ↑</span></a>
   </footer>
   <script>
+   import "../lib/motion";
    const root=document.documentElement;
    const themeButton=document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
    const refreshTheme=()=>{
@@ -102,11 +103,13 @@ const canonicalURL=new URL(Astro.url.pathname,Astro.site);
     delete panel.dataset.closing;delete backdrop.dataset.closing;
     closeTimer=undefined;
    };
-   const close=()=>{
+   const close=(restoreFocus=false)=>{
     if(!menu||!panel||!backdrop||panel.hidden||panel.dataset.closing==="true")return;
+    const focusWasInside=panel.contains(document.activeElement);
     menu.setAttribute("aria-expanded","false");
     panel.inert=true;
     root.removeAttribute("data-menu-open");
+    if(focusWasInside||restoreFocus)menu.focus({preventScroll:true});
     if(motionReduced.matches){finishClose();return;}
     panel.dataset.closing="true";backdrop.dataset.closing="true";
     closeTimer=setTimeout(finishClose,310);
@@ -126,7 +129,7 @@ const canonicalURL=new URL(Astro.url.pathname,Astro.site);
     if(menu.getAttribute("aria-expanded")==="true")close();
     else openMenu();
    });
-   panel?.querySelectorAll("a").forEach(a=>a.addEventListener("click",close));
+   panel?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>close()));
    // The visual backdrop deliberately passes through touch scrolling.
    // Dismiss on an outside click without intercepting native touch gestures.
    document.addEventListener("click",event=>{
@@ -137,7 +140,7 @@ const canonicalURL=new URL(Astro.url.pathname,Astro.site);
    });
    document.addEventListener("keydown",e=>{
     if(e.key==="Escape"&&panel&&!panel.hidden){
-     close();
+     close(true);
      menu?.focus({preventScroll:true});
     }
    });
@@ -164,6 +167,29 @@ const canonicalURL=new URL(Astro.url.pathname,Astro.site);
      window.prompt(root.lang==="en"?"Copy WeChat ID":"复制微信号",id);
     }
    });
+   // Shared pointer light for the navigation glass. When the GPU optical layer
+   // is active it uses the same tracker, so the CSS fallback and WebGL material
+   // never disagree about where the light is. Touch only lights while held.
+   const navGlass=document.querySelector<HTMLElement>(".glass-nav");
+   if(navGlass){
+    const setLight=(x:number,y:number)=>{
+     navGlass.style.setProperty("--glass-light-x",`${Math.round(x*100)}%`);
+     navGlass.style.setProperty("--glass-light-y",`${Math.round(y*100)}%`);
+    };
+    let touchLighting=false;
+    const track=(event:PointerEvent)=>{
+     if(event.pointerType!=="mouse"&&!touchLighting)return;
+     const rect=navGlass.getBoundingClientRect();
+     if(!rect.width||!rect.height)return;
+     setLight(Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width)),Math.max(0,Math.min(1,(event.clientY-rect.top)/rect.height)));
+    };
+    navGlass.addEventListener("pointermove",track,{passive:true});
+    navGlass.addEventListener("pointerdown",event=>{if(event.pointerType!=="mouse"){touchLighting=true;track(event)}},{passive:true});
+    const release=()=>{touchLighting=false;setLight(.28,0)};
+    navGlass.addEventListener("pointerleave",()=>{if(!touchLighting)release()});
+    navGlass.addEventListener("pointerup",release,{passive:true});
+    navGlass.addEventListener("pointercancel",release,{passive:true});
+   }
   </script>
  </body>
 </html>

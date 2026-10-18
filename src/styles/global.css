@@ -1,11 +1,11 @@
 @import "./tokens.css";
 *,*:before,*:after{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:80px}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-height) + 22px)}
 body{margin:0;background:var(--bg);color:var(--fg);line-height:1.6}
 a{color:inherit;text-decoration:none}
 button{font:inherit;cursor:pointer}
 button,a{-webkit-tap-highlight-color:transparent}
-button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+button:focus-visible,a:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .wrap{width:min(var(--wide),calc(100% - 48px));margin-inline:auto}
 .eyebrow{font-size:12px;font-weight:650;letter-spacing:.08em;color:var(--muted)}
 h1,h2,h3,p{margin-top:0}
@@ -14,7 +14,27 @@ h1,h2,h3,p{margin-top:0}
 [data-locale]{display:none!important}
 html[lang="zh-CN"] [data-locale="zh"],html[lang="en"] [data-locale="en"]{display:revert!important}
 @media(max-width:760px){.wrap{width:calc(100% - 36px)}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important}}
+
+/* Pointer light shared by every glass surface. Registered custom properties let
+   the radial highlight follow the pointer without a per-frame layout read. */
+@property --glass-light-x{syntax:"<percentage>";inherits:true;initial-value:28%}
+@property --glass-light-y{syntax:"<percentage>";inherits:true;initial-value:0%}
+.glass-nav,.mobile-menu{transition:--glass-light-x var(--motion-hover) var(--ease-editorial),--glass-light-y var(--motion-hover) var(--ease-editorial)}
+
+/* Editorial reveal. Content is fully visible before JS; the hidden state only
+   exists while motion is available, so slow/failed scripts never hide content. */
+html[data-motion-ready] .motion-item:not(.is-revealed){opacity:0;translate:0 var(--motion-distance)}
+.motion-item{transition:opacity var(--motion-page) var(--ease-editorial),translate var(--motion-page) var(--ease-editorial);transition-delay:var(--reveal-delay,0ms)}
+@media(prefers-reduced-motion:reduce){
+ html[data-motion-ready] .motion-item:not(.is-revealed){opacity:1;translate:none}
+ .motion-item{transition:none!important}
+}
+
+/* One shell height on every route: the Daily Brief toolbar script may add
+   data-orb-ready later, but the box it lives in never changes. */
+.glass-nav{height:var(--nav-height);min-height:var(--nav-height)}
+.glass-nav .nav-inner{min-height:calc(var(--nav-height) - 2px);height:calc(var(--nav-height) - 2px)}
 
 /* Coordinated theme color interpolation. Applied only after hydration so a saved
    preference renders instantly on page load without a flash of the other theme. */
@@ -29,8 +49,8 @@ html[data-theme-transition="true"] .mobile-menu,
 html[data-theme-transition="true"] .controls button,
 html[data-theme-transition="true"] .site-footer{
  transition-property:background-color,color,border-color,box-shadow,filter,transform,opacity;
- transition-duration:.52s;
- transition-timing-function:cubic-bezier(.2,.7,.2,1);
+ transition-duration:var(--motion-page);
+ transition-timing-function:var(--ease-editorial);
 }
 @media(prefers-reduced-motion:reduce){
  html[data-theme-transition="true"] body,
