@@ -2,7 +2,8 @@
   "version": 1,
   "date": "2026-10-20",
   "editions": [
-    "morning"
+    "morning",
+    "evening"
   ],
   "items": [
     {
@@ -559,6 +560,843 @@
       "original_title": "Mitigating Demographic Disparities in Explanation-Human Alignment via Rationale Regularization",
       "focus": false,
       "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.22770",
+      "title_zh": "单元级聚合会破坏因果基础模型的区间覆盖率",
+      "summary_zh": "一篇 arXiv 预印本考察因果基础模型（CFM）的可信区间：这类模型在单元级处理效应估计上表现有竞争力，但实际决策常依赖对整组单元（全样本、处理组或子群）的平均效应。作者报告，在合成设定和标准基准上，聚合后的区间覆盖率都会下降；在 ACIC 2016 上，CausalPFN 经温度校准的 95% 区间在组规模超过约 30 个单元（共 4802 个单元）后低于名义覆盖率，全样本平均效应的区间仅在 20% 的数据集中包含真值。作者将问题归因于模型逐单元输出预测分布、推断时把单元级方差直接合并的做法。",
+      "why_zh": "它指出一个容易被基准分数掩盖的实用缺陷：单元级估计好，不等于聚合决策所需的区间可信。对使用因果推断做政策或业务决策的人，这是校准层面的警示。",
+      "details_zh": "摘要给出的关键信息是覆盖率随聚合组规模增大而下降，并给出 ACIC 2016 上的具体数字（组超过约 30 个单元后低于名义 95%，全样本区间仅 20% 覆盖真值）。作者称问题源于训练方式与区间构造方式：模型一次只对一个单元给出预测分布，推断时把不同单元的误差当作可简单合并。需要注意，这是未经独立验证的预印本，摘要未说明温度校准的具体流程、基准选择是否全面，也未给出修复方案的效果；20% 这一数字仅针对所述设定，不能外推为所有 CFM 的普遍表现。",
+      "original_title": "Unit-level aggregation breaks coverage in causal foundation models",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/23 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.22770",
+        "pages_read": 14,
+        "pages_total": 23,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 6
+          },
+          {
+            "id": "E3",
+            "page": 2
+          },
+          {
+            "id": "E4",
+            "page": 4
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E7",
+            "page": 3
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E11",
+            "page": 7
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E14",
+            "page": 10
+          },
+          {
+            "id": "E15",
+            "page": 11
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文关注因果基础模型（CFM）在组水平/子集平均处理效应上的可信区间校准问题：当把单元级预测聚合为子集平均时，后验不确定性会使单元误差相关，导致合并方差偏小，覆盖失效。作者据此提出两个联合预测的神经过程模型来修正。",
+            "evidence_ids": [
+              "E1",
+              "E5",
+              "E3"
+            ]
+          },
+          "method": {
+            "text": "作者区分单元级聚合与SCM边缘化（联合）聚合：前者把对SCM参数ζ的后验积分放在乘积内部，等价于把单元效应视为独立；后者把积分放在乘积外部，保留共享SCM引起的误差相关。理论上推导标准化误差与方差比R=mS/[1+(k−1)ρS]的关系，并给出在R=1时名义覆盖成立、R<1时覆盖不足的结论；同时提出两个对一组单元做联合预测的神经过程模型（CNP与latent NP），并作为head接在冻结的CausalPFN上。",
+            "evidence_ids": [
+              "E7",
+              "E2",
+              "E10"
+            ]
+          },
+          "findings": {
+            "text": "实验显示温度校准后的CausalPFN在多个基准上做单元级聚合时，名义95%子集CATE区间覆盖低于名义水平，且随聚合比例k/n变化；公式(1)的预测（用每个基准测得的mS与ρS）能预测覆盖在何处失败及失败幅度。两个联合预测模型在合成任务上显著改善覆盖，作为head接在冻结CausalPFN上时在全部六个基准上改善覆盖。图4把覆盖对R作图，SCM边缘化点按单元级聚合的R绘制。",
+            "evidence_ids": [
+              "E1",
+              "E6",
+              "E14"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录只覆盖部分页码，无法判断完整实验设置、所有基准的逐项数值与统计显著性；文中提到当报告方差随查询变化时公式(1)只是近似（R为期望之比），并在5.2节检验；识别假设为所有混杂可观测。相关工作报告其逐点程序不提供跨查询点的联合推断，留作未来工作。无法从摘录判断预印本是否经过独立验证。",
+            "evidence_ids": [
+              "E4",
+              "E10",
+              "E9"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：按表1的六个基准（Hill-A、Friedman、IHDP、Hill-B、Kang–Schafer、ACIC 2016）与合成族准备数据；CausalPFN按发布版本使用、不重训，基准上启用其逐数据集温度校准，合成族用默认（关闭校准）；CNP与latent NP在s=1训练，CausalPFN用s∈{1,2,4,6}；用附录A的合成族系数先验与倾向机制、附录B的架构与训练设置、附录B的覆盖估计器。摘录未给出完整超参与随机种子细节，需查附录。",
+            "evidence_ids": [
+              "E12",
+              "E11",
+              "E15"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2512.16759",
+      "title_zh": "Rao-Blackwell 化的 e-变量：条件化充分统计量可提升期望效用",
+      "summary_zh": "一篇 arXiv 统计学预印本证明：对任意凹效用函数，e-变量在给定充分统计量后条件化，其期望效用只会增加，与经典 Rao-Blackwell 定理相呼应。作者称最简单形式可由 Jensen 不等式直接证明，并给出了更复杂的版本。文中还给出若干应用，包括推导线性回归模型中检验方差的 log-最优 e-变量。该结果属于假设检验与 e-值方法论的基础性工作。",
+      "why_zh": "把 Rao-Blackwell 思想移植到 e-变量与任意凹效用，是统计检验理论中较通用的结构性结论，可能影响序贯检验和证据度量的构造方式，而非单点应用技巧。",
+      "details_zh": "摘要只说明结论方向（条件化不降低期望效用）与证明工具（Jensen 不等式及更强版本），并列举线性回归方差检验中 log-最优 e-变量的推导作为应用。信息局限明显：未给出具体定理条件、充分统计量的适用范围、与现有 e-变量最优性结果的比较，也未提供数值实验。作为预印本，结论尚未经同行评审或独立复现，读者不宜将其视为已确立的标准工具。",
+      "original_title": "Rao-Blackwellized e-variables",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/20 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2512.16759",
+        "pages_read": 14,
+        "pages_total": 20,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 8
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E11",
+            "page": 7
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究的问题是：对任意凹效用函数，e-variable 在给定充分统计量后取条件期望（Rao-Blackwellization）能否提升期望效用，并据此刻画 log-optimal/GRO e-variable 与相关应用。摘录还提到在线性回归模型中检验方差的 log-optimal e-variable 的推导。",
+            "evidence_ids": [
+              "E5",
+              "E1",
+              "E6"
+            ]
+          },
+          "method": {
+            "text": "方法核心是建立 e-variable 版本的 Rao-Blackwell 型定理：以充分统计量（文中说明结果可直接推广到充分 σ-域）对 e-variable 取条件期望得到 G(S)=EΘ[E|S]，并用 Jensen 不等式给出最简单形式的证明，同时证明更精细的版本；随后通过例子与应用展示，包括线性回归方差检验中恢复 GRO/GROW e-variable，以及置换平均提升期望效用。",
+            "evidence_ids": [
+              "E5",
+              "E8",
+              "E12"
+            ]
+          },
+          "findings": {
+            "text": "摘录给出的理论结果是：对任意凹效用，e-variable 在充分统计量上取条件后期望效用只会增加；例 2 中进一步展示严格凹函数下出现严格效用改进。应用方面，摘录说明可用该结果把线性回归方差检验的 GRO(W) e-variable 写成 (β̂, σ̂) 的函数，并说明置换平均可提升期望凹效用。摘录未提供数值实验或独立复现验证。",
+            "evidence_ids": [
+              "E5",
+              "E8",
+              "E11"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录只覆盖部分页码，无法判断完整证明细节、所有应用实例与实验评估；文中讨论部分指出，关于与定理一致的可容许性概念仍是值得研究的方向，说明相关刻画尚未在摘录中给出。另需注意这是预印本（arXiv 标识），摘录未显示独立验证或复现结果。",
+            "evidence_ids": [
+              "E4",
+              "E3",
+              "E13"
+            ]
+          },
+          "replication": {
+            "text": "学习/复现建议：先按摘录梳理 e-variable 定义与水平 α 检验的 Markov 不等式保证，再复现例 2 中二项/伯努利情形下 G(S)=EΘ[E|S] 的计算与严格凹效用改进；随后按摘录给出的线性回归方差检验设定，检查 GRO(W) e-variable 依赖 (β̂, σ̂) 的推导。摘录不足以支持完整数值复现或独立验证，需查阅全文与附录。",
+            "evidence_ids": [
+              "E6",
+              "E8",
+              "E11"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.22566",
+      "title_zh": "视频与脑电深度学习自动检测大鼠癫痫发作：跨个体泛化明显变难",
+      "summary_zh": "该预印本在索曼诱导癫痫大鼠模型上，用20只大鼠、601次记录、24131对同步视频与脑电片段，比较10种视频架构与7种单通道脑电模型的发作检测和严重程度分级。同会话参照下检测宏F1可达0.968（视频）与0.974（脑电），但五级分级仅0.657与0.560；改为排除个体的评估后，五级宏F1降至0.475与0.404。",
+      "why_zh": "关键信息不是“AI检测癫痫准确率高”，而是同一批数据内的高分在换个体后大幅下降，提示临床前动物模型中的泛化评估比单次基准成绩更值得关注。",
+      "details_zh": "研究任务是二分类检测加三级、五级行为严重程度分级，数据来自索曼诱导癫痫模型。摘要显示，检测任务上R(2+1)D-18与GRU分别达到0.968和0.974的宏F1，但五级分级明显更难；采用排除受试个体的评估后，视频与脑电的五级宏F1分别降到0.475和0.404，作者据此强调对未见动物分级的困难。时间采样实验表明多帧输入有价值，而检测性能在不同视频架构间差异相对较小。该文为预印本，未经独立验证，摘要未披露数据集划分细节与置信区间。",
+      "original_title": "Seeing Seizures: A Large-Scale Empirical Study of Video and EEG Deep Learning for Automated Rodent Seizure Detection and Severity Grading",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.22588",
+      "title_zh": "SAG2：用 BM25 与 JEV 实现无需嵌入的多跳检索",
+      "summary_zh": "一篇 arXiv 预印本提出 SAG2，一种无需向量嵌入的多跳检索架构，仅依赖单个 SQLite 数据库、BM25 词法索引，以及 JEV 提供的上下文证据判断。作者称其延续 SAG（SQL 检索增强生成）的查询时关联思路，但用对原始文本的词法索引替代了事件-实体索引和稠密索引，目标是让强多跳检索无需昂贵的语料预处理或复杂数据库设施即可部署。",
+      "why_zh": "在普遍堆叠向量库与嵌入模型的 RAG 潮流中，它主张用轻量词法检索加证据判断达到多跳效果，对部署成本和可复现性有实际意义，值得关注其真实取舍。",
+      "details_zh": "摘要给出的信息有限：核心组件是 SQLite、BM25 和 JEV 的上下文证据决策，设计动机是降低语料准备与基础设施成本。但摘要未提供任何基准名称、数据集、检索指标或与稠密检索方法的对比数字，也未说明 JEV 的具体机制与多跳推理如何串联。因此目前只能把它视为一种架构主张，其相对优势尚无公开证据支撑；预印本结论需待代码、实验细节和独立复现后再评估。",
+      "original_title": "SAG2: Embedding-Free Multi-Hop Retrieval with BM25 and JEV",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.23821",
+      "title_zh": "在球面上学习物理对称性：一种无需重新学习的SO(3)等变卷积网络",
+      "summary_zh": "该预印本针对科学数据常天然定义在球面上、且不具备优先位置或方向的特点，提出一种面向HEALPix球面网格的规范等变网格架构。其SO(3)等变卷积由可操纵滤波器、平行移动和自旋加权特征构成，在给定频带限制下可证明具有精确等变性，从而不必用训练数据去学习对称性。摘要称完整CNN的SO(3)不变性误差可控制在百分级及更低。",
+      "why_zh": "与普通视觉模型堆数据不同，它把物理对称性直接写进网络结构，对球面天文、地球与气候数据建模有直接方法学意义，也触及等变性证明与频带限制这一可检验问题。",
+      "details_zh": "摘要指出，若不反映球面数据的对称性，模拟需求会大幅上升，甚至迫使研究者使用廉价但不完美的模型，进而使分析结果产生偏差。作者的做法是把精确对称性内置到架构中，卷积操作在给定频带限制下具备可证明的精确等变性，并用可操纵滤波器、平行移动与自旋加权特征实现。需要说明的是，这是arXiv预印本，尚未经独立验证；摘要只给出百分级误差的说法，未提供完整实验设置、对比基线与误差定义，因此不宜把其性能表述为已被社区确认的结论。",
+      "original_title": "Learning without relearning physical symmetry: an SO(3)-equivariant convolutional network (CNN) on the sphere",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 12/12 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.23821",
+        "pages_read": 12,
+        "pages_total": 12,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 1
+          },
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 10
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          },
+          {
+            "id": "E14",
+            "page": 10
+          },
+          {
+            "id": "E15",
+            "page": 11
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文关注球面数据（如宇宙学弱透镜收敛场、CMB 图）缺乏优选位置与朝向的对称性问题，研究如何构建对 SO(3) 旋转精确等变的球面卷积网络，以减少对昂贵模拟的依赖，并用于模拟推断（SBI）等任务。",
+            "evidence_ids": [
+              "E3",
+              "E6",
+              "E1"
+            ]
+          },
+          "method": {
+            "text": "作者提出一种直接定义在 HEALPix 网格上的球面 SO(3)-等变卷积，由可导向滤波器、平行移动和自旋加权特征构成，在给定带限下具有可证明的精确等变性；网络可达到 SO(3)-不变性，误差由超参数控制。",
+            "evidence_ids": [
+              "E2",
+              "E15",
+              "E9"
+            ]
+          },
+          "findings": {
+            "text": "在基准任务上，该方法给出最准确的稠密梯度回归，并在 CMB 前景去除与去噪上具竞争力；在相同模拟次数下，宇宙学透镜 SBI 得到最紧的后验。高斯随机场任务中球面卷积方法显著优于朴素平面方法，但 CMB 去噪任务中 DeepSphere 表现最好，作者指出该任务并非严格 SO(3) 等变。",
+            "evidence_ids": [
+              "E1",
+              "E4",
+              "E10"
+            ]
+          },
+          "limitations": {
+            "text": "作者明确说明方法存在局限：比平面与 DISCO 基线更慢；等变性仅在 Section 2 的假设下精确，真实情形可能不满足。此外其卷积参数量比 DISCO 多一个数量级。摘录未提供独立第三方验证，本文为期刊稿件（含预印本编号），不能据此断言已被独立复现。",
+            "evidence_ids": [
+              "E4",
+              "E13",
+              "E5"
+            ]
+          },
+          "replication": {
+            "text": "摘录给出可参考的复现要素：HEALPix 网格、Nγ=8、Nside=256 下达到百分级 SO(3) 不变性误差，引入球谐带限可降至 10^-4；网络总参数 27,938，各层权重形状见表 6；SBI 使用 sbi 包的两步自回归变换、每变换八个隐藏特征，78 张图用于 NDE 验证。但摘录未给出完整训练超参数、数据生成细节与代码，无法据此完整复现。",
+            "evidence_ids": [
+              "E10",
+              "E14",
+              "E12"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.23846",
+      "title_zh": "独立成分分析混合模型能否仅凭矩张量唯一还原参数？",
+      "summary_zh": "该预印本研究独立成分分析（ICA）混合模型的可辨识性：这类模型由若干ICA密度混合而成，可视为高斯混合的非参数推广。作者证明在一般参数下，若观测到最高d阶矩张量，混合系数、线性变换与源分布矩可被唯一确定（相差尺度与置换对称性），并借助割簇及其维数、高斯映射等代数性质给出条件，n维分布下d≥5时参数可恢复。",
+      "why_zh": "把“矩方法能否唯一确定混合模型参数”从统计估计问题转为代数几何问题，对理解非参数混合模型的可辨识边界有方法论意义，不同于一般深度学习应用论文。",
+      "details_zh": "摘要给出的核心结论是：在一般（generic）参数与忽略尺度、置换对称性的意义下，观测矩张量足以识别混合系数、各线性变换和源矩。作者用割簇（secant varieties）的维数与高斯映射等代数工具处理该问题，并给出n维分布、d≥5时的唯一恢复条件。需要注意这是arXiv预印本，尚未经同行评审或独立验证；摘要未给出有限样本下的估计误差与算法复杂度，实际统计可行性仍需进一步材料判断。",
+      "original_title": "Identifiability from Moments in Independent Component Analysis Mixture Models",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/39 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.23846",
+        "pages_read": 14,
+        "pages_total": 39,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 4
+          },
+          {
+            "id": "E2",
+            "page": 4
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E7",
+            "page": 4
+          },
+          {
+            "id": "E8",
+            "page": 5
+          },
+          {
+            "id": "E9",
+            "page": 6
+          },
+          {
+            "id": "E10",
+            "page": 7
+          },
+          {
+            "id": "E11",
+            "page": 8
+          },
+          {
+            "id": "E12",
+            "page": 9
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究 ICA 混合模型（由多个 ICA 密度混合而成）的参数可识别性问题：能否从观测分布的各阶矩唯一恢复混合系数、各分量的线性变换以及源矩。作者指出，虽然估计这些参数可确定密度 f，但反过来不成立，同一密度可能来自多组参数，因此需要研究参数化映射的可识别性。",
+            "evidence_ids": [
+              "E1",
+              "E4"
+            ]
+          },
+          "method": {
+            "text": "采用代数几何与矩方法：用源矩和累积量参数化 ICA 混合矩簇，定义映射 Φn,m,d 及其加权版本 Ψn,m,d,˜λ，并引入代数可识别性与有理可识别性（generic one-to-one，模去平凡的缩放与置换对称性）的概念。证明手段是证明矩簇非缺陷（达到期望维数），从而由 Jacobian 矩阵的秩条件推出可识别性。",
+            "evidence_ids": [
+              "E2",
+              "E7",
+              "E11"
+            ]
+          },
+          "findings": {
+            "text": "定理 1.2 给出：当 n > d ≥5 且 m ≤⌊Γd⌋−1（Γd ∼ (1/d!)n^{d−2}）时 Φn,m,d 有理可识别；当 n=m=2 且 d≥7、n∈N 且 d=3 且 m ≤ (n+2)/6 + n+1、或 n>d≥5 且 m≤Γd 时代数可识别。另对加权映射 Ψn,m,d,˜λ 在情形 ii–iv 及 d=4、m≤Γ4（Γ4 ∼ (1/48)n^2）时给出代数可识别性。作者称这些 m 的上界在情形 i、iii、iv、v 中关于 n 的阶数最优，且在 i、iii、iv 中渐近尖锐。",
+            "evidence_ids": [
+              "E2",
+              "E8"
+            ]
+          },
+          "limitations": {
+            "text": "摘录仅覆盖第 1–14 页，无法判断完整证明细节、实验验证或与其他方法的数值比较；论文为预印本（arXiv 编号 2610.23846，2026 年 10 月），未见独立验证。作者明确指出可识别性不推广到任意子模型（第 3 节讨论子模型中的不可识别性），且同一密度可能对应多组参数。",
+            "evidence_ids": [
+              "E1",
+              "E10",
+              "E4"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：先按第 2.1 节用源矩参数化 Φn,m,d，注意缩放对称性（将 A(k) 第 r 列除以 A(k)rr 并相应调整 μ(k)rj）；再按第 2.2 节用累积量参数化（T1,k=b(k)，c(k)r,2=1）。验证可识别性可计算 Jacobian 矩阵并检查其列满秩，如 n=m=2、d≥7 时的分块结构。由于摘录未给出数值实验或代码，无法判断实际估计精度与算法实现细节。",
+            "evidence_ids": [
+              "E9",
+              "E10",
+              "E12"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-16",
+      "url": "https://arxiv.org/abs/2610.23791v1",
+      "title_zh": "DrugHarness：面向计算药物发现的可进化智能体框架",
+      "summary_zh": "该预印本提出DrugHarness，一个可进化的智能体框架，将可组合的科学执行与条件式技能归纳结合起来，用于计算药物发现。其环境整合了80余项科学操作、生物医学资源和任务专用代码，并保留候选物、结果与产物之间的关联；框架从执行轨迹和结果反馈中归纳技能，以适应变化的证据与约束。",
+      "why_zh": "AI Agent在科研流程中的落地是当前热点，但多数工作停留在演示；该文试图把工具调用、结果追踪与技能积累做成可进化闭环，值得关注其可复现性与评测方式。",
+      "details_zh": "摘要显示，计算药物发现要求智能体组合科学操作，并随证据和约束变化而调整。DrugHarness的设计重点有二：一是环境层整合80多项科学操作、生物医学资源与任务代码，并维护候选物、结果和产物之间的关联；二是从执行轨迹与结果反馈中归纳出可复用的技能。需要指出，输入仅提供论文标题与摘要，未给出具体任务、基线对比、成功率或湿实验验证等信息，因此无法判断其相对现有智能体框架的实际增益。该文为arXiv预印本，结论未经独立验证，技能归纳的有效性与可迁移性仍需后续工作检验。",
+      "original_title": "DrugHarness: An Evolvable Agent Harness for Computational Drug Discovery",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-10-19",
+      "url": "https://www.theregister.com/networks/2026/10/19/broadcom-wi-fi-bug-turns-sweet-16-still-lets-strangers-hijack-your-router/5303771",
+      "title_zh": "博通Wi-Fi漏洞已满16年：仍可让陌生人劫持路由器",
+      "summary_zh": "据The Register报道，博通Wi-Fi芯片中的一个漏洞据称早在2018年就已被知晓，但至今仍可能使数百万台设备处于风险之中，攻击者可借此劫持路由器。报道称该漏洞已存在约16年。上述说法来自媒体转述，涉及的研究者指控与厂商回应尚未在输入材料中完整呈现。",
+      "why_zh": "家用路由器是多数人网络的入口，一个长期未修复的芯片级漏洞关系到大量普通用户；同时该条也提示“厂商早已知情”这类指控需要区分已核实事实与消息来源说法。",
+      "details_zh": "输入材料仅有标题与一句摘要：漏洞存在于博通Wi-Fi芯片中，研究者称芯片厂商2018年已知情，但数百万设备可能仍受影响，攻击者可劫持路由器。报道未在摘要中说明漏洞编号、受影响芯片型号、利用条件、是否需要邻近访问，也未给出博通的正式回应。因此“16年”“数百万设备”等表述应视为媒体与研究者说法，而非已完成的事实核查。对普通用户而言，可关注路由器厂商固件更新与设备替换建议；但具体修复状态需以厂商公告和CVE记录为准，本条不宜据此推断某一品牌设备必然受影响。",
+      "original_title": "Broadcom Wi-Fi bug turns sweet 16, still lets strangers hijack your router",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-19",
+      "url": "https://www.psypost.org/does-loving-horror-make-you-psychologically-tougher-in-a-crisis-not-in-war-torn-lebanon-study-finds/",
+      "title_zh": "爱看恐怖片能让人在危机中更坚韧？黎巴嫩研究未发现关联",
+      "summary_zh": "PsyPost报道的一项研究在经历战争与经济危机的黎巴嫩学生中，考察恐怖片爱好者身份与心理韧性之间的关系，结果未发现二者相关。报道的推论是：当危险真实且持续存在时，虚构的惊吓可能失去其“保护性”作用。该报道未在摘要中给出样本量、测量工具与具体统计结果。",
+      "why_zh": "以真实高危环境检验“恐怖娱乐锻炼心理韧性”这一流行说法，属于对常见心理学叙事的反例检验；但单一国家样本与相关性设计限制了结论强度。",
+      "details_zh": "据PsyPost摘要，研究对象是面临战争与经济危机的黎巴嫩学生，核心发现是恐怖片爱好与韧性无关。报道提出的解释是：当危险真实而持续时，虚构恐惧的“保护作用”可能不复存在。需要说明信息局限：摘要未提供样本规模、韧性量表、控制变量或效应量，也未说明是否为横断面相关设计，因此不能推断因果；这是媒体报道，未经独立交叉核实，原始论文的方法与统计细节需查证。此类结果更适合作为对“恐怖片增强抗压”叙事的谨慎反例，而非定论。",
+      "original_title": "Does loving horror make you psychologically tougher in a crisis? Not in war-torn Lebanon, study finds",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-10-19",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE5hOV8xTm9NaVNPV1QyZ05la3Rwa09NaFUzNzFxOUNYRzlkLS11aVFCdFhKRVhubkJPV29KWkZDQk5LRUVUX0VoWmNma1Y4ZmlsUURXXy13REhpajAzNFVtM3I2QnE5VjZXa2hCQzRQWmdMMnhPSHdKX2doU2pYdw?oc=5",
+      "title_zh": "中国开源AI被指提供更具包容性的全球模式",
+      "summary_zh": "《中国日报》刊文称，中国的开源人工智能为全球提供了一种更具包容性的模式。该条来自聚合RSS，仅有标题与一句摘要，未提供文章正文、具体模型清单、许可证条款、采用数据或第三方评价。标题中的“更具包容性”是媒体表述，尚不能视为已核实结论。",
+      "why_zh": "开源模型的地缘与治理含义是国际AI讨论的实质议题；但该条仅有媒体标题，价值在于提示需回到原始报道核对论据，而非复述立场。",
+      "details_zh": "目前只取得标题及极少量公开摘要，不能据此确认事件完整经过、政策适用范围或各方解释。请查看原始报道与相关官方资料，区分事实、当事方说法和进一步的影响分析。",
+      "original_title": "China’s open-source AI offers a more inclusive global model - China Daily",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-16",
+      "url": "https://arxiv.org/abs/2610.23820v1",
+      "title_zh": "CocoRNA：用协作式多智能体强化学习做RNA二级结构逆设计",
+      "summary_zh": "该预印本提出CocoRNA，一个面向RNA逆设计的协作式多智能体强化学习框架：把设计特定二级结构的序列问题拆成较小子问题，由多个智能体协同求解，以降低问题复杂度并改善搜索。作者称该方法用于设计能可靠折叠成目标二级结构的RNA序列，服务于理解其生物学功能。",
+      "why_zh": "把多智能体协作与强化学习用于组合爆炸的RNA逆设计，属于AI方法进入生物序列设计的实例；相比通用大模型新闻，更接近具体科学问题的算法贡献。",
+      "details_zh": "摘要给出的信息有限：CocoRNA将RNA逆设计分解为多个子问题，每个子问题由多个智能体协作求解，目标是降低问题复杂度、提升探索能力。RNA逆设计指寻找能折叠成指定二级结构的序列，是理解RNA生物学功能的基础计算问题之一。摘要未提供基准数据集、成功率、与既有方法的对比数值或消融实验，也未说明智能体间如何共享奖励。该文为预印本，尚未经独立验证，实际设计成功率与泛化能力需待全文和复现研究判断。",
+      "original_title": "CocoRNA: Collective RNA Design with Cooperative Multi-agent Reinforcement Learning",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-10-19",
+      "url": "https://www.technologyreview.com/2026/10/19/1145904/tr-explains-how-far-can-we-push-computing/",
+      "title_zh": "计算能力还能推进多远？从费曼1959年演讲谈起",
+      "summary_zh": "MIT Technology Review 的“Explains”专栏以1959年费曼在加州理工美国物理学会会议上题为“There’s Plenty of Room at the Bottom”的演讲为引子，讨论计算技术还能推进到何种程度。文章属于解释性综述，梳理科学界与产业界对计算极限的长期追问。",
+      "why_zh": "在芯片、算力与能耗成为全球科技竞争焦点的当下，回溯费曼式“底层还有空间”的问题框架，比单条产品快讯更适合建立长期判断。",
+      "details_zh": "输入仅提供文章开头与专栏说明，未给出具体技术路线、数据或受访者观点，因此无法概括其结论。可确认的是文章以费曼演讲为叙事起点，属于面向大众的科技解释类写作，而非一手研究。读者若要引用其中关于计算极限的判断，应回到原文核对具体论据与出处，不宜把专栏综述当作技术共识。",
+      "original_title": "How far can we push computing?",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.22602",
+      "title_zh": "“卡在洗牌”：视觉语言模型中的属性—对象绑定评测",
+      "summary_zh": "该预印本指出，多模态检索依赖嵌入不仅编码“有哪些概念”，还要编码概念如何组合，其中属性—对象绑定（哪个属性属于哪个对象）是关键难点。现有基准多只覆盖部分模态配对、简单的两对象交换或小属性集，难以判断模型在不同模态配对和更复杂场景下是否稳健保持绑定。作者提出受控基准SABER，覆盖全部四种图文模态配对、多种属性类型及最多十个对象的场景，并报告了模型评测结果。",
+      "why_zh": "把“组合性”从生成任务拉到检索嵌入层面，并用统一受控基准覆盖四种模态配对，比零散的两对象交换测试更能暴露模型的结构性短板。",
+      "details_zh": "摘要说明检索是多模态系统的基础任务，可靠检索要求共享嵌入空间保留组合结构，而属性—对象绑定是其中一项关键挑战。作者认为现有基准视野有限：通常只覆盖部分模态配对、简单的两对象交换或较小属性集，因此不清楚当前模型在跨模态配对与更复杂设定下的绑定稳健性。SABER被描述为受控基准，覆盖四种图文模态配对、多样属性类型和最多十个对象的场景。摘要提到“评测揭示”但未给出具体数值与结论方向，且为未经独立验证的预印本，基准设计与模型选择偏差需看全文核实。",
+      "original_title": "Stuck on Shuffle: On Attribute-Object Binding in Vision-Language Models",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-19",
+      "url": "https://www.psypost.org/your-bodys-state-may-shape-whether-your-best-ideas-are-verbal-or-visual/",
+      "title_zh": "身体状态或决定创意更偏语言还是更偏视觉",
+      "summary_zh": "PsyPost 报道一项追踪学生心率五天的小样本研究：较平静的生理状态与更具原创性的绘画相关，却与较低原创性的语言想法相关。报道据此提出，不同创造性任务可能依赖不同的身体状态，而非统一的“放松更利于创造”。",
+      "why_zh": "把创造力从单一认知能力拆成受生理状态调节的多通道过程，对学习、创作与实验设计有实际启发；但属媒体报道的小样本研究，需谨慎。",
+      "details_zh": "现有材料仅有标题与摘要，未说明样本量、心率指标定义、创造力评分方式及是否控制睡眠、情绪等混杂因素，也未给出效应大小。因此“平静身体带来更好视觉创意、更差语言创意”只能视为该研究的初步线索，不能当作普遍结论。读者应注意媒体转述与同行评审论文之间的差距，避免据此做过度行为推断。",
+      "original_title": "Your body’s state may shape whether your best ideas are verbal or visual",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.22542",
+      "title_zh": "HeRE：利用大模型去噪知识图谱对齐构建希伯来语关系抽取基准",
+      "summary_zh": "该预印本指出，大模型在英语关系抽取上表现强，但低资源语言缺乏标准化基准；人工标注昂贵，机器翻译又会引入英语中心偏差。作者提出可扩展、语言无关的方法：利用知识库与文本之间天然但含噪的对齐，以自然语言推断判断关系三元组是否被文本蕴含，从而去噪生成关系抽取数据，并比较五种去噪策略，构建希伯来语基准 HeRE。",
+      "why_zh": "低资源语言评测长期受翻译偏差困扰，该工作把“对齐去噪”做成可复用流程，对多语言信息抽取评测设计有启发，而非单纯刷榜。",
+      "details_zh": "摘要称，作者在少样本大模型设定下发现多语言模型优于语言专用模型，而希伯来语专用编码器在自然语言推断微调下仍有竞争力，并在无标签设定中表现最强。这些结论来自预印本自述，尚未经独立复现；摘要未披露基准规模、标注一致性或去噪策略的具体指标。读者应把它视为方法提案与初步实验，而非已确立的评测标准。",
+      "original_title": "HeRE: A Novel Benchmark for Hebrew Relation Extraction via LLM-Guided Denoising of Knowledge Graph Alignments",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "Quanta Magazine",
+      "published": "2026-10-16",
+      "url": "https://www.quantamagazine.org/he-wants-ai-benchmarking-to-be-a-science-not-a-dark-art-20261016/",
+      "title_zh": "Moritz Hardt：AI基准测试应成为科学，而非“黑魔法”",
+      "summary_zh": "Quanta Magazine报道，着有基准测试新书的Moritz Hardt认为，用于评估人工智能的这类“标准化考试”从根本上存在缺陷，但并非不可修复；报道以其主张为核心，讨论AI基准测试如何走向更科学的方法。",
+      "why_zh": "AI基准分数被广泛用于模型比较与采购决策，但基准本身的效度、污染与统计不确定性常被忽略；该访谈把评估方法本身当作科学问题提出，对读者理解榜单可信度有直接启发。",
+      "details_zh": "据摘要，Hardt在新书中主张当前AI基准测试“根本上是坏的”，但可以修复，并希望基准测试成为一门科学而非“黑魔法”。报道未在摘要中展开其具体批评维度（如基准污染、统计功效、指标选择）与提出的替代方案，因此无法据此判断其论证细节。该条为媒体报道，未经独立交叉核实；引用其观点时应视为受访者主张，而非已获学界共识的结论。",
+      "original_title": "He Wants AI Benchmarking To Be a Science, Not a Dark Art",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.23570",
+      "title_zh": "为迭代算法构建数据自适应、任意时刻有效置信包络的通用方法",
+      "summary_zh": "该预印本指出，多数迭代随机算法的收敛保证只针对固定迭代次数，无法支持在依赖数据的时间点停止。已有任意时刻有效的确定性包络过于保守，而数据自适应包络多为逐案推导。作者提出通用构造方法：把误差分析归结为对可预测加权噪声和的时间一致集中要求，并用连续与离散混合、拼接及乘积下注鞅给出可直接使用的边界构造。",
+      "why_zh": "把“何时停止”从经验调参变成有统计保证的通用框架，对早停、在线监控和自适应实验设计有直接方法论价值，不同于普通调参技巧分享。",
+      "details_zh": "摘要显示，论文关注一大类迭代随机算法，其性能度量满足单步递推，因此整个误差分析可化约为一个条件：可预测加权噪声和的时间一致集中。作者用强适应次ψ条件形式化这一点，并借助连续与离散混合、拼接和乘积下注鞅得到现成边界。需要强调，这是未经独立验证的预印本，摘要未给出具体算法实例、数值实验或与既有包络的定量比较，实际保守程度和计算开销仍待检验。",
+      "original_title": "A general recipe for data-adaptive anytime-valid envelopes for iterative algorithms",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.23308",
+      "title_zh": "无需筛网的 ReLU 贝叶斯先验取得近极小极大后验收缩率",
+      "summary_zh": "一篇 arXiv 统计学预印本研究高斯随机设计回归中浅层 ReLU 网络的分数后验收缩。作者称使用不依赖样本量和光滑度参数的先验，对 β-Hölder 目标函数，在任意固定设计分布下得到 Rényi 散度意义下的收缩，并在将后验抽样截断到目标取值范围后，得到平方 L2 损失下 (log n/n)^{2β/(2β+d)} 的速率。该速率与极小极大下界同阶，且先验无需按光滑度调参。",
+      "why_zh": "贝叶斯神经网络的理论难点在于先验常需随光滑度或样本量调整；若先验确实与二者无关而仍达近极小极大速率，对理解 ReLU 网络的贝叶斯推断有理论价值。",
+      "details_zh": "摘要明确了设定：浅层 ReLU 网络、高斯随机设计、β-Hölder 目标、固定设计分布，结论覆盖 Rényi 散度与截断后的平方 L2 损失两种度量，速率为 (log n/n)^{2β/(2β+d)}。需要留意的是，这是预印本的理论结果，摘要未给出证明思路、常数依赖、先验的具体构造，也未讨论深层网络或非高斯设计下的适用性；截断操作本身对结论的必要性也需读全文才能判断。不宜据此宣称贝叶斯深度学习已解决校准或不确定性问题。",
+      "original_title": "Sieve-free ReLU Bayesian priors with near-minimax posterior contraction",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-16",
+      "url": "https://arxiv.org/abs/2610.23830v1",
+      "title_zh": "等待恰好换来两个矩：预测驱动分配中的内生识别",
+      "summary_zh": "该预印本构建一个预算固定的预防性帮助分配问题：规划者要决定帮助谁、何时帮助，等待可揭示风险，但高风险个体先离开会减少干预机会。作者在重复噪声信号与风险相关流失的设定下刻画这一权衡，称在典型模型中，长度为τ的观测前缀恰好识别潜在风险矩m_j=E[p^j]（j=0,…,2τ−1），即每多观察一期可多获得两个矩，并称这些矩可识别下一期的平均处理效应。摘要未给出应用数据或实证结果。",
+      "why_zh": "把“等待获取信息”与“对象流失”的权衡形式化为可识别的矩条件，连接序贯决策与因果识别，对分配政策与在线实验设计有方法启示。",
+      "details_zh": "摘要描述的是一个规划者在固定预防性帮助预算下选择对象与时机的问题：等待能降低风险不确定性，但更高风险者会先退出，导致可干预人群变化。作者称在典型模型中，观测前缀长度τ恰好识别前2τ−1阶风险矩，每增加一期观察多识别两个矩，并称这些矩可识别下一期平均处理效应。该结果为理论刻画，摘要未提供模拟、真实数据或与现有方法的比较；作为预印本，其假设条件与识别结论需进一步核验。",
+      "original_title": "Waiting Buys Exactly Two Moments: Endogenous Identification in Prediction-Driven Allocation",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-16",
+      "url": "https://arxiv.org/abs/2610.23845v1",
+      "title_zh": "用LLM智能体自动化科研可复现性与分析稳健性检验",
+      "summary_zh": "该预印本探讨LLM智能体能否自动完成研究复现与稳健性分析，以美国SEER癌症登记数据库为医学案例——该数据库支撑了数万项已发表研究。作者提出SEER-Repro基准，包含20项已发表研究（摘要在此处截断），用于评估智能体复现结果与开展分析稳健性检验的能力。研究关注的是能否以较低人工成本替代昂贵的手工复核流程。",
+      "why_zh": "把“可复现性危机”从呼吁转为可评测任务，若成立可为期刊与审稿提供规模化核查工具；但基准仅20项研究、单一数据库，外推性有限。",
+      "details_zh": "摘要给出的信息有限：研究以SEER数据库为医学案例，指出可复现与分析稳健是科学进步的必要条件，但评估通常需要昂贵的人工投入，因此考察LLM智能体能否自动化复现与稳健性分析。作者提出SEER-Repro，一个包含20项已发表研究的基准（摘要在此截断，未说明任务形式、评分标准与智能体表现）。需要注意：这是arXiv预印本，未经独立验证；20项研究的样本量、单一数据库与单一领域意味着结论不能直接推广到其他学科；摘要未提供任何成功率或对比数据，相关说法应视为作者主张而非已确认结果。",
+      "original_title": "AI-Driven Reproducibility and Analytical Robustness in Scientific Discovery",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.22606",
+      "title_zh": "三种激光雷达、二十五个数据集：树种识别中的跨源泛化问题",
+      "summary_zh": "该预印本以目前最大的公开激光雷达树种分类基准FOR-species20K为对象，该基准汇集25个独立采集的地面、移动与机载激光扫描数据集、覆盖33个树种。作者提出多分辨率多视角ConvNeXtV2模型，将官方隐藏测试准确率从79.5%提升到85.0%，并进一步追问这一分数究竟衡量了什么。",
+      "why_zh": "它不只报告刷榜提升，还拆解基准本身：隐藏测试按树种平衡、官方随机划分让每个源数据集同时出现在训练与评估中，这直接关系到跨源泛化结论是否被高估。",
+      "details_zh": "摘要给出的关键线索是：隐藏测试为树种平衡，因此总体准确率更接近宏平均指标，而非公开集长尾分布下的准确率；官方随机划分把每个源数据集同时放入训练和评估，模型可能借源域特征走捷径。作者称逻辑回归探针可从折外模型概率中以69%准确率恢复源身份，几何特征在两个广泛共享的树种内识别来源的准确率超过90%，33个树种中有18个只出现在单一来源。在按源—树种单元留出的评估设置下，作者在8个合格树种的5566棵树上测试。以上均为预印本自述，尚未独立复核。",
+      "original_title": "Three LiDARs, Twenty-Five Datasets: Cross-Source Generalization in Tree-Species Recognition",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.23504",
+      "title_zh": "缺失观测下加权空间平均：delta法方差近似的收敛性与精度",
+      "summary_zh": "该预印本讨论不完整网络上的加权空间平均——本质是比值估计，其方差常用截断泰勒级数（delta法）近似。作者针对观测以共同概率α独立地完全随机缺失的情形，研究三个未决问题：级数是否收敛、截断误差有多大、以及误差随网络规模如何变化，并给出相应分析。",
+      "why_zh": "网络数据缺失下的比值型统计量在空间统计与网络分析中常见，但delta法近似的收敛性和误差界常被默认成立；该文把这一技术假设本身作为研究对象。",
+      "details_zh": "摘要说明研究对象是缺失完全随机（MCAR）、以共同概率α独立缺失时的加权空间平均，其方差由截断泰勒级数近似。作者提出三个开放问题：截断级数是否收敛、截断带来的误差规模、以及网络增大时误差的行为，并称针对这些问题给出结果。由于仅见标题与摘要，具体收敛条件、误差阶数和模拟设置尚不清楚；该文为arXiv预印本，结论未经同行评审或独立复核，不宜直接当作已确立的实用准则。",
+      "original_title": "Weighted spatial averages with missing observations: Convergence and accuracy of delta-method variance approximations",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.23825",
+      "title_zh": "ENFR：用流匹配参考构建证据网络，实现摊销式模拟推断中的模型证据估计",
+      "summary_zh": "该预印本关注贝叶斯框架中数据生成模型的证据（边际似然）难以计算的问题，提出ENFR方法，用流匹配参考构建证据网络，对绝对证据进行准确、快速且摊销式的估计。作者指出，现有学习方法多针对贝叶斯因子（仅衡量证据比），而绝对证据可用于高维拟合优度检验和模型误设检验，并诱导最小体积的水平α检验。摘要未给出具体实验结果。",
+      "why_zh": "与常见的贝叶斯因子学习不同，它直接估计绝对证据，并把证据用作检验统计量，关系到模拟推断结果是否可信，对做贝叶斯计算与模型检验的读者有方法启发。",
+      "details_zh": "摘要说明，证据Z=p(x|M)在模型推断、误设检验和拟合优度评估中有用，可替代χ²等差异统计量；但即使似然可得，证据也以难算著称。作者称现有学习方法大多只估计贝叶斯因子，即证据比，而ENFR提供绝对证据的摊销估计。摘要只给出方法动机与定位，未提供精度、速度对比或基准结果，且为未经独立验证的预印本，结论需待复现与同行评议。",
+      "original_title": "ENFR: Evidence Networks with Flow-Matched References for Amortized Simulation-Based Model Inference",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-16",
+      "url": "https://arxiv.org/abs/2610.23827v1",
+      "title_zh": "量子网络传输质量估计：解析计算、仿真还是学习？",
+      "summary_zh": "一篇 arXiv 预印本讨论未来量子网络控制面的决策需求：路由、调度、纠缠供给、纯化与内存分配都依赖对候选路径可交付纠缠质量的及时可靠估计，端到端保真度是核心指标。作者借鉴光网络中传输质量（QoT）估计的经验，提出一个框架性问题：量子控制器何时应解析计算保真度、何时应仿真、何时应用学习方法，并比较三类途径的适用条件与代价。",
+      "why_zh": "它把光网络成熟的 QoT 工程思路迁移到量子网络控制面，提出的是方法选择问题而非单一算法，对量子网络从实验走向运维有框架性启发。",
+      "details_zh": "摘要只给出问题设定与类比来源，未提供具体模型、仿真结果或学习方法的性能数据，也未说明三类途径在何种网络规模或噪声条件下切换。因此目前只能确认其议题定位：控制面决策对保真度估计的时效与可靠性有要求，而解析、仿真、学习各有代价。读者应把它当作综述性/立场性文章看待，具体结论需查阅全文；预印本尚未经独立验证。",
+      "original_title": "Quality-of-Transmission Estimation in Quantum Networks: Compute, Simulate, or Learn?",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.22454",
+      "title_zh": "MoE预填充阶段减少专家为何损害短答F1：少数提示词 token 承担大部分损失",
+      "summary_zh": "该预印本研究在预填充阶段让提示词 token 经过更少路由专家以降低混合专家（MoE）模型服务成本时，究竟损害了什么。作者在四个MoE模型家族上，通过token、层与注意力路径干预定位损害。结果显示，专家数减半时，三个家族的F1损失主要体现为答案形式：模型仍能找到答案，但不再简短作答；Qwen3-30B-A3B 的情况在摘要中被截断，未给出结论。",
+      "why_zh": "把“省算力”的工程取舍转化为可定位的失效机制分析，指出损失集中在少数提示词 token 与答案形式而非知识本身，对MoE推理优化有直接参考价值。",
+      "details_zh": "摘要说明背景：预填充时减少路由专家是降低MoE服务成本的简单手段，但其代价不清楚。作者采用token级、层級与注意力路径干预，在四个MoE家族的短答案问答任务上定位损害。关键发现是：专家数减半时，三个家族的F1损失“主要是答案形式”——模型仍找到答案，却停止简短作答；关于Qwen3-30B-A3B 的具体结果在摘要中被截断，无法据此推断。该工作为arXiv预印本，未经独立验证；摘要未给出具体F1数值、模型规模清单或干预的完整方法细节，实际部署影响需结合全文与复现评估。",
+      "original_title": "Where Prefill Expert Reduction Hurts MoE Models: A Few Prompt Tokens Carry Most of the Short-Answer F1 Loss",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.22610",
+      "title_zh": "偏移依赖对齐：按视觉语言模型“信任的线索”而非单一榜单排名",
+      "summary_zh": "该预印本指出，视觉语言模型通常按排行榜统一选型，但在“场景暗示存在、实际并不存在”的物体问题上，POPE幻觉基准上误差最低的模型并非此类问题误差最低者。作者提出通过编辑100张有标注源图像、让某一线索（如场景上下文或图中文字）暗示错误答案，并与匹配的对照编辑比较，来度量模型对该线索的依赖；据称依赖度可预测模型受物理贴纸攻击误导的情况（在九个未参与设计评分的模型上Spearman相关系数为0.93），以及在未编辑COCO照片上的幻觉倾向。",
+      "why_zh": "它质疑“一个榜单通吃”的选型习惯，提出按模型依赖的线索做领域匹配排序，对实际部署视觉语言模型和评估幻觉有直接参考价值。",
+      "details_zh": "摘要称，只要650至1200条有标注的目标领域样本用于校准检测器，就能在不运行候选模型于目标领域的情况下预测哪个模型最适合该领域。作者用编辑图像度量线索依赖，并报告依赖度与贴纸攻击易感性的强相关，以及在COCO照片幻觉上的额外解释力，超出模型“倾向回答是”的影响。需注意这些为预印本自述结果，样本规模与相关性结论尚未经独立复核；摘要未说明具体模型清单与完整实验设置。",
+      "original_title": "Shift-Reliance Alignment: Ranking Vision-Language Models by the Cues They Trust",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.22428",
+      "title_zh": "词嵌入太贵？为小型与三值语言模型冻结16MB词表",
+      "summary_zh": "该预印本关注小型语言模型中词表占比过大的问题：以 Gemma 3 270M 为例，嵌入表占2.68亿参数中的1.68亿，且量化后仍以16位存储，成为压缩后文件主体。作者追问这张表究竟买到了什么，并用一张由预训练嵌入经主成分分析等方法一次性导出、无训练参数的512位编码冻结表（约16MB）替换它，考察性能代价。",
+      "why_zh": "直击端侧小模型部署中“词表即大头”的结构性成本，若成立可改变小模型压缩与量化的优先级，比一般模型发布更值得追问。",
+      "details_zh": "摘要只给出动机与替换方案的开头，未提供替换后的困惑度、下游任务表现或与原始嵌入的对比数字，也未说明三值模型的具体训练设置。因此不能据此断言16MB词表“够用”或“无损”。该工作属于预印本，结论需独立复现；其价值在于提出一个可检验的问题：小模型词表容量与性能之间的边际收益究竟有多大。",
+      "original_title": "Embeddings Are Overpriced? A Frozen 16 MB Vocabulary for Small and Ternary Language Models",
+      "focus": false,
+      "edition": "evening"
     }
   ]
 }
