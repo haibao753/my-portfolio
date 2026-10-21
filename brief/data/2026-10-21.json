@@ -2,7 +2,8 @@
   "version": 1,
   "date": "2026-10-21",
   "editions": [
-    "morning"
+    "morning",
+    "evening"
   ],
   "items": [
     {
@@ -689,6 +690,548 @@
       "original_title": "Semantic Observability for Autonomous Systems Diagnostics",
       "focus": false,
       "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-21",
+      "url": "https://arxiv.org/abs/2610.27022",
+      "title_zh": "流形上逻辑分类的Besov函数高斯逼近",
+      "summary_zh": "该预印本研究在无边界、内蕴维数为ϱ的紧致光滑嵌入流形上，用高斯核逼近并结合正则化逻辑分类。作者提出Bernstein型不等式，其常数线性依赖预测器的上确界范数，从而在不假设Bayes函数有界的情况下得到oracle不等式；又用不同带宽高斯核积分算子的带符号组合抵消低阶偏差，得到L2逼近误差阶。",
+      "why_zh": "把核方法的统计学习理论从欧氏空间推进到低维流形，并处理无界Bayes函数这一常见但难处理的假设，对理解高维分类的维数灾难有理论意义。",
+      "details_zh": "摘要显示工作分两部分：一是统计侧，通过Bernstein型不等式与局部化复杂度估计，在可分赋范函数空间上给出快速oracle不等式，且不要求Bayes函数有界；二是逼近侧，建立一致的Sobolev算子展开，用不同带宽高斯核积分算子的带符号组合消去低阶偏差项，再借实插值得到γ^α阶的L2逼近误差。摘要在此处截断，未给出具体常数、样本复杂度或实验。该文为arXiv预印本，尚未经同行评审，结论应视为待验证。",
+      "original_title": "Gaussian Approximation of Besov Functions for Logistic Classification on Manifolds",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-21",
+      "url": "https://arxiv.org/abs/2610.27857",
+      "title_zh": "最优传输泛函的中心极限定理：高维经验传输映射为何不存在非零弱极限",
+      "summary_zh": "该预印本为二次最优传输映射与势函数的标量泛函（含Wasserstein代价及基于传输分位数的风险度量）建立经验插入估计量的中心极限定理。研究在参考分布已知、目标分布样本独立同分布的单样本设定下，指出维度至少为二时，经验传输映射误差在任何归一化尺度下于L2空间都没有非零弱极限，因此无法直接套用泛函delta方法，转而直接对目标分布线性化，得到余项由传输映射误差控制的影响函数展开，该影响函数由线性椭圆偏微分方程刻画。",
+      "why_zh": "与常见“最优传输用于生成模型”的热点不同，这条揭示了一个反直觉的负结果：高维传输映射本身不收敛，必须绕道影响函数。对做统计推断与分布比较的读者有方法论价值。",
+      "details_zh": "摘要给出的关键信息是：作者先尝试“经验传输映射极限定理＋泛函delta方法”的自然路线，但证明在维度≥2时该路线失效，因为映射误差在L2下无任何非零弱极限。替代方案是直接在目标分布上做线性化，得到影响函数展开，余项由传输映射误差控制，影响函数满足一个线性椭圆PDE；在正则条件下据此证明低维情形的中心极限定理。需注意这是未经独立验证的预印本，摘要未给出具体维数阈值、收敛速率与模拟结果，实际可用性仍需同行评议与复现检验。",
+      "original_title": "Central Limit Theorems for Optimal Transport Functionals",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/49 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.27857",
+        "pages_read": 14,
+        "pages_total": 49,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 2
+          },
+          {
+            "id": "E2",
+            "page": 1
+          },
+          {
+            "id": "E3",
+            "page": 3
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E5",
+            "page": 2
+          },
+          {
+            "id": "E6",
+            "page": 3
+          },
+          {
+            "id": "E7",
+            "page": 4
+          },
+          {
+            "id": "E8",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 7
+          },
+          {
+            "id": "E12",
+            "page": 9
+          },
+          {
+            "id": "E15",
+            "page": 12
+          },
+          {
+            "id": "E16",
+            "page": 13
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究二次最优传输映射与势函数的标量泛函的经验插件估计量的中心极限定理，涵盖平方Wasserstein距离以及由传输型多元分位数构造的若干风险度量；设定为参考分布已知、目标分布独立同分布观测的单样本问题。",
+            "evidence_ids": [
+              "E2",
+              "E1",
+              "E5"
+            ]
+          },
+          "method": {
+            "text": "作者指出，在维度至少为二时，经验传输映射误差在任何归一化尺度下于L2中都没有非零弱极限，因此不先建立函数空间极限，而是直接在目标分布上线性化泛函，得到影响函数展开，其余项由传输映射误差控制；影响函数由一个线性椭圆偏微分方程刻画。在正则条件下，用该展开证明低维中心极限定理并建立经验bootstrap的有效性，还推导半参数效率界。",
+            "evidence_ids": [
+              "E4",
+              "E6",
+              "E15"
+            ]
+          },
+          "findings": {
+            "text": "理论结果包括：在任意维度d≥2，若确定性归一化an→∞且an(φPn−φP)在H1(Ω)中紧，则an=o(√n)且an‖φPn−φP‖H1(Ω)依概率趋于0，对L2(μ;Rd)中的an(TPn−TP)同样成立，故根n误差不紧、无发散归一化下的非零弱极限。对平方Wasserstein距离，泛函余项为二次（r=2）；对最大尾部相关，因权重在内边界跳跃，得到r=4/3。当√n‖TPn−TP‖^r_L2(μ)依概率趋于0时，展开给出根n高斯极限。",
+            "evidence_ids": [
+              "E7",
+              "E8",
+              "E3"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录只给出理论框架与部分结果陈述，未提供数值实验、模拟或实证数据；中心极限定理与bootstrap有效性所依赖的具体正则条件、维度范围及证明细节仅见片段性描述，无法从给定材料完整判断。关于与既有文献（如González-Sanz等、Sadhu等）结果的关系，摘录仅作对比性提及，不能据此认定独立验证或复现结论。",
+            "evidence_ids": [
+              "E6",
+              "E10",
+              "E16"
+            ]
+          },
+          "replication": {
+            "text": "复现建议（仅基于摘录）：需先按定义2.1的正则分布与Assumption 2.1、2.2核对支撑、密度与泛函近似条件，构造零均值势空间V及双线性形式BP，再实现影响函数所满足的线性椭圆PDE的数值求解，并用经验bootstrap检验标量泛函的根n高斯极限；对平方Wasserstein距离与最大尾部相关分别验证r=2与r=4/3的余项界。摘录未给出算法步骤、超参数或代码，具体复现细节无法判断。",
+            "evidence_ids": [
+              "E12",
+              "E15",
+              "E16"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28559v1",
+      "title_zh": "大规模流语言模型Lafa：8B参数并行生成路径",
+      "summary_zh": "该预印本提出Lafa，一个扩展到80亿参数的流语言模型。作者称连续流语言模型可实现并行生成，并具备离散扩散所缺乏的控制与加速工具，但在十亿参数规模上构建的有效技术仍不成熟。Lafa采用分块流结构：前缀使用因果注意力，每个块内部使用双向、异步的流。",
+      "why_zh": "若连续流模型能在十亿参数级保持质量并支持并行解码，将挑战自回归与离散扩散的现有格局，对关注推理效率与生成建模范式的读者有参考价值。",
+      "details_zh": "摘要强调两点：一是动机，连续流语言模型相对离散扩散有并行生成和控制加速优势，但大规模训练方法尚不成熟；二是架构，Lafa为分块流模型，前缀部分用因果注意力，块内为双向异步流，并以数据高效方式扩展到8B参数。摘要未给出训练数据规模、基准测试结果、吞吐提升倍数或与自回归模型的直接对比。该文为arXiv预印本，机构与作者未在摘要中说明，结论需待同行评审与独立复现。",
+      "original_title": "Large Flow Language Models",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-10-21",
+      "url": "https://www.technologyreview.com/2026/10/21/1146121/exercise-in-a-pill-impossible-issue/",
+      "title_zh": "“运动药丸”：研究能否把锻炼的部分益处做成药物",
+      "summary_zh": "MIT Technology Review一篇报道讨论“运动药丸”思路：锻炼能增肌、强骨、降血压、改善情绪，研究者试图解析运动如何作用于身体，从而开发能提供部分相同益处的药物。报道强调目标不是替代运动，而是让无法锻炼的人群获得部分收益。文章为媒体综述，具体研究进展与临床阶段需核实原文。",
+      "why_zh": "把运动生理学转化为药物靶点是生物医学的长期方向，涉及肌肉、代谢与情绪多条通路；该报道提供的是领域概览而非单一突破，读者需区分机制假设与已证实的临床效果。",
+      "details_zh": "摘要仅给出总体框架：运动带来肌肉、骨骼、血压和情绪等多方面益处，研究者希望“解码”这些机制并开发药物，让无法运动的人获得部分好处，而非取代锻炼。输入未提供具体靶点、候选药物、动物或人体试验数据、研究机构与发表时间，因此无法判断当前进展处于哪个阶段。该条为媒体报道，未经独立交叉核实；读者应把它当作选题线索，具体结论需回到原始论文或临床试验注册信息核实，不宜据此认为已有成熟“运动替代药”。",
+      "original_title": "Exercise in a pill",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-21",
+      "url": "https://arxiv.org/abs/2610.28136",
+      "title_zh": "通过数据稀疏化，UCB风格高斯过程赌博机获得近最优遗憾界",
+      "summary_zh": "该预印本指出，高斯过程上置信界（GP-UCB）虽被广泛研究，但其已知遗憾上界并非最优；以往追求近最优界多依赖不确定性采样等非自适应方法，实际效果有限。作者在噪声服从高斯分布的假设下，利用“数据稀疏化”这一统计技术从单一数据集构造相互独立的数据集，证明可得到更紧的置信区间，并使直接扩展的GP-UCB取得近最优简单遗憾界；再结合分阶段消除算法，得到近最优累积遗憾界，并给出数值实验。",
+      "why_zh": "与常见“又一个UCB变体”不同，它把统计学的数据稀疏化引入赌博机置信区间构造，试图让实用的自适应UCB类算法逼近理论最优，值得关注其假设强度与实验规模。",
+      "details_zh": "摘要给出的核心链条是：数据稀疏化→更紧置信区间→简单遗憾近最优→与分阶段消除结合→累积遗憾近最优。这挑战了“要近最优就须放弃自适应UCB”的既有印象。但需注意：结论建立在高斯噪声假设下，摘要未说明常数因子、维度依赖及实验设置；作为arXiv预印本，尚未经同行评审或独立复现，数值实验的对比基线也不清楚，不宜视为已确立的实用优势。",
+      "original_title": "Near-Optimal Regret Bounds for UCB-Style Gaussian Process Bandits via Data Thinning",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-21",
+      "url": "https://www.psypost.org/how-personality-traits-shape-the-speed-of-depression-recovery/",
+      "title_zh": "外向性与抑郁症状更快缓解相关",
+      "summary_zh": "PsyPost 报道一项新研究，称精神科治疗期间患者人格与抑郁症状同步变化：高神经质与多个症状维度的恢复较慢相关，而外向性和宜人性可能帮助患者更快回升。报道将人格特质与症状缓解速度联系起来，但摘要未交代样本量、治疗类型、随访时长与统计模型，也未说明是观察性关联还是可干预结论。",
+      "why_zh": "把人格特质与抑郁治疗中的症状变化速度联系起来，对理解个体差异有启发；但属媒体转述的观察性研究，需与“人格决定康复”的通俗叙事保持距离。",
+      "details_zh": "据摘要，研究关注治疗过程里人格与抑郁症状的联动变化，结论方向是神经质高者恢复更慢、外向性与宜人性高者恢复更快。信息局限较多：来源为 PsyPost 的新闻摘要，未经独立交叉核实；未给出样本规模、人格测量工具、抑郁量表、治疗方式及随访周期，也未说明是否控制基线症状严重度等混杂因素。因此只能理解为相关性线索，不能推断人格特质导致恢复速度差异，更不宜据此给出临床建议。",
+      "original_title": "Extraversion is linked to faster relief from depressive symptoms",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28626v1",
+      "title_zh": "UniWALM：把视频、动作与语言放进同一表征的具身机器人模型",
+      "summary_zh": "该预印本提出UniWALM，一个统一的世界-动作-语言模型，在单一共享表征中同时学习视频、动作和语言，每种模态既是条件信号也是监督目标。作者的问题是：联合生成语言能否丰富这一共享表征，从而改善操作任务并支持依赖记忆的行为？摘要称其不同于以往把推理或视觉模块外挂的做法。目前仅有标题与摘要，具体架构、训练数据、评测任务与量化结果均未提供。",
+      "why_zh": "具身智能正从“视觉-语言-动作”拼接走向统一生成式表征，该工作把语言生成当作表征正则与记忆机制来检验，问题设定比单纯刷操作成功率更有科研价值。",
+      "details_zh": "从摘要可确认的只有动机与总体设计：多模态共享表征、各模态互为条件与监督、关注联合生成语言对操作与记忆依赖行为的增益。但摘要未说明模型规模、视频与动作数据的来源、是否使用真实机器人还是仿真、基线对比及失败案例；也没有给出“记忆依赖行为”的具体定义。作为未经独立验证的预印本，其“统一”是否带来实际增益仍需看实验细节，读者不宜据标题推断已超越现有VLA系统。",
+      "original_title": "UniWALM: Unified World Action Language Model for Embodied Robot Control",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-10-21",
+      "url": "https://www.theregister.com/ai-and-ml/2026/10/21/ai-cuts-coding-time-but-its-also-filling-open-sources-inbox-with-crap/5304389",
+      "title_zh": "AI缩短编码时间，却让开源项目收件箱塞满低质拉取请求",
+      "summary_zh": "据The Register报道，开源维护者估计涌入的拉取请求中约四分之一是低质量“slop”，在较大项目上这一比例升至31%。报道将这一现象与AI辅助编码缩短开发时间联系起来：提交门槛降低后，维护者需要花更多时间甄别、评审和拒绝无效贡献。该数字来自对维护者的调查性说法，报道未在摘要中说明样本规模、统计方法与项目范围，需核实原始报道与调查细节。",
+      "why_zh": "不同于一般“AI提升效率”的叙事，它指向AI编码的外部性：贡献数量上升但评审成本转嫁给志愿者维护者，涉及开源治理与劳动负担，值得关注可复现的量化证据。",
+      "details_zh": "摘要只给出两个数字（约四分之一、较大项目31%）和“维护者认为”这一归属，未说明调查由谁执行、覆盖多少项目、如何界定“slop”，也未区分AI生成与其它低质提交。因此这些比例应视为受访者估计而非经审计的统计。报道本身属媒体二手叙述，需回到原始调查核实。可讨论的方向包括：评审负担是否影响维护者留存、平台是否引入提交门槛，但在缺乏数据前不宜断言因果关系。",
+      "original_title": "AI cuts coding time, but it's also filling open source's inbox with crap",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-21",
+      "url": "https://arxiv.org/abs/2610.27765",
+      "title_zh": "有色噪声下干摩擦的控制变量法：非光滑观测量的方差收敛速率",
+      "summary_zh": "该预印本延续Garnier与Mertz（2022）针对有色噪声驱动的多值随机微分方程的控制变量方法。光滑观测量的渐近方差为O(ε²)，但阈值指示、超调严重度等非光滑可靠性观测量此前缺乏速率估计。作者针对惯性干摩擦包含问题，在三种白噪声传播子已知的情形下，按观测量的Hölder正则性与有界变差性质给出不同方差速率。",
+      "why_zh": "为可靠性工程中常见的非光滑统计量补上方差收敛速率，说明正则性如何决定蒙特卡洛估计效率，属于方法层面的实质推进而非应用噱头。",
+      "details_zh": "摘要给出的速率包括：对α-Hölder观测量（α∈(0,1]）为O(ε^{2α})；对有界变差且满足单侧连续性条件的观测量为O(ε)；对同时满足α-Hölder与有界变差的观测量为O(ε^{1+α})；另有一类为O(ε^{min{2,1+2α}})。这些结果依赖白噪声传播子已知的三种情形。信息局限在于：摘要未说明证明技术、常数是否依赖参数，也未提供数值实验；作为预印本，速率结论尚未经同行评审独立验证。",
+      "original_title": "Control variates for dry friction under colored noise: variance rates for non-smooth observables",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28619v1",
+      "title_zh": "自适应多词元预测：推测视野该放多长",
+      "summary_zh": "多词元预测（MTP）通过一次目标模型前向中起草多个词元并验证来加速解码，但最佳推测视野随上下文变化：可靠时更长起草可摊薄成本，被拒后则浪费算力。由于 MTP 各头在同一次前向中同时触发，必须在起草前固定视野。作者将视野选择建模为在线控制问题，利用验证反馈学习每个上下文的可信长度，提出无需重训、不改变精确验证器的轻量控制器 AMTP。",
+      "why_zh": "把推测解码的“起草多长”从固定超参变成在线控制问题，直接关系 LLM 推理成本，且方法不重训、不改验证器，工程可迁移性强。",
+      "details_zh": "摘要指出，自回归起草可以逐词元决定何时停止，而 MTP 必须预先固定视野，这是其结构性限制。作者用“接受存活率”——即起草前缀被完全接受的概率——刻画各视野下期望提交词元数，并据此在每轮前选择视野。信息局限明显：摘要未给出加速比、接受率数值、基准模型与数据集，也未说明控制器在线学习的收敛性或失败情形。作为预印本，结论尚待独立复现；读者不宜把“无需重训”理解为零成本部署。",
+      "original_title": "Adaptive Multi-Token Prediction: How far should we go?",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "TechCrunch",
+      "published": "2026-10-20",
+      "url": "https://techcrunch.com/2026/10/20/openai-acquires-startup-orchestra-bio%e2%81%a0-to-beef-up-its-biotech-business/",
+      "title_zh": "OpenAI收购生物科技初创Orchestra Bio，加码生命科学业务",
+      "summary_zh": "据TechCrunch报道，OpenAI称已收购初创公司Orchestra Bio，将其团队与技术并入面向生命科学研究的AI模型Rosalind，以及配套的Rosalind Workbench工具。该工具旨在帮助研究人员规划实验并分析结果。报道未披露交易金额与具体条款。",
+      "why_zh": "这是AI公司向科研工作流纵深扩张的案例，涉及模型、工具链与领域团队的整合，对关注AI for Science落地路径的读者有观察价值。",
+      "details_zh": "摘要仅提供有限信息：收购对象为Orchestra Bio，人员与技术将服务于Rosalind模型和Rosalind Workbench。后者被描述为帮助研究者规划实验、分析结果的工具框架。报道未说明收购价格、监管审批状态、Orchestra原有产品是否保留，也未给出Rosalind的基准表现或用户规模。该消息来自单一媒体，未经独立交叉核实，OpenAI官方公告细节亦未在材料中呈现，读者应将其视为待确认的商业动态而非已完成的整合结果。",
+      "original_title": "OpenAI acquires startup Orchestra Bio⁠ to beef up its biotech business",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-10-20",
+      "url": "https://arstechnica.com/health/2026/10/cops-raid-office-of-rfk-jr-allies-planning-unethical-vaccine-trial-on-babies/",
+      "title_zh": "几内亚比绍警方搜查 RFK Jr. 盟友办公室，涉计划在婴儿身上开展疫苗试验",
+      "summary_zh": "Ars Technica 报道，几内亚比绍警方表示在调查中查获了乙肝疫苗剂量，并搜查了与 RFK Jr. 盟友相关、计划在婴儿身上开展被指“不道德”疫苗试验的办公室。报道称警方将疫苗剂量作为调查的一部分带走。摘要未说明涉事组织名称、被调查人员身份、是否有人被逮捕或起诉，也未给出试验计划的具体内容与当地监管回应。",
+      "why_zh": "涉及疫苗试验伦理、跨国监管与公共卫生政治的交汇，属于有实质公共意义的争议事件；但现有材料仅为媒体简述，需明确区分警方说法与尚未确认的指控。",
+      "details_zh": "可确认的仅是 Ars Technica 摘要层面的信息：几内亚比绍警方称正在调查，并查获乙肝疫苗剂量，搜查对象是与美国卫生官员 RFK Jr. 盟友有关、计划在婴儿中开展疫苗试验的办公室。摘要使用“unethical”描述该试验计划，但未说明这一判断来自何方、试验是否已获伦理批准、涉事机构如何回应。信息明显不足：无涉事组织全名、无指控细节、无官方声明原文。读者应把警方行动视为已发生事件，而把试验“不道德”等定性视为待核实的指控。",
+      "original_title": "Cops raid office of RFK Jr. allies planning “unethical” vaccine trial on babies",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28604v1",
+      "title_zh": "AI生成辩论“价值丰富但组织不同”：一套衡量价值表达与结构的诊断指标",
+      "summary_zh": "该预印本指出，当前对LLM生成辩论的评估多集中在论证质量，对生成论证的价值结构考察不足。作者提出一套诊断性指标框架，用于比较人类参考辩论与AI生成辩论中价值的表达与组织方式：前者指辩论调用了哪些可识别的价值及其范围，后者指这些价值如何在多轮发言中分布与延续。框架以Schwartz基本价值理论为基础。摘要未给出具体指标数值、语料规模或主要发现。",
+      "why_zh": "把“AI辩论好不好”从文采与逻辑转向价值多元性与价值结构，为评估AI参与公共说理提供了可操作的测量维度，比一般LLM评测榜单更触及规范性问题。",
+      "details_zh": "摘要提供的信息是：现有LLM辩论评估偏重论证质量，价值结构研究不足；作者区分“价值表达”（可识别价值的范围）与“价值组织”（价值在各轮次中的分布与持续），并称框架根植于Schwartz基本价值理论。但摘要在此处截断，未说明具体价值类别、标注方法、人机对比样本量及结论方向，也未交代是否经过人工信度检验。该文为arXiv cs.AI预印本，未经独立验证；读者应将其视为测量框架提案，而非“AI辩论价值更丰富/更贫乏”的既定结论。",
+      "original_title": "Value-Rich, Differently Organized: Measuring Value Expression and Organization in AI-Generated Debates",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-21",
+      "url": "https://www.psypost.org/older-adults-tell-the-story-of-their-lives-differently-and-it-may-not-be-a-sign-of-decline-new-psychology-study-suggests/",
+      "title_zh": "新心理学研究提示：老年人讲述人生故事的方式不同，未必是衰退信号",
+      "summary_zh": "一项心理学研究报道称，老年人在描述一次性事件和重复性日常时，比年轻人使用更多概括性事实、更少具体细节；但在需要于不同记忆类型之间切换时，两个年龄组的困难程度相似。报道据此提出，老年人叙事方式的差异不一定意味着认知衰退。",
+      "why_zh": "把“细节减少”从衰退指标重新解释为叙事策略差异，提醒读者区分记忆内容与表达方式，对理解老龄化认知评估有现实意义。",
+      "details_zh": "据PsyPost摘要，研究比较了老年人与年轻人对一次性事件和重复日常的描述：老年人给出更多一般性事实、更少具体细节；而在记忆类型间切换的任务上，两组表现出的困难相近。这提示概括化叙事未必等同于功能下降。信息局限较大：摘要未提供样本量、测量工具、期刊来源和效应量，也未说明是否为横断面设计，因此不能推断因果或排除其他解释；该报道未经独立交叉核实，应视为媒体对单项研究的转述。",
+      "original_title": "Older adults tell the story of their lives differently, and it may not be a sign of decline, new psychology study suggests",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-21",
+      "url": "https://arxiv.org/abs/2610.27606",
+      "title_zh": "询问式学习：基于查询的协作强化学习",
+      "summary_zh": "该预印本关注离线强化学习受数据覆盖范围限制的问题，提出不直接与环境交互、而是通过向“协作者”查询状态—时间对来获取补充信息。协作者按固定且可能次优的策略给出动作，模拟器返回奖励与下一状态。作者在有限时域表格问题上给出识别ε最优策略所需额外查询量的实例相关信息论下界。",
+      "why_zh": "把“离线数据不足”转化为可量化的查询预算问题，为协作式仿真、人机协同数据采集提供了理论视角，区别于常见的在线探索或纯离线算法改进。",
+      "details_zh": "摘要显示研究动机来自“协作者介导的仿真”等实际场景：学习者拥有固定离线数据集，可自适应查询状态—时间对，由协作者采样动作、模拟器返回奖励和下一状态。理论部分针对有限时域表格问题推导实例相关的信息论下界，用于刻画达到ε最优策略所需的额外查询量。需要注意，这是未经独立验证的预印本，摘要未给出具体算法、实验环境或上界匹配情况，下界与实际可达性能之间的差距尚不明确，结论应视为作者自述。",
+      "original_title": "Ask to Learn: Query-Based Collaborative Reinforcement Learning",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-21",
+      "url": "https://arxiv.org/abs/2610.27679",
+      "title_zh": "广义指数族的Cramér-Rao型下界：把经典信息不等式推广到幂律与t分布",
+      "summary_zh": "该预印本把“指数族充分统计量达到经典Cramér-Rao下界”的结论推广到更广的分布族，涵盖指数族与幂律族，Student t分布为特例。作者先用Eguchi关于Bregman散度的理论得到黎曼度量，再沿Amari与Nagaoka的路线推导广义Cramér-Rao不等式；由于该路线只适用于有限支撑模型，作者用Cauchy-Schwarz不等式将其扩展到可数无限或连续支撑。所得下界与最小Bregman散度估计量的渐近协方差矩阵相关，并证明广义族的充分统计量可达该界。",
+      "why_zh": "信息几何视角下的估计下界推广，属于统计理论基础工作。对关注t分布等重尾模型、Bregman散度与估计效率的读者，提供了比常规“新模型刷榜”更根本的问题框架。",
+      "details_zh": "摘要显示论证分两步：先借Bregman散度构造黎曼度量，再按Amari-Nagaoka方法得到广义Cramér-Rao不等式；因原方法限于有限支撑，作者用Cauchy-Schwarz不等式推广到无限与连续支撑。结论包括：广义下界是有限样本下界，与最小Bregman散度估计量的渐近协方差矩阵有关；广义族的充分统计量达到该界；但摘要明确提到广义下界一般并不与……（原文在此截断），说明其与经典CRLB的关系仍有条件限制。该文为未经独立验证的预印本，摘要未给出具体分布例子、数值验证或正则条件细节，引用时需谨慎。",
+      "original_title": "Cramer-Rao Type Bounds for Generalized Exponential Families",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28586v1",
+      "title_zh": "教师强而评分短视：面向智能体在线策略蒸馏的无奖励教师修复",
+      "summary_zh": "一篇arXiv cs.CL预印本讨论智能体在线策略蒸馏（OPD）：学生在自身轨迹上训练，教师对每个token打分。作者称“复合误差”解释并不完整，并提出“无奖励教师修复”的思路，针对教师评分短视的问题改进蒸馏。摘要信息有限，未给出具体方法细节与实验数值。",
+      "why_zh": "在线策略蒸馏是当前智能体训练的重要路线，该文挑战“学生偏离教师可靠区域”这一常见解释，把问题归因于评分机制本身，对做Agent训练与评测的读者有方法启发。",
+      "details_zh": "根据摘要，OPD让学生在自身产生的轨迹上学习，教师逐token评分；近期方法通过课程式回合长度、教师引导回合、前缀回放或在师生分歧处干预，把训练限制在教师可靠区域内。作者认为复合误差解释不完整，但摘要在此处截断，未说明其替代解释与“无奖励教师修复”的具体机制。由于输入仅有标题与摘要片段，无法确认实验设置、基线、任务类型及提升幅度；该文为预印本，结论未经独立验证，读者应将其视为待核实的研究线索。",
+      "original_title": "Capable Teacher, Myopic Scorer: Reward-Free Teacher Repair for Agentic On-Policy Distillation",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-10-21",
+      "url": "https://www.theregister.com/offbeat/2026/10/21/happiness-is-the-next-ai-kpi-if-oxford-boffins-have-their-way/5304253",
+      "title_zh": "牛津研究者提议：把“幸福感”列为AI的下一个关键指标",
+      "summary_zh": "The Register报道，牛津大学研究者主张对AI的公共补贴应以民众福祉而非仅经济增长来回报，提出将“幸福感”作为AI的关键绩效指标。报道称研究者认为公共资金支持AI应附带福祉回报条件。该条为媒体转述，具体研究论文、指标设计与政策建议细节需核实原文。",
+      "why_zh": "AI政策讨论多集中在算力、就业与GDP，把公共补贴与主观福祉挂钩是一个可争论的政策框架问题，涉及如何度量、归因与问责，对关注AI治理与经济政策的读者有讨论价值。",
+      "details_zh": "摘要信息有限：仅说明研究者认为AI的公共补贴应以福祉而非单纯经济增长来“偿还”，并把幸福感称为AI的下一个KPI。输入未给出研究机构的具体报告名称、福祉如何测量、由谁评估、是否已有政策采纳，也未说明与现有AI评估框架的关系。该条来自科技媒体，属于对研究者主张的转述，未经独立交叉核实；读者应区分“研究者提议”与“已实施政策”，并注意幸福感指标本身在心理学与经济学中存在测量争议。",
+      "original_title": "Happiness is the next AI KPI if Oxford boffins have their way",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28591v1",
+      "title_zh": "PaPi：面向快速神经谱架构的并行Picard-Duhamel积分",
+      "summary_zh": "神经谱架构（NeuSA）是一类在频域求解含时偏微分方程的物理信息神经网络，但训练与推理常依赖昂贵的数值积分，通常用顺序Runge-Kutta时间步进，限制了时间并行性。作者提出PaPi，一种受弱非线性流启发的积分方案，通过指数型构造实现时间并行推理。",
+      "why_zh": "针对PINN类方法推理速度的实际瓶颈，提出可并行的时间积分思路，对科学计算与机器学习交叉领域有方法启发，而非单纯模型规模竞赛。",
+      "details_zh": "摘要指出NeuSA在频域处理含时PDE有效，但学习到的向量场需要数值积分，顺序Runge-Kutta步进无法在时间维度并行，成为训练和推理的成本来源。PaPi被描述为受弱非线性流启发的积分格式，借助指数化手段实现时间并行推理。信息局限明显：摘要未给出误差分析、并行加速比、测试的PDE类型或与基线方法的定量比较，也未说明该方法是否适用于强非线性或刚性情形；作为预印本，效果尚待独立验证。",
+      "original_title": "PaPi: Parallel Picard-Duhamel Integration for Fast Neuro-Spectral Architectures",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-21",
+      "url": "https://www.psypost.org/childhood-intelligence-predicts-the-pace-of-adolescent-brain-development/",
+      "title_zh": "童年早期流体智力与青少年期灰质“精炼”速度相关：一项大型纵向研究",
+      "summary_zh": "PsyPost报道一项大型纵向研究，称童年早期的智力测验分数可预测青少年时期灰质与白质的发育速度，并提示大脑精炼与网络专门化存在不同模式。报道将早期流体智力与灰质细化的更快节奏联系起来。摘要未给出样本量、测量工具、效应大小或是否控制社会经济地位等混杂因素，也未说明因果方向。",
+      "why_zh": "把认知能力差异与脑发育轨迹的时间节奏联系起来，比常见的“益智游戏提升智商”类报道更接近发展神经科学的实质问题；但媒体转述需与原始论文对照，避免把相关性读成因果。",
+      "details_zh": "已知信息仅来自媒体摘要：研究为大型纵向设计，早期儿童智力分数预测青春期灰质与白质发育速度，呈现不同的脑细化与网络专门化模式。摘要未披露样本规模、年龄区间、影像指标定义、统计模型及效应量，也未说明智力测验具体测的是流体智力还是综合分数。该报道未经独立交叉核实，属于对单篇论文的媒体转述；读者应注意“预测发育速度”不等于“早期智力决定大脑发育”，且个体差异、环境因素与测量误差都可能影响结论，需查阅原始论文后再作判断。",
+      "original_title": "Early fluid intelligence linked to faster gray matter refinement",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-21",
+      "url": "https://arxiv.org/abs/2610.27502",
+      "title_zh": "高维块稀疏非光滑正则化下近似留一法的精度研究",
+      "summary_zh": "该预印本关注近似留一法（ALO）在高维比例渐近情形下的统计精度。ALO 常用于高效估计留一风险，并与机器遗忘、数据估值等问题相关；传统方法依赖牛顿步，需要光滑损失与正则项，但高维问题中正则项常非光滑。作者研究一类促进块稀疏的非可微惩罚项下启发式 ALO 的精度，在块大小一致有界的假设下给出期望平均绝对误差的界。",
+      "why_zh": "把机器遗忘、数据估值背后的 ALO 近似从光滑情形推进到高维非光滑块稀疏正则，属于方法论层面的理论补强，而非普通模型刷榜新闻。",
+      "details_zh": "摘要显示，已有针对非光滑正则的启发式 ALO 方法经验表现较强，但理论依据有限，本文正是补这一缺口。作者限定在比例高维渐近框架，并假设块大小一致有界，推导期望平均绝对误差的界。需要注意：这是 arXiv 预印本，尚未经独立验证；摘要未给出具体误差阶、模拟或真实数据实验，也未说明假设在何种实际稀疏结构下成立。读者应把它视为理论进展线索，而非已可直接部署的工具结论。",
+      "original_title": "On the Accuracy of Approximate Leave-One-Out with Blockwise Nonsmooth Regularization in High-dimensions",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28577v1",
+      "title_zh": "面向智能体的缓存工程：轨迹变长后 KV 缓存成为主要成本",
+      "summary_zh": "该预印本讨论 LLM 智能体在长轨迹任务中的键值（KV）缓存问题。随着观测与动作轨迹增长，缓存 I/O 与存储成为主导成本，轨迹还可能超出模型最大上下文长度，需要控制活跃缓存的增长。已有上下文工程通过裁剪或摘要历史来缩小缓存，但修改轨迹前缀会使后续缓存状态失效。摘要在此处截断，未给出具体方法名称与实验结论。",
+      "why_zh": "AI Agent 落地的瓶颈正从模型能力转向长轨迹下的缓存与上下文管理，这一视角比一般 Agent 产品新闻更贴近系统层真实约束。",
+      "details_zh": "可确认的信息有限：来源为 arXiv cs.CL 预印本，摘要只交代了问题背景——智能体轨迹变长导致 KV 缓存 I/O 和存储成为主要开销，且可能超过最大上下文长度；并指出裁剪或摘要历史会改动轨迹前缀，从而使后续缓存状态失效。摘要未提供所提方法、缓存复用机制、评测任务或量化收益，因此无法判断其相对现有上下文工程的实际改进幅度。该文未经独立验证，读者应将其视为问题定义与方向的线索，而非已证实的性能结论。",
+      "original_title": "Cache Engineering for Agents",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28618v1",
+      "title_zh": "面向图生成的高效边感知注意力网络",
+      "summary_zh": "该预印本关注图生成模型的可扩展性。现有图专用Transformer架构联合更新节点与边特征，但无法直接利用近期硬件感知的注意力实现。作者指出适配并不简单：边与图级特征须注入成对注意力分数，图掩码须被遵守，动态边更新仍是二次内存占用的主要来源。为此提出一种边感知注意力方案。",
+      "why_zh": "图生成在分子设计、程序图等场景重要，而能否用上FlashAttention类硬件优化决定其规模上限；该工作直面工程瓶颈而非仅提新模型。",
+      "details_zh": "摘要给出的关键约束有三：一是边和图级特征需要进入注意力分数计算，二是必须尊重图结构掩码，三是动态边更新导致二次内存开销。作者称现有图专用Transformer因此难以从硬件感知注意力实现中直接获益，并提出边感知注意力网络来缓解。摘要在此处截断，未说明具体机制、复杂度改进幅度或生成质量指标。该文为arXiv预印本，未经独立验证，实际加速与质量权衡需看后续全文与复现。",
+      "original_title": "Efficient Edge-aware Attention Network for Graph Generation",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28543v1",
+      "title_zh": "二元离散扩散：面向逻辑与规划任务的候选集扩散",
+      "summary_zh": "离散扩散模型通过对类别数据序列迭代去噪，实现任意顺序生成、自我纠错与填充，因而被视为推理、规划和代码数学等约束生成任务的候选方案。但掩码式与均匀扩散在单次损坏事件中抹去词元身份，噪声状态无法显式表示“多个备选仍并存”的部分不确定信息。作者据此提出候选集扩散思路。",
+      "why_zh": "指出现有离散扩散的损坏机制丢失了部分不确定性的表示能力，把“保留候选集”作为设计原则，对逻辑与规划类生成任务具有针对性。",
+      "details_zh": "摘要的核心论点是：掩码扩散和均匀扩散在一次损坏中就把词元替换为掩码或随机类别，因此中间噪声状态不能表达“尚未定论、若干候选并存”的信息，而这恰是推理与规划中常见的不确定性形态。作者提出二元离散扩散/候选集扩散，试图让噪声状态显式携带候选集合。信息局限在于：摘要未给出具体损坏过程、训练目标、基准任务和实验结果，也未说明与掩码扩散在计算成本上的差异；预印本结论需谨慎看待。",
+      "original_title": "Binary Discrete Diffusion: Candidate-Set Diffusion for Logic and Planning Tasks",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-21",
+      "url": "https://arxiv.org/abs/2610.26987",
+      "title_zh": "面向时间序列预测的动态双反馈保形推断",
+      "summary_zh": "该预印本针对时间序列预测中的不确定性量化，提出动态双反馈保形推断（DDCI）。作者指出，现有在线保形方法通常只用真实标签是否落入区间这一误覆盖指标作为反馈，忽略了由oracle保形方法导出的经验预测阈值这一估计反馈。DDCI同时使用实际反馈与估计反馈：前者依据真实观测驱动区间的主调整，后者提供额外信号。",
+      "why_zh": "保形推断是当前不确定性量化的热点，而时间序列的分布漂移使在线方法尤为关键；双反馈思路对做预测区间和Agent可靠性评估的读者有直接启发。",
+      "details_zh": "摘要说明问题背景：序列数据存在时间依赖且易发生分布变化，使不确定性量化困难；保形推断通过构造预测集提供无分布假设的覆盖保证，近期在线方法用反馈机制自适应调整预测阈值。作者认为现有反馈机制只依赖误覆盖指示（实际反馈），而忽视oracle保形方法给出的经验预测阈值（估计反馈）。DDCI将两者结合，实际反馈负责主调整。摘要未给出覆盖保证的理论形式、实验数据集或对比结果，且为预印本，需谨慎看待其相对基线方法的实际增益。",
+      "original_title": "Dynamic Dual-Feedback Conformal Inference for Time Series Forecasting",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28623v1",
+      "title_zh": "神经算子PUN：在控制执行噪声下学习可规划的价值场",
+      "summary_zh": "arXiv cs.LG一篇预印本提出“Planning Under Noise”（PUN）神经算子，用于在存在控制执行噪声时学习带噪声感知的价值场，以便在未见过的几何环境中规划。方法基于既有的 screened-Poisson 随机最优控制表述，重点处理障碍边界条件设定与可靠梯度计算，并把蒙特卡洛求解器Walk on Stars扩展到更高维。",
+      "why_zh": "机器人规划常被当作控制问题，该文把噪声下的价值场学习与偏微分方程数值方法结合，关注泛化到新几何体，属于方法层面的新意，而非产品发布。",
+      "details_zh": "摘要指出两个技术难点：一是边界条件，若在障碍处用零Dirichlet条件，采样路径会在墙边终止，长路径上的目标信号被削弱；作者改用障碍处反射Neumann条件、目标处Dirichlet条件，让路径继续探索自由空间。二是无网格求解，作者把Walk on Stars这一蒙特卡洛PDE求解器扩展到高维，但摘要也提到局部蒙特卡洛方法存在问题，具体如何修正未在摘要中展开。该工作为预印本，未经独立验证；摘要未提供基准环境、成功率或与基线对比的数值，实际效果需看全文与后续复现。",
+      "original_title": "Planning under Noise with Neural Operators",
+      "focus": false,
+      "edition": "evening"
     }
   ]
 }
