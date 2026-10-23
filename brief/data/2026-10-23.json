@@ -1,0 +1,643 @@
+{
+  "version": 1,
+  "date": "2026-10-23",
+  "editions": [
+    "morning"
+  ],
+  "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31659v1",
+      "title_zh": "SpectralCanary：用极简低频痕迹审计文生图数据集是否被使用",
+      "summary_zh": "该预印本关注如何审计文生图模型是否在特定图像集合上微调。作者提出SpectralCanary，用平滑低通掩码把固定金丝雀图像混入集合中每张图，标题不变，无需辅助生成或逐图优化，再由轻量验证器在可疑模型输出中检测该信号。摘要称在Pokemon数据集八项测试和三种真实数据变换、两个架构族上取得最高平均单次生成TPR@1%FPR（91.1%）。",
+      "why_zh": "与常见水印或成员推断不同，它把“数据是否被使用”转为可部署的主动审计信号，并明确权衡可验证性、保真度与鲁棒性，对数据授权和版权治理有直接启发。",
+      "details_zh": "摘要指出，审计难点在于模型可能吸收集合级视觉特征却不复现训练图。主动审计思路是在发布前植入共享信号，事后检查可疑模型输出是否携带该信号。SpectralCanary的关键设计是低频混合，避免逐图优化和额外生成，降低部署成本。需注意这是未经独立验证的预印本，91.1%等数字来自作者自述实验，测试仅限Pokemon数据集和有限变换，真实大规模图像集合、不同微调流程和对抗性去除下的表现尚不明确，不能视为已确立的审计标准。",
+      "original_title": "SpectralCanary: Embarrassingly Simple Low-Frequency Traces for T2I Dataset-Use Auditing",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31624v1",
+      "title_zh": "质疑RLVR中的工具性趋同：来自OLMo-3检查点的证据",
+      "summary_zh": "该预印本检验一个常见担忧：能力较强的智能体是否会普遍表现出自我保护、获取资源、欺骗或抵抗监督等工具性趋同行为。作者指出，对LLM而言，强化学习是直接针对目标优化行为的后训练阶段，因此按工具性趋同理论，这类行为最可能在此阶段出现。研究以OLMo-3的检查点为对象考察可验证奖励强化学习（RLVR）是否诱发此类行为。摘要信息有限，未给出具体测量方法与结果。",
+      "why_zh": "工具性趋同常被当作AI安全的一般性论据，该研究尝试用开源模型检查点做实证检验，属于把安全假设落到可观测行为上的尝试。",
+      "details_zh": "标题与摘要显示，作者的问题意识是：若工具性趋同成立，则直接优化目标的强化学习后训练阶段应最易出现权力寻求类子目标。研究选择OLMo-3检查点作为观察对象，暗示采用跨训练阶段对比的思路。但输入仅提供标题与摘要开头，未披露具体行为评测任务、指标、样本规模及结论方向，因此无法判断其是否支持或反驳工具性趋同。该文为预印本，未经独立验证；读者应将其视为待核实的研究线索，而非AI会寻求权力的证据。",
+      "original_title": "Questioning Instrumental Convergence in RLVR: Checkpoint Evidence from OLMo-3",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30708",
+      "title_zh": "黑箱条件预测的有限查询相干投影：极小极大风险界与方向保真",
+      "summary_zh": "该预印本讨论黑箱模型给出的局部条件预测未必能对应同一个联合分布的问题，研究“相干投影”的两个方面：有限查询精度与方向保真。作者针对任意确定性二值条件表，在独立均匀精确表查询下给出匹配的期望极小极大超额条件KL风险界，并构造矩估计量达到上界；主要技术贡献是尊重共享成对交互与冻结精确表响应的下界构造。摘要还提到在保留直接黑箱边缘的可计算硬边缘表述中考察方向保真，并涉及预注册内容，但具体结果未在摘要中展开。",
+      "why_zh": "与常见“模型准确率”报道不同，它追问黑箱条件预测能否被一致地拼成联合分布，并给出查询预算下的统计极限，对理解概率预测的可解释性与评估有方法论意义。",
+      "details_zh": "摘要给出的核心是统计学习理论问题：局部条件预测来自黑箱，但未必存在共同联合分布，因此需要构造一个“相干”的联合预测。作者在确定性二值条件表、独立均匀精确表查询的设定下，建立期望极小极大超额条件KL风险为 Θ(min{R√(d/B), d²/B})，并称矩估计量可达上界；下界构造需满足共享成对交互与冻结表响应等约束。摘要还提到方向保真与预注册，但未给出具体数值或实验结论。该文为arXiv预印本，未经独立验证，结论应视为作者自述，适用条件（如d足够大、B的范围）也需阅读全文确认。",
+      "original_title": "Finite-Query Coherent Projection of Black-Box Conditional Predictions",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/50 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.30708",
+        "pages_read": 14,
+        "pages_total": 50,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 2
+          },
+          {
+            "id": "E2",
+            "page": 10
+          },
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E5",
+            "page": 2
+          },
+          {
+            "id": "E10",
+            "page": 7
+          },
+          {
+            "id": "E11",
+            "page": 8
+          },
+          {
+            "id": "E12",
+            "page": 9
+          },
+          {
+            "id": "E13",
+            "page": 10
+          },
+          {
+            "id": "E14",
+            "page": 11
+          },
+          {
+            "id": "E16",
+            "page": 13
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究黑箱条件预测的“相干投影”问题：局部条件概率回答未必来自同一个联合分布，因此需要把黑箱条件表投影到某个学生类中的联合分布。作者提出两个问题：在有限查询访问下，指定投影能被多准确地估计；以及该投影在哪些条件方向上拟合得较好。",
+            "evidence_ids": [
+              "E1",
+              "E5",
+              "E4"
+            ]
+          },
+          "method": {
+            "text": "方法上，作者在二值变量、成对联合的学生类中定义共享边参数的成对联合模型，并用全条件键上的逻辑链接表示条件概率；以条件KL风险相对同一教师表进行评估，并引入不可约差异、类近似误差与有限样本误差的分解。主定理针对独立均匀精确表查询、重复抽样计费的被动协议，给出矩估计的上界与匹配下界构造；此外用可计算的小联合硬边际案例研究方向保真度。",
+            "evidence_ids": [
+              "E12",
+              "E10",
+              "E2"
+            ]
+          },
+          "findings": {
+            "text": "理论结果显示，在独立均匀精确表查询下，期望极小极大超额条件KL风险为Θ(min{R√d/B, d2/B})，适用于足够大的d、R√d≤M0以及Cd3≤B≤(d2d−1)1/3的窗口；矩估计达到该上界，且下界构造尊重共享成对交互与冻结精确表回答。作者还指出精确回答消除了观测键上的标签抽样噪声，但不揭示任意表中未观测的条目；并给出无结构覆盖的障碍命题。方向保真度部分为可计算案例研究，摘录未给出其具体数值结果。",
+            "evidence_ids": [
+              "E3",
+              "E2",
+              "E13"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界包括：主定理是信息论结果而非计算极小极大最优性，估计器把总体设计项G视为已知，且未断言其指数和可在多项式时间内计算；结果针对精确表协议，量化或噪声回答模型有不同信息预算，不能直接等同；自适应补充构造报告的是非联合条件表且损失不同，其保证不转移到相干重构。摘录未提供独立复现或外部验证，论文标注为2026年预印本式稿件，无法判断是否经过同行评审。",
+            "evidence_ids": [
+              "E14",
+              "E11",
+              "E4"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：先按问题定义实现黑箱精确表查询协议，固定评估分布μ、学生类Q与预算B，并记录重复键计费；再实现成对联合模型与矩估计，注意G的计算复杂度未被作者保证；理论验证应检查d、R、B满足定理窗口，并将结果与同一实现表的最佳投影比较，而非与假定的生成联合比较。方向保真度案例需按硬边际小联合设定单独实现。摘录未给出代码、数据或完整实验细节，无法判断具体复现条件。",
+            "evidence_ids": [
+              "E10",
+              "E14",
+              "E16"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.31431",
+      "title_zh": "岭可分离模型下ULA的免维数分析：子空间稳健Wasserstein视角",
+      "summary_zh": "该预印本重新分析高维贝叶斯推断常用的未调整Langevin算法（ULA）。作者不用经典的Wasserstein-2距离，而改用子空间稳健Wasserstein距离衡量偏差，该距离控制均值与任意低维边缘分布。对由独立同分布数据构成的岭可分离势函数，作者证明高概率界，显示混合表现随样本数N相对维数d呈钟形；在过参数化区间复杂度取决于数据扰动的秩N而非d，大样本下可获免维数复杂度。",
+      "why_zh": "它质疑“ULA偏差必然随维数增长”的经典结论，指出评价指标选择本身决定结论，对高维采样与贝叶斯计算读者有概念性启发。",
+      "details_zh": "摘要的核心论点是：经典Wasserstein-2分析给出的渐近偏差与混合时间随维数增长，但对许多统计任务而言该度量过强。作者改以子空间稳健Wasserstein距离分析偏差，因其恰好对应实践中常估计的均值与低维边缘。结果包括随N与d相对关系变化的钟形混合轮廓、过参数化区间依赖秩N的复杂度，以及大样本下的免维数复杂度。需注意这是预印本的理论工作，摘要未给出常数、具体假设细节与数值实验；结论适用范围限于岭可分离势函数与独立同分布数据设定，不宜外推为ULA普遍免维数。",
+      "original_title": "Dimension-free regimes for unadjusted Langevin in ridge-separable models: A subspace robust Wasserstein analysis",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/30 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.31431",
+        "pages_read": 14,
+        "pages_total": 30,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E3",
+            "page": 3
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E7",
+            "page": 3
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E11",
+            "page": 7
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究无调整朗之万算法（ULA）在高维贝叶斯推断中估计函数期望时的维度依赖问题：经典 Wasserstein-2 分析预测偏差与混合时间随维度增长，作者提出在子空间稳健 Wasserstein 距离下分析偏差，以刻画何时可用与维度无关的步数与迭代次数准确估计低维可观测量的期望。",
+            "evidence_ids": [
+              "E5",
+              "E1",
+              "E8"
+            ]
+          },
+          "method": {
+            "text": "作者分析 ULA 的 Euler–Maruyama 离散化偏差，改用子空间稳健 Wasserstein 距离（SRW）度量渐近偏差；对高斯扰动类分布给出 SRW 偏差上界与均值估计改进界，并通过分解 Hessian 为常数矩阵与余项、建立递推与 Itô 估计来证明；对岭可分势模型在 N≫d 等区域给出迭代复杂度结果。",
+            "evidence_ids": [
+              "E6",
+              "E12",
+              "E13"
+            ]
+          },
+          "findings": {
+            "text": "理论结果包括：在 SRW 距离下，对某些分布（如高斯情形）W2 偏差随维度增长而 SRW 偏差可维度无关；定理给出 SRW 渐近偏差上界及均值估计的改进界（S→0 时误差趋零），并给出新的 W2 偏差界；在过参数化与渐近区域，达到 SRW 精度 ε 的迭代复杂度在维度上无关（至多对数因子）。摘录还提到数值图示，但未给出完整实验细节。",
+            "evidence_ids": [
+              "E8",
+              "E11",
+              "E9"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录表明经典 W2 保证需要步长随维度反比缩放，且 MALA 的 Metropolis 修正带来步长限制与维度相关混合；作者称一般情形下维度无关保证不可能。但摘录未完整给出所有假设、证明细节与实验设置，无法判断结论的适用范围与独立验证情况；该文为预印本（arXiv:2610.31431v1），未见独立复现证据。",
+            "evidence_ids": [
+              "E7",
+              "E1",
+              "E3"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：先核对 Assumption 1.1 与 Assumption 2.1/3.1 的具体条件及岭可分势定义，再按论文 Section 2–3 的递推分解（Hessian 分解、Gk/Rk 递推、Itô 估计）实现 SRW 偏差上界验证；数值上可复现 Figure 1/2 的步长缩放与迭代复杂度趋势。但摘录未给出完整算法参数、代码与数据，无法据此独立复现全部实验。",
+            "evidence_ids": [
+              "E10",
+              "E12",
+              "E9"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30296",
+      "title_zh": "衡量低资源语言的研究进展与语言包容性",
+      "summary_zh": "该预印本分析2020至2025年间1158篇同行评审开放获取论文，考察大语言模型加速低资源与多语言NLP研究后，研究注意力是否真正覆盖低资源语言（LRL），以及语言与说话人群体在研究中如何被代表。作者指出，LLM虽推动了相关研究，但其能否带来更公平的格局仍未被系统描绘；为在论文数量之外评估语言包容性，研究引入了一个新的度量（摘要中以“Li”开头，未给出全称与定义）。材料未提供具体发现数值。",
+      "why_zh": "用文献计量加新包容性指标审视低资源语言研究的真实覆盖，而非仅数论文增量，对多语言NLP的资源分配讨论有参考价值。",
+      "details_zh": "摘要显示样本为1158篇2020—2025年开放获取同行评审论文，时间跨度覆盖LLM兴起阶段，问题意识是“研究热度是否等于语言包容”。作者提出在发表数量之外衡量包容性的指标，说明其关注语言与说话人人口的代表性，而不仅是语言种类计数。信息局限：摘要未给出指标定义、主要统计结果、语言分布或与基线方法的比较；作为预印本，编码标准与分类口径也未经独立复核。读者应将其视为问题框架与测量尝试，而非已确认的领域结论。",
+      "original_title": "Measuring Research Progress and Linguistic Inclusion in Low-Resource Languages",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30160",
+      "title_zh": "V-JEPA 2结合动作质量评估：面向山地车骑行的分阶段打分与参考反馈",
+      "summary_zh": "该预印本研究弱标签条件下的山地车动作质量评估：训练语料为95段实地拍摄的跳跃片段，仅有“技术好/差”的二元标签，缺少连续专家评分以及阶段边界和细粒度标注。作者用冻结的V-JEPA 2视频特征与二维姿态信息归纳出四个启发式阶段，并探索基于参考的反馈生成，属于小样本、粗标签场景下的方法尝试。",
+      "why_zh": "它把视频基础模型用于体育动作质量评估这一细分任务，并直面弱标签与缺乏细粒度标注的现实约束，对多模态应用落地有借鉴意义。",
+      "details_zh": "摘要明确说明数据局限：95段跳跃视频、二元好坏标签，属于粗粒度类别标签而非连续专家打分，也没有阶段边界与方面级标注。方法上，作者用冻结的V-JEPA 2视频特征和二维姿态线索来概括四个启发式阶段，并涉及基于参考的反馈。由于摘要未给出评估指标、与基线的对比结果和泛化实验，无法判断方法实际效果。样本量很小、标签粗糙，结论外推到其他运动或真实教练场景需谨慎。该文为预印本，未经独立验证，标题中的“Meets AQA”指将模型与动作质量评估任务结合，而非已有系统集成。",
+      "original_title": "V-JEPA 2 Meets AQA: Phase-Based Scoring and Reference-Based Feedback for Mountain Biking",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2311.15598",
+      "title_zh": "混合块模型下多层网络聚类的最优误差率",
+      "summary_zh": "该预印本研究多层网络聚类：每个观测是在同一顶点集上测量的无向网络，在混合多层随机块模型（MMSBM）下，每个网络由两个随机块模型之一生成，目标是恢复潜在网络标签。作者建立了极小极大最优的网络聚类错误率，该率呈指数形式并由Chernoff信息刻画。",
+      "why_zh": "它为多层网络聚类给出理论下界与可达上界，属于统计机器学习中较硬的基础结果；对理解多视图数据融合何时真正有益、何时信息被稀释有直接意义。",
+      "details_zh": "摘要仅给出模型设定和“极小极大最优、指数形式、由Chernoff信息刻画”的结论，未提供具体常数、证明技巧或模拟实验。可确定的是：问题被形式化为从多个同顶点网络观测中恢复每个网络的潜在类别标签，两个候选块模型之间的可区分性决定错误率。信息局限明显：这是数学统计预印本，结论依赖MMSBM假设，实际网络的多层结构、稀疏性和异质性可能偏离模型；未提供全文，无法评估证明细节与适用边界。",
+      "original_title": "Optimal Clustering of Multi-layer Networks under Mixture Block Models",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "TechCrunch",
+      "published": "2026-10-22",
+      "url": "https://techcrunch.com/2026/10/22/microsofts-mustafa-suleyman-says-its-ai-outperforms-doctors-on-hard-cases-as-he-chases-medical-superintelligence/",
+      "title_zh": "微软 Mustafa Suleyman 称其 AI 在疑难病例上优于医生，追逐“医疗超级智能”",
+      "summary_zh": "TechCrunch 报道称，微软新的 AI 诊断系统在一项发表于 Science 的研究中，于疑难病例上胜过全科医生；但报道同时指出，大部分提升似乎来自底层 AI 模型，而非微软系统本身。报道引述 Mustafa Suleyman 对“医疗超级智能”的追求。给定材料只有标题与摘要，未提供研究设计、样本量、对照设置、评估指标与置信区间等细节，因此“优于医生”的具体含义和可推广性尚不能从现有信息确认。",
+      "why_zh": "医疗诊断是 AI 落地的高风险场景，该报道的关键不在“AI 赢医生”的口号，而在于提升可能来自底层模型而非系统集成，这提醒读者区分系统贡献与模型贡献。",
+      "details_zh": "据 TechCrunch 摘要，微软的新 AI 诊断系统在 Science 发表的一项研究中，于疑难病例上表现优于全科医生；但报道明确提示，大部分改善似乎源自底层 AI 模型，而不是微软系统本身。这一区分很重要：若成立，则系统层面的工程与产品设计对结果的增量贡献有限，评估时应做消融比较。Mustafa Suleyman 的表态涉及“医疗超级智能”愿景，属于公司高管说法，不能当作独立验证的结论。给定材料未说明研究样本、病例难度定义、医生分组、盲法、统计显著性和外部验证情况，因此无法判断结果是否可推广到真实临床流程。该报道未经独立交叉核实，需以 Science 论文原文为准。",
+      "original_title": "Microsoft’s Mustafa Suleyman says its AI outperforms doctors on hard cases as he chases ‘medical superintelligence’",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-22",
+      "url": "https://www.psypost.org/higher-progesterone-is-linked-to-blurrier-brain-signals-for-emotional-control-study-finds/",
+      "title_zh": "研究称孕酮较高与情绪控制相关脑信号区分度下降有关",
+      "summary_zh": "据PsyPost报道，一项针对116名年轻女性的神经影像研究发现，自然孕酮水平较高的女性在抑制自动情绪冲动时，脑活动模式的区分度较低；另一种主要卵巢激素雌二醇则未显示这种关联。报道将孕酮与情绪控制的脑信号清晰度联系起来，但摘要未说明具体脑区、任务范式与效应大小。",
+      "why_zh": "性激素与情绪调控的关系常被简化传播，该研究提供了神经影像层面的关联线索，但属相关性证据，读者需区分“相关”与“因果”。",
+      "details_zh": "可确认的信息有限：样本为116名年轻女性，方法为神经影像，观察指标是抑制自动情绪冲动时的脑活动模式区分度，结论是孕酮较高者区分度较低、雌二醇无此关联。摘要未交代研究设计是横断面还是纵向、激素测量方式、统计控制变量及效应量，也未说明是否预注册或经同行评审。媒体报道未经独立交叉核实，不宜据此推断孕酮直接导致情绪控制变差，或据此给出任何激素相关建议；该发现应视为待重复的关联性线索。",
+      "original_title": "Higher progesterone is linked to blurrier brain signals for emotional control, study finds",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30196",
+      "title_zh": "基于广义矩匹配的差分隐私合成数据",
+      "summary_zh": "该预印本研究在给定积分概率度量（IPM）下，为取值于[-1,1]^d的任意n条记录数据库生成(ε,δ)差分隐私合成数据。作者提出广义矩匹配：先私有地估计矩，再拟合概率测度并采样合成记录；当矩误差能控制目标IPM时，可得到一般误差定理。该框架推广了针对1-Wasserstein距离与光滑查询的Chebyshev矩匹配，并应用于Matern核、Laplace核的最大均值差异及两层ReLU神经正切核，还给出sliced Wasserstein-1与范数有界ReLU网络诱导IPM的保证；在合成记录足够多时，固定维度下速率在对数因子内达到极小极大最优。",
+      "why_zh": "把差分隐私合成数据的误差保证从特定距离推广到一类IPM，并覆盖神经核，属于隐私统计与学习理论交叉的方法论进展，而非产品发布。",
+      "details_zh": "摘要给出的核心是“矩误差控制目标IPM”这一充分条件，使不同距离下的隐私合成数据误差可统一分析。作者列举了若干核与网络诱导的IPM实例，并声称在固定维度、合成样本充足时达到对数因子内的极小极大最优。需要注意：这是arXiv预印本，尚未经同行评审或独立复现；摘要未给出具体隐私参数、样本复杂度常数或实验对比，因此不能据此判断实际部署中的效用与隐私权衡。读者可关注其定理条件是否依赖矩估计的稳定性，以及高维情形下速率是否仍可用。",
+      "original_title": "Differentially Private Synthetic Data via Generalized Moment Matching",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-10-22",
+      "url": "https://www.technologyreview.com/2026/10/22/1146812/making-the-case-for-context-aware-ai/",
+      "title_zh": "为情境感知型AI提供依据",
+      "summary_zh": "该媒体报道讨论企业AI从实验走向日常运营时的关键障碍：模型即使能生成建议、自动执行任务并加快决策，若不了解企业实际运作方式，也可能忽略决定决策是否正确的约束与关系。文章围绕“情境感知”展开，主张企业需要让AI理解业务约束与关联，而非仅依赖强大模型本身。",
+      "why_zh": "把企业AI落地问题从模型能力转向业务情境建模，对关注AI Agent与实际部署的人提供了不同于产品发布的讨论角度。",
+      "details_zh": "摘要为观点性导语，未给出具体企业案例、技术方案、实施数据或效果评估，也未说明“情境感知”的具体实现路径与衡量标准。因此该文更适合作为议题线索，而非可引用的事实依据。读者应注意这是媒体评论而非独立研究，其中关于企业AI局限的判断需要结合具体场景核实。",
+      "original_title": "Making the case for context-aware AI",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31606v1",
+      "title_zh": "真值标注如何影响检索得分：乳腺病变检索增强生成系统的证据感知评估",
+      "summary_zh": "该预印本提出一套面向临床乳腺病变管理文献的检索增强生成系统证据感知检索评估协议，针对检索得分依赖标注覆盖度的问题。方法使用18篇文献语料与18条查询的开发基准，每篇文献对应一个是/否或特殊疑问问题，检索结合稠密嵌入、BM25与交叉编码器重排，并考察128至1024词元的切块大小与0至20%的重叠等设置。",
+      "why_zh": "直指RAG评估中常被忽略的基准标注偏差问题，对做检索评估与临床AI应用的人有方法学提醒，而非产品发布类新闻。",
+      "details_zh": "摘要显示这是一项小规模开发基准研究：18篇文档、18条查询，评估重点是检索得分对真值标注覆盖的依赖。摘要未给出主要实验结果、各检索组件的相对贡献或统计检验，切块与重叠的完整实验设计也在摘要中被截断。因此无法判断该协议是否优于现有评估方式，也不能据此推断系统在真实临床场景的表现。作为预印本，结论需独立复核，且小语料基准的外推性有限。",
+      "original_title": "How Ground Truth Shapes Retrieval Scores: Evidence-Aware Evaluation of a Retrieval-Augmented Generation System for Breast Lesions",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31650v1",
+      "title_zh": "EpiSEM-Bench：评估证据缺失下LLM智能体的安全边界与证据恢复",
+      "summary_zh": "该预印本提出EpiSEM-Bench，用于评估工具调用型语言模型智能体在关键证据缺失时是否仍执行被禁止动作。基准含六个领域300对匹配的不安全/安全任务，通过系统性抑制关键事实测量不安全执行，并记录最小失败基数；独立审计工具检验智能体是否主动寻找缺失事实。摘要称十个模型在遗漏鲁棒性上差异显著。",
+      "why_zh": "现实智能体常因工具返回不完整而越界，该工作把“缺失证据”作为独立安全维度，比单纯越狱测试更贴近部署风险，也为Agent安全评测提供可执行范式。",
+      "details_zh": "摘要强调，用户请求可能完全无害、工具返回的每条陈述也都为真，但遗漏安全相关事实就足以让智能体执行禁止动作。基准通过配对任务和系统抑制关键事实来测量这一点，并区分有完整证据仍失败、穷尽测试后无观察到失败等情形。信息局限在于：这是预印本，300对任务覆盖六个领域但未说明领域分布与真实工具生态的差距；十个模型的差异幅度、审计工具本身的有效性均需独立复核，不能据此断言某模型已安全或已失败。",
+      "original_title": "EpiSEM-Bench: Evaluating Safety and Evidence Recovery in LLM Agents under Missing Evidence",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30642",
+      "title_zh": "给定最大值的耦合：多变量拟 copula 刻画的一个简短证明",
+      "summary_zh": "该预印本回应 Sempi（2017）对更简洁透明证明的呼吁，给出多变量拟 copula 经典刻画的一个简短概率证明。方法基于构造随机变量耦合：边缘分布固定，并规定其最大值的分布。主要结果称，这样的耦合存在当且仅当最大值随机不小于每个分量，且最大值的分布被边缘测度之和支配。构造适用于任意分布，只依赖最大值律的分解与单调分位数耦合；一个直接推论是存在沿递增轨道取指定值的 copula。",
+      "why_zh": "它把拟 copula 的刻画转化为关于最大值分布的耦合存在性条件，并给出更短证明，属于概率与统计基础工具的简化，对 copula 相关建模有潜在影响。",
+      "details_zh": "拟 copula 是多变量分布函数刻画中的经典对象，Sempi 曾呼吁给出更简单透明的证明。该文的核心贡献是概率化重构：不再直接做解析论证，而是问“能否构造一组随机变量，使边缘固定且最大值的分布给定”。摘要称充要条件为最大值随机不小于每个分量、且最大值分布被各边缘测度之和支配；构造对任意分布成立，依赖最大值律分解和单调分位数耦合。由此可推出沿递增轨道指定值的 copula 存在性。需注意这是预印本，摘要未给出完整证明细节与反例讨论，结论未经独立验证。",
+      "original_title": "Couplings with prescribed maxima: A short proof of the quasi-copula characterization",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30158",
+      "title_zh": "Lighthouse：面向民权档案历史探索的可信数字助手设计",
+      "summary_zh": "该预印本介绍名为 Lighthouse 的数字助手（聊天机器人），用于探索美国南卡罗来纳州民权时期的多模态档案，包括文本、图像和音频。作者称这是据其所知首个面向该民权档案的数字助手，并从 AI 角度强调其指导设计原则，摘要仅列出第一条原则的开头，未展开完整原则与评估结果。文章属于系统设计类工作，涉及如何用 AI 辅助历史研究，但摘要信息有限，具体方法、数据规模、用户评估和可信性度量均未在给定材料中说明。",
+      "why_zh": "它把 AI 助手用于历史档案与民权资料，关注“可信”而非单纯问答能力，涉及多模态检索与历史解释的设计原则，对 AI 在人文研究中的落地有参考价值。",
+      "details_zh": "根据标题与摘要，Lighthouse 是一个面向美国南卡罗来纳州民权时期档案的聊天机器人式数字助手，处理文本、图像、音频等多模态材料，目标是帮助用户更有效地研究历史。作者称其为该领域首个此类系统，并强调以若干指导设计原则保证可信性，但摘要只显示第一条原则的开头，未给出完整原则列表、系统架构、数据来源规模或用户研究结果。因此无法判断其“可信”如何度量、与通用聊天机器人相比效果如何。该文为 arXiv 预印本，未经独立验证，且摘要信息明显不完整，读者应将其视为设计报告而非已证实的效果结论。",
+      "original_title": "Lighthouse: On Building a Trustworthy Digital Assistant for Exploring History with Civil Rights Archives",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30468",
+      "title_zh": "SplatLab：面向3DGS研究的自主科学发现系统",
+      "summary_zh": "该预印本提出SplatLab，一个面向3D高斯泼溅（3DGS）的自主研究系统。作者指出，复现一篇已发表的3DGS论文往往需要数周专家工程工作，之后才能提出改进；此前的自主研究系统虽能读论文、提假设、写代码，但受限于固定模板短、可执行性低、可追溯性弱，且未在活跃的计算机视觉子领域做过端到端演示。SplatLab试图解决这些问题。摘要未给出具体评测结果。",
+      "why_zh": "它把“AI做科研”从通用演示推进到高活跃度具体子领域，并强调可执行性与可追溯性，对关注AI Agent与科研自动化的读者有参考价值。",
+      "details_zh": "摘要给出的背景是：3DGS研究复现成本高，构成自主研究系统的现实试验场；既有系统的主要短板是模板固定、生成代码难以执行、过程难以追溯。SplatLab被描述为针对这些短板设计的端到端自主研究系统。但输入未提供系统架构细节、实验设置、与人类研究者或基线的对比数据，也未说明“自主发现”的具体判定标准。该文为预印本，机构自述不能视为第三方确认；其宣称的端到端能力需待论文全文与社区复现检验。",
+      "original_title": "SplatLab: Autonomous Scientific Discovery for 3DGS Research",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30948",
+      "title_zh": "随机投影用于谱算法：Sobolev范数下的最优收敛速率",
+      "summary_zh": "该预印本对基于随机投影的谱算法给出更一般的泛化分析，声称在不牺牲统计效率的前提下，于Sobolev范数下建立与极小极大下界在忽略对数因子后相匹配的最优学习速率。作者利用再生核希尔伯特空间的嵌入性质和更精细的算子相似性分析，并针对随机草图与Nyström子采样（均匀或杠杆采样）两种常见实现，讨论达到最优性所需的投影维度如何随规模变化。",
+      "why_zh": "随机投影常被视为省算力的近似手段，此文追问它是否真能保住统计最优性，对核方法与大规模学习的理论边界有参考价值。",
+      "details_zh": "摘要指出，既有研究多聚焦特定核正则算法在模型设定正确且条件较严情形下的最优泛化表现，本文则试图在更一般条件下给出更完整的分析。技术路线包括利用RKHS的嵌入性质，以及对算子相似性的精细化处理，从而得到Sobolev范数下的速率结论。对两种实现，作者分析达到最优所需的投影维度与样本量等的关系，但摘要在此处被截断，具体比例未完整呈现。需要强调这是预印本，结论未经同行评审或独立复现，摘要中的“最优”是相对于其设定下的极小极大下界而言，实际有限样本表现仍需实验检验。",
+      "original_title": "Random Projections for Spectral Algorithms: Optimal Rates in Sobolev Norms",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.31603",
+      "title_zh": "谱自监督学习是密度比估计的极小极大最优方法吗？",
+      "summary_zh": "该预印本研究谱自监督学习作为密度比估计方法的统计性质。该设定下只能获得来自分子联合密度的样本；此前工作多关注最优解与表示学习联系等计算性质，统计理论仍不充分。作者围绕三个问题展开：极小极大最优性、理论对正则化算法的适用性，以及近期自监督表示学习中数据增强机制下密度比估计的统计优势。摘要称，对一般Hölder连续密度比类，存在正则化谱自监督算法使估计量在对数因子内达到极小极大最优；对具备额外结构的子类还有进一步结论。",
+      "why_zh": "把自监督表示学习与密度比估计的统计最优性联系起来，回应“自监督为何有效”的理论追问，对理解对比学习目标有直接启发。",
+      "details_zh": "摘要明确该文关注统计性质而非计算性质，问题设定是仅能从分子分布采样、无法直接获得分母样本的密度比估计。作者声称对Hölder连续密度比类给出正则化算法的极小极大最优上界（对数因子内），并讨论数据增强带来的统计收益。信息局限在于：摘要未给出下界构造、具体正则化形式、增强机制假设及证明细节；作为预印本，结论未经独立验证。读者应区分“存在达到最优的算法”与“常用谱方法本身最优”，后者需要更完整的算法与实验证据。",
+      "original_title": "Is Spectral Self-Supervised Learning a Minimax Optimal Method of Density Ratio Estimation?",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31656v1",
+      "title_zh": "METTA：面向元强化学习的内存增强测试时自适应方法",
+      "summary_zh": "该预印本提出METTA，用于元强化学习中的快速任务适应。方法把适应阶段拆成两个时间尺度：因果神经内存以线性序列复杂度完成回合内的细粒度适应，回合级摘要则支持跨回合的长程任务推断，避免对完整交互历史做二次复杂度的注意力计算。作者称神经内存还带来更强的表达能力和测试时训练能力，有助于适应未见过的任务与任务族。",
+      "why_zh": "与常见“更大上下文窗口”路线不同，它试图用分层记忆结构降低长历史建模成本，对研究元学习与Agent长期记忆的读者有方法启发。",
+      "details_zh": "摘要指出，经典循环智能体把经验压缩进隐状态，而基于Transformer的智能体需在历史轨迹上检索，内存与计算开销随长度呈二次增长。METTA的应对是把快速适应分解为两个时间尺度，并强调神经内存同时提供表达容量与测试时训练能力。需要说明的是，这些均为作者自述，预印本尚未经独立验证；摘要未给出具体基准、任务集和性能数值，实际相对基线提升多少、在何种任务分布上有效，仍需阅读全文与复现实验确认。",
+      "original_title": "METTA: Memory-Enhanced Test-Time Adaptation for Meta-Reinforcement Learning",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30154",
+      "title_zh": "baseVultra：重新分配容量的紧凑非线性循环单元",
+      "summary_zh": "该预印本关注流式序列建模中的非线性循环网络，指出门控单元设计仍由LSTM与GRU主导。作者提出baseVultra：一种紧凑循环单元，把稠密循环预算集中到单个H×H候选生成矩阵，并用O(H)的对角结构替代循环门矩阵，从而把循环计算从门变换重新分配到候选生成。摘要称其研究循环计算能否这样重新分配，但未在给定材料中给出具体基准结果、参数量对比或长序列任务表现。",
+      "why_zh": "在LSTM/GRU长期主导的门控设计之外，提出以候选生成为中心的容量分配思路，属于循环架构的效率探索，但证据仅为摘要层面的设计主张。",
+      "details_zh": "根据摘要，baseVultra的核心改动是结构性的：保留一个稠密H×H候选生成矩阵，同时把门控矩阵换成O(H)对角形式，以降低门控部分的循环开销。这延续了近期线性循环与状态空间模型对效率的关注，但作者强调其仍是非线性循环网络，面向流式序列建模。信息局限明显：摘要未提供困惑度、吞吐、内存或消融数据，也未说明H的量级与训练稳定性；预印本结论未经独立复现。读者不宜据此判断其相对LSTM/GRU的实际优劣，需等待代码与基准结果。",
+      "original_title": "baseVultra: Compact Nonlinear Recurrence with Reallocated Capacity",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30481",
+      "title_zh": "AVAtt：面向绘画视觉注意的自由观看眼动数据集与基准",
+      "summary_zh": "该预印本指出，显著性与扫视路径模型几乎只在自然照片上开发，而绘画在纹理、色彩与抽象程度上不同，且由艺术家构图引导观看。作者推出AVAtt自由观看眼动数据集，覆盖16个艺术流派、五个世纪的绘画，包含多名参与者的扫视路径与注视点，并配套基准，用于检验现有视觉注意模型在绘画上的表现。",
+      "why_zh": "把视觉注意研究从自然图像扩展到艺术图像，提供跨流派、跨世纪的数据资源，对研究模型泛化与人类观看行为差异有参考价值。",
+      "details_zh": "摘要只交代数据集定位与覆盖范围，具体图像数量、参与者人数、每图扫视路径与注视点数量在摘要中以占位符形式出现，无法确认。摘要也未给出基准测试结果，因此不能判断现有显著性模型在绘画上的性能差距有多大。该数据集为预印本发布，尚未经独立验证；使用时应核对正式版本中的数据规模、采集协议与伦理审批信息。",
+      "original_title": "AVAtt: A Free-Viewing Eye-Tracking Dataset and Benchmark for Visual Attention on Paintings",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30421",
+      "title_zh": "从噪声大、来源杂的数据中提炼高价值训练数据",
+      "summary_zh": "该预印本提出一种可扩展的数据加权方法：借助一个小规模高质量目标数据集，通过训练过程中的元梯度直接优化各训练样本的权重，并进一步学习可泛化到新样本、流式数据以及从较小模型迁移到更大模型的参数化加权规则。作者以奖励建模为典型应用场景，针对偏好数据可能含噪声、对抗性、合成或与目标领域不匹配的问题进行考察，摘要称学习到的数据权重改善了留出集表现。",
+      "why_zh": "不同于常见的“清洗数据”经验做法，它把样本权重当作可学习对象并追求跨模型规模迁移，对关心数据质量与训练效率的读者有方法层面的启发。",
+      "details_zh": "摘要显示，研究动机是当前模型训练依赖大规模异构数据，样本在质量、领域相关性和监督来源上差异很大，而按样本加权是控制数据影响的通用手段，难点在于规模化地学到有效权重。方法核心是用元梯度穿过训练过程，以目标域表现为优化目标；为突破固定数据集和模型的限制，作者学习参数化加权规则，使其能泛化到新样本并从小模型迁移到大模型。应用示例是奖励建模，偏好数据可能噪声大、含对抗样本、为合成数据或与目标域不匹配。需注意这是未经独立验证的预印本，摘要未给出具体数据集、提升幅度和对比基线，结论应视为作者自述。",
+      "original_title": "High-Value Training Data from Noisy, Diverse Sources",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31588v1",
+      "title_zh": "VERA：面向欧盟人工智能法案的负责任AI部署评估仪表盘",
+      "summary_zh": "该预印本介绍VERA，一个用于评估大语言模型部署的负责任AI仪表盘。其背景是COMPL-AI对欧盟人工智能法案给出技术化解读，将证据组织为六个原则组和十八项技术要求，其中十二项可由现有基准测量。由于产出这些证据的基准套件通常以命令行方式运行，而审批部署的人员多为非技术人员，VERA试图降低这一使用门槛。",
+      "why_zh": "它关注合规证据如何从命令行基准转化为审批者可用的界面，触及AI治理落地中的工具与流程缺口，而非又一份原则宣言。",
+      "details_zh": "摘要提供的信息有限：可确认VERA是面向受监管场景中LLM部署审批的仪表盘，依托COMPL-AI对欧盟AI法案的技术解读框架，该框架含六组原则、十八项技术要求，其中十二项当前基准可测。摘要指出矛盾点在于基准套件多由命令行操作，而审批人员通常不具备技术背景，仪表盘意在弥合这一差距。但摘要未说明VERA的具体功能、界面设计、用户测试结果，也未说明其是否覆盖全部十二项可测要求。该文为预印本，未经独立验证；涉及法规合规的表述应视为作者的技术解读，不构成法律意见。",
+      "original_title": "VERA: A Responsible AI Dashboard for Assessing LLM Deployments in Light of the EU AI Act",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31670v1",
+      "title_zh": "感觉运动对齐：具身策略成功率的柏拉图式代理指标",
+      "summary_zh": "该预印本讨论机器人基础模型通常依赖昂贵的闭环 rollout 评估，因而需要廉价的离线代理指标。作者借用柏拉图表示假说（PRH）——随着表示改进，视觉与语言等不同模态趋向共享的现实统计模型——追问运动轨迹是否构成另一模态：具身模型能力增强时，其感觉表示是否应向运动轨迹表示收敛。摘要将这一思路表述为“感觉运动对齐”，并把它作为具身策略成功的代理指标来考察。材料未给出具体实验设置、相关性数值或基准结果。",
+      "why_zh": "把表示对齐假说用于具身策略的离线评估，试图替代昂贵闭环测试，若成立可改变机器人基础模型的评测方式；但目前仅为概念与摘要层面。",
+      "details_zh": "摘要的核心逻辑是：闭环 rollout 成本高，因此需要离线代理；PRH 预测多模态表示会收敛到共享统计模型，作者据此假设运动轨迹也是一种模态，模型越强其感觉表示越应与轨迹表示对齐。需要强调，这是研究假设而非已验证结论：摘要未说明对齐如何度量、在哪些模型与任务上测试、代理指标与真实成功率的相关系数，也未给出失败案例。预印本未经同行评审，读者应把它视为评测方法学的探索性提案，而非可直接采用的评估标准。",
+      "original_title": "Sensorimotor Alignment: A Platonic Proxy for Embodied Policy Success",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30162",
+      "title_zh": "FusionEval：系统评测大语言模型融合方法的基准",
+      "summary_zh": "该预印本提出FusionEval，用于评测大语言模型的多专家模型融合。摘要指出，现有评测对长思维链推理和工具使用的覆盖有限，且平均性能强可能掩盖单个专家能力的显著损失。FusionEval提供受控专家池，整合有额外训练与无额外训练的融合方法，并给出统一评测。",
+      "why_zh": "模型融合常被平均分掩盖真实退化，该基准把“专家能力是否被保留”和长链推理、工具使用纳入评测，对开源模型合并实践有直接参考价值。",
+      "details_zh": "摘要说明，模型融合目标是把多个专家模型能力整合进单一模型，但现有评测覆盖不足，强平均表现可能掩盖个体专家能力的大幅损失。FusionEval的贡献在于受控专家池和统一评测框架，并同时纳入需要额外训练的融合方法与无需训练的方法。信息局限：这是预印本，摘要未给出具体模型、数据集规模、融合方法数量和量化结果；受控专家池与真实异构专家生态的差距、评测是否覆盖安全与多语言等维度均不明确，结论需独立复现。",
+      "original_title": "FusionEval: Benchmarking Model Fusion for Large Language Models",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.30592",
+      "title_zh": "先做视觉定位，多模态上下文学习才跟得上",
+      "summary_zh": "该预印本讨论多模态大模型（MLLM）的上下文学习（ICL）。摘要指出，已有方法常依赖ICL专用数据集做额外训练或任务向量提取，虽能在同一ICL基准上提升，却难以泛化到其他基准，并会诱发对已解决任务的遗忘。作者据此提出“视觉定位优先”的思路，但摘要未给出具体方法与数值结果。",
+      "why_zh": "它挑战了用ICL专用数据微调提升分数的常见做法，把泛化与遗忘作为核心问题，对多模态Agent和少样本视觉推理的研究方向有提醒意义。",
+      "details_zh": "摘要可确认的背景是：LLM的ICL能力较强，扩展到MLLM仍困难；既有方法通过额外训练或任务向量提取适配ICL基准，存在同基准提升但跨基准泛化差、并导致已掌握任务遗忘的问题。标题暗示作者主张先建立视觉定位能力，再谈多模态上下文学习。信息局限较大：摘要未提供方法细节、实验设置和量化对比，无法判断“视觉定位优先”是训练策略、推理流程还是评测发现；作为预印本，其因果主张需独立验证。",
+      "original_title": "Visual Grounding First, Multimodal In-context Learning Follows",
+      "focus": false,
+      "edition": "morning"
+    }
+  ]
+}
