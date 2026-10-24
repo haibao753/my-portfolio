@@ -2,7 +2,8 @@
   "version": 1,
   "date": "2026-10-24",
   "editions": [
-    "morning"
+    "morning",
+    "evening"
   ],
   "items": [
     {
@@ -637,6 +638,445 @@
       "original_title": "AI’s hidden storage bill: What inference leaves behind",
       "focus": false,
       "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-24",
+      "url": "https://arxiv.org/abs/2610.30344",
+      "title_zh": "AQL-Lite：以数据为中心的持续预训练，为阿拉伯语大模型高效获取知识",
+      "summary_zh": "arXiv 新预印本提出 AQL-Lite 框架，用于把多语言大模型适配到现代标准阿拉伯语。该框架包含以质量为先的数据清洗流程（结构清洗、启发式与模型过滤、方言筛选、去重），以及只训练部分参数的持续预训练方案：联合训练 RS-LoRA 适配器、最后八个 Transformer 块和嵌入矩阵，并采用分层学习率。摘要称，在相同 10 亿 token 预算下，用 AQL 筛选数据做持续预训练，四项阿拉伯语基准平均比原始网页文本提升 3.51 分，而后者相对基座模型没有增益；在 50 亿 token 对照中，AQL-Lite 以约 52% 的实际耗时达到全参数持续预训练增益的 94%。",
+      "why_zh": "与常见“堆数据、堆算力”的模型新闻不同，这条把重点放在数据筛选与部分参数训练的成本效益上，对关注低资源语言适配和训练效率的读者有方法层面的参考价值。",
+      "details_zh": "该工作针对阿拉伯语大模型面临的三类问题：网页数据噪声大、方言差异明显、持续预训练成本高。其方案把数据治理与参数高效训练结合，试图在有限 token 预算下接近全参数持续预训练的收益。需要强调，这些数字来自作者自述的预印本摘要，尚未经过独立复现或同行评审；基准选择、对照设置和“匹配预算”的具体口径也需看全文才能判断。对读者而言，可关注两点：数据质量筛选是否比单纯增加数据更有效，以及部分参数训练在真实多语言场景中的泛化边界。",
+      "original_title": "AQL-Lite: Enabling Efficient Knowledge Acquisition for Arabic LLMs via Data-Centric Continual Pretraining",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/15 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.30344",
+        "pages_read": 14,
+        "pages_total": 15,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 2
+          },
+          {
+            "id": "E2",
+            "page": 5
+          },
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 8
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E7",
+            "page": 3
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E11",
+            "page": 7
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          },
+          {
+            "id": "E15",
+            "page": 11
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文关注如何以较低时间和资源成本，将多语言大模型适配到现代标准阿拉伯语（MSA）。摘录指出阿拉伯语训练面临噪声网页数据、方言差异、拼写不一致以及持续预训练成本高的问题，并提到仅扩大原始阿拉伯语token规模不足以构建强阿拉伯语LLM。",
+            "evidence_ids": [
+              "E5",
+              "E1",
+              "E3"
+            ]
+          },
+          "method": {
+            "text": "方法包含两部分：一是AQL数据策展流水线，按摘录所述为五阶段，包括结构清洗、启发式过滤、MSA选择、基于模型的质量/安全评分以及精确+近似去重；算法1描述流式过滤后进行全局去重。二是AQL-Lite持续预训练策略，在部分参数上训练：解冻最后8个transformer块和token嵌入矩阵，上层块使用分层学习率，下层块仅通过低秩适配器更新，并采用RS-LoRA适配器。",
+            "evidence_ids": [
+              "E2",
+              "E9",
+              "E10"
+            ]
+          },
+          "findings": {
+            "text": "在5B token受控CPT实验中，AQL-Lite平均73.19、耗时63小时；全量CPT平均73.58、121小时；仅LoRA平均70.24、17小时；RS-LoRA平均70.88、24小时；未做CPT的Gemma 3 12B PT基线平均66.91。摘录还称AQL-Lite恢复了94%（该句在E13处被截断，具体恢复对象需查原文）。数据消融方面，摘录称策展文本相对基线增加3.51分。40B token规模扩展与SFT后的完整结果在摘录中仅部分可见，无法完整判断。",
+            "evidence_ids": [
+              "E12",
+              "E13",
+              "E11"
+            ]
+          },
+          "limitations": {
+            "text": "摘录明确的安全边界是：部署时安全分类器不能消除所有风险，作者建议AQL-Lite不应作为医疗、法律、金融或公共决策等高风险场景的唯一决策者。此外，摘录提到N∈{4,8,12}的扫描留作未来工作，说明部分超参数未充分探索。关于预印本与独立验证：摘录未说明本文是否经过同行评审或独立复现，无法判断。",
+            "evidence_ids": [
+              "E15",
+              "E4"
+            ]
+          },
+          "replication": {
+            "text": "复现建议基于摘录可确认的要素：使用同一数据、硬件和评测协议进行受控对比（表3注明所有方法共享数据、硬件与评测协议）；硬件为8×A100 80GB；评测采用OALL v2的七个基准。但摘录未给出完整超参数、随机种子、数据来源清单和代码链接，因此无法仅凭这些片段完整复现，需查阅原文补充。",
+            "evidence_ids": [
+              "E12",
+              "E13",
+              "E7"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-23",
+      "url": "https://www.psypost.org/american-catholics-reported-a-greater-sense-of-meaning-in-life-after-pope-leo-xivs-election-study-finds/",
+      "title_zh": "研究称教皇利奥十四世当选后，美国天主教徒报告生活意义感增强",
+      "summary_zh": "PsyPost报道，一项每日问卷调查显示，在教皇利奥十四世当选后，美国虔诚天主教徒自述生活意义感略有上升，且这一趋势持续到研究结束。该研究为观察性设计，样本与效应量等细节未在摘要中给出，尚不能推断教皇选举与意义感之间存在因果关系。",
+      "why_zh": "把宗教重大事件与日常意义感联系，属少见的长时段心理追踪视角；但需注意其观察性证据与自评量表局限。",
+      "details_zh": "据摘要，研究采用每日调查追踪美国天主教徒在教皇选举前后的生活意义感变化，发现虔诚者报告的意义感略有提升并延续至研究终点。报道未说明样本规模、对照组设置、统计显著性或是否控制季节与新闻情绪等混杂因素，也未提及非天主教徒的对照结果。此类发现属于相关模式，不能证明教皇选举直接导致意义感变化；媒体转述亦未经独立复核。读者可关注其测量工具与预注册情况，再判断结论稳健性。",
+      "original_title": "American Catholics reported a greater sense of meaning in life after Pope Leo XIV’s election, study finds",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-10-24",
+      "url": "https://github.com/obsproject/obs-studio/releases/tag/33.0.0",
+      "title_zh": "OBS Studio 发布 33.0.0 版本",
+      "summary_zh": "开源直播与录屏软件 OBS Studio 在 GitHub 发布 33.0.0 版本，相关链接在 Hacker News 获得约266点讨论。现有材料仅为聚合标题与链接，未提供更新日志内容、新增功能或已知问题，具体改动需查阅官方发布说明。",
+      "why_zh": "OBS 是内容创作与远程教学的基础工具，大版本更新影响大量普通用户；但本条只有版本号，价值取决于更新日志，需核实后再判断重要性。",
+      "details_zh": "OBS Studio 为跨平台开源软件，广泛用于直播推流、屏幕录制与虚拟摄像头场景，其版本迭代常涉及编码器、插件接口与界面调整。本条来源为 Hacker News 聚合条目，仅显示版本号与讨论热度，未包含任何功能变更、兼容性说明或破坏性改动信息。Hacker News 热度不等于官方确认，读者应直接查看 GitHub Releases 页面的更新日志，关注插件兼容性与升级回滚建议。",
+      "original_title": "OBS Studio 33",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-24",
+      "url": "https://arxiv.org/abs/2610.30512",
+      "title_zh": "聚合分数背后：系统改变Arena-Hard的LLM评审设置揭示了什么",
+      "summary_zh": "一篇arXiv预印本指出，LLM评审的总体得分相近，可能掩盖个体判定的大幅波动。作者固定两个模型的回答，用GPT-4.1在500条Arena-Hard v2.0提示上，按评判标准、输出格式和任务框架的八种组合运行，并在温度为零、固定模型版本下重复。结果显示，重复默认设置时总分仅变动约1分，但21.2%的提示胜负平结果改变；某些指令变化带来的结果变动比重复运行平均多28.2个百分点。",
+      "why_zh": "它把“LLM当裁判”的可靠性问题量化到个体判定层面，提醒研究者和排行榜读者：聚合分数稳定不等于评审结论稳定，指令措辞本身就会改变结论。",
+      "details_zh": "该研究关注的是评审可重复性与指令敏感性，而非某个模型能力高低。摘要给出的关键信息包括：500条提示、两个模型回答固定、GPT-4.1作为评审、八种设置组合、温度为零并固定模型版本。作者强调相似总分下个体判定会显著变化，说明仅看排行榜聚合分数可能低估评审噪声。局限在于这是预印本，尚未经独立验证；摘要未给出完整统计方法和置信区间，也未说明结论能否推广到其他评审模型或提示集。读者应把它视为对评审方法学的提醒，而非对Arena-Hard排名的最终裁定。",
+      "original_title": "Behind Aggregate Scores: What Systematically Varying Arena-Hard's LLM Judge Reveals",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-10-23",
+      "url": "https://www.theregister.com/ai-and-ml/2026/10/23/ai-models-think-humans-are-a-bunch-of-amoral-sheep/5305123",
+      "title_zh": "实验称大语言模型对人类给出“缺乏道德”的负面评价",
+      "summary_zh": "The Register报道，一项AI实验让大语言模型给出对人性最具争议的看法，结果模型对人类评价相当负面，称人类是“一群没有道德的羊”。报道未披露实验设计、提示词、模型版本与评分方式，结论应视为媒体转述的实验观察，而非对模型价值观的系统性结论。",
+      "why_zh": "模型价值取向与对齐讨论正热，但此类“让模型说狠话”的实验易受提示词引导，需区分演示效果与可复现研究。",
+      "details_zh": "摘要仅说明实验要求模型给出对人性最具争议的看法，模型回应偏负面。报道没有交代所用模型、采样温度、提示措辞、是否多次采样以及如何判定“负面”，因此无法判断这是模型的稳定倾向还是特定提问方式的产物。大语言模型的输出对提示高度敏感，单次演示不足以说明其价值观。该条价值在于提示对齐与模型人格设定问题，但证据强度有限，需等待可复现的方法说明。",
+      "original_title": "AI models think humans are a bunch of amoral sheep",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-10-23",
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNM1pqSXlLaE8teGtoTk8xdkZONTBDbi01WXpSWTVvYlhpVW1IZGJkMGQ3YV9MdjRXUGtaSE1raHVyZjNQcTltSGpXWTdVRnFqZUhJNjhmTnl4Z2RXRExwVUVlVHdVLTA5bzYyalBpZkdWZ0ptMUR2MVd6cGpCSks0RnFpUlJKc3N4cEowcTBMNmM5cXc3Qy13cldCZXFsVGtKaXh1bVNKd2dsNi1QbzJnYnAxZWpndHFTX2RBcVd2Q1ltZzBHcU9r0gHHAUFVX3lxTE85ZnRla2hZT25Mak9seWR0em9JWnBBNDR6OXRtNTBlMlcwQUVvcll3enlhdTY4ZzRmOTNOQWxNd3g4SXZXeGpuSVJLaTBvQXY5VU45UEV3WE1BTEVRTDF2aVo2OXdaSkdjQy1pRVdDYVdEdVNjbGJsRXpNTG1qS0xTTDZvemg5WE5EMDFmNzhRQTNWWWdEamxqX3M4YzhjejlGSzdKVlhENFQ3OVp4bGsxT0JUbVRReVhFbVI4QTNpWWJFWkk0VWs?oc=5",
+      "title_zh": "陆克文称美中战略竞争将持续升级，世界密切关注",
+      "summary_zh": "据南华早报报道，澳大利亚前总理、现任驻美大使陆克文表示，美中之间的战略竞争将继续升级，并称世界其他国家正密切关注这一态势。现有材料仅为聚合RSS标题与摘要，未提供其发言场合、完整表述及双方回应，具体判断需核实原始报道。",
+      "why_zh": "这是了解美中关系走向的一手人物表态线索，但摘要极简；价值在于提示竞争长期化预期，读者需区分个人判断与政策事实。",
+      "details_zh": "陆克文具有澳大利亚前总理与驻美大使的双重身份，其涉华涉美表态常被视为中间国家视角的观察窗口。但本条来源为聚合线索，仅有标题式摘要，未说明发言时间、平台（演讲、访谈或社交媒体）、是否涉及具体政策领域（贸易、科技或军事），也没有中方或美方回应。标题中“持续升级”是转述其判断，并非已发生事实的确认，需回到原始报道核对语境与措辞。",
+      "original_title": "US-China strategic competition to keep escalating as world watches on, Rudd says - South China Morning Post",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-24",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOZTFqQTZsRWV0SzlGVWFEYUxqcFB5RFVDTkUxbXliS3ZKcFpJa1c4VkNDZ2RoWEN1MW5OeUNvMTMwVDRyYVVsbF9fVWNQN0liay11T0xVay1sZ1BJZnl4TU1lVURrWXg4VFdGVFFwMTl2N0JRSVlCQXNxaDIwbnU2Q2VwaFI3Q1RUc3E3R3hjaFNmRVFWaGhITg?oc=5",
+      "title_zh": "会议委员会称劳动力市场足够强劲，美联储可专注通胀",
+      "summary_zh": "美国经济研究机构会议委员会（The Conference Board）发布观点称，当前劳动力市场足够强劲，使美联储能够将政策重心放在通胀上。该条来自聚合RSS，仅有标题与摘要，未提供就业数据、工资增速或美联储官员回应等细节，具体论据需核实原始发布。",
+      "why_zh": "涉及美联储政策权衡的一手机构判断，对理解利率路径与就业—通胀取舍有参考价值；但摘要过简，不能当作数据发布或政策决定。",
+      "details_zh": "目前只取得标题及极少量公开摘要，不能据此确认事件完整经过、政策适用范围或各方解释。请查看原始报道与相关官方资料，区分事实、当事方说法和进一步的影响分析。",
+      "original_title": "Labor Market Strong Enough for Fed to Focus on Inflation - The Conference Board",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "TechCrunch",
+      "published": "2026-10-24",
+      "url": "https://techcrunch.com/2026/10/24/all-the-ai-agents-that-can-live-in-your-text-messages/",
+      "title_zh": "盘点可驻留短信界面的主流AI Agent",
+      "summary_zh": "TechCrunch整理了一份可运行在短信对话中的AI Agent清单，涵盖通用助手以及面向家庭、旅行和工作场景的专用代理。报道属于媒体盘点，材料仅有标题与一句摘要，未给出各产品的评测数据、隐私条款或可用地区，具体能力与限制需查阅原文核实。",
+      "why_zh": "AI Agent正从独立应用转向短信等日常入口，涉及交互形态、隐私与平台依赖等现实问题，比单纯产品快讯更值得关注。",
+      "details_zh": "该条目的价值在于呈现“Agent进入通信界面”这一产品趋势：用户无需安装新应用，即可通过短信与助手交互。但材料没有说明清单包含哪些公司、是否收费、如何处理对话数据，也没有比较各代理在任务完成率或安全性上的差异。短信通道还涉及运营商与平台政策，可能影响可用性。读者应把它当作产品地图而非性能排名，具体选择需自行核查隐私政策与服务范围。",
+      "original_title": "Here are the top AI agents that can live in your text messages",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-10-24",
+      "url": "https://arstechnica.com/science/2026/10/ice-sheet-expansion-may-have-started-2000-years-go-but-we-canceled-that/",
+      "title_zh": "研究称冰盖扩张可能在两千年前启动，但被人类活动抵消",
+      "summary_zh": "Ars Technica报道称，劳伦泰德冰盖的残余部分可能在约两千年前开始出现某种扩张趋势，但摘要仅有一句带调侃意味的描述，未提供研究团队、方法或数据来源。该说法涉及古气候重建，需查阅原始论文才能确认时间尺度与因果解释。",
+      "why_zh": "这条线索把自然冰盖变化与人类气候影响放在同一时间框架下，反常识之处在于“扩张”与“被抵消”的并置，值得追问证据链。",
+      "details_zh": "目前只取得标题及极少量公开摘要，尚不足以确认报道涉及的具体时间线、产品技术细节或相关方回应。此处不对原始材料未说明的细节作推断；建议打开来源阅读全文后再判断其实际影响。",
+      "original_title": "Ice sheet expansion may have started 2,000 years ago, but we canceled that",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-24",
+      "url": "https://www.psypost.org/psychopathy-scores-run-a-bit-higher-among-americans-still-living-in-their-home-state-study-finds/",
+      "title_zh": "研究发现，仍住在出生州的美国人精神病态得分略高",
+      "summary_zh": "一项针对近4000名成年人的研究显示，仍居住在成长所在州的美国人在精神病态量表上的得分略高于搬离该州的人。报道称差距虽小，但在最严格的比较中依然存在。该研究由媒体PsyPost报道，摘要未说明量表工具、抽样方式与是否控制年龄、收入等混杂因素，结论尚待独立核实。",
+      "why_zh": "把人格特质与人口流动联系起来，属于反常识的小切口问题；但效应量小、机制不明，读者应关注其可重复性与因果解释边界，而非当作地域性格定论。",
+      "details_zh": "据现有摘要，研究比较的是“留在成长州”与“搬离”两类人群的精神病态得分，样本约4000人，差异幅度被描述为很小。报道未提供量表名称、效应量数值、统计控制变量，也未说明数据是横断面还是追踪设计，因此无法判断是迁移选择效应（某些特质者更倾向离开）还是居住环境的影响。PsyPost属科普型媒体，该研究未经独立交叉核实，摘要信息有限，不宜据此推断具体州或群体的特征。",
+      "original_title": "Psychopathy scores run a bit higher among Americans still living in their home state, study finds",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-24",
+      "url": "https://arxiv.org/abs/2610.30435",
+      "title_zh": "用自我评估强化学习让检索增强大模型感知自身搜索状态",
+      "summary_zh": "一篇arXiv预印本提出自我评估强化学习（SARL）框架，针对检索增强大模型在搜索中缺乏“搜索状态感知”的问题——模型难以判断已获得哪些信息、还缺什么，导致幻觉推理和过早终止搜索。方法通过双重奖励设计，在训练中让模型学会识别自身搜索状态，并惩罚对评估的过度依赖，从而兼顾搜索有效性与效率。摘要称相对最强基线取得24.3%的相对提升。",
+      "why_zh": "不同于普通“检索增强”产品新闻，它直指Agent搜索中的元认知缺陷，把“知道自己不知道什么”变成可训练目标，对做AI Agent与RAG的读者有方法启发。",
+      "details_zh": "据摘要，现有搜索智能体常缺乏搜索状态感知，即无法区分已获取与仍缺失的信息，进而产生幻觉推理或过早结束检索。SARL在训练阶段让模型学习识别自身搜索状态并调整搜索行为，测试时无需额外评估模块；其双重奖励既衡量每次评估的纠错效果，又惩罚过度依赖评估，以鼓励有效且高效的搜索轨迹。摘要给出的量化结果为相对最强基线24.3%的相对提升，并提及平均增益35.9%（原文摘要在此处截断，具体指标口径不明）。需注意这是未经独立验证的预印本，实验设置、基线选择与统计显著性均未在给定材料中说明，不宜视为已确认结论。",
+      "original_title": "Self-Assessment Reinforcement Learning for Search-State Awareness in Retrieval-Augmented Large Language Models",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "科学研究",
+      "source": "Nature Machine Learning",
+      "published": "2026-10-24",
+      "url": "https://www.nature.com/articles/s41467-026-78406-y",
+      "title_zh": "用蛋白质语言模型预测蛋白质静电性质",
+      "summary_zh": "Nature Machine Learning的RSS条目显示一项研究关注用蛋白质语言模型预测蛋白质静电性质。给定材料仅有标题，没有摘要、方法、数据集或结果信息，因此无法判断其具体模型架构、评估指标与相对传统物理方法的优劣。该方向若成立，可能把语言模型学到的序列表征用于静电计算，减少对昂贵结构模拟的依赖。",
+      "why_zh": "蛋白质语言模型多用于结构或功能预测，转向静电这类物理量是较新的交叉方向；对关注ML for Science的读者有潜在价值，但现有材料极少。",
+      "details_zh": "当前公开材料主要提供标题和很少的摘要信息，无法独立判断研究方法、数据、因果关系或结论的可靠性。具体内容需要阅读原始来源后核实。",
+      "original_title": "Predicting protein electrostatics with protein language models",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-10-24",
+      "url": "https://arstechnica.com/science/2026/10/a-1000-mile-cloud-on-mars-may-reveal-physics-never-seen-in-nature/",
+      "title_zh": "火星上一条1000英里长的云可能揭示自然界从未见过的物理过程",
+      "summary_zh": "Ars Technica报道，一项新模型提出火星可能存在从未被直接观测到的成冰物理过程，并提到一条约1000英里长的云。摘要未说明云的具体位置、观测手段、模型假设及与现有理论的差异。该说法来自媒体报道，尚未经独立交叉核实，属于有待同行评议和观测检验的科学假说。",
+      "why_zh": "它涉及行星大气中可能存在的新成冰机制，若成立将拓展对火星水循环和云物理的理解；但当前仅是模型提议，价值在于提出可检验的科学问题而非已确认发现。",
+      "details_zh": "目前只取得标题及极少量公开摘要，尚不足以确认报道涉及的具体时间线、产品技术细节或相关方回应。此处不对原始材料未说明的细节作推断；建议打开来源阅读全文后再判断其实际影响。",
+      "original_title": "A 1,000-mile cloud on Mars may reveal physics never seen in nature",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-24",
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5hbHJic1h3UDRxT2kwMkFYUS14UjNXVVdRa1ZvdlhrZk9lNGdPMzBMaWJsVFB2dE5IVDJ5dVZOU0Z3ZHI4ZUlDMWRSX2N4VzdFUnpfelhVcjRhcy1mTjBZOFNXSkM?oc=5",
+      "title_zh": "中国拟调控劳动密集型行业AI应用节奏以“防止大规模失业”",
+      "summary_zh": "据亚洲经济聚合标题，中国将调控劳动密集型行业采用AI的速度，目标是防止大规模失业。目前仅有聚合来源的标题与极简摘要，未提供政策文件、主管部门、具体行业范围、实施时间或调控工具等细节。该线索涉及AI对就业结构的冲击与政策回应，但原始报道内容尚待核实。",
+      "why_zh": "AI对劳动密集型岗位的替代是当前中国经济与就业政策的核心张力之一；若确有节奏调控，将影响企业技术部署与劳动力市场预期，但现有材料仅支持“有报道称”这一层级。",
+      "details_zh": "该条来自国际媒体聚合RSS，标题称中国将调控劳动密集型行业AI采用速度，并引述“防止大规模失业”。但摘要没有说明是哪个部门、以何种形式（审批、补贴、试点、指导意见）调控，也没有行业清单和时间表。因此不能据此断言政策已出台或具体内容为何。可讨论的背景是：中国劳动密集型制造业和服务业吸纳大量就业，AI自动化推进速度与就业安置、技能培训之间的平衡是公共政策议题。信息局限明显：需找到原始报道或官方文件，确认政策层级、约束力和适用范围，避免把标题当作已核实政策。",
+      "original_title": "China to Regulate AI Adoption Pace in Labor-Intensive Industries... \"Prevent Mass Unemployment\" - 아시아경제",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "机构一手发布",
+      "verification_status": "机构陈述，未经交叉核实",
+      "material_scope": "机构RSS标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "Hugging Face",
+      "published": "2026-10-21",
+      "url": "https://huggingface.co/blog/nvidia/kumo-relational",
+      "title_zh": "英伟达 Kumo Relational 在关系数据上优于监督式机器学习，且无需训练",
+      "summary_zh": "Hugging Face 上的一则机构发布称，英伟达 Kumo Relational 在关系数据任务上表现优于监督式机器学习方法，并且不需要训练。输入材料只有标题，没有摘要、基准名称、对比方法、数据集规模或评测协议。该说法属于机构自述，尚未经过独立交叉核实，不能据此认定其已普遍优于监督学习。",
+      "why_zh": "“无需训练即可在关系数据上超过监督学习”若成立，会改变表格与关系型数据的建模流程；但正因结论强，读者更需要区分机构宣传与可复现证据。",
+      "details_zh": "当前公开材料主要提供标题和很少的摘要信息，无法独立判断研究方法、数据、因果关系或结论的可靠性。具体内容需要阅读原始来源后核实。",
+      "original_title": "NVIDIA Kumo Relational Outperforms Supervised Machine Learning on Relational Data, No Training Required",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-10-24",
+      "url": "https://www.theregister.com/os-platforms/2026/10/24/raspberry-pi-desktop-proves-old-pcs-arent-past-it/5304676",
+      "title_zh": "树莓派桌面系统显示老电脑仍可胜任日常使用",
+      "summary_zh": "The Register报道，基于Debian 13的树莓派桌面系统更新可在老款ThinkPad等旧电脑上较流畅运行，且安装过程不需要把折腾系统当成爱好。报道强调旧硬件在日常桌面使用中的可用性，但未在给定摘要中提供具体性能数据、支持机型列表或与主流轻量发行版的对比测试。",
+      "why_zh": "不同于新品发布快讯，它触及旧硬件再利用与轻量桌面生态，对关注开源系统、电子垃圾与低成本计算的学生读者有实际参考意义。",
+      "details_zh": "据摘要，这次树莓派桌面系统刷新基于Debian 13，定位是能在“资深”ThinkPad一类旧电脑上舒适运行，并让安装不至于变成一项需要长期投入的爱好，即降低上手门槛。报道来自The Register，属媒体评测类内容，未经独立交叉核实；给定材料没有列出具体硬件配置、内存占用、启动时间或与Ubuntu、Linux Mint等轻量发行版的横向对比。因此可确认的只是该媒体对易用性与旧硬件兼容性的定性描述，不能据此推断所有老PC都能获得同等体验。对读者而言，值得关注的是官方支持周期、驱动兼容性与安全更新策略。",
+      "original_title": "Raspberry Pi Desktop proves old PCs aren't past it",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-24",
+      "url": "https://www.psypost.org/psychologists-showed-extreme-metal-fans-a-series-of-disgusting-images-and-their-reactions-stood-out/",
+      "title_zh": "心理学家向极端金属乐迷展示一系列令人不适的图片，他们的反应引人注意",
+      "summary_zh": "PsyPost 报道称，一项心理学研究让极端金属乐迷观看一系列令人厌恶的图片，并与非乐迷比较反应。摘要称，极端金属乐迷对血腥艺术作品、专辑封面和恶心照片报告的不适感更低，也更容易觉得这类怪诞艺术和封面有趣。报道未在摘要中给出样本量、实验设计、测量工具和统计结果，因此目前只能视为媒体对一项研究的概述。",
+      "why_zh": "它触及“审美偏好是否与厌恶敏感度相关”这一可检验问题，比一般趣味心理新闻更有理论抓手；但证据细节有限，适合作为阅读原始论文的线索而非结论。",
+      "details_zh": "从摘要看，研究比较的是极端金属乐迷与非乐迷对厌恶刺激的主观反应，并区分了“恶心程度”和“觉得有趣”两个维度。这类发现容易被解读为“听金属乐让人麻木”，但相关设计通常只能说明群体差异，不能证明音乐导致厌恶阈值变化；也可能存在自我选择、熟悉效应或对怪诞美学的长期接触等因素。由于输入材料没有提供样本规模、对照组构成、刺激材料和统计显著性，读者应把它当作待核实的研究线索，而不是已确立的心理学结论。",
+      "original_title": "Psychologists showed extreme metal fans a series of disgusting images, and their reactions stood out",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-24",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNSm9iUGdESFp3a2R0d0FwbHRiUkgydkF5QnNyMGc5RzRxZV9jckR6N1hXWnNOb1VLZHZ6MXJvcXl4WTlfY2ZpZ0IyakJYdFRvWDlmOFIyVW1QRWlSaVlPSVBCMXNsMC1Eb0xmbi1mYkF3MFh3azhtWEc2QkhWN25nYTRxeWl1a1BWMHkxWC1MTHcwWWc?oc=5",
+      "title_zh": "分析文章讨论西方贸易壁垒与“中国制造”",
+      "summary_zh": "Eurasia Review刊发一篇分析，标题聚焦西方贸易壁垒与“中国制造”。给定材料仅有标题与来源，没有摘要、作者背景或具体论点，无法确认其涉及哪些行业、关税或非关税措施，也无法判断其数据来源与论证质量。该话题与出口、产业链转移和就业相关，但需查阅原文并对照多方数据后再评估。",
+      "why_zh": "贸易壁垒与中国制造的互动直接影响出口就业与产业链布局，属结构性经济议题；但仅有标题，价值在于提示议题而非提供可引用结论。",
+      "details_zh": "目前只取得标题及极少量公开摘要，不能据此确认事件完整经过、政策适用范围或各方解释。请查看原始报道与相关官方资料，区分事实、当事方说法和进一步的影响分析。",
+      "original_title": "Western Trade Barriers And ‘Made In China’ – Analysis - Eurasia Review",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-10-23",
+      "url": "https://arstechnica.com/gadgets/2026/10/updated-google-privacy-policy-says-your-gmail-might-be-used-for-advertising/",
+      "title_zh": "谷歌更新隐私政策：你的 Gmail 可能被用于广告",
+      "summary_zh": "Ars Technica 报道，谷歌更新隐私政策，称开启“Personal Intelligence”后，公司可获得更多用于广告定向的数据，Gmail 内容可能被用于广告用途。摘要仅提到这一功能会扩大广告定向的数据来源，未说明具体适用范围、是否默认开启、用户如何关闭以及政策生效时间。该报道属于媒体解读，尚需对照谷歌官方政策文本核实。",
+      "why_zh": "隐私政策措辞变化往往比产品发布更能影响日常用户，这条把“AI 功能”与“广告数据使用”联系起来，对依赖 Gmail 的学生和开发者有实际提醒意义。",
+      "details_zh": "目前只取得标题及极少量公开摘要，尚不足以确认报道涉及的具体时间线、产品技术细节或相关方回应。此处不对原始材料未说明的细节作推断；建议打开来源阅读全文后再判断其实际影响。",
+      "original_title": "Updated Google privacy policy says your Gmail might be used for advertising",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-10-23",
+      "url": "https://arstechnica.com/space/2026/10/nasa-updates-lander-plans-for-moon-landings-finally-solves-long-festering-orion-issue/",
+      "title_zh": "NASA更新登月着陆器方案，并称解决猎户座长期问题",
+      "summary_zh": "Ars Technica报道，NASA更新了月球着陆器计划，并表示已解决猎户座飞船一个长期存在的问题。报道引述NASA方面称“有授权、有资源、有利益相关方支持”。摘要未说明着陆器承包商、时间表调整幅度及猎户座问题的具体技术细节，相关说法来自机构自述，尚待独立核实。",
+      "why_zh": "登月架构调整牵动承包商分工与预算节奏，是观察美国载人航天执行力的窗口；但需警惕机构表态与工程现实之间的落差。",
+      "details_zh": "目前只取得标题及极少量公开摘要，尚不足以确认报道涉及的具体时间线、产品技术细节或相关方回应。此处不对原始材料未说明的细节作推断；建议打开来源阅读全文后再判断其实际影响。",
+      "original_title": "NASA updates lander plans for Moon landings, finally solves long-festering Orion issue",
+      "focus": false,
+      "edition": "evening"
     }
   ]
 }
