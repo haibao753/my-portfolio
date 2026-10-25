@@ -232,7 +232,11 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
     const needsMeasurement=measuredEpoch!==layoutEpoch;
     if(needsMeasurement){glyphMeasurements=0;cacheHits=0;}
     // Only objects crossing the navbar geometry are relevant; draw in document order.
+    // A cheap bounding-box pre-filter avoids walking every ancestor with
+    // getComputedStyle for the thousands of nodes that are far below the bar.
     for(const el of candidates){
+     const quick=el.getBoundingClientRect();
+     if(quick.right<nr.left||quick.left>nr.right||quick.bottom<nr.top-18||quick.top>nr.bottom+18)continue;
      const r=readBounds(el);
      if(r.right<nr.left||r.left>nr.right||r.bottom<nr.top-18||r.top>nr.bottom+18)continue;
      const style=getComputedStyle(el);
@@ -367,7 +371,7 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
     nav.dataset.opticalUploadedPixels=String(shader.stats.uploadedPixels);
     nav.dataset.opticalSamples=String(elements);nav.dataset.opticalImages=String(images);nav.dataset.opticalColors=String(colors);nav.dataset.opticalGradients=String(gradients);nav.dataset.opticalVectors=String(vectors);nav.dataset.opticalError='';nav.dataset.opticalFrameMs=(performance.now()-frameStart).toFixed(1)}catch{nav.dataset.opticalError='texture'}
    };
-   let pending=false;const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;refresh()})}};
+   let pending=false,engineReady=false;const schedule=()=>{if(!engineReady||pending)return;pending=true;requestAnimationFrame(()=>{pending=false;refresh()})};
    if(liquid)subscribeGlassPointer(schedule);
     addEventListener('jhlab:scene-media',event=>{
      if(document.hidden||gl.isContextLost()||glass.hidden||!mediaBaseCtx)return;
@@ -396,7 +400,11 @@ if(['1','2'].includes(mode)&&!matchMedia('(prefers-reduced-motion: reduce)').mat
    resizeObserver.observe(root);
    // Width changes of the nav can move text even if the main element is unchanged.
    resizeObserver.observe(nav);
-   schedule();
+   // The first scene reconstruction is expensive (~0.5s on a long brief). Keep
+   // the CSS glass visible and only start sampling when the browser is idle, so
+   // content and the first interaction are never blocked by the material.
+   const startOptics=()=>{engineReady=true;forceFull=true;invalidateLayout()};
+   if('requestIdleCallback' in window)requestIdleCallback(startOptics,{timeout:1800});else setTimeout(startOptics,700);
   }
  }
 }

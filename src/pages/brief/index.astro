@@ -1,7 +1,24 @@
 ---
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+// Warm the two requests the reader needs first: the archive manifest and the
+// newest issue. Data is committed before the Cloudflare build, so this stays
+// in sync with the published JSON without changing the publishing pipeline.
+let latestIssue = "";
+try {
+ const manifest = JSON.parse(readFileSync(join(process.cwd(), "brief/data/index.json"), "utf8"));
+ const candidate = Array.isArray(manifest?.dates) ? manifest.dates[0] : "";
+ if (typeof candidate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(candidate)) latestIssue = candidate;
+} catch {
+ latestIssue = "";
+}
 ---
 <BaseLayout title="全球资讯观察站 — J.H. LAB" description="每天以中文整理全球议题、人工智能与前沿科学资讯，保留可信的原始来源。">
+ <Fragment slot="head">
+  <link rel="preload" href="/brief/data/index.json" as="fetch" />
+  {latestIssue && <link rel="preload" href={`/brief/data/${latestIssue}.json`} as="fetch" />}
+ </Fragment>
  <section class="brief-hero wrap" id="top" aria-labelledby="brief-heading">
   <div class="brief-masthead">
    <h1 id="brief-heading"><span data-locale="zh">今日值得读</span><span data-locale="en">Worth Reading Today</span></h1>
@@ -70,7 +87,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   <div class="explore-bar" id="spatial-experiment"><span class="explore-caption"><span data-locale="zh">把这一期读成一张地图</span><span data-locale="en">Read this issue as a map</span></span><button id="spatial-open" type="button" aria-haspopup="dialog">◈ <span data-locale="zh">探索空间</span><span data-locale="en">Explore in 3D</span> ↗</button></div>
   <p class="status" id="status" role="status" aria-live="polite"><span data-locale="zh">正在载入每日简报…</span><span data-locale="en">Loading Daily Brief…</span></p>
   <div id="stories" class="stories" aria-live="off"></div>
-  <dialog id="spatial-dialog" aria-labelledby="spatial-heading" aria-describedby="spatial-state"><div class="spatial-shell"><header><h2 id="spatial-heading"><span data-locale="zh">知识空间</span><span data-locale="en">Knowledge Space</span></h2><button id="spatial-close" type="button" aria-label="关闭探索空间">×</button></header><p id="spatial-state" role="status">选择一个节点展开阅读</p><div class="spatial-legend" aria-hidden="true"><span><i class="legend-topic"></i><span data-locale="zh">颜色 = 主题</span><span data-locale="en">Colour = topic</span></span><span><i class="legend-time"></i><span data-locale="zh">高度 = 新近</span><span data-locale="en">Height = recency</span></span><span><i class="legend-edge"></i><span data-locale="zh">连线 = 同主题 / 同来源</span><span data-locale="en">Edge = same topic / source</span></span></div><div class="spatial-viewport" aria-label="可拖动的三维知识网络"><div class="spatial-tooltip" data-spatial-tooltip hidden></div></div><div id="spatial-scene" class="spatial-scene" aria-label="所选新闻详情"></div><footer><button type="button" data-rotate="-24" aria-label="上一个节点">←</button><div class="spatial-controls"><button type="button" data-spatial-reset><span data-locale="zh">重置视角</span><span data-locale="en">Reset view</span></button><button type="button" data-spatial-zoom="-1" aria-label="缩小">−</button><button type="button" data-spatial-zoom="1" aria-label="放大">+</button></div><button type="button" data-rotate="24" aria-label="下一个节点">→</button></footer><p class="spatial-note"><span data-locale="zh">位置只表达当前列表的主题聚类与时间顺序，不做语义模型推断。</span><span data-locale="en">Positions encode topic clusters and list recency only; no semantic model is inferred.</span></p></div></dialog>
+  <div class="stories-progress" id="stories-progress" hidden>
+   <span class="stories-progress-copy" id="stories-progress-copy" aria-live="polite"></span>
+   <button type="button" class="stories-load-more" id="stories-load-more">继续加载 ↓</button>
+  </div>
+  <div class="stories-sentinel" id="stories-sentinel" aria-hidden="true"></div>
+  <dialog id="spatial-dialog" aria-labelledby="spatial-heading" aria-describedby="spatial-state"><div class="spatial-shell"><header><h2 id="spatial-heading"><span data-locale="zh">知识空间</span><span data-locale="en">Knowledge Space</span></h2><button id="spatial-close" type="button" aria-label="关闭探索空间">×</button></header><p id="spatial-state" role="status">选择一个节点展开阅读</p><div class="spatial-legend" aria-hidden="true"><span><i class="legend-topic"></i><span data-locale="zh">颜色 = 主题</span><span data-locale="en">Colour = topic</span></span><span><i class="legend-time"></i><span data-locale="zh">高度 = 新近</span><span data-locale="en">Height = recency</span></span><span><i class="legend-edge"></i><span data-locale="zh">连线 = 同主题 / 同来源</span><span data-locale="en">Edge = same topic / source</span></span></div><div class="spatial-viewport" aria-label="可拖动的三维知识网络"><span class="spatial-axis" aria-hidden="true"><span>较新</span><i></i><span>较早</span></span><div class="spatial-tooltip" data-spatial-tooltip hidden></div></div><div id="spatial-scene" class="spatial-scene" aria-label="所选新闻详情"></div><footer><button type="button" data-rotate="-24" aria-label="上一个节点">←</button><div class="spatial-controls"><button type="button" data-spatial-reset><span data-locale="zh">重置视角</span><span data-locale="en">Reset view</span></button><button type="button" data-spatial-zoom="-1" aria-label="缩小">−</button><button type="button" data-spatial-zoom="1" aria-label="放大">+</button></div><button type="button" data-rotate="24" aria-label="下一个节点">→</button></footer><p class="spatial-note"><span data-locale="zh">位置只表达当前列表的主题聚类与时间顺序，不做语义模型推断。</span><span data-locale="en">Positions encode topic clusters and list recency only; no semantic model is inferred.</span></p><p class="spatial-gestures"><span data-locale="zh">单指拖动旋转 · 双指缩放 · 点按节点阅读</span><span data-locale="en">Drag to rotate · pinch to zoom · tap a node to read</span></p></div></dialog>
   <noscript><p>启用 JavaScript 以浏览与筛选每日简报。 / Enable JavaScript to browse and filter Daily Brief.</p></noscript>
   <p class="disclaimer"><span data-locale="zh">简报以 AI 辅助整理公开资讯，仅供信息参考，并非独立事实核查。重要结论请核对原始来源。</span><span data-locale="en">AI-assisted editorial summaries, not independent fact-checking. Verify important claims against original sources.</span></p>
  </section>
@@ -202,6 +224,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  .spatial-shell footer button{min-width:40px;min-height:40px;font-size:16px}
  .spatial-tooltip{position:absolute;z-index:4;max-width:230px;padding:6px 9px;border-radius:9px;background:color-mix(in srgb,var(--fg) 92%,transparent);color:var(--bg);font-size:11px;line-height:1.45;pointer-events:none;box-shadow:0 6px 18px #0003}
  .spatial-tooltip[hidden]{display:none!important}
+ .spatial-axis{position:absolute;z-index:2;left:9px;top:14px;bottom:14px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;font-size:9px;letter-spacing:.06em;color:var(--muted);pointer-events:none;opacity:.72}
+ .spatial-axis i{flex:1;width:1px;margin:6px 0;background:linear-gradient(to bottom,color-mix(in srgb,var(--fg) 22%,transparent),color-mix(in srgb,var(--fg) 5%,transparent))}
+ .spatial-gestures{display:none;margin:5px 0 0;font-size:10px;color:var(--muted)}
+ @media(max-width:760px){.spatial-axis{left:6px;top:10px;bottom:10px;font-size:8px}.spatial-gestures{display:block}}
  .spatial-note{margin:7px 0 0;font-size:10px;line-height:1.5;color:var(--muted)}
  @media(max-width:760px){.explore-caption{display:none}.spatial-legend{font-size:9px;gap:8px 12px}.spatial-controls button{min-width:34px;min-height:34px;font-size:11px}.spatial-note{font-size:9px}}
  #spatial-dialog{padding:0;border:1px solid var(--stroke);border-radius:24px;background:var(--bg);color:var(--fg);width:min(96vw,1040px);max-height:92dvh;box-shadow:0 24px 90px #0005}
@@ -339,6 +365,22 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
  :global(.news-card .news-reading .news-expanded),:global(.news-card.is-reading .news-reading .news-expanded){display:block}
  :global(.news-empty-retry){margin-top:14px;border:1px solid var(--stroke);background:var(--card);color:var(--fg);border-radius:999px;min-height:40px;padding:8px 16px;font:inherit;font-size:12px;font-weight:650;cursor:pointer}
  @media(prefers-reduced-motion:reduce){:global(.news-reading){transition:none}.news-skeleton span{animation:none}}
+ /* Reading focus: one card at a time, the rest recede, and the open card is
+    aligned below the sticky navigation instead of jumping under it. */
+ :global(.news-card){scroll-margin-top:calc(var(--nav-height) + 18px);transition:opacity var(--motion-card) var(--ease-editorial)}
+ :global(.news-card.is-reading){border-top-color:color-mix(in srgb,var(--fg) 55%,var(--stroke))}
+ :global(.stories.has-reading .news-card:not(.is-reading)){opacity:.42}
+ @media(hover:hover) and (pointer:fine){:global(.stories.has-reading .news-card:not(.is-reading)){filter:saturate(.85)}}
+ /* The archive grows daily: paint the first chunk, then continue on scroll. */
+ .stories-progress{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 14px;padding:22px 8px 4px;border-top:1px solid var(--stroke);margin-top:18px}
+ .stories-progress[hidden]{display:none!important}
+ .stories-progress-copy{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+ .stories-load-more{border:1px solid var(--stroke);border-radius:999px;background:var(--card);color:var(--fg);min-height:38px;padding:7px 16px;font:inherit;font-size:12px;font-weight:650;cursor:pointer;transition:border-color var(--motion-hover) ease,background-color var(--motion-hover) ease}
+ .stories-load-more:hover{border-color:var(--fg);background:color-mix(in srgb,var(--fg) 5%,var(--card))}
+ .stories-load-more:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+ .stories-sentinel{height:1px;margin-top:-1px}
+ @media(max-width:760px){:global(.stories.has-reading .news-card:not(.is-reading)){opacity:.55}.stories-progress{padding-top:16px}.stories-load-more{min-height:40px}}
+ @media(prefers-reduced-motion:reduce){:global(.news-card){transition:none!important}.stories-load-more{transition:none!important}}
  .news{padding-top:2px!important}
  @media(max-width:950px){#compact-edition{display:none}}
  @media(max-width:760px){
