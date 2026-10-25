@@ -2,7 +2,8 @@
   "version": 1,
   "date": "2026-10-25",
   "editions": [
-    "morning"
+    "morning",
+    "evening"
   ],
   "items": [
     {
@@ -378,6 +379,394 @@
       "original_title": "The AI graveyard: a running list of projects and startups that didn’t make it",
       "focus": false,
       "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31558v1",
+      "title_zh": "用扩散语言模型改进困惑度感知的黑盒攻击",
+      "summary_zh": "该预印本指出，连续空间黑盒攻击通过在低维高斯潜空间中采样或优化，再经随机映射和最近词查找解码为文本，生成的提示往往不自然、易被输入防护拦截，风险估计也缺乏自然语言依据。作者提出将同一潜空间框架直接耦合到学习得到的连续扩散语言模型，去掉人工随机映射，并在RareTrap采样估计与ThinkTrap优化搜索两种设置下评估。",
+      "why_zh": "与普通AI安全资讯不同，它针对攻击提示“不自然”这一方法学缺陷，尝试用学习到的语言生成分布替代随机映射，关系到红队评估结论是否可信。",
+      "details_zh": "摘要显示，研究关注的是黑盒大模型攻击中的提示自然性问题：连续空间方法虽然便于采样和优化，但随机映射并非从语言中学习，导致提示可能高度不自然，从而被输入防护轻易识别，由此得到的风险估计也不以自然提示为基础。作者的做法是把该框架接到连续扩散语言模型上，保留标准高斯潜空间表述和下游采样或优化流程，同时移除人工随机映射。评估分两部分：基于RareTrap的采样式估计和基于ThinkTrap的优化式搜索。需要说明的是，这是arXiv预印本，尚未经独立验证，摘要未给出具体攻击成功率或防护绕过率，结论应谨慎看待。",
+      "original_title": "Diffusion Language Models for Perplexity-Aware Black-Box Attacks",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/15 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.31558v1",
+        "pages_read": 14,
+        "pages_total": 15,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 2
+          },
+          {
+            "id": "E3",
+            "page": 2
+          },
+          {
+            "id": "E4",
+            "page": 9
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E7",
+            "page": 3
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          },
+          {
+            "id": "E15",
+            "page": 11
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究的问题是：在连续潜空间黑盒攻击中，用扩散语言模型（dLLM）学到的语言表示替代固定随机矩阵映射，能否生成更自然、更接近真实部署分布的对抗提示，并因此改变攻击效果与风险估计。摘录明确列出两个研究问题：dLLM 映射是否可作为随机映射的可行替代（RQ2），以及 dLLM 映射是否产生更像自然语言的提示。",
+            "evidence_ids": [
+              "E2",
+              "E6",
+              "E1"
+            ]
+          },
+          "method": {
+            "text": "方法是在既有连续潜空间攻击框架中只替换潜变量到文本的映射：把高斯潜变量 z 经映射解码为提示，再查询目标模型并评分，由采样或优化提出下一个 z。具体用 Cola-DLM 的输入噪声作为搜索潜变量，按 16×16 噪声块生成文本；RareTrap 用子集模拟估计事件概率，ThinkTrap 用 CMA-ES 搜索。对照的随机映射包括 ThinkTrap 的独立高斯矩阵和 RareTrap 的随机正交块加协方差缩放与均值偏置。目标、搜索方法和目标模型保持不变。",
+            "evidence_ids": [
+              "E7",
+              "E8",
+              "E15"
+            ]
+          },
+          "findings": {
+            "text": "摘录报告：在 RareTrap 下，dLLM 映射使多个目标的估计事件概率下降，例如 Qwen3-14B 从 3.94×10−3 降至 2.02×10−3，DeepSeek-R1-Distill-Llama-8B 从 9.04×10−2 降至 2.11×10−3；Phi-4-reasoning 两者均为 1.000。提示自然性方面，dLLM 映射命中的字符级困惑度显著低于随机映射命中（如 3.6 对 3.8×104），且在六个目标中的四个上更自然；在困惑度过滤器和两个防护模型下，dLLM 命中被标记比例更低。ThinkTrap 中 dLLM 映射的输出长度增益约为随机映射的 1.6 倍以内（Finding 3）。这些是论文自报结果，摘录未显示独立复现。",
+            "evidence_ids": [
+              "E10",
+              "E12",
+              "E3"
+            ]
+          },
+          "limitations": {
+            "text": "作者列出的局限包括：随机映射基线只来自一次已发表运行，最小估计依赖少量不同提示；只用一个 dLLM 且无条件采样，因此提示读起来像通用文本而非典型用户请求，估计描述的是该分布而非真实部署；只考虑过度生成，自然性用困惑度而非人工判断衡量；ThinkTrap 比较只覆盖少数目标。此外摘录为部分页码，无法判断完整实验规模、统计显著性和独立验证情况。",
+            "evidence_ids": [
+              "E4",
+              "E13"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：先按摘录实现潜变量到提示的管线（z 采样、映射解码、目标查询、评分、采样或优化更新），再分别接入 RareTrap 的子集模拟与 ThinkTrap 的 CMA-ES；dLLM 映射需使用 Cola-DLM 的 16×16 噪声块切分方式。对照应保留随机映射的两种构造，并固定目标模型、搜索预算和评分器。评估需报告事件概率、输出长度增益、字符级与 token 级困惑度、困惑度过滤器和防护模型标记率。由于摘录未给出完整超参数、种子设置和代码细节，完整复现条件资料不足。",
+            "evidence_ids": [
+              "E15",
+              "E9",
+              "E10"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-25",
+      "url": "https://www.psypost.org/your-body-makes-its-own-cannabis-like-chemicals-as-you-run-and-neuroscience-research-finds-they-keep-rising-all-the-way-to-the-marathon-finish-line-a-possible-clue-to-the-runners-high/",
+      "title_zh": "研究发现跑步时体内大麻素类物质持续上升，或与马拉松跑者欣快感有关",
+      "summary_zh": "PsyPost 报道称，多数关于“跑者欣快感”的研究只考察一小时以内的运动，而一项针对马拉松和超马跑者的新研究发现，人体自身产生的大麻素类化学物质在数小时奔跑过程中持续活跃，并可能一直上升到马拉松终点。报道未在摘要中给出样本量、对照设计或具体数值，相关结论仍需查阅原始论文核实。",
+      "why_zh": "不同于常见的短时运动与情绪研究，该报道把观察窗口拉到数小时耐力运动，提出内源性大麻素系统是否持续参与“跑者欣快感”的问题，对运动神经科学与大众跑步实践都有讨论价值。",
+      "details_zh": "该条来自 PsyPost 的新闻摘要，属于媒体报道而非一手论文，证据状态标注为未经独立交叉核实。已知信息仅限于：既有研究多关注一小时以内运动，新研究把对象扩展到马拉松与超马跑者，并报告体内大麻素类物质在长时间奔跑中保持活跃。摘要没有说明研究人数、是否设置对照、测量了哪些具体分子、采血时间点以及是否控制饮食和疼痛等因素，因此不能据此断言因果关系或给出效应大小。读者应把它视为值得追踪的研究线索，而非已经确立的结论。",
+      "original_title": "Your body makes its own cannabis-like chemicals as you run, and neuroscience research finds they keep rising all the way to the marathon finish line, a possible clue to the runner’s high",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-10-24",
+      "url": "https://gopher.muffinlabs.com/sdf.org/users/nervtoji/phlog/001.txt",
+      "title_zh": "2026 年为什么还有人使用 Gopher 协议？",
+      "summary_zh": "Hacker News 上出现一篇讨论 Gopher 协议的短文，标题追问在 2026 年继续使用这一早期互联网协议的理由。聚合摘要只给出原文与评论链接，没有说明作者的具体论点、使用场景或社区规模，相关内容需查阅原文。",
+      "why_zh": "在 HTTP 与中心化平台主导的当下，Gopher 的存续涉及小众协议、低带宽文本发布与去平台化实践，属于开发者社区的技术文化议题，而非普通产品快讯。",
+      "details_zh": "该条为 Hacker News 聚合线索，原文是一篇发布在 Gopher 服务器上的文本文章，这本身说明仍有人维护此类服务。材料中没有作者身份、协议使用统计或具体案例，无法判断其代表性。可讨论的背景是 Gopher 采用菜单式文本检索、协议简单，但缺乏现代加密与交互能力；它在爱好者群体中的延续更多体现为对简洁发布方式的偏好，不能据此推断其用户规模或商业价值。",
+      "original_title": "Why Gopher in 2026?",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-25",
+      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQNld6TDBsdENRX181czFGOVp6cHVLVDB1ckpiNXNISE96cWlOM2xuVWtrLUl6RTd6azVoOUlubk5KSHVsbGdLWHpoWmV4MnhNVU5SU09UZnRrS3UwQWhnT1cxRHo0SnI4dmZ6ZDV5anRkZWVlRVRleUstSllNcllPd2ZzRk1iV0UxV2c?oc=5",
+      "title_zh": "高盛称AI招聘缺口达1万个岗位？聚合线索待核实",
+      "summary_zh": "一条聚合RSS标题称“高盛：AI招聘缺口达1万个岗位”，来源标注为tech-insider.org，并归入中国就业与社会类别。该条仅有标题和重复链接，没有摘要、报告原文或统计口径，无法确认“缺口”指哪些行业、地区和时段，也无法确认是否确为高盛发布。信息有限，需核实原始报道。",
+      "why_zh": "AI对就业的影响是当前经济政策核心议题；但该条是聚合线索，数字和归属都未核实，不能当作高盛官方结论引用。",
+      "details_zh": "目前只取得标题及极少量公开摘要，不能据此确认事件完整经过、政策适用范围或各方解释。请查看原始报道与相关官方资料，区分事实、当事方说法和进一步的影响分析。",
+      "original_title": "Goldman: AI Hiring Gap Hits 10,000 Jobs [2026] - https://tech-insider.org/",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "亲密关系",
+      "source": "PsyPost",
+      "published": "2026-10-25",
+      "url": "https://www.psypost.org/the-material-fallout-of-a-breakup-correlates-with-shifts-in-sexual-identity/",
+      "title_zh": "研究发现成年期恋爱分手与性身份变化相关",
+      "summary_zh": "PsyPost报道一项新研究，称恋爱分手带来的现实扰动，如搬家或财务状况变化，与个体对自身性取向的模糊感增加相关。该报道基于新闻摘要，未提供样本规模、研究设计、测量方式和效应大小，也未说明相关关系是否经独立重复。因此目前只能视为一项待核实的研究报道，不能据此推断分手导致性身份改变。",
+      "why_zh": "把分手的生活扰动与性身份模糊联系起来，比常见的分手情绪报道更具体，但证据来自单一媒体转述，需谨慎看待因果。",
+      "details_zh": "摘要提到“实际扰动”包括搬家和财务变化，并将其与性取向模糊感增加相关联，这提示研究者可能关注生活结构变化而非单纯情感痛苦。但给定材料没有说明研究对象年龄范围、追踪时长、性身份测量工具，也未区分相关与因果。PsyPost属媒体转述，未经独立交叉核实。读者可关注的问题包括：性身份流动性在成年期是否被低估，生活事件研究如何避免回忆偏差。在原始论文可查前，不宜把该结论当作已确立的心理学事实。",
+      "original_title": "Romantic breakups correspond with changes in sexual identity during adulthood",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-10-25",
+      "url": "https://www.theregister.com/public-sector/2026/10/25/want-to-build-a-uk-datacenter-please-hold-while-whitehall-transfers-you/5304956",
+      "title_zh": "想在英国建数据中心？先等白厅把您转接一圈",
+      "summary_zh": "The Register报道，英国数据中心建设审批涉及施工、电信和能源等分属不同部门的职责，有部长坚称责任划分清晰，但报道以“请稍等，白厅正在为您转接”的标题暗示跨部门协调可能造成拖延。摘要未提供具体审批流程、时限或案例数据，信息较为有限。",
+      "why_zh": "数据中心是AI基础设施的关键环节，英国跨部门审批碎片化问题折射出AI算力扩张与行政协调之间的现实摩擦，对关注国际科技政策与基建效率的读者有参考价值。",
+      "details_zh": "报道核心是英国数据中心建设面临的行政协调问题：建设、电信、能源分别归不同部门管辖，部长表态称职责明确，但标题和摘要传递出实际推进中可能存在的转接与等待。这背后是AI热潮下各国争相扩建算力基础设施，而土地、电力、网络许可往往分散在多个监管口。现有材料未给出具体项目延误案例、审批平均时长或部门间冲突细节，因此只能说明存在这一制度性摩擦的线索，不能量化其严重程度。",
+      "original_title": "Want to build a UK datacenter? Please hold while Whitehall transfers you",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31520v1",
+      "title_zh": "隐喻的几何结构：探测并调控大语言模型中的隐喻表征",
+      "summary_zh": "一篇arXiv预印本论文提出，隐喻是人类认知的重要方面，作者希望理解大语言模型如何表征隐喻、能否加以控制。研究采用机制可解释性技术，在覆盖不同架构与规模的多个大语言模型中识别出与隐喻相关的因果子空间，并在不同词性的分类任务上实现输出调控；作者还称可在生成任务上调控输出的隐喻程度。该结论尚未经独立验证。",
+      "why_zh": "把可解释性从事实性、拒答等常见议题扩展到隐喻这一认知层面，并尝试因果子空间与生成调控，对理解模型内部表征有方法启发。",
+      "details_zh": "据摘要，研究目标是回答两个问题：大语言模型如何表征隐喻，以及这种表征能否被控制。方法上使用机制可解释性技术，在多种架构和参数规模的模型中找到“因果子空间”，即对隐喻相关输出具有因果作用的内部方向。实验显示，在分类任务上可跨不同词性调控输出，在生成任务上可调控输出的隐喻性。需要说明的是，这是预印本，摘要未给出具体模型清单、数据集、评测指标与效应大小，也未说明调控是否影响其他语义能力；因此“可调控”应理解为作者自述的实验结果，而非已独立复现的结论。",
+      "original_title": "The Geometry of Metaphor: Probing and Steering Metaphor Representations in Large Language Models",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-10-25",
+      "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1IQUlpT25pWmhzSDhrU2ZocjZWVEdYUnVSYUd2SjlKekZ0dWk1TW4za19hQUg4MmVIQ3ZsT3BxU29MWUVKNVVqLTlQNUlOdXViVVh3YUtIZHRsSGJVYXJURFVB?oc=5",
+      "title_zh": "报道称中国在南海争议水域修建大型跑道并填海",
+      "summary_zh": "韩国媒体재경일보的聚合标题称，中国正在南海争议水域修建大型跑道，填海作业正在进行。给定材料仅为聚合RSS标题与摘要，未提供具体岛礁名称、工程规模、消息来源或各方回应，需核实原始报道。",
+      "why_zh": "与常见南海泛泛表态不同，该条指向具体跑道与填海工程，涉及地区安全与航运，但仅有聚合标题，证据基础薄弱，需以核实为前提。",
+      "details_zh": "现有材料只有一条聚合标题，来源标注为国际媒体中国报道，验证状态为需要核实原始报道。标题称中国在南海争议水域建设大型跑道，并称填海正在进行，但没有给出岛礁名称、开工时间、卫星图像来源、工程长度或官方表态。此类涉及主权争议的报道容易依赖匿名消息或卫星图像解读，单凭聚合标题无法判断事实细节。读者应等待原始报道、卫星影像分析或相关方面回应，不宜把标题表述直接视为已确认的工程进展。",
+      "original_title": "China constructing large runway in disputed South China Sea waters... land reclamation underway - 재경일보",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "TechCrunch",
+      "published": "2026-10-24",
+      "url": "https://techcrunch.com/2026/10/24/starlink-seems-to-be-working-normally-again-in-ukraine/",
+      "title_zh": "Starlink在乌克兰似乎已恢复正常运行",
+      "summary_zh": "TechCrunch报道称，Starlink在乌克兰似乎已恢复正常工作，并提到有消息称马斯克曾下令SpaceX限制乌克兰的Starlink接入。报道未在给定摘要中说明中断范围、持续时间、恢复方式及各方回应。",
+      "why_zh": "与一般卫星互联网产品新闻不同，它涉及商业卫星网络在冲突地区的可用性，牵涉企业与政府关系，但现有材料仅为媒体转述，需谨慎对待。",
+      "details_zh": "目前只取得标题及极少量公开摘要，尚不足以确认报道涉及的具体时间线、产品技术细节或相关方回应。此处不对原始材料未说明的细节作推断；建议打开来源阅读全文后再判断其实际影响。",
+      "original_title": "Starlink seems to be working normally again in Ukraine",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-10-23",
+      "url": "https://arstechnica.com/tech-policy/2026/10/safety-concerns-cloud-americas-flagship-nuclear-restart/",
+      "title_zh": "被寄望展示核能回归的示范反应堆接连遇到问题",
+      "summary_zh": "Ars Technica报道，一座旨在展示核能复兴的示范反应堆接连出现工程问题，包括一名承包商跌入反应堆腔室、一束燃料棒险些倾倒。报道称这些问题发生在该项目的推进过程中。摘要未说明涉事项目名称、地点、时间线及是否造成人员伤亡或放射性风险，相关细节需进一步核实。",
+      "why_zh": "核能复兴常被讨论为气候与能源安全方案；示范项目接连出事故，提示工程执行风险可能比技术路线争论更现实。",
+      "details_zh": "目前只取得标题及极少量公开摘要，尚不足以确认报道涉及的具体时间线、产品技术细节或相关方回应。此处不对原始材料未说明的细节作推断；建议打开来源阅读全文后再判断其实际影响。",
+      "original_title": "The reactor meant to showcase nuclear’s comeback keeps hitting problems",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-25",
+      "url": "https://www.psypost.org/anger-and-fear-nudge-voters-toward-different-kinds-of-leader-faces-study-suggests/",
+      "title_zh": "研究提示：愤怒与恐惧会把选民推向不同类型的领导者面孔",
+      "summary_zh": "PsyPost报道的一项研究提出，政治议题引发的情绪可能影响选民偏好哪种面孔的领导者：愤怒与恐惧或对应不同的面孔特征偏好。摘要称，共和党人整体上仍比民主党人更偏好看起来强势的领导者，但愤怒和恐惧两种情绪在两党中的效应似乎相似。报道未给出样本规模、实验设计或统计结果，相关结论尚待独立核实。",
+      "why_zh": "把政治情绪与面孔偏好联系起来，比一般选举民调更触及政治心理机制；但需警惕媒体转述把实验室效应说成普遍规律。",
+      "details_zh": "该条只有媒体标题与摘要，信息有限。已知要点是：研究关注愤怒和恐惧两种情绪如何影响对“领导者面孔”的判断，并比较了党派差异；摘要称两党在情绪效应上表现相似，而共和党人整体更偏好强势面孔。但摘要没有说明面孔材料如何构造、情绪如何诱发、样本来自哪里，也没有给出效应大小，因此不能据此断言情绪会决定投票行为。此类研究通常属于实验心理学，外部效度需要更多重复验证；在缺乏原文方法和数据的情况下，应把它视为待核实的线索，而非已确认的选举规律。",
+      "original_title": "Anger and fear nudge voters toward different kinds of leader faces, study suggests",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "科学研究",
+      "source": "Nature Machine Learning",
+      "published": "2026-10-23",
+      "url": "https://www.nature.com/articles/s42003-026-11199-4",
+      "title_zh": "综述：面向全基因组关联研究的自监督影像表型",
+      "summary_zh": "Nature Machine Learning刊出一篇综述，主题是用于全基因组关联研究的自监督影像表型。现有材料仅有标题，未提供综述范围、纳入文献数量、方法分类或作者结论。该条目可提示自监督学习与遗传学交叉的方向，但具体内容需查阅原文，不能据标题推断研究已得出何种结论。",
+      "why_zh": "把自监督表征学习用于影像表型以支撑遗传关联分析，是机器学习与生物医学交叉的实质问题，值得关注其方法学共识与局限。",
+      "details_zh": "当前公开材料主要提供标题和很少的摘要信息，无法独立判断研究方法、数据、因果关系或结论的可靠性。具体内容需要阅读原始来源后核实。",
+      "original_title": "A review of self-supervised imaging phenotypes for genome-wide association studies",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "机构一手发布",
+      "verification_status": "机构陈述，未经交叉核实",
+      "material_scope": "机构RSS及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "Hugging Face",
+      "published": "2026-10-23",
+      "url": "https://huggingface.co/blog/torch-neuronx-model-support",
+      "title_zh": "你的模型能在AWS Trainium上运行吗？可以查一查",
+      "summary_zh": "Hugging Face发布博客，介绍如何查询模型是否支持AWS Trainium。该条目为机构一手发布，摘要仅包含Hugging Face的使命陈述，未给出具体支持模型列表、性能数据或使用限制。相关页面标题指向torch-neuronx模型支持文档。",
+      "why_zh": "与普通云厂商新闻不同，该条涉及开源模型与专用AI芯片的适配查询，关系到开发者选择训练/推理硬件的实际成本，属于AI基础设施生态的具体工具信息。",
+      "details_zh": "据Hugging Face博客标题，内容围绕“模型是否能在AWS Trainium上运行”提供查询入口，链接指向torch-neuronx模型支持页面。Trainium是AWS自研AI加速芯片，torch-neuronx是其PyTorch适配组件。对开发者而言，模型能否在特定加速器上运行直接影响部署成本与迁移难度。但现有材料仅有机构RSS元数据和一句使命陈述，未说明查询工具的具体形式、覆盖模型范围或适配成熟度。机构自述不等于第三方验证，实际支持情况需以官方文档和实测为准。",
+      "original_title": "Does Your Model Run on AWS Trainium? Look It Up",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-10-25",
+      "url": "https://www.cerebras.ai/blog/how-we-deploy-trillion-parameter-frontier-models-on-cerebras",
+      "title_zh": "Cerebras 介绍如何在自家芯片上部署万亿参数前沿模型",
+      "summary_zh": "Hacker News 聚合条目指向 Cerebras 官方博客文章，标题称该公司展示了在 Cerebras 硬件上部署万亿参数级前沿模型的方法。聚合摘要仅包含文章链接与评论页链接，未提供部署规模、吞吐、延迟、成本或模型名称等具体信息，相关技术细节需回到原始博客核实。",
+      "why_zh": "万亿参数模型通常与大规模 GPU 集群绑定，若能在专用晶圆级芯片上部署，涉及推理架构与算力路线的竞争问题，对关注 AI 基础设施和 Agent 部署成本的学生有参考价值。",
+      "details_zh": "该条来自 Hacker News 聚合，原始出处标注为 Cerebras 官方博客，属于机构自述，尚未经过独立核实。现有材料只有标题和链接，无法确认所部署模型的具体参数规模、是否为客户生产环境、使用的精度与并行策略，也没有性能数字。因此不宜把“部署万亿参数模型”理解为已获第三方验证的行业基准。可追问的问题包括：单机可承载多大模型、推理吞吐与传统 GPU 集群相比如何、以及这类专用硬件对模型架构选择有何约束。",
+      "original_title": "Cerebras Deploys Trillion-Parameter AI Models",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-10-23",
+      "url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxQY05ZWWpudE5ONHFYZE5BdWxxZ19nTXdXS3ZOS2VaTDBWYlRMVGlRMFhtZGFZVjgwRG1mbU9kY1p1cXF6M1ZZX0FWOC1ndUw0XzNmTlZqT1F0NlNqdFk4N0t1RmN4emF2V0I4U1BmRTZvS2xSNmJiV3JHZUlLcW5xNkg3TFpUOVNtRmFYb2l4Sk1ReDJDY1NIbUJ0Y3EtN2hQRjZ2azF4REs1NDJGcEhGM2l5MnRFSV9sSzk5R1o3dzlSTXQzMEctYzV6YWFha1dJa0dJQ3BVLVVyaFMtZE1BUS1COUhac01zS2szVnBlU2ZjX2IwWk53b0Jwcm5TTTRXMlNNLVYwbUF2VGlV?oc=5",
+      "title_zh": "西藏发生7.0级地震，至少16人死亡、300余户房屋损毁，中国启动大规模救援",
+      "summary_zh": "据聚合来源标题，西藏发生7.0级地震，造成至少16人死亡、300多所房屋被毁，中国已启动大规模救援行动。该信息来自聚合RSS标题与摘要，尚未核对原始报道与官方通报，伤亡与损毁数字、震中位置、救援规模等关键细节均需进一步核实。",
+      "why_zh": "重大自然灾害直接关系生命财产与救援响应，但本条仅有聚合标题，需以官方通报和一手报道核实后再作判断。",
+      "details_zh": "现有材料仅包含一条聚合来源的标题式摘要，称西藏发生7.0级地震，至少16人死亡、300多所房屋被毁，中国启动大规模救援。标题未提供震中具体位置、发震时间、震源深度、余震情况、救援力量构成与受灾范围，也未说明数字来源是官方通报还是媒体统计。地震伤亡数字在灾后初期往往快速变动，不同来源可能不一致。本条不宜据此推断灾害全貌或救援成效，应等待中国地震台网、应急管理部门等一手信息以及现场报道交叉核对。",
+      "original_title": "A 7.0-magnitude earthquake in Tibet leaves at least 16 dead and more than 300 homes destroyed as China launches a large-scale rescue operation - voz.us",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-25",
+      "url": "https://www.psypost.org/neuroscientists-are-digging-into-a-worrying-link-between-polluted-air-and-childrens-brain-wiring/",
+      "title_zh": "神经科学家探究空气污染与儿童大脑网络连接之间的令人担忧关联",
+      "summary_zh": "PsyPost报道称，一项针对6000多名美国儿童的研究发现，来自汽车、发电厂、农场和火灾的多种空气污染源，与儿童各自不同的大脑网络通信模式存在关联。报道将这一发现描述为“令人担忧的关联”，但摘要未给出效应大小、研究设计类型或混杂因素控制情况。该研究尚未经过独立交叉核实，具体结论需查阅原始论文。",
+      "why_zh": "不同于泛泛的“污染有害健康”报道，该条聚焦污染源类型与儿童脑网络通信模式的对应关系，涉及环境神经科学与公共健康交叉议题，对理解早期环境暴露的长期影响有启发。",
+      "details_zh": "据摘要，研究覆盖6000余名美国儿童，考察汽车、发电厂、农场和火灾等不同污染源，并分别对应儿童自身的大脑网络通信模式。这一设计若成立，意味着不同污染源可能通过不同路径影响神经发育，而非单一“空气污染”笼统效应。但现有材料仅有媒体摘要，未说明是横断面还是纵向研究、如何测量脑网络、是否控制社会经济地位等混杂因素，也未给出具体统计结果。因此只能视为值得追踪的研究线索，不能当作已确认的因果结论。",
+      "original_title": "Neuroscientists are digging into a worrying link between polluted air and children’s brain wiring",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-10-25",
+      "url": "https://twitter.com/mike64_t/status/2114150399406202896",
+      "title_zh": "三星被指在960x540图像上运行TensorFlow Lite模型用于追踪用户",
+      "summary_zh": "Hacker News上一条聚合线索称，三星在960x540分辨率的图像上运行TensorFlow Lite模型以追踪用户，原帖指向一条Twitter链接。该条目来自聚合RSS，仅有标题和评论数，未提供原始报道或技术细节，需要核实原始来源与具体设备、场景。",
+      "why_zh": "与普通AI产品发布不同，该条涉及端侧轻量模型被用于用户追踪的具体技术路径，触及隐私与设备端机器学习的交叉议题，但证据目前仅为社交平台线索，需谨慎对待。",
+      "details_zh": "据聚合标题，争议点在于三星在960x540图像上运行TensorFlow Lite模型，用途被描述为“追踪你”。960x540属于较低分辨率，若属实，可能意味着在有限算力下做端侧视觉推理，这在隐私影响上值得讨论：设备本地推理可减少数据上传，但也可能让追踪更隐蔽。然而现有材料仅为Hacker News条目，附Twitter链接和157点、100条评论，没有三星回应、技术文档或独立验证。因此不能断言具体追踪行为、涉及机型或数据流向，只能作为待核实的技术隐私线索。",
+      "original_title": "Samsung running a TensorFlow lite model on 960x540 image to track you",
+      "focus": false,
+      "edition": "evening"
     }
   ]
 }
