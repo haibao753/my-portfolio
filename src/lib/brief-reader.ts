@@ -45,6 +45,10 @@ const searchClear=document.querySelector<HTMLButtonElement>("#brief-search-clear
 const searchAll=document.querySelector<HTMLButtonElement>("#brief-search-all");
 const searchScope=document.querySelector<HTMLElement>("#search-scope");
 const filterReset=document.querySelector<HTMLButtonElement>("#filter-reset");
+const storiesProgress=document.querySelector<HTMLElement>("#stories-progress");
+const storiesProgressCopy=document.querySelector<HTMLElement>("#stories-progress-copy");
+const storiesLoadMore=document.querySelector<HTMLButtonElement>("#stories-load-more");
+const storiesSentinel=document.querySelector<HTMLElement>("#stories-sentinel");
 if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline&&total&&filterDock&&filterToggle&&filterDetails&&categoryCompact&&rangeCompact&&editionCompact&&dateButton&&dateLabel&&dateOptions&&filterScrim&&searchInput&&searchClear){
  let current:(BriefItem & {issue_date?:string})[]=[];
  let viewLabel="";
@@ -230,6 +234,30 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   statusNode.classList.remove("is-summary");
   renderEmpty(message,"error",{label:t("重试","Retry"),run:retry});
  };
+ // vNext reading: one open card at a time, peripheral cards recede, the card is
+ // brought under the sticky navigation, and closing returns the reader there.
+ let readOpen:HTMLElement|null=null;
+ const setCardReading=(card:HTMLElement,open:boolean)=>{
+  const reading=card.querySelector<HTMLElement>(".news-reading");
+  const toggle=card.querySelector<HTMLButtonElement>(".news-read-toggle");
+  card.classList.toggle("is-reading",open);
+  if(reading)reading.setAttribute("aria-hidden",String(!open));
+  if(toggle){
+   toggle.setAttribute("aria-expanded",String(open));
+   toggle.textContent=open?t("收起 ↑","Show less ↑"):t("展开阅读 ↓","Read more ↓");
+  }
+  if(open){
+   if(readOpen&&readOpen!==card)setCardReading(readOpen,false);
+   readOpen=card;
+   stories?.classList.add("has-reading");
+   requestAnimationFrame(()=>card.scrollIntoView({block:"start",behavior:prefersReduced()?"instant":"smooth"}));
+  }else{
+   if(readOpen===card)readOpen=null;
+   if(readOpen===null)stories?.classList.remove("has-reading");
+   if(toggle)toggle.focus({preventScroll:true});
+  }
+ };
+ const prefersReduced=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
  const readingStructure=(item:BriefItem,card:HTMLElement,expand:HTMLButtonElement)=>{
   const reading=document.createElement("div");
   reading.className="news-reading";
@@ -261,55 +289,90 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   inner.append(txt("p",t("一般摘要依据公开标题、摘要整理；研究档案仅取部分可读取 PDF 文本，不等于独立验证或阅读全文。","News summary uses available excerpts; research dossier uses partial PDF text, not independent verification or full-paper review."),"news-disclosure-note"));
   reading.append(inner);
   card.append(reading);
-  expand.addEventListener("click",()=>{
-   const open=card.classList.toggle("is-reading");
-   expand.setAttribute("aria-expanded",String(open));
-   expand.textContent=open?t("收起 ↑","Show less ↑"):t("展开阅读 ↓","Read more ↓");
-   reading.setAttribute("aria-hidden",String(!open));
-   if(open&&card.getBoundingClientRect().top<70)card.scrollIntoView({block:"start",behavior:"smooth"});
-  });
+  expand.addEventListener("click",()=>setCardReading(card,!card.classList.contains("is-reading")));
  };
+ const buildCard=(item:BriefItem & {issue_date?:string})=>{
+  const card=txt("article","","news-card");
+  if(item.focus)card.classList.add("is-focus");
+  const meta=txt("div","","news-meta");
+  const slot=item.edition==="morning"?t("早报","AM"):item.edition==="evening"?t("晚报","PM"):"";
+  const fullStamp=item.issue_date||(item.published||"时间未提供");
+  const stamp=/^\d{4}-\d{2}-\d{2}/.test(fullStamp)?fullStamp.slice(5,10):fullStamp;
+  meta.append(txt("span",(researchReady(item.research)?t("◇ 论文精读 · ","◇ Paper study · "):item.focus?t("✦ 重点 · ","✦ Focus · "):"")+(item.category||"其他"),"news-category"),txt("span",slot?slot+" · "+stamp:stamp));
+  const heading=txt("h3",item.title_zh||"未命名资讯");
+  const summary=txt("p",item.summary_zh||"","news-summary");
+  const expand=txt("button",t("展开阅读 ↓","Read more ↓"),"news-read-toggle") as HTMLButtonElement;
+  expand.type="button";
+  expand.setAttribute("aria-expanded","false");
+  card.append(meta,heading,summary,expand);
+  readingStructure(item,card,expand);
+  const foot=txt("div","","news-source");
+  foot.append(txt("span",item.source||"原始来源"));
+  const link=item.url?safeUrl(item.url):null;
+  if(link){
+   const a=txt("a",t("阅读原始报道 ↗","Read original report ↗")) as HTMLAnchorElement;
+   a.href=link;a.rel="noopener noreferrer";a.target="_blank";
+   foot.append(a);
+  }
+  card.append(foot);
+  return card;
+ };
+ /* The archive grows every day; painting every matching card at once blocks the
+    main thread for ~0.5s at 120+ cards. The list is paginated by viewport: the
+    total is shown immediately, the first chunk paints fast, and more chunks
+    follow on scroll or on request. Filters/search always operate on the full
+    selection, not only the painted chunk. */
+ const CHUNK=24;
+ let visibleStories:(BriefItem & {issue_date?:string})[]=[];
+ let renderedCount=0;
+ let progressObserver:IntersectionObserver|null=null;
+ const updateProgress=()=>{
+  if(!storiesProgress||!storiesProgressCopy||!storiesLoadMore)return;
+  const remaining=visibleStories.length-renderedCount;
+  storiesProgress.hidden=remaining<=0;
+  storiesProgressCopy.textContent=remaining>0
+   ?t(`已显示 ${renderedCount} / ${visibleStories.length} 条`,`Showing ${renderedCount} of ${visibleStories.length}`)
+   :"";
+  storiesLoadMore.textContent=t(`继续加载 ↓（还剩 ${remaining} 条）`,`Load more ↓ (${remaining} left)`);
+ };
+ const appendChunk=()=>{
+  if(renderedCount>=visibleStories.length){updateProgress();return}
+  const end=Math.min(visibleStories.length,renderedCount+CHUNK);
+  const fragment=document.createDocumentFragment();
+  for(let index=renderedCount;index<end;index++)fragment.append(buildCard(visibleStories[index]));
+  stories?.append(fragment);
+  renderedCount=end;
+  updateProgress();
+ };
+ const setupProgressObserver=()=>{
+  if(progressObserver||!storiesSentinel||!("IntersectionObserver" in window))return;
+  progressObserver=new IntersectionObserver((entries)=>{
+   if(entries.some(entry=>entry.isIntersecting)&&visibleStories.length>renderedCount)appendChunk();
+  },{rootMargin:"320px 0px"});
+  progressObserver.observe(storiesSentinel);
+ };
+ storiesLoadMore?.addEventListener("click",()=>appendChunk());
  const render=()=>{
-  const selection=current.filter(x=>(category==="全部"||(x.category||"其他")===category) && (selectedEdition==="all"||x.edition===selectedEdition) && matchesQuery(x));
-  statusNode.textContent=t(`显示 ${selection.length} 条 · 范围：${scopeLabel()}`,`Showing ${selection.length} · scope: ${scopeLabel()}`);
+  visibleStories=current.filter(x=>(category==="全部"||(x.category||"其他")===category) && (selectedEdition==="all"||x.edition===selectedEdition) && matchesQuery(x));
+  statusNode.textContent=t(`显示 ${visibleStories.length} 条 · 范围：${scopeLabel()}`,`Showing ${visibleStories.length} · scope: ${scopeLabel()}`);
   statusNode.classList.add("is-summary");
-  total.textContent=String(selection.length);
+  total.textContent=String(visibleStories.length);
   if(expandedTotal)expandedTotal.textContent=total.textContent;
   updateCompact();
-  const fragment=document.createDocumentFragment();
-  if(!selection.length){
+  readOpen=null;
+  stories?.classList.remove("has-reading");
+  if(storiesProgress)storiesProgress.hidden=true;
+  if(!visibleStories.length){
    if(query)renderEmpty(t("没有找到匹配的资讯。试试其他关键词，或在全部归档中搜索。","No matches. Try another keyword, or search all archived issues."),"empty-search",{label:t("清空搜索","Clear search"),run:()=>{searchInput.value="";updateSearch(true);searchInput.focus({preventScroll:true})}});
    else if(!current.length)renderEmpty(t("本期简报暂无条目。","This issue has no stories yet."),"empty-issue");
    else renderEmpty(t("当前筛选下没有资讯。清除筛选即可返回全部条目。","No stories under these filters. Clear filters to see everything."),"empty-filter",{label:t("清除筛选","Clear filters"),run:()=>void resetFilters()});
    return;
   }
-  for(const item of selection){
-   const card=txt("article","","news-card");
-   if(item.focus)card.classList.add("is-focus");
-   const meta=txt("div","","news-meta");
-   const slot=item.edition==="morning"?t("早报","AM"):item.edition==="evening"?t("晚报","PM"):"";
-   const fullStamp=item.issue_date||(item.published||"时间未提供");
-   const stamp=/^\d{4}-\d{2}-\d{2}/.test(fullStamp)?fullStamp.slice(5,10):fullStamp;
-   meta.append(txt("span",(researchReady(item.research)?t("◇ 论文精读 · ","◇ Paper study · "):item.focus?t("✦ 重点 · ","✦ Focus · "):"")+(item.category||"其他"),"news-category"),txt("span",slot?slot+" · "+stamp:stamp));
-   const heading=txt("h3",item.title_zh||"未命名资讯");
-   const summary=txt("p",item.summary_zh||"","news-summary");
-   const expand=txt("button",t("展开阅读 ↓","Read more ↓"),"news-read-toggle") as HTMLButtonElement;
-   expand.type="button";
-   expand.setAttribute("aria-expanded","false");
-   card.append(meta,heading,summary,expand);
-   readingStructure(item,card,expand);
-   const foot=txt("div","","news-source");
-   foot.append(txt("span",item.source||"原始来源"));
-   const link=item.url?safeUrl(item.url):null;
-   if(link){
-    const a=txt("a",t("阅读原始报道 ↗","Read original report ↗")) as HTMLAnchorElement;
-    a.href=link;a.rel="noopener noreferrer";a.target="_blank";
-    foot.append(a);
-   }
-   card.append(foot);fragment.append(card);
-  }
+  renderedCount=0;
   stories.dataset.state="ready";
-  stories.replaceChildren(fragment);
+  stories.replaceChildren();
+  appendChunk();
+  setupProgressObserver();
  };
  const renderTabs=()=>{
   const names=["全部",...new Set([...current.map(x=>x.category||"其他"),"亲密关系","设计学"])];

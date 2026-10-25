@@ -120,6 +120,23 @@
   reduce.addEventListener?.("change", () => {
     window.dispatchEvent(new CustomEvent("jhlab:reduced-motion", { detail: reduce.matches }));
   });
+  // Mobile: the explanation dock starts collapsed so the surface keeps more of
+  // the viewport. The summary still shows the current surface and status.
+  const dock = document.querySelector(".lab-dock");
+  if (dock && matchMedia("(max-width: 760px)").matches) {
+    dock.classList.add("is-collapsible", "is-collapsed");
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "lab-dock-toggle";
+    const paint = (open) => {
+      toggle.textContent = open ? t("收起 −", "Less −") : t("说明 +", "Details +");
+      dock.classList.toggle("is-collapsed", !open);
+      toggle.setAttribute("aria-expanded", String(open));
+    };
+    paint(false);
+    toggle.addEventListener("click", () => paint(dock.classList.contains("is-collapsed")));
+    dock.append(toggle);
+  }
   // Keep the canvas comfortable on small devices.
   window.LabWorkspace.maxDpr = matchMedia("(max-width: 760px)").matches ? 1.5 : 1.75;
   };
