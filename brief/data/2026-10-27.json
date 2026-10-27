@@ -2,9 +2,622 @@
   "version": 1,
   "date": "2026-10-27",
   "editions": [
+    "morning",
     "evening"
   ],
   "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35866v1",
+      "title_zh": "Auto-Research Arena：评测并推进语言建模中的自动研究",
+      "summary_zh": "该预印本提出 Auto-Research Arena，一个面向自主研究系统的多目标基准，用于评估系统并发现语言建模中的研究思路。它把“结果是否合格”与“改进幅度”分开：模型质量与资源约束决定结果是否可采纳，选定目标衡量合格结果间的进展。作者在语言模型预训练中设置覆盖模型、数据、训练与推理效率的九个目标，用两个基础模型评测七种研究框架，并称现有框架差异明显，部分复杂方法不及简单顺序搜索基线。",
+      "why_zh": "与普通“AI 自动做研究”宣传不同，它给出可比较的评测框架，并指出当前自动研究系统仍有较大提升空间，对关注 AI Agent 与科研自动化的人有直接参考价值。",
+      "details_zh": "摘要显示，该工作关注的是如何同时评测自主研究系统并支持真实研究进展，而非只展示单个系统能力。其设计把可采纳性与改进分开，避免资源或质量不达标的结果被误当作进步。实验覆盖语言模型预训练的九个目标，涉及模型、数据、训练和推理效率，并比较七种研究框架与两个基础模型。作者称简单顺序搜索基线超过若干复杂方法，说明现有系统存在明显余量。需注意这是未经独立验证的预印本，摘要未给出具体数值、统计显著性或完整实验设置，结论应视为作者自述。",
+      "original_title": "Auto-Research Arena: Benchmarking and Advancing Auto-Research in Language Modeling",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/28 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.35866v1",
+        "pages_read": 14,
+        "pages_total": 28,
+        "citations": [
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 10
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E7",
+            "page": 3
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E11",
+            "page": 7
+          },
+          {
+            "id": "E14",
+            "page": 10
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文关注如何同时评估自主研究系统并支持语言建模中的想法发现：现有基准在评估研究系统和支持广泛研究想法两方面都有限，因此作者提出 Auto-Research Arena，一个多目标基准，在共享实验环境中分离“可采纳性”与“改进”，并覆盖模型、数据、训练和推理效率等目标。",
+            "evidence_ids": [
+              "E5",
+              "E6",
+              "E3"
+            ]
+          },
+          "method": {
+            "text": "方法是在共享实验环境中设置多个效率目标（如参数量、训练 token、优化器更新、训练 FLOPs、内存、KV cache、解码与长提示延迟等），每个目标在统一模型质量阈值和目标特定资源约束下最小化；基准将可采纳性与改进分离，并用两个基础模型实例化并评估多个研究 harness，同时包含非 agentic 的 TPE 基线。摘录未给出完整实现细节与全部实验配置。",
+            "evidence_ids": [
+              "E9",
+              "E3",
+              "E10"
+            ]
+          },
+          "findings": {
+            "text": "摘录报告：Arena 能区分现有 harness 在不同研究目标上的表现，若干复杂方法被简单的顺序搜索基线超过，说明当前自动研究系统仍有较大提升空间；多目标搜索发现的程序经组合与适配后，在匹配数据和 FLOP 预算下训练损失低于参考程序，相同模型规模下 held-out BPB 也更低（如训练损失 2.675→2.544、2.617→2.544，BPB 0.9295→0.9112）；此外，相同最终分数可能对应差异很大的实验效率，且 10 分钟搜索发现的程序可迁移到 60 分钟训练。以上为预印本自报结果，摘录未显示独立验证。",
+            "evidence_ids": [
+              "E3",
+              "E7",
+              "E11"
+            ]
+          },
+          "limitations": {
+            "text": "作者明确将范围限定为语言建模中的自动研究，而非完整端到端研究过程或科学新颖性；想法族分组具有解释性，系统测量有噪声，解释小差异需谨慎。摘录还说明实验在受控语言建模环境、沙箱中进行，不涉及人类受试者或用户部署。除此之外，摘录不足以判断外部效度、统计显著性或独立复现情况。",
+            "evidence_ids": [
+              "E4",
+              "E14"
+            ]
+          },
+          "replication": {
+            "text": "若尝试学习或复现，可依据摘录先搭建共享实验环境与统一质量阈值，再按表 1 的目标与资源约束实现各效率轨道，并保留参考运行、候选程序训练、可采纳性检查与跨 harness 评估流程；同时记录每个目标的 charged experiments 与 Elo，以区分最终分数和搜索效率。摘录未提供完整代码、超参数、数据规模或随机种子，无法据此保证复现，需查阅原文补充。",
+            "evidence_ids": [
+              "E9",
+              "E8",
+              "E11"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.33278",
+      "title_zh": "未观测混杂下连续处理效应的锐利界",
+      "summary_zh": "该预印本研究在存在未观测混杂时，对连续处理的条件平均潜在结果与条件平均处理效应进行部分识别。作者假设结果有界，且响应函数与给定潜在混杂的倾向得分满足Lipschitz连续性，证明这些条件蕴含Kim等（2018）提出的平滑处理响应与平滑处理选择条件。作者指出，Kim等的合并界只使用已识别对角线上的两个参考点，通常较松；改用每个对角线参考点进行约束，可得到显式界，其平均值即为各处理水平下条件平均潜在结果的锐利识别集，无论该处理是否位于观测支持内。对上下界之差取上限，则得到条件平均处理效应的锐利因果界。摘要称这些界在无需单调性假设时仍具信息量。",
+      "why_zh": "与常见因果推断热点不同，这条聚焦连续处理与未观测混杂下的锐利部分识别界，直接回应观察性研究中“无法点识别时能说多少”的核心问题，对做因果推断与政策评估的读者有方法学价值。",
+      "details_zh": "该条来自arXiv math.ST新论文，仅有标题与摘要，尚未经同行评审或独立验证。已知信息是：研究目标为条件平均潜在结果E[Y_x|z]和两个处理水平间的条件平均处理效应；识别策略依赖结果有界、响应函数与倾向得分对潜在混杂的Lipschitz连续性；作者将上述假设与Kim等（2018）的平滑性条件联系起来，并批评后者仅用两个参考点导致界偏松。改进思路是利用对角线上每个参考点构造约束并取平均，从而得到显式且锐利的识别集，并由此导出条件平均处理效应的因果界。摘要提到这些界在无需单调性时仍有信息量，但未给出具体数值或模拟结果。读者应注意：预印本结论未经复核，锐利性证明与有限样本表现需查看全文及后续讨论；该结果适用于连续处理设定，向其他数据结构的推广尚不明确。",
+      "original_title": "Sharp Bounds on Continuous Treatment Effects under Unobserved Confounding",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35721v1",
+      "title_zh": "JEV能否支持临床试验标准评估？",
+      "summary_zh": "该预印本关注临床试验预筛中区分“条件未满足”与“证据不足”的难点。作者以患者记录、标准问题及预设答案选项为输入，回顾性比较了JEV（一种返回原生选项概率的非生成式决策模型）与受模式约束的Qwen Flash，在来自TrialGPT以及基于MIMIC-III和MIMIC-IV构建的问答数据集的2048个患者-条件测试对上评估，且均在严格零数据保留条件下进行。摘要未在可见文本中给出比较结果或性能数值。",
+      "why_zh": "与泛泛的医疗大模型新闻不同，这条把问题定位在“未满足”与“证据不足”的区分上，并比较非生成式决策模型与受约束生成模型，对关注AI在临床筛选中的可靠性与评估设计的读者有参考价值。",
+      "details_zh": "该条来自arXiv cs.CL新论文，材料仅为标题与摘要，未经独立验证。已知背景是：临床试验预筛需要从患者记录中判断某项入组标准是否满足，而“条件未满足”与“记录中证据不足”在临床上含义不同，模型若混淆二者可能带来错误筛选。作者采用回顾性设计，输入包括患者记录、标准问题与预设答案选项，比较对象为JEV——一种非生成式、直接返回各选项概率的决策模型——以及受模式约束的Qwen Flash。测试集共2048个患者-条件对，来源包括TrialGPT以及基于MIMIC-III和MIMIC-IV衍生的问答数据集，评估在严格零数据保留条件下进行。摘要未披露准确率、校准或错误类型分布等结果，也未说明“零数据保留”的具体合规含义。读者需注意：这是预印本，数据来源与任务构造可能影响结论外推；非生成式模型与生成式模型的比较需结合全文的统计检验与误差分析。",
+      "original_title": "Can JEV Support Clinical Trial Criteria Assessment?",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.33516",
+      "title_zh": "仿射不变三次牛顿法与弱学习器的结合：提升梯度提升的全局收敛保证",
+      "summary_zh": "该预印本将仿射不变三次牛顿（AICN）方案推广到带弱学习器的凸优化，以改进梯度提升的理论分析。作者基于优化路径上的平均余弦值与Hessian诱导范数下的方向改进量，证明弱AICN更新等价于带显式步长的阻尼弱牛顿步；在半强自协调条件下给出全局收敛率，声称显著优于此前GRN提升中依赖最坏情形弱梯度边γ的界。",
+      "why_zh": "与常见梯度提升调参经验不同，这条从Hessian几何出发给出可证明的全局收敛率，属于优化理论与提升方法交叉的理论进展，对关注ML理论保证的读者有启发。",
+      "details_zh": "摘要显示，此前Gradient-Regularized Newton提升虽达到全局速率，但分析未能利用Hessian几何，且对最坏情形“弱梯度边”γ有很重的依赖。本文把AICN扩展到弱学习器场景，用平均余弦值刻画优化路径，用方向改进量δ_k确定阻尼步长，并在半强自协调假设下给出全局速率。需要说明的是，这是未经独立验证的arXiv预印本，摘要未给出完整速率表达式与实验，结论应视为作者自述，尚待同行评议与复现。",
+      "original_title": "Affine-invariant Cubic Newton with Weak Learners",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/41 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.33516",
+        "pages_read": 14,
+        "pages_total": 41,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 2
+          },
+          {
+            "id": "E2",
+            "page": 1
+          },
+          {
+            "id": "E3",
+            "page": 2
+          },
+          {
+            "id": "E4",
+            "page": 9
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          },
+          {
+            "id": "E14",
+            "page": 10
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文关注牛顿型梯度提升缺乏全局收敛保证、且既有弱学习器分析无法利用局部 Hessian 几何的问题；其目标是构造一种仿射不变的弱学习器牛顿更新，并在弱学习器条件下给出全局与局部收敛率。摘录显示作者将问题置于 Restricted Newton Descent 框架中，并以弱学习器与精确牛顿迭代之间的余弦角 Θk 度量弱学习器质量。",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E6"
+            ]
+          },
+          "method": {
+            "text": "方法为 weak-AICN：在 Restricted Newton Descent 框架下，每步在弱学习器族 F 上最小化二阶近似 Qk(f)，得到弱牛顿方向，再用由 δk 与立方正则常数 Cest 计算的可显式步长 αk 进行阻尼更新；算法伪代码给出梯度、Hessian、方向、δk、αk 与迭代更新。理论分析使用半强自协调性（semi-strong self-concordance）与局部 Hessian 范数，并引入 Q-δ 对偶关系以及基于平均余弦角的递推分析。",
+            "evidence_ids": [
+              "E9",
+              "E8",
+              "E6"
+            ]
+          },
+          "findings": {
+            "text": "摘录中的理论结果包括：在 semi-strong self-concordance 下建立全局 O(1/Θk^2) 收敛率，并称相较 GRN 的 O(1/γ1^2 k^2) 有改进；给出一般凸损失的局部线性收敛率，以及 Hessian-dominated 损失（如交叉熵）的全局线性收敛率；还证明取标准基向量为弱学习器族时，牛顿坐标下降是特例，并给出余弦角下界 Θk ≥ 1/√(dκk)。实验部分摘录仅显示 HIGGS 上树提升的弱学习器边缘比较图，未提供完整实验结论，故不能据此判断实证优越性。",
+            "evidence_ids": [
+              "E1",
+              "E3",
+              "E13"
+            ]
+          },
+          "limitations": {
+            "text": "作者自述的局限是：weak-AICN 完全在局部 Hessian 几何中运作，若不加入静态 ℓ2 正则，可能在病态问题上表现不佳，而 weak-GRN 通过自适应梯度 ℓ2 惩罚可较顺畅地处理此类问题。证据边界方面，摘录还指出对所有数据集建立 Θk 的通用确定性下界是不可能的，且实验摘录不完整；此外该文为 arXiv 预印本（arXiv:2610.33516v1），摘录未显示独立复现或同行评审验证，不能把作者定理表述为已被独立验证的结论。",
+            "evidence_ids": [
+              "E4",
+              "E12",
+              "E5"
+            ]
+          },
+          "replication": {
+            "text": "若尝试学习或复现，可依据 Algorithm 1 实现：每步计算梯度与 Hessian，在给定弱学习器族上求 Qk 的最小化方向，计算 δk 与阻尼 αk，再更新 Fk；并需按论文设定选择学习率 η、立方正则常数 Cest 与弱学习器族。摘录中的实验信息仅涉及 HIGGS 数据集（n=10000, J=4）的树提升边缘比较，缺少完整超参数、代码与重复实验细节，因此无法从给定材料判断完整复现条件；坐标下降特例可作为较小规模的验证入口。",
+            "evidence_ids": [
+              "E9",
+              "E14",
+              "E13"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35847v1",
+      "title_zh": "按患者与治疗阶段评分：鼻咽癌全程照护中的大语言模型纵向评测基准",
+      "summary_zh": "大语言模型在专科医学中显示潜力，但现有评测多聚焦单次临床接触，较少追踪临床责任在纵向照护路径中如何演变。作者提出 NPC-RubricBench，一个阶段感知的基准，以鼻咽癌为限定疾病背景，评估跨癌症照护连续体的多阶段临床推理；基准整理自两个癌症中心 405 名患者的纵向记录。",
+      "why_zh": "把评测从“单次问答”推进到“分阶段、按患者”的纵向推理，更贴近真实临床责任链，也暴露现有基准的盲区。",
+      "details_zh": "摘要给出的关键信息是：基准名为 NPC-RubricBench，采用阶段感知的评分量表式评测，疾病背景限定为鼻咽癌，数据来自两个癌症中心共 405 名患者的纵向记录。摘要未说明具体评分维度、模型对比结果或标注者一致性，也未交代患者数据的脱敏与伦理审查细节。作为未经独立验证的预印本，其基准设计是否可推广到其他癌种、评分量表是否经临床专家验证，均需进一步材料确认。",
+      "original_title": "Patient-specific rubric-based evaluation of large language models across longitudinal cancer care",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.35330",
+      "title_zh": "α散度广义后验的渐近行为",
+      "summary_zh": "该预印本研究以α散度正则化的无约束广义变分推断问题，考察其解的渐近行为。作者称在温和条件下，最小化点除一个标量归一化常数外具有显式形式，并证明存在一种重缩放，使其在经验损失最小化点附近以偏离经典n^{-1/2}尺度的集中速度，依L^1收敛到一个固定的非高斯分布。摘要未在可见文本中给出该非高斯分布的具体形式或正则条件细节。",
+      "why_zh": "这条讨论α散度广义后验的集中速度偏离经典n^{-1/2}，并收敛到非高斯律，触及变分推断与贝叶斯后验渐近理论的反常识点，对关注统计推断理论边界的读者有启发。",
+      "details_zh": "该条来自arXiv math.ST新论文，仅有标题与摘要，未经同行评审或独立验证。已知信息是：研究对象为α散度正则化的无约束广义变分推断问题；作者在温和条件下给出最小化点的显式形式（至多差一个标量归一化常数），并证明经适当重缩放后，该解在经验损失最小化点附近依L^1收敛到一个固定的非高斯分布，且集中尺度不同于经典的n^{-1/2}。摘要未说明“温和条件”具体指什么，也未给出非高斯分布的名称、重缩放因子的形式或收敛速度的精确阶数。该结果若成立，意味着广义变分后验在渐近上可能不呈现通常的高斯极限，这对基于正态近似的推断与不确定性量化有潜在含义。读者应注意：预印本结论尚未经独立复核，α取值、损失函数正则性与数据维数对结果的影响需查看全文；不应据此推断实际算法在有限样本中的表现。",
+      "original_title": "On the asymptotic behaviour of $\\alpha$-divergence generalized posteriors",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-10-26",
+      "url": "https://www.technologyreview.com/2026/10/26/1147672/will-the-real-anthropic-please-stand-up/",
+      "title_zh": "真正的Anthropic请站出来",
+      "summary_zh": "该报道称，在数周猜测之后，Anthropic已提交IPO招股说明书。这份335页的文件中约100页聚焦风险，并阐述了该公司对其技术的独特看法。文章原载于MIT Technology Review的AI通讯《The Algorithm》。摘要未披露估值、发行规模、财务数据或具体风险条目内容。",
+      "why_zh": "与一般融资快讯不同，这条指向一份数百页的IPO文件，其中风险披露与技术自我定位是观察头部AI公司治理与商业假设的一手材料，对关注AI产业结构的读者有信息价值。",
+      "details_zh": "该条来自MIT Technology Review的新闻通讯，材料仅为标题与摘要，未经独立交叉核实。已知信息是：Anthropic在经历数周市场猜测后提交了IPO招股说明书，文件共335页，其中约100页涉及风险因素；报道称文件还呈现了公司对其所开发技术的独特观点。摘要没有给出估值、募资额、营收或亏损等财务数字，也未列出具体风险条目，更未说明上市时间表或承销安排。读者应注意：这是媒体对一份监管文件的概述，而非文件全文；招股书中的公司自述属于机构陈述，风险披露的完备性与财务数据的可靠性需以正式文件及后续监管审核为准。该条与普通融资快讯的区别在于，它把焦点放在文件本身的结构与风险篇幅上，但可见材料不足以判断其实际影响。",
+      "original_title": "Will the real Anthropic please stand up",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-26",
+      "url": "https://www.psypost.org/frequent-cannabis-use-linked-to-higher-odds-of-nighttime-breathing-problems/",
+      "title_zh": "研究称频繁使用大麻与夜间呼吸问题风险升高相关",
+      "summary_zh": "据PsyPost报道，一项新研究把大麻使用与睡眠中打鼾响亮、呼吸暂停联系起来，频繁使用者的关联更强。作者提出可能的机制包括烟雾刺激以及咽喉部肌肉松弛。报道未在摘要中给出研究设计、样本量、效应大小或混杂因素控制情况。",
+      "why_zh": "睡眠呼吸问题影响面广，而大麻使用日益普遍；该报道提示二者可能存在关联，但摘要信息有限，适合作为需要追问研究设计的线索。",
+      "details_zh": "现有材料仅来自媒体报道的标题与摘要，属于未经独立交叉核实的线索。可确认的表述是：研究观察到使用大麻与夜间打鼾、呼吸暂停存在关联，且频繁使用者关联更强；作者提出的解释是烟雾刺激和咽喉肌肉松弛。但摘要未说明是横断面调查还是队列研究、样本规模、如何测量大麻使用与呼吸问题、是否控制吸烟、饮酒、体重等关键混杂因素，也未给出风险增幅。因此不能据此推断因果关系，更不能把“关联”读成“大麻导致呼吸问题”。读者应等待原始论文或同行评议后再评估。",
+      "original_title": "Frequent cannabis use linked to higher odds of nighttime breathing problems",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-27",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE54dnhmdHVVTkZ6Z3FXQUlKc0s1bzVzMlR2dDZjN2NUUlZ1MDBtX19TaWRzOVlzNFRCTHNJWDBvdUFEYzl6a2ZKazNKTmRjS2s2SlE?oc=5",
+      "title_zh": "丽水国家产业园区劳动者数量变化引发关注（韩媒报道，待核实）",
+      "summary_zh": "据매일경제聚合标题，韩国最大石化集群丽水国家产业园区的劳动者数量出现变化，标题提及该园区工人数。现有材料仅为聚合RSS标题与摘要，未提供具体数字、统计口径、时间范围或变化原因，也未见原始报道全文，因此无法确认具体事实与背景。",
+      "why_zh": "产业园区就业是观察制造业与石化行业结构调整的一手切口，但本条仅有聚合标题，价值在于提示需回到原始报道核实，而非直接采信结论。",
+      "details_zh": "该条来源标注为国际媒体中国就业与社会，但标题实际指向韩国丽水国家产业园区，即韩国最大石化集群，与“中国就业”分类并不吻合，存在归类偏差。聚合摘要仅重复标题，未给出工人数量、同比变化、统计机构或采访对象。由于材料有限，无法判断这是短期波动还是结构性裁员，也不能推断与中国相关。读者应将其视为待核实线索，需查阅매일경제原文及韩国官方就业统计后再作判断。",
+      "original_title": "The number of workers in Yeosu National Industrial Complex, the largest petrochemical cluster in Kor.. - 매일경제",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35806v1",
+      "title_zh": "VGGT 是否知道自己不知道？前馈三维重建中的位姿失败可探测性",
+      "summary_zh": "该预印本研究前馈三维重建模型 VGGT 是否在内部隐含位姿错误信息。作者构建 HardMatch 基准，含 1000 对刻意困难的图像，VGGT 在其中 35% 的图上失败。对冻结特征做线性探针，可在留出类别上以 ROC-AUC 93.5% 预测位姿失败，高于 VGGT 自身点图置信度的 79.7% 和基于全部输出的分类器的 77.7%。探针还能让下游系统对不信任的图对弃权，并在不重训情况下迁移到其他数据集的旋转失败。",
+      "why_zh": "它把“模型能否报告自身不确定性”变成可测量问题，并显示冻结特征中已含失败信号，对三维视觉与可靠 AI 系统设计有启发。",
+      "details_zh": "摘要指出，VGGT 这类模型一次前向即可回归相机与几何，但不报告相机位姿的不确定性，错误相对位姿与正确位姿看起来没有区别。作者在 HardMatch 上检验冻结模型是否仍“知道”位姿错误，并用线性探针预测失败。结果显示探针优于模型自带点图置信度和基于全部输出的分类器，且能捕捉模型自信却失败的案例。该知识不在单图编码器中，而是在融合两视图的中间层计算得到。需注意这是预印本，基准规模、失败定义和迁移实验细节未在摘要中完整给出，ROC-AUC 等数值应视为作者报告而非独立复核结果。",
+      "original_title": "Does VGGT Know What It Does Not Know?",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35793v1",
+      "title_zh": "量化大模型研究智能体的“论断平滑”现象",
+      "summary_zh": "这篇预印本研究用大语言模型阅读大量文档并生成研究综述时的失真问题。作者称，模型产出的长篇报告读起来像自信的综合结论，却未能准确反映原始文档；他们把这种失败称为“平滑”，即模型把多样甚至相互冲突的来源压缩成单一叙事，丢弃了证据本身的“参差感”。",
+      "why_zh": "它把“深度研究型智能体”的输出可靠性问题命名为可检验的失真模式，对使用LLM做文献综述、尽调或情报汇总的人有直接警示意义。",
+      "details_zh": "摘要显示，研究对象是“深度研究”场景：让LLM读取大规模文档集合并产出洞见，必然涉及跨来源综合。作者的核心发现是，模型倾向于生成语气笃定、结构完整的长报告，但在把多源材料合并为单一叙事的过程中，抹掉了来源之间的分歧与证据强弱差异，即所谓“平滑”。需要强调，这是未经独立验证的预印本，摘要未给出量化指标、样本规模或人工评估方案，“平滑”如何度量、在哪些模型上成立，均需看正文。该概念对评估AI研究智能体有潜在价值，但目前不宜当作已确立的结论。",
+      "original_title": "Quantifying Claim Smoothing by LLM Research Agents",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.34035",
+      "title_zh": "InCOPE：用先验数据拟合网络做上下文内离策略评估",
+      "summary_zh": "离策略评估（OPE）用于在部署前评估决策策略，当在线实验昂贵或不安全时尤为关键，但在行为策略数据有限、目标策略偏好罕见状态动作时估计困难。作者提出 InCOPE，一种先验数据拟合网络：在合成的 OPE 任务先验上预训练，学习共享的策略价值预测规则；面对新的表格型决策问题时，无需任务特定参数更新，仅以行为数据集、目标策略和任务设定为上下文预测期望回报。",
+      "why_zh": "把“上下文学习”用于离策略评估，绕开每个新任务重新训练，对高风险场景下的策略上线前评估有实际意义。",
+      "details_zh": "摘要说明，作者构建了马尔可夫决策过程与行为—目标策略对的 OPE 任务先验，生成行为策略数据集及精确的目标策略价值用于预训练。实验覆盖四个表格型领域，包括一个半合成临床场景，显示该方法在策略价值估计上的有效性。局限在于：这是未经独立验证的预印本，实验限于表格型设定，摘要未报告误差指标或与基线的具体对比；向高维状态空间和真实临床数据的迁移能力尚不明确。",
+      "original_title": "Prior-Data Fitted Networks for In-Context Off-Policy Evaluation",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35802v1",
+      "title_zh": "AI 时代的学术努力与招聘博弈论",
+      "summary_zh": "该预印本讨论数学与理论科学等学科如何适应高能力 AI 的兴起。作者指出，在 AI 之前，一篇理论结果扎实、写作良好的论文能可靠表明作者深入理解领域；AI 普及后，这类信号的生产成本降低，不再能可靠区分学术人员的水平层次。摘要未给出具体模型、均衡分析或政策建议，信息有限。",
+      "why_zh": "它把 AI 对学术信号与招聘筛选的冲击形式化为博弈问题，触及高校评价与就业，比一般“AI 改变科研”评论更接近制度机制。",
+      "details_zh": "摘要的核心论点是：AI 使高质量论文这一传统能力信号变得廉价，从而削弱其在学术招聘中的筛选功能。作者以数学和理论科学为例，提出学科需要重新思考实践方式。可确认的只有问题设定与信号贬值这一判断，摘要没有给出博弈模型的具体结构、均衡结果、数据或模拟，也没有说明对招聘制度的具体建议。该文为 arXiv cs.AI 预印本，未经独立验证；其关于 AI 降低信号成本的论断属于作者论证前提，而非已核实经验事实。读者应区分概念框架与可检验结论。",
+      "original_title": "Game theory of academic effort and hiring in the age of AI",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.34531",
+      "title_zh": "高维独立Metropolis-Hastings的收敛：迭代长度、截断轮廓与诊断工具不可靠性",
+      "summary_zh": "该预印本刻画了从提议分布出发的独立Metropolis-Hastings算法在高维下算术均值的收敛性，以有界函数上的最坏期望绝对误差为度量。作者给出均值收敛关于重要性权重的充要条件，精确描述由目标与提议间相对熵决定迭代长度的对数截断轮廓，并证明常用基于模拟输出的收敛诊断可能验证不准确的结论。",
+      "why_zh": "它把MCMC的迭代需求与重要性采样联系起来，并指出常用收敛诊断在高维下可能失效，对使用贝叶斯计算与诊断指标的实践者有直接警示意义。",
+      "details_zh": "摘要指出，收敛以有界函数上的最坏期望绝对误差衡量，充要条件与重要性权重相关；当目标与提议的相对熵决定所需迭代长度时，出现对数截断轮廓。作者还说明标准截断现象在此并不存在，并证明流行的基于模拟输出的收敛诊断可能“验证”不准确的结果。对集中型贝叶斯后验，文中称可估计所需迭代时间以指导模拟。该文为未经独立验证的预印本，摘要未提供具体数值与证明细节，诊断不可靠性的范围需结合全文核实。",
+      "original_title": "Convergence of Independence Metropolis-Hastings Algorithms in High Dimensions: Iteration Lengths, Cutoff Profiles, and Diagnostic Unreliability",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-26",
+      "url": "https://www.psypost.org/playing-video-games-with-trusted-friends-may-reduce-addiction-risks/",
+      "title_zh": "与信任的朋友一起玩电子游戏或降低成瘾风险",
+      "summary_zh": "PsyPost报道一项研究称，与信任、熟悉的群体一起玩电子游戏既能培养玩家忠诚度，也可能降低游戏成瘾风险，并称玩家的社交环境在很大程度上决定其数字习惯。报道未在摘要中给出研究样本、测量方式、研究设计或效应量，也未说明“成瘾风险降低”是相关还是因果结论。该条为媒体转述，未经独立交叉核实。",
+      "why_zh": "把游戏成瘾从“时长”转向“社交情境”的解释，对理解数字健康与同伴关系有现实意义；但需警惕媒体报道把相关性写成因果。",
+      "details_zh": "目前仅有标题与摘要：研究指向“与可信赖的熟悉群体同玩”这一社交情境，称其与玩家忠诚度提升、成瘾风险下降相关，并强调社交环境对数字习惯的塑造。但摘要未提供样本量、年龄构成、成瘾测量工具、纵向或横断面设计，也未说明是否控制游戏时长等混杂因素。因此无法判断效应大小与因果方向——也可能是低成瘾倾向者更倾向与朋友同玩。该报道属媒体转述，原始论文未经独立核实，读者应把它当作待查线索而非定论。",
+      "original_title": "Playing video games with trusted friends may reduce addiction risks",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-26",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQWS1EejhQQ0hnX2plekNfMzFNV0lua1BlMXpYRHBFdk1RTmlMOFc4eFQwV05YbWdJVmVDRTR1WFN1cERxMmw4dGc3cXVPVkZIaDJwV3ZFRy1kWVJCb2M0VnhaV2ZCSkpINmFwSC13dTZoYm93TURTVmZHazlWZHk1SEdNcUJ5dTZUTFRXUTQyWHVfRlBzVEhuNk9B?oc=5",
+      "title_zh": "MERICS：中国推进 AI 应用，同时为可能的就业冲击做准备",
+      "summary_zh": "墨卡托中国研究中心（MERICS）的一则报道称，中国在推进人工智能应用的同时，也在为可能出现的就业危机做准备。目前可获取的仅为标题与来源信息，摘要未提供具体政策工具、受影响行业或数据依据。",
+      "why_zh": "把 AI adoption 与就业结构性风险放在同一政策框架下观察，比单纯讨论模型能力更贴近中国经济与劳动市场的现实议题。",
+      "details_zh": "该条来自聚合线索，仅有标题，信息非常有限：无法确认 MERICS 原文引用了哪些政策文件、覆盖哪些行业与群体，也无法判断“就业危机”是机构判断、政策讨论还是媒体概括。读者应注意，标题中的因果与程度表述尚未经独立核实，不宜据此推断具体政策已出台或规模已确定。后续需查阅 MERICS 原始报告，区分已核实事实、机构观点与待确认内容。",
+      "original_title": "China pushes ahead with AI adoption and prepares for a possible jobs crisis - Mercator Institute for China Studies (MERICS)",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.34171",
+      "title_zh": "MetaARIMA：面向ARIMA模型的配置级迁移学习",
+      "summary_zh": "这篇预印本指出，时间序列基础模型已证明多数据集预训练可迁移到新预测任务，而ARIMA等经典方法仍对每条序列独立配置和训练，丢弃了以往实验积累的知识，配置选择常依赖样本内拟合优度的启发式规则。作者提出MetaARIMA，用元学习预训练一个配置策略，从历史实验中学习哪些ARIMA配置能达到上分位表现，为新序列推荐候选配置，同时保留可解释性与局部估计。",
+      "why_zh": "把迁移学习从“模型级”下移到“配置级”，是经典统计方法与元学习结合的一个具体思路，对做时间序列预测和AutoML的人有启发。",
+      "details_zh": "摘要给出的核心主张是：ARIMA的痛点不在模型本身，而在配置选择与训练彼此独立、经验无法复用。MetaARIMA学习的是一个“配置策略”，即从历史实验里归纳哪些配置表现靠前，再对新序列推荐候选；推理阶段用最大边际相关性挑选一组多样候选，再高效确定最终配置。文章强调保留可解释性和局部估计，意味着并未用黑箱模型替代ARIMA。局限在于：这是未经独立验证的预印本，摘要未披露数据集规模、对比基线、提升幅度，也未说明“上分位表现”的具体阈值，实际效果需看正文与复现。",
+      "original_title": "MetaARIMA: Configuration-Level Transfer Learning for ARIMA Models",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35846v1",
+      "title_zh": "保留以扩展：多语种语音大模型ASR的源感知适配与模型合并",
+      "summary_zh": "该预印本研究在连接器式语音大模型中扩展新语种ASR的问题：适配新语言时需保留原有语种性能，且不能重放源语言训练数据。模型结构为可训练连接器把语音表示映射进冻结的大语言模型。作者评估了在保持源语言性能前提下适配连接器的目标更新构造与合并策略，摘要提到单目标扩展中仅用目标语数据微调的情形，但摘要在此截断，未给出具体语种、数据规模与性能数值。",
+      "why_zh": "多语种语音模型“加语言不掉旧语言”是实际部署痛点，且不重放源数据更贴近隐私与成本约束；对关注语音LLM适配与模型合并的读者有直接参考。",
+      "details_zh": "已知信息有限：研究对象是连接器式Speech LLM，连接器可训练、LLM冻结；核心约束是扩展新语种时不回放源语言训练数据，同时尽量不损失已支持语种。作者比较不同目标更新构造与合并策略，摘要仅透露“单目标扩展中仅目标语微调”这一设定便截断，未说明基线、评测语种、WER变化或合并的具体算法。因此无法判断其相对现有持续学习/模型合并方法的实际增益。作为预印本，结论未经独立验证，读者应待全文与复现结果。",
+      "original_title": "Preserve to Expand: Source-Aware Adaptation and Model Merging for Multilingual LLM-Based ASR",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.34443",
+      "title_zh": "随机超图β模型中的最大似然估计",
+      "summary_zh": "该预印本研究随机超图β模型的最大似然估计：一组顶点“成功”的概率取决于其参数之和，数据为按任意（可能不完整）设计对顶点组做独立二元实验的结果。设每个被检验组含k个顶点、成功概率落在[ε,1-ε]。作者给出完整设计下MLE以高概率唯一存在的样本量条件，以及均匀随机组实验所需实验数下界，二者均与ε^{-1}线性相关，并称对固定k在常数意义下一般不可改进；结果来自任意设计的有限样本界，并给出参数盒上MLE的均方误差界。",
+      "why_zh": "把经典β模型从图推广到超图并处理不完整设计，给出显式样本量门槛，对网络统计与高维估计的有限样本理论有参考价值。",
+      "details_zh": "摘要说明模型设定：每组顶点成功概率由成员参数之和决定，实验设计可任意且可能不完整，这比常见的完整成对比较更一般。主要贡献是MLE存在唯一性的高概率条件：完整设计下每组至少重复r次时，r需达到与ε^{-1}log n/n^{k-1}同阶的量级；均匀随机组做m次实验时，m需达到与ε^{-1}n log n同阶。作者强调两条件对ε^{-1}线性、对固定k常数不可改进，并给出任意设计的有限样本界与参数盒上的MSE界。摘要未提供证明细节与数值实验，预印本结论待同行评议。",
+      "original_title": "On maximum likelihood estimation in the $\\beta$-model for random hypergraphs",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35845v1",
+      "title_zh": "工作型智能体：系统、能力与优化",
+      "summary_zh": "这篇预印本提出以“工作”为中心的系统视角，把工作型智能体视为基础模型与运行时框架的组合，在有状态工作空间中执行任务并交付可验证结果。作者用工作持续性与工作开放性两个维度刻画工作条件，按任务范围与组织方式把数字工作分为五类，并归纳可靠执行所需的五类核心能力，进而讨论模型优化、运行时框架优化及二者联合优化，同时梳理现有评测方法与指标。",
+      "why_zh": "不同于常见的单点智能体演示，该文试图为“智能体如何可靠完成被委托的工作”建立统一分析框架，对关注AI Agent系统设计与评测的人有参考价值。",
+      "details_zh": "摘要显示，作者关心的是基础模型从“生成信息”转向“执行数字工作”后的系统性问题：智能体要在跨工具、跨应用、跨流程的环境中完成任务，而现有研究缺少统一视角。文章提出工作持续性与工作开放性两个刻画维度，并给出五类数字工作的分类，再据此讨论五类核心能力与优化路径。需要说明的是，这是未经独立验证的预印本，摘要未给出具体实验数据、基准结果或能力划分的细节，分类与框架的有效性尚待同行评议和后续复现；其“可验证结果”的提法也需看正文如何定义与度量。",
+      "original_title": "Work Agents: Systems, Capabilities, and Optimization",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35829v1",
+      "title_zh": "Reva：通过大模型上下文探测实现实时漏洞检测",
+      "summary_zh": "该预印本提出Reva，面向编码智能体快速生成代码、开发者审查跟不上的场景，试图在函数生成时实时筛查漏洞。摘要称LLM智能体已能像安全专家一样运行分析工具、探索周边代码、检验假设并权衡证据，但这种推理跨越许多模型步骤，Reva据此设计上下文探测流程以降低检测延迟。",
+      "why_zh": "与常见静态扫描或事后审计不同，它把LLM智能体的多步安全推理压缩到实时筛查环节，回应AI生成代码速度超过人工审查这一现实问题。",
+      "details_zh": "摘要给出的背景是：漏洞发现越晚修复成本越高，而编码智能体产出代码的速度快于开发者审查速度，因此需要对新函数做实时第一道防线。作者认为LLM智能体已具备发现真实漏洞的能力，方式是像安全专家一样调用分析工具、探索上下文、测试假设并综合证据，但这种推理横跨多个模型步骤。Reva的具体架构、检测准确率、误报率与延迟数据在摘要中均未给出，且该文为未经独立验证的预印本，实际效果需待复现与评测确认。",
+      "original_title": "Reva: Real-Time Vulnerability Detection through Contextual Probing of Large Language Models",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.33419",
+      "title_zh": "黎曼流形上平均随机梯度下降的在线协方差估计",
+      "summary_zh": "该预印本研究参数位于流形上时平均黎曼随机梯度下降（RSGD）的在线统计推断。平均迭代虽渐近正态，但实际推断需估计极限分布中的未知协方差算子。由于一般黎曼流形没有加法运算，且包含黎曼梯度的切空间随迭代变化，现有欧氏空间的分批均值方法无法直接套用。作者借助向量传输构造重叠与非重叠协方差估计量，自适应合并相邻批次信息，无需计算黎曼Hessian或预设终止样本量，并声称达到与欧氏情形相同的收敛速率。",
+      "why_zh": "把在线推断从欧氏空间推进到流形优化，触及RSGD实用化的关键缺口；对做几何优化与统计推断交叉方向的学生有方法启发。",
+      "details_zh": "摘要给出的核心信息是：平均RSGD迭代渐近正态，但协方差算子未知，需在线估计；难点在于流形缺少加法、切空间逐次变化。作者用向量传输把不同迭代的梯度搬到可比空间，构造重叠与非重叠两类估计量，并强调无需黎曼Hessian、无需预先指定终止样本量，收敛速率与欧氏分批均值方法（Zhu等，2023）一致。摘要在此处截断，未给出具体速率常数、模拟或真实数据实验，也未说明流形曲率等条件。作为预印本，结论尚未经独立验证，速率“相同”的说法需看全文假设。",
+      "original_title": "Online Covariance Estimation for Averaged Stochastic Gradient Descent on Riemannian Manifolds",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35835v1",
+      "title_zh": "I-HITL：不可剥夺的人类在环审批机制",
+      "summary_zh": "该预印本提出“不可剥夺的人类在环”（I-HITL）概念，针对AI智能体绕过护栏能力增强的问题，要求智能体只有在获得人类明确批准后才能发起关键动作，即便人类通过本地智能体运行环境等系统交互也不例外。摘要称该协议旨在从机制上强制执行人类监督，而非依赖智能体自觉遵守。",
+      "why_zh": "常见的人类监督讨论多停留在原则层面，这条把“人类批准”设计成不可绕过的协议约束，对AI Agent安全架构与权限设计有直接参考价值。",
+      "details_zh": "摘要指出，人类监督是AI安全支柱之一，通常由人类在环审批AI智能体的关键动作来实施；但智能体绕过护栏的能力上升，使如何稳健地强制执行HITL成为问题。作者由此提出I-HITL，强调智能体只能在获得明确人类批准后发起动作，即使人类与本地智能体运行环境等系统交互时也须满足该约束。摘要未说明具体协议实现、威胁模型、形式化保证或实验评估，且为未经独立验证的预印本，其“不可剥夺”属性是否成立需看全文与后续复现。",
+      "original_title": "I-HITL: Inalienable Human-in-the-Loop",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35856v1",
+      "title_zh": "学习何时会失稳：梯度信息稀疏且带噪时，平均收敛不等于可靠学习",
+      "summary_zh": "该预印本指出，常见学习算法分析假设信息性梯度持续可用，但生物神经网络中的学习信号可能稀疏、局部且间歇出现。作者在若干可解析设定（含单层与多层线性网络）中展示：当梯度信息带噪且仅间歇可得时，即使平均学习动态收敛到正确最优点，学习过程的方差也可能渐近无穷，并给出学习稳定的显式条件。",
+      "why_zh": "它把“无偏信用分配即足够”这一默认前提拆开，指出稳定性还取决于信号频率与信息量，对理解生物学习与稀疏反馈训练都有启发。",
+      "details_zh": "摘要明确区分了该稳定性条件与随机梯度下降的既有稳定性条件：两者互补但概念不同。作者强调，无偏的信用分配不足以保障可靠学习，还需要足够频繁且信息充分的梯度信号。需要注意，这是未经独立验证的预印本，结论基于线性网络等可解析模型，尚不能直接外推到深度非线性网络或真实生物系统；摘要也未给出具体阈值数值，实际影响需待同行评议与复现。",
+      "original_title": "On the stability of learning",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35826v1",
+      "title_zh": "理解 Jev 式 System One 模型：结构能否降低选择偏差？",
+      "summary_zh": "该预印本关注大语言模型中的选择偏差，即即使被要求忽略呈现顺序或进行推理，偏差仍可能存在。作者指出，近期复现 Jev 式 System One 行为的模型不断增多，这类模型直接在候选上预测概率；但跨 Jev 版本、复现模型与生成式大模型在多选项任务中的选择偏差系统比较仍有限。摘要提出核心问题：Jev 式决策结构是否减少选择偏差，但未给出结果。",
+      "why_zh": "它把“直接对候选打分”的结构与选择偏差联系起来，对理解 LLM 评测偏差和 System One 式建模有方法意义，而非单纯模型发布。",
+      "details_zh": "根据摘要，选择偏差指模型受选项呈现顺序或提示方式影响，即使指令要求忽略顺序或先推理也难以消除。Jev 式 System One 模型直接在给定候选上预测概率，近期出现多个复现版本。作者认为，目前缺乏对这些模型与生成式 LLM 在多选项任务上的系统比较，因此提出结构是否降低选择偏差的问题。可确认的仅是研究动机与问题，摘要未提供实验设计、数据集、偏差指标或任何结果。该文为 arXiv cs.CL 预印本，未经独立验证，不能据此断言 Jev 式结构有效或无效。",
+      "original_title": "Understanding Jev-Style System One Models: Does Structure Reduce Selection Bias?",
+      "focus": false,
+      "edition": "morning"
+    },
     {
       "source_type": "研究预印本",
       "verification_status": "未经独立验证",
