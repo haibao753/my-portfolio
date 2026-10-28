@@ -59,7 +59,9 @@ test('a failed issue request clears stale cards and exposes a recoverable error'
  await page.locator('#filter-date').click();
  await page.locator(`#date-options [data-date="${dates[1]}"]`).click();
  await expect(page.locator('.news-card')).toHaveCount(0);
- await expect(page.locator('#status')).toContainText('加载失败');
+ await expect(page.locator('#status')).toContainText('暂时无法加载');
+ await expect(page.locator('#stories')).toHaveAttribute('data-state','error');
+ await expect(page.locator('.news-empty-retry')).toHaveText('重试');
  await expect(page.locator('#stories')).toHaveAttribute('aria-busy', 'false');
  await page.locator(`#date-options [data-date="${dates[0]}"]`).click();
  await expect(page.locator('.news-card').first()).toBeVisible();
@@ -89,7 +91,7 @@ test('Daily Brief source disclosure expands inline without a paywall redirect',a
  await expect(disclosure).not.toHaveAttribute('open','');
  await disclosure.locator('summary').click();
  await expect(disclosure).toHaveAttribute('open','');
- await expect(card.locator('.news-disclosure-note')).toBeVisible();
+ await expect(card.locator('.news-reading-inner > .news-disclosure-note')).toBeVisible();
  await expect(page).toHaveURL(url=>url.pathname==='/brief/');
  await expect(card.locator('.news-source a')).toHaveAttribute('target','_blank');
 });
@@ -112,6 +114,9 @@ test('three-day and seven-day filters aggregate issues and preserve single-date 
  await page.locator('#quick-dates [data-days="3"]').click();
  await expect(page.locator('.news-card')).toHaveCount(3);
  await expect(page.locator('#quick-dates [data-days="3"]')).toHaveAttribute('aria-pressed','true');
+ // Re-selecting the active range dismisses the popover; reopen for another range.
+ await expect(page.locator('#filter-toggle')).toHaveAttribute('aria-expanded','false');
+ await page.locator('#filter-toggle').click();
  await page.locator('#quick-dates [data-days="7"]').click();
  await expect(page.locator('.news-card')).toHaveCount(7);
  await page.locator('#tabs button').nth(1).click();
@@ -189,8 +194,8 @@ test('all three covers remain complete on mobile with reduced motion',async({pag
   expect(box!.width).toBeGreaterThan(200);
   expect(box!.x).toBeGreaterThanOrEqual(0);
   expect(box!.x+box!.width).toBeLessThanOrEqual(391);
+  expect(await cover.evaluate(el=>el.getAnimations({subtree:true}).some(animation=>animation.playState==='running'))).toBe(false);
  }
- await expect(page.locator('.geometry-orbit')).toHaveCSS('animation-name','none');
 });
 
 test('sculpture remains visible and changes form when its renderer fails to load',async({page})=>{

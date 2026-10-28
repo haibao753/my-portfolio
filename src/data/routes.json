@@ -1,0 +1,10 @@
+[
+  { "path": "/", "file": "index.html", "sitemap": true },
+  { "path": "/brief/", "file": "brief/index.html", "sitemap": true },
+  { "path": "/lab/", "file": "lab/index.html", "sitemap": true },
+  { "path": "/lab/rotation/", "file": "lab/rotation/index.html", "sitemap": true },
+  { "path": "/experiments/minimal-surfaces-classical.html", "file": "experiments/minimal-surfaces-classical.html", "sitemap": true },
+  { "path": "/experiments/minimal-surfaces-periodic.html", "file": "experiments/minimal-surfaces-periodic.html", "sitemap": true },
+  { "path": "/experiments/liquid-glass-optics.html", "file": "experiments/liquid-glass-optics.html", "sitemap": false },
+  { "path": "/experiments/optical-engine-v1.html", "file": "experiments/optical-engine-v1.html", "sitemap": false }
+]
