@@ -1,0 +1,651 @@
+{
+  "version": 1,
+  "date": "2026-10-29",
+  "editions": [
+    "evening"
+  ],
+  "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2610.36283",
+      "title_zh": "近崩溃点约束下稳健高斯均值估计的极小极大速率",
+      "summary_zh": "一篇arXiv统计学预印本研究带星形约束的高斯位置模型在对抗性污染下的均值估计：N个观测中至多k<N/2个被“预言机”对手篡改。作者刻画了污染比例ε=k/N在整个[0,1/2)区间上的极小极大平方ℓ2风险，结果由约束集的局部熵、噪声方差与污染项共同决定，并给出污染误差与信息量之间的权衡形式。",
+      "why_zh": "把稳健统计的极小极大理论推进到接近崩溃点的全污染区间，并显式引入约束集几何（局部熵），属于理论统计的实质进展，而非普通方法应用。",
+      "details_zh": "摘要给出的核心结论是一个上界与下界同阶的速率表达式，其中关键量δ*_ε由局部熵与(1-2ε)Nr²/σ²的比较定义，最终风险在污染项σ²ε²log(e/(1-2ε))与约束集直径d²之间取小。这说明当污染接近1/2时，可恢复的信息急剧衰减，且约束集越“大”（局部熵越高）越有利。需注意这是预印本，尚未经同行评审或独立验证；摘要未给出具体实验或下界证明细节，读者不宜将其视为已确立的定论。",
+      "original_title": "Minimax Rates for Robust Gaussian Mean Estimation Near the Breakdown Point under Constraints",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/33 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.36283",
+        "pages_read": 14,
+        "pages_total": 33,
+        "citations": [
+          {
+            "id": "E2",
+            "page": 2
+          },
+          {
+            "id": "E3",
+            "page": 4
+          },
+          {
+            "id": "E4",
+            "page": 10
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E7",
+            "page": 3
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          },
+          {
+            "id": "E14",
+            "page": 10
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究在对抗性污染下、带星形约束的高斯位置模型均值估计问题：N个观测中至多k<N/2个被oracle对手污染，目标是刻画ε=k/N在整个[0,1/2)区间（即直到唯一可恢复性的崩溃点1/2）上的极小极大平方ℓ2风险。作者指出既有工作未刻画接近崩溃点时的速率依赖，超过1/2后唯一恢复不再可能，需转向list-decodable学习。",
+            "evidence_ids": [
+              "E5",
+              "E3",
+              "E9"
+            ]
+          },
+          "method": {
+            "text": "方法为理论分析：定义oracle对抗污染模型（对手可查看模型参数、干净数据及映射，并腐蚀至多k个样本），以平方ℓ2损失定义极小极大风险；用局部度量熵与局部packing数刻画约束集K的复杂度；下界通过贝叶斯风险与Fano方法建立信息论分量和污染分量，上界借助tournament-on-the-tree框架及有界/无界K的定位步骤。摘录未给出具体算法伪代码或数值实验。",
+            "evidence_ids": [
+              "E2",
+              "E7",
+              "E12"
+            ]
+          },
+          "findings": {
+            "text": "作者给出极小极大风险刻画：风险由两项组成，第一项δ*_ε²为信息论分量，由局部度量熵与有效样本量N−2k=N(1−2ε)通过不动点方程决定；第二项σ²ε²log(e/(1−2ε))为污染误差分量，随ε趋近1/2呈对数发散。当ε严格远离1/2时结果退化为Prasadan and Neykov (2026)的已有速率。文中还给出ℓ1球与稀疏向量集等例子及无界星形集K的上界定理。这些是预印本中的理论结果，摘录未见独立验证或数值实验。",
+            "evidence_ids": [
+              "E10",
+              "E14",
+              "E4"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录仅覆盖目录、模型定义、部分定理陈述与讨论，未包含完整证明、常数标定细节及任何实验评估，因此无法判断有限样本表现、计算可行性或与其他方法的实证比较。作者自述结果限于星形约束的高斯位置模型与ε∈[0,1/2)的唯一恢复区间；超过崩溃点1/2时唯一恢复不可能，只能考虑list-decodable学习。无界K情形需额外定位步骤，作者称定位概率与空定位集概率贡献相同、不影响极小极大速率。",
+            "evidence_ids": [
+              "E3",
+              "E4",
+              "E14"
+            ]
+          },
+          "replication": {
+            "text": "复现建议（基于摘录可推断的学习路径）：先掌握对抗污染模型与极小极大风险定义，再学习局部度量熵/局部packing数、Fano下界与tournament-on-the-tree上界框架；可按附录结构逐步推导：例子证明、下界证明、崩溃点附近的常数标定、有界与无界K的上界（含定位步骤）。摘录未提供代码、数据或数值实验条件，无法据此复现实证结果；且该文为预印本，复现前应核对正式发表版本与独立验证情况。",
+            "evidence_ids": [
+              "E6",
+              "E8",
+              "E13"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2610.36006",
+      "title_zh": "MedJev：在十项医学基准上评估本地运行的零样本“系统一”决策模型",
+      "summary_zh": "一篇arXiv预印本介绍MedJev——一种可在笔记本电脑本地运行、不生成文本而直接单次前向输出答案的“系统一”医学决策模型。作者在覆盖医学知识、诊断及基于MIMIC IV与MIMIC IV ED的患者层面预测共十项基准上，将其与零样本大模型基线、已发表的GPT结果及监督模型比较。摘要称其在MedQA、USMLE、NEJM上分别达72.5%、75.4%、80.1%，接近已发表GPT-4表现，置信度校准较好；院内死亡AUROC 0.926高于XGBoost的0.902，但在急诊分诊入院等运营性结局上不及监督模型，患者层面预测存在明显校准偏差。",
+      "why_zh": "与常见“更大模型刷榜”不同，它检验的是不生成文本、可本地部署的轻量决策模型在临床任务上的边界：知识题接近大模型，运营预测却输给监督学习，提示“快而省”路线有明确适用域。",
+      "details_zh": "该工作属预印本，未经同行评审或独立复现，摘要中的数字应视为作者自述。值得注意的设计是区分了两类任务：结构化医学知识问答与患者层面预测。前者MedJev接近已发表GPT-4水平且校准误差较低（ECE 0.028–0.063），后者在院内死亡预测上超过XGBoost，却在急诊分诊入院等运营性结局上落后（0.745对0.809），并出现显著校准偏差。这提示单次前向的“系统一”模型可能擅长记忆型知识检索，而对需要结构化特征与流程信息的运营决策并不占优。信息局限：摘要未给出基准样本量、数据划分方式、基线提示设计及校准偏差的具体数值，也未说明MIMIC数据的伦理与隐私处理；本地运行的实际硬件条件与推理延迟同样未披露。读者不宜据此判断该类模型已可临床部署。",
+      "original_title": "MedJev: Evaluating Zero-Shot System-One Decision Making in Medicine",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2610.36502",
+      "title_zh": "图形分离准则的算法研究：多数准则可用线性时间检验",
+      "summary_zh": "一篇 arXiv 统计机器学习预印本研究统计图形模型中各类分离准则的算法检验问题。作者称，所研究的全部准则都可通过可达性算法的模块化变体来检验；除 σ-分离外，其余准则可在线性时间内判定，而由于读入图本身即为边数的线性时间，这已接近最优。作者还基于 CIfly 框架提供 R 与 Python 实现，并用模拟实验评估运行时间与规模表现。",
+      "why_zh": "把因果图模型中的分离判定统一归约为可达性问题，并给出线性时间算法与开源实现，对做因果推断和概率图模型的人有直接工具价值，而非泛泛的模型性能新闻。",
+      "details_zh": "图形模型用图结构编码随机向量各分量之间的依赖关系，分离准则是判断条件独立等陈述的核心工具。该预印本关注的是“给定图与准则，如何高效判定某条分离陈述是否成立”这一算法问题，而非统计估计。作者的核心主张是：所考察的准则都能写成可达性计算的模块化变体，其中除 σ-分离外均可线性时间完成，并强调线性时间在读取图数据这一层面已是最优量级。文中还提到提供 R 与 Python 代码并做了模拟运行时间评估。需要注意，这是未经独立验证的预印本，摘要未给出具体图类清单、σ-分离的复杂度结论以及实验数值，实际性能与实现质量仍需查看全文和复现。",
+      "original_title": "Algorithmics for Graphical Separation Criteria",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2602.02491",
+      "title_zh": "最小角回归的新解释与推断框架：把算法输出理解为总体相关路径的估计",
+      "summary_zh": "arXiv 统计学理论预印本提出对最小角回归（LAR）的新推断框架。作者指出，自 Efron 等人 2004 年提出 LAR 以来，其输出的一些基本行为性质仍不清楚，包括算法应在何处终止。新框架把数据层面的 LAR 算法视为在估计一条总体“路径”：响应均值沿按总体“相关”参数递减顺序排列的回归变量组织，零相关对应不重要变量。摘要称由此获得若干新的数学性质与变量贡献解释。",
+      "why_zh": "不同于一般“新算法刷指标”，这条针对的是被长期使用却缺乏推断理论的经典方法，涉及终止点这一实际建模痛点，对统计学习与高维回归读者有方法论价值。",
+      "details_zh": "LAR 由 Efron 等人在 2004 年提出，作为线性预测算法，被视为前向选择的替代方案，并与惩罚回归（如 LASSO）存在联系。摘要强调它长期近似“黑箱”：输出的基本行为性质、合适的终止点都未被充分理解。该文的核心思路是引入总体层面的对应物——一条按总体相关参数递减排序的路径，并赋予相关参数可解释含义，零相关意味着变量不重要。需要注意，这是未经独立验证的预印本，摘要未给出具体定理条件、模拟结果或与其他推断方法的比较；其“新解释”是否在实际数据中带来更可靠的变量选择与终止规则，仍需同行评议与复现检验。",
+      "original_title": "New explanations and inference for least angle regression",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/57 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2602.02491",
+        "pages_read": 14,
+        "pages_total": 57,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 3
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E7",
+            "page": 3
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          },
+          {
+            "id": "E14",
+            "page": 10
+          },
+          {
+            "id": "E15",
+            "page": 11
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文关注最小角回归（LAR）本身机制与统计推断：作者指出LAR自Efron等（2004）提出后仍近似“黑箱”，其输出的基本行为（包括合适的终止规则）未被充分理解，且既有工作多集中于选择性/序贯推断而非算法机制。因此研究问题可概括为：为LAR建立新的解释框架与推断方法，并刻画其总体层面的“路径”与变量贡献。",
+            "evidence_ids": [
+              "E5",
+              "E6",
+              "E2"
+            ]
+          },
+          "method": {
+            "text": "方法上，作者把数据层面的LAR（Algorithm 1，基于设计矩阵X与样本响应y）与总体层面的对应算法（Algorithm 3，Lar(X, μ)，基于X与均值响应μ）对照研究，用逐步线性更新刻画均值，并给出等角向量、步相关系数等的闭式表达（如Lemma 6、Lemma 7）；同时提出用于LAR推断的bootstrap框架，并称其在理论上有效。摘录中未给出bootstrap的具体构造细节。",
+            "evidence_ids": [
+              "E9",
+              "E12",
+              "E4"
+            ]
+          },
+          "findings": {
+            "text": "理论结果方面：总体路径中第k步的步相关系数Ck有闭式表达（Lemma 7）；当活跃变量数m小于列数p时，LAR停止意味着仅需这m个活跃变量即可写出μ在所有列上的线性投影（Lemma 8相关表述）；并说明LAR选择进入变量时并非简单贪心取最大SS，而是取SS相对于等角更新（分母）最大的变量。数值证据方面，摘录仅提到第6节有模拟研究、第7节有真实数据分析，但未给出具体数值结果，故无法判断实验效果。",
+            "evidence_ids": [
+              "E12",
+              "E13",
+              "E14"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：作者明确其理论框架沿用Efron等（2004），主要聚焦p<n情形，并称本文可为p>n的发展提供基础，因此摘录不足以判断p>n下的结论。文中还提到标准回归的bootstrap可能可证明地失效，而所提bootstrap简单且理论有效，但摘录未给出该失效的具体条件与证明细节。此外，摘录未提供模拟与真实数据分析的具体数值，无法评估有限样本表现；该文为arXiv预印本（arXiv:2602.02491v2），摘录中未见独立验证信息。",
+            "evidence_ids": [
+              "E4",
+              "E7",
+              "E1"
+            ]
+          },
+          "replication": {
+            "text": "复现建议（仅基于摘录）：可按Algorithm 1的步骤实现数据层面LAR（计算ˆck、活跃集、等角向量、步长ˆγk与更新ˆyk），并按Algorithm 3实现总体层面Lar(X, μ)以核对Lemma 6–9的闭式量；可用文中Example 1的小规模X与μ逐步核对变量进入顺序与更新值。若要复现推断部分，需依据文中bootstrap框架，但摘录未给出其具体算法与调参，故无法从给定材料确定完整复现条件；模拟与真实数据分析的设置细节也不在摘录范围内。",
+            "evidence_ids": [
+              "E8",
+              "E15",
+              "E4"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2610.36523",
+      "title_zh": "智能体交接中的任务接管基准测试",
+      "summary_zh": "一篇arXiv预印本提出HSC-Bench基准，含1,039个任务，评估多智能体协作中“责任交接”后的任务接管能力：接收方模型需在先前决策、观察与工具/文件状态基础上继续完成剩余需求。基准分两条互补轨道——恢复相关仓库证据与延续既有对话、工具和文件工作状态。对六个接收模型的比较显示，结构化交接状态对多数模型有助益，且两条轨道上的最强模型并不相同。",
+      "why_zh": "AI Agent长任务协作的关键瓶颈正从单模型能力转向跨模型状态传递，该工作把“交接保真度”与“后续表现”显式关联，提供了可复用的评测框架。",
+      "details_zh": "摘要指出，仅靠任务成功率或记忆保持分数无法刻画交接质量，因此需要把交接时保留的信息与接收方如何继续工作联系起来。实验发现结构化交接状态能提升所有模型的仓库证据恢复，并改善多数模型的延续表现；但两条轨道的排名不一致，说明单看证据恢复无法代表整体接管能力。信息局限：摘要未披露任务来源、评分细则、模型清单与统计显著性，且为预印本，结论未经独立复核，不宜直接当作模型能力的定论。",
+      "original_title": "Benchmarking Task Takeover Across Agent Handoffs",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-28",
+      "url": "https://www.psypost.org/intelligence-and-fertility-do-smarter-people-have-fewer-children-the-strongest-evidence-suggests-a-smaller-more-complicated-link/",
+      "title_zh": "智力与生育：更聪明的人孩子更少吗？最强证据指向更小且更复杂的关联",
+      "summary_zh": "PsyPost报道称，在美英调查中智力得分较高者家庭规模略小；但若等到人们完成生育后再比较同一家庭内的兄弟，这一关联会缩小甚至反转。文章强调现有最强证据指向一个更小、也更复杂的联系，而非简单的“越聪明生得越少”。",
+      "why_zh": "常见叙事把智力与低生育率直接挂钩，并引申出人口与演化推论。该报道的价值在于指出研究设计与测量时点会显著改变结论，提醒读者区分跨人群相关与家庭内比较。",
+      "details_zh": "据摘要，报道对比了两类证据：一是美英调查中智力分数与较小家庭规模的微弱负相关；二是更严格的设计——等个体生育结束后，在同一家庭内部比较兄弟——此时关联减弱甚至方向反转。这一差异提示，跨家庭比较可能受教育、收入、地域等未观测因素混杂，而家庭内设计能部分控制共同背景。信息局限明显：仅有媒体摘要，未给出具体研究名称、样本量、智力测量工具、效应量大小或置信区间，也未说明“反转”出现在哪些子样本；PsyPost属科普媒体，未经独立交叉核实。因此不宜据此断言因果方向，更不能外推到全球人口趋势。读者可把它当作方法学提醒：生育率与认知能力的关联对研究设计高度敏感。",
+      "original_title": "Intelligence and fertility: Do smarter people have fewer children? The strongest evidence suggests a smaller, more complicated link",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.37657v1",
+      "title_zh": "“安全注意力头”：学习式注意力门提升提示注入鲁棒性",
+      "summary_zh": "该预印本提出Heads of Security（HoS），一种通过少量可学习的逐头注意力门来强制指令与数据分离的提示注入防御方法。HoS学习每个注意力头如何在可信与不可信token之间重新分配注意力，使模型能处理不可信内容而不执行其中注入的指令。作者在Llama-3.3-70B-Instruct与GPT-OSS-20B上评估，并与基于微调的SecAlign++及防御方案ASIDE比较。",
+      "why_zh": "提示注入是AI Agent落地的核心安全瓶颈，该工作从注意力机制内部入手而非仅靠输入过滤或微调，思路与常见“加一层检测器”的方案不同，值得关注其可迁移性。",
+      "details_zh": "据摘要，HoS的关键设计是只引入一小组逐头门控参数，让每个注意力头学会区分可信指令与不可信数据，从而在模型内部实现指令—数据分离，而不是在外部加分类器。评估覆盖两个开源大模型，并与SecAlign++和ASIDE对比，但摘要未给出具体攻击成功率、误拒率或性能损失数字。信息局限明显：这是未经独立验证的预印本，攻击测试集构成、自适应攻击下的表现以及门控是否可被绕过均未在摘要中说明，不能据此认为该方法已被证明稳健。",
+      "original_title": "Heads of Security: Learned Attention Gates Improve Prompt Injection Robustness",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-10-28",
+      "url": "https://www.theregister.com/security/2026/10/28/cisco-open-sources-tool-for-detecting-ai-agents-on-hacking-sprees/5305867",
+      "title_zh": "思科开源用于识别AI智能体攻击行为的检测工具",
+      "summary_zh": "据The Register报道，思科开源了名为Project Quarry的工具，目标是检测正在实施攻击行为的AI智能体。报道称该项目旨在为评估智能体行为提供一种“共享语言”。摘要信息有限，未披露具体检测方法、支持的智能体框架、开源许可证或已公开的测试结果。",
+      "why_zh": "AI Agent自主执行任务时如何审计其行为是实际部署中的空白环节，厂商开源检测工具意味着这一需求正从研究走向工程，但需注意目前仅为媒体报道。",
+      "details_zh": "目前只取得标题及极少量公开摘要，尚不足以确认报道涉及的具体时间线、产品技术细节或相关方回应。此处不对原始材料未说明的细节作推断；建议打开来源阅读全文后再判断其实际影响。",
+      "original_title": "Cisco open sources tool for detecting AI agents on hacking sprees",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.37631v1",
+      "title_zh": "预训练过程中什么在提升？用时间点模型追踪知识获取",
+      "summary_zh": "该预印本关注在多年网络语料上预训练的语言模型如何随训练推进习得通用与领域知识。作者利用在不同年份网络快照上训练的时间点模型，提出时间可变性分数（TVS），定义为某条目负对数似然的变异系数，用以刻画知识流行度随时间的变化，并据此区分不同类型知识的学习动态。",
+      "why_zh": "把“模型知道什么”与“语料何时出现该知识”联系起来，为理解预训练数据的时间分布如何塑造模型能力提供了可操作的度量，区别于单纯刷榜式预训练研究。",
+      "details_zh": "摘要说明，研究借助按年份切分的网络快照训练出的时间点模型，构造TVS指标：对同一测试条目，计算其负对数似然在不同时间点模型间的变异系数，以此衡量该知识对语料时间分布的敏感程度。这一设计可用于区分随时间稳定出现的通用知识与只在特定时期流行的领域知识。局限是：预印本未经独立验证，摘要未给出具体模型规模、数据集、TVS与下游任务表现的相关性数值，也未说明该分数能否因果性地解释知识获取机制，读者不宜将其视为已确立的结论。",
+      "original_title": "What Improves During Pretraining? Tracking Knowledge Acquisition with Point-in-Time Models",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-10-28",
+      "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1xcTRfZ0t0YWRvelgyR0UyRmVhbHctNDdtaE81QThTOV9BQVpna2FBQ2lRendESjlsaTEycTJiOHk5MmhhWTlUTlBLOEdFSFk?oc=5",
+      "title_zh": "中国就业竞争加剧，据报道大学生支付高额费用",
+      "summary_zh": "韩国媒体《每日经济》的一则聚合标题称，随着中国就业竞争加剧，大学生据报支付数百万韩元级别的费用。该条目仅有标题与极简摘要，未说明费用用途（如求职培训、实习中介或“内推”）、数据来源、调查方法与涉及人数，属于需要核实原始报道的线索。",
+      "why_zh": "若属实，这类支出反映就业压力向学生家庭转移的结构性现象，与青年就业、教育回报和劳动市场信息不对称相关，值得追踪而非当作猎奇。",
+      "details_zh": "目前可确认的信息仅限于标题层面：报道主体为中国大学生，背景为就业竞争加剧，行为是支付高额费用，金额以韩元表述。标题未交代这笔钱买的是什么服务、由哪些机构收取、是否有合同纠纷或监管介入，也没有受访者数量或抽样方式。由于来源为聚合线索、需核实原始报道，且不同媒体转述可能失真，读者应把它当作待验证的现象线索，而非已核实的普遍事实；在缺乏一手调查前，不宜推断其规模或成因。",
+      "original_title": "As the job competition in China intensifies, college students are reportedly paying millions of won - 매일경제",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2610.36488",
+      "title_zh": "二阶Sinkhorn几何与√n推断：为熵最优传输补上黎曼结构",
+      "summary_zh": "一篇arXiv stat.ML预印本讨论Sinkhorn散度——熵最优传输的去偏形式——虽计算与统计上易处理，却不是度量，也不天然具备黎曼结构，因而难以支持插值、重心平均、平行移动等几何操作。作者在已有“用度量张量二次逼近Sinkhorn散度”的工作基础上推进两条线索：对一类有限光滑代价函数证明Sinkhorn度量张量的Hadamard可微性，并推导该几何下的Levi-Civita协变导数；摘要还提及√n推断方向。",
+      "why_zh": "最优传输的几何工具在生成模型、分布比较中被广泛借用，但Sinkhorn散度缺乏度量性质是长期障碍。该预印本试图把可微性与协变导数补齐，属于方法层面的基础推进而非应用热点。",
+      "details_zh": "背景上，Wasserstein距离具备度量与形式黎曼结构，使插值、重心、平行移动等操作有定义；Sinkhorn散度因熵正则带来计算与统计便利而被广泛使用，却牺牲了这些性质。近期研究通过构造形式黎曼切空间与度量张量，使Sinkhorn散度被二次逼近，从而“借回”几何操作。本文声称的贡献是在合适的光滑性条件下证明该度量张量的Hadamard可微性，并给出Levi-Civita协变导数，为沿该几何做优化与推断提供工具；标题中的√n推断指向统计收敛速率层面的结果。信息局限：摘要被截断，未提供定理的完整假设、维数依赖、样本复杂度常数或数值实验；预印本结论未经独立验证，也不清楚√n速率在何种正则条件下成立、是否对熵正则参数有额外要求。对非专业读者而言，应把它理解为理论工具进展，而非可直接落地的算法。",
+      "original_title": "Second-order Sinkhorn Geometry and $\\sqrt{n}$-Inference",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2609.22444",
+      "title_zh": "Wright-Fisher隐马尔可夫模型中预测与平滑的渐近性质及有限样本界",
+      "summary_zh": "该预印本研究潜变量为多类型Wright-Fisher扩散、观测为分类数据的隐马尔可夫模型，在有限次观测时点、每个时点内样本量很大的重复抽样框架下展开分析。作者在中性与父本独立突变假设下，证明贝叶斯预测分布与平滑分布可精确表示为Dirichlet混合，并给出一步预测与局部平滑律以全变差收敛到相邻种群频率决定的转移律与桥律，从而为基于经验比例的代入近似提供依据，同时推导有限样本误差界。",
+      "why_zh": "把群体遗传学经典扩散过程与隐马尔可夫推断结合，给出可计算的有限样本保证，区别于一般统计方法热点，对理解频率数据的贝叶斯近似误差有实际参考价值。",
+      "details_zh": "摘要显示，研究关注的是“时点少、每时点样本多”的重复抽样情形，而非连续时间全观测。核心结果有三：一是预测与平滑律的Dirichlet混合精确表示；二是收敛到由邻近种群频率确定的Wright-Fisher转移与桥律，说明经验比例代入法在理论上站得住；三是针对预测及多样性等有界泛函的显式有限样本界，以及边际平滑器的集中不等式。信息局限在于：这是未经独立验证的预印本，摘要未给出具体收敛速率常数、模拟实验或真实数据应用，结论的实用性仍需同行评议与复现检验。",
+      "original_title": "Asymptotics and finite sample bounds for prediction and smoothing in Wright-Fisher hidden Markov models",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-28",
+      "url": "https://www.psypost.org/horror-isnt-just-intense-fear-new-psychology-study-suggests/",
+      "title_zh": "新心理学研究：恐怖感不只是强烈恐惧",
+      "summary_zh": "PsyPost报道一项新心理学研究，认为恐惧通常指向未来可能的危险，而“恐怖感”（horror）多出现在得知某件“本不该发生”的事情之后。研究提示，对伤害的血腥、极端描写会通过让事件显得反常，把读者推向恐怖体验，而非单纯的恐惧。报道未在摘要中给出样本量、实验设计与效应大小。",
+      "why_zh": "区分恐惧与恐怖感有助于理解极端叙事内容如何影响读者情绪与判断，对内容平台、心理教育与创伤相关讨论都有现实意义，而非泛泛的“吓人内容有害”结论。",
+      "details_zh": "据摘要，该研究的核心主张是：恐惧与恐怖感在时间指向与认知评价上不同——前者面向可能的危险，后者源于对已发生之“异常”的认知。极端、血腥的伤害描写之所以引发恐怖，是因为它们让事件显得违背常规。信息局限：这是媒体对单篇研究的报道，摘要未提供期刊、作者、样本、测量工具与统计结果，也未说明是否预注册或重复验证；因此只能视为一条研究线索，不能当作已确立的心理学定论。",
+      "original_title": "Horror isn’t just intense fear, new psychology study suggests",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.37609v1",
+      "title_zh": "EnvSched：面向智能体强化学习的环境感知调度，以提升 rollout 效率",
+      "summary_zh": "一篇 arXiv 机器学习预印本提出 EnvSched，针对语言智能体可执行环境规模扩大、rollout 生成与验证成本上升的问题，主张在环境层面做数据管理：把任务实例与决定其工具、状态、转移和验证的环境一起组织、评估和调度。作者称在有限 rollout 预算下，这种环境级调度可提升智能体强化学习的效率。",
+      "why_zh": "智能体 RL 的瓶颈正从模型转向环境与验证成本；把“环境”当作可调度数据单元是较新的效率视角，对做 Agent 训练的人有实际参考价值。",
+      "details_zh": "随着语言智能体可执行环境数量增长，生成并验证其 rollout 变得昂贵，而训练预算通常有限。该预印本提出的 EnvSched 把调度对象从单条样本上移到“环境+任务实例”的组合，理由是环境决定了可用工具、状态、转移与验证方式，因而环境层面的组织与评估会影响 rollout 的信息效率。摘要只给出问题动机与总体思路，未披露具体调度策略、基线对比、实验环境集合或效率提升幅度。该工作为未经独立验证的预印本，其“更高效”的主张需要看全文中的实验设计与对照才能评估；也不宜据此推断该方法已在真实生产训练中验证。",
+      "original_title": "EnvSched: Environment-Aware Scheduling for Rollout-Efficient Agent Reinforcement Learning",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "Quanta Magazine",
+      "published": "2026-10-28",
+      "url": "https://www.quantamagazine.org/how-spiders-spin-silk-dope-into-natures-toughest-material-20261028/",
+      "title_zh": "蜘蛛如何把“丝浆”纺成自然界最坚韧的材料：无序蛋白缠结如何变成纤维",
+      "summary_zh": "Quanta Magazine报道，生物学家通过探测蜘蛛丝的分子结构，正在揭示一团无序蛋白如何转变为坚韧而有弹性的丝线。文章聚焦“丝浆”（silk dope）在纺丝过程中的结构转变，属于材料与生物物理交叉的基础研究报道。",
+      "why_zh": "蜘蛛丝是长期被模仿却难以复制的高性能材料，关键难点在于理解储存态无序蛋白如何在外力与化学环境下有序化。该报道提供的是机制层面的科普梳理，而非新论文结论。",
+      "details_zh": "据摘要，报道的核心是“分子结构探测”与“无序蛋白缠结转化为纤维”这一过程：蜘蛛丝在腺体内以浓缩的丝浆形式储存，纺丝时经历剪切、脱水与pH变化等条件，蛋白链从无序状态重排为具有特定二级结构的纤维。这类研究对仿生纺丝与高性能纤维设计有潜在启发。信息局限：仅有标题与摘要，未提供具体研究团队、论文出处、实验手段（如散射、显微或谱学）、力学数值或可纺性数据；Quanta属科学媒体，其叙述未经独立交叉核实。因此不能据此判断某一机制已被确证，也不应引用未给出的强度或韧性数字。读者可将其视为理解“结构无序—功能有序”转变的入门线索。",
+      "original_title": "How Spiders Spin ‘Silk Dope’ Into Nature’s Toughest Material",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.37655v1",
+      "title_zh": "KPPax：为大气化学机器学习预处理可微分动力学ODE",
+      "summary_zh": "一篇arXiv论文介绍KPPax，一个把大气化学机理从KPP语言转换为JAX可微分、即时编译且可向量化代码的动力学预处理器。作者称现有KPP工具生成高效Fortran或C代码，但难以嵌入机器学习框架；KPPax用稀疏操作在低维子空间上计算速率定律，从而支持梯度传播。摘要未给出与Fortran版本的性能对比数值。",
+      "why_zh": "打通传统大气化学机理与可微分编程，使化学模块能参与端到端训练，属于科学计算与机器学习交叉的基础设施工作。",
+      "details_zh": "该文来自arXiv cs.AI，仅有标题与摘要，未经独立验证。已知信息：大气化学机理通常以KPP语言分发，KPP生成Fortran/C代码，与Python机器学习生态脱节；KPPax从同一机理语言生成JAX代码，强调可微分、JIT编译与向量化，并用稀疏运算计算速率定律。摘要在此处截断，未说明支持哪些机理规模、精度损失、编译时间或与原始KPP的数值一致性。对读者而言，关键待验证点是微分结果与参考实现是否逐位一致，以及在大规模机理下的实际加速比。",
+      "original_title": "KPPax: preprocess differentiable kinetic ODE for machine learning in atmospheric chemistry",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-28",
+      "url": "https://www.psypost.org/a-mirror-trick-that-adds-a-sixth-finger-also-changes-what-people-think-their-hand-can-grab/",
+      "title_zh": "镜子错觉让人“多出”第六根手指，并改变其对抓握能力的判断",
+      "summary_zh": "PsyPost 报道一项身体错觉研究：研究者用镜子和定时刷触，让志愿者产生拥有第六根手指的感觉。之后，参与者判断自己的手需要更宽的开口才能穿过，并认为自己能抓取更大的积木。报道称这显示身体表征的改变会影响对自身动作能力的估计。",
+      "why_zh": "把“身体图式影响动作可能性判断”这一心理学命题用可操作的错觉实验呈现，对理解具身认知与身体表征的可塑性有启发，而非普通健康趣闻。",
+      "details_zh": "该报道描述的实验使用镜子与同步刷触制造拥有额外手指的错觉，属于经典橡胶手错觉范式的变体。据摘要，产生第六指感觉后，参与者对“手需要多宽开口才能通过”以及“能抓多大积木”的判断发生变化，指向身体表征改变会外溢到对自身行动能力的估计。需要说明的是，这里只有媒体标题与摘要，缺少样本量、对照组设置、效应大小与是否预注册等关键信息，无法判断结果稳健性；PsyPost 属二手报道，未经独立交叉核实。此类实验室错觉的效应能否迁移到日常抓握行为，也尚不能由该报道断定。",
+      "original_title": "A mirror trick that adds a sixth finger also changes what people think their hand can grab",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2610.36138",
+      "title_zh": "有限容量下对称性破缺的精确代价",
+      "summary_zh": "一篇arXiv机器学习预印本讨论：若问题在旋转下答案不变，最优模型是否应旋转不变。作者称当模型容量有限时这一直觉会以可预测且可精确计算的方式失效：对称性把方向分成等强度块，容量预算若切断了某个块，所有最优模型都会破缺对称。摘要给出高斯问题下k单元双线性预测器的对数损失代价公式，并称注意力头在三维方向上于预测的头维度处破缺对称。",
+      "why_zh": "把“对称性破缺”从经验观察变成可计算的容量代价，并联系到注意力头维度，为理解Transformer结构限制提供理论视角。",
+      "details_zh": "该文为arXiv stat.ML新投稿，仅有摘要，未经独立验证。摘要中的关键主张包括：对称模型必须整块使用方向；预算切断块时最优模型必然破缺对称；高斯问题下代价为(U_k−I_k)/(2σ²)，即最佳k个方向的信号减去最佳整块的信号；注意力头因相似度秩不超过头维度而受同一代价支配，实验中在三维方向上按预测的头维度破缺对称，旋转敏感度RMSE为0.004。这些数值来自作者自述，尚未复现。摘要提到softmax注意力后内容被截断，完整结论未知。",
+      "original_title": "Symmetry Breaking Is the Price of Finite Capacity",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2610.36178",
+      "title_zh": "指令微调会让语言模型“选数字”的偏好更明显：对 1 到 N 的整数概率做无采样误差测量",
+      "summary_zh": "一篇 arXiv 计算语言学预印本测量语言模型在被要求“随机选一个数”时对 1 到 N 每个整数赋予的概率。作者称通过累加每个整数各种拼写形式的打分而非抽样估计，消除了此前研究中的采样噪声；覆盖 18 个开放权重模型系列、五个上限至 N=100 的范围以及 29 种解码配置，并指出指令微调会“安装”并强化数字选择启发式。",
+      "why_zh": "用无采样误差的方法量化大模型“随机数”偏好，把常见的趣味现象转为可测量的分布偏差，对评估模型校准与指令微调的副作用有方法学意义。",
+      "details_zh": "该研究关注一个具体而可检验的行为：当提示模型给出随机整数时，模型实际输出的并非均匀分布。作者的方法是直接读取模型对每个整数各拼写形式的打分并求和，得到固定提示下的一个概率向量，从而避免抽样估计带来的噪声——这是对以往依赖采样的研究的改进点。实验规模包括 18 个开放权重模型系列、上限至 100 的五个数值范围、29 种解码配置。标题暗示指令微调会“安装并锐化”数字选择启发式，即这类偏好可能部分来自后训练而非预训练本身。摘要未给出具体偏好的数字、效应大小或统计检验细节，且为未经独立验证的预印本，结论需结合全文与复现判断。",
+      "original_title": "3, 7, 14, 17, 42: Instruction Tuning Installs and Sharpens Number-Choice Heuristics in Language Models",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2604.24736",
+      "title_zh": "中等偏差概率区域中的参数统计推断",
+      "summary_zh": "一篇arXiv统计学预印本提出在“中等偏差概率区域”建立参数统计推断理论。作者称新证明方法基于以Hellinger距离为基础的对数似然比泰勒展开，并为贝叶斯估计量与最大似然估计量证明该区域的大偏差原理，同时给出对数似然比的一致逼近和后验贝叶斯测度集中定理。摘要未给出具体收敛速率或模拟结果。",
+      "why_zh": "把大偏差理论从极端尾部推进到中等偏差区间，关系到置信区间与后验近似的适用边界，属于统计推断基础理论而非应用热点。",
+      "details_zh": "该条目来自arXiv math.ST的替换版本，仅有标题与摘要，未经同行评审或独立验证。可确认的信息是：研究对象为参数模型下的中等偏差概率区域，工具是Hellinger距离与对数似然比展开，结论形式为大偏差原理与后验集中。摘要未说明模型假设的具体范围、偏差区域的刻度条件，也未提供数值实验。对读者而言，值得追问的是该理论能否给出比经典大偏差更紧的有限样本界，以及在维数增长时是否仍成立；这些均需阅读全文才能判断。",
+      "original_title": "Parametric Statistical Inference in the Zone of Moderate Deviation Probabilities",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.37656v1",
+      "title_zh": "把注意力看作格点规范场论：关系只能通过Wilson环相互作用",
+      "summary_zh": "一篇arXiv cs.LG预印本提出类比：关系通过共享实体复合（Alice是Bob的母亲、Bob是Carol的父亲，则Alice是Carol的祖母），且顺序重要。作者称若每个实体的坐标框架可独立旋转（逐实体框架自由度），则在纯规范扇区中，不共享任何环的关系完全无法相互作用，唯一规范不变的评分量由Wilson环给出。摘要未提供完整推导与实验细节。",
+      "why_zh": "它把Transformer注意力与规范场论的“规范不变性”联系起来，提出关系推理受环结构约束的反常识命题。若成立，可为关系组合与顺序敏感任务提供结构性解释，但目前仅为理论类比。",
+      "details_zh": "该条仅有标题与摘要，信息有限。可确认的论点包括：关系复合依赖共享实体，复合顺序影响语义（父亲的母亲不同于母亲的父亲）；验证复合关系相当于“闭合环路”。作者引入逐实体框架自由度作为规范对称性，主张在纯规范扇区中无共同环的关系之间不存在相互作用，规范不变的评分只能由Wilson环构造。这暗示注意力中某些看似全局的交互可能受拓扑约束。但摘要未说明模型的具体数学设定、与标准注意力机制的对应关系、是否给出可检验预测或实验验证，也未讨论非纯规范扇区（如存在物质场）时的情形。作为预印本，其结论未经独立评审；读者应将其视为一个富有启发性的理论框架提案，而非已被证实的注意力机制解释。",
+      "original_title": "Attention as Lattice Gauge Theory: Relations Interact Only Through Wilson Loops",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.37666v1",
+      "title_zh": "ThinkWorld：以世界动态想象强化视觉-语言-动作模型的链式推理",
+      "summary_zh": "arXiv 人工智能预印本提出 ThinkWorld，一个视觉-语言-动作（VLA）学习框架，把动作推理建立在世界动态之上。作者指出 VLA 在机器人操作上进展显著，但泛化受限于带动作标注的机器人演示在多样性和覆盖面上的不足；人类视频提供更广的行为与环境经验，然而从中学习面临可扩展数据与显式动作 grounding 之间的根本权衡。",
+      "why_zh": "针对机器人数据稀缺这一结构性瓶颈，提出用世界模型想象补足动作监督，属于 VLA 与具身智能的核心路线之争，比一般模型发布更值得追问其泛化证据。",
+      "details_zh": "给定材料只有摘要开头，信息有限：可确认的是框架名为 ThinkWorld，目标是让动作推理“扎根于世界动态”，并声称借此强化链式动态推理（chain-of-dynamics reasoning）。摘要提到人类视频数据规模大但缺少显式动作标注，机器人演示有动作标签但多样性不足，这一权衡是该工作的出发点。但摘要未提供具体架构、训练数据规模、基准任务、成功率数值或与现有 VLA 的对比结果，也未说明“世界想象”是生成式预测还是隐空间建模。作为未经独立验证的预印本，其泛化能力主张目前无法评估，读者应等待论文全文与复现实验。",
+      "original_title": "ThinkWorld: World Imagination Reinforces Chain-of-Dynamics Reasoning",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-28",
+      "url": "https://www.psypost.org/men-and-women-report-similar-levels-of-duty-sex-and-similar-reasons-behind-it/",
+      "title_zh": "研究称男女报告的“义务性性行为”水平及原因相似",
+      "summary_zh": "PsyPost报道一项新研究，称出于义务而发生的性行为在男女中报告水平相近，背后原因也相似；这种行为最常出现在当事人感到关系可能受到威胁时。报道将其描述为在部分关系中可能具有功能性，而非单纯的关系危险信号。摘要未提供样本量、测量工具或统计效应大小。",
+      "why_zh": "挑战“义务性性行为主要是女性现象”的常见叙事，把关系威胁感知作为解释变量，对亲密关系研究有讨论价值。",
+      "details_zh": "该条目为PsyPost的媒体报道，仅有标题与摘要，未经独立交叉核实，也未提供原始论文出处、样本构成、研究设计与效应量。可确认的仅是报道层面的说法：男女在义务性性行为的报告水平与动机上相似，且与感知到的关系威胁相关。需要注意，相关性不等于因果，自我报告也可能受社会赞许性影响；媒体标题中的“相似”是否在统计上达到等价性检验标准，摘要未说明。读者应把它视为待查证的研究线索，而非已确立结论。",
+      "original_title": "Men and women report similar levels of “duty sex,” and similar reasons behind it",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2610.36078",
+      "title_zh": "用低维替代过程在线诊断准平稳分布：以粗粒化与模拟推断替代 MCMC 诊断",
+      "summary_zh": "arXiv 机器学习统计预印本研究加速动力学中的去相关时间估计问题。平行副本动力学等方法需要判断过程何时在亚稳态内按准平稳分布（QSD）分布。作者探索以非线性概率流的粗粒化和模拟推断替代 Binder、Lelièvre 与 Simpson 方法中的 MCMC 式诊断，为被杀的马尔可夫跳过程建立粗粒化框架，并给出用集体变量定义的替代过程逼近真实非线性流的非渐近、时间一致误差估计，且不假设真实过程可逆。",
+      "why_zh": "把稀有事件采样中的诊断环节从 MCMC 换成可学习的低维替代模型，属于方法论层面的替换而非单纯加速，对分子模拟与统计机器学习交叉读者有启发。",
+      "details_zh": "背景是加速动力学：过程被困在亚稳态时，需要估计去相关时间，之后样本才近似服从准平稳分布。已有方法把粒子近似与 MCMC 启发的诊断耦合起来定义该时间。本文的替代路线是先对条件于存活的被杀马尔可夫跳过程做粗粒化，证明替代过程的非线性流在时间上一致地逼近真实流，误差界随某量指数缩放（摘要在此处截断，具体形式不明）。框架不要求真实过程可逆，这是相对常见可逆性假设的放宽。局限在于：这是预印本，摘要未提供数值实验、与 MCMC 诊断的实测对比，也未说明高维集体变量选择对结果的影响，实际可用性尚待验证。",
+      "original_title": "Learning on-the-fly quasi-stationarity diagnostics from low-dimensional surrogates",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-28",
+      "url": "https://arxiv.org/abs/2610.36187",
+      "title_zh": "同一词、两套含义：用词向量追踪国会议员通讯中“选举公正”的语义分化",
+      "summary_zh": "arXiv 计算语言学预印本分析 2010 至 2025 年间 10,420 封美国国会电子通讯，考察民主党和共和党如何使用“integrity”“security”“fraud”等选举相关词汇。研究使用历时词嵌入，通过词语在上下文中的用法追踪语义变化，测量两党对这些术语的理解差异如何随时间扩大。摘要称选举公正本是美国政治的共同承诺，但两党所指 increasingly 不同。",
+      "why_zh": "不是民调或个案，而是用大规模文本与历时词向量量化政治语言漂移，为“同一概念被双方各自定义”提供可测量证据，方法上对计算社会科学读者有参考价值。",
+      "details_zh": "研究材料是 2010—2025 年共 10,420 封国会电子通讯，属于议员主动向选民传播的文本，能反映其想强调的议题框架，但不等于立法行为或选民态度。方法为历时词嵌入：同一词在不同时间窗口的向量位置变化被解读为语义变化，再比较两党用法差异。摘要未给出具体差异幅度、统计检验方式，也未说明如何控制议题议程变化、选区差异和模板化群发邮件等混杂因素。词嵌入的语义漂移也可能反映语料构成变化而非真实观念变化。因此“两党含义分化”目前是预印本结论，需独立复核；原文标题中的“Frankly Speaking”与摘要内容的对应关系在给定材料中也不明确。",
+      "original_title": "Frankly Speaking: The Company Election Integrity Keeps in Congressional Communication",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.37647v1",
+      "title_zh": "MuonGS：以松弛权重范数控制预训练大语言模型",
+      "summary_zh": "一篇arXiv机器学习预印本分析Muon优化器训练中的权重范数控制问题，提出用“累积有效学习率”C_T=Ση_t/‖W_t‖_F来统一理解权重衰减与显式范数约束为何有效、需要多少。作者称在有界更新等条件下可据此分析整个训练轨迹，并据此提出松弛的范数控制方法MuonGS，用于大语言模型预训练。",
+      "why_zh": "把权重衰减与范数约束这类经验性技巧纳入统一的有效学习率视角，对优化器设计与预训练调参有直接参考价值，而非又一篇刷榜式预训练报告。",
+      "details_zh": "摘要强调，尽管权重衰减和显式权重范数约束能改善语言模型预训练中的优化器表现，但“为何有帮助、需要多少”仍缺乏统一理解。作者以名义学习率与权重范数之比定义有效学习率，并沿训练轨迹累积，试图解释范数控制的作用机制。信息局限明显：摘要未给出MuonGS的具体算法、实验规模、对比基线与困惑度数值，也未说明“松弛”的具体含义；作为预印本，其理论假设与实证效果均待独立验证。",
+      "original_title": "MuonGS: Pretraining LLMs with Relaxed Weight-Norm Control",
+      "focus": false,
+      "edition": "evening"
+    }
+  ]
+}
