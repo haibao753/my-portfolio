@@ -1,6 +1,8 @@
 import {test,expect, type Page} from "@playwright/test";
 
 async function fakeArchive(page:Page){
+ // The fixtures model the three days ending on Oct 17, independent of today's date.
+ await page.clock.setFixedTime(new Date("2026-10-17T04:00:00Z"));
  await page.route("**/brief/data/index.json",route=>route.fulfill({
   contentType:"application/json",
   body:JSON.stringify({version:1,dates:["2026-10-17","2026-10-16","2026-10-15"],updated_at:"test-2026-10-17"})
@@ -85,6 +87,10 @@ test("expansion reveals working category, date range and edition, with live resu
  await expect(page.locator("#filter-toggle")).toBeFocused();
  await page.locator("#filter-date").click();
  await page.locator('#date-options [data-date="2026-10-17"]').click();
+ // Date changes preserve the selected topic; this date has no mathematics item.
+ await expect(page.locator("#stories .news-card")).toHaveCount(0);
+ await expect(page.locator("#stories")).toHaveAttribute("data-state","empty-filter");
+ await page.locator("#tabs button").filter({hasText:"全部"}).click();
  await expect(page.locator("#stories .news-card")).toHaveCount(2);
  await expect(page.locator("#total")).toHaveText("2");
 });
@@ -275,7 +281,8 @@ test("new intimacy and design topics are visible before first publication and wo
  await expect(page.locator("#tabs button").filter({hasText:"设计学"})).toHaveCount(1);
  await page.locator("#tabs button").filter({hasText:"设计学"}).click();
  await expect(page.locator("#stories .news-card")).toHaveCount(0);
- await expect(page.locator(".news-empty")).toContainText("暂无该话题");
+ await expect(page.locator(".news-empty")).toHaveAttribute("data-state","empty-filter");
+ await expect(page.locator(".news-empty-retry")).toHaveText("清除筛选");
  await page.locator("#tabs button").filter({hasText:"全部"}).click();
  await expect(page.locator("#stories .news-card")).toHaveCount(4);
 });

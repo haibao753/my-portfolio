@@ -83,9 +83,12 @@ test('Home and Daily Brief expanded logos share a common left alignment',async({
   expect(Math.abs(brief!.x-home!.x)).toBeLessThan(2);
   await page.evaluate(()=>window.scrollTo(0,650));
   await expect(nav).toHaveAttribute('data-orb-closed','true');
-  const orb=await nav.boundingBox();
-  const mark=await nav.locator('.brand span').boundingBox();
-  expect(Math.abs((orb!.x+orb!.width/2)-(mark!.x+mark!.width/2))).toBeLessThan(3);
+  // The state attribute changes before the CSS morph reaches its final geometry.
+  await expect.poll(async()=>{
+   const orb=await nav.boundingBox();
+   const mark=await nav.locator('.brand span').boundingBox();
+   return Math.abs((orb!.x+orb!.width/2)-(mark!.x+mark!.width/2));
+  }).toBeLessThan(3);
  }
 });
 

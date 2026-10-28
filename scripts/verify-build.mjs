@@ -1,18 +1,7 @@
 import {existsSync,readFileSync} from "node:fs";
 import {join} from "node:path";
-const paths=[
- "dist/index.html",
- "dist/robots.txt",
- "dist/sitemap.xml",
- "dist/brief/index.html",
- "dist/brief/data/index.json",
- "dist/experiments/minimal-surfaces-classical.html",
- "dist/experiments/minimal-surfaces-periodic.html",
- "dist/experiments/liquid-glass-optics.html",
- "dist/assets/jh-orbit.svg",
- "dist/assets/jhlab-signature.svg",
- "dist/images/1.jpg"
-];
+import {requiredFiles} from "./site-contract.mjs";
+const paths=requiredFiles.map(path=>join("dist",path));
 let failed=false;
 for(const path of paths){
  const exists=existsSync(path);

@@ -9,7 +9,8 @@
     "build:cloudflare": "node scripts/build-cloudflare.mjs --build-only",
     "preview": "astro preview",
     "check": "astro check",
-    "validate": "npm run check && node --test tests/build-guard.test.mjs && npm run build && node scripts/verify-build.mjs",
+    "validate": "npm run check && npm run test:unit && npm run build && node scripts/verify-build.mjs",
+    "test:unit": "node --test tests/*.test.mjs && playwright test --config playwright.unit.config.ts",
     "test:e2e": "playwright test",
     "deploy:preview": "wrangler deploy --config wrangler.preview.jsonc",
     "deploy:preview:dry-run": "wrangler deploy --config wrangler.preview.jsonc --dry-run"

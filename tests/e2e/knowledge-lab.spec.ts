@@ -4,7 +4,7 @@ test("Knowledge Lab only features working experiments and connects to Lab 001",a
  await page.goto("/lab/");
  await expect(page.locator("h1")).toBeVisible();
  await expect(page.locator("#lab-first")).toBeVisible();
- const link=page.locator('a[href="/lab/rotation/"]');
+ const link=page.locator('a.launch[href="/lab/rotation/"]');
  await expect(link).toBeVisible();
  await link.click();
  await expect(page).toHaveURL(/\/lab\/rotation\/$/);
@@ -17,7 +17,7 @@ test("Knowledge Lab only features working experiments and connects to Lab 001",a
 test("Knowledge Lab mobile view is content-first and does not overflow",async({page},testInfo)=>{
  await page.setViewportSize({width:390,height:844});
  await page.goto("/lab/");
- const link=page.locator('a[href="/lab/rotation/"]');
+ const link=page.locator('a.launch[href="/lab/rotation/"]');
  await expect(link).toBeVisible();
  const box=await link.boundingBox();
  expect(box).not.toBeNull();
@@ -38,7 +38,7 @@ test("Knowledge Lab is discoverable from homepage and readable in English and da
  await expect(page.locator("#lab-first")).toContainText("Two rotations");
  await page.locator("[data-theme-toggle]").click();
  await expect(page.locator("html")).toHaveAttribute("data-theme","dark");
- await expect(page.locator('a[href="/lab/rotation/"]')).toBeVisible();
+ await expect(page.locator('a.launch[href="/lab/rotation/"]')).toBeVisible();
 });
 
 test("Knowledge Lab and published experiment are discoverable in sitemap",async({request})=>{

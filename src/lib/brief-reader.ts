@@ -5,22 +5,10 @@
  * network and parse failures are distinct states, and the first paint reserves
  * its height with skeleton cards.
  */
-interface ResearchSection {text?:string; evidence_ids?:string[]}
-interface ResearchDossier {
- status?:string;material_scope?:string;review_status?:string;source_url?:string;
- pages_read?:number;pages_total?:number;
- citations?:Array<{id?:string;page?:number}>;
- sections?:Record<string,ResearchSection>;
-}
-interface BriefItem {
- edition?: "morning"|"evening"; focus?: boolean;
- category?: string;source?: string;published?: string;url?: string;
- title_zh?: string;summary_zh?: string;why_zh?: string;
- details_zh?: string;original_title?: string;research?:ResearchDossier;
-}
-interface BriefIssue {date?:string;items?:BriefItem[]}
-interface BriefIndex {dates?:string[];updated_at?:string}
-type ScopeMode="issue"|"range"|"archive";
+import { createBriefRepository, createRequestScope } from "./brief/api";
+import { createBriefCards, textElement as txt } from "./brief/cards";
+import { matchesQuery, normalizeSearch, recentDays, todayBeijing, type BriefStory, type ScopeMode } from "./brief/model";
+
 const stories=document.querySelector<HTMLElement>("#stories");
 const tabs=document.querySelector<HTMLElement>("#tabs");
 const issueSelect=document.querySelector<HTMLSelectElement>("#issues");
@@ -50,7 +38,9 @@ const storiesProgressCopy=document.querySelector<HTMLElement>("#stories-progress
 const storiesLoadMore=document.querySelector<HTMLButtonElement>("#stories-load-more");
 const storiesSentinel=document.querySelector<HTMLElement>("#stories-sentinel");
 if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline&&total&&filterDock&&filterToggle&&filterDetails&&categoryCompact&&rangeCompact&&editionCompact&&dateButton&&dateLabel&&dateOptions&&filterScrim&&searchInput&&searchClear){
- let current:(BriefItem & {issue_date?:string})[]=[];
+ let current:BriefStory[]=[];
+ const repository=createBriefRepository();
+ const requests=createRequestScope();
  let viewLabel="";
  let availableDates:string[]=[];
  let selectedRange=0;
@@ -58,18 +48,11 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  let category="全部";
  let selectedEdition="all";
  let query="";
- let request=0;
  let scopeMode:ScopeMode="issue";
  let searchTimer:ReturnType<typeof setTimeout>|undefined;
  const root=document.documentElement;
  const t=(zh:string,en:string)=>root.lang==="en"?en:zh;
- const isDate=(date:string)=>/^\d{4}-\d{2}-\d{2}$/.test(date);
- const todayBeijing=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Shanghai",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
- const recentDays=(date:string,days:number)=>{
-  const end=Date.parse(date+"T00:00:00Z");
-  const start=end-(days-1)*86400000;
-  return (d:string)=>{const ms=Date.parse(d+"T00:00:00Z");return ms>=start&&ms<=end};
- };
+ const cards=createBriefCards(stories,t);
  const rangeLabel=(days:number)=>days===3?t("近三天","last 3 days"):days===7?t("近一周","last 7 days"):t("当天","this day");
  const scopeLabel=()=>scopeMode==="archive"?t("全部归档","all archived issues"):selectedRange?rangeLabel(selectedRange):viewLabel||t("当前简报","current issue");
  const setFilterOpen=(open:boolean)=>{
@@ -145,67 +128,6 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  };
  const updateRangeButtons=()=>quickDates.querySelectorAll<HTMLButtonElement>("button[data-days]").forEach(button=>button.setAttribute("aria-pressed",String(Number(button.dataset.days)===selectedRange)));
  const updateEditionButtons=()=>editionControls.querySelectorAll<HTMLButtonElement>("button[data-edition]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.edition===selectedEdition)));
- const txt=(tag:string,value:string,cls?:string)=>{
-  const el=document.createElement(tag);
-  if(cls)el.className=cls;
-  el.textContent=value;
-  return el;
- };
- const safeUrl=(candidate:string)=>{
-  try{const u=new URL(candidate);return ["https:","http:"].includes(u.protocol)?u.href:null}
-  catch{return null}
- };
- const researchReady=(d:ResearchDossier|undefined)=>{
-  if(!d||d.status!=="partial_pdf_text"||!d.sections||!Array.isArray(d.citations))return false;
-  try{
-   const url=new URL(d.source_url||"");
-   return url.protocol==="https:" && ["arxiv.org","www.arxiv.org"].includes(url.hostname)
-    && url.pathname.startsWith("/pdf/") && url.pathname.length>5
-    && !url.search && !url.username && !url.password && !url.port;
-  }catch{return false}
- };
- const makeResearch=(d:ResearchDossier)=>{
-  const panel=txt("section","","news-research");
-  panel.setAttribute("aria-label",t("论文证据解读","Evidence-led paper reading"));
-  panel.append(txt("h4",t("论文研究档案 · 原始 PDF 页码可追溯","Paper research dossier · PDF page references")));
-  panel.append(txt("p",d.material_scope||"PDF 文本部分阅读","news-research-scope"));
-  const labels:Record<string,[string,string]>={
-   question:["研究问题","Research question"],method:["方法与关键思想","Method"],
-   findings:["论文报告的发现","Reported findings"],limitations:["局限与尚未证实的部分","Limitations"],
-   replication:["学习与复现路线","Learning / replication"]
-  };
-  const pages=new Map<string,number>();
-  for(const c of d.citations||[]){
-   if(typeof c.id==="string"&&c.id.startsWith("E")&&/^[0-9]{1,2}$/.test(c.id.slice(1))&&Number.isInteger(c.page)
-    && Number(c.page)<=Number(d.pages_total||0))pages.set(c.id,c.page as number);
-  }
-  for(const [key,names] of Object.entries(labels)){
-   const part=d.sections?.[key];
-   if(!part||typeof part.text!=="string"||!part.text.trim())continue;
-   const section=txt("div","","news-research-part");
-   section.append(txt("h5",t(names[0],names[1])),txt("p",part.text));
-   const cites=txt("div","","news-research-citations");
-   cites.append(txt("span",t("核对论文：","Source pages: ")));
-   for(const id of part.evidence_ids||[]){
-    const number=pages.get(id);if(number===undefined)continue;
-    const link=txt("a",t(`第${number}页`,`p. ${number}`)) as HTMLAnchorElement;
-    link.href=(d.source_url||"")+"#page="+number;
-    link.rel="noopener noreferrer";link.target="_blank";
-    link.setAttribute("aria-label",t(`在原始 PDF 中查看第${number}页`,`Open original PDF page ${number}`));
-    cites.append(link);
-   }
-   section.append(cites);panel.append(section);
-  }
-  panel.append(txt("p",d.review_status||t("AI 根据部分论文文本归纳，尚未经独立核验。","AI reading of partial PDF text; not independently verified."),"news-disclosure-note"));
-  return panel;
- };
- const normalizeSearch=(value:string)=>value.normalize("NFKC").toLocaleLowerCase().replace(/\s+/g," ").trim();
- const matchesQuery=(item:BriefItem)=>{
-  if(!query)return true;
-  const fields=[item.title_zh,item.original_title,item.summary_zh,item.why_zh,item.details_zh,item.source,item.category,
-   ...Object.values(item.research?.sections||{}).map(section=>section?.text)];
-  return normalizeSearch(fields.filter((v):v is string=>typeof v==="string").join(" ")).includes(query);
- };
  const renderSkeleton=()=>{
   const fragment=document.createDocumentFragment();
   for(let index=0;index<6;index++){
@@ -234,96 +156,13 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   statusNode.classList.remove("is-summary");
   renderEmpty(message,"error",{label:t("重试","Retry"),run:retry});
  };
- // vNext reading: one open card at a time, peripheral cards recede, the card is
- // brought under the sticky navigation, and closing returns the reader there.
- let readOpen:HTMLElement|null=null;
- const setCardReading=(card:HTMLElement,open:boolean)=>{
-  const reading=card.querySelector<HTMLElement>(".news-reading");
-  const toggle=card.querySelector<HTMLButtonElement>(".news-read-toggle");
-  card.classList.toggle("is-reading",open);
-  if(reading)reading.setAttribute("aria-hidden",String(!open));
-  if(toggle){
-   toggle.setAttribute("aria-expanded",String(open));
-   toggle.textContent=open?t("收起 ↑","Show less ↑"):t("展开阅读 ↓","Read more ↓");
-  }
-  if(open){
-   if(readOpen&&readOpen!==card)setCardReading(readOpen,false);
-   readOpen=card;
-   stories?.classList.add("has-reading");
-   requestAnimationFrame(()=>card.scrollIntoView({block:"start",behavior:prefersReduced()?"instant":"smooth"}));
-  }else{
-   if(readOpen===card)readOpen=null;
-   if(readOpen===null)stories?.classList.remove("has-reading");
-   if(toggle)toggle.focus({preventScroll:true});
-  }
- };
- const prefersReduced=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
- const readingStructure=(item:BriefItem,card:HTMLElement,expand:HTMLButtonElement)=>{
-  const reading=document.createElement("div");
-  reading.className="news-reading";
-  reading.setAttribute("aria-hidden","true");
-  const inner=document.createElement("div");
-  inner.className="news-reading-inner";
-  if(item.why_zh){
-   const reason=txt("p","","news-reason");
-   reason.append(txt("b",t("为什么值得关注　","Why it matters　")),document.createTextNode(item.why_zh));
-   inner.append(reason);
-  }
-  const hasDetail=Boolean(item.original_title||item.details_zh||researchReady(item.research));
-  if(hasDetail){
-   const disclosure=document.createElement("details");
-   disclosure.className="news-expanded";
-   disclosure.append(txt("summary",t("原文信息与详细解读 ↓","Source info and analysis ↓")));
-   if(item.original_title){
-    const original=txt("p","","news-original-title");
-    original.append(txt("b",t("原文标题：","Source headline: ")),document.createTextNode(item.original_title));
-    disclosure.append(original);
-   }
-   if(item.details_zh){
-    disclosure.append(txt("h4",t("站内详细解读","Extended analysis")));
-    disclosure.append(txt("p",item.details_zh));
-   }
-   if(researchReady(item.research))disclosure.append(makeResearch(item.research!));
-   inner.append(disclosure);
-  }
-  inner.append(txt("p",t("一般摘要依据公开标题、摘要整理；研究档案仅取部分可读取 PDF 文本，不等于独立验证或阅读全文。","News summary uses available excerpts; research dossier uses partial PDF text, not independent verification or full-paper review."),"news-disclosure-note"));
-  reading.append(inner);
-  card.append(reading);
-  expand.addEventListener("click",()=>setCardReading(card,!card.classList.contains("is-reading")));
- };
- const buildCard=(item:BriefItem & {issue_date?:string})=>{
-  const card=txt("article","","news-card");
-  if(item.focus)card.classList.add("is-focus");
-  const meta=txt("div","","news-meta");
-  const slot=item.edition==="morning"?t("早报","AM"):item.edition==="evening"?t("晚报","PM"):"";
-  const fullStamp=item.issue_date||(item.published||"时间未提供");
-  const stamp=/^\d{4}-\d{2}-\d{2}/.test(fullStamp)?fullStamp.slice(5,10):fullStamp;
-  meta.append(txt("span",(researchReady(item.research)?t("◇ 论文精读 · ","◇ Paper study · "):item.focus?t("✦ 重点 · ","✦ Focus · "):"")+(item.category||"其他"),"news-category"),txt("span",slot?slot+" · "+stamp:stamp));
-  const heading=txt("h3",item.title_zh||"未命名资讯");
-  const summary=txt("p",item.summary_zh||"","news-summary");
-  const expand=txt("button",t("展开阅读 ↓","Read more ↓"),"news-read-toggle") as HTMLButtonElement;
-  expand.type="button";
-  expand.setAttribute("aria-expanded","false");
-  card.append(meta,heading,summary,expand);
-  readingStructure(item,card,expand);
-  const foot=txt("div","","news-source");
-  foot.append(txt("span",item.source||"原始来源"));
-  const link=item.url?safeUrl(item.url):null;
-  if(link){
-   const a=txt("a",t("阅读原始报道 ↗","Read original report ↗")) as HTMLAnchorElement;
-   a.href=link;a.rel="noopener noreferrer";a.target="_blank";
-   foot.append(a);
-  }
-  card.append(foot);
-  return card;
- };
  /* The archive grows every day; painting every matching card at once blocks the
     main thread for ~0.5s at 120+ cards. The list is paginated by viewport: the
     total is shown immediately, the first chunk paints fast, and more chunks
     follow on scroll or on request. Filters/search always operate on the full
     selection, not only the painted chunk. */
  const CHUNK=24;
- let visibleStories:(BriefItem & {issue_date?:string})[]=[];
+ let visibleStories:BriefStory[]=[];
  let renderedCount=0;
  let progressObserver:IntersectionObserver|null=null;
  const updateProgress=()=>{
@@ -339,7 +178,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   if(renderedCount>=visibleStories.length){updateProgress();return}
   const end=Math.min(visibleStories.length,renderedCount+CHUNK);
   const fragment=document.createDocumentFragment();
-  for(let index=renderedCount;index<end;index++)fragment.append(buildCard(visibleStories[index]));
+  for(let index=renderedCount;index<end;index++)fragment.append(cards.buildCard(visibleStories[index]));
   stories?.append(fragment);
   renderedCount=end;
   updateProgress();
@@ -353,14 +192,13 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  };
  storiesLoadMore?.addEventListener("click",()=>appendChunk());
  const render=()=>{
-  visibleStories=current.filter(x=>(category==="全部"||(x.category||"其他")===category) && (selectedEdition==="all"||x.edition===selectedEdition) && matchesQuery(x));
+  visibleStories=current.filter(x=>(category==="全部"||(x.category||"其他")===category) && (selectedEdition==="all"||x.edition===selectedEdition) && matchesQuery(x,query));
   statusNode.textContent=t(`显示 ${visibleStories.length} 条 · 范围：${scopeLabel()}`,`Showing ${visibleStories.length} · scope: ${scopeLabel()}`);
   statusNode.classList.add("is-summary");
   total.textContent=String(visibleStories.length);
   if(expandedTotal)expandedTotal.textContent=total.textContent;
   updateCompact();
-  readOpen=null;
-  stories?.classList.remove("has-reading");
+  cards.reset();
   if(storiesProgress)storiesProgress.hidden=true;
   if(!visibleStories.length){
    if(query)renderEmpty(t("没有找到匹配的资讯。试试其他关键词，或在全部归档中搜索。","No matches. Try another keyword, or search all archived issues."),"empty-search",{label:t("清空搜索","Clear search"),run:()=>{searchInput.value="";updateSearch(true);searchInput.focus({preventScroll:true})}});
@@ -384,7 +222,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
     // Keep the clicked button mounted so keyboard focus survives filtering.
     category=name;
     tabs.querySelectorAll("button").forEach(tab=>tab.setAttribute("aria-pressed",String(tab===button)));
-    render();
+    if(loaded)render();
    });
    fragment.append(button);
   }
@@ -413,47 +251,38 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
   searchInput.focus({preventScroll:true});
  });
  searchAll?.addEventListener("click",()=>{void loadAll();});
- let controller:AbortController|undefined;
- const validateIssue=(data:BriefIssue,date:string)=>{
-  if(data.date!==date||!Array.isArray(data.items))throw Error("日报数据结构不符合预期");
-  const fields=["category","source","published","url","title_zh","summary_zh","why_zh","details_zh","original_title"] as const;
-  if(data.items.some(item=>!item||typeof item!=="object"||fields.some(key=>item[key]!==undefined&&typeof item[key]!=="string")))throw Error("日报条目结构不符合预期");
- };
  const beginLoad=(message:string)=>{
-  loaded=false;stories.setAttribute("aria-busy","true");stories.dataset.state="loading";
+  loaded=false;visibleStories=[];renderedCount=0;cards.reset();
+  if(storiesProgress)storiesProgress.hidden=true;
+  total.textContent="—";if(expandedTotal)expandedTotal.textContent="—";
+  stories.setAttribute("aria-busy","true");stories.dataset.state="loading";
   statusNode.classList.remove("is-summary");
   statusNode.textContent=message;
   renderSkeleton();
  };
  const load=async(date:string)=>{
-  const currentRequest=++request;
-  controller?.abort();controller=new AbortController();
+  const operation=requests.begin();
   beginLoad(t(`正在加载 ${date}…`,`Loading ${date}…`));
   try{
-   if(!isDate(date))throw Error("日期格式不正确");
-   const response=await fetch(`/brief/data/${date}.json`,{cache:"no-cache",signal:controller.signal});
-   if(!response.ok)throw Error(`HTTP ${response.status}`);
-   const data=await response.json() as BriefIssue;
-   if(currentRequest!==request)return;
-   validateIssue(data,date);
+   const data=await repository.getIssue(date,operation.signal);
+   if(!operation.isCurrent())return;
    current=data.items ?? [];loaded=true;
    scopeMode="issue";selectedRange=0;viewLabel=date;
    updateRangeButtons();updateDateButtons();
    headline.textContent=date;
    renderTabs();render();
   }catch(error){
-   if(currentRequest!==request)return;
+   if(!operation.isCurrent())return;
    current=[];total.textContent="—";if(expandedTotal)expandedTotal.textContent="—";
    tabs.replaceChildren();
    renderError(t("这期内容暂时无法加载。检查网络后重试，或切换日期。","This issue is unavailable. Check your connection, retry, or pick another date."),()=>void load(date));
   }finally{
-   if(currentRequest===request)stories.setAttribute("aria-busy","false");
+   if(operation.isCurrent())stories.setAttribute("aria-busy","false");
   }
  };
  const loadRange=async(days:number)=>{
-  const currentRequest=++request;
-  controller?.abort();controller=new AbortController();
-  const signal=controller.signal;
+  const operation=requests.begin();
+  const signal=operation.signal;
   selectedRange=days;updateRangeButtons();
   const matching=availableDates.filter(recentDays(todayBeijing(),days));
   beginLoad(t("正在汇总范围内的简报…","Loading recent issues…"));
@@ -465,70 +294,47 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
     statusNode.classList.remove("is-summary");
     return;
    }
-   const results=await Promise.allSettled(matching.map(async date=>{
-    const response=await fetch(`/brief/data/${date}.json`,{cache:"no-cache",signal});
-    if(!response.ok)throw Error(`HTTP ${response.status}`);
-    const issue=await response.json() as BriefIssue;
-    validateIssue(issue,date);
-    return (issue.items ?? []).map(item=>({...item,issue_date:date}));
-   }));
-   if(currentRequest!==request)return;
-   const success=results.filter((result):result is PromiseFulfilledResult<(BriefItem & {issue_date:string})[]>=>result.status==="fulfilled");
-   if(!success.length)throw Error("All matching issues failed");
-   // Preserve newest issue first, while deduplicating the same source URL.
-   const seen=new Set<string>();
-   current=success.flatMap(result=>result.value).filter(item=>{
-    const key=item.url||`${item.title_zh}|${item.source}`;
-    if(seen.has(key))return false;
-    seen.add(key);return true;
-   });
+   const result=await repository.getIssues(matching,signal);
+   if(!operation.isCurrent())return;
+   current=result.items;
    loaded=true;scopeMode="range";viewLabel=rangeLabel(days);
    headline.textContent=rangeLabel(days);
    renderTabs();render();
-   if(success.length<matching.length){
-    const failed=matching.length-success.length;
+   if(result.failedDates.length){
+    const failed=result.failedDates.length;
     statusNode.classList.remove("is-summary");
     statusNode.textContent=t(`有 ${failed} 期加载失败，当前显示其余 ${current.length} 条。`,`${failed} issue(s) failed; showing the remaining ${current.length}.`);
    }
   }catch(error){
-   if(currentRequest!==request)return;
+   if(!operation.isCurrent())return;
    current=[];loaded=false;tabs.replaceChildren();
    renderError(t("近期简报暂时无法加载。检查网络后重试，或选择具体日期。","Recent issues are unavailable. Check your connection, retry, or choose a date."),()=>void loadRange(days));
   }finally{
-   if(currentRequest===request)stories.setAttribute("aria-busy","false");
+   if(operation.isCurrent())stories.setAttribute("aria-busy","false");
   }
  };
  const loadAll=async()=>{
   if(!availableDates.length)return;
-  const currentRequest=++request;
-  controller?.abort();controller=new AbortController();
-  const signal=controller.signal;
+  const operation=requests.begin();
+  const signal=operation.signal;
   beginLoad(t("正在搜索全部归档…","Searching all archived issues…"));
   try{
-   const results=await Promise.allSettled(availableDates.map(async date=>{
-    const response=await fetch(`/brief/data/${date}.json`,{cache:"no-cache",signal});
-    if(!response.ok)throw Error(`HTTP ${response.status}`);
-    const issue=await response.json() as BriefIssue;
-    validateIssue(issue,date);
-    return (issue.items ?? []).map(item=>({...item,issue_date:date}));
-   }));
-   if(currentRequest!==request)return;
-   const success=results.filter((result):result is PromiseFulfilledResult<(BriefItem & {issue_date:string})[]>=>result.status==="fulfilled");
-   if(!success.length)throw Error("All issues failed");
-   const seen=new Set<string>();
-   current=success.flatMap(result=>result.value).filter(item=>{
-    const key=item.url||`${item.title_zh}|${item.source}`;
-    if(seen.has(key))return false;
-    seen.add(key);return true;
-   });
+   const result=await repository.getIssues(availableDates,signal);
+   if(!operation.isCurrent())return;
+   current=result.items;
    loaded=true;scopeMode="archive";selectedRange=0;viewLabel=t("全部归档","All issues");
+   headline.textContent=viewLabel;
    updateRangeButtons();renderTabs();render();
+   if(result.failedDates.length){
+    statusNode.classList.remove("is-summary");
+    statusNode.textContent=t(`有 ${result.failedDates.length} 期加载失败，当前显示其余 ${current.length} 条。`,`${result.failedDates.length} issue(s) failed; showing the remaining ${current.length}.`);
+   }
   }catch(error){
-   if(currentRequest!==request)return;
+   if(!operation.isCurrent())return;
    current=[];loaded=false;
    renderError(t("全部归档暂时无法加载。请重试。","The archive is unavailable. Please retry."),()=>void loadAll());
   }finally{
-   if(currentRequest===request)stories.setAttribute("aria-busy","false");
+   if(operation.isCurrent())stories.setAttribute("aria-busy","false");
   }
  };
  const resetFilters=async()=>{
@@ -541,7 +347,7 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  };
  filterReset?.addEventListener("click",()=>void resetFilters());
  editionControls.querySelectorAll<HTMLButtonElement>("button[data-edition]").forEach(button=>{
-  button.addEventListener("click",()=>{selectedEdition=button.dataset.edition||"all";updateEditionButtons();render();});
+  button.addEventListener("click",()=>{selectedEdition=button.dataset.edition||"all";updateEditionButtons();if(loaded)render();});
  });
  quickDates.querySelectorAll<HTMLButtonElement>("button[data-days]").forEach(button=>{
   button.addEventListener("click",()=>{
@@ -554,16 +360,13 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
  let manifestStamp="";
  const refreshManifest=async(initial=false)=>{
   try{
-   const response=await fetch("/brief/data/index.json",{cache:"no-cache"});
-   if(!response.ok)throw Error(`HTTP ${response.status}`);
-   const index=await response.json() as BriefIndex;
-   if(!Array.isArray(index.dates))throw Error("归档索引结构不符合预期");
-   const dates=[...new Set(index.dates.filter(date=>typeof date==="string"&&isDate(date)))].sort().reverse();
+   const index=await repository.getIndex();
+   const dates=index.dates;
    const stamp=(index.updated_at||"")+"|"+dates.join(",");
    if(!initial&&stamp===manifestStamp)return;
    const previousNewest=availableDates[0];
    const priorSelection=issueSelect.value;
-   const viewingLatest=initial||(selectedRange===0&&priorSelection===previousNewest);
+   const viewingLatest=initial||(scopeMode==="issue"&&priorSelection===previousNewest);
    manifestStamp=stamp;
    availableDates=dates;
    issueSelect.replaceChildren();
@@ -586,7 +389,8 @@ if(stories&&tabs&&issueSelect&&quickDates&&editionControls&&statusNode&&headline
    }else{
     if(dates.includes(priorSelection))issueSelect.value=priorSelection;
     updateDateButtons();
-    if(selectedRange>0)await loadRange(selectedRange);
+    if(scopeMode==="archive")await loadAll();
+    else if(selectedRange>0)await loadRange(selectedRange);
    }
   }catch(error){
    if(!initial)return;

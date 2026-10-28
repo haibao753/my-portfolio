@@ -1,7 +1,7 @@
 # J.H. LAB — Astro portfolio and daily briefing
 
 ## Performance and reliability
-- `npm run validate` runs Astro diagnostics, deployment guards, the production build and artifact checks.
+- `npm run validate` runs Astro diagnostics, data/request and deployment-contract tests, the production build and artifact checks.
 - `npm ci` installs the committed dependency lockfile reproducibly.
 - The homepage photo strip uses Astro-generated WebP at 320/640/960px. Historic `/images/*.jpg` URLs remain available to legacy pages.
 - Production pages emit canonical/sharing metadata plus `/robots.txt` and `/sitemap.xml`.
@@ -23,7 +23,9 @@ npm run test:e2e # after installing Playwright Chromium
 - Design tokens: `src/styles/tokens.css`.
 - Navigation and project metadata: `src/data/site.ts`.
 - During migration, `scripts/copy-legacy.mjs` includes the existing `/experiments/`, `/assets/` and `/images/`, and separately copies `/brief/data/` in the production `dist/` output.
-- Daily Brief is now an Astro route at `src/pages/brief/index.astro`, with a typed reader in `src/lib/brief-reader.ts`; published JSON remains at `brief/data/`. No private tokens should be committed.
+- Daily Brief is an Astro route at `src/pages/brief/index.astro`. Its controller is `src/lib/brief-reader.ts`; pure data logic, bounded network loading, and card rendering live in `src/lib/brief/`. Published JSON remains at `brief/data/`.
+- Shared browser interactions live in `src/lib/site/`, initialized by `src/lib/site-shell.ts`; the layout owns document structure.
+- `src/data/routes.json` supplies the sitemap and required route inventory. `scripts/site-contract.mjs` owns legacy copy boundaries and deployment artifacts. See [architecture and maintenance rules](docs/ARCHITECTURE.md).
 - The preview/dev server may not serve every legacy URL until the content is moved into public/ or a preview build is used; use `npm run build && npm run preview` for migration acceptance.
 
 ## Deployment
