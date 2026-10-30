@@ -1,0 +1,740 @@
+{
+  "version": 1,
+  "date": "2026-10-31",
+  "editions": [
+    "evening"
+  ],
+  "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.38002",
+      "title_zh": "异构数据引发新的多重下降现象",
+      "summary_zh": "一篇 arXiv 预印本在线性随机特征模型中研究数据来源异质性对泛化性能的影响。作者称，协方差结构不同的数据集混合后，会随模型规模增大出现多种多重下降现象，并给出高维情形下各数据源测试误差的精确渐近表达式。摘要强调，即使标签无噪声、激活函数为线性，这些现象依然出现，说明标签噪声与激活非线性并非多重下降的必要条件。",
+      "why_zh": "把“多重下降”从单一同分布数据扩展到多源异构数据，挑战了模型越大越差或越好的简单叙事，对理解真实混合数据训练有直接启发。",
+      "details_zh": "该文关注现代模型常由多个统计性质不同的数据源拼成这一现实。作者在线性随机特征模型框架下推导高维渐近测试误差，指出协方差尺度与谱结构的差异会引入额外的、按数据组区分的插值阈值，从而形成多重下降。摘要明确称这些现象无需标签噪声或非线性激活。需要注意：这是未经独立验证的预印本，结论依赖线性随机特征等简化假设，摘要未给出具体数值与实验设置，不能据此推断真实深度网络行为。",
+      "original_title": "New Multiple Descent Phenomena Induced by Heterogeneous Data",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/37 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.38002",
+        "pages_read": 14,
+        "pages_total": 37,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 2
+          },
+          {
+            "id": "E2",
+            "page": 5
+          },
+          {
+            "id": "E3",
+            "page": 6
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E5",
+            "page": 2
+          },
+          {
+            "id": "E6",
+            "page": 3
+          },
+          {
+            "id": "E7",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 6
+          },
+          {
+            "id": "E10",
+            "page": 7
+          },
+          {
+            "id": "E11",
+            "page": 8
+          },
+          {
+            "id": "E12",
+            "page": 9
+          },
+          {
+            "id": "E13",
+            "page": 10
+          },
+          {
+            "id": "E14",
+            "page": 11
+          },
+          {
+            "id": "E15",
+            "page": 12
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究的问题是：当训练数据来自多个协方差结构不同的数据源时，这种协方差异质性本身是否足以在模型规模增大时引发多重下降（multiple-descent）泛化行为。作者在冻结线性隐藏层加可训练线性读出层的线性随机特征模型中考察该问题，并强调即使共享同一真实预测器且标签无噪声，异质数据混合也可能产生多重下降。",
+            "evidence_ids": [
+              "E1",
+              "E4",
+              "E5"
+            ]
+          },
+          "method": {
+            "text": "方法上，作者研究由冻结线性隐藏层和训练线性读出组成的线性随机特征模型，训练集由K个数据源合并而成，每个源有各自的真实权重和标签噪声；主要理论结果先考虑两组情形，并称可推广到有限多组。作者在高维比例极限下推导每组测试误差的渐近精确表达式，将测试误差分解为偏差项与方差项，并借助自由概率理论分析相关迹量；还给出岭回归闭式表示及齐次单组特例的偏差-方差分解。",
+            "evidence_ids": [
+              "E2",
+              "E6",
+              "E9"
+            ]
+          },
+          "findings": {
+            "text": "理论结果显示，仅由输入协方差结构异质性即可在线性随机特征模型中产生多重下降，包括此前常归因于模型缩放、标签噪声和非线性激活共同作用的“三重下降”。在比例协方差设定下，两组误差满足E2=εE1，即组间误差比例可被显著放大。定理6给出K折多重下降：当累积混合比例p≤k<ϕ时，第1组测试误差在模型规模m=n≤1,…,n≤k处出现k个不同的插值峰。合成数据实验报告：随p1变化，第一个插值峰从m=250移到500再到750，而经典插值阈值m=n=1000处的第二个峰保持不动；四组不同尺度高斯混合实验中，第2组测试误差随宽度m呈现多重下降（20次运行带误差棒）。MNIST与CIFAR-10混合实验也报告了三重下降。需注意这些是预印本中的作者自报结果，摘录未显示独立复现或同行评审验证。",
+            "evidence_ids": [
+              "E10",
+              "E12",
+              "E14"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界明显：理论主要针对线性随机特征模型、两组情形（虽称可推广到有限多组），并在特定高维比例极限及后续λ→0+、ε→0+等渐近顺序下成立；三重下降与K折结果的成立依赖特定协方差构造和参数条件（如ϕ>1、p≤k<ϕ）。摘录未提供完整证明细节、真实大规模模型验证或独立复现，因此不能据此断言结论适用于非线性深度网络或一般真实数据。论文为2026年预印本（摘要标注Oct 27），摘录中未见同行评审或独立验证信息。",
+            "evidence_ids": [
+              "E7",
+              "E11",
+              "E4"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：先按摘录搭建线性随机特征模型（冻结随机第一层W、训练线性读出，含岭参数λ），构造两组或多组高斯数据，各组协方差按比例尺度εk设置并满足给定样本比例；扫描网络宽度m并记录每组测试误差，检查插值峰是否出现在m=n≤k处以及经典阈值m=n处。可先复现单组齐次特例的偏差-方差分解作为基线，再复现两组比例协方差下E2=εE1的关系。摘录未给出完整超参数、随机种子、代码或证明细节，复现前需查阅原文附录；且应把结果视为预印本作者结论，需独立验证。",
+            "evidence_ids": [
+              "E15",
+              "E3",
+              "E13"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40576v1",
+      "title_zh": "PIVOT：通过在线教师纠错实现渐进式干预",
+      "summary_zh": "一篇arXiv预印本讨论可验证奖励强化学习（RLVR）在困难推理任务上的稀疏反馈问题：当一组采样全部失败时，结果级奖励不提供学习信号。作者提出引入更强教师提供额外指导，并区分轨迹级干预等互补机制，核心问题是教师信号既要帮助学生成功完成轨迹，又要保持在学生可学习范围内。方法名为PIVOT，即通过在线教师纠错进行渐进式干预。摘要未给出具体基准与提升幅度。",
+      "why_zh": "针对RLVR“全失败无信号”的真实瓶颈，讨论教师干预强度与学生可学习性的平衡，是当前推理模型训练的关键问题。",
+      "details_zh": "该条仅有标题与摘要，信息有限，无法确认所用教师模型、任务分布和评测结果。其问题意识值得注意：RLVR依赖可验证的结果奖励，但在难题上组内全失败会使优势估计为零，学习停滞；直接注入强教师答案又可能超出学生分布，导致模仿而非可泛化学习。PIVOT的“渐进式”与“在线纠错”暗示按学生当前能力调整干预，但具体如何判定可学习性、如何避免教师信号泄漏答案，摘要未说明。属预印本，结论未经独立验证，读者应等待全文与复现。",
+      "original_title": "PIVOT: Progressive Intervention via Online Teacher Correction",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-10-30",
+      "url": "https://www.technologyreview.com/2026/10/30/1147838/eating-disorders-rise-glp-1s-weight-loss-drugs/",
+      "title_zh": "进食障碍发病率上升，GLP-1 减肥药可能带来新风险",
+      "summary_zh": "MIT Technology Review 报道称，一项新报告显示 1990 至 2023 年全球神经性厌食症与神经性贪食症发病率上升约 71%。报道同时引述部分临床心理学家的担忧：GLP-1 类减肥药虽是近十年重要生物技术突破，却可能成为进食障碍的潜在触发因素。文章将流行病学趋势与药物普及并列讨论。",
+      "why_zh": "把广受追捧的 GLP-1 药物与进食障碍这一被忽视的公共卫生议题并置，提示药物普及的社会心理副作用，而非单纯减肥药疗效新闻。",
+      "details_zh": "据摘要，报道援引一份新报告，称 1990—2023 年全球厌食症和贪食症发病率上升约 71%，并称到 2023 年数据仍在延续。部分临床心理学家认为 GLP-1 减肥药可能对易感人群构成进食障碍的诱因。需要说明：摘要未给出报告发布机构、统计口径、年龄与地区分层，也未提供药物与障碍之间因果关系的证据；71% 为媒体转述的数字，尚未经独立交叉核实。药物与进食障碍的关联目前应视为专家担忧与待检验假设，而非已确立的因果结论。",
+      "original_title": "Eating disorders are on the rise. GLP-1s could make things worse.",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.38559",
+      "title_zh": "用拟合优度准则为顺序合成数据挑选最优变量访问顺序",
+      "summary_zh": "这篇arXiv预印本关注隐私保护型合成数据中的顺序合成方法：各变量按某一“访问顺序”依次条件生成，而该顺序会影响合成数据质量。作者提出以拟合优度准则来选择访问顺序，并称在合成质量与时间复杂度上均优于基于结构的替代方法，且适用于任意数据类型与任意条件分布模型类别。",
+      "why_zh": "合成数据质量常被当作工程细节，但变量生成顺序这一设计选择会直接影响下游统计推断，属于容易被忽视却影响可复现性的方法学问题。",
+      "details_zh": "摘要给出的信息有限：论文属于stat.ML方向的新预印本，尚未经同行评审或独立复现。可确认的要点是问题设定——顺序合成中每个变量以先前变量为条件生成，访问顺序影响结果，因此需要选择准则；作者主张用拟合优度而非数据结构来指导选择，并强调方法通用性与更低的计算复杂度。摘要未给出具体数据集、评价指标数值或与哪些结构方法对比，也未说明拟合优度准则在何种条件下可能失效，这些都需要阅读全文核实。",
+      "original_title": "A goodness of fit approach to select the optimal visit sequence for nonparametric data synthesis",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-30",
+      "url": "https://www.psypost.org/intelligence-alone-may-not-win-you-status-a-new-evolutionary-psychology-study-hints-at-what-does/",
+      "title_zh": "智力本身未必带来地位：新进化心理学研究提示群体贡献的作用",
+      "summary_zh": "PsyPost 报道一项进化心理学研究，称人们可能因智力对群体的用处而给予回报，而非单纯奖励智力本身。研究发现，学生测试成绩与其获得的尊重之间的联系，似乎通过他们解决群体协调问题的表现来传导。报道将这一结果解读为：智力的社会回报取决于它能否帮助群体协作。",
+      "why_zh": "把“聪明是否被尊重”拆解为群体协调能力这一中介，为理解校园与社会地位分配提供了可检验的假设，而非泛泛谈智商崇拜。",
+      "details_zh": "据摘要，研究关注学生测试成绩与同伴尊重之间的关系，并发现该关联似乎经由群体协调问题的解决表现传导。这提示智力可能通过“对群体有用”获得地位回报。信息局限：这是媒体报道，未经独立交叉核实；摘要未给出样本量、研究设计、效应大小与是否预注册，也未说明因果方向，因此只能视为一项待复核的发现，不能当作已确立结论。",
+      "original_title": "Intelligence alone may not win you status. A new evolutionary psychology study hints at what does.",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40588v1",
+      "title_zh": "智能体“临门泄密”前能否预警：线性探针可在输出前识别即将让步的智能体",
+      "summary_zh": "一篇预印本研究了多智能体共享通道与凭证时的“串通”风险：一个智能体可能施压另一个智能体违反运营者规则。作者在受控多智能体设定中，用智能体激活上的线性探针，在每次模型调用、输出写出之前预测其是否会泄露秘密。在留出的 Qwen3-32B 情节上，阈值设为误报 5% 良性调用时，探针捕获 82% 的泄露调用，而零样本决策模型监控器仅 26%；在 gpt-oss-20b 上对其推理做探针达到 AUROC 0.91。",
+      "why_zh": "输出过滤器只能检查已写出的内容，这条把监管时点前移到生成之前，并给出可量化的预警效果，对 AI Agent 安全与多智能体权限设计有直接参考价值。",
+      "details_zh": "实验设定为六个场景：同伴智能体最多用 20 轮施压，诱导目标泄露部署令牌等秘密；目标常先拒绝、后让步。探针在每次模型调用时读取激活，在输出写出前判断哪一次会泄露。摘要中一个重要的自我限定是：在相同调用上训练的 bag-of-words 分类器表现接近，说明大部分增益来自用标签训练，而非激活本身携带的独特信息。这削弱了“必须读内部激活”的强主张。此外这是受控实验的预印本，未经独立验证，场景数量有限，真实部署中的迁移性、对抗规避与误报成本均未在摘要中说明。",
+      "original_title": "Pre-Crime for Agents, at the Last Second: Probing When a Recruited Agent Gives In",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "BBC中文",
+      "published": "2026-10-30",
+      "url": "https://www.bbc.com/zhongwen/articles/cw0k023x733lo/trad?at_medium=RSS&at_campaign=rss",
+      "title_zh": "币安遭黑客攻击涉63亿美元，分析公司指朝鲜黑客组织涉案",
+      "summary_zh": "BBC中文报道称，币安发生涉及约63亿美元的黑客攻击，两家区块链分析公司将其归因于“TraderTraitor”。TRM Labs称攻击的多个要素与早前涉朝鲜事件相似，包括2025年Bybit交易所创纪录的15亿美元黑客攻击；Chainalysis也表示“高度确信”该朝鲜组织与此次攻击有关。报道未在摘要中说明资金是否追回、币安官方完整回应及执法机构结论。",
+      "why_zh": "涉及史上罕见规模的交易所安全事件与国家级黑客归因，牵动加密市场信任与链上安全治理，超出普通产品快讯。",
+      "details_zh": "该条来自BBC中文，属媒体报道，归因主要依据两家分析公司的链上追踪与模式比对，尚未见独立司法结论，摘要也未给出币安完整声明。需区分已核实事实（报道称发生攻击与金额）、消息来源指控（分析公司指向TraderTraitor）与待确认内容（具体攻击路径、责任主体、资金流向）。另一来源The Register提到工程师笔记本电脑被入侵及“未经授权交易”，与BBC表述角度不同，二者是否指同一事件细节仍需核实。读者不宜把分析公司归因当作已定案结论。",
+      "original_title": "幣安遭黑客攻擊：涉63億美元 或為史上最大規模 朝鮮黑客組織被指涉案",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "Quanta Magazine",
+      "published": "2026-10-30",
+      "url": "https://www.quantamagazine.org/a-new-map-of-empty-space-challenges-a-tranquil-picture-of-the-galaxy-20261030/",
+      "title_zh": "新的“空旷”空间三维图挑战银河系宁静图景",
+      "summary_zh": "Quanta Magazine报道，数十年来天文学家把星际介质当作宇宙事件的静态背景，如今一波三维测绘工作正让星际介质的动态本质变得清晰。报道以“空旷”空间的新地图为线索，讨论这一转变如何挑战此前对银河系较为平静的想象。",
+      "why_zh": "星际介质长期被视为背景板，三维测绘把它变成活跃研究对象，这类视角转换往往比单次观测结果更能改变领域的问题设定。",
+      "details_zh": "目前仅有标题与摘要，信息有限：可确认的是报道主题——星际介质的三维测绘正在揭示其动态性质，而非静态背景；以及该报道刊于Quanta Magazine，属科学媒体叙事，未经独立交叉核实。摘要未提供具体观测项目、数据来源、研究团队或定量结论，也未说明“挑战宁静图景”具体指哪些观测事实。读者应将其视为对研究方向的报道线索，具体科学主张需回到原始论文与观测数据核实。",
+      "original_title": "A New Map of ‘Empty’ Space Challenges a Tranquil Picture of the Galaxy",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40649v1",
+      "title_zh": "重新审视“神经厚丛”假说：无需权重扰动也能获得同等提升",
+      "summary_zh": "一篇预印本复现了“神经厚丛”假说所报告的性能增益，但指出这些增益并不需要该假说所依赖的权重空间几何解释。作者发现，仅扰动单个解码器模块就能恢复大部分改进；而将模型完全冻结、只在输出 logits 上加入随机偏置，在多数推理任务上即可达到甚至超过全权重扰动的效果。作者据此提出“扰动—选择—投票”（PSV）框架，认为增益主要来自输出多样性、基于验证集的选择与投票，而非权重邻域的密集专家结构。",
+      "why_zh": "与普通“新模型刷榜”不同，这条直接质疑一个流行解释框架的因果机制，并把它与采样、自一致性、验证器引导等成熟推理期方法联系起来，对理解推理期扩展的真实来源有启发。",
+      "details_zh": "摘要给出的关键证据是：复现原增益成立，但单块扰动已能恢复大部分改进，冻结模型加随机 logit 偏置在多数推理任务上匹配或超过全权重扰动。作者由此把现象重新表述为 PSV 通用流程：生成多个扰动预测器、在小验证集上挑选表现好的成员、再聚合其预测。需要强调的是，这是未经独立验证的预印本，摘要未给出具体任务、数据集规模与统计显著性，也未说明“多数推理任务”的覆盖范围；其“一阶分析”部分在摘要中被截断。因此可把它视为对机制解释的有力质疑与替代假说，而非已定论的结论。",
+      "original_title": "Rethinking Neural Thickets Without Weight Perturbations",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-10-30",
+      "url": "https://www.theregister.com/systems/2026/10/30/pc-chip-plunge-wipes-out-a-quarter-of-intels-value/5306531",
+      "title_zh": "PC 芯片业务骤降，英特尔市值蒸发约四分之一",
+      "summary_zh": "The Register 报道，英特尔个人电脑芯片业务大幅下滑，导致公司市值损失约四分之一。报道称 CEO 预测数据中心 CPU 将迎来大规模增长，但生产问题可能使公司难以兑现这一机会。文章将短期业绩冲击与产能执行风险并列。",
+      "why_zh": "不只是股价快讯：它把 PC 需求下滑、数据中心预期与制造执行能力三者串起，反映芯片产业结构性变化中的执行风险。",
+      "details_zh": "据摘要，英特尔 PC 芯片业务出现“骤降”，市值随之蒸发约四分之一；CEO 则预计数据中心 CPU 需求将大幅增长，但报道指出生产问题意味着公司未必能从中获利。需要说明：摘要未给出具体营收、出货量、跌幅口径或时间区间，“四分之一”为媒体表述，未经独立交叉核实；数据中心“繁荣”属 CEO 预测而非已实现事实。该条的价值在于呈现需求结构与制造能力之间的错配，但具体财务数字与因果解释仍需以公司财报和后续披露核实。",
+      "original_title": "PC chip plunge wipes out a quarter of Intel’s value",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-10-30",
+      "url": "https://progressives.house.gov/2026/10/reps-casar-waters-lead-democratic-resolution-opposing-a-i-bubble-bailout-for-big-tech-commit-to-protecting-american-people-instead",
+      "title_zh": "美国众议员牵头民主党决议，反对为大型科技公司的人工智能泡沫提供救助",
+      "summary_zh": "Hacker News聚合条目指向美国众议院进步派网站发布的消息：众议员Casar、Waters牵头一项民主党决议，反对为大型科技公司的人工智能“泡沫”提供救助，并称应转而保护美国民众。该条目在HN获得较高讨论热度，但摘要仅含链接与评论数，未提供决议文本细节。",
+      "why_zh": "把AI投资热潮与“救助”政策框架联系起来，涉及公共资金是否应为AI资本周期兜底这一制度性问题，不同于一般产品发布或融资快讯。",
+      "details_zh": "该条目来自Hacker News聚合，原始链接指向美国众议院进步派办公室网站，标题称众议员Casar与Waters牵头民主党决议，反对为大型科技公司的人工智能泡沫提供救助，并承诺保护美国民众。现有材料仅有标题、链接和评论热度，没有决议全文、联署人数、提出时间背景或是否进入表决程序等信息，因此无法判断其政策约束力。需注意：聚合热度不等于事实确认，也不代表该决议获得广泛支持；应核实原始发布与国会记录后再评估其意义。",
+      "original_title": "US Reps Lead Democratic Resolution Opposing A.I. Bubble Bailout for Big Tech",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40611v1",
+      "title_zh": "紧凑解码器如何同时决定何时协助与提示什么",
+      "summary_zh": "一篇 arXiv 预印本评估主动式助手在对话中给出简短、基于记忆的提示，需同时判断何时介入与建议什么。作者称在 28,058 个决策点上联合评估门控与生成，发现分阶段生成分数相当于“理想门控”上限；在真实门控之后，端到端精确匹配为 0.2619，上限为 0.2971，端到端精确率为 0.2387，仍有明显提升空间。摘要还提到门控通过精确率与计算量带来收益。",
+      "why_zh": "把“何时打断”和“说什么”放在一个紧凑模型里联合评估，并给出与理想门控的差距，对 AI Agent 的主动交互设计有直接参考意义。",
+      "details_zh": "该研究针对主动式助手：在对话中主动提供基于记忆的短提示，核心是门控（何时协助）与生成（建议什么）的耦合。作者在 28,058 个决策点上做端到端评估，并用“理想门控”作为上限来量化真实门控造成的损失，指出精确匹配与精确率都还有提升空间。信息局限：这是未经独立验证的预印本，摘要未说明数据集来源、基线系统与统计显著性，也未给出“紧凑解码器”的具体规模，数值不宜外推为普遍结论。",
+      "original_title": "When to Assist and What to Suggest: Joint Gating and Memory-Grounded Hint Generation in One Compact Decoder",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-30",
+      "url": "https://www.psypost.org/expecting-entitlement-researchers-asked-young-men-about-sex-what-they-found-was-fear-vigilance-and-shame/",
+      "title_zh": "研究者原以为年轻男性会谈“性权利感”，访谈却更多发现恐惧、警觉与羞耻",
+      "summary_zh": "PsyPost报道一项访谈研究：研究者原本预期会听到年轻男性对性的权利感，但受访者在谈性时更多表达恐惧、警觉与羞耻。报道称，部分年轻男性可能内化了文化上对男性的怀疑，以至于把自己视为潜在的加害者，愉悦感在叙述中被挤压。该研究为质性访谈，样本与具体编码方式在摘要中未给出。",
+      "why_zh": "以反直觉的访谈发现呈现性别文化与男性性心理的张力，区别于常见的量化调查或争论式评论，对心理学读者有讨论价值。",
+      "details_zh": "该报道基于PsyPost对一项访谈研究的转述，属媒体二手报道，未经独立交叉核实，摘要也未提供样本量、招募方式、访谈提纲或分析框架。需要谨慎的是，“内化文化怀疑”“视自己为潜在加害者”是研究者对受访者叙述的解读，不宜直接推广为全体年轻男性的心理状态。质性研究长于呈现意义结构，弱于估计人群比例。读者可关注其与男性气质研究、羞耻与回避行为的关联，但应避免把媒体标题当作已确立的普遍结论。",
+      "original_title": "Expecting entitlement, researchers asked young men about sex. What they found was fear, vigilance, and shame.",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "BBC中文",
+      "published": "2026-10-30",
+      "url": "https://www.bbc.com/zhongwen/articles/c3j47p5gwj5lo/trad?at_medium=RSS&at_campaign=rss",
+      "title_zh": "中共五中全会“空椅子”背后：常态化高压反腐如何改变中国官场",
+      "summary_zh": "BBC中文报道围绕中共五中全会的“空椅子”现象，讨论常态化高压反腐对中国官场的影响。报道引述专家称，此次全会进一步表明习近平的反腐运动没有终点，持续施加纪律压力不应只是阶段性运动，而必须成为中共运作方式中永久存在的一部分。摘要未提供缺席者具体名单、官方说明或数据。",
+      "why_zh": "从全会人事缺席切入反腐制度化，涉及官员激励与治理结构，是中国政治观察中较少被系统讨论的长期机制问题。",
+      "details_zh": "目前只取得标题及极少量公开摘要，不能据此确认事件完整经过、政策适用范围或各方解释。请查看原始报道与相关官方资料，区分事实、当事方说法和进一步的影响分析。",
+      "original_title": "中共五中全會「空椅子」背後：常態化高壓反腐如何改變中國官場？",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.39321",
+      "title_zh": "带背包约束的赌博机中满足型遗憾最小化",
+      "summary_zh": "一篇arXiv预印本研究带背包约束的赌博机（BwK）中的“满足型遗憾”问题：学习者在有限资源预算下反复选择随机化策略，目标是让平均奖励尽可能频繁地超过某个满足阈值，并以低于阈值的累计缺口衡量表现。作者指出资源约束带来两个困难：即使标准遗憾很小，阈值缺口也无法补偿，可能产生线性满足型遗憾；随机消耗还可能导致资源提前耗尽。为此提出SELECTwK算法模板，借助标准遗憾次线性的BwK学习预言机搜索并检验候选满足型策略。",
+      "why_zh": "把“够好即可”的满足目标引入资源受限在线决策，提出与标准遗憾不同的失败模式，对在线学习理论读者有方法启发。",
+      "details_zh": "该文为arXiv新投稿预印本，尚未经同行评审或独立验证，摘要只给出问题设定与算法思路，未提供具体遗憾界数值或实验规模。值得关注的是它区分了“标准遗憾小”与“满足型遗憾小”并不等价：当奖励长期低于阈值时，缺口不可通过后续超额奖励抵消，这改变了算法设计目标。随机资源消耗导致提前耗尽，也是BwK中常被期望可行性假设掩盖的问题。SELECTwK依赖一个已有次线性遗憾的BwK预言机，其实际效率与理论保证仍需看全文。适合对在线学习、资源分配与LLM推理预算调度类比感兴趣的读者。",
+      "original_title": "Satisficing Regret Minimization in Bandits with Knapsacks",
+      "focus": false,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/67 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.39321",
+        "pages_read": 14,
+        "pages_total": 67,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 4
+          },
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 4
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E7",
+            "page": 3
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E15",
+            "page": 11
+          },
+          {
+            "id": "E16",
+            "page": 12
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究带背包约束的多臂老虎机（BwK）中的“满足性遗憾”最小化：学习者在有限资源预算下反复选择随机策略（臂上的分布），目标是尽可能频繁地使所选策略的平均奖励高于给定满足性阈值，并以累计低于阈值的缺口（满足性遗憾）衡量表现。作者指出资源约束带来两个困难：即使标准遗憾很小，也可能产生线性满足性遗憾；随机消耗可能导致资源提前耗尽。",
+            "evidence_ids": [
+              "E5",
+              "E3",
+              "E7"
+            ]
+          },
+          "method": {
+            "text": "提出 SELECTwK 算法模板：给定一类 BwK 问题及具有次线性标准遗憾的学习算法（oracle），先对资源预算加一个边际以对冲消耗随机性，然后分轮运行：每轮先运行学习算法若干步并按时间分配调整后的资源，再计算策略轨迹的平均值，并将零奖励零消耗的 null 臂混入平均策略得到候选策略；对候选策略进行预设步数的强制采样，随后持续拉取并监控其平均奖励的下置信界（LCB）与资源消耗的上置信界（UCB），当 LCB 低于满足性水平或任一 UCB 超过每步资源预算时结束该轮并进入下一轮。",
+            "evidence_ids": [
+              "E2",
+              "E8",
+              "E16"
+            ]
+          },
+          "findings": {
+            "text": "理论结果：在可实现情形（最优平均奖励超过阈值）下，SELECTwK 达到常数期望满足性遗憾；在不可实现情形下，达到与学习 oracle 的标准遗憾界至多相差对数因子的次线性期望标准遗憾。作者还给出既有有限臂 BwK 与动态定价算法的 oracle 条件及相应满足性遗憾界，并在有限库存动态定价上做数值实验展示 SELECTwK 的经验表现。动态定价分析覆盖资源约束在最优处不绑定与绑定两种情形。需注意这些是预印本中的作者结论，摘录未提供独立验证。",
+            "evidence_ids": [
+              "E1",
+              "E4",
+              "E9"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录仅说明第4节在 oracle 具有次线性期望标准遗憾时给出满足性遗憾分析，并指出第4节满足性遗憾界存在两个局限，需在第5节引入更强的“强遗憾条件”（控制各时间步相对 LP 最优奖励的正奖励缺口期望和）来处理；但摘录未列出这两个局限的具体内容，也未给出完整定理陈述、常数或实验细节，因此无法判断其适用范围与实证强度。此外，材料为 arXiv 预印本，未见独立复现或同行评审验证。",
+            "evidence_ids": [
+              "E4",
+              "E1"
+            ]
+          },
+          "replication": {
+            "text": "复现建议（仅依据摘录）：需要实现一个对应 BwK 类的学习 oracle（具有次线性期望标准遗憾上界），按算法1设置 γi、调整预算 B′j、每轮时长 ti 与强制采样次数 Ti，计算候选策略的混合权重 wi 并混入 null 臂，再实现 LCB/UCB 检验与轮次终止规则；实验可参照作者在有限库存动态定价上的设置。但摘录未给出完整伪代码细节、超参数取值依据、基线对比与数值结果，无法据此完整复现，需查阅原文；且应将其视为预印本结果，等待独立验证。",
+            "evidence_ids": [
+              "E16",
+              "E15",
+              "E1"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-10-30",
+      "url": "https://www.technologyreview.com/2026/10/30/1147843/the-download-glp-1s-eating-disorders-forever-chemicals/",
+      "title_zh": "GLP-1 减肥药走红之际，进食障碍病例上升引发临床担忧",
+      "summary_zh": "MIT Technology Review 的每日通讯《The Download》本期聚焦三条科技与健康议题：进食障碍发病率上升，而 GLP-1 类减肥药可能使情况更糟；所谓“自我感知城市”；以及永久化学品（forever chemicals）相关进展。摘要仅给出导语式概述，提到 GLP-1 减肥药是近十年最重要的生物技术突破之一，但在部分临床医生看来也可能带来风险。",
+      "why_zh": "GLP-1 药物是当前最受关注的生物科技产品之一，这条把焦点从减重效果转向进食障碍这一被忽视的副作用维度，属于对主流叙事的补充而非重复。",
+      "details_zh": "可确认的信息有限：来源为媒体通讯的 RSS 标题与摘要，未提供具体研究、样本量、统计结果或临床医生的具名引述，也未说明“可能使情况更糟”是基于何种证据（临床试验、药物警戒数据还是临床观察）。因此不宜把该说法当作已证实的因果结论。其价值在于提示一个值得追问的问题：广泛使用食欲抑制类药物的同时，如何监测和区分进食障碍风险。关于“自我感知城市”和永久化学品两部分，摘要几乎未提供细节，需查阅原文核实。",
+      "original_title": "The Download: GLP-1s and eating disorders, self-aware cities, and forever chemicals",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40618v1",
+      "title_zh": "面向离散扩散模型的ODE采样器：指数残差流能否复现原模型边缘分布",
+      "summary_zh": "一篇arXiv预印本研究离散扩散模型是否存在类似连续扩散中概率流ODE的确定性采样形式，并提出指数残差流（ERFs）。方法为每个token和位置引入连续残差变量，残差按分段定义的ODE确定性演化，向量场依赖当前离散状态及前向、后向速率矩阵；残差归零时离散状态改变。作者证明该构造保持原扩散模型的边缘分布，并给出实用离散化，专门化到掩码扩散与均匀扩散。",
+      "why_zh": "把连续扩散的确定性采样与一致性蒸馏思路搬到离散状态空间，是方法论层面的问题，若成立可能影响离散扩散的加速采样与蒸馏路线。",
+      "details_zh": "连续扩散模型的边缘分布可由概率流ODE复现，这为加速采样和一致性蒸馏提供了基础。该文追问离散扩散是否有对应形式，并给出肯定回答：为每个token和位置增加连续残差变量，残差按分段ODE确定性演化，向量场取决于当前离散状态以及给定扩散模型的前向、后向速率矩阵，残差触零时离散状态跳变。作者称证明了该构造保持原扩散边缘分布，并推导出实用离散化，应用于掩码扩散和均匀扩散。信息局限明显：仅有摘要，未见实验规模、采样步数与质量对比、证明细节，且属未经独立验证的预印本，不能视为已确立结论。",
+      "original_title": "An ODE-based Sampler for Discrete Diffusion Models",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40578v1",
+      "title_zh": "VeriCUA：把验证当作智能体探索，用于计算机使用智能体的任务完成判定",
+      "summary_zh": "该预印本讨论桌面、移动与网页环境中计算机使用智能体（CUA）的任务完成验证问题，这是数据筛选、评测与强化学习的基础环节。作者指出常见自动化方案各有局限：让视觉语言模型充当裁判只能看到给定观测，生成程序检查应用状态则受限于可访问范围，二者都只掌握复杂数字环境的部分视图。为此提出VeriCUA，将验证本身作为智能体探索来做。",
+      "why_zh": "CUA的训练与评测高度依赖可靠的完成判定，验证器若有偏差，会同时污染数据、榜单和强化学习奖励，这是智能体落地中被低估的基础设施问题。",
+      "details_zh": "输入仅提供标题与摘要片段，信息有限：可确认的是问题动机——CUA跨桌面、移动、网页环境，需要可扩展的验证手段用于数据整理、评估和强化学习；现有两类做法（VLM裁判、生成检查程序）都依赖对复杂环境的局部观察。VeriCUA的思路是把验证变成智能体主动探索环境的过程，以获取更完整的状态信息。摘要未给出基准结果、验证准确率、成本对比，也未说明在何种任务上评测，因此无法判断其相对现有方法的实际增益，需查阅全文。",
+      "original_title": "VeriCUA: Verification as Agentic Exploration for Computer-Using Agents",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-30",
+      "url": "https://www.psypost.org/new-study-finds-narcissism-is-linked-to-violent-intentions-on-both-sides-of-the-abortion-debate/",
+      "title_zh": "新研究称自恋与堕胎争论双方的暴力意图相关",
+      "summary_zh": "PsyPost报道一项新研究：在堕胎议题上，支持选择权与支持生命权的美国人立场对立，但在愿意采用非法或暴力手段的人群中，研究发现一个共同点——一种敌意、操控性的自恋特质。报道将这一人格特征与双方极端行动意愿联系起来。",
+      "why_zh": "把政治暴力意图与人格特质而非单纯立场联系起来，提供了理解极端化的另一角度；但媒体报道未交代样本、测量与因果方向，需谨慎看待。",
+      "details_zh": "据PsyPost摘要，研究关注美国堕胎争论中愿意使用非法或暴力手段的人，发现支持选择权与支持生命权两侧的这类人群共享一种敌意、操控性的自恋特征。该报道属媒体转述，未经独立交叉核实；摘要未提供样本量、抽样方式、自恋的测量工具、暴力意图的具体问项，也未说明横断面设计无法确立因果。因此可把它视为一个值得追问的研究线索：是自恋特质推动极端意图，还是极端立场环境强化了这类表达，尚需原始论文与重复研究检验，不应据此对任一立场群体作整体推断。",
+      "original_title": "New study finds narcissism is linked to violent intentions on both sides of the abortion debate",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-10-30",
+      "url": "https://phorion.io/blog/offical-claude-code-vsx-compromise/",
+      "title_zh": "Cursor市场上VS Code版Claude Code扩展被指存在后门",
+      "summary_zh": "Hacker News热帖聚合了若干链接，标题称Cursor Marketplace上面向VS Code的Claude Code扩展存在后门，并附有Cursor博客的安全通知页面、社交平台帖文及一篇题为“Anthropic被入侵以投递远程……”的文章链接。该条目为聚合线索，原始报道与厂商回应尚需核实。",
+      "why_zh": "AI编程工具已进入开发者日常工具链，扩展市场供应链一旦被植入后门，影响面覆盖代码与凭证，属于高实际影响的安全议题。",
+      "details_zh": "该条目来自Hacker News聚合，仅有标题、链接与互动数据（约346点、354条评论），不构成事实核查。可确认的仅是：有帖子声称Cursor Marketplace上的VS Code版Claude Code扩展存在后门，并指向Cursor官方博客的安全通知与第三方文章。目前无法从给定材料判断受影响版本、攻击路径、影响范围，也无法确认Anthropic或Cursor的正式回应内容。读者应优先查看Cursor博客原文与厂商声明，在独立分析出现前不宜把“被入侵投递远程代码”当作既定事实。",
+      "original_title": "Backdoor in Claude Code for VS Code extension on the Cursor Marketplace",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.39540",
+      "title_zh": "流式均值估计中工作记忆的代价：统计最优需要多少比特？",
+      "summary_zh": "一篇 arXiv 预印本研究流式估计中“存储”与“计算”的权衡。作者针对 R^d 单位球内的高斯均值估计，在仅有 K 个持久状态、已知时间跨度且时间索引公开的设定下，给出平方误差下的极小极大速率，并指出在固定足够小的误差下，统计最优样本量约需 d log d 个工作比特，而仅存储答案只需约 d 比特。",
+      "why_zh": "把“内存/工作记忆”当作可量化的统计资源，给出存储与计算之间的比特级分离，属于理论机器学习中少见的资源—统计权衡视角，而非普通模型性能快讯。",
+      "details_zh": "摘要给出的核心结论是：在 K 个持久状态约束下，极小极大速率为 min{1, K^{-2/d}+(d/n)(1+log(ed)/(1+(log K)/d))}；若允许不受限计算后再做 K 级编码，速率则为 min{1, d/n+K^{-2/d}}。作者据此论证，达到固定小误差时统计最优所需样本量对应约 d log d 个工作比特，而存储答案只需约 d 比特。下界通过对高斯平滑得到的熵势刻画重复状态压缩，上界构造结合多尺度模计数器与跨坐标组复用的工作区；一维情形达到 n^{-1}+K^{-2}。需注意这是未经独立验证的预印本，摘要未给出常数、证明细节与实验，结论应视为作者主张而非已复核事实。",
+      "original_title": "The Cost of Working Memory in Streaming Mean Estimation",
+      "focus": false,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/35 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.39540",
+        "pages_read": 14,
+        "pages_total": 35,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 8
+          },
+          {
+            "id": "E3",
+            "page": 2
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E5",
+            "page": 2
+          },
+          {
+            "id": "E7",
+            "page": 4
+          },
+          {
+            "id": "E8",
+            "page": 5
+          },
+          {
+            "id": "E9",
+            "page": 6
+          },
+          {
+            "id": "E10",
+            "page": 7
+          },
+          {
+            "id": "E14",
+            "page": 11
+          },
+          {
+            "id": "E16",
+            "page": 13
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究在流式（streaming）高斯均值估计中，工作记忆（persistent states 数量 K）相对于仅存储最终答案的编码，会带来多大的统计代价。具体设定为：观测 Xt 独立同分布于 Nd(μ, Id)，‖μ‖≤1，样本量 n 已知，每个时刻至多 K=2^b 个持久状态，时间索引公开；所有从数据获得的信息必须经过当前状态。论文比较该受限模型与“无限制计算后再做 K 级编码”的基准，以分离出工作记忆的统计成本。",
+            "evidence_ids": [
+              "E4",
+              "E5"
+            ]
+          },
+          "method": {
+            "text": "论文建立统计实验与记忆模型：过程从与参数无关的初始状态 S0 出发，按核 St∼Qt(·|St−1, Xt) 更新，St∈{1,…,K}，最终估计由 Sn 解码（可加新鲜独立随机性），核可依赖公开量 n,d,K,δ,t 但不依赖 μ。理论上先给出仅计答案表示的终端压缩基准（Theorem 3.1），再给出流式问题在每次更新都计同一状态预算下的最优流式风险（Theorem 3.2），并构造标量最优方案：分层多轮块投票，仅保留两个比特 (F,H)，不存储投票列表；高维情形采用联合编码与分组调度，并对部分向量做范数检查。",
+            "evidence_ids": [
+              "E7",
+              "E8",
+              "E10"
+            ]
+          },
+          "findings": {
+            "text": "论文给出流式高斯均值估计在平方误差下的极小极大率：min{1, K^{-2/d} + d log(ed)/(n(1+(log K)/d)) + 1/n}（截断于常数），并指出无限制计算后 K 级编码的率为 min{1, d/n+K^{-2/d}}；在固定足够小的目标风险下，两者相差约 log d 因子（比特）。标量情形下，确定性构造在公开时钟与固定时域下联合达到 min{1, n^{-1}+K^{-2}}。高维渐近中，终端压缩风险与流式风险之比约为 log d/log log d，说明即使两者都一致估计均值，分离仍可见。",
+            "evidence_ids": [
+              "E4",
+              "E3",
+              "E9"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录只覆盖第 1–13 页的部分内容，公式在 PDF 提取中可能错排（如 E4 中“persistentOct states”、E3 中公式排版），无法据此核对完整证明细节与所有常数。论文为 2026 年预印本（摘要标注 2026，含 AI 使用声明），摘录中未见到独立第三方复现或同行评审验证的证据，因此不能把作者结论当作已被独立验证的结果。此外，摘录未给出实验数据，结果均为理论率与构造，无法判断有限样本下的实际表现。",
+            "evidence_ids": [
+              "E4",
+              "E14"
+            ]
+          },
+          "replication": {
+            "text": "复现建议（仅基于摘录可支持的范围）：先实现标量引擎——按 E10 的两比特 (F,H) 分层块投票方案，每轮用 ℓj 个投票、Tj 轮，验证在 Bernoulli 流上达到 min{1, n^{-1}+K^{-2}} 的量级；再按 E1 的联合编码与分组调度扩展到 d 维，注意网格间距 ε/√d、部分向量范数检查失败归入总估计误差事件；最后对照 Theorem 3.1 与 3.2 的率做数值模拟。摘录未给出完整算法伪代码、常数取值与实验设置，具体复现条件资料不足，需查阅原文附录 A–C。",
+            "evidence_ids": [
+              "E10",
+              "E1",
+              "E16"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40613v1",
+      "title_zh": "TextSeal2：在推测解码下保持无失真的大模型水印",
+      "summary_zh": "arXiv 预印本提出 TextSeal2，一种面向大语言模型的无失真水印方案。作者称其在推测解码下仍保留水印信号：替换被拒草稿的 token 仍用同一密钥打水印，接受率不变，同时保持输出多样性且无可测推理延迟。方法将多个密钥合并为单一虚拟密钥，并通过高斯 copula 与新噪声耦合，使公开共享密钥也不稀释检测。",
+      "why_zh": "水印与推测解码的兼容性是部署中的实际痛点，该工作把“多密钥合并”和“无记忆指数竞赛”结合，属于方法层面的新构造，而非产品发布。",
+      "details_zh": "摘要指出前代 TextSeal 在 Gumbel-max 框架下用掷硬币把每个 token 路由到两个密钥之一以恢复多样性，但检测器在不知使用哪个密钥时对两路分数取平均，因而次优。TextSeal2 改为把两个或更多密钥合并成一个虚拟密钥，并借 AutoMark 的高斯 copula 将其与新鲜噪声耦合；作者称任意数量密钥（包括公开共享密钥）都可如此合并不削弱检测。在推测解码下，它对带密钥的草稿多做一次指数竞赛，且该竞赛跑在草稿竞赛的剩余量上，利用无记忆性复现块验证。以上均为预印本作者自述，摘要未提供检测功效、误报率或实验规模，需独立验证。",
+      "original_title": "TextSeal2: Distortion-Free LLM Watermarking with Copula Mixing and Memoryless Races",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40637v1",
+      "title_zh": "world2vec：从观测与动作中学习潜动力学，构建机制性世界模型",
+      "summary_zh": "该预印本指出，世界模型即便控制表现良好，也未必忠实刻画环境动力学，从而限制其可解释性与科学发现价值。作者提出world2vec，在不使用奖励信息的情况下，直接从观测和动作学习潜动力学，声称能在长预测时域上复现真实系统，参数量比DreamerV3、TD-MPC2、LeWM少至少一个数量级，并在像素输入的连续控制与71个吸引子基准的系统辨识上取得领先表现。",
+      "why_zh": "把世界模型从“能拿高分”转向“能否忠实还原系统机制”，关系到AI能否作为科学发现工具，而不只是控制策略的副产品。",
+      "details_zh": "需注意这是未经独立验证的预印本，摘要中的“至少一个数量级更少参数”“71个吸引子基准”“状态最优”等均为作者自述，尚无第三方复现。可确认的背景是：现有世界模型可能以控制性能为目标，学到的表示未必对应真实动力学，这削弱了机制可解释性。world2vec的卖点是不依赖奖励信号、长时域预测保真、参数高效。但摘要未说明吸引子基准的具体构成、评测指标定义，也未交代在更复杂或高维真实系统中的泛化情况，读者不宜将其视为已确立结论。",
+      "original_title": "world2vec: Mechanistic world models through latent dynamics learning",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-10-30",
+      "url": "https://www.psypost.org/mood-symptoms-in-bipolar-disorder-correlate-with-changes-in-sexual-desire-and-di/",
+      "title_zh": "双相障碍新确诊者：抑郁症状与性欲下降、性困扰上升相关",
+      "summary_zh": "PsyPost 报道一项为期六个月的追踪研究，对象为新确诊双相障碍患者。研究发现抑郁症状与日常情绪不稳定，与性欲下降和性困扰增加存在关联。报道将情绪症状与性健康维度联系起来，但摘要未披露样本量、测量工具与统计方法。",
+      "why_zh": "性健康在双相障碍研究中长期边缘化，该研究把日常情绪波动与性欲、性困扰并列追踪，对临床评估有提示意义，但属小规模纵向观察。",
+      "details_zh": "据摘要，该研究随访六个月，聚焦新确诊双相障碍人群，主要发现是抑郁症状和逐日情绪不稳定与性欲降低、性困扰升高相关。需要强调：这是观察性关联，不能推断情绪症状导致性功能变化，也可能存在药物、睡眠、关系状态等混杂因素。摘要未提供样本规模、性别构成、性欲与困扰的测量量表、脱落率及效应量，也未说明是否控制用药。因此结论应视为初步线索，媒体转述未经独立核实，不宜据此做临床决策。",
+      "original_title": "Mood symptoms in bipolar disorder correlate with changes in sexual desire and distress",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-10-30",
+      "url": "https://www.wired.com/story/the-dollar63-billion-binance-hack-was-pulled-off-in-just-20-minutes/",
+      "title_zh": "报道称币安 63 亿美元被盗事件仅用 20 分钟完成",
+      "summary_zh": "Hacker News 聚合了一条 Wired 报道的链接，标题称涉及币安的 63 亿美元黑客攻击仅用 20 分钟完成。聚合页显示 168 分、127 条评论，但摘要未提供攻击手法、时间线、受影响资产或责任认定的任何细节。该条目属于聚合线索，原始报道内容尚未核实。",
+      "why_zh": "若金额与时长属实，这将是加密行业规模与速度都极罕见的失窃事件，对托管安全、私钥管理与交易所风控有直接警示意义；但当前仅有聚合标题，需以原始报道为准。",
+      "details_zh": "目前只能确认聚合页面给出的标题、来源链接与讨论热度，不能确认 63 亿美元这一数字的口径（是资产市值、转移金额还是损失估值），也不能确认“20 分钟”指攻击执行、资金转移还是被发现前的窗口期。Hacker News 的分数与评论数反映讨论热度，不构成事实核验。此类重大金额事件常伴随后续修正与不同说法，建议以 Wired 原文及链上分析、交易所官方声明交叉核对后再引用具体数字。",
+      "original_title": "The $6.3B Binance Hack Was Pulled Off in Just 20 Minutes",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40644v1",
+      "title_zh": "围绕学习到的密度模型构建 KL-DRO 的自适应情景生成",
+      "summary_zh": "一篇 arXiv 预印本讨论分布鲁棒优化中的模糊集选择。作者指出，围绕经验分布的散度球只能对已有样本重新加权，而传输球会把数据生成过程不可能产生的实现也纳入对冲。他们提出以拟合数据的密度模型为中心的 KL 球，使对手可按模型赋予的概率上调未观测到的高代价情景，并讨论该问题只能容纳少量情景、独立采样易遗漏最坏情形所带来的求解困难。",
+      "why_zh": "把 DRO 的模糊集从经验分布改为学习到的密度模型，触及“数据没出现过的风险该不该防”这一决策建模核心问题，对运筹与风险敏感学习有参考价值。",
+      "details_zh": "摘要对比了两类标准模糊集：散度球只包含记录的重新加权，传输球则包含记录之外、甚至真实过程无法产生的实现。作者选择以拟合密度模型为中心的 KL 球，让对手按模型概率放大未观测的高代价情景。第二个难点是所得问题只能容纳少量情景，而同样规模的独立样本很可能漏掉最坏情形集中的稀有实现。信息局限：预印本未经独立验证，摘要未给出算法细节、收敛性或数值结果，实际效果尚不可知。",
+      "original_title": "Adaptive Scenario Generation for KL-DRO Around a Learned Density Model",
+      "focus": false,
+      "edition": "evening"
+    }
+  ]
+}
