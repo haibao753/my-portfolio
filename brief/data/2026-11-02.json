@@ -2,9 +2,631 @@
   "version": 1,
   "date": "2026-11-02",
   "editions": [
+    "morning",
     "evening"
   ],
   "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.40692",
+      "title_zh": "CausalGrade：借助Jev概率判断模型为因果图打分",
+      "summary_zh": "因果发现结果在真实因果结构未知时难以评估，该预印本提出CausalGrade，把观测数据中的关联、条件依赖与方向性证据，连同因果发现基础模型CDFM给出的边概率，一并输入概率判断模型Jev，由Jev对直接因果边作概率判断，再以图结构与这些边级判断的一致程度给出图级分数。在300个合成数据集、4种算法与5种变量数的20种组合中，分数与结构误差呈较强负相关。",
+      "why_zh": "因果发现长期缺少“无真值也能评分”的实用工具，该工作把大模型式判断引入图结构评估，值得追问其判断是否只是复述输入算法的偏好。",
+      "details_zh": "摘要显示方法的核心是让Jev同时接收三类证据：变量间关联、条件依赖和方向性，以及CDFM输出的边概率，再比对候选图邻接结构与边级判断的一致度。实验覆盖300个合成数据集，20种“算法×变量数”组合下分数与结构误差均呈较强负相关，另有500个合成数据集的后续实验但摘要未给出结论。需注意这是未经独立验证的预印本，全部证据来自合成数据，真实数据上的表现、以及Jev判断与CDFM输出是否循环依赖，摘要均未说明，不能据此认为该方法已在实践中可靠。",
+      "original_title": "CausalGrade: Evidence-Guided Causal Graph Scoring with Jev",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.41849",
+      "title_zh": "多元高斯分布微分熵估计的改进：最优仿射等变估计量不可容许",
+      "summary_zh": "该预印本在未知均值向量与协方差矩阵的多元正态分布下研究微分熵估计，采用决策论框架，在严格凸且零点最小化的位置不变损失函数下刻画仿射等变估计量类，求出最优仿射等变估计量，并证明其在一般损失下不可容许；利用样本均值信息导出Stein型改进估计量，并推广到均值矩阵情形，在线性指数损失下给出光滑的Brewster–Zidek型估计量，证明其优于最优仿射等变估计量且在合适无信息先验下为广义贝叶斯。",
+      "why_zh": "不同于常见应用型机器学习论文，这是统计决策论中关于熵估计可容许性的理论进展，涉及Stein型收缩估计与贝叶斯先验的经典问题，对理解高维估计与信息论量的统计性质有启发。",
+      "details_zh": "摘要显示研究聚焦于多元正态分布熵估计的决策论性质：先刻画仿射等变估计量类并求最优者，再证明其不可容许，从而构造利用样本均值信息的Stein型改进估计量，并扩展到均值矩阵情形；在线性指数损失下得到光滑的Brewster–Zidek型估计量，并给出其广义贝叶斯解释。信息局限在于：这是未经独立验证的预印本，摘要未给出具体损失函数形式、改进幅度或模拟结果，也未说明维数条件与渐近性质，读者需查阅原文核实定理假设与证明细节。",
+      "original_title": "Improved estimation of differential entropy of a multivariate Gaussian distribution",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/17 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.41849",
+        "pages_read": 14,
+        "pages_total": 17,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 1
+          },
+          {
+            "id": "E3",
+            "page": 8
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 3
+          },
+          {
+            "id": "E7",
+            "page": 4
+          },
+          {
+            "id": "E8",
+            "page": 5
+          },
+          {
+            "id": "E11",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 10
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究的问题是：在均值向量与协方差矩阵均未知的多变量正态分布下，估计其微分熵（Shannon熵），并采用决策论方法，在严格凸且零点最小化的广义位置不变损失下研究估计问题。作者先刻画仿射等变估计类并求最佳仿射等变估计（BAEE），再证明其不可容许，并构造Stein型改进估计，包括推广到均值矩阵情形；在linex损失下还给出Brewster–Zidek型估计。",
+            "evidence_ids": [
+              "E4",
+              "E1",
+              "E2"
+            ]
+          },
+          "method": {
+            "text": "方法上，作者使用决策论框架：定义Shannon熵H(θ)=−E(ln Λ(Y|θ))，在满足L(t)二阶可微、严格凸、L(0)=0且积分可微等假设的损失下，先刻画仿射等变估计类并求BAEE；随后利用样本均值中的信息构造Stein型改进估计，并扩展到均值矩阵情形；在linex损失下构造光滑的Brewster–Zidek型估计，并证明其在合适非信息先验下为广义Bayes。摘录还显示作者通过条件分布（如|S+XX′|与W在K=κ下的卡方表示）推导风险并求最优常数。",
+            "evidence_ids": [
+              "E1",
+              "E6",
+              "E11"
+            ]
+          },
+          "findings": {
+            "text": "摘录给出的理论结果是：BAEE在一般损失下不可容许；在linex损失下得到的Brewster–Zidek型估计优于BAEE，且为广义Bayes；Stein型估计在均值矩阵情形下一致优于BAEE δc0。摘录还给出二次损失与linex损失下BAEE的具体常数形式，以及改进估计δS=ln|S|−min{c0,b0+ln w}并论证其风险严格更小。摘录未提供数值模拟或实际数据实验，因此无法判断有限样本表现。",
+            "evidence_ids": [
+              "E1",
+              "E13",
+              "E3"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录仅覆盖前14页，主要是理论推导与若干例子，未见到完整的数值实验、模拟比较或实际数据应用；因此无法判断所提估计在有限样本下的风险表现、计算稳定性与适用范围。摘录中的公式存在PDF提取错排（如分式、求和上下标），部分推导细节无法从给定片段完整核验。论文标注为arXiv预印本（arXiv:2610.41849v1），摘录未显示独立验证或同行评审信息，不能把作者结论当作已被独立复现的结果。",
+            "evidence_ids": [
+              "E2",
+              "E8",
+              "E4"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：先按摘录整理模型设定（X∼N(μ,Σ⊗I)、S∼Wp(n,Σ)）与损失假设（严格凸、L(0)=0、积分可微），再实现BAEE常数c01（二次损失）与c02（linex损失），并用条件卡方表示（|S|/|Σ|的乘积卡方）数值计算风险；随后实现δS=ln|S|−min{c0,b0+ln w}并检验其风险是否小于BAEE。由于摘录未给出完整算法、模拟参数与代码，复现前需补充完整论文与附录；当前只能做理论推导层面的核对，不能声称已复现实验结论。",
+            "evidence_ids": [
+              "E7",
+              "E11",
+              "E13"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.40996",
+      "title_zh": "开放语言模型会编造经文吗？BILAL-BENCH 评测孟加拉语伊斯兰文献虚构",
+      "summary_zh": "该预印本指出，语言模型若虚构古兰经经文或圣训，会给文本赋予虚假的宗教权威。现有伊斯兰幻觉基准多集中于阿拉伯语且多为封闭式问题，孟加拉语资源则主要研究通用幻觉或事实知识。作者推出BILAL-BENCH，一个含240道专家核验问题的孟加拉语开放式基准，覆盖古兰经归属等内容，用于评测开放语言模型在伊斯兰文献引用上的虚构行为。",
+      "why_zh": "它把幻觉评测推进到低资源语言与高权威文本场景，提示“引用来源”本身可能成为模型编造的对象，而非仅事实错误。",
+      "details_zh": "摘要说明该基准为开放式问答，而非仅判断选项，这更接近真实使用中模型自由生成宗教引文的场景。240道题经专家核验，覆盖古兰经归属等类别。信息局限明显：摘要未列出被测模型名单、具体虚构率、评分标准与标注者一致性，也未说明基准是否公开。作为预印本，其结论未经独立验证；对宗教文本虚构的严重性判断应基于后续复现与更完整的方法披露。",
+      "original_title": "Do Open Language Models Invent Scripture? BILAL-BENCH: Benchmarking Islamic-Source Fabrication in Bengali",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.40752",
+      "title_zh": "PathoJev：共享视觉上下文的高效病理决策模型",
+      "summary_zh": "该预印本针对病理工作流中同一张切片需回答多个视觉判断的问题，提出PathoJev模型。它一次编码整张切片，对多个独立问题后缀批量评估，并复用混合骨干网络的循环状态，以减少每增加一个问题带来的计算增长。摘要称在三个全切片基准上，9B和27B模型平均准确率为77.2%和78.1%，分别高于SlideChat 5.4和6.3个百分点；WSI-Bench上9B模型运行速度约为SlideChat的9.1倍。",
+      "why_zh": "它把“一次编码、多问题复用”作为病理多任务推理的效率路径，对关注医疗AI推理成本与准确率权衡的读者有参考价值。",
+      "details_zh": "摘要显示，PathoJev基于System One范式，直接预测答案概率而非为每个结构化问题生成并解析独立文本，从而缩短视觉证据到可用决策的延迟。模型在整张切片和区域级评估上共用视觉上下文，并在五个ROI基准上保持有竞争力的准确率。需要注意，这些数字来自作者自述的预印本，尚未经独立复现；摘要未说明基准数据来源、患者分布、临床前瞻验证情况，因此不能据此推断已具备临床部署价值。",
+      "original_title": "PathoJev: Efficient Pathology Decisions from Shared Visual Context",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.42117v1",
+      "title_zh": "面向随机分配采样的快速隐私损失核算：多尺度FFT方法",
+      "summary_zh": "该预印本关注差分隐私中的随机分配采样方案：每个用户的数据在t个步骤中被随机均匀选中的k步使用。该方案据称在私有优化与通信高效聚合中优于泊松采样。作者称现有针对该方案的隐私损失分布（PLD）核算器运行时间与精度参数α的倒数平方成正比（引Feldman与Shenfeld，2026）。论文提出“多尺度FFT”算法来表示似然，摘要在此处截断，未给出复杂度改进的具体阶数或实验数据。",
+      "why_zh": "差分隐私核算器的速度直接决定隐私预算能否在训练中被频繁查询；把FFT引入PLD核算是工程上可落地的方向，但摘要信息不完整。",
+      "details_zh": "已知背景：随机分配采样是每个用户数据被使用k次、位置从t步中随机均匀抽取的方案，作者称其在私有优化和通信高效聚合中优于泊松采样。瓶颈在于现有PLD核算器的时间复杂度随精度参数α的倒数平方增长，精度要求越高越慢。论文提出多尺度FFT来表示似然，摘要在此截断，未说明新算法的复杂度、误差保证、是否适用于其他采样方案，也没有实验对比。由于是预印本且关键结果缺失，目前只能确认问题设定与思路方向，不能断言实际加速倍数或精度表现。",
+      "original_title": "Fast Privacy Loss Accounting for Random Allocation via Multiscale FFT",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.41271",
+      "title_zh": "维度如何改变最近邻双样本检验中的尺度信号通道",
+      "summary_zh": "该预印本研究有向1-最近邻图上广义边计数检验的检验力，突破以往固定维度的分析框架。作者在平衡各向同性高斯样本、维度与样本量对数之比趋于正常数的设定下，推导局部位置与尺度备择下的连边概率。位置备择下两类样本内边计数均值漂移同向而在差分中抵消，尺度备择下则反向，因此差分分量对尺度变化更敏感。",
+      "why_zh": "把高维渐近引入经典非参数检验，解释了同一统计量为何对位置与尺度信号反应不同，属于方法论层面的结构性发现，而非普通应用结果。",
+      "details_zh": "摘要显示，作者关注的是检验统计量中加权和与差分两个成分的分工：位置偏移使两个样本内边计数均值同向移动，差分项相互抵消；尺度偏移则使二者反向移动，差分项得以保留信号。作者还推导了零假设下共享一个顶点的有向边对计数期望的增长速率，并在一段显式的维度参数区间内给出局部检验力极限严格高于检验水平的结论。需要说明的是，这是未经独立验证的预印本，结论依赖高斯与各向同性等模型假设，实际数据上的表现尚待检验。",
+      "original_title": "Dimension Changes the Scale-Signal Channel in Nearest-Neighbor Two-Sample Testing",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/22 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2610.41271",
+        "pages_read": 14,
+        "pages_total": 22,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 6
+          },
+          {
+            "id": "E3",
+            "page": 2
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E5",
+            "page": 2
+          },
+          {
+            "id": "E6",
+            "page": 3
+          },
+          {
+            "id": "E9",
+            "page": 6
+          },
+          {
+            "id": "E12",
+            "page": 9
+          },
+          {
+            "id": "E13",
+            "page": 10
+          },
+          {
+            "id": "E14",
+            "page": 11
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究在维数随样本量增长（而非固定维数）的情形下，有向1-最近邻图上广义边计数两样本检验的检验功效问题：检验 H0: FX = FY 对 Ha: FX ≠ FY，重点考察局部位置与尺度备择下，维数如何改变可检测尺度差异的大小以及由检验的哪个分量来检测。",
+            "evidence_ids": [
+              "E1",
+              "E4"
+            ]
+          },
+          "method": {
+            "text": "方法基于有向1-最近邻图构造广义边计数统计量，它由两个样本内边计数的加权和与差组成；在平衡各向同性高斯样本、d/log N → γ > 0 的设定下，推导局部位置与尺度备择下的连接概率，并利用置换分布下的精确矩（均值、方差、协方差，涉及边对计数 C2、C3）与正态近似得到置换临界值，再结合备择下的均值漂移与正态近似推导局部功效极限。",
+            "evidence_ids": [
+              "E2",
+              "E9",
+              "E4"
+            ]
+          },
+          "findings": {
+            "text": "理论结果显示维数决定尺度信号通道：在一维情形，加权和统计量 Zw 的极限漂移关于 a = N^{1/4}εN 是二次的，而差统计量 Zd 的漂移为零（Theorem 6）；在对数维数情形，Zd 的漂移关于 ℓ = εN N d/√(E0C3) 是线性的，而 Zw 的漂移为零（Theorem 5）。此外，E0C3 的超线性增长（由大入度顶点驱动）导致 VarP(Rd) 增大。",
+            "evidence_ids": [
+              "E3",
+              "E5",
+              "E12"
+            ]
+          },
+          "limitations": {
+            "text": "证据片段仅覆盖引言、方法框架与部分理论结果，未包含完整定理陈述、证明细节、数值模拟或与其他检验的实证比较；因此无法判断有限样本表现、方法在非高斯或非平衡样本下的适用性，也无法确认结论是否经过独立验证。摘录中提及的正式参数结果假设紧支撑（属相关工作描述），但不足以据此评价本文结论的适用范围。",
+            "evidence_ids": [
+              "E6",
+              "E13",
+              "E14"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：按论文设定生成平衡各向同性高斯样本（m = n = N/2），构造有向1-最近邻图，计算加权和与差两个边计数统计量及其置换临界值；在 d = 1 与 d/log N → γ 两种维数区间分别施加局部尺度备择，检验 Zw 与 Zd 的标准化漂移形态是否分别呈二次与线性。需注意摘录未给出完整算法参数、模拟规模与代码，具体复现条件资料不足。",
+            "evidence_ids": [
+              "E2",
+              "E5",
+              "E3"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.42040v1",
+      "title_zh": "个体光滑性下近最优的二阶凸有限和优化",
+      "summary_zh": "该预印本研究 n 个分量光滑凸有限和优化的随机二阶 oracle 复杂度。作者援引近期结果：在平均光滑性与凸性下，极小极大最优复杂度为 Õ(n + n^{6/7} ε^{-2/7})。本文声称个体光滑性与个体凸性可带来进一步加速，给出下界 Ω(n + n^{5/7} ε^{-2/7})，并讨论相应上界。摘要未完整给出上界形式与算法细节。",
+      "why_zh": "它区分“平均光滑性”与“个体光滑性”，指出后者可改进二阶有限和优化的复杂度指数，属于优化理论中设定细化带来加速的典型例子。",
+      "details_zh": "摘要显示，问题设定是光滑凸有限和优化的随机二阶 oracle 复杂度，共 n 个分量。背景是 Tsedenov 与 Kovalev（2026）在平均光滑性与凸性下建立的极小极大最优复杂度 Õ(n + n^{6/7} ε^{-2/7})。本文主张，利用每个分量各自的个体光滑性与凸性，可证明进一步加速，下界为 Ω(n + n^{5/7} ε^{-2/7})。摘要被截断，未展示完整上界、算法构造与匹配性证明，也未说明与已有下界技术的差异。该结果为预印本自述，尚未经同行评审或独立验证，读者不宜将其视为已确立的复杂度结论。",
+      "original_title": "Near-Optimal Second-Order Convex Finite-Sum Optimization under Individual Smoothness",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-01",
+      "url": "https://github.com/ivankovic/omnidiff",
+      "title_zh": "开源工具OmniDiff：用Rust实现的内容感知Git差异比较",
+      "summary_zh": "Hacker News上一位开发者发布开源差异工具OmniDiff，用Rust编写，采用AGPLv3许可。作者称其可比较25种语言的代码，以及配置、图片、PDF、压缩包、光标和字体等文件；在2023款ThinkPad T14s上，数万行C++文件的差异比较可在100毫秒内完成。作者称设计基于真实开源仓库中的差异：考察Gentoo软件包列表中的7400个仓库，抽样2000个差异并手工处理，以建立对“理想差异工具”的理解。以上均为作者自述，尚无第三方评测。",
+      "why_zh": "与常见“又一个diff工具”不同，它声称以真实仓库差异为设计依据并覆盖二进制与文档格式，对日常使用Git的开发者有实际参考价值，但性能与正确性仍需独立验证。",
+      "details_zh": "可确认的信息来自作者自述：OmniDiff是开源、Rust实现、AGPLv3许可的Git差异工具，支持代码（25种语言）、配置、图片、PDF、压缩包、光标、字体等类型；作者给出在2023款ThinkPad T14s上数万行C++文件低于100毫秒的对比时间。方法论上，作者称考察了Gentoo软件包列表中的7400个仓库，抽样2000个差异并手工解决，以此归纳需求。局限明显：性能数字为单一硬件上的自报，未说明基准方法、文件规模分布与内存占用；多格式支持的正确性、边界情况与安全性均未经第三方审计。作为聚合来源的Hacker News帖子，应视为待核实的项目发布信息。",
+      "original_title": "Show HN: OmniDiff – Opensource, super fast, content aware Git difftool, in Rust",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-01",
+      "url": "https://www.psypost.org/inflammation-briefly-dampens-pleasure-and-the-desire-to-socialize-placebo-controlled-study-finds/",
+      "title_zh": "安慰剂对照研究发现：炎症会短暂降低愉悦感与社交意愿",
+      "summary_zh": "PsyPost报道的一项安慰剂对照研究显示，在健康女性中诱发炎症后，其社交意愿下降、感受愉悦的能力减弱，且在统计上控制生病症状后这一效应仍然存在。报道称炎症的影响可能不止于让人感觉不适。该报道未在摘要中给出样本量、炎症诱发方式、测量工具和效应大小，相关结论仍需查阅原始论文核实。",
+      "why_zh": "它把免疫激活与动机、奖赏体验联系起来，提示“生病行为”可能部分独立于主观症状，对理解身心交互有启发。",
+      "details_zh": "据摘要，研究采用安慰剂对照设计，对象为健康女性，通过诱发炎症观察社交意愿与愉悦感变化，并声称在考虑疾病症状后效应仍存在。这类设计有助于区分“因为难受所以不想社交”与炎症对动机系统的直接影响。但信息有限：摘要未披露样本规模、随机化与盲法细节、炎症标志物、测量量表及统计效应量，也未说明是否预注册。媒体报道未经独立交叉核实，不宜将单篇研究结论视为已确立的因果机制。",
+      "original_title": "Inflammation briefly dampens pleasure and the desire to socialize, placebo-controlled study finds",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.40723",
+      "title_zh": "用INLA实现IoT网络无线电环境图的自适应无人机采样：先验宽度决定精度与校准",
+      "summary_zh": "该预印本研究无人机自适应采样构建无线电环境图（REM），观测为非高斯IoT数据。方法用积分嵌套拉普拉斯近似（INLA）更新Matérn高斯马尔可夫随机场后验，并以熵预筛选和Sherman–Morrison前瞻在可达集内选航点。作者称似然诱导的偏正态修正对熵只有六次方量级影响，故对航点选择作用有限；在19个保留的射线追踪窗口上，随机与割草机式采样的残差NMSE中位数分别比后验知情采样高18.0%和14.0%。把先验阴影标准差从6.0放宽到10.025 dB可改善NMSE与可信区间覆盖率，4–16 dB扫描内单调改善、未见拐点，但过度自信仍存在。",
+      "why_zh": "与常见无人机通信热点不同，它把贝叶斯近似推断的校准问题摆到前台：先验宽度而非采样规则主导精度，提示工程调参可能比算法选择更关键。",
+      "details_zh": "摘要给出的核心线索有三点：一是方法层面，INLA替代MCMC做在线后验更新，配合熵预筛选与Sherman–Morrison前瞻降低计算量；二是理论层面，作者论证偏正态修正的熵效应为六次方量级，因此对航点选择影响有限，这解释了为何不同“信息型”规则之间差异不显著；三是实证层面，19个射线追踪窗口的对比显示后验知情采样优于随机和割草机基线，但各信息型规则之间仍未分出高下。值得注意的是，先验阴影标准差放宽带来单调改善且无拐点，说明结果对先验设定敏感，而过度自信未被消除。以上均为预印本作者自述，未经独立复现，样本窗口数量有限，结论外推需谨慎。",
+      "original_title": "INLA for Adaptive UAV Sampling of Radio Environment Maps in IoT Networks: Prior Width Governs Accuracy and Calibration",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.40893",
+      "title_zh": "Qistas：面向大语言模型公平性评估的预注册可移植协议",
+      "summary_zh": "现有大模型公平性基准多源于英语环境、社会类别带有美国色彩，翻译版本把这些类别带入并不适用的社会，且很少在运行模型前固定假设。该预印本提出Qistas协议，用于评估大模型如何对待某一社会的社会、教派与地域群体，并强调可跨社会移植与预注册。摘要信息有限，未给出具体实验规模与结果。",
+      "why_zh": "公平性评测的“类别移植”问题常被忽视，预注册加可移植的设计思路，比再添一个英文基准更值得讨论。",
+      "details_zh": "摘要点出的问题很具体：公平性基准的类别体系是英语世界、尤其是美国社会的产物，直接翻译会把不适用的社会分类强加给其他社会；同时多数基准在跑模型之后才形成假设，存在事后调整空间。Qistas自称是一套预注册、可移植的协议，评估对象是某一社会的社会、教派和地域群体。但输入仅有标题与摘要，协议的具体指标、覆盖哪些社会、预注册如何执行、是否已有实测结果均不清楚，无法判断其可操作性。作为未经独立验证的预印本，其方法学主张需待全文与第三方复核。",
+      "original_title": "Qistas: A Pre-Registered, Portable Protocol for Fairness Evaluation of Large Language Models",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.41283",
+      "title_zh": "含冗余参数时真实且可采纳的主方—代理方检验契约",
+      "summary_zh": "该预印本讨论统计契约设计：委托方按实验产生的证据奖励实验者，奖励规则同时影响谁参与和报告什么。作者研究在只关心均值效应、但方差或分布形状未知时，能否设计既阻止无效提案获利、又激励诚实报告参数的契约。在风险中性与固定参与成本下，作者构造e值菜单，使零假设类型不参与、备择类型获得正期望收益，且真实报告唯一最大化收益。",
+      "why_zh": "把假设检验、e值与机制设计结合，回应科研激励与可复现性中的真实报告问题，视角不同于常规统计方法论文。",
+      "details_zh": "摘要指出，这类契约的核心张力在于：奖励规则既决定参与激励，也决定报告激励。作者要求同时满足四点：自知为零假设的代理方没有参与动机；所有备择类型都有正期望利润因而愿意参与；诚实报告唯一最大化其期望奖励；每份契约可采纳，即在不破坏零假设有效性的前提下无法逐点提高支付。对高斯观测，作者还讨论了分离情形。需注意这是预印本，结论建立在风险中性、固定参与成本等理想化假设上，实际科研激励场景更复杂。",
+      "original_title": "Truthful and Admissible Principal--Agent Testing with Nuisance Parameters",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.42106v1",
+      "title_zh": "物理信息神经网络中的硬约束投影：从线性偏微分方程扩展到Burgers方程",
+      "summary_zh": "该预印本将Chen等2021年提出的硬约束投影（HCP）方法从线性偏微分方程推广到非线性情形，并以Burgers方程为例。作者讨论物理信息机器学习在流体动力学模拟中的潜力，目标是在低于传统数值方法的计算成本下，改善纯数据驱动模型的可解释性、准确性和稳健性。摘要未给出具体误差或加速比数据。",
+      "why_zh": "硬约束投影让网络结构直接满足边界或守恒条件，而非仅靠损失项惩罚，这对关注PINN可靠性的读者是值得追踪的技术路线。",
+      "details_zh": "摘要显示，研究延续Chen等发表在《Journal of Computational Physics》第445卷的工作，把HCP从线性PDE扩展到非线性PDE，具体以Burgers方程作为测试对象。物理信息神经网络通常把方程残差加入损失，但约束只是软性的；硬约束投影试图在架构层面强制满足条件。信息局限在于：摘要未说明投影的具体构造、与软约束PINN的定量对比、网格规模及外推表现，且预印本未经同行评审，不能据此认定该方法已普遍优于数值求解器。",
+      "original_title": "Hard Constraint Projection in a Physics Informed Neural Network (Burgers)",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.40949",
+      "title_zh": "AVID：面向微小空中目标的弱对齐可见光—红外数据集与扰动基准",
+      "summary_zh": "远距离探测小型无人机因外观类似鸟类、地面相机细节有限而困难，可见光与红外融合可提供互补信息，但效果取决于目标尺寸、跨模态对齐与图像质量。该预印本发布AVID基准，基于真实可见光—红外鸟与无人机监控影像，用于系统研究这些因素，并附带扰动基准。摘要未给出数据规模与具体实验结果。",
+      "why_zh": "把“弱对齐”和扰动作为显式变量纳入基准，比单纯刷检测精度更接近真实部署条件，对多模态感知研究有参考价值。",
+      "details_zh": "摘要说明难点有二：小无人机与鸟在视觉上相似，以及地面相机可获得的细节有限；可见光与红外结合是常见应对思路，但其收益受目标尺寸、跨模态配准误差和成像质量制约。AVID以真实监控影像构建基准，并设计扰动测试，意在把上述因素变成可测量变量。信息局限明显：数据来源仅提及来自某监控影像库，样本量、标注方式、扰动类型、基线模型表现摘要均未提供，也没有任何精度数字。这是未经独立验证的预印本，基准质量与可复现性需看全文和社区使用情况。",
+      "original_title": "AVID: A Weakly Aligned RGB-Infrared Dataset and Perturbation Benchmark for Tiny Aerial Targets",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-01",
+      "url": "https://terrytao.wordpress.com/2026/11/01/mathematics-has-changed-lets-act-like-it/",
+      "title_zh": "陶哲轩：数学已经改变，我们应当据此行动",
+      "summary_zh": "Hacker News聚合条目指向陶哲轩个人博客文章《Mathematics has changed. Let's act like it》，该条目在HN获得275点、295条评论，但聚合摘要未提供文章正文内容。仅从标题看，文章主张数学研究环境已发生变化，并呼吁学界与研究者相应调整做法；具体论点、涉及的工具或制度建议无法从现有材料确认。",
+      "why_zh": "陶哲轩是数学界少有的公开讨论研究方法与社区制度的学者，其关于数学实践变化的判断常引发跨领域讨论；但本条仅有标题与热度，需回到原文核实具体主张，不能把HN热度当作观点正确性的证据。",
+      "details_zh": "现有材料仅包含聚合标题、原文链接与HN讨论热度，未提供文章正文、发表平台细节或具体论点，因此无法判断“数学已经改变”所指是AI工具、协作模式、预印本文化还是评价体系。信息局限明显：这是聚合线索而非一手内容，热度与评论数只反映关注度，不构成对论点的验证；读者应直接阅读陶哲轩博客原文，并区分作者个人观察与可核实的制度性事实。",
+      "original_title": "Mathematics has changed. Let's act like it",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.41903",
+      "title_zh": "强化学习的统计基础：非渐近视角综述",
+      "summary_zh": "该预印本是一篇综述，讨论强化学习在不确定性下序贯决策中的统计基础，聚焦有限样本（非渐近）情形。作者指出，随着模型复杂度上升，数据高效RL成为核心问题，尤其在采样成本高、耗时长或风险高的场景。文章称尽管研究数十年，RL的统计理论直到近年才显著发展，并综述了借助高维统计与概率、信息论和统计学习理论推进非渐近RL理论的前沿工作。摘要未给出具体定理、样本复杂度数值或实验。",
+      "why_zh": "对关注RL理论而非产品动态的读者，这类综述有助于厘清“样本效率”背后的统计工具谱系，但需注意其定位是梳理框架而非新结论。",
+      "details_zh": "从摘要可确认的信息有限：这是一篇综述性预印本，主题是RL的有限样本统计理论，动机是现代应用中模型复杂度增长导致数据收集昂贵甚至高风险，因此需要理解并改进算法数据效率。作者强调该领域长期欠发达，近年因高维统计、概率、信息论与统计学习理论的交叉而活跃。摘要未列出具体算法、样本复杂度界、假设条件或实验验证，也未说明综述覆盖的时间范围与文献数量。读者应把它当作领域地图而非可直接引用的结论；若需具体速率或下界，需查阅原文各章节。预印本未经同行评审，引用前应核对正式版本。",
+      "original_title": "Statistical Foundations of Reinforcement Learning: A Non-Asymptotic Perspective",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.42141v1",
+      "title_zh": "RoboArchitect：自动设计带持久记忆的机器人智能体框架",
+      "summary_zh": "该预印本指出，冻结的机器人策略在智能体框架内表现更好，因为控制代码决定何时查询策略、调用视觉工具或直接控制机械臂，但这类框架目前需针对每个新机器人或基准手工构建和重新设计；RoboArchitect让编码模型观察机器人执行轨迹、诊断失败并迭代修改框架，从而把框架设计自动化，作为在新设置上微调策略之外的替代方案。摘要未给出具体性能数值。",
+      "why_zh": "把“智能体框架设计”本身作为可自动优化的对象，而非只微调策略，这一思路对机器人学习与AI Agent工程化都有启发，也触及持久记忆在具身任务中的作用。",
+      "details_zh": "摘要说明该工作基于已有观察：冻结策略在由控制代码编排的智能体框架中表现优于单独使用，但框架构建依赖人工且需按机器人或基准重做；RoboArchitect用编码模型读取执行轨迹、诊断失败并迭代修订框架，形成自动化的框架设计流程，并称其可作为新设置下微调的强替代。信息局限在于：这是未经独立验证的预印本，摘要未提供任务集合、对比基线、成功率或消融结果，也未说明“持久记忆”的具体实现与失败诊断的可靠性，结论需原文与复现支撑。",
+      "original_title": "RoboArchitect: Automating the Design of Robotic Agents with Persistent Memory",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.41255",
+      "title_zh": "多项分布下的离散总变差（第三部分）：一般分布下的期望",
+      "summary_zh": "该预印本论文研究有序分箱上多项计数相对参考分布的“参考中心化离散总变差”的期望。作者指出，在非均匀零假设下，计数的原始总变差含有量级为 N 的确定性阶梯结构，无法通过中心化消除，因此改为以参考分布为中心。通过按相邻两箱的总质量取条件，把每条边化为平移二项分布的绝对偏差问题，得到精确有限样本期望，并在采样分布远离单纯形边界时给出 1/N 的三项渐近展开。",
+      "why_zh": "与常见统计热点不同，它处理的是非均匀零假设下检验统计量的精确期望与渐近展开，属于组合检验理论的基础性推进，对理解离散检验统计量的偏差来源有直接启发。",
+      "details_zh": "摘要显示，研究对象是梳状检验统计量在非均匀参考分布下的自然推广。关键观察是：非均匀零假设下，计数本身的原始总变差带有量级 N 的确定性阶梯，任何中心化都无法去除，因此作者将计数围绕参考分布中心化，使零假设下统计量成为匹配版本。精确有限样本期望通过对相邻两箱总质量取条件获得，每条边化为平移二项绝对偏差问题；对固定 n≥3 且采样分布有界远离单纯形边界的情形，给出 1/N 幂次的三项渐近展开。以上均为预印本摘要自述，尚未经独立验证，摘要未给出展开系数的具体形式与数值结果。",
+      "original_title": "Discrete total variation under the multinomial, Part 3: expectation under a general distribution",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.42118v1",
+      "title_zh": "两个ReLU神经元上的梯度下降：全局景观与分岔动力学",
+      "summary_zh": "该预印本用最小多指标模型研究梯度下降如何学习特征：在各向同性高斯输入下，一个良设定的双神经元ReLU教师—学生模型，从小初始化出发用总体梯度流训练。作者称动力学由两个方向组织，即承载主要信号的“容易”角平分线方向，以及另一个方向，并呈现多阶段梯度动态。摘要未给出完整结论与定量结果。",
+      "why_zh": "以可解析的极小模型刻画深度学习中特征学习的相变与分岔，属于神经网络理论的典型进路，对理解训练动力学有启发。",
+      "details_zh": "摘要显示，作者选择的是一个已经能展现丰富多阶段动力学的极简设定：教师和学生都是双神经元ReLU网络，输入为各向同性高斯，训练采用总体梯度流而非小批量随机梯度，初始化较小。作者称动力学由“容易”的角平分线方向与另一方向共同组织，暗示存在分岔式的阶段转换。但摘要在此截断，未说明另一方向的具体含义、分岔发生的条件、收敛速率或与已有工作的差异。该文为预印本，结论基于总体梯度流与特定模型假设，向实际训练推广需谨慎。",
+      "original_title": "Gradient Descent on Two ReLU Neurons: Global Landscape and Bifurcation Dynamics",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.40966",
+      "title_zh": "检索器更强、标注更差：不完整相关性判断如何扭曲对话式RAG的拒答评估",
+      "summary_zh": "该预印本讨论对话式RAG基准（如MTRAG、RETECO）的评估缺陷。这类基准端到端评测检索与生成，每个系统基于自身检索结果作答，因此拒答应依据所检索上下文是否充分来评分。作者指出一种便捷捷径：直接从相关性判断读取充分性，把不含金标文档的上下文视为不可回答。作者称精确复跑了官方基线，并在RECOR（RETECO第2赛道）上检验该捷径。摘要在此处截断，未给出具体偏差幅度或修正方案。",
+      "why_zh": "它揭示RAG评测中一个易被忽略的测量问题：检索变强反而可能让基于金标标签的拒答评分失真，对做Agent评估的读者有方法论启发。",
+      "details_zh": "可确认的细节：对话式RAG基准把检索与生成耦合评估，系统各自检索、各自作答，因此“该不该拒答”取决于该系统实际拿到的上下文是否足够，而非全局是否存在金标答案。作者把“上下文无金标文档即不可回答”称为捷径，并指出这会系统性扭曲拒答评估。摘要提到作者精确复跑官方基线并在RECOR上测试该捷径，但截断处未披露具体实验设置、偏差方向与量级，也未说明提出的替代评分方法。因此目前只能把它视为一个评估方法学问题的工作草案，结论需待全文与独立复现确认。",
+      "original_title": "Better Retrievers, Worse Labels: How Incomplete Relevance Judgments Distort Abstention Evaluation in Conversational RAG",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.40801",
+      "title_zh": "Drone-PUR：面向无人机场景的视觉线索发现、理解与推理基准",
+      "summary_zh": "该预印本提出Drone-PUR数据集与基准，针对无人机场景中小目标、细微属性和视角变化给视觉语言模型带来的感知与理解困难，按感知、理解、推理三个能力维度组织任务，推理样本要求模型组合多条视觉线索得出有视觉依据的结论；共11项任务、17.5万训练样本和2万测试样本，覆盖单图、图像序列、跨模态图像和多视角，测试样本经人工审核；评估22个通用视觉语言模型显示其在空间判断、跨模态与跨视角推理上存在持续局限，且感知更强与推理表现相关。",
+      "why_zh": "无人机场景是视觉语言模型评测中较少系统覆盖的领域，该基准把线索发现与多线索整合分开考察，有助于区分感知瓶颈与推理瓶颈，对具身智能与遥感应用有参考价值。",
+      "details_zh": "摘要说明该工作关注通用视觉语言模型在无人机视角下的感知不完整或不准确问题，构建了围绕视觉线索发现、解释与整合的三层能力基准，任务涵盖单图、序列、跨模态与多视角，测试集经人工审核，并评测了22个通用模型，发现空间判断和跨视角推理仍是短板，且模型感知能力与推理表现存在关联。信息局限在于：这是未经独立验证的预印本，摘要未给出各模型的具体分数、任务定义细节和人工审核流程，也未说明数据采集来源与偏差控制，结论需待同行评议与复现验证。",
+      "original_title": "Drone-PUR: From Visual Clue Discovery to Understanding and Reasoning in UAV Scenes",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.40884",
+      "title_zh": "从受污染样本中进行稳健的分布学习",
+      "summary_zh": "该预印本关注检索、抓取和自动过滤得到的大数据集往往混入非目标人群样本的问题。作者提出污染校正最大均值差异（CC-MMD），利用所有观测的噪声成员分数与少量已审核子集的精确标签，估计若拥有潜在干净样本本可得到的理想MMD，从而避免忽略污染或只保留小规模可信子集两种极端。摘要未给出实验细节。",
+      "why_zh": "不同于一般“数据清洗”经验谈，它把污染问题形式化为可估计的分布目标，对依赖网络抓取数据训练模型的读者有方法启发。",
+      "details_zh": "摘要指出，标准分布目标在污染数据上要么收敛到错误目标，要么丢弃大部分数据。作者设定观测样本为潜在目标分布q与未知污染分布z的混合，并假设所有观测有噪声成员分数、少量子集有精确审核标签。CC-MMD属于设计型估计器，用代理分数加审核残差校正来逼近理想MMD。需要强调这是未经独立验证的预印本，摘要未披露具体数据集、误差界或与基线方法的对比结果，实际稳健性和可扩展性尚待核实。",
+      "original_title": "Robust-by-Design Distributional Learning from Contaminated Samples",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.42066v1",
+      "title_zh": "知识层模型KLM：让AI输出可见证据、路由诊断与负面结果",
+      "summary_zh": "该预印本提出知识层模型KLM，一套开放、与实现无关的推理记录规范，包含带版本的认知评估、证据关系和显式未知项；Nage AI OS的知识与证据架构SEDIM为参考实现，对应KLM v0.3。作者称经验材料来自彼此独立的内部实验，而非统一验证，摘要未给出具体结果。",
+      "why_zh": "“答案看起来对”与“依据可被审查”是两回事，把证据链和未知项写进推理记录，是AI可审计性讨论中较少见的工程化尝试。",
+      "details_zh": "摘要的核心主张是：AI回答仅表面正确不够，审查者需要查看其记录在案的依据。KLM因此规定推理记录应包含版本化的认知评估、证据关系以及明确标注的未知项，并强调规范开放、不绑定具体实现；SEDIM被列为参考实现，版本为KLM v0.3（仓库标签v0.3.0）。需要谨慎的是，作者自述经验材料是若干独立的内部实验，而非系统性验证，标题中的“负面结果”具体指什么摘要未说明。这是未经独立验证的预印本，且由相关系统方提出规范，其有效性不能视为第三方确认。",
+      "original_title": "The Knowledge Layer Model (KLM): Evidence-Visible AI Output, Routing Diagnostics, and Negative Results",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.42135v1",
+      "title_zh": "分布匹配蒸馏中更可靠的评论者网络更关键",
+      "summary_zh": "该预印本研究分布匹配蒸馏（DMD）：少步学生模型利用教师得分与在线评论者网络对学生分布得分的估计之差进行训练。作者从容量与信息两方面考察评论者需要什么才能提供可靠训练信号。在 ImageNet 上跨七种 SiT 模型尺寸的受控实验显示，固定小型评论者而增大教师模型可能降低学生质量并导致训练崩溃。摘要未给出具体指标数值。",
+      "why_zh": "它把扩散蒸馏的瓶颈从学生架构转向评论者容量匹配，提示“教师越大越好”的直觉在蒸馏中可能失效，对少步生成模型训练有直接实践意义。",
+      "details_zh": "摘要指出，DMD 依赖在线评论者估计学生分布得分，因此评论者质量决定训练信号可靠性。作者从容量和信息两个维度分析：容量方面，在 ImageNet 上用七种 SiT 模型尺寸做受控实验，发现保持小型评论者不变而增大教师模型，可能反而损害学生质量并引发训练崩溃。这说明教师与评论者容量需要匹配，而非单方面扩大教师。摘要未披露具体 FID 等指标、崩溃判据或信息维度的实验结论，也未说明是否提出修复方法。该工作为预印本，实验结论尚未经独立复现验证。",
+      "original_title": "A Better Critic Matters for Distribution Matching Distillation",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.41012",
+      "title_zh": "检索增强生成中的从众偏差：多数被污染文档可影响模型识别错误信息",
+      "summary_zh": "该预印本研究检索增强生成中检索文档含误导证据时，互相一致的被污染文档数量是否影响语言模型识别错误信息的能力；作者从SciFact随机选取200个问题（随机种子38），比较“一份被污染加六份健康文档”与“六份互相一致的被污染文档”等上下文条件。摘要未给出具体结果数值，仅表明研究设计围绕文档一致性与数量对模型判断的影响。",
+      "why_zh": "把社会心理学中的从众效应引入RAG可靠性研究，提示检索文档的“多数一致”本身可能成为攻击面，对构建抗投毒的检索系统与评估模型事实性有直接意义。",
+      "details_zh": "摘要显示研究关注RAG场景下检索到的误导性文档如何影响模型识别错误信息，实验以SciFact的200个随机问题为材料，对比少量污染文档与多份互相一致的污染文档两种上下文，考察模型判断是否随“多数一致”而改变。信息局限明显：这是未经独立验证的预印本，摘要未披露具体准确率变化、所用模型、污染文档构造方式和统计检验，因此不能据此断言从众偏差的效应大小；读者应查阅原文核实实验设计与结果，并注意单一数据集与随机种子的外部效度限制。",
+      "original_title": "Language Models Show Conformity Bias in RAG: When the Majority Endorses a Poisoned Claim",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2610.40900",
+      "title_zh": "AquaProbe：为水下图像高效适配冻结视觉模型",
+      "summary_zh": "该预印本关注水下自主探索中的视觉感知可靠性。陆地上预训练的视觉模型在水下会因浑浊、后向散射和波长相关衰减而性能下降。现有适配方法要么在编码器各层均匀布置适配器，要么依据两个固定域之间的差异选择层。作者提出AquaProbe，用于更高效地为水下图像适配冻结视觉模型，摘要未给出具体实验数据。",
+      "why_zh": "水下视觉是具身智能与机器人感知的真实短板，问题设定具体；但摘要信息有限，创新程度与实测收益尚无法判断。",
+      "details_zh": "从摘要可知，论文的出发点是域偏移：水下成像的物理特性改变了场景外观，使陆地预训练特征失配。作者批评两类现有做法——按深度均匀分配适配器，以及用两个固定域的发散度选层——并据此提出AquaProbe。但摘要在此处截断，未说明方法细节、评测数据集、对比基线或量化提升幅度，也未提供开源链接。因此目前只能确认研究动机与问题定位，不能据此判断其相对已有方法是否确有优势，需等待全文与独立复现。",
+      "original_title": "AquaProbe: Efficient Adaptation of Frozen Vision Models for Underwater Images",
+      "focus": false,
+      "edition": "morning"
+    },
     {
       "source_type": "媒体报道",
       "verification_status": "未经独立交叉核实",
