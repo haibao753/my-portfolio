@@ -1,0 +1,633 @@
+{
+  "version": 1,
+  "date": "2026-11-05",
+  "editions": [
+    "evening"
+  ],
+  "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.04207",
+      "title_zh": "流式生成模型中的点插值与分布普适性",
+      "summary_zh": "该预印本从神经常微分方程的表达能力出发，研究由参数化Lipschitz向量场生成的前推测度对概率测度的逼近问题。作者在Wasserstein距离下建立有限样本点插值与分布逼近之间的定量关系，并基于传输映射的L^p逼近给出普适性判据；还证明在总变差距离下，坐标分离式动力学在二维及以上维度不足，并提出基于一维Sobolev逼近与剪切型混合的充分条件。",
+      "why_zh": "把生成模型的“能拟合样本点”与“能逼近真实分布”用定量不等式连接起来，并给出维度相关的失效边界，比一般生成模型性能报告更触及理论根基。",
+      "details_zh": "摘要显示，研究关注含非仿射向量场的仿射不变族在紧支撑绝对连续基测度下具有普适性，并讨论不同点插值机制之间的关系以及近似插值何时可变为精确插值。这些结论来自预印本，尚未经独立验证；摘要未给出具体常数、样本复杂度数值或实验设置，因此不宜据此判断实际训练中的收敛速度。对关注流模型、扩散模型理论保证的读者，其价值在于区分Wasserstein与总变差两种准则下所需的结构条件。",
+      "original_title": "Point interpolation and distributional universality in flow-based generative models",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2606.08218",
+      "title_zh": "深度高斯过程到底有多深？组合高斯过程的锐利阈值与非高斯极限",
+      "summary_zh": "该预印本论文研究逐层为向量值高斯过程的组合先验随深度增长的极限行为。作者称，此前针对RBF核与一定带宽范围r的工作已表明先验在极限下退化、收敛到常数函数集合，因而不适合作为概率模型；本文给出新的带宽阈值结果，称存在锐利阈值r_c(d)=Θ(√d)，超过该阈值极限退化，从而加强了此前的界。摘要还提到一个非高斯极限，但输入材料在此处截断，具体结论无法确认。",
+      "why_zh": "与常见的深度网络经验研究不同，它从数学上追问“深度”在概率模型中的真实含义，并给出可检验的阈值刻画，对理解深度贝叶斯模型的表达能力有直接启发。",
+      "details_zh": "材料显示，该文属于arXiv math.ST的替换版本，摘要指出研究对象是“每一层本身为向量值高斯过程”的组合先验，而非宽网络极限下的普通GP。作者称此前RBF核在部分带宽下先验随深度退化到常数函数，本文的核心贡献之一是给出更锐利的带宽阈值r_c(d)=Θ(√d)。摘要后半段提到“更重要的是”后即被截断，因此非高斯极限的具体形式、证明方法与适用条件均无法从现有材料判断。该文为预印本，未经独立验证，阈值结论应视为作者自述而非已复核事实。",
+      "original_title": "How Deep Are Deep GPs, Really? A Sharp Threshold and a Non-Gaussian Limit for Compositional GPs",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/27 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2606.08218",
+        "pages_read": 14,
+        "pages_total": 27,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 2
+          },
+          {
+            "id": "E3",
+            "page": 5
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E7",
+            "page": 3
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E11",
+            "page": 7
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究的是逐层为向量值高斯过程的组合式先验（compositional GP）在深度趋于无穷时的极限行为：在什么条件下深度无限极限会退化，以及在非退化情形下极限分布具有什么性质。摘要指出，已有工作主要通过深度相关核研究宽网络极限下的GP，而本文关注每层本身是向量值GP的情形。",
+            "evidence_ids": [
+              "E5",
+              "E1"
+            ]
+          },
+          "method": {
+            "text": "核心对象是组合先验在n个输入点上诱导的马尔可夫链。作者先分析标量成对距离链，得到尖锐二分定理（Theorem 4.1），再证明完整位置链在总变差意义下收敛到唯一平稳分布（Theorem 4.3）。方法上，作者不直接为完整链构造Lyapunov函数，而是利用完整链由成对距离决定这一点，转而研究距离上的诱导链。",
+            "evidence_ids": [
+              "E2",
+              "E10"
+            ]
+          },
+          "findings": {
+            "text": "理论结果包括：标量成对距离链存在尖锐阈值rc(d)：当r>rc(d)时距离几乎必然指数衰减到0；当r<rc(d)时距离不趋于0，并收敛到(0,∞)上的唯一非平凡平稳分布。完整位置链收敛到唯一平稳分布。作者还给出平稳律下log v2的矩性质与Jensen上界，并指出非平凡区域随维度d迅速变窄（d=100时约在λ∈(0.99,1)）。经验上，作者在多个维度验证阈值，并用t-SNE等展示极限分布的多峰、链特异结构。",
+            "evidence_ids": [
+              "E10",
+              "E12",
+              "E13"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录只覆盖部分页码，无法据此判断完整证明细节、所有定理假设与实验设置。作者明确指出，Dunlop et al. [2018] 的遍历性结果针对不同构造（Paciorek式分层核），不能迁移到组合类；Lu et al. [2019] 的矩计算只是一步恒等式，不能迭代到更深层，因为有限深度下链非高斯且矩不闭合。此外，高维非平凡区域极窄，若不知道阈值很难定位。摘录未提供独立第三方复现或验证信息，本文为arXiv预印本（arXiv:2606.08218v2）。",
+            "evidence_ids": [
+              "E3",
+              "E7",
+              "E1"
+            ]
+          },
+          "replication": {
+            "text": "学习/复现建议：可先按Theorem 4.1实现标量距离链v2i的迭代，用digamma函数计算rc(d)=2e^{ψ(d/2)/2}，在d=100等维度下分别取r高于和低于阈值，检查log v2i轨迹的指数衰减与平稳化；再按文中描述生成n个输入点上的完整链，在λ接近1的窄带内用t-SNE（perplexity 30、PCA初始化）观察链特异多峰结构，并注意小λ下应退化为无结构团块。由于摘录未给出完整算法伪代码与全部超参数，复现前需核对原文第5节与附录B。",
+            "evidence_ids": [
+              "E10",
+              "E13",
+              "E11"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.03993",
+      "title_zh": "AI助手替谁站台？对LLM辅助众筹中声誉与人口信号的算法审计",
+      "summary_zh": "一篇arXiv预印本用预先设定的选择实验，让七个大语言模型在五个合成众筹项目间做选择，项目质量信号与创始人姓名独立随机化，并设置三种出资者人格及无人格对照，共收集40248条回应。结果显示默认情况下创始人姓名影响很小；但当出资者表示想支持弱势创作者时，模型明显偏向黑人信号（+8.1个百分点，七个模型均为正）和女性信号（+5.1）创始人。",
+      "why_zh": "把算法歧视从静态打分推进到“用户意图触发”的条件机制，对关注AI公平性与金融科技的人有直接启发，也提示审计需区分默认与特定人格场景。",
+      "details_zh": "研究关注的是LLM助手在众筹推荐中的性别与族裔信号使用，属于创业金融中歧视问题的延伸。作者采用选择型联合实验，把项目质量与创始人姓名解耦，从而观察模型在控制质量后是否仍受姓名影响。摘要给出的关键发现是：在预算敏感和交付导向人格下，性别与黑人姓名的效应在统计上等同于零；只有在出资者明确想支持代表性不足群体时，偏向才显著出现。需要注意，这是预印本，未经独立验证，样本为合成项目而非真实平台数据，结论能否外推到实际推荐系统尚不明确；摘要也未说明各模型间差异的具体来源。",
+      "original_title": "Whose startup does the AI back? An algorithm audit of reputation and demographic signals in LLM-assisted crowdfunding",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2610.36601",
+      "title_zh": "公理化学习与概率结构：面向算术机器学习变体的首次应用",
+      "summary_zh": "一篇 arXiv 预印本提出“公理化学习结构”（ALS）与“公理化概率结构”（APS），试图用公理刻画机器学习与优化所依赖的数学框架，研究损失函数等学习理论对象与其变换所满足公理之间的相互作用；APS 则关注 Gibbs 分布、含噪方程等概率论结构与相应公理的关系。作者还在第 6 节提出基于变换公理的学习方法（TABLe），在数学数据集上按得分对变换排序。",
+      "why_zh": "不同于常见的模型刷榜或产品发布，这条试图为“学习理论”本身建立公理化语言，属于方法论层面的基础探索，对关注机器学习数学基础与可解释框架的读者有启发。",
+      "details_zh": "据摘要，该工作把机器学习、优化与“研究框架”的互动归结为公理层面的刻画：ALS 研究损失函数等对象及其变换的公理如何相互制约，APS 研究概率论中 Gibbs 分布、含噪方程等结构与对应公理的关系。第 6 节引入 TABLe，在数学数据集上对变换打分排序，思路类似人类研究者比较哪些变换更有效。需要说明的是，这是未经独立验证的预印本，摘要未给出实验规模、对比基线与量化结果，TABLe 的实际效果与可推广性尚待核实；标题中的“算术机器学习”具体所指也需读全文才能确认。",
+      "original_title": "Axiomatic Learning and Probabilistic Structures with first applications to variants of Arithmetic Machine Learning and beyond",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-03",
+      "url": "https://arxiv.org/abs/2611.05320v1",
+      "title_zh": "PyRUA-DataFarm：让LLM编码智能体替代遥操作员生成机器人演示数据",
+      "summary_zh": "该预印本提出用编码智能体替代遥操作来收集机器人演示数据。在DataFarm流程中，智能体接收数据请求和目标场景中机器人一次校准回合，然后在仿真中重建任务：编写场景、专家控制器与成功判定器。仿真器提供精确动作，视频模型用于后续处理（摘要在此处截断）。作者的问题意识是遥操作每回合都消耗机器人与操作员时间，且每个新任务都从零开始。",
+      "why_zh": "机器人数据采集成本是具身智能落地的瓶颈之一，该工作把LLM编码智能体放进数据生产闭环，属于AI Agent与机器人交叉的实用方向，而非普通模型发布。",
+      "details_zh": "摘要给出的流程是：智能体收到数据请求与一次真实场景校准回合，随后在仿真中重建任务，包括场景、专家控制器和成功判定器；仿真器提供精确动作标签，视频模型的作用因摘要截断而不完整。该思路的吸引力在于把每个新任务的边际成本从人工遥操作转向可复用的代码生成。但信息有限：摘要未说明任务类型、成功率、仿真到真实的迁移效果、与遥操作基线的定量比较，也未说明视频模型的具体角色。作为未经独立验证的预印本，其“real-ready”主张需要真实机器人实验证据支撑。",
+      "original_title": "PyRUA-DataFarm: LLM Agent as a Cost-Efficient Teleoperator for Real-Ready Robot Data",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-04",
+      "url": "https://www.psypost.org/can-watching-sports-make-voters-accept-political-defeats/",
+      "title_zh": "看体育比赛能让人更容易接受政治失败吗？",
+      "summary_zh": "PsyPost报道的一项新研究称，观看电视转播中运动员和教练坦然接受失败，可能让选民更容易接受政治上的失利；观察良好体育精神会直接提高选民认为不利选举结果公平的可能性。报道将体育观赛与政治态度联系起来，但摘要未交代研究设计、样本规模与效应大小。",
+      "why_zh": "把体育精神这一日常经验与选举合法性感知相连，属于政治心理学中较新颖的迁移假设；但媒体报道未给方法细节，读者应把它当作待核实的线索而非定论。",
+      "details_zh": "该条来自PsyPost的新闻摘要，核心主张是“观看良好体育精神”与“认为不利选举公平”之间存在正向关联。可能的机制是榜样式的坦然认输降低了选民对失利的不接受程度，但摘要没有说明是实验还是观察研究、受试者来自哪个国家、测量的是态度还是行为，也没有给出效应量。由于仅有标题与摘要，且未经独立交叉核实，无法判断因果方向与外部效度；体育观赛与政治态度之间也可能受既有党派倾向等因素影响。读者宜等待原始论文或更多方法信息后再评估其意义。",
+      "original_title": "Can watching sports make voters accept political defeats?",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-04",
+      "url": "https://www.phoronix.com/news/Synaptics-Blocks-Vino-Driver",
+      "title_zh": "Synaptics 被指以法律威胁阻止开源 DisplayLink 驱动",
+      "summary_zh": "聚合自Hacker News的条目称，Phoronix报道Synaptics似乎利用法律威胁阻止一个开源DisplayLink驱动（Vino驱动）。该条目仅提供文章链接与讨论链接，未给出威胁的具体形式、涉及的法律依据、驱动项目状态或Synaptics的回应。因此目前只能确认存在这样一则报道线索，其核心指控与双方立场均需回到原始报道核实。",
+      "why_zh": "它触及开源驱动与硬件厂商法律施压的边界问题，对依赖DisplayLink外接显示器的Linux用户有实际影响，也关系到开源兼容性生态的可持续性。",
+      "details_zh": "现有材料仅为HN聚合标题与链接，属于二手线索，不能据此断言Synaptics确实发出了法律威胁或驱动已被下架。需要核实的关键点包括：Phoronix原文引用了何种法律函件或声明、Vino驱动的开发者是谁、争议涉及商标、专利还是驱动分发方式、Synaptics是否有公开回应。此类硬件厂商与开源驱动的冲突并非首次出现，但本条尚无足够细节判断严重程度。在原始报道与当事方回应核实前，应把“法律威胁”视为报道方的说法而非既定事实。",
+      "original_title": "Synaptics Appears to Use Legal Threats to Block Open-Source DisplayLink Driver",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "Quanta Magazine",
+      "published": "2026-11-04",
+      "url": "https://www.quantamagazine.org/new-research-tests-whether-ai-models-know-their-own-thoughts-20261104/",
+      "title_zh": "新研究尝试判断 AI 模型是否“知道自己在想什么”",
+      "summary_zh": "Quanta Magazine 报道称，研究人员通过向大语言模型直接注入“想法”，试图描绘 AI 的内省能力边界。报道将这一方向描述为对模型能否察觉自身内部状态的实验性探测，属于 AI 可解释性与“机器内省”交叉的新兴议题。",
+      "why_zh": "内省能力关系到模型自我报告能否作为可靠信号，涉及可解释性、对齐评估与安全审计，比一般模型发布新闻更具科学追问价值。",
+      "details_zh": "据标题与摘要，研究思路是向大语言模型注入“想法”，观察模型能否报告或利用这些内部状态，从而测量其内省能力。这类实验通常涉及区分“真实读取内部状态”与“根据上下文猜测”的困难，但摘要未提供实验设计、模型规模、对照条件或结果数值，也未说明“想法注入”的具体技术手段。作为媒体报道，其结论尚未经独立交叉核实；读者应注意，即便模型能描述被注入内容，也不等于具备类人意义上的自我意识，相关推断需以论文原文为准。",
+      "original_title": "New Research Tests Whether AI Models Know Their Own Thoughts",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-11-04",
+      "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPdHhpUFBJUjR0cjJtU05TRldQd3Awbk0xdkNYM1FCSF9jSll3M3R1X01wS2l4STByUXRpSnZVOVJPZW5ROGFGdXBPVG5UeUU4Wmh6b1Q4ZGdjWUI5ZVpLN1BEdDhsNXJpZUp2NFYtVGZGVDRoTmNWVGV0VVBBVlI1MjhfVy1hdjhxOW1EdWhya3FPNGhMNGU3ZnBWQlFydnhXaFY2dEtEYUZfMTFwSGZmcDF0b0J5VmZpMlRwM0kyWlk1V2tyMmpURXg4N2RDdXR0U09ENWNGUQ?oc=5",
+      "title_zh": "菲律宾团体在发布会上戴特朗普面具高喊“特朗普下台”",
+      "summary_zh": "据聚合线索，菲律宾多个人民组织与公民社会团体在奎松市菲律宾大学迪利曼校区美术学院举行的新闻发布会上高喊“特朗普下台”，其中一名参与者戴着描绘美国总统特朗普的面具。该条目来源为社交平台聚合信息，原始报道尚待核实。",
+      "why_zh": "该条涉及东南亚公民社会对美国政治人物的公开抗议，但现有材料仅为聚合标题，信息量有限，其新闻价值与事实细节均需原始报道支撑。",
+      "details_zh": "目前可确认的仅是聚合标题所描述的场景要素：地点为奎松市菲律宾大学迪利曼校区美术学院，事件为新闻发布会，参与者包括多个人民组织与公民社会团体，行为包括高喊口号和佩戴特朗普面具。标题未说明发布会主题、组织者诉求、参与规模或事发具体日期（仅称“周三”）。该来源被标注为聚合线索、需要核实原始报道，因此不应把标题描述当作已完成事实核查的新闻；在缺乏一手报道的情况下，不宜推断其政治背景或影响。",
+      "original_title": "Members of various people’s organizations and civil society groups chant “Trump Out Now!” as a participant wears a mask depicting US President Donald Trump during a press conference at the UP College of Fine Arts in UP D",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-11-04",
+      "url": "https://arstechnica.com/health/2026/11/the-dea-banned-a-drug-some-opioid-users-called-a-miracle/",
+      "title_zh": "DEA禁用一款被部分阿片使用者称为“奇迹”的药物",
+      "summary_zh": "Ars Technica报道，美国缉毒局将一款部分阿片类药物使用者称为“奇迹”的药物列入附表一管制，研究人员表示这一禁令可能扼杀对一种有前景的阿片类治疗方案的科学研究。报道聚焦管制决定与科研之间的张力，但摘要未给出药物名称、具体研究阶段与禁令生效细节。",
+      "why_zh": "涉及药物管制与科研自由的直接冲突，对关注公共卫生政策与证据如何进入监管决策的读者有现实意义；但仅有媒体摘要，需核实药物身份与禁令依据。",
+      "details_zh": "目前只取得标题及极少量公开摘要，尚不足以确认报道涉及的具体时间线、产品技术细节或相关方回应。此处不对原始材料未说明的细节作推断；建议打开来源阅读全文后再判断其实际影响。",
+      "original_title": "The DEA banned a drug some opioid users called a miracle",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.04099",
+      "title_zh": "评估契约与评估杠杆：结构化预测中的切片差距读数可在模型不变时发生移动",
+      "summary_zh": "该预印本指出，NLP评估报告中常被当作能力证据的切片性能差距（如文档级关系抽取的intra-inter差距），实际上是模型与评估契约的共同产物，涉及评分函数、金标准版本、阈值、输出格式和提示语言。作者称在预测冻结的情况下，仅交换金标准版本就能使方法排序反转（+0.0363，置信区间不含零），并据此提出以排序翻转条件为核心的“评估杠杆”解释及一种审计式评估读数流程。",
+      "why_zh": "不同于常见的“新模型刷榜”报道，它质疑评估差距本身的可比性，提醒读者排行榜差异可能来自评估契约而非能力，对做NLP实验与复现的人有直接方法论意义。",
+      "details_zh": "摘要给出的关键线索是：切片差距是模型与评估契约的联合属性；在预测不变时，金标准交换可导致方法排序反转，且效应量+0.0363的置信区间不含零；重命名被视为规范变换（Delta=0），而重新标注则带来+0.862的变化，说明差距移动集中在金标准重新划分之处。作者还提出审计式评估读数（AER），声称在声明的WMT19网格上覆盖全部契约引发的翻转（14/14），留出集为73%，并称在epsilon=0.10时与最佳单一指标契约相当。需注意这是未经独立验证的预印本，摘要未给出完整实验设置与统计细节，结论应视为待复核的方法论主张。",
+      "original_title": "Evaluation Contracts and Evaluation Leverage: Sliced-Gap Readings in Structured Prediction Can Move Without Model Change",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2312.10333",
+      "title_zh": "二元工具变量模型中基于logit的2SLS替代估计量",
+      "summary_zh": "该预印本针对内生处理变量与工具变量均为二元的情形，提出基于logit的IV估计量与增广logit IV估计量，作为传统两阶段最小二乘的替代方案。作者称其计算难度与2SLS相当，但在因果可解释性上更优：当两类估计量的概率极限都表现为加权平均处理效应时，新估计量保证权重非负，而2SLS不保证。",
+      "why_zh": "工具变量实证研究广泛使用2SLS，负权重会导致“加权平均处理效应”难以解释；该文给出计算简便且权重非负的替代方案，对应用计量与因果推断有直接意义。",
+      "details_zh": "摘要仅说明估计量在二元处理与二元工具变量模型中的构造思路和权重性质，未提供具体权重表达式、渐近方差比较或模拟与实证结果。所谓“保证非负权重”是在概率极限呈加权平均处理效应形式的特定情形下成立，不能推广为所有设定下优于2SLS。该文为预印本，尚未经同行评审独立验证；读者应关注其识别假设是否比2SLS更强，以及有限样本表现。",
+      "original_title": "Logit-based alternatives to two-stage least squares",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.05137",
+      "title_zh": "对称张量展开的随机矩阵分析：验证Montanari与Richard的开放猜想",
+      "summary_zh": "该预印本研究从尖峰张量中部分恢复植入信号这一机器学习基础问题。此前工作常把对称高斯噪声替换为独立同分布标准高斯张量以回避依赖性问题，本文直接用随机矩阵理论分析对称模型，证明平方展开算法在λ≍n^{(p-2)/4}处存在部分恢复的尖锐相变，从而验证Montanari与Richard（2014）提出的开放猜想，并给出极限谱分布、确定性等价、相变阈值与重叠度的精确表达式。",
+      "why_zh": "不同于普通算法调参报道，该工作为张量PCA的可恢复性给出精确相变阈值并验证十年开放猜想，属理论机器学习与随机矩阵交叉的实质进展。",
+      "details_zh": "摘要指出核心信息：展开后的对称张量在谱行为上类似标准Wigner矩阵，这解释了为何此前用独立同分布替代噪声的简化分析能给出正确阈值。研究给出极限谱分布、确定性等价、相变阈值和重叠度的精确表达式，并称平方展开算法在λ≍n^{(p-2)/4}处出现尖锐相变。需注意这是arXiv预印本，未经同行评审或独立验证；摘要未提供模拟规模、常数因子或p的具体取值范围，结论的适用范围仍需查阅全文确认。",
+      "original_title": "A Random Matrix Analysis of Symmetric Tensor Unfolding",
+      "focus": false,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/34 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.05137",
+        "pages_read": 14,
+        "pages_total": 34,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 3
+          },
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 11
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          },
+          {
+            "id": "E16",
+            "page": 12
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究从尖峰张量模型 X = λ v⊗p + Z 中部分恢复植入信号 v 的问题，其中 Z 为对称高斯张量、方差约为 n^{-1}；核心是量化展开算法（取张量矩阵化后的主奇异向量）随信噪比 λ 变化的性能，并确定可部分恢复信号的 SNR 区间。",
+            "evidence_ids": [
+              "E1",
+              "E3",
+              "E5"
+            ]
+          },
+          "method": {
+            "text": "采用随机矩阵理论分析对称张量展开：将张量按 k=⌊p/2⌋ 做方阵展开，得到 n^q×n^q 的对称矩阵（q=⌊p/2⌋），该矩阵具有额外超对称性；通过确定性等价刻画预解式，进而得到极限谱分布与特征向量重叠，并分析展开算法作为相关初始化的性能。",
+            "evidence_ids": [
+              "E12",
+              "E13",
+              "E2"
+            ]
+          },
+          "findings": {
+            "text": "作者声称展开算法对提升信号 v⊠q 的恢复呈现经典相变，并给出显式临界值与重叠；极限谱分布是半圆分布与 Dirac 分布的混合，权重依赖张量阶 p；模拟在 n∈{20,50,100} 等较小维度下与理论吻合。图 1 示例（p=4, n=20）显示重叠在 λ 约 0.5 到 1 之间从 0% 升到 80%。",
+            "evidence_ids": [
+              "E9",
+              "E10",
+              "E6"
+            ]
+          },
+          "limitations": {
+            "text": "摘录仅覆盖方阵展开情形；作者指出其他 k 选择会导致长矩阵或不均衡随机矩阵，此时维度不可比，不能直接套用经典 RMT 结果，需要更复杂工具。摘录未给出完整证明细节与全部实验设置，无法据此判断结论的普遍性；该文为预印本（arXiv:2611.05137v1），摘录中未见独立验证。",
+            "evidence_ids": [
+              "E12",
+              "E4",
+              "E5"
+            ]
+          },
+          "replication": {
+            "text": "可复现建议：按模型 X = λ v⊗p + Z 生成 GOTE 随机张量，取 q=⌊p/2⌋ 做方阵展开并按 αp,q n^{-(p-2)/4} 归一化，计算最大特征值对应特征向量与 v⊠q 的重叠，扫描 λ 观察相变；可先在小维度 n∈{20,50,100} 与文中图 1 及理论曲线对照。摘录未提供代码、完整超参数与证明细节，复现前需查阅原文附录。",
+            "evidence_ids": [
+              "E16",
+              "E10",
+              "E6"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-04",
+      "url": "https://www.psypost.org/social-media-rewards-politicians-for-negative-partisan-attacks-massive-study-fin/",
+      "title_zh": "研究称社交媒体奖励政客的负面党派攻击",
+      "summary_zh": "据PsyPost报道，一项对国会议员数百万条社交媒体帖子的大规模分析显示，政客发起负面党派攻击时获得的在线互动远多于其宣传立法成就时。报道将这一现象与社交媒体的互动激励联系起来。",
+      "why_zh": "它把平台激励与政治传播行为联系起来，提示互动指标可能系统性偏向冲突性内容，对理解社交媒体设计与政治极化讨论有现实意义。",
+      "details_zh": "现有材料仅来自媒体报道的标题与摘要，未提供研究作者、样本时间范围、平台构成、互动指标定义或统计模型等细节，也未说明是否控制发帖频率、粉丝规模等混杂因素。因此“负面攻击获得更多互动”应视为该报道转述的研究结论，尚需核对原始论文的方法与数据。该条与普通政治新闻不同之处在于它关注平台激励机制这一结构性因素，但证据强度受限于二手报道，不能据此推断因果关系或推广到所有平台。",
+      "original_title": "Social media rewards politicians for negative partisan attacks, study finds",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-04",
+      "url": "https://news.ycombinator.com/item?id=50363461",
+      "title_zh": "HN 讨论：Gemini 对个人订阅用户也用聊天历史训练模型",
+      "summary_zh": "Hacker News 上一则帖子称，拥有个人 Google AI 订阅的用户，其 Gemini 中保存的聊天历史可能被用于模型训练，除非关闭聊天历史或使用临时会话，否则无法选择退出；帖子还称这些对话记录可能被人工审阅，Google 虽声称审阅时会与账户解绑，但明确警告不要输入机密信息。帖子引用了 Google 支持页面作为依据。",
+      "why_zh": "这关系到付费用户对数据用途的知情与选择权，是 AI 服务条款与隐私设计的现实问题，而非单纯的产品功能讨论。",
+      "details_zh": "该条为聚合社区线索，需核实原始支持文档与 Google 官方表述。据帖子描述，个人订阅用户的 Gemini 聊天历史可被用于改进模型，退出方式只有关闭聊天历史或改用临时会话；人工审阅时 Google 称会断开与账户的关联，但同时提示勿输入机密信息。摘要未说明企业/教育版是否适用不同规则，也未给出条款变更时间线。读者应区分“社区用户的转述”与“已核实的官方政策”，并以 Google 支持页面原文为准，避免把单一帖子当作完整事实。",
+      "original_title": "Tell HN: Gemini trains on chat history, even for subscribers (personal accounts)",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-03",
+      "url": "https://arxiv.org/abs/2611.05376v1",
+      "title_zh": "从自主智能体到认知共生体：走向AI增强的人类智能",
+      "summary_zh": "一篇arXiv预印本提出，过去十年AI进展多以机器独立完成多少任务来衡量，大模型已能写代码、执行多步任务，个人智能体也可代人行动。但人仍会遗忘、漏看、找不到合适措辞，并在重大选择前无法调用自身历史，因为能帮忙的机器站在情境之外。文章主张随着AI进入物理世界，应转向“认知共生体”方向，让AI增强而非替代人的认知。",
+      "why_zh": "对当前以自主性为单一进步标尺的叙事提出反思，把议题从“智能体能做多少”转向“如何嵌入人的情境增强判断”，对AI Agent产品方向与交互设计有启发。",
+      "details_zh": "该文属于立场/展望类论文，摘要以人类认知局限为切入点：遗忘、注意盲区、表达困难和决策时缺乏个人历史参照，并指出问题在于机器处于情境之外。作者据此提出从自主智能体转向认知共生体的框架，强调AI进入物理世界后应与人形成互补关系。需要说明的是，输入仅提供标题与摘要，未给出具体系统设计、实验评估或度量方法，因此无法判断其主张的可操作性与验证程度；这是预印本，观点性较强，读者宜将其视为研究议程而非已证实结论。",
+      "original_title": "From Autonomous Agents to Cognitive Symbionts: Toward AI-Augmented Human Intelligence",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2603.04172",
+      "title_zh": "枢轴信息准则：针对BIC与AIC惩罚过小与高维不可优化的改进",
+      "summary_zh": "该预印本指出贝叶斯信息准则（BIC，惩罚λ=log n）与赤池信息准则（AIC，惩罚λ=2）存在两个问题：惩罚参数偏小导致较多假发现，且其内在的最佳子集离散优化在高维下不可行。作者提出枢轴信息准则PIC，将其定义为连续优化问题，并在纯噪声下的检测边界处选取惩罚参数λ，即某个统计量的上分位数；作者证明在损失函数适当变换后该统计量渐近枢轴。模拟显示PIC在精确支撑恢复概率上出现相变。",
+      "why_zh": "模型选择准则被日常广泛使用，该文直接质疑BIC/AIC惩罚参数并给出可计算的替代方案，对统计实践与高维变量选择有实际参考价值。",
+      "details_zh": "摘要称PIC的λ取为某统计量的上分位数，并证明该统计量在损失函数适当变换后渐近枢轴，因此λ的选择不依赖未知参数。模拟显示PIC在精确支撑恢复概率上呈现相变，作者称这一现象此前主要在无噪声的压缩感知中研究。应用于真实数据时，在预测性能相近的情况下PIC表现如何，摘要仅提及而未给出具体数值。该文为替换版本（v3），仍属未经独立验证的预印本；摘要未说明渐近条件、样本量要求及与现有高维准则的全面比较，实际使用前需核对全文假设。",
+      "original_title": "The Pivotal Information Criterion",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-04",
+      "url": "https://www.psypost.org/massive-study-upends-our-understanding-of-the-psychology-of-collectivism/",
+      "title_zh": "万人跨百文化研究：集体主义测量可能混淆了温情与约束性义务",
+      "summary_zh": "PsyPost报道一项覆盖100种文化、约1.2万人的研究，试图解释为何数十年调查显示美国人与中国或日本民众的集体主义程度相当。报道称原因可能在于测量把温暖情感与约束性义务混为一谈。该报道为媒体转述，摘要未给出研究作者、发表期刊、具体量表与效应量，也未说明样本抽样方式。",
+      "why_zh": "集体主义是跨文化心理学最常被引用的维度之一，若测量确实混淆情感与义务，将影响大量比较研究与管理、教育场景的解读，值得追踪原始论文。",
+      "details_zh": "报道的核心线索是：以往问卷可能把对群体的温暖感受与必须履行的约束性义务合并计分，导致跨国比较失真；新研究用100种文化、约1.2万人的数据区分这两类成分。这一区分若成立，可解释此前“美国人同样集体主义”的反常结果，并提示跨文化比较需拆分情感态度与规范义务。信息局限明显：仅有媒体摘要，未提供论文题目、期刊、量表条目、统计模型与效应量，也未呈现其他学者的批评；应视为待核实的报道线索，不宜据此断言集体主义理论已被推翻。",
+      "original_title": "Massive study upends our understanding of the psychology of collectivism",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.03826",
+      "title_zh": "超越聚合指标重新审视下次就诊诊断预测：检索—记忆多智能体裁决",
+      "summary_zh": "该预印本讨论基于电子病历的下次就诊诊断预测，指出传统聚合指标掩盖了任务的多面性：分布上需处理变长诊断集合与长尾标签，时间上需区分持续、新记录与复发诊断，且这些特征随人群与时间变化。作者提出检索—记忆多智能体裁决框架，试图在评估与预测中显式处理上述维度。",
+      "why_zh": "临床预测论文常以单一聚合分数排名，该文把评估拆解为分布、时间与标签长尾等维度，并引入多智能体裁决，提示“高分模型”可能掩盖临床上有意义的失败模式。",
+      "details_zh": "摘要未给出数据集名称、模型规模、具体指标数值或与基线的对比结果，也未说明多智能体裁决中检索与记忆模块的具体实现及临床验证方式。因此无法判断其相对现有方法是否真正提升，也不能把“多智能体”视为已证实的性能优势。该文为预印本，涉及医疗应用，需谨慎对待；其价值更多在于提出评估框架问题，而非已确立的临床结论。",
+      "original_title": "Rethinking Next-Visit Diagnosis Prediction Beyond Aggregate Metrics: Retrieval--Memory Multi-Agent Adjudication",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.04700",
+      "title_zh": "基于加权平均与服务器端信息的一次性分布式学习",
+      "summary_zh": "该预印本研究一次性分布式学习：各工作节点只训练本地模型并发送给服务器聚合，以避免频繁通信。已知简单平均在特定条件下可达到“池化数据”的均方误差阶，但当工作节点数量相对本地样本增长过快时，本地估计偏差会使平均失效。作者在m个节点各n个观测、服务器另有p个独立同分布观测的设定下，探讨服务器数据能否克服这一限制。",
+      "why_zh": "它针对分布式学习中通信成本与统计效率的核心权衡，提出服务器端少量数据能否替代多轮通信的问题，对联邦学习与边缘训练的系统设计有参考价值。",
+      "details_zh": "摘要说明的设定是：m个工作节点各有n个观测，服务器有p个观测，全部独立同分布，合计N=mn+p；在此框架下讨论平均估计能否达到假设拥有全部数据的节点的池化MSE阶。已知的困难在于节点数相对本地样本增长过快时，非零本地估计偏差会破坏平均法的理论保证。该文的核心问题是独立服务器数据能否消除这一偏差，但摘要未给出具体定理形式、收敛速率或实验验证，且属于未经独立验证的预印本，实际收益与适用条件仍需阅读全文核实。",
+      "original_title": "One-shot Distributed Learning via Weighted Averaging with Server-side Information",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-04",
+      "url": "https://www.tomshardware.com/pc-components/cpus/amd-expects-to-outsell-intel-in-q4-for-the-first-time-in-history-usd17b-guidance-would-exceed-intels-projections",
+      "title_zh": "AMD预计第四季度营收将史上首次超过英特尔",
+      "summary_zh": "聚合自Hacker News的条目称，Tom's Hardware报道AMD预计在第四季度史上首次在销售上超过英特尔，其约170亿美元的营收指引将超过英特尔的同期预测。该条目仅提供标题、链接与讨论页，未给出两家公司指引的具体口径、统计范围或发布时间。因此“首次超越”的比较基础与数据来源仍需核对原始报道及公司财报指引。",
+      "why_zh": "若属实，这将是x86处理器市场竞争格局的标志性转折，反映数据中心与PC两条产品线的份额变化，对理解半导体行业结构性变迁有参考价值。",
+      "details_zh": "材料仅显示标题与链接，属聚合线索。可确认的表述是：AMD对第四季度给出约170亿美元营收指引，报道称这一数字将超过英特尔的同期预测，并称这是史上首次。但“outsell”指营收还是出货量、是否按同一财季口径比较、英特尔指引是否已更新，材料均未说明。此外，单季营收受产品组合、代工与库存周期影响，不宜直接等同于长期份额逆转。在公司正式财报与独立分析核实前，应把该比较视为媒体报道中的预测性说法。",
+      "original_title": "AMD expects to outsell Intel in Q4 for the first time in history",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2408.10068",
+      "title_zh": "大维 Marčenko–Pastur 型随机矩阵极限谱分布的分析",
+      "summary_zh": "一篇 arXiv 数学统计预印本研究形如 W_n = B_n + n^{-1} X_n* A_n X_n 的随机矩阵，其中 A_n、B_n 为 Hermitian 矩阵，X_n 元素独立同分布、均值 0、方差 1，且 p 与 n 按比例趋于无穷。在 Marčenko–Pastur 经典结果基础上，作者考察 B_n 的谱测度收敛到一般概率测度时极限分布 F 的性质，证明在 B 的 Stieltjes 变换有界的区域附近 F 具有解析密度，且密度形态接近 C√|x| 一类表达式。",
+      "why_zh": "这是随机矩阵谱理论中带一般加性扰动的推广，属于高维统计与机器学习理论常用的数学工具，价值在方法本身而非新闻热度。",
+      "details_zh": "经典 Marčenko–Pastur 定理给出样本协方差矩阵经验谱分布的极限，并由 Stieltjes 变换刻画。本文把模型扩展为在样本协方差结构上叠加 Hermitian 矩阵 B_n，并允许 B_n 的谱测度收敛到一般测度而非特定形式，讨论极限分布 F 在 Stieltjes 变换有界区域附近的正则性，得到解析密度及近似 C√|x| 的局部形态。摘要未给出收敛速率、有限样本模拟或证明细节，且为预印本修订版，结论尚未经同行评审独立验证；对非专业读者而言，其意义主要在于为高维数据下的谱方法提供更一般的理论边界。",
+      "original_title": "Analysis of The Limiting Spectral Distribution of Large Random Matrices of The Mar\\v{c}enko-Pastur Type",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-03",
+      "url": "https://arxiv.org/abs/2611.05334v1",
+      "title_zh": "p范数几何下无约束凸优化的自适应加速乐观对偶平均法",
+      "summary_zh": "该预印本提出自适应加速乐观对偶平均方法（A²ODA），用于p范数几何（p∈[2,∞]）下的无约束凸优化，采用低成本预条件。方法无需线搜索，基于聚合仿射下模型设计新的步长选择技术，且更新结构在p∈[2,∞]范围内保持简单统一。",
+      "why_zh": "大规模一阶优化的预条件与步长选择常是工程难点；该文试图用统一、免线搜索的框架覆盖多个p范数几何，若成立可降低调参成本，但需看其理论速率与实验。",
+      "details_zh": "摘要仅概述方法动机与结构，未给出收敛速率、复杂度界、与已有加速方法的理论比较，也没有实验设置或基准结果。所谓“自适应”“加速”均为作者表述，尚未经独立验证；p∈[2,∞]的统一更新是否在极端p值下保持数值稳定也未说明。对优化理论读者，可关注其聚合仿射下模型步长规则与乐观对偶平均的结合方式，但不宜据摘要推断实际加速幅度。",
+      "original_title": "A simple adaptive accelerated optimistic dual averaging method for unconstrained convex optimization in $p$-norm geometry",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-04",
+      "url": "https://www.psypost.org/one-month-of-time-restricted-eating-linked-to-a-nine-month-drop-in-estimated-brain-age-in-new-study/",
+      "title_zh": "小样本研究称一个月限时进食与九个月后估算脑龄下降相关",
+      "summary_zh": "PsyPost报道一项小规模研究：患有代谢综合征的男性在一个月内仅在上午8点至下午4点进食，随后出现记忆改善以及与记忆相关脑区灰质增加；报道标题称这与九个月后估算脑龄下降相关。该研究样本小，结论需谨慎看待。",
+      "why_zh": "限时进食与脑健康是公众高度关注的话题，但此类小样本、特定人群研究常被媒体放大为普遍建议；区分“相关信号”与“可推广结论”对读者更有价值。",
+      "details_zh": "据摘要，研究对象为代谢综合征男性，干预仅一个月，观察指标包括记忆表现和记忆相关脑区灰质，随访涉及估算脑龄。但摘要未提供样本量、对照组设置、脑龄估算方法、效应大小或统计显著性，也未说明九个月后脑龄变化是否独立于体重等混杂因素。媒体报道未经独立交叉核实，不能视为限时进食延缓脑衰老的证据；读者应将其视为需更大规模随机试验验证的初步线索。",
+      "original_title": "One month of time-restricted eating linked to a nine-month drop in estimated brain age in new study",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.03868",
+      "title_zh": "EvoGroup：面向共享上下文中群体智能体的自演化框架",
+      "summary_zh": "一篇 arXiv 预印本关注“群体智能体”（Group Agent）在长期团队协作中的记忆问题。作者指出，现有智能体记忆系统多面向单个用户，难以捕捉共享上下文中累积的群体级知识，包括群体关系与协作形成的知识；摘要提到 Claude Tag 等群体智能体的兴起，并提出 EvoGroup 这一自演化框架来应对上述缺口。",
+      "why_zh": "AI Agent 正从个人助手转向多用户长期协作，群体记忆与共享上下文是实际部署中的关键瓶颈，这条切中 Agent 研究的新方向而非泛泛的产品新闻。",
+      "details_zh": "据摘要，群体智能体作为“数字工作者”参与长期团队协作，其共享上下文通过多用户交互不断累积；但现有记忆系统主要按个人用户设计，难以表示群体关系与协作中形成的知识。EvoGroup 被描述为面向共享上下文中群体智能体的自演化框架，摘要提到人工维护的局限但未展开具体机制。信息有限：摘要未给出架构细节、评测任务、数据集或量化结果，也未说明“自演化”具体指记忆更新、提示演化还是工具编排；作为未经独立验证的预印本，其有效性需待全文与复现检验。",
+      "original_title": "EvoGroup: A Self-Evolving Harness for Group Agents in Shared Contexts",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-03",
+      "url": "https://arxiv.org/abs/2611.05345v1",
+      "title_zh": "对抗式推测推理可提升长程智能体表现",
+      "summary_zh": "该预印本挑战了“推测解码只是不改变模型行为的系统加速手段”这一常见看法。作者称在复杂智能体任务上测量多个前沿开放权重模型时发现，不同推测解码方式下验证环节中的数值噪声会增长，并据此提出对抗式推测推理，声称能改善长程智能体的表现。",
+      "why_zh": "它把推测解码从纯工程优化重新定位为可能影响推理结果的因素，涉及AI Agent长程任务的可靠性，对关注智能体评测与推理系统的人有启发。",
+      "details_zh": "摘要提供的信息有限：推测解码通常被视为不改变模型输出的加速技术，训练更好的草稿模型也主要围绕接受率；作者认为这一观点在长程智能体推理中不成立，并称在复杂智能体任务上对不同推测解码方式进行了测量，观察到验证过程中的数值噪声增长。由此提出的“对抗式推测推理”具体机制、任务集合、模型清单和量化结果在摘要中均未展开。该文为未经独立验证的预印本，且输入未提供primary_excerpt，无法核对实验细节，读者应将其视为待复核的研究主张而非已确认结论。",
+      "original_title": "Adversarial Speculative Reasoning Improves Long Horizon Agents",
+      "focus": false,
+      "edition": "evening"
+    }
+  ]
+}
