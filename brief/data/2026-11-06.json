@@ -1,0 +1,622 @@
+{
+  "version": 1,
+  "date": "2026-11-06",
+  "editions": [
+    "evening"
+  ],
+  "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.06885",
+      "title_zh": "广义方差对数仿射的自然指数族：非高斯族必在凸支撑的某个面上集中概率质量",
+      "summary_zh": "一篇数理统计预印本研究自然指数族中广义方差（协方差矩阵行列式）对自然参数呈对数仿射的情形。作者称无需对参数域作假设即可证明这类族都是正则的，且广义方差为常数时必为高斯族；由此给出样本来自非退化正态分布的刻画：给定样本均值后样本广义方差的条件期望为正常数。非高斯族会把概率质量放在凸支撑的某个面上，且离该面的高度只取固定步长的整数倍。摘要还提到用三阶与四阶累积量的局部不等式刻画泊松—高斯族。",
+      "why_zh": "把“协方差行列式随参数如何变化”这一看似技术性的条件，转化为区分高斯与非高斯的判别准则，并给出非高斯族支撑结构的几何约束，属于统计基础理论中少见的统一视角。",
+      "details_zh": "该文为arXiv新投稿，未经同行评审或独立验证，摘要只给出结论轮廓，未提供证明细节与具体例子。可关注三点：一是“无需假设参数域”这一表述若成立，将简化自然指数族正则性的判定；二是广义方差为常数即高斯的结论，与最大熵、充分统计量等经典结果形成对照；三是非高斯族在凸支撑面上集中质量、且高度取整数步长，类似泊松计数的离散结构，提示指数族之间存在某种分类层级。摘要末尾提到对无穷可分族的完全分类，但截断处信息不全，具体范围需查原文确认。",
+      "original_title": "On Natural Exponential Families with Log-Affine Generalized Variance",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/41 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.06885",
+        "pages_read": 14,
+        "pages_total": 41,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 2
+          },
+          {
+            "id": "E3",
+            "page": 6
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 3
+          },
+          {
+            "id": "E7",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 6
+          },
+          {
+            "id": "E10",
+            "page": 7
+          },
+          {
+            "id": "E11",
+            "page": 8
+          },
+          {
+            "id": "E16",
+            "page": 13
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究自然指数族（NEF）的广义方差（协方差矩阵行列式）在对数仿射于自然参数时的分类问题：在不对自然参数域作额外假设的情况下，这类族是否正则、广义方差为常数时是否必为高斯族，以及能否由此得到正态分布的回归刻画。",
+            "evidence_ids": [
+              "E4",
+              "E1",
+              "E7"
+            ]
+          },
+          "method": {
+            "text": "方法核心是“行列式变换”：把广义方差方程（1.1）转化为正测度之间的等式，从而转化为支撑集恒等式；再结合全局边界机制（第4节）与局部累积量机制（第5节）进行论证，第6节给出几何应用，第7节与两个早期论证比较，附录A、B补充引理与二维情形。摘录未给出完整证明细节。",
+            "evidence_ids": [
+              "E3",
+              "E10",
+              "E11"
+            ]
+          },
+          "findings": {
+            "text": "摘要称：无需对自然参数域作假设即可证明此类族正则，且广义方差为常数时为高斯族；并由此得到样本量 n>d 时，样本广义方差在样本均值条件下的条件期望为正常数当且仅当样本来自非退化正态分布。正文还给出支撑恒等式 Σ(S)=b+S^{⊕(d+1)}，并指出非高斯解支撑无界、非 Poisson–Gaussian 解没有小阶卷积幂。二维情形下非高斯解在仿射变换后为 N0^2 上的双变量幂级数族，或凸支撑沿某直线平移不变。",
+            "evidence_ids": [
+              "E4",
+              "E11",
+              "E9"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录仅为部分页码，未包含完整定理陈述与全部证明，无法独立核验分类结论的证明细节。文中明确指出早期文献的证明有问题：Kokonendji–Masloudi 的证明依赖一个“as stated”为假的引理，Kokonendji 早先的证明不完整；且仅作为偏微分方程，(1.1) 存在许多非累积量函数的凸解。该文为 arXiv 预印本（arXiv:2611.06885v1），摘录中未见独立验证或同行评审信息。",
+            "evidence_ids": [
+              "E2",
+              "E6",
+              "E4"
+            ]
+          },
+          "replication": {
+            "text": "复现建议（仅基于摘录）：先按第2节定义行列式变换 ν_μ 并验证其 Laplace 变换（Kokonendji–Seshadri 引理），再检验支撑恒等式 Σ(S)=b+S^{⊕(d+1)} 与不等式 (2.5)；随后按第3节用矩估计与特征函数方法推导指数矩（Proposition 3.2），最后按 (3.6) 检验回归刻画。摘录未给出数值实验、代码或数据，无法据此复现实验；二维情形可参照附录B的 Theorem B.1 做小规模符号/数值验证。",
+            "evidence_ids": [
+              "E10",
+              "E11",
+              "E16"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.06633",
+      "title_zh": "TestBED：面向贝叶斯实验设计的开源工具包",
+      "summary_zh": "arXiv 新预印本介绍 TestBED，一个通用开源贝叶斯实验设计（BED）工具包。作者指出，BED 长期缺乏标准化软件与基准，现有方法多写在各自定制的代码库中，只在少量任务上评估，难以复现、比较和扩展。TestBED 把 BED 流程拆成任务、目标函数、训练机制、策略架构与评估流程等可复用模块，并提供期望信息增益估计器等核心原语的可扩展实现，组件可自由组合。",
+      "why_zh": "贝叶斯实验设计是主动数据采集的通用框架，但工具碎片化阻碍方法比较。该工作若成立，可能成为该领域的公共基准与复现基础设施，价值在方法学而非单点性能。",
+      "details_zh": "据摘要，TestBED 的定位是解决 BED 领域“无标准软件、无统一基准”的问题：既有方法通常各自实现、只在少数任务上评测，导致难以应用、比较或扩展。工具包将流程模块化为任务、目标、训练机制、策略架构和评估程序，并包含期望信息增益估计器等核心原语的可扩展实现，组件可自由组合，从而在同一框架内复现已有方法并支持新方法。需要说明的是，这是未经独立验证的预印本，摘要未给出基准任务数量、与既有实现的性能对比或代码可用性细节，实际易用性与覆盖范围仍需查看论文与代码仓库。",
+      "original_title": "TestBED: An Open-Source Toolkit for Bayesian Experimental Design",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.05771",
+      "title_zh": "大语言模型能在多大程度上模仿单个作者？一项比较评估",
+      "summary_zh": "该预印本比较六款大语言模型的作者身份模仿能力：Gemini 3 Pro、Claude Opus、GPT 5.2、GPT 5.2 Pro、DeepSeek 3.2 与 Grok 4.1 Fast。实验使用作者内部写作风格一致性较高的短产品评论文本，设计简单提示与含显式文体计量指导的复杂提示，以余弦距离指标并辅以嵌入分布可视化评估。结果显示多数模型模仿仍困难，Gemini 3 Pro 表面表现最强，但重叠分析发现其大量复制训练文本中的句子和短语，程度远超人类。",
+      "why_zh": "它把“风格模仿”与“文本复制”区分开，提示表面高分的模仿评估可能被记忆污染，对 authorship 归因与评测设计有直接启发。",
+      "details_zh": "研究关注的是作者身份模仿，而非一般文本生成质量。实验材料特意选择同一作者风格一致性高的短评论，以降低风格噪声；提示分简单与复杂两档，后者加入显式文体计量指导。评估主指标为基于余弦距离的“距训练文本距离”，并辅以嵌入分布的可视化分析。关键发现是多数模型难以真正模仿作者，而表现最好的 Gemini 3 Pro 存在大量逐句逐短语复用训练文本的现象，远超人类基线，这使“模仿成功”可能实为记忆复现。摘要未给出具体样本量、模型版本细节与统计检验，结论来自预印本，未经独立验证，指标本身也不能直接等同于人类判断的作者归属。",
+      "original_title": "How Well Can Large Language Models Impersonate Individual Authors? A Comparative Evaluation",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.06846v1",
+      "title_zh": "解释忠实性评估标准之间的分歧该如何处理",
+      "summary_zh": "该预印本指出，算法解释的“忠实性”要求解释真实反映模型行为，但现有多种操作化标准会对同一解释是否忠实给出相互矛盾的判断，令开发者和审计者难以取舍。作者先梳理这些操作化之间的差异，提出一个“忠实性泛函”，把分歧定位在解释对模型作出了何种断言、哪些比较与该断言相关、以及如何聚合这些比较三个环节，并在该框架内重构既有评估标准。摘要未给出实验结论。",
+      "why_zh": "可解释AI的评估长期缺乏统一口径，该文把“标准互相打架”本身作为研究对象，对做模型审计和解释方法评测的读者有直接的方法论启发。",
+      "details_zh": "在可解释机器学习中，忠实性通常被理解为解释与模型真实决策依据之间的一致性，但不同论文用删除曲线、扰动敏感性等不同手段来度量，导致同一解释可能在一个标准下合格、在另一个标准下不合格。该文不急于推出新指标，而是先建立一个统一的功能性框架，把各标准的差异归因于它们对“解释声称了什么”的不同假设，以及跨比较聚合方式的选择。作者据此主张忠实性是一个共同但未被完全指定的模型—解释关系。需注意这是预印本，摘要未提供具体实验或用户研究，框架的实用性尚待检验。",
+      "original_title": "Navigating Disagreement Among Criteria for Evaluating Explanation Faithfulness",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.06858v1",
+      "title_zh": "CompressionBench：编码智能体能否自主完成大模型压缩任务",
+      "summary_zh": "一篇cs.AI预印本提出CompressionBench，把大模型压缩设定为编码智能体可自主执行的终端任务：智能体获得源检查点、存储上限、推理环境与时间预算，需构造压缩后的权重，在更小存储预算内保留预训练模型的行为。作者将这一任务置于“递归自我改进”的框架下，即AI系统改进后续系统所用的模型与基础设施，并以压缩作为具体的效率目标，考察编码智能体能否独立完成该步骤。",
+      "why_zh": "把“模型压缩”从人工调参的研究问题改造成可自动评测的智能体任务，直接触及AI能否参与自身基础设施改进这一关键问题，也为智能体基准提供了可量化的效率目标。",
+      "details_zh": "该条仅有标题与摘要，未提供基准规模、参与智能体、评分方式与结果，因此无法判断当前智能体的实际表现。可确认的设定是：任务输入包括源检查点、存储限制、推理环境和时间预算，输出为压缩权重，评价核心是压缩后模型对原模型行为的保留程度。摘要将其与递归自我改进联系起来，但这是作者的动机框架，不等于已证明智能体能可靠完成该任务。需注意预印本未经独立验证，且“终端任务”的具体判定标准、是否允许调用外部工具等细节均未在摘要中说明，读者不宜据此推断智能体已具备自主压缩能力。",
+      "original_title": "CompressionBench: How can your coding agents compress LLMs?",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.06892",
+      "title_zh": "稀疏图子模型度分布的一致中心极限定理",
+      "summary_zh": "该预印本研究稀疏 L^p 图子模型的经验度分布极限理论。作者称此前即使对稠密有界图子模型也只有有限维结果，缺少函数型极限定理。论文在潜在期望度有密度的条件下，给出当 nρ_n/log n→∞ 且 nρ_n^{2+β}→0 时的有限维中心极限定理，极限协方差与稠密情形一致；并在局部正则性下建立紧区间上的函数型中心极限定理，在尾部正则性与更强稀疏条件下把一致性推广到无界区间。",
+      "why_zh": "这是网络统计中基础对象的极限理论进展，而非应用热点；对研究稀疏网络、重尾度分布与图子模型推断的读者有方法论价值。",
+      "details_zh": "度分布是网络最基本的汇总之一，但图子模型的经验度分布此前缺乏函数型极限定理。该文把研究对象扩展到允许无界核的稀疏 L^p 图子模型，从而覆盖重尾度。核心结果依赖稀疏水平 ρ_n 与核矩条件的配合：有限维 CLT 要求 nρ_n/log n 发散而 nρ_n^{2+β} 收敛，说明稀疏程度受较强制约。函数型结果还需局部正则性，且仅在支撑内部紧区间成立；要扩展到无界区间需额外尾部正则性与更强稀疏条件。以上均据摘要，预印本未经独立验证，极限协方差与稠密情形一致等结论尚待同行评议。",
+      "original_title": "Uniform Central Limit Theorems for Degree Distributions of Sparse Graphon Models",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-05",
+      "url": "https://www.psypost.org/in-female-mice-modeling-schizophrenia-a-single-dose-of-psilocybin-restored-sensory-filtering-for-days/",
+      "title_zh": "精神分裂症模型雌鼠中，单剂裸盖菇素可恢复感觉过滤数日",
+      "summary_zh": "PsyPost报道一项小鼠研究：精神分裂症患者通常被排除在迷幻药试验之外，而新研究提示情况更复杂。在精神分裂症模型小鼠中，裸盖菇素放大了即时反应，但在雌鼠中持续改善了感觉过滤，效果维持数日。报道称这来自一项新的动物实验，涉及单剂给药与感觉过滤指标。",
+      "why_zh": "迷幻药临床试验长期排除精神分裂症人群，该动物研究提示疗效与风险可能因性别和即时/延迟效应而分化，为这一被回避的议题提供了可讨论的实验线索。",
+      "details_zh": "该条为媒体报道，仅提供标题与摘要，未给出研究机构、样本量、给药剂量、感觉过滤的具体测量范式（如惊跳反射前脉冲抑制）及统计结果，也未说明雄鼠是否同样改善。可确认的表述是：在精神分裂症模型雌鼠中，单剂裸盖菇素使感觉过滤改善并持续数日，同时急性反应被放大。需强调这是小鼠模型结果，不能直接外推到人类患者；动物模型对精神分裂症的模拟本身有限。报道未经独立交叉核实，读者应等待原始论文与同行评审，不宜据此认为裸盖菇素对精神分裂症患者安全或有效。",
+      "original_title": "In female mice modeling schizophrenia, a single dose of psilocybin restored sensory filtering for days",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "TechCrunch",
+      "published": "2026-11-05",
+      "url": "https://techcrunch.com/2026/11/05/axiom-math-wants-to-keep-ai-slop-out-of-mathematics/",
+      "title_zh": "Axiom Math希望把“AI垃圾”挡在数学之外",
+      "summary_zh": "据TechCrunch报道，随着AI大量生成未经检验的数学证明，初创公司Axiom Math押注于形式化验证，其AI智能体已完成对Stacks Project的形式化验证，后者是该领域最大的数学资料库之一。报道将此举定位为应对AI生成内容泛滥的验证路径。摘要未说明验证的具体范围、耗时、所用系统及是否经过独立复核。",
+      "why_zh": "与常见的AI数学能力宣传不同，这条聚焦“验证”而非“生成”，涉及AI产出可信度这一实质问题，对关注AI for Math的读者有讨论价值。",
+      "details_zh": "Stacks Project是代数几何领域广泛使用的开放协作资料库，体量庞大且结构复杂，若真被形式化验证，将是AI辅助形式化的一个标志性工程案例。但需注意：这是TechCrunch的媒体报道，核心说法来自公司自身，属于机构自述而非第三方确认；摘要未披露验证覆盖了全部还是部分内容、使用何种证明助手、是否发现并修正了错误，也未说明“形式化验证”与“数学正确性”之间的差距。读者应把“完成验证”视为待核实的主张，而非已独立验证的结论。",
+      "original_title": "Axiom Math wants to keep AI slop out of mathematics",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.05803",
+      "title_zh": "语言模型掌握多少汉字语音知识？新基准 PinyinBench 揭示声调是明显短板",
+      "summary_zh": "arXiv 预印本提出 PinyinBench，用同音字、声母韵母声调等语音特征及多音字系统评测语言模型对汉字的语音知识，覆盖 17 个纯文本与多模态模型，并结合行为测试、逐层探针与激活引导三种方法。摘要称某前沿模型在同音判断上得分超过 90%，但当两字仅声调不同时准确率降至 72%；探针显示声调信息在嵌入层即可高度解码，而声母韵母信息随层数加深才明显提升。",
+      "why_zh": "把中文语音表征拆成可测量的子维度，并区分“知道”与“会用”，比笼统的基准分数更能说明模型内部机制与中文场景的真实局限。",
+      "details_zh": "该研究关注一个常被忽略的问题：以文本为主的模型是否真正编码了汉字的读音结构。PinyinBench 的设计把语音知识分解为同音、声母、韵母、声调与多音字，避免单一准确率掩盖结构性差异。三种方法各有分工：行为评测看输出表现，逐层探针看信息在何处可解码，激活引导检验表征是否被因果性使用。摘要中最值得追问的是声调：它在浅层就高度可解码，却在行为层面成为最易出错的部分，提示“表征存在”不等于“推理可用”。需注意这是未经独立验证的预印本，摘要未说明测试集规模、模型清单细节与统计显著性。",
+      "original_title": "Phonological Knowledge of Chinese Characters in Language Models",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.06859v1",
+      "title_zh": "分层表示与量化如何相互影响：文本嵌入的效率权衡基准研究",
+      "summary_zh": "该预印本对两种已成熟的效率手段做实证基准：分层文本嵌入提供可变长度表示，量化降低数值精度。作者在 MTEB 的 38 个任务上，用四个基于 Transformer 的嵌入模型，组合一维与二维分层表示和 32 位、8 位、二值量化，每个任务 168 种配置，并分别报告每向量理论存储与端到端评测时间。经 Friedman 检验与 Nemenyi 事后分析，int8 量化在配对分类与重排序上与 float32 统计上不可区分，整体最多损失约 1.5 个百分点；二值量化在所有任务类别上显著更差；嵌入维度减半一次在统计上不可检测。",
+      "why_zh": "它不提出新模型，而是系统测量两种正交压缩手段的交互，给出“哪种组合可放心用”的实证边界，对部署嵌入检索的工程决策比单点刷榜更有参考价值。",
+      "details_zh": "这是实证基准研究，属未经独立验证的预印本，结论依赖所选的四个模型与 MTEB 任务集，外推到其他领域或多语言场景需谨慎。摘要给出的关键量化结果包括：int8 与 float32 在配对分类和重排序上统计不可区分，整体差距至多约 1.5 个百分点；二值量化在每个任务类别都显著更差；维度减半一次未达统计显著。作者强调分别报告存储与端到端时间两个效率维度，而非合成单一分数。摘要未披露具体模型名称、硬件环境、延迟绝对值，也未说明分层表示与量化叠加时是否存在交互效应，这些是判断实用性的关键缺口。",
+      "original_title": "Balancing hierarchical representation and quantization: A performance trade-off in text embeddings",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "亲密关系",
+      "source": "PsyPost",
+      "published": "2026-11-04",
+      "url": "https://www.psypost.org/the-psychological-profile-of-reality-dating-television-stars/",
+      "title_zh": "新研究揭示恋爱真人秀嘉宾的心理特征",
+      "summary_zh": "PsyPost 报道一项新研究，称自愿参加电视恋爱真人秀的人在自大型自恋上得分更高，且更依赖外貌维持自尊。报道称研究探讨了驱动电视恋爱节目的具体人格特质。该报道为媒体转述，摘要未给出样本量、测量工具、对照设计或效应大小，研究原文与同行评审状态亦未在输入中说明。",
+      "why_zh": "把真人秀参与者的人格特征作为研究对象，属于大众文化心理学的可检验问题；但媒体转述易放大结论，读者应关注样本自选择与效应量，而非把“上节目的人更自恋”当作定论。",
+      "details_zh": "据 PsyPost 摘要，研究关注自愿参与电视恋爱节目者的人格画像，报告其在自大型自恋（grandiose narcissism）上水平更高，并更以外貌作为自尊来源。需要强调的信息局限：输入只有媒体标题与摘要，没有样本规模、对照组（如普通志愿者或其他节目参与者）、自恋测量量表、效应量或是否经同行评审；媒体转述也不等于独立交叉核实。此类研究通常难以区分“自恋者更愿意上节目”与“节目经历改变人格”，横断面设计无法回答因果。因此宜将其视为一个有讨论价值但证据待核的线索。",
+      "original_title": "New research reveals the psychological profile of reality dating television stars",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2411.02835",
+      "title_zh": "Bethe-Hessian 矩阵用于社区检测：首次严格分析证实稀疏网络中的检测阈值猜想",
+      "summary_zh": "一篇 arXiv 预印本对 Saade、Krzakala 与 Zdeborová 于 2014 年提出的 Bethe-Hessian 谱方法给出首个严格理论分析。作者在稀疏随机块模型下证明：当期望度 d≥2 时，该矩阵负特征值离群点的数量可一致估计位于 Kesten-Stigum 阈值之上的社区数，从而证实原猜想；当 d 足够大时，其特征向量可实现弱恢复。摘要未给出完整证明细节与常数条件。",
+      "why_zh": "把长期只有猜想与经验支持的谱聚类方法提升为可证明结论，对网络科学和随机矩阵理论都有直接价值，不同于一般算法调参新闻。",
+      "details_zh": "Bethe-Hessian 矩阵的意义在于用 Hermitian 矩阵替代非对称、高维的非回溯算子，从而降低稀疏网络谱聚类的计算与理论分析难度。此前该方法的有效性主要依赖猜想和数值实验；本条摘要称作者首次在随机块模型的有界期望度与增长度两种机制下给出严格分析，并覆盖 d≥2 的阈值估计与 d 足够大时的弱恢复。需要注意：这是未经同行评审的预印本，摘要未披露证明所依赖的具体假设、收敛速率或有限样本表现，结论应视为作者自述而非已独立验证。",
+      "original_title": "Community detection with the Bethe-Hessian",
+      "focus": false,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/39 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2411.02835",
+        "pages_read": 14,
+        "pages_total": 39,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 1
+          },
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 13
+          },
+          {
+            "id": "E7",
+            "page": 3
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E13",
+            "page": 9
+          },
+          {
+            "id": "E14",
+            "page": 10
+          },
+          {
+            "id": "E15",
+            "page": 11
+          },
+          {
+            "id": "E16",
+            "page": 12
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究稀疏随机块模型（SBM）中基于Bethe-Hessian矩阵的谱聚类方法，关注其能否在期望度有界及缓慢增长的条件下达到Kesten-Stigum检测阈值，并解释负离群特征值为何不局域化却仍含社区信息。",
+            "evidence_ids": [
+              "E2",
+              "E8",
+              "E3"
+            ]
+          },
+          "method": {
+            "text": "作者对Bethe-Hessian矩阵H(t)=t²I−tA+(D−I)在t=±√d下做谱分析，借助非回溯矩阵B的特征值与Ihara-Bass公式构造核向量，用Courant-Fischer定理下界负特征值个数，并给出特征向量逼近与基于负特征值计数的谱聚类算法（Algorithm 1）。",
+            "evidence_ids": [
+              "E7",
+              "E13",
+              "E16"
+            ]
+          },
+          "findings": {
+            "text": "摘录给出三项理论结果：(i) 期望度d≥2时负离群点个数可一致估计Kesten-Stigum阈值以上的块数，证实Saade等2014的猜想；(ii) 期望度足够大时特征向量可被逼近；(iii) d→∞时负离群特征值位置集中，基于Bethe-Hessian的谱方法可达弱一致性。摘录未提供数值实验的定量结果。",
+            "evidence_ids": [
+              "E2",
+              "E15",
+              "E1"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：分析限于SBM、共同渐近期望度d>1及Assumption 2的参数控制（d≥2、各量不超过(log n)^K）；此前工作或只到d=ω(1)而不给负特征值位置信息，或只讨论d→∞。摘录未说明真实数据实验、其他图模型适用性或独立复现验证；该文为COLT 2025会议论文，摘录未显示独立第三方验证。",
+            "evidence_ids": [
+              "E4",
+              "E14",
+              "E9"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：按Algorithm 1，用平均度估计d，构造H(±√d)，以ˆd/√log n为阈值统计低于阈值的特征值个数得r±，取对应特征向量拼接后做(1+η)近似k-means。需注意摘录未给出完整实验设置、代码或数据，无法据此判断可复现性；建议先在小规模2块SBM上核对负离群点个数与图1现象。",
+            "evidence_ids": [
+              "E16",
+              "E7",
+              "E15"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.05542",
+      "title_zh": "整页排序的一次性推理：兼顾顺序依赖与生成效率的尝试",
+      "summary_zh": "该预印本关注整页排序问题：在复杂布局与商业约束下联合优化广告与自然内容，以平衡商业结果与用户参与。摘要指出，现有非自回归方法能高效生成页面，但通常独立打分候选条目，忽略其与已选条目的顺序依赖交互；自回归方法则通过逐项生成来建模这种依赖。论文标题强调“一次性推理”的高效整页排序，试图在两类方法之间取得折中。",
+      "why_zh": "推荐系统与广告排序的常见热点是模型刷榜，而这里的问题设定是带约束的整页组合优化，涉及顺序依赖与推理成本的真实工程矛盾，对做排序系统的人有方法层面的参考。",
+      "details_zh": "可获取材料仅为 arXiv 标题与摘要片段，信息有限：摘要止于“自回归方法通过……”处，未给出所提方法的具体机制、实验数据集、基线对比或线上指标。已知背景是整页排序需在布局与商业约束下联合决定广告和自然内容的展示，非自回归方法效率高但打分独立，自回归方法能捕捉顺序依赖但推理代价大。标题中的“一次性推理”暗示试图降低自回归式逐项生成的开销，但摘要未说明如何实现、是否牺牲效果，也未提供任何数值。该文为交叉提交的预印本，未经独立验证，读者不应把标题表述当作已证实的性能结论。",
+      "original_title": "Towards Efficient Whole Page Ranking with One-Pass Inference",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.05637",
+      "title_zh": "用情境化象形图修复多语种语音识别错误：界面设计与对照研究计划",
+      "summary_zh": "一篇cs.CL预印本描述一种语音转写纠错界面：当候选词不熟悉或视觉相似时，用户难以察觉转写错误。该系统同时呈现备选转写、回放，以及针对选定不确定概念、经上下文核对的象形图，初期支持法语和西班牙语的功能性话语。作者计划用平衡设计实验检验图像反馈能否帮助听者恢复说话人意图的动作，超出纯文本备选的效果；同时量化语义错配与额外交互时间，因为不恰当的图像可能强化误解而非修复。",
+      "why_zh": "把多模态纠错从“提高识别率”转向“帮助人判断该不该信”，并明确把图像误导风险纳入评估指标，对语音交互与无障碍界面设计有直接参考价值。",
+      "details_zh": "该文为研究计划型预印本，摘要说明的是系统构想与将要开展的实验，尚未报告结果，因此不能视为已证实象形图有效。已知细节包括：面向法语、西班牙语的功能性话语（如指令类表达），界面元素为备选转写、回放与经上下文核对的象形图；评估采用平衡顺序设计以控制学习效应，指标含意图恢复、语义错配和额外交互时间。信息局限在于未说明象形图来源、核对机制如何实现、样本量与统计方案，也未给出基线系统的具体配置。读者应把它当作设计思路而非效果证据。",
+      "original_title": "Contextual Pictograms for Repairing Multilingual ASR Errors",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-05",
+      "url": "https://www.psypost.org/social-anxiety-might-not-warp-how-we-perceive-eye-contact/",
+      "title_zh": "新实验质疑社交焦虑与“被注视感”的稳定关联：效应弱且难以复现",
+      "summary_zh": "PsyPost 报道称，一项新研究挑战了社交焦虑者倾向于把陌生人目光感知为注视自己的流行看法。新实验显示，焦虑与扭曲的目光感知之间的联系较弱，且难以重复验证。报道未在摘要中给出样本规模、实验范式与具体效应量，属于媒体对单篇研究的转述，尚未经过独立交叉核实。",
+      "why_zh": "直接检验心理学中广为流传却证据不稳的效应，提醒读者区分可复现的稳健发现与直觉叙事，对理解焦虑与感知的关系有启发。",
+      "details_zh": "“社交焦虑者会觉得别人都在看自己”是临床与大众叙事中常见的说法，常被用来解释社交回避的维持机制。若该关联在更严格控制的新实验中效应微弱且难以复现，则相关干预假设需要重新审视。需要强调信息局限：本条仅有媒体标题与摘要，未提供研究设计、被试数量、统计功效或是否预注册等关键信息，也无法判断“难以复现”是重复实验失败还是效应量缩小。因此应把它视为对既有结论的质疑线索，而非已完成的定论；在原始论文与独立复核出现前，不宜据此改写临床建议。",
+      "original_title": "Social anxiety might not warp how we perceive eye contact",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.06888v1",
+      "title_zh": "“枯燥、肮脏、危险”工作更易被 AI 替代？职业暴露度与工作条件的关联研究",
+      "summary_zh": "该预印本用 O*NET 的 21 个条目覆盖美国 754 个职业，考察“枯燥、肮脏、危险”工作条件与职业 AI 暴露度的关系。结果显示，在大语言模型暴露度指标与 AI 职业暴露度（AIOE）下，更高的暴露度与更低的条件得分相关，在职业等权与就业人数加权下均成立。控制体力需求、所需教育、培训与经验以及工资后，复合关联有所减弱。作者据此讨论以自动化“解放”恶劣岗位这一常见论证的限度。",
+      "why_zh": "它把“AI 会替代谁”的讨论从任务可自动化转向工作质量分布，提示高暴露职业未必是恶劣岗位，对理解自动化的分配后果与政策叙事有启发。",
+      "details_zh": "这是基于 O*NET 职业层面数据的横截面关联分析，属未经独立验证的预印本，不能据此推断因果，也无法说明个体层面的替代风险。摘要给出的信息包括：21 个 O*NET 条目、754 个美国职业、两种暴露度度量（LLM 指标与 AIOE）、职业等权与就业加权两种汇总方式；核心发现是高暴露与更低的条件得分相关；加入体力需求、教育、培训经验与工资等控制变量后复合关联减弱，但摘要未给出减弱后的具体系数或显著性。摘要未披露数据年份、条件得分的构造方式，也未讨论职业内部异质性，因此“自动化解放恶劣工作”的规范判断仍需更多证据。",
+      "original_title": "Dull, Dirty, Dangerous? Working Conditions and the Limits of Occupational AI Exposure",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2601.13428",
+      "title_zh": "集群随机试验中多结局广义因果效应的最优估计",
+      "summary_zh": "该预印本针对集群随机试验（CRT）常同时收集多个互补结局、但现有方法多聚焦单一结局或依赖因果解释不清的模型这一问题，提出统一的潜在结局框架来定义广义治疗效应，覆盖结局有优先级与无优先级两种情形。作者以成对对比函数定义集群对与个体对因果估计量，显式处理信息性集群规模，并用加权聚类U统计量进行非参数估计，结合去偏机器学习与U统计量构造协变量调整估计量。摘要未给出具体数值结果。",
+      "why_zh": "与常见单一结局试验方法不同，它把多结局、信息性集群规模与去偏机器学习纳入同一因果框架，对做因果推断和试验设计的研究者有方法学参考价值。",
+      "details_zh": "集群随机试验按群体而非个体分配干预，常用于公共卫生、教育等场景，其分析难点在于组内相关与集群规模可能携带信息。该文的核心贡献是给出一个可容纳多结局的广义治疗效应定义，并区分结局是否被预先排序，从而避免把多个互补维度强行压成单一指标。估计层面采用加权聚类U统计量并推导有效影响函数，再与去偏机器学习结合以引入协变量调整。需注意这是arXiv预印本，摘要未披露模拟或实证结果、样本设定与有限样本表现，结论尚未经独立验证，读者不宜据此认为方法已可直接落地。",
+      "original_title": "Optimal estimation of generalized causal effects in cluster-randomized trials with multiple outcomes",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.05543",
+      "title_zh": "多变量共形预测中的广义超矩形预测集",
+      "summary_zh": "arXiv 预印本讨论多变量共形预测的预测集几何形状问题。作者指出，许多非一致性评分会产生椭球或密度水平集等复杂几何的预测集，难以解释和可视化；超矩形为每个输出给出一个区间，是更实用的替代。论文将这一概念推广到任意一维集合的笛卡尔积，称为广义超矩形，并提出“矩形化”框架。摘要未给出具体理论保证与实验数值。",
+      "why_zh": "共形预测的可解释性直接影响其在多输出回归与决策中的可用性。把预测集约束为逐维区间集合，是统计方法与可用性之间的务实折中，值得关注其覆盖保证如何保持。",
+      "details_zh": "据摘要，多变量共形预测中不少非一致性评分会生成椭球或密度水平集等复杂几何的预测集，虽可能更紧致，但难以解释和可视化。超矩形为每个输出维度提供一个区间，便于呈现和下游使用。作者把超矩形推广为任意一维集合的笛卡尔积，即“广义超矩形”，并提出矩形化框架。由于输入仅含标题与摘要，论文的覆盖性理论保证、矩形化带来的效率损失、与既有方法的实验对比均未提供，无法判断其相对优势大小；这是未经独立验证的预印本，结论需以全文与复现为准。",
+      "original_title": "Generalized Hyperrectangular Prediction Sets in Multivariate Conformal Prediction",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-05",
+      "url": "https://www.psypost.org/voters-care-more-about-economic-improvement-than-total-benefits/",
+      "title_zh": "研究发现选民对长期经济增长的重视超过此前认识",
+      "summary_zh": "PsyPost 报道的一项新研究称，选民在评价经济时并非只短视地看近期表现。研究结果显示，人们一贯偏好稳定上升的经济轨迹，即使这意味着牺牲部分总体收益。报道摘要未说明实验设计、样本规模、所在国家与具体测量方式，也未给出研究发表渠道。该报道属于媒体转述，未经独立交叉核实。",
+      "why_zh": "它挑战“选民经济评价短视”的常见假设，对理解选举中的经济议题与政策沟通有启发，但需注意这是媒体转述的单一研究。",
+      "details_zh": "政治经济学中常见观点是选民依据近期经济表现投票，因而政策容易偏向短期收益。该报道称新研究给出不同图景：受访者更看重经济是否沿稳定上升轨迹发展，并愿意为此放弃部分总体收益水平。若成立，这意味着选民偏好具有跨期结构，而不只是对过去增长率的反应。但输入材料仅有媒体标题与摘要，缺少实验情境、样本代表性、效应大小与同行评议状态，无法判断结论稳健性，也不能推广到具体国家或选举。报道本身未经独立交叉核实，应视为待查证的研究线索而非既定事实。",
+      "original_title": "Voters value long-term economic growth more than previously thought, study finds",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.06912v1",
+      "title_zh": "FlowReconBench：稀疏传感器流场重建中学习模型与经典方法的精度、校准与成本对比",
+      "summary_zh": "一篇cs.LG预印本提出FlowReconBench，用于评测从稀疏传感器重建完整流场的方法。该问题需要对未测量区域和物理量作先验假设，但学习模型何时优于经典估计、其预测哪些方面可信仍不清楚。基准在三种流态上评估十种学习方法和五种经典方法：跨雷诺数的层流圆柱尾迹、二维Kolmogorov湍流，以及大规模三维各向同性湍流，并比较精度、校准与成本。",
+      "why_zh": "流场重建是科学机器学习中“学习模型是否真的胜过经典估计”的典型争议场景，该基准同时考察精度、校准与计算成本，比单一误差指标更能揭示模型可信度边界。",
+      "details_zh": "该条仅有标题与摘要，未给出各方法的具体排名、误差数值或校准指标定义，因此不能断言学习方法整体优劣。已知信息是评测覆盖三种物理情形，从较规则的层流尾迹到二维湍流再到三维各向同性湍流，难度递增；方法数量为十种学习法与五种经典法，比较维度包括精度、校准与成本。摘要强调“哪些方面的预测可信”这一问题，暗示基准可能区分不同物理量的重建质量，但细节未披露。作为预印本，其结论尚未经独立复现，读者应关注其数据生成方式与传感器布置是否具有代表性。",
+      "original_title": "FlowReconBench: Accuracy, calibration and cost of learned and classical flow reconstruction from sparse sensors",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.05720",
+      "title_zh": "带搜索能力的 LLM 智能体中的认知偏差特征：分阶段分析",
+      "summary_zh": "arXiv 预印本构建受控搜索实验环境，在固定问题与文档集合的前提下，考察结果排序、既往工作记录和初始假设如何影响 LLM 智能体的搜索与作答。作者称在 10 个模型、1000 个合成搜索世界上追踪查询、检索文档、文档打开与最终答案，发现主动搜索时最终答案对初始证据顺序更敏感；失败历史会降低策略切换，且该效应超出上下文长度；错误假设下可区分检索减少与反证后仍持续的错误。",
+      "why_zh": "把认知偏差实验范式搬到 LLM 智能体搜索流程，并做分阶段测量，比笼统讨论“模型有偏见”更可操作，对设计检索增强智能体与评估其可靠性有直接启发。",
+      "details_zh": "摘要显示，研究关注的是搜索智能体的“起始条件”如何塑造其找到并使用哪些证据，而非仅看最终准确率。实验用匹配对照区分顺序效应与文档构成差异，并把失败历史的影响与上下文长度效应分开。作者称在 10 个模型、1000 个合成搜索世界上追踪查询、检索、打开文档和最终答案四个阶段，结论包括：主动搜索时答案对初始证据顺序更敏感；死胡同历史相对中性历史会减少策略切换；在错误假设下，分阶段测量能区分“检索或打开减少”与“面对反证仍持续的错误”。这些均为预印本作者自述，合成环境与真实网络搜索存在差距，结论未经独立复现，不宜当作已确立的模型行为规律。",
+      "original_title": "Cognitive Bias Signatures in Search-Equipped LLM Agents: A Stage-Resolved Analysis",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.06899v1",
+      "title_zh": "无需遮挡标注：利用两种单目距离线索的分歧检测行人遮挡",
+      "summary_zh": "一篇 arXiv 预印本提出，机器人可在没有遮挡标注的情况下判断行人是否被遮挡：比较相机管线已计算出的两种距离估计即可。表观高度因检测框仍覆盖整个人而基本不受遮挡影响，单目度量深度则会被遮挡物拉近，两者出现分歧即提示遮挡。该方法面向部署场景中缺乏遮挡标注的现实困难。摘要未给出定量评测结果。",
+      "why_zh": "把“检测不到”转化为“可推断被遮挡”的免费信号，对机器人与自动驾驶的安全感知有实际意义，思路简洁而非堆叠新模型。",
+      "details_zh": "遮挡检测通常依赖人工标注的遮挡掩码，而真实部署环境很少具备这类标注，导致模型难以泛化。该工作的核心观察是：同一相机管线中已存在两种互补的距离线索——基于检测框高度的表观距离，以及单目度量深度。前者在行人被部分遮挡时仍大致稳定，后者会偏向遮挡物，二者的系统性分歧因此可作为遮挡的代理信号。这一思路的吸引力在于几乎不增加标注与计算成本。但摘要未披露数据集、阈值设定、误报率或与监督方法的对比，属于未经独立验证的预印本，实际鲁棒性仍需检验。",
+      "original_title": "Occlusion for Free: Detecting Occlusion from the Disagreement Between Two Monocular Distance Cues",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.06830",
+      "title_zh": "生成式 AI 对齐的“短视”问题：预印本呼吁从即时满意度转向长期影响",
+      "summary_zh": "一篇 arXiv 预印本提出“对齐短视”概念，认为当前生成式 AI 对齐主要依赖短期对话反馈，优化即时满意度，却忽视人机长期互动带来的外部性，例如认知退化、社会关系侵蚀与人的能动性下降。作者主张转向长时段对齐范式，把持续交互的累积影响纳入目标。摘要仅给出问题框架与方向性主张，未提供实验数据或具体算法。",
+      "why_zh": "把对齐讨论从单轮安全与有用性扩展到跨时间的认知与社会后果，为 AI Agent 长期部署的评估标准提出值得追问的框架性问题。",
+      "details_zh": "当前主流对齐方法多基于人类对单次回复的偏好反馈，这种设计天然偏向短期可感知的质量。该预印本指出，当人与模型长期反复交互时，短期最优可能累积成长期损害，并把认知萎缩、社会资本流失与自主性削弱列为潜在外部性。其贡献主要在概念层面：提出长时段对齐的问题设定，而非给出可验证的度量或训练方法。信息局限明显——摘要未说明如何测量这些长期效应、由谁承担评估成本，也未提供实证支持；相关因果链条仍属作者论断，需谨慎对待，不能视为已证实结论。",
+      "original_title": "Alignment Myopia in Generative AI",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.06905v1",
+      "title_zh": "强化学习使通用机器人策略的规模化自我改进成为可能",
+      "summary_zh": "该预印本讨论通用机器人策略的部署适应问题。作者指出，基于大规模预训练语料训练的单一通用策略虽具备较强零样本泛化，但在实际部署中通常仍需适应阶段才能达到足够性能。通过强化学习进行迭代式自我改进被认为有前景，但此前多在单任务设定中探索。该研究探索将这一范式扩展到通用机器人策略的规模化改进。摘要未披露具体算法、任务集合与性能数值。",
+      "why_zh": "通用机器人策略的部署后自我改进是具身智能的关键瓶颈；把 RL 迭代改进从单任务推向通用策略，具有方向性意义。",
+      "details_zh": "通用机器人策略通常先在大规模数据上预训练，获得跨任务的零样本能力，但零样本性能往往不足以直接部署，需要针对具体环境做适应。强化学习驱动的迭代自我改进提供了一条不依赖大量新示范的路径，然而已有工作多局限于单任务场景，难以说明能否在通用策略上规模化。该文标题与摘要表明其目标是填补这一空白，但输入材料未给出方法细节、任务分布、改进幅度或是否在真实机器人上验证。因此只能确认研究问题与方向，不能据此判断其效果；预印本未经独立验证，机构与媒体转述也不构成第三方确认。",
+      "original_title": "Reinforcement Learning Enables Scaling Generalist Robot Policy Improvement",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.06868v1",
+      "title_zh": "面向LLM智能体长程任务的轮级Best-of-N采样",
+      "summary_zh": "该预印本评估一种简单的推理时扩展方法——轮级Best-of-N采样，用于复杂长程任务中的大语言模型智能体。作者采用“生成器—选择器”双模型框架：每一轮由生成器模型产生N个候选动作，选择器模型从中挑出一个并在环境中执行。摘要称该工作与已有相关研究密切相关，但未披露任务环境、模型规模、N取值或性能对比数据。",
+      "why_zh": "推理时扩展是当前LLM智能体研究的实用方向，把Best-of-N从单次生成推广到多轮交互的每一轮，是值得关注的工程化思路，而非产品发布新闻。",
+      "details_zh": "Best-of-N采样原本用于单轮生成：采样多个候选再由奖励模型或验证器挑选。该文将其搬到智能体的多轮决策中，每一轮都做候选动作生成与选择，理论上可提升长程任务的成功率，但代价是每轮推理成本乘以N，且选择器本身的判断质量成为瓶颈。摘要提到与已有工作“密切相关”，暗示该方法可能是对既有框架的复现或扩展评估，而非全新提出。需注意这是预印本，未提供基准任务、成功率、成本曲线等关键数据，无法判断其相对基线是否真有增益，读者应等待更完整的实验披露。",
+      "original_title": "On Turn-Level Best-of-N Sampling for Scaling LLM Agents",
+      "focus": false,
+      "edition": "evening"
+    }
+  ]
+}
