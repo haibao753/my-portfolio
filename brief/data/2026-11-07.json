@@ -1,0 +1,743 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "editions": [
+    "evening"
+  ],
+  "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2512.24669",
+      "title_zh": "单指数奖励下的非参数赌博机：最优性与自适应性",
+      "summary_zh": "该预印本针对上下文赌博机中非参数方法受维度灾难困扰的问题，采用单指数模型把高维协变量投影到一维子空间，同时保留非参数灵活性。作者先为每条臂建立离线单指数回归的非渐近理论，结合最大秩相关估计指数与局部多项式回归，再提出单指数赌博机算法并给出收敛速率，还推导了匹配下界，显示遗憾界与原始维度d无关，从而克服维度灾难；文中另给出自适应方面的不可能性结果。",
+      "why_zh": "与常见赌博机热点不同，它把高维非参数回归的统计理论与序贯决策的极小极大最优性打通，并明确给出自适应代价的负面结论，对理解维度与探索的权衡有启发。",
+      "details_zh": "摘要显示该工作分两步：先做每条臂的离线单指数回归理论，用最大秩相关估计投影方向、局部多项式回归拟合连接函数；再据此构造赌博机算法并证明收敛速率与匹配下界，声称遗憾界不随环境维度d增长。摘要还提到在缺少额外假设时存在自适应方面的不可能性结果，但截断处未说明具体条件。需注意这是arXiv替换版预印本，结论未经独立验证，下界与上界的常数、假设细节需读全文核对，不宜视为已确立的定论。",
+      "original_title": "Nonparametric Bandits with Single-Index Rewards: Optimality and Adaptivity",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.05605",
+      "title_zh": "退火路径上的传输：Wasserstein几何与多峰采样",
+      "summary_zh": "一篇arXiv预印本从Wasserstein几何角度分析几何退火中的传输学习：当概率质量在不同模态间迁移时，退火路径可能远长于端点间距离，长路径会拖慢种群优化，而足够规则的路径可实现快速收敛。作者据此提出分量退火传输（CAT），从模态感知的混合参考分布出发，对目标做精确混合分解并分别学习各分量的传输映射，以降低跨模态质量迁移需求。",
+      "why_zh": "把多峰采样的模式坍缩问题转化为Wasserstein空间中的路径几何问题，为退火类生成模型提供可检验的设计原则，而非又一篇调参式采样改进。",
+      "details_zh": "摘要指出，变分方法学习传输映射用于多峰采样时容易出现模式坍缩，几何退火通过预设中间分布路径来缓解。作者的核心观察是：质量在模态间移动时，退火路径在Wasserstein空间中可能大幅绕行，路径长度远超端点距离；路径几何与传输学习直接相关，长路径会减慢种群优化，规则路径则利于快速收敛。CAT的做法是构造目标的精确混合分解，沿分量退火路径分别学习传输映射，并单独估计分量权重。需注意这是未经独立验证的预印本，摘要未给出实验规模与对比基线，路径几何与收敛速度的定量关系仍需查阅全文核实。",
+      "original_title": "Transport along Local Annealing Paths: Wasserstein Geometry and Multimodal Sampling",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/36 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.05605",
+        "pages_read": 14,
+        "pages_total": 36,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 3
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E11",
+            "page": 7
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          },
+          {
+            "id": "E14",
+            "page": 10
+          },
+          {
+            "id": "E15",
+            "page": 11
+          },
+          {
+            "id": "E16",
+            "page": 12
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究多峰分布采样中沿几何退火路径学习传输映射的问题：如何刻画退火路径在 Wasserstein 空间中的几何代价，以及路径几何与优化动力学之间的关系，从而缓解变分训练中的模式坍缩。",
+            "evidence_ids": [
+              "E1",
+              "E5",
+              "E6"
+            ]
+          },
+          "method": {
+            "text": "作者研究 Wasserstein 空间中的退火路径几何，用连续性方程刻画由速度场生成的粒子 ODE；提出分量式退火路径，即对每个分量分别学习传输映射并按固定参考权重加权组合，再单独校准混合权重；训练目标为连续性方程残差的平方损失（PINN 型损失），并分析总体梯度流动力学。摘录给出算法框架（固定训练集上的分量流训练、采样与密度评估），但具体超参数与完整实验设置需见附录，摘录中无法判断。",
+            "evidence_ids": [
+              "E8",
+              "E11",
+              "E13"
+            ]
+          },
+          "findings": {
+            "text": "理论方面：退火路径在质量跨模态移动时可显著长于端点间的 Wasserstein 距离；在一致 Poincaré 不等式下，路径长度可由 Poincaré 常数与仅涉及两端点的散度界定；分量式路径的 Wasserstein 速度由各分量速度凸性组合界定；同一 Poincaré 条件给出各分量总体残差损失沿梯度流的指数衰减。实验方面，摘录仅称在多峰合成分布与贝叶斯推断问题上改善了传输学习与采样效率，未给出具体数值，无法判断效应大小。",
+            "evidence_ids": [
+              "E1",
+              "E12",
+              "E14"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录为预印本（arXiv:2611.05605v1）的部分页码，未见独立验证或同行评审信息；理论结果依赖严格正密度、绝对连续性及一致/分量式 Poincaré 不等式等假设；分量式路径端点仅在权重校准后才等于目标，否则存在偏差；实验细节与证明置于附录，摘录未包含，故无法判断实验规模、基线与失败情形。",
+            "evidence_ids": [
+              "E5",
+              "E9",
+              "E11"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：依据算法 1 在固定训练集上以 minibatch SGD 最小化分量残差损失，依据算法 2 从基密度采样并沿学习到的速度场积分、同时累积对数密度；需注意摘录未给出网络结构、温度分布 νj 与空间分布 µjβ 的具体选择、学习率与步数，这些需查阅附录，当前资料不足以完整复现。",
+            "evidence_ids": [
+              "E15",
+              "E16"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.05731",
+      "title_zh": "面向主动型LLM智能体的前瞻记忆框架",
+      "summary_zh": "一篇arXiv预印本指出，现有LLM智能体记忆系统多为回溯式，而主动型智能体还需要“前瞻记忆”：保存面向未来的意图，并在合适时机即使无明确请求也能兑现。作者受人类前瞻记忆认知理论启发提出Pro-Memory，把“维持未来意图”与“决定何时如何实现”分开，将待办目标与其支撑证据关联，用新观察对照原始目标与激活条件，并依据实际发出的动作更新意图状态。",
+      "why_zh": "把认知心理学的前瞻记忆概念引入Agent记忆设计，触及“记住意图”与“在正确时机行动”的分离问题，对做Agent架构的读者比一般模型发布更有启发。",
+      "details_zh": "摘要强调一个关键区分：记住正确的意图并不保证在正确时间行动——相关观察可能意味着应当等待，而稍后的线索才使同一意图可执行。Pro-Memory据此把意图维护与触发决策拆成两个环节，并让智能体把候选行动与正在进行的行为协调起来，同时根据实际执行情况更新意图状态。该工作为预印本，未经独立验证；摘要未披露基准测试、数据集与量化结果，实际效果与相对基线方法的优劣尚无法从现有材料判断。",
+      "original_title": "Prospective Memory for Proactive LLM Agents",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "BBC中文",
+      "published": "2026-11-06",
+      "url": "https://www.bbc.com/zhongwen/articles/cqr7ydkrnpxno/trad?at_medium=RSS&at_campaign=rss",
+      "title_zh": "美国中期选举后共和党失去两院，对华政策与对台军售会转向吗？",
+      "summary_zh": "BBC中文报道称，美国中期选举中民主党取得两院多数后，受访专家普遍认为，特朗普以个人外交主导的对华政策与对台军售节奏将面临国会更多监督与拉锯，但总统仍掌握主要决策权。报道聚焦国会与白宫在对华政策上的权力分配，而非具体政策已发生的变化。",
+      "why_zh": "把选举结果与对华政策、对台军售的决策机制联系起来，关注的是制度性制衡而非表态本身，对理解中美关系走向有实际参考价值。",
+      "details_zh": "目前只取得标题及极少量公开摘要，不能据此确认事件完整经过、政策适用范围或各方解释。请查看原始报道与相关官方资料，区分事实、当事方说法和进一步的影响分析。",
+      "original_title": "美國中期選舉：共和黨失去兩院，對華政策與對台軍售會轉向嗎？",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2605.31416",
+      "title_zh": "二阶PACF渐近理论：区分分数高斯噪声与FARIMA(0,d,0)",
+      "summary_zh": "arXiv预印本指出，分数高斯噪声与FARIMA(0,d,0)共享同一长记忆极点，因此一阶偏自相关函数都近似为d/n，仅凭这一阶无法区分二者。作者证明在0<d<1/2时，纯分数高斯噪声的PACF展开到二阶时出现一个小于d²的系数，从而与FARIMA模型分离。证明借助Bingham–Inoue–Kasahara表示、相位系数展开与Hankel算子扰动论证。",
+      "why_zh": "把“长记忆模型难以区分”这一常识推进到二阶可辨识性，对时间序列模型选择与短记忆阶数判定有直接方法论意义，而非泛泛的统计新闻。",
+      "details_zh": "摘要给出的核心事实是：两类过程的一阶PACF同为d/n，差异只在二阶项显现，且分数高斯噪声的二阶系数严格小于d²。作者据此解释，用FARIMA类模型拟合分数高斯噪声数据时，短记忆阶数的选择可能不同。需要说明的是，这是未经独立验证的预印本，摘要未给出完整定理条件与数值实验，二阶项在实际样本量下是否可稳定估计尚不清楚，读者不宜将其当作已确立的实用判别准则。",
+      "original_title": "Second-order PACF asymptotics and discrimination between fractional Gaussian noise and $\\FARIMA(0,d,0)$",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/24 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2605.31416",
+        "pages_read": 14,
+        "pages_total": 24,
+        "citations": [
+          {
+            "id": "E2",
+            "page": 4
+          },
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E5",
+            "page": 2
+          },
+          {
+            "id": "E6",
+            "page": 3
+          },
+          {
+            "id": "E7",
+            "page": 4
+          },
+          {
+            "id": "E8",
+            "page": 5
+          },
+          {
+            "id": "E12",
+            "page": 9
+          },
+          {
+            "id": "E16",
+            "page": 13
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究的问题是：分数高斯噪声（fGn）与分数差分噪声 FARIMA(0,d,0) 在原点具有相同的局部长记忆奇异性 |θ|^{-2d}，一阶 PACF 渐近也相同，因此仅凭一阶预测理论无法区分二者。作者追问在二阶 PACF 渐近层面二者是否可区分，并据此构造基于预测的模型判别诊断。",
+            "evidence_ids": [
+              "E4",
+              "E2",
+              "E5"
+            ]
+          },
+          "method": {
+            "text": "方法为解析/渐近理论推导：利用谱密度分解把 fGn 谱包络与分数差分极点分离，转化为平滑相位扰动；通过 BIK（Bingham–Inoue–Kasahara）相位系数与 PACF 映射，并验证纯 fGn 的 Szegő 系数可容许条件；最后在可显式求解的 FARIMA(0,d,0) 尾部做 Hankel 算子扰动，得到二阶系数。文中还以残差驱动噪声比较来表述判别障碍。",
+            "evidence_ids": [
+              "E8",
+              "E6",
+              "E16"
+            ]
+          },
+          "findings": {
+            "text": "理论结果：FARIMA(0,d,0) 的 PACF 为 α_F(n)=d/(n−d)，展开为 d/n + d^2/n^2 + O(n^{-3})；纯 fGn 的 BIK 相位系数展开含 −L_d sin(πd)/(π(n−d)^2) 项，且 L_d>0，故存在 N_0(d) 使 0<β^{fGn}_n<β^F_n 且差值至少为 L_d sin(πd)/(2π(n−d)^2)。由此二阶系数严格不同，fGn 与分数差分噪声不能作为可互换的结构驱动噪声；在 Whittle 阶数选择中该二阶差异会改变总体谱投影及所选短记忆 ARMA 阶数的解释。",
+            "evidence_ids": [
+              "E7",
+              "E12",
+              "E2"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录仅覆盖第1–14页的数学推导，未提供数值实验、模拟或实证数据，也未提供独立复现验证；论文以 arXiv 预印本形式出现（arXiv:2605.31416v2），摘录中未见同行评审或独立验证信息。结果限于 d∈(0,1/2) 的解析框架与所讨论的两类噪声，摘录未说明其他 d 范围或更一般模型的适用性，无法判断。",
+            "evidence_ids": [
+              "E3",
+              "E12",
+              "E4"
+            ]
+          },
+          "replication": {
+            "text": "复现建议（基于摘录可核对的步骤）：先按式(2.3)–(2.4)构造 r_d(θ)、g_d(θ)=log r_d(θ) 与 L_d 的积分并数值验证 L_d>0；再按 Lemma 3.2/3.3 计算 q_d 与相位函数比 Ω_fGn=Ω_F q_d；随后按 Proposition 3.4 的两次分部积分核对 β^{fGn}_n 的 −L_d sin(πd)/(π(n−d)^2) 项，并与 FARIMA 的 d/(n−d) 展开比较；最后按 BIK 映射(3.20)由 β_n 重建 PACF 并检验不等式(3.15)。摘录未给出代码、数据或数值容差，具体实现细节无法判断。",
+            "evidence_ids": [
+              "E7",
+              "E12",
+              "E16"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08439v1",
+      "title_zh": "类型化决策编码器中的标签措辞增强：对陌生词有效，对缩写和代码无效",
+      "summary_zh": "一篇arXiv机器学习预印本研究类型化决策模型对标签措辞的敏感性。此类模型在请求时对调用方提供的选项打分，因此准确率受开发者无法控制的标签表述影响。作者比较了307M参数多语言交叉编码器Ru-Jev的两个版本，均基于13个俄语任务训练，后一版本加入将标签以多种表面形式呈现的增强。固定问题、仅改变18个路由标签的措辞，在10个标签词表上评估。",
+      "why_zh": "多数研究关注输入分布漂移，这里关注“输出标签怎么写”这一常被忽视的脆弱点，并给出增强收益的边界：对陌生词有帮助，对缩写和代码无效，对部署提示设计有直接参考价值。",
+      "details_zh": "摘要说明，类型化决策模型的打分对象是调用方在请求时给出的选项，因此标签措辞不在模型开发者控制之内，这构成一类特殊的分布偏移。作者以307M参数的多语言交叉编码器Ru-Jev为对象，比较两个发布版本，训练数据为13个俄语任务；较晚版本增加了把标签以多种表面形式呈现的增强。实验设计是固定问题、只改变18个路由标签的措辞，并在10个标签词表上评估，从而把标签表述的影响单独隔离出来。标题给出的结论是：增强带来的增益出现在不熟悉的词上，而在缩写或代码类标签上没有增益。信息局限明显：摘要未给出具体指标数值、词表构成和统计检验，也未说明结论能否推广到其他语言与模型规模；预印本结论尚待独立复现。",
+      "original_title": "Label-Wording Augmentation in a Typed-Decision Encoder: Gains on Unfamiliar Words, Not on Abbreviations or Codes",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-06",
+      "url": "https://www.psypost.org/unpredictable-home-lives-are-linked-to-childrens-mental-health-problems-beyond-abuse-and-neglect/",
+      "title_zh": "家庭生活不可预测性与儿童心理健康问题相关，且超出虐待与忽视的影响",
+      "summary_zh": "PsyPost报道一项覆盖近3万名儿童的研究：常规童年逆境筛查通常询问虐待、忽视与家庭功能障碍，若额外询问家庭生活的不可预测性，可识别出部分被标准筛查漏掉、存在抑郁风险的儿童。报道称不可预测性与儿童心理健康问题的关联超出虐待和忽视本身。",
+      "why_zh": "提示现行逆境筛查量表可能遗漏“不可预测性”这一维度，对儿童心理健康筛查与家庭政策设计有直接参考价值，而非泛泛的育儿建议。",
+      "details_zh": "报道基于PsyPost对一项研究的转述，摘要仅给出样本量约3万、筛查维度与抑郁风险识别等要点，未提供研究设计、测量工具、效应量或混杂因素控制等细节，也未说明是否经同行评审。因此只能确认“额外询问不可预测性可识别标准筛查漏掉的风险儿童”这一报道层面的说法，关联强度与因果方向均需查阅原始论文核实。对关注心理测量与公共政策的读者，值得追问的是不可预测性如何操作化定义，以及在不同家庭社会经济背景下是否稳定。",
+      "original_title": "Unpredictable home lives are linked to children’s mental health problems, beyond abuse and neglect",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-06",
+      "url": "https://news.ycombinator.com/item?id=50393105",
+      "title_zh": "HN讨论：Ubuntu为何迟迟未修复一个9.8分严重漏洞",
+      "summary_zh": "Hacker News上一条提问帖称，Ubuntu将CVE-2026-98432评为9.8分严重漏洞，但临近一周仍无修复更新，状态显示为“处理中”，目前至少列出了缓解措施。发帖者表示已自行采取缓解措施，但对Ubuntu的响应速度感到担忧，并猜测原因可能包括维护内核版本过多、构建自动化不足等。",
+      "why_zh": "触及开源发行版安全响应能力的结构性问题：内核分支数量与自动化程度如何影响补丁时效，对依赖发行版的企业运维有现实意义。",
+      "details_zh": "该条目来自Hacker News聚合，属社区讨论而非官方声明，CVE编号、评分与状态描述均需以Ubuntu安全页面和CVE数据库核实。摘要只呈现发帖者的观察与猜测，未提供Ubuntu官方解释、漏洞影响范围或实际利用情况。值得关注的背景是：主流发行版需同时维护多个内核与软件分支，安全修复涉及构建、测试与回移，周期可能拉长；但“内核太多导致延迟”目前只是发帖者推测，不能当作已确认原因。读者应区分社区情绪与可核实的安全公告。",
+      "original_title": "Ask HN: What in the world is taking Ubuntu so long?",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.05596",
+      "title_zh": "RAGCompass：通过重排序实现可泛化的检索器路由",
+      "summary_zh": "一篇arXiv预印本指出，不同检索器各有所长，但现有路由器依赖查询特征和固定检索器池，面对未见过的检索器或新语料无法给出路由。RAGCompass改为直接读取各检索器返回的段落集合，使陌生检索器或语料下的段落仍可比较。作者对重排序器做对比式微调，以各证据集产生的答案为目标，并加一个小型比较头；两个组件均无检索器专属参数。摘要称相对最佳固定检索器，答案F1提升28%，并优于融合方法。",
+      "why_zh": "RAG系统常默认“选一个最强检索器”，该工作把路由问题转为对证据集本身的可比较评估，且设计上不绑定检索器池，对实际部署中新检索器频繁出现的场景更有意义。",
+      "details_zh": "摘要给出的关键动机是：没有单一检索器对所有查询都最优，而既有路由器从查询特征映射到固定检索器池，遇到池外检索器就没有输出，换语料也需重训。RAGCompass的思路是让路由决策读取检索到的段落集合本身，因为段落表示在不同检索器和语料间仍可直接比较，从而在查询-only映射会失效的场景保持可用。方法上，对比式微调重排序器贡献了大部分增益，小型比较头带来中等改进，且两者都不含检索器专属参数，这支持跨检索器泛化。摘要报告相对最佳固定检索器答案F1提升28%，并优于融合基线。局限在于：这是预印本，28%的相对提升依赖具体基准与数据集，摘要未披露评测集构成、统计显著性与计算开销；路由本身也引入额外重排序成本。",
+      "original_title": "RAGCompass: Generalizable Retriever Routing via Reranking",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-11-05",
+      "url": "https://arstechnica.com/gadgets/2026/11/nasas-experimental-x-70-aircraft-is-a-big-question-mark/",
+      "title_zh": "NASA发布神秘的X-70实验飞行器，配图由AI生成",
+      "summary_zh": "Ars Technica报道，NASA公布X-70“Fractal”实验飞行器，相关发布使用了AI生成的图像；报道称此举正值该机构寻求扩大X-plane机队之际。现有材料仅为标题与摘要，未说明X-70的技术参数、试飞计划或AI生成图像的具体用途与标注方式。",
+      "why_zh": "机构在正式发布中使用AI生成图像，涉及科技传播中的真实性与可信度问题，比单纯的飞行器新闻更值得追问；但材料有限，需谨慎对待。",
+      "details_zh": "目前只取得标题及极少量公开摘要，尚不足以确认报道涉及的具体时间线、产品技术细节或相关方回应。此处不对原始材料未说明的细节作推断；建议打开来源阅读全文后再判断其实际影响。",
+      "original_title": "NASA unveils mysterious X-70 experimental aircraft using AI-generated image",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "Quanta Magazine",
+      "published": "2026-11-06",
+      "url": "https://www.quantamagazine.org/a-strange-quantum-theorem-has-killed-einsteins-reality-20261106/",
+      "title_zh": "一个奇特的量子定理如何动摇爱因斯坦的实在观",
+      "summary_zh": "Quanta Magazine刊文讲述爱因斯坦为捍卫日常实在观与量子力学奇异性的论争，以及后来研究者如何不断在其论证中找出漏洞。文章标题称一个“奇特的量子定理”对爱因斯坦的实在观构成打击。现有材料仅为RSS标题与摘要，未提供定理名称、作者、实验或数学细节。",
+      "why_zh": "量子基础中“实在性”争论的科普梳理，涉及数学定理与物理诠释的关系，对关注数学与物理交叉的读者有启发；但需注意这是媒体叙事而非研究论文。",
+      "details_zh": "从标题与摘要可知，文章主线是爱因斯坦试图从量子力学的奇异中拯救日常实在概念，而后续研究者持续削弱其论证。摘要未说明所涉定理的具体内容、是否涉及贝尔类不等式或上下文性结果，也未给出实验验证情况。因此本条只能作为科普阅读线索，不能据此判断某项具体物理结论已被证实；对定理的数学表述与适用范围需查阅原始论文与综述。",
+      "original_title": "A Strange Quantum Theorem Has Killed Einstein’s Reality",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-11-06",
+      "url": "https://www.technologyreview.com/2026/11/06/1148154/the-download-humanoid-robot-cleaner-samsung-ai-chip-boom/",
+      "title_zh": "每日简报：人形机器人打扫公寓，三星为AI热潮扩产",
+      "summary_zh": "MIT Technology Review的每日简报包含两条内容：记者体验了一款新人形机器人上门清洁服务，称其像未来生活的一次预演；另一条涉及三星为AI需求扩张产能。简报为汇编性质，摘要仅给出记者个人体验的开头，未提供机器人型号、价格、服务范围或三星投资规模等细节。",
+      "why_zh": "人形机器人从演示走向付费家政服务是具身智能商业化的观察窗口，但简报体裁信息密度低，需区分记者体验与可核实的产品能力。",
+      "details_zh": "摘要显示，记者Grace Huckins看到社交平台X上关于新人形机器人清洁服务的帖子后进行了体验，并形容“像尝到了未来的味道”。这属于第一人称体验报道，不是受控评测，无法据此判断机器人的自主性、可靠性或成本效益。另一条“三星为AI热潮而建”仅有标题式提示，摘要未展开。整体信息有限：没有公司名称、服务定价、技术路线，也没有三星扩产的具体数字。读者应将其视为趋势线索而非已验证的产业结论。",
+      "original_title": "The Download: a humanoid cleans house and Samsung builds for the AI boom",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.05723",
+      "title_zh": "平衡引导森林：用于因果效应估计的协变量平衡新方法",
+      "summary_zh": "该预印本讨论观察性研究中协变量平衡的核心难题：应平衡哪些特征。现有森林核平衡方法先学树表示再构造平衡权重，二者脱节，有限的树容量可能浪费在已平衡良好的特征上。作者提出平衡引导森林（BGF），用当前平衡权重指导后续树生长，分裂分数同时考虑残余不平衡与结果对比，优先切分仍存在不平衡且与结果相关的区域，从而把表示学习与平衡耦合，并给出连接迭代构造的oracle型界。",
+      "why_zh": "它指出“先学表示再平衡”的两阶段流程存在目标错配，并用权重反馈指导树分裂，属于因果推断与森林方法交叉的方法论改进，对做观察性数据分析的读者有实际参考价值。",
+      "details_zh": "摘要交代的动机是：森林核平衡依赖数据驱动地学习平衡特征，但先建树表示、后算权重的流程会让树容量花在已被很好表示的特征上，形成错配。BGF的改动在于把平衡权重回灌到树构建过程，用结合残余不平衡与结果对比的新分裂分数，聚焦结果相关且仍不平衡的区域。作者称建立了oracle型界联系迭代构造，但摘要未给出具体速率或实验数字。该文为arXiv预印本，未经独立验证，实际效果与假设强弱需看全文和复现。",
+      "original_title": "Balance-Guided Forest for Causal Effect Estimation",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-11-06",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOcDN1MV96bnVaX3M3N3ZTTkNGVk5JOGh5SzA4eno4TXZsaGp4QVlSV2J5RTk0MnNmejlYSmltSnkzaE5mbUk1OHVSbXJkS3ZhUDA5UHREdmZ1T3hiczNLaXdVN25GVU1oRUVqY0hKd2ktMDZLdkZfeC1WSzlIaUJlMzJndDJJQ0d2UExqdzc5cnFQa19lbXg1YWZn?oc=5",
+      "title_zh": "《外交学者》发文讨论：中国是否准备好应对民主党控制的国会",
+      "summary_zh": "《外交学者》（The Diplomat）刊发文章，标题追问中国是否已有应对美国民主党控制国会的方案。该条目来自聚合RSS，仅提供标题与来源，摘要未包含文章论点、受访者或具体政策分析。文章涉及中美关系与立法机构变化，具体内容需查阅原文核实。",
+      "why_zh": "美国国会控制权变化会影响对华立法议程，该文提出的是政策准备问题而非事件报道，对关心中美关系制度性变化的读者有议题价值。",
+      "details_zh": "目前可确认的只有标题与来源：文章发表于《外交学者》，以问句形式讨论中国对美国民主党控制国会的应对准备。聚合信息未提供作者、发布时间以外的正文内容，也没有中方官方回应或美方立法细节。因此无法判断文章是分析性评论还是基于采访。读者需注意，标题本身是提问而非结论，不能据此推断中国已有或没有相关计划。建议查阅原文，并区分评论观点与可核实事实。",
+      "original_title": "Does China Have a Plan for Dealing With a Democratic Congress? - The Diplomat – Asia-Pacific Current Affairs Magazine",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-06",
+      "url": "https://www.psypost.org/a-bad-day-at-work-may-leave-you-feeling-less-in-love-study-suggests/",
+      "title_zh": "两周日记研究提示：工作琐事堆积当天，爱意与激情可能下降",
+      "summary_zh": "PsyPost报道一项为期两周的日记研究，认为工作截止日期、家庭争吵、车辆故障等外部烦扰若超出个人日常水平，当天的爱与激情感受倾向于下降。报道强调这些外部压力不会停留在关系之外。给定材料仅含媒体摘要，未提供样本量、测量工具、效应大小或发表期刊等关键信息。",
+      "why_zh": "把日常压力与亲密关系情感放在同日时间尺度上考察，比笼统的“压力有害关系”更具体；但需警惕媒体对相关性结果的因果化表述。",
+      "details_zh": "已知信息仅来自媒体摘要：设计为两周日记法，预测变量是外部日常烦扰的累积超出常态，结果变量是当天的爱与激情感受。日记法能捕捉日内波动，但本质是观察性相关，无法排除反向因果（关系满意度低者更易报告烦扰）与共同第三变量。摘要未说明样本构成、是否预注册、效应量级，也未指明原始论文出处，属于未经独立交叉核实的报道，结论应谨慎看待。",
+      "original_title": "A bad day at work may leave you feeling less in love, study suggests",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "TechCrunch",
+      "published": "2026-11-06",
+      "url": "https://techcrunch.com/video/after-the-midterms-is-the-ai-industry-in-for-a-rough-two-years/",
+      "title_zh": "中期选举后，美国AI产业会迎来艰难两年吗",
+      "summary_zh": "TechCrunch报道称，美国中期选举中民主党取得被形容为历史性的胜利，可能改变科技行业格局。报道指出，本周共有41项与数据中心相关的公投措施，除一项外多数投票结果倾向对数据中心开发施加更多限制；即便数据中心未直接列入选票，相关议题也被带入讨论。报道以提问方式讨论AI行业未来两年是否面临更严环境。",
+      "why_zh": "把AI算力扩张的地方政治阻力落到具体公投数量上，提示数据中心选址与许可正成为产业变量，而非单纯的技术或资本故事。",
+      "details_zh": "可确认的只有报道转述的选举结果与41项数据中心相关公投的多数倾向，以及“限制开发”这一方向性描述。报道未给出各州分布、限制措施的具体内容、对在建项目的影响评估，也未提供行业回应。“历史性胜利”“艰难两年”均属媒体框架与推测，不是已核实结论。该条为单一媒体信源，需结合地方选举官方结果与后续立法进展核实。",
+      "original_title": "After the midterms, is the AI industry in for a rough two years?",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2605.09214",
+      "title_zh": "前向KL正则化离线上下文赌博机在单策略集中性下取得快速收敛率",
+      "summary_zh": "该预印本研究离线上下文赌博机中前向KL正则化的统计效率。此前反向KL正则化已被证明可达ε^{-1}型快速率，而前向KL目标的分析要么不适用，要么只能得到ε^{-2}型慢率。作者给出表格型与一般函数逼近设定下首个ε^{-1}上界，均基于单策略集中性假设，并用凸分析框架统一处理、绕开中值定理式证明路线。",
+      "why_zh": "把强化学习中常见的KL正则化方向差异转化为可证明的收敛率差异，属于理论机器学习中少见的“方向决定速率”结果，对理解正则化设计有直接启发。",
+      "details_zh": "摘要显示，论文关注的是离线上下文赌博机，即在固定数据集上学习决策策略，并用KL正则化约束策略偏离。关键对比是反向KL与前向KL：前者已有ε^{-1}型快速率结论，后者此前分析受限。作者声称在表格型和一般函数逼近两类设定下都得到ε^{-1}上界，且都依赖单策略集中性这一较弱的覆盖假设。方法上强调凸分析流程与悲观原则的新用法。需注意这是预印本，结论未经独立验证，摘要未给出常数、具体假设细节或实验，实际适用范围仍需阅读全文确认。",
+      "original_title": "Fast Rates for Offline Contextual Bandits with Forward-KL Regularization under Single-Policy Concentrability",
+      "focus": false,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/36 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2605.09214",
+        "pages_read": 14,
+        "pages_total": 36,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 2
+          },
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 5
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E11",
+            "page": 7
+          },
+          {
+            "id": "E14",
+            "page": 10
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究的是带前向KL（forward-KL）正则化的离线上下文赌博机（offline contextual bandits）的统计学习问题：在表格型与一般函数逼近两种设定、单策略可集中性（single-policy concentrability）条件下，能否获得 ϵ^{-1} 型快速样本复杂度，并给出匹配的下界。摘录显示作者指出前向KL正则化目标的既有统计分析要么不适用、要么只给出 ϵ^{-2} 慢率。",
+            "evidence_ids": [
+              "E1",
+              "E5",
+              "E3"
+            ]
+          },
+          "method": {
+            "text": "作者提出算法 FKL-PCB，分表格型（Algorithm 1）与函数逼近（Algorithm 2）两个版本。表格版用经验奖励减去基于计数 N(s,a) 的悲观惩罚 b(s,a)，再做悲观截断，最后求解 max ⟨ĝ,π⟩−η^{-1}KL(πref‖π)；函数逼近版用最小二乘估计奖励，惩罚项为 β·D_G(s,a) 形式的悲观项，同样求解带前向KL正则的目标。理论分析采用凸分析（Bregman 散度、共轭函数）路线，绕开以往基于中值定理的证明套路。",
+            "evidence_ids": [
+              "E9",
+              "E10",
+              "E3"
+            ]
+          },
+          "findings": {
+            "text": "作者声称给出表格型与一般函数逼近下首个 ϵ^{-1} 上界（表格型为 η(Cπ*)²|S||A|/ϵ，函数逼近为 ηCπ*D²π*log(NG)/ϵ 量级），并给出表格型下界 Ω(η|S||A|/ϵ)，据此论证在 ϵ 与 η（及表格型的 S、A）上的率最优性，以及正则化减弱时由快率向慢率的相变。需注意这些是论文自述结果，摘录未提供独立复现或第三方验证。",
+            "evidence_ids": [
+              "E2",
+              "E11",
+              "E14"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录只覆盖第1–12页的部分内容，公式与表格存在错排，无法核对完整定理陈述与证明细节。可确认的限定包括：下界结果限于表格型设定；快率依赖 f(t)=−log t 特有的解耦性质，作者称一般严格凸正则化器未必达到 ϵ^{-1}；函数逼近结果依赖可实现性（realizable）假设与覆盖数 NG。摘录未给出实验验证，也未说明独立复现情况，因此实际数值表现与稳健性无法判断。",
+            "evidence_ids": [
+              "E11",
+              "E14",
+              "E6"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：先按 Algorithm 1 在表格型环境实现 FKL-PCB（计数、经验奖励、惩罚 b(s,a)=sqrt(4log(2|S||A|/δ)/N(s,a))、悲观截断、带前向KL正则的优化），再按 Algorithm 2 换成最小二乘奖励估计与 βD_G 惩罚。需注意摘录中公式排版错乱，具体常数与 β 定义应回到原文核对；摘录未提供实验设置、数据集或代码，因此无法据此判断可复现性，也无法确认是否经过独立验证。",
+            "evidence_ids": [
+              "E9",
+              "E10",
+              "E4"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08487v1",
+      "title_zh": "用户嵌入是可解释行为模式的稀疏叠加",
+      "summary_zh": "一篇arXiv预印本提出，推荐与个性化系统中的稠密用户嵌入可理解为若干可解释行为模式的稀疏叠加。作者称这一结构对线性嵌入可由用户行为生成模型直接推出，并借叠加假说近似延伸到深度学习表示。用稀疏自编码器等稀疏字典学习方法可恢复这些模式，并用自然语言自动命名和查询；在合成数据上，SAE恢复模式优于经典稀疏基线，包括对Transformer编码嵌入。",
+      "why_zh": "把机制可解释性中的叠加与稀疏自编码器思路迁移到用户行为建模，若成立可为推荐系统审计与用户画像解释提供可操作工具。",
+      "details_zh": "用户嵌入广泛用于推荐、个性化和行为建模，但稠密且不透明。作者主张其可分解为稀疏的行为模式叠加，并用稀疏字典学习恢复模式、自动命名。验证主要在合成数据上进行，作者称SAE优于经典稀疏基线，且在Transformer编码嵌入上同样有效；摘要还提到方法应用于经典与Transformer类表示，但具体数据集与指标未在摘要中给出。这是预印本，模式是否对应真实可解释行为、命名是否可靠，尚需独立复现与人工评估，不能视为已确立结论。",
+      "original_title": "User Embeddings are Superpositions of Interpretable Behavioral Modes",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-06",
+      "url": "https://www.psypost.org/people-high-in-narcissism-show-less-coordinated-brain-responses-to-others-embarrassment/",
+      "title_zh": "高自恋者在他人尴尬时的大脑反应同步性较低",
+      "summary_zh": "PsyPost报道一项研究：自恋程度较低的人观看他人被严厉批评时，脑活动与他人较为同步；而在 grandiose 自恋程度较高的人中，这种反应更不同步。报道称研究聚焦于他人尴尬情境下的脑间同步。摘要未给出样本量、测量方法与效应大小。",
+      "why_zh": "把自恋特质与“脑间同步”这一社会神经科学指标联系起来，比常见自陈量表研究多了一层神经层面证据，但媒体报道需回到原论文核实。",
+      "details_zh": "据摘要，研究场景是观看他人被严厉批评，属于替代性尴尬/共情相关情境。核心发现是：低自恋者的脑反应与他人更匹配，高 grandiose 自恋者则更不同步。这里“同步”通常指多人脑活动的时间相关性，但摘要未说明是与人还是与刺激对齐、使用何种成像手段。信息局限较大：没有样本规模、统计显著性、效应量，也未说明是否控制其他人格变量。PsyPost为媒体报道，未经独立交叉核实，不宜据此推断因果或推广到临床。",
+      "original_title": "People high in narcissism show less coordinated brain responses to others’ embarrassment",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-06",
+      "url": "https://github.com/Unleash/unleash",
+      "title_zh": "开源特性开关服务器Unleash已持续开发11年",
+      "summary_zh": "Hacker News上出现一条指向GitHub项目Unleash的帖子，标题称团队已构建这个开源特性开关（feature flag）服务器11年，帖子获得约105点、66条评论。摘要仅提供仓库链接与讨论链接，未包含架构、用户规模或版本发布等具体信息，属于社区聚合线索，相关说法需回到项目仓库与文档核实。",
+      "why_zh": "特性开关是持续交付与灰度发布的关键基础设施，一个开源项目长期维护11年本身反映工程可持续性问题；但该条只是HN热帖，价值在于引出对开源基础设施维护模式的讨论，而非产品新闻。",
+      "details_zh": "已知信息仅限于聚合标题与互动数据：项目为GitHub上的Unleash，定位是开源特性开关服务器，标题声称已开发11年，讨论区有66条评论。摘要未提供功能特性、许可证、采用情况或维护者背景，也未说明“11年”的起算依据。Hacker News为聚合来源，热度不等于事实确认；读者应查阅仓库提交历史、发布记录与文档，再判断其成熟度与适用场景，不宜仅凭标题采信。",
+      "original_title": "We've built an open-source feature flag server for 11 years",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.05780",
+      "title_zh": "π-former：用文献知识引导无量纲学习，为数据驱动方程补上物理闭合",
+      "summary_zh": "arXiv预印本提出知识引导的无量纲学习框架π-former，从1288个已确立的无量纲群语料中学习变量关联与指数分配模式，在精确量纲约束下提出可解释的基本群，并针对观测优化其组合。作者称在七个物理问题上数秒内找到有预测力的无量纲坐标，与方程发现结合后可用这些坐标表达随工况变化的系数，在多工况模拟中复现已知物理标度。",
+      "why_zh": "把“量纲分析”这一经典物理方法与大模型式模式学习结合，回应数据驱动方程系数随工况漂移的痛点，属于方法论层面的新意而非产品发布。",
+      "details_zh": "摘要强调的已知细节包括：语料规模1288个无量纲群、七个物理问题、数秒级搜索，以及与传统方程发现流程的集成。其价值在于让数据拟合出的方程系数获得物理可解释的条件依赖形式。局限也很明显：这是预印本，摘要未披露七个问题的具体领域、与基线方法的定量对比及误差范围；“复现已知标度”属于作者自述，需独立复现验证，实验测量部分摘要被截断，结论完整性未知。",
+      "original_title": "Discovering like a scientist: Literature-informed dimensionless learning for physical closure of data-driven equations",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-11-06",
+      "url": "https://www.technologyreview.com/2026/11/06/1148090/i-watched-a-humanoid-robot-clean-my-apartment-it-felt-like-a-taste-of-the-future/",
+      "title_zh": "我旁观一台人形机器人打扫公寓：像提前尝到未来的味道",
+      "summary_zh": "MIT Technology Review一位作者讲述在旧金山体验新出现的人形机器人清洁服务：看到社交平台X上的帖子后随即预约，并观察机器人打扫自己的公寓。文章以第一人称体验为主，摘要未给出服务价格、机器人型号、任务完成质量、失败次数或公司名称等具体信息。",
+      "why_zh": "人形机器人正从演示视频走向付费家庭服务，第一手体验能揭示演示与真实家居环境之间的差距；但这是个人体验报道，不能当作技术成熟度或商业可行性的证据。",
+      "details_zh": "摘要显示，作者原本节俭、习惯自己打扫，但在X上看到旧金山有人形机器人清洁服务后立刻预约，随后旁观机器人清理公寓。这一叙事把讨论从实验室演示拉到真实家庭场景：家居环境杂乱、物品摆放随机、任务边界模糊，都是人形机器人泛化能力的压力测试。不过，摘要没有提供任何可核验的运营细节，例如服务由哪家公司提供、收费多少、机器人自主程度如何、是否需要远程人工接管、清洁效果与耗时、是否发生损坏或安全事故。作为媒体体验报道，它适合作为观察行业动向的线索，但不足以判断该服务是否可规模化、成本是否可持续，也不构成对机器人能力的独立评测。",
+      "original_title": "I watched a humanoid robot clean my apartment. It felt like a taste of the future.",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08465v1",
+      "title_zh": "通过缩放激活反演解释残差流中的任意方向",
+      "summary_zh": "该预印本关注语言模型可解释性：要解释残差流中的某个方向，通常需在语料中搜索能强烈激活它的文本，但受限于语料内容。作者提出“最大激活示例元模型”（MAEMs），即一类语言模型，把目标模型的残差流方向映射到能强烈激活该方向的文本示例，目标是最大化给定方向与示例激活之间的余弦相似度，从而不再局限于现有语料中恰好存在的文本。",
+      "why_zh": "常见可解释性工作多依赖语料检索或探针，这里用生成式元模型直接反演方向到文本，把“解释方向”变成可优化的映射问题，思路新颖，但摘要信息有限，效果待验证。",
+      "details_zh": "摘要说明的已知信息是：解释残差流方向的一种做法是找能强烈激活它的文本，而语料扫描受语料覆盖限制；MAEMs被训练为把主体模型的残差流方向映射到强激活文本示例，优化目标是方向与示例激活的余弦相似度。摘要未提供模型规模、训练数据、评测指标或与基线对比结果，也未说明生成文本是否忠实反映模型内部机制。该文为arXiv预印本，未经独立验证，读者应把它视为方法提案而非已确认的可解释性结论。",
+      "original_title": "Towards interpreting any residual stream direction by scaling activation inversion",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.07219",
+      "title_zh": "条件尾部指数模型的Neyman正交化设定检验",
+      "summary_zh": "一篇arXiv统计学预印本提出针对重尾分布参数化条件尾部指数模型的设定检验。方法基于投影经验过程，消除估计零假设参数带来的一阶影响；在条件Hall类下给出投影同时消除Pareto近似主偏差的条件，从而可在保持渐近正确检验水平的同时采用更低阈值。作者用乘子自助法验证检验有效性，并针对对数线性模型讨论协变量集中、信息矩阵最小特征值趋零时的自助法有效性，还提出基于投影后Pareto偏差估计的数据驱动阈值选择规则。",
+      "why_zh": "与常见“新模型刷分”不同，这篇关注极值统计中检验的有限样本可靠性：降低阈值可保留更多样本、提升功效，但需控制水平扭曲，属于方法学层面的实质进展。",
+      "details_zh": "摘要显示，该工作处理的是重尾分布尾部指数建模中的模型设定检验问题。核心难点在于：估计零假设参数会污染检验过程，而Pareto近似偏差又迫使研究者使用高阈值、丢弃大量观测。作者提出投影经验过程以消除一阶估计效应，并在条件Hall类中刻画投影同时消除主偏差的条件，使更低阈值在渐近上仍可接受。检验有效性通过乘子自助法建立；对对数线性模型，作者还讨论了协变量在上尾集中、信息矩阵最小特征值趋零这一较病态情形。数据驱动阈值规则依据投影后偏差估计，目标是在控制水平扭曲的前提下保留更多观测。需注意这是未经独立验证的预印本，摘要未给出模拟规模与实际数据表现，理论条件在实际中的可检验性也待评估。",
+      "original_title": "Neyman Orthogonalized Specification Tests for Conditional Tail Index Models",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-06",
+      "url": "https://www.psypost.org/transgender-women-show-distinct-patterns-of-resting-brain-activity-small-study-finds/",
+      "title_zh": "小型研究发现跨性别女性静息脑活动模式存在差异",
+      "summary_zh": "PsyPost报道一项小型脑成像研究，称跨性别女性在处理躯体感觉与运动的脑网络上，与顺性别男性和顺性别女性均存在差异；在多数测量指标上，顺性别男性位于另外两组之间。报道未在摘要中给出样本量、具体网络指标或统计细节，属于媒体对单项小样本研究的转述，结论的稳健性与可推广性有待核实。",
+      "why_zh": "与常见心理轻研究不同，它涉及性别认同与神经影像的交叉议题，易被过度解读；读者需要区分小样本探索性发现与群体本质论断，关注其证据边界比关注结论本身更重要。",
+      "details_zh": "据摘要，该研究比较跨性别女性、顺性别男性与顺性别女性的静息态脑活动，发现前一组在躯体感觉和运动相关网络上与后两组不同，且顺性别男性在多数指标上处于中间位置。摘要未交代样本规模、成像方法、是否控制激素使用等因素，也未说明差异的效应大小。PsyPost为媒体转述，未经独立交叉核实；此类小样本脑成像研究常存在多重比较与可重复性问题，不宜据此推断因果或作群体定性。",
+      "original_title": "Transgender women show distinct patterns of resting brain activity, small study finds",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-11-04",
+      "url": "https://www.technologyreview.com/2026/11/04/1148049/roundtables-inside-the-quest-for-cognitive-immortality/",
+      "title_zh": "圆桌讨论：追寻“认知永生”的技术路径",
+      "summary_zh": "MIT Technology Review预告11月17日一场圆桌讨论，主题是部分技术专家为追求自我的延续性，正在探索让大脑在死亡之后仍能维持运转或延续心智的路径，包括渐进式保存等设想。活动由科学编辑Mary Beth Griggs与生物医学高级编辑Antonio Regalado主持。",
+      "why_zh": "把“认知永生”从科幻话题拉进可讨论的技术与伦理议程，涉及神经科学、数据保存与人格同一性，适合作为批判性阅读的入口。",
+      "details_zh": "目前仅有活动预告，摘要提到“渐进式”路径但未展开具体技术方案，也未给出任何研究结果或可行性证据。此类议题常混合脑保存、连接组学、数字分身等不同概念，其科学成熟度差异很大；圆桌讨论本身属于观点交流，不构成技术验证。读者可关注的问题包括：心智延续的判定标准是什么、谁有权处置死后神经数据、以及相关宣称如何与现有神经科学证据对照。信息有限，不宜据此推断某项技术已接近实现。",
+      "original_title": "Roundtables: Inside the Quest for Cognitive Immortality",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08445v1",
+      "title_zh": "用隐马尔可夫偏好模型在线预测对手下一步行动",
+      "summary_zh": "该预印本提出用隐马尔可夫模型预测对手的下一步行动：潜在状态表示对手当前的行为模式，模式可在同一回合内切换；每个行动由操作与随时间变化的状态相关参数组成。模型据此在行动发生前给出概率分布，用于防御方预判攻击方行为。摘要未披露具体实验设置与预测精度。",
+      "why_zh": "把行为模式的持续与切换、行动参数的时变性同时纳入预测模型，比静态偏好假设更贴近真实对抗场景，对安全与博弈建模有方法启发。",
+      "details_zh": "摘要指出两个建模难点：一是攻击者的行为模式具有持续性，但可能在一次事件内切换；二是每个行动由“操作”加“依赖状态的参数”构成，而可行参数值随时间变化。作者用隐马尔可夫模型刻画：潜在状态即当前活跃模式，模式条件下的行动分布另行定义。这类结构适合在线预测，因为可在观测到行动前输出概率分布。信息局限明显：摘要未说明数据来源、对手类型、评估指标，也未给出与基线方法的比较，因此无法判断实际预测增益。作为预印本，结论需独立复核。",
+      "original_title": "A Hidden Markov Preference Model for Online Prediction of Adversary Actions",
+      "focus": false,
+      "edition": "evening"
+    }
+  ]
+}
