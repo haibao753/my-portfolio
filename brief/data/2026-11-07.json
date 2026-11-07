@@ -2,9 +2,681 @@
   "version": 1,
   "date": "2026-11-07",
   "editions": [
+    "morning",
     "evening"
   ],
   "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08315v1",
+      "title_zh": "在异构认知与生物医学知识图谱上评测大语言模型：图接地在多跳推理与幻觉缓解中的作用",
+      "summary_zh": "一篇arXiv预印本评测GPT-5.1、Gemini 2.0 Pro、Llama 3、Qwen与BioGPT五个模型在DrugBank、NeuroSynth、Cognitive Atlas、Brain Map和GDPKG五个知识图谱上的表现，并构建多层级查询数据集，比较图感知与图无关条件下的推理深度与事实准确性。摘要称标注者间一致性较高（Cohen's kappa 0.781），通用模型在多跳与高层推理上总体优于领域专用模型，图接地降低了所有模型的幻觉率，但性能随查询复杂度上升而下降。",
+      "why_zh": "与常见模型榜单不同，它把“知识图谱接地能否抑制幻觉”作为可测变量，并给出领域专用模型未必占优的反直觉线索，对做RAG与Agent推理评测的读者有方法参考价值。",
+      "details_zh": "该研究属预印本，未经独立验证，摘要仅给出部分结果，完整实验设置、各图谱上的具体分数与统计检验需查原文。值得注意的设计点：一是跨五个异构图谱而非单一数据集，二是区分图感知与图无关两种条件，三是引入多层级查询以刻画推理深度。摘要提到领域专用模型未如预期稳定胜出，但未说明差距大小与显著性；幻觉率下降的幅度也未在摘要中量化。读者应把它视为评测框架与初步发现的线索，而非已确立的结论。",
+      "original_title": "Benchmarking Large Language Models on Heterogeneous Cognitive and Biomedical Knowledge Graphs: The Role of Graph Grounding in Multi-Hop Reasoning and Hallucination Mitigation",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08438v1",
+      "title_zh": "从内部理解AI：面向AI安全的机制可解释性研究现状",
+      "summary_zh": "一篇arXiv预印本综述讨论机制可解释性是否真能让AI系统更安全。作者指出，神经网络能力与自主性提升的同时，社会危害风险也在上升，但人们仍在不完全理解模型内部表征与计算的情况下构建强大系统。综述将机制可解释性置于更广泛的可解释性研究脉络中，比较其机制性证据与行为评估，并梳理该领域的基础方法，核心追问是：理解模型如何工作是否真的使其更安全。",
+      "why_zh": "不同于一般AI安全评论，该文把“可解释性是否提升安全性”作为可检验问题，并区分机制证据与行为评估，对关注AI Agent可靠性的读者有方法论价值。",
+      "details_zh": "据提供的摘要，该综述的问题意识是：模型越自主，越需要预测其在陌生情境中的行为并可靠控制。作者主张机制可解释性通过研究内部表征与计算，为评估、预测和控制行为提供路径。文章还提出将机制性证据与行为评估对照，这触及当前AI安全讨论中的一个关键缺口——可解释性成果常被默认等同于安全收益，但二者关系需要论证。需注意这是预印本，未经独立验证，摘要未给出具体方法清单或实证结论，因此不宜据此判断该领域已形成共识。",
+      "original_title": "Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "亲密关系",
+      "source": "PsyPost",
+      "published": "2026-11-07",
+      "url": "https://www.psypost.org/fatherhood-brain-changes-ai-companions-and-a-dispute-over-evolutions-grip-on-romance-the-week-in-psychology-podcasts/",
+      "title_zh": "播客周报：父职的脑变化、AI伴侣，以及进化心理学对择偶解释力的争论",
+      "summary_zh": "PsyPost汇总本周心理学播客内容，涉及成为父亲后的大脑变化、AI伴侣现象，以及两位心理学家围绕进化史在多大程度上决定人类择偶与竞争的尖锐分歧。一位以祖先战争解释人类智力与男性地位追求，另一位认为流行的进化择偶脚本在人们真实面对面接触后便站不住脚。",
+      "why_zh": "把“进化决定择偶”这一流行叙事放回可争论的学术语境，而非当作定论传播，对关注心理学的读者有辨伪价值。",
+      "details_zh": "该条为播客内容综述，摘要只呈现两位心理学家的立场对立，未提供具体研究设计、样本或效应量，因此无法判断哪一方证据更强。父职脑变化与AI伴侣部分仅有主题提示，缺少研究发现细节。读者可将其视为话题地图而非结论：进化心理学对择偶偏好的解释在跨文化实验与真实互动情境中仍有争议，媒体转述的“本能脚本”常被简化。信息有限，需回到原始播客与研究论文核实。",
+      "original_title": "Fatherhood brain changes, AI companions, and a dispute over evolution’s grip on romance: The week in psychology podcasts",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "TechCrunch",
+      "published": "2026-11-06",
+      "url": "https://techcrunch.com/2026/11/06/hundreds-of-artex-ai-hacking-tools-found-publicly-exposed-to-the-web/",
+      "title_zh": "数百个 Artex AI 黑客工具实例被公开暴露在互联网上",
+      "summary_zh": "TechCrunch 报道称，安全研究人员发现数百台托管渗透测试工具 Artex 的服务器暴露在公网，任何人都能访问该黑客工具。报道将其描述为 AI 相关黑客工具的公开暴露事件，但摘要未说明暴露的具体原因、涉及哪些运营方、是否已被滥用，也未给出研究机构的完整报告。",
+      "why_zh": "AI 工具与攻击性安全能力的公开暴露，涉及平台责任与滥用风险，比一般漏洞快讯更值得追问工具扩散的治理边界。",
+      "details_zh": "该条来自 TechCrunch 的 RSS 标题与摘要，属媒体报道，未经独立交叉核实。已知信息仅限于：安全研究人员发现数百个托管 Artex 的服务器可被公网访问。摘要没有交代 Artex 的开发方、部署者身份、暴露持续时间、是否包含凭证或模型权重，也没有说明是否通知相关方。读者应把它视为待核实的安全线索，而非已确认的大规模入侵事件；后续需关注原始研究报告和厂商回应。",
+      "original_title": "Hundreds of Artex AI hacking tools found publicly exposed to the web",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "BBC中文",
+      "published": "2026-11-06",
+      "url": "https://www.bbc.com/zhongwen/articles/cw62yyejjrlro/trad?at_medium=RSS&at_campaign=rss",
+      "title_zh": "澳门首宗国安案件宣判：区锦新获刑12年半，家属称遭“莫须有迫害”",
+      "summary_zh": "BBC中文报道，澳门首宗国安案件宣判，区锦新被判处12年半监禁。报道称案件过程不公开，区锦新由“指派律师”辩护，审理法官及律师身份不明；从预审、开审到宣判，外界只能通过政府新闻稿获知消息。其妻子斥责这是“莫须有迫害”。",
+      "why_zh": "涉及澳门国安司法程序的首例实践，关乎不公开审理与辩护权如何运作，属具有制度意义的中国相关报道，而非普通社会新闻。",
+      "details_zh": "目前只取得标题及极少量公开摘要，不能据此确认事件完整经过、政策适用范围或各方解释。请查看原始报道与相关官方资料，区分事实、当事方说法和进一步的影响分析。",
+      "original_title": "澳門國安首案宣判：區錦新囚12年半，妻子斥「莫須有迫害」",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08323v1",
+      "title_zh": "多任务学习结合句法增强的情感极性分类",
+      "summary_zh": "一篇arXiv预印本比较两种把句法知识注入神经情感分析模型的统一多任务学习策略：Standard-MTL用共享编码器加两个任务头联合学习依存句法分析（以序列标注形式）与情感极性分类；Contrastive-MTL则通过对比辅助目标与句法偏置注意力池化提供隐式句法引导。作者称将依存分析重构为序列标注可降低传统句法分析器的计算开销。",
+      "why_zh": "它讨论的是“句法信息值不值得算”这一工程权衡，用多任务与对比学习替代独立句法分析器，对关注NLP效率与可解释性的读者比单纯刷分更有启发。",
+      "details_zh": "摘要只交代了动机与两种方法框架，未给出数据集、准确率或效率对比数字，因此无法判断哪种策略更优。可确认的背景是：词典方法透明但难处理否定与强化，传统句法分析器开销大，近期工作把依存分析改写为序列标注以提效。该文属预印本，未经同行评审与独立复现；Contrastive-MTL中“句法偏置注意力池化”的具体机制摘要未展开。读者宜将其视为方法设计思路，而非已验证的性能结论。",
+      "original_title": "Polarity Classification with Multitask Learning Syntax Augmentation",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/21 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.08323v1",
+        "pages_read": 14,
+        "pages_total": 21,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 12
+          },
+          {
+            "id": "E2",
+            "page": 1
+          },
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 3
+          },
+          {
+            "id": "E8",
+            "page": 5
+          },
+          {
+            "id": "E9",
+            "page": 6
+          },
+          {
+            "id": "E10",
+            "page": 7
+          },
+          {
+            "id": "E11",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 10
+          },
+          {
+            "id": "E14",
+            "page": 11
+          },
+          {
+            "id": "E16",
+            "page": 13
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文关注句子/文档级情感极性分类：给定输入文本x，预测其整体情感极性y∈Y（如正面、负面、中性）。研究动机是词典方法难以处理否定与强化等语言现象，而传统句法分析器计算开销大；因此探索在训练中引入隐式句法监督、推理时无需显式解析的可行性。",
+            "evidence_ids": [
+              "E2",
+              "E4",
+              "E3"
+            ]
+          },
+          "method": {
+            "text": "方法为多任务学习框架：将依存句法分析（以序列标注形式，采用CoDeLin的绝对、相对、POS偏移及括号类编码）作为辅助训练信号，与情感极性分类联合训练。两个变体为Standard-MTL（联合依存分析）与Contrastive-MTL（对比学习加句法引导注意力池化）。对比目标在依存关系标签类别与句子级情感标签类别上各计算一次（τ=0.07），并使用标签平滑（ε=0.1）。推理时丢弃句法相关组件，仅用标准情感头与普通池化。",
+            "evidence_ids": [
+              "E11",
+              "E10",
+              "E6"
+            ]
+          },
+          "findings": {
+            "text": "摘录显示作者报告：训练中的隐式句法监督在推理时无需显式解析即可达到或超过显式解析的效果。表5消融显示Contrastive-only MTL在Darmstadt_unis的Brk7Bits编码下F1为0.602，而Syntax-only MTL为0.558；表4比较Standard-MTL、Contrastive-MTL与语法朴素基线及SELSP；表6给出训练/评估时间对比。但摘录中多数数据集与编码的完整数值被截断，无法据此判断整体优劣，需查阅完整表格。",
+            "evidence_ids": [
+              "E3",
+              "E1",
+              "E16"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：输入仅为14页摘录，表格数值多处被截断或错排（如E13、E15），无法完整核对所有数据集与编码的结果；SELSP仅覆盖英语和西班牙语数据集，其他语言无对比。摘录未提供统计显著性检验、误差分析或独立复现验证的信息，因此无法判断结论的稳健性。该文为预印本（arXiv标识），摘录中未见独立第三方验证。",
+            "evidence_ids": [
+              "E14",
+              "E13",
+              "E4"
+            ]
+          },
+          "replication": {
+            "text": "复现建议基于摘录可确认的要素：使用MARC多语言亚马逊评论语料，按表2的划分（含丢弃空标签行）；将结构化情感标注按算法1转换为评论级极性标签；实现CoDeLin的四种编码（Brk7Bits、BrkBased、Absolute、Relative）；训练Standard-MTL与Contrastive-MTL，对比目标τ=0.07、标签平滑ε=0.1，推理时移除句法组件。但摘录未给出完整超参数、模型规模与随机种子，复现前需查阅原文其余部分；且需注意这是预印本，尚无独立验证。",
+            "evidence_ids": [
+              "E8",
+              "E9",
+              "E11"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-06",
+      "url": "https://www.planned-obsolescence.org/p/ai-is-dramatically-accelerating-ai",
+      "title_zh": "有观点称 AI 正在大幅加速 AI 研究本身",
+      "summary_zh": "Hacker News 上一条聚合帖指向 planned-obsolescence.org 的文章，标题主张 AI 正在显著加速 AI 研究。该条目仅提供标题、链接与讨论热度，未给出原文摘要、具体指标或研究方法，因此无法判断其依据是文献计量、实验对比还是作者观察。",
+      "why_zh": "AI 自我加速是讨论热度高但证据常薄弱的话题；本条价值在于提示读者追问衡量口径，而非接受标题结论。",
+      "details_zh": "目前可确认的信息仅限于：聚合来源为 Hacker News，标题为“AI is dramatically accelerating AI research”，原文链接指向 planned-obsolescence.org，讨论获得 261 点、209 条评论。这些数字只反映社区关注度，不构成对论点的证据。原文是否给出可复现的度量（如论文产出、实验迭代周期、研究者效率）、是否区分相关性和因果、是否讨论测量偏差，均无法从现有材料得知。该来源属于聚合线索，需核实原始报道；在读到原文前，不宜把“大幅加速”当作已确立事实。",
+      "original_title": "AI is dramatically accelerating AI research",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08453v1",
+      "title_zh": "比较强到弱在线策略蒸馏与GRPO的计算效率：教师模型选择如何改变结论",
+      "summary_zh": "一篇arXiv预印本系统比较反向KL在线策略蒸馏（OPD）与GRPO在达到目标准确率时所需的训练FLOPs，考察任务难度、师生规模、领域与优化选择。摘要称，使用外部后训练教师时，OPD在同等设置下每单位训练FLOP的准确率通常不如GRPO，且常出现回答长度膨胀；但当教师是学生自身的GRPO检查点时，OPD在数学任务上以约50倍更少的蒸馏FLOPs达到该检查点准确率。",
+      "why_zh": "不同于普通模型发布快讯，该研究把“蒸馏是否省算力”拆成教师来源这一变量，给出反常识的条件性结论，对做后训练与算力预算的读者有直接参考价值。",
+      "details_zh": "摘要给出的核心对照是：外部后训练教师下OPD总体劣于GRPO，即便教师再用GRPO训练也如此，并伴随回答变长；换成学生自身的GRPO检查点作教师，效率优势显著。这说明“在线蒸馏省不省算力”可能高度依赖教师与学生的关系，而非方法本身。需注意这是未经独立验证的预印本，摘要未给出具体任务集、模型规模与误差范围，50倍数字仅适用于所述数学设定，不能外推为普遍结论；引用时应视为待复核线索。",
+      "original_title": "Unpacking the Compute Efficiency of Strong-to-Weak OPD against GRPO",
+      "focus": false,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/44 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.08453v1",
+        "pages_read": 14,
+        "pages_total": 44,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E3",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 7
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E11",
+            "page": 7
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          },
+          {
+            "id": "E14",
+            "page": 10
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究的问题是：在达到目标准确率时，on-policy distillation（OPD）相比 GRPO 这类结果奖励强化学习，是否能减少训练所需的 FLOPs；以及这种强到弱 OPD 的计算效率在任务难度、学生与教师规模等条件下如何变化。摘录还指出，既有 OPD 效率报告多用 GPU-hours，而本文以 FLOPs 为口径比较。",
+            "evidence_ids": [
+              "E5",
+              "E6"
+            ]
+          },
+          "method": {
+            "text": "方法上，OPD 在学生自己的 rollouts 上，用冻结教师对每个 token 做逐 token 监督；具体目标是对学生 top-k（k=16）支持集上的学生与教师概率重归一化后，计算闭式 reverse KL。实验比较 GRPO 与 OPD，并设置 Joint GRPO（instance-mix 与 batch-mix）、多教师 self-GRPO OPD（按域路由到对应 self-GRPO 教师并计算 reverse KL）、以及单一外部 8B-thinking 教师 OPD 等条件；学生固定为 Qwen3-4B-Base，在 DAPO-Math-17K 上扫描教师类型。",
+            "evidence_ids": [
+              "E8",
+              "E9",
+              "E11"
+            ]
+          },
+          "findings": {
+            "text": "摘录报告的主要结果是：按域使用 self-GRPO 教师的 OPD 在总 FLOPs 少 42.0% 的情况下匹配 joint GRPO；在 OOD 数学评测上，使用 self-GRPO 教师的 OPD 是唯一能以比 GRPO 少 50.0× FLOPs、比外部 Qwen3-8B 教师 OPD 少 135.6× FLOPs 匹配 GRPO 性能的设置。另一方面，单一外部 8B 教师尽管整体性能更强，却显著欠佳，训练出的学生出现严重退化行为，如无法停止的重复、英文提示下输出中文字符。多教师 OPD 在域平均性能上优于 joint GRPO，但外部教师 OPD 在 2 域欠佳、在 4 域崩溃。",
+            "evidence_ids": [
+              "E1",
+              "E3",
+              "E12"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界方面：摘录明确说某些教师与学生之间的大差距原因未知，留待未来工作；并指出外部教师 OPD 在多域会崩溃、单一外部 8B 教师会导致学生退化。摘录还说明本文是预印本（Salesforce AI Research），未提供独立复现或第三方验证信息；因此不能把上述效率结论视为已经独立验证的定论。",
+            "evidence_ids": [
+              "E4",
+              "E14",
+              "E5"
+            ]
+          },
+          "replication": {
+            "text": "复现建议只能依据摘录：以 Qwen3-4B-Base 为学生、DAPO-Math-17K 为训练数据，按 top-k=16 的闭式 reverse KL OPD 目标实现；对比 joint GRPO 的 instance-mix 与 batch-mix、多教师 self-GRPO OPD（按域路由）以及单一外部 8B-thinking 教师 OPD；OPD 运行默认 rollout group size G=1（除非另有说明），并在 2 域（math+code）与 4 域（math+code+IFBench+MMLU-Pro）混合上评估。摘录未给出完整超参数、随机种子或独立验证条件，无法据此判断可复现性。",
+            "evidence_ids": [
+              "E8",
+              "E9",
+              "E13"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "Ars Technica",
+      "published": "2026-11-06",
+      "url": "https://arstechnica.com/security/2026/11/chainalysis-says-hackers-stole-credentials-and-tokens-for-all-of-its-customers/",
+      "title_zh": "Chainalysis 称黑客窃取全部客户的凭证与令牌",
+      "summary_zh": "Ars Technica 报道，区块链分析公司 Chainalysis 表示遭遇“多方位网络攻击”，黑客窃取了其所有客户的凭证和令牌。报道称攻击包含 AI 智能体参与，以及一种在路径上截取数据的手法。公司已对外说明事件，但摘要未披露受影响客户数量、攻击者身份、是否发生资金损失及补救措施。",
+      "why_zh": "安全公司自身被攻破且涉及全部客户凭证，暴露供应链信任问题；报道所称“AI 智能体参与攻击”也值得审慎追问其证据。",
+      "details_zh": "目前只取得标题及极少量公开摘要，尚不足以确认报道涉及的具体时间线、产品技术细节或相关方回应。此处不对原始材料未说明的细节作推断；建议打开来源阅读全文后再判断其实际影响。",
+      "original_title": "Chainalysis says hackers stole credentials and tokens for all of its customers",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-06",
+      "url": "https://www.psypost.org/why-humans-punish-a-study-of-two-distinct-societies-reveals-a-shared-sense-of-ju/",
+      "title_zh": "人类为何惩罚：两个差异巨大社会的研究显示共享的正义感",
+      "summary_zh": "PsyPost报道一项跨两种差异较大文化的研究，称人们惩罚违规者的冲动包含双重动机：一是补偿受害者所遭受的确切损失，二是施加额外惩罚以威慑未来伤害。报道将这一发现概括为不同社会共享的正义感。由于仅有媒体摘要，研究的具体社会样本、实验设计、样本量和效应大小均未呈现，相关结论仍需回到原始论文核实。",
+      "why_zh": "把惩罚拆解为“补偿”与“威慑”两种动机，比笼统谈正义感更具分析力，对理解跨文化合作与制度设计有启发，但需警惕媒体对单一研究的概括。",
+      "details_zh": "该条来自PsyPost的新闻摘要，属于媒体报道而非一手论文，未经独立交叉核实。摘要只说明研究覆盖两个“差异巨大”的文化，并得出惩罚兼具补偿与额外威慑两种欲望的结论，没有交代这两个社会具体是哪里、参与者数量、使用的是惩罚博弈还是其他范式，也没有说明两种动机在不同社会中的权重是否一致。因此可以把它视为一个值得追踪的研究线索，而不宜直接当作“人类普遍正义感已被证实”的证据。跨文化研究尤其需要关注样本代表性和实验情境对惩罚行为的影响。",
+      "original_title": "Why humans punish: A study of two distinct societies reveals a shared sense of justice",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-11-07",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNd1JXWFBzYlJTRnRabmViWjNOb0VYSFdQLVRkY0gwdGJpMXlhbV8xc1EzYXE0a2NRRHJzVnRCWU5DQ1YzUU9MSVdxY1VEclRYalNyb3dJVjZfZ0dWMTBpdkdjX0xhaDdJTDlsbmhoNDFmRkRpbTVWX2NjTFlFT29XMnpuLVAwbERONktFV3ZGX1Z2aDFTbEZVaDJZQXNuakV3Z21Dd2VyMTlPSkZneUNEQ25QQjVoQVdNRmppWkZHUF9UX3djeDhQSVliXzlwYWR0ZGpGWNIB1AFBVV95cUxONkVMYVJkb2h3cVZILWlEblo4WlRsQ1JNeHNPaXZPRGJtUFUySHRRbnZhVTA5cVBITVcwREdDZG1yUDlkaGFRNXI4VEg2Qi16WEpaWUN2Z0hzV3hLYVFNdjNYQjBFWUtUTGV1VnVGdjgweGxyMjgwejhWR0VfSE1SWnVDZHg4ZS1YaTBwNVpkbDRzM1lmZlVQNGhaYXNLM0V0emZ1NEdqNS1jTjROclBaazV6TWxUNS1zRzNxS3NKLU43SjJWR1JfQlVFdkJNeTRlV0lRdw?oc=5",
+      "title_zh": "评论：美国中期选举后，激烈的政治分裂如何侵蚀中国四个王朝",
+      "summary_zh": "南华早报“Reflections”评论栏目以美国中期选举为引，讨论激烈的政治分裂如何侵蚀中国历史上四个王朝。聚合来源仅提供标题，未给出具体朝代、论证框架或作者观点。",
+      "why_zh": "这是一篇历史类比评论而非新闻事实报道，其价值在于观察媒体如何用中国王朝史解读美国政治极化，但标题本身不构成可核实的历史结论。",
+      "details_zh": "该条来自聚合RSS，仅有标题，需核实原始报道全文。可确认的只有栏目性质（评论/Reflections）与类比主题；具体涉及哪四个王朝、依据哪些史料、是否提出政策启示，均无法从现有材料判断。历史类比常因选择性取材而失真，读者应区分作者论点与史实。此外，该条与美国中期选举相关，选举结果本身应另以权威选举报道核实，不宜由评论栏目替代。",
+      "original_title": "Reflections | After US midterms, how bitter political divisions eroded 4 Chinese dynasties - South China Morning Post",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-11-06",
+      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPUE9yQTV0eG1UTXhrOFRfLXBZS3J0SjNJekw5UFU3c1JDWEkwR3Y0VDlJNDU5Z2pIcE9UUVRPWXVNclZpLVlkZ1pRVGhRRms4cFUySkFPa2c3RHBnWWFMRG1KNmhtQ2l4ajBOZDQyQm9nNk5iWmZmeVhDX0VYUjJXb2d6V0JpRHBoRkHSAY8BQVVfeXFMTk0wUjFNT01lYWExemZRa1V3X3RuRGY5OV9UZ2hsS2N5d2trbWk0ajdldnhBU2l0dkRGejMyZVJRcXhMLVg1bzNXdzFKWlloR3ZoVG0zMzVTb3FpemlIYkxMV3FTVHMwRHE1ZjZsT2hqZ2JWVHdSWTJ5Zl9vbEhYMmFDYUl4Q05UV19ybmhmbGM?oc=5",
+      "title_zh": "加拿大总理卡尼称正与中国商讨贸易发展下一步，并称有更多机会提供更大稳定性",
+      "summary_zh": "据 Forex Factory 聚合的标题，加拿大总理卡尼表示，加拿大正与中国讨论贸易发展的后续步骤，并称双方有更多机会提供更大的稳定性。该条为聚合线索，未提供具体议题、时间表或双方表态细节，需回到原始报道核实。",
+      "why_zh": "中加贸易关系在经历摩擦后出现接触信号，涉及农产品、关税等潜在议题；但当前仅有聚合标题，价值在于提示需要追踪的政策动向。",
+      "details_zh": "该条来源为聚合站点，标题转述了卡尼关于对华贸易“下一步”和“更大稳定性”的表态，但没有说明谈判层级、涉及商品、是否与既有争端有关，也没有中方回应。由于材料仅为一句话标题，无法判断这是例行外交表述还是实质性进展。读者应将其视为待核实的线索，关注加拿大官方发布或主流通讯社的原始报道，避免据此推断具体协议内容。",
+      "original_title": "Canada PM Carney: We Are Talking To China About Next Steps On Trade Development; We Have More Opportunities To Provide Greater Stability - Forex Factory",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-11-04",
+      "url": "https://www.technologyreview.com/2026/11/04/1148043/texas-was-the-new-epicenter-of-the-ai-data-center-buildout-that-might-be-kaput/",
+      "title_zh": "得州曾是 AI 数据中心建设新中心，政治版图变化可能动摇这一地位",
+      "summary_zh": "MIT Technology Review 报道称，得克萨斯州是美国增长最快的数据中心市场，也是大型科技公司 AI 基建的重心。但文章提出，该州选举结果变化可能危及这一地位，并提到民主党人 James Talarico 赢得参议员席位、Gina Hinojosa 赢得州长选举。摘要未说明具体政策机制。",
+      "why_zh": "把 AI 算力基建与地方政治、能源和监管联系起来，提示数据中心选址不只取决于电价和土地，也受选举与政策风向影响。",
+      "details_zh": "报道的核心论点是：得州凭借电力、土地和宽松环境成为 AI 数据中心扩张的热点，而选举结果可能改变当地对数据中心的态度或政策支持。摘要只给出选举人名和结果，未说明新政府的具体立场、可能出台的法规，也未提供数据中心投资或电价数据。因此“可能受挫”目前是媒体分析而非已发生的事实，需关注后续立法、电网审批和公司投资公告来验证。",
+      "original_title": "Texas was the new epicenter of the AI data center buildout. That might be kaput.",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08362v1",
+      "title_zh": "SpecCTMC：对扩散语言模型连续时间马尔可夫链的精确投机模拟",
+      "summary_zh": "该预印本针对掩码扩散语言模型并行解码会改变输出分布的问题，提出无需训练、也无需独立草稿模型的投机采样器 SpecCTMC：利用已计算的模型预测提出连续 token 更新，并行评估中间状态，再做精确的接受与修正。作者称可证明其保持底层连续时间马尔可夫链在事件时间、生成顺序和 token 取值上的联合分布，从而不引入时间离散化误差或并行解码的额外分解误差。",
+      "why_zh": "与常见的并行解码加速不同，它试图在保持精确分布的前提下压缩逐 token 顺序评估的瓶颈，属于推理算法层面的方法创新，值得关注其证明与实测的边界。",
+      "details_zh": "摘要给出的背景是：掩码扩散语言模型可并行生成文本，但独立采样多个 token 会破坏依赖关系并改变输出分布；精确的连续时间采样虽避免近似，却通常需要每个 token 一次顺序模型评估。SpecCTMC 的做法是用先前计算出的模型预测提出后续 token 更新，并行评估这些中间状态，再执行精确的接受与修正程序。作者声称证明了该方法保持事件时间、生成顺序与 token 值的联合分布，因此既无时间离散化误差，也无并行解码带来的额外分解误差。摘要还提到在 LLaDA-8B-Instruct 与 Dream-v0-Instruct-7B 上跨五个基准取得 1.73–4.38 倍加速，但摘要在此处截断，具体基准与对比条件不明。该文为预印本，未经独立验证，理论证明与实验细节需查阅原文核实。",
+      "original_title": "SpecCTMC: Exact Speculative Simulation of Diffusion Language Model Continuous-Time Markov Chains",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "科学研究",
+      "source": "Nature Machine Learning",
+      "published": "2026-11-03",
+      "url": "https://www.nature.com/articles/s41598-026-78103-2",
+      "title_zh": "网络安全政策领域的文档分类基准数据集",
+      "summary_zh": "Nature Machine Learning 的 RSS 条目显示，一项工作发布了面向网络安全政策领域的文档分类基准数据集。标题表明该数据集用于训练和评估政策文本的分类模型，但摘要为空，未提供数据规模、标签体系、来源机构、标注方法和基线结果。该条目目前只能确认数据集主题与发布渠道。",
+      "why_zh": "政策文本分类缺乏公开基准，若数据集可靠，可支撑监管科技与政策分析的可复现研究；但信息有限，需先核实构建方法。",
+      "details_zh": "当前公开材料主要提供标题和很少的摘要信息，无法独立判断研究方法、数据、因果关系或结论的可靠性。具体内容需要阅读原始来源后核实。",
+      "original_title": "A document classification benchmark dataset on cybersecurity policy domain",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-06",
+      "url": "https://www.psypost.org/brain-stimulation-made-people-see-sexualized-women-less-like-objects-in-a-lab-test/",
+      "title_zh": "脑刺激实验显示：对女性“物化”的知觉可能像习惯一样可被改变",
+      "summary_zh": "PsyPost 报道一项脑刺激研究，探讨把女性视为客体是否是知觉的固定特征。报道称，在实验室条件下，温和电流刺激似乎能改变这种倾向，研究者将其类比为可被调整的习惯。报道未在摘要中给出样本量、刺激脑区、测量方式和效应大小。",
+      "why_zh": "它把“物化”从态度问题引向知觉与习惯机制，涉及社会认知与神经调控的交叉，但媒体报道未提供方法细节，需谨慎看待其外推意义。",
+      "details_zh": "该条只有媒体标题与摘要，信息有限。可确认的是：研究使用脑刺激手段，在实验室测试中观察对性化女性图像的加工变化，作者倾向把物化知觉解释为可塑的习惯而非固定特征。但摘要未说明被试数量、对照组设置、刺激参数、行为指标，也未说明效果能否持续或迁移到真实情境。此类小样本实验室研究常受可重复性与生态效度质疑，媒体标题的概括不宜当作已确立结论。",
+      "original_title": "Brain stimulation made people see sexualized women less like objects in a lab test",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-06",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/",
+      "title_zh": "谷歌发布Gemini Omni 1.2 Flash，开发者工具线再添新模型",
+      "summary_zh": "Hacker News聚合条目指向谷歌官方博客文章，标题为“Gemini Omni 1.2 Flash”，该帖在HN获得315点与226条评论。现有材料仅为聚合标题与链接，未包含模型能力、上下文长度、定价、基准测试或可用地区等具体信息。",
+      "why_zh": "模型发布本身属常见快讯，但开发者社区高讨论度提示其接口或性价比可能有变化；在缺少参数细节时只宜作线索记录。",
+      "details_zh": "该条证据来自HN聚合，指向blog.google的开发者工具栏目，说明是官方发布而非第三方爆料，但摘要未提供任何技术规格。因此无法判断“Omni”与“Flash”命名对应的能力定位，也不能比较其与前代或其他厂商模型的性能。读者若关注实际影响，应直接查阅官方博客的模型卡、定价与限流说明，并注意社区评论可能包含未经证实的体验描述。本条不构成对模型质量的评价。",
+      "original_title": "Gemini Omni 1.2 Flash",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-11-06",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPakNLaDVCMElHQkc5cjV5SmVJcFNPdVpMbnZHRmVFMkoxR3hhbERYTnBZcUlmQVZBanhMeVhEZHpsN3JxM0xrUHNsYVZPWW1EdXBWam1pNk5lSEZVNHkwcUV1VG9xbmVYek80a3JXelRIcW9fQjQ3TUljTUdpZkhYWUJaZHhxNTUybWQwME81bUtPTmJ4UUg4ZjVrZjVlLUx2azFkWjhmeThDWkp2MHJwdTVR?oc=5",
+      "title_zh": "路透：美国就业增长回升，失业率降至 4.1%",
+      "summary_zh": "聚合线索显示，路透报道美国劳动力市场重拾动能，就业增长大幅上升，失业率降至 4.1%。现有材料只有这一句标题式摘要，未提供新增就业人数、统计月份、前值修正、劳动参与率或薪资增速等关键数据，也未说明数据来源是官方统计还是调查。",
+      "why_zh": "美国就业与失业率是全球利率、汇率与风险资产定价的核心输入；但本条仅有标题，读者应等待官方数据与分项细节再判断强弱。",
+      "details_zh": "可确认的仅是路透标题所传达的方向：就业增长“激增”，失业率“降至 4.1%”。标题未给出统计月份，因此无法判断这是最新月度数据还是对某次发布的描述；也未提供非农新增就业的具体数值、前几个月是否被上修或下修、失业率下降是源于就业增加还是劳动力退出。该条目属于聚合线索，需核实原始报道与官方来源（如美国劳工统计局发布）。在缺少分项数据时，不宜推断劳动力市场已全面转强，也不宜据此判断货币政策路径。",
+      "original_title": "US labor market regains ground as job growth surges, unemployment rate falls to 4.1% - Reuters",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08403v1",
+      "title_zh": "StepBack：在推理链的步骤层面定位错误并重采样，以降低测试时推理成本",
+      "summary_zh": "该预印本提出 StepBack，针对自一致性（SC）需大量采样完整推理轨迹、成本高的问题，先用少量草稿轨迹，借助轻量信号定位可能的首次出错步骤，再只重采样该步骤及其后续内容，最后对答案多数投票。作者称在七个数学推理与多跳问答基准上平均准确率与 SC 相当，token 用量最多减少 41.26%，并可与其他自适应推理方法结合。",
+      "why_zh": "与常见的“多采样、早停止”效率优化不同，它把错误定位细化到推理步骤，属于测试时计算分配的新思路，对关注推理模型成本的人有直接参考价值。",
+      "details_zh": "摘要给出的核心机制是“步骤级错误定位加后缀重采样”，即不再重复生成整条推理链，而是把算力集中在疑似出错的环节。实验覆盖数学推理和多跳问答两类任务，报告的平均准确率与自一致性持平，token 节省最高约 41%。需要注意，这些数字来自作者自述的预印本，尚未经独立复现或同行评审；摘要也未说明轻量信号的具体构成、基准名称和误差范围。因此可将其视为有前景的效率方向，而非已被验证的结论。",
+      "original_title": "StepBack: Step-Level Error-Localized Resampling for Efficient Test-Time Reasoning",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-11-05",
+      "url": "https://www.technologyreview.com/2026/11/05/1148062/permitting-reform/",
+      "title_zh": "美国一项新法案可能改变能源基础设施建设方式",
+      "summary_zh": "MIT Technology Review 报道，一项旨在削减审批繁文缛节的综合性立法可能加快美国能源基础设施建设。参议院计划于 11 月 9 日就《两党美国可负担性与就业法案》（BAAJA）投票。报道称该计划可能最终推动相关建设，但摘要未展开具体条款、适用能源类型及反对意见。",
+      "why_zh": "能源基建审批制度是气候政策与经济增长的交汇点，法案若通过将影响电力、数据中心等长期投资，超出普通立法快讯。",
+      "details_zh": "该条来自 MIT Technology Review 的 RSS 标题与摘要，属媒体报道，未经独立交叉核实。已知信息有限：法案名称为 Bipartisan American Affordability and Jobs Act，参议院投票定于 11 月 9 日，核心卖点是削减审批环节以加速能源基建。摘要未说明法案覆盖输电、发电还是许可程序的具体范围，也未提供两党支持度、成本估算或环保团体的反应。对关注 AI 算力与电力约束的读者，值得追踪该法案对数据中心供电审批的潜在影响。",
+      "original_title": "A new bill could change how the US builds energy infrastructure",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-11-07",
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE5mZk11YUJ6UGVvWnllU1QwSTNoUWhBbGZuZERLemZmM0lDZHprRnlZRDZvLThJbXRvalROeEJISHFLa3NCaGlXNk1aUEY0SlpWN0Mxaw?oc=5",
+      "title_zh": "日本与中国转向选择性经济依赖",
+      "summary_zh": "Nippon.com的一则报道标题称，日本与中国正转向“选择性经济依赖”，即双方并非简单脱钩或全面依赖，而是在不同领域有选择地维持或削减经济联系。该条为聚合来源标题，仅能确认报道主题，具体涉及哪些行业、政策依据和双方官方表态均未在输入材料中呈现，需回到原始报道核实。",
+      "why_zh": "“选择性依赖”比“脱钩/去风险”更具体，提示中日经济关系可能按行业分化，对理解东亚供应链与政策调整有观察价值，但目前仅有标题线索。",
+      "details_zh": "目前只取得标题及极少量公开摘要，不能据此确认事件完整经过、政策适用范围或各方解释。请查看原始报道与相关官方资料，区分事实、当事方说法和进一步的影响分析。",
+      "original_title": "Japan, China Shifting to Selective Economic Dependence - Nippon.com",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-06",
+      "url": "https://www.psypost.org/how-sports-betting-apps-hook-users-and-discourage-help-seeking/",
+      "title_zh": "体育博彩伤害螺旋背后的科学：频繁下注如何推高过度自信与损失",
+      "summary_zh": "PsyPost报道称，频繁参与体育博彩会通过让下注者更具竞争性和过度自信而增加赌博伤害。当经济损失累积时，若赌徒将损失归因于运气不好而非自身判断失误，他们更可能寻求专业帮助。报道把这一过程描述为一种“伤害螺旋”。由于仅有媒体摘要，研究设计、样本与统计结果均未提供，相关因果表述需谨慎看待。",
+      "why_zh": "该报道把归因方式与求助行为联系起来，比单纯讨论赌博成瘾更有现实意义，对理解行为金融与心理健康干预有参考价值，但证据来自媒体转述。",
+      "details_zh": "据摘要，核心机制是：频繁下注提升竞争心态与过度自信，损失累积后形成伤害；而求助行为取决于赌徒如何解释损失——归咎运气者更可能求助，归咎自身判断者则未必。这一归因差异对设计干预信息有直接含义，例如避免让求助等同于承认自己判断力差。但需注意，该条为PsyPost的媒体报道，未经独立交叉核实，摘要未说明是横断面调查还是纵向追踪，也未给出样本规模和效应量，因此“频繁下注导致伤害”的因果方向不能仅凭此摘要确认，可能存在反向因果或共同因素。",
+      "original_title": "The science behind the sports betting harm spiral",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "TechCrunch",
+      "published": "2026-11-07",
+      "url": "https://techcrunch.com/2026/11/06/from-the-front-row-to-the-hot-seat-what-the-midterms-mean-for-big-tech/",
+      "title_zh": "中期选举后，大型科技公司与民主党的关系修复能否经受州与市场检验",
+      "summary_zh": "TechCrunch报道称，大型科技公司此前两年与白宫保持密切关系，中期选举后转而试图与民主党修好；报道提出的开放问题是，这一形象转变能否经受住州政府、地方社区与市场接下来行动的考验。摘要未给出具体公司、政策条款或选举结果细节。",
+      "why_zh": "关注科技监管权力格局如何随选举变化，而非产品发布；但摘要信息偏少，价值在于提示监管风险来源正从联邦转向州与地方。",
+      "details_zh": "该条属于政治与科技产业交叉的评论性报道，摘要仅描述公关姿态转向与待观察的监管压力，未列出具体立法、诉讼或企业声明，因此“修好”的程度与动机无法核实。对读者更实际的含义是：科技监管的落点可能在州级隐私、反垄断与地方许可层面，而非仅看华盛顿。由于缺乏一手材料，不宜据此推断具体政策走向；需查阅原始报道与州级立法进展。",
+      "original_title": "From the front row to the hot seat — what the midterms mean for Big Tech",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国就业与社会",
+      "published": "2026-11-06",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQVndsZlFQc3E5b3FhMkI4X2h6RUZJQm9NVXpxZVZXUWJUZkxadzl6WnlfblgtNTRJMHhkYVVqeTZ1RlBGMDhpYkpYdFhKbUhBNWdVT1JBdXdrYUdWdUZST3NVOFFiOGM5R1h6dE80cXFqY3NBUWlITEVfUWlRT19qVXFfRFZ0N2dSNGh1aGt30gGTAUFVX3lxTE41V2ZOUjZEMzhYWUlzbjQ0SnFSNURleFJTVTRWMGt4eWRKVklUSjdwOFNrN1RuTlBpYzMxR0VsbExBQkstSlR5RWpwWGl4ZW84M3BwWUxWcS1QeDRJOERYWlBrU29pLXJKLWF6bDBvOFc5VUFXaG10MTNfV2dCcWJPRVpkdUpqd25zWEt4RzhhdVRfaw?oc=5",
+      "title_zh": "美方警告中国须立即履行釜山贸易休战条款",
+      "summary_zh": "据 Forex Factory 聚合的《金融时报》标题，美国警告中国必须立即履行“釜山贸易休战”相关条款。该条仅有一句标题，未说明条款内容、美方具体诉求、中方回应及所谓“休战”的时间范围，需核实原始报道。",
+      "why_zh": "若属实，这涉及中美经贸阶段性安排的执行争议，可能影响关税与市场预期；但当前信息极不完整，只能作为需要追踪的信号。",
+      "details_zh": "该条为聚合线索，标题指向美方对中方履行某贸易安排的不满，但未提供任何条款细节、官方表态原文或时间节点。由于材料只有一句话，无法判断这是正式外交交涉、官员吹风还是媒体转述，也不能确认“釜山贸易休战”的具体所指。读者应等待《金融时报》原文或中美双方官方声明，避免把标题当作已核实的事实或据此推断谈判走向。",
+      "original_title": "The US warns China that it must immediately meet terms of Busan trade truce - FT - Forex Factory",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-06",
+      "url": "https://www.pv-magazine.com/2026/11/06/sodium-ion-batteries-approach-cost-parity-with-lfp-with-70-gwh-covered-by-supply-agreements/",
+      "title_zh": "钠离子电池成本逼近磷酸铁锂，供应协议覆盖约 70 GWh",
+      "summary_zh": "Hacker News 聚合帖指向 pv-magazine 的一篇文章，标题称钠离子电池正接近与磷酸铁锂（LFP）的成本平价，并提到供应协议覆盖约 70 GWh。现有材料只有标题与链接，未提供具体成本数字、比较口径、协议签约方或时间表，因此成本平价的程度与可信度尚待核实。",
+      "why_zh": "若成本平价成立，将影响储能与入门级电动车的材料路线选择；但本条目前只是媒体标题线索，需区分宣称与已验证数据。",
+      "details_zh": "可确认的信息有限：来源为 Hacker News 聚合，原文刊于 pv-magazine，标题同时包含两个要素——钠离子电池接近与 LFP 的成本平价，以及约 70 GWh 的供应协议覆盖量。标题未说明“接近”是每千瓦时成本、系统成本还是其他口径，也未说明 70 GWh 是意向框架还是已签署合同、交付年份如何分布。钠离子电池的优势通常被归于资源可得性与低温性能，但本条材料未展开。该条目属于聚合线索，需核实原始报道；在获得原文数据前，不应把成本平价视为已实现。",
+      "original_title": "Sodium-ion batteries approach cost parity with LFP",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-11-04",
+      "url": "https://www.technologyreview.com/2026/11/04/1148001/the-download-blended-meat-sight-restoring-implant-agentic-web/",
+      "title_zh": "MIT 科技评论《The Download》：混合肉、视力恢复与智能体网络",
+      "summary_zh": "这是 MIT 科技评论工作日通讯《The Download》的一期，摘要提到三条内容线索：初创公司希望用“混合”食品降低人们对红肉的食欲，文中以 2025 年秋季为学生供应番茄酱与肉丸的场景开篇；此外还涉及视力恢复与“智能体网络”（agentic web）。摘要在此截断，未给出具体研究结果或产品细节。",
+      "why_zh": "该通讯把食品科技、医学进展与智能体网络并置，可作为跨领域选题线索；但单条摘要信息量有限，需回到各原文核实。",
+      "details_zh": "现有材料仅显示这是一期日更通讯，包含多个话题。关于混合食品，摘要描述初创公司希望减少红肉消费，并提到 2025 年秋季 Jeff Dodge 为学生提供番茄酱与肉丸、学生反应积极，但未说明混合成分、营养数据或成本。视力恢复与智能体网络仅被标题提及，没有任何方法、样本或效果信息。该来源为媒体报道，未经独立交叉核实；摘要本身不构成对任何一项进展的证据。若要采用其中任一话题，应分别查找对应原文，避免把通讯的编排当作研究结论。",
+      "original_title": "The Download: blended meat, restored sight, and the agentic web",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-06",
+      "url": "https://github.blog/engineering/architecture-optimization/inside-githubs-new-git-storage-architecture/",
+      "title_zh": "GitHub 新的 Git 存储架构",
+      "summary_zh": "Hacker News聚合条目指向GitHub工程博客的一篇文章，主题为GitHub新的Git存储架构。聚合信息仅含文章链接与讨论链接，未提供架构细节、迁移范围或性能数据。",
+      "why_zh": "Git存储层是开发者日常依赖的基础设施，其架构调整可能影响克隆、拉取性能与仓库行为，对使用GitHub的开发者比一般产品发布更具实际相关性。",
+      "details_zh": "现有材料只有标题与链接，无法确认新架构的具体设计（如存储后端、分片方式、一致性策略）、上线范围与对用户可见的影响。Hacker News的115点与20条评论只反映讨论热度，不构成技术验证。读者应直接查阅GitHub工程博客原文，并注意官方工程叙述属机构自述，性能与可靠性声明需独立观察或后续数据支持。此类基础设施变更通常渐进推出，短期未必影响所有仓库。",
+      "original_title": "GitHub's new Git storage architecture",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-11-04",
+      "url": "https://www.technologyreview.com/2026/11/04/1147596/securing-the-agentic-enterprise-with-data-lineage/",
+      "title_zh": "用数据血缘保障智能体企业：当AI代理在无人复核下传递数据",
+      "summary_zh": "MIT Technology Review的一篇文章以销售场景开篇：一名销售代表向AI代理询问客户定价，代理从受限定价系统、内部通讯和归档报价等多个来源取数，输出对代理而言看似准确，随后第二个代理据此起草提案，两次交接均无人工检查。文章由此引出用数据血缘保障“智能体企业”的议题，讨论多代理自动流转中数据来源与权限追溯的重要性。",
+      "why_zh": "它把AI Agent风险落到具体的企业数据流与权限边界上，而非泛谈“代理会出错”，对关注Agent落地与治理的读者有实际启发。",
+      "details_zh": "该条来自MIT Technology Review的报道摘要，未经独立交叉核实。摘要呈现的是一个说明性场景：代理跨受限系统取数、代理间传递结果、人类不介入复核，问题在于输出“看起来准确”并不等于来源合规或权限适当。数据血缘在此被提为保障手段，即追踪数据从何而来、经过哪些系统与代理、是否越权使用。但摘要未给出具体企业案例、技术方案细节或效果数据，因此不能据此判断血缘工具已能解决代理链路的全部风险。可确定的是，多代理协作把传统的数据治理问题放大到了自动决策链上。",
+      "original_title": "Securing the agentic enterprise with data lineage",
+      "focus": false,
+      "edition": "morning"
+    },
     {
       "source_type": "研究预印本",
       "verification_status": "未经独立验证",
