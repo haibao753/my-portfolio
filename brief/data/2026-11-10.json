@@ -1,0 +1,723 @@
+{
+  "version": 1,
+  "date": "2026-11-10",
+  "editions": [
+    "evening"
+  ],
+  "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.09087",
+      "title_zh": "统计模型与相关统计流形的群不变性",
+      "summary_zh": "该预印本研究在群作用下封闭的参数化统计模型，证明样本空间上的群作用会诱导统计流形上的等距作用，并保持Fisher-Rao度量和Amari-Chentsov张量。作者还给出与等变充分统计量的兼容性，据此对群不变模型做约简，并用条件期望显式量化Fisher信息损失；应用示例为圆数据中的广义心形分布。",
+      "why_zh": "把信息几何与群论、充分统计量联系起来，为对称模型的降维与估计提供可量化框架，不同于一般统计应用论文。",
+      "details_zh": "摘要给出的核心是三条：群作用在样本空间上可诱导统计流形上的等距作用；该作用保持Fisher-Rao度量与Amari-Chentsov张量；约简与等变、充分统计量相容，信息损失可用条件期望表达。作者称这与Hall-Wijsman-Ghosh广义Stein定理的精神一致，并以圆数据中的广义心形分布演示估计与假设检验。需注意这是未经独立验证的预印本，摘要未给出具体定理条件、收敛率或模拟结果，实际适用性仍需同行评议与复现检验。",
+      "original_title": "Group Invariance of Statistical Models and Associated Statistical Manifolds",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/17 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.09087",
+        "pages_read": 14,
+        "pages_total": 17,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E5",
+            "page": 2
+          },
+          {
+            "id": "E8",
+            "page": 5
+          },
+          {
+            "id": "E9",
+            "page": 6
+          },
+          {
+            "id": "E12",
+            "page": 9
+          },
+          {
+            "id": "E14",
+            "page": 11
+          },
+          {
+            "id": "E16",
+            "page": 13
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究的问题是：在参数化统计模型对样本空间群作用的推前变换封闭（G-不变）的条件下，样本空间上的群作用如何诱导关联统计流形上的等距作用，以及这种不变性如何导致模型约化并量化Fisher信息损失。摘录还提到将该框架应用于圆数据分析中的广义心形分布，用于相对参数的估计与假设检验，但摘录未给出该应用的细节。",
+            "evidence_ids": [
+              "E4",
+              "E1",
+              "E5"
+            ]
+          },
+          "method": {
+            "text": "方法基于信息几何与测度论：在模型G-不变、可识别且具有Borel可测群作用元素的假设下，先证明样本空间群作用诱导统计流形上的等距参数变换（保持Fisher-Rao度量），再证明其保持Amari-Chentsov张量及α-连接；随后利用不变σ-代数与充分σ-代数（引用Hall-Wijsman-Ghosh型定理）构造约化模型，并通过条件期望显式表达约化后的得分函数与Fisher信息损失。摘录显示证明使用了微分、Radon-Nikodym导数与条件期望等工具。",
+            "evidence_ids": [
+              "E8",
+              "E9",
+              "E14"
+            ]
+          },
+          "findings": {
+            "text": "理论结果包括：群作用在样本空间上诱导统计流形上的等距作用，保持Fisher-Rao度量；诱导的等距子群保持Amari-Chentsov张量（φ*CAC=CAC）；若诱导等距子群可迁作用，则统计流形成为齐性统计流形；约化模型仅依赖不变观测，且Fisher信息损失可写成得分函数条件方差的形式，即gFR(V,V)θ−(φ*ginv)(V,V)θ=‖sθ,V−Eθ(sθ,V|BI)‖²=Eθ(Var(sθ,V|BI))，并可分解为垂直部分与商度量差。摘录未提供数值实验或独立验证结果。",
+            "evidence_ids": [
+              "E9",
+              "E12",
+              "E16"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录仅覆盖前14页，未包含完整论文的数值实验、应用细节（广义心形分布的估计与检验结果）及与独立工作的对比验证；因此无法判断实验性能、实际数据表现或复现条件。此外，摘录中的公式与排版可能因PDF提取而错排，部分定理陈述不完整。该文为预印本（2026 Nov），摘录未显示同行评审或独立复现证据。",
+            "evidence_ids": [
+              "E1",
+              "E4",
+              "E16"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：学习/复现需先掌握信息几何基础（Fisher-Rao度量、Amari-Chentsov张量、α-连接）、群作用与不变σ-代数、充分统计量及条件期望；然后按摘录中的假设（G-不变、可识别、k-积分模型）逐步验证等距性证明与张量保持定理，并实现约化模型与信息损失公式的数值核对。由于摘录未给出完整算法、数据或代码，无法判断具体复现步骤与实验设置，需查阅完整论文。",
+            "evidence_ids": [
+              "E8",
+              "E14",
+              "E16"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08936",
+      "title_zh": "有序策略优化：按样本可靠性自适应调整PPO裁剪半径",
+      "summary_zh": "该预印本指出，近端策略优化（PPO）对所有样本使用固定裁剪区间，无法区分统计上有害的极端重要性比率与幅度大但可容忍的变化。作者提出有序策略优化（OPO）：在每个小批次中排序重要性比率，挑出对更新影响可能最大的极端比率，为其分配样本级自适应裁剪半径，而非统一固定半径。摘要称这些半径由重要性比率分布的可靠性推导而来，但未给出完整推导与实验数据。",
+      "why_zh": "PPO是当前强化学习与RLHF训练的主流算法，裁剪半径这一细节长期靠经验设定；该工作把“统一裁剪”改为按可靠性分配，属于对基础训练机制的再思考，值得关注其后续实证。",
+      "details_zh": "摘要给出的核心观察是：可靠更新需要控制极端重要性比率，而不只是检查单个比率是否落在固定区间内。OPO的做法是在小批次内排序比率、定位极端值，再按样本分配自适应半径。这提示裁剪的作用可能更像对分布尾部施加约束，而非逐点截断。需要说明的是，该文为arXiv预印本，未经独立验证；摘要未披露所用任务、基线对比和具体数值，因此无法判断其相对PPO的实际增益，也不清楚自适应半径的推导是否依赖额外假设。读者宜将其视为方法学线索而非已确立结论。",
+      "original_title": "Ordered Policy Optimization",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/36 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.08936",
+        "pages_read": 14,
+        "pages_total": 36,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E4",
+            "page": 2
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E11",
+            "page": 7
+          },
+          {
+            "id": "E12",
+            "page": 8
+          },
+          {
+            "id": "E13",
+            "page": 9
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文关注 PPO 中固定标量裁剪区间无法区分“统计上有害的极端重要性比值”与“数值大但可容忍的比值”这一问题，并提出结构性研究问题：似然比分布的哪些统计性质足以保证重要性加权代理目标在统计上可靠。作者据此主张稳定性应由似然比分布的尾部行为而非单个比值是否落在固定区间决定。",
+            "evidence_ids": [
+              "E5",
+              "E8",
+              "E9"
+            ]
+          },
+          "method": {
+            "text": "OPO 对一个小批量内的重要性比值排序，按预设的广义帕累托分布（GPD）尾部轮廓为上下经验尾部构造教师目标，再把这些目标分配给对应的次序统计量，从而得到样本自适应的近端半径/目标，替代 PPO 的固定逐点裁剪。目标仍是一阶的，只需小批量排序与修改后的策略损失；正负优势分别处理正负尾部。",
+            "evidence_ids": [
+              "E4",
+              "E6",
+              "E11"
+            ]
+          },
+          "findings": {
+            "text": "作者报告在 MuJoCo 与 Atari 基准上，这一简单修改相对已有基线取得较强表现，并给出 Atari 上相对 PPO 的逐环境相对提升图。理论/分析部分以 LQR 案例说明：稳定性取决于似然比分布的尾部参数，而非比值是否落在固定标量区间；并引用已有工作指出有限样本裁剪不保证分布层面的控制。需注意这些是预印本中作者自述结果，摘录未提供独立复现或第三方验证。",
+            "evidence_ids": [
+              "E1",
+              "E9",
+              "E10"
+            ]
+          },
+          "limitations": {
+            "text": "摘录仅覆盖部分页码，无法判断完整实验设置、超参数敏感性、统计显著性与失败案例；GPD 教师轮廓中阈值、形状与尺度参数如何选取及其稳健性在给定片段中不足以判断。关于“裁剪不保证分布控制”的论述在摘录中以引用他人工作形式出现，不能当作本文独立实验结论。此外材料为预印本，缺少独立验证证据。",
+            "evidence_ids": [
+              "E10",
+              "E12",
+              "E13"
+            ]
+          },
+          "replication": {
+            "text": "复现建议以摘录可支持的范围为限：按作者给出的评估协议，对每种方法使用三层与七层两种策略网络参数化，取最后 10% 训练步的验证回报均值，并按各环境验证回报范围归一化后比较。算法侧需实现小批量比值排序、按 GPD 逆 CDF 生成分位目标并映射到次序统计量、以及修改后的近端损失。由于摘录未给出完整超参数与阈值设定，具体复现细节资料不足，需查阅原文与作者代码仓库。",
+            "evidence_ids": [
+              "E13",
+              "E12",
+              "E1"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08538",
+      "title_zh": "视觉语言模型也会出现“潜意识学习”：无关任务可传递隐藏偏好",
+      "summary_zh": "一篇arXiv预印本将“潜意识学习”从大语言模型扩展到视觉语言模型。研究者先微调教师模型，使其偏好特定动物或面部属性，再让教师模型在与该偏好无关的几何图形任务上生成数字，并用这些数字微调学生模型。结果显示，在2B至7B参数的多个模型上，学生模型会更多选择目标偏好，动物偏好任务中差异最高约10个百分点，且传递效应随训练数据增加可能增强。",
+      "why_zh": "不同于普通模型能力评测，这条揭示训练数据中看似无关的“数字”也能携带隐藏偏好，直接关系AI安全、数据溯源与对齐评估的可信度。",
+      "details_zh": "摘要给出的关键设计是：同一基座模型分别作为“有偏教师”和“对照教师”，两者都在无关视觉任务上输出数字，学生模型只接触相同图像和不同教师生成的数字。这样就把偏好传递与显式标签、任务内容隔离开。结果在2B到7B参数范围内成立，动物偏好差异最高约10个百分点，并提到传递强度随数据量变化。需要注意，这是未经独立验证的预印本，摘要未给出完整实验设置、统计显著性和跨任务泛化细节，不能据此断言真实部署中必然出现同类风险。",
+      "original_title": "Subliminal Learning in Vision-Language Models",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08967",
+      "title_zh": "用大语言模型处理尼泊尔语推文命名实体识别的困难样本",
+      "summary_zh": "该预印本针对低资源语言尼泊尔语社交媒体文本的命名实体识别，先用微调预训练语言模型的token概率把测试集分为“易”“难”两类，再用16种提示配置评估大语言模型在困难样本上的表现。作者报告，按语义相似度选例并增加示例数量，可使F1较基线配置提升近10分；大模型在全集和易集上不及预训练模型，但在难集上反超，二者结合后总分提高。",
+      "why_zh": "不是泛泛比较LLM与PLM，而是按难度分层考察互补性，对低资源语言NLP的模型组合策略有直接参考价值。",
+      "details_zh": "研究设计的关键在于用预训练模型的token概率划分难度，而非人工标注难度，这使“难例”定义可复现但也依赖该模型本身。摘要称LLM在16种提示配置下评估，语义相似度选例与增加示例带来约10个F1点的提升；LLM在难集上超过PLM，合并两模型后整体分数改善。局限是仅一个尼泊尔语推文数据集、单一LLM与PLM组合，摘要未报告统计显著性、方差或错误类型分析，结论应视为预印本线索而非已确立的通用规律。",
+      "original_title": "Using an LLM to Tackle Difficult Cases in NER for Nepali Tweets",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-11-09",
+      "url": "https://www.technologyreview.com/2026/11/09/1147654/innovating-with-ai-in-the-special-chemicals-industry/",
+      "title_zh": "特种化学品企业如何把AI创新接入可靠数据与科研经验",
+      "summary_zh": "MIT Technology Review刊文讨论特种化学品行业的AI创新：企业希望用人工智能、云计算与先进建模加速研发，但主要挑战在于把新技术与可靠数据、科学专业知识和产品推向市场的现实约束连接起来。文章以特种化学品制造商Lubrizol为例，称其数字化转型的重点是让研究人员更快验证想法、做出更有依据的决策。摘要未披露具体技术架构或成效数据。",
+      "why_zh": "不同于常见的模型发布报道，这条聚焦传统材料与化工企业的AI落地瓶颈——数据可靠性与领域知识衔接，对理解AI在非互联网行业的真实渗透更有参考价值。",
+      "details_zh": "摘要显示，行业推进AI时遇到的并非算力或算法本身，而是数据质量、科研人员经验与产品商业化流程之间的衔接。Lubrizol的案例被描述为以工具赋能研究人员、缩短想法验证周期。需要指出，该文属媒体内容，未经独立交叉核实，且摘要未给出可量化的效率提升、部署规模或失败经验；企业自述的转型成效也不等同于第三方评估。读者可将其作为行业实践线索，但不宜据此推断整个特种化学品行业的AI成熟度。",
+      "original_title": "Innovating with AI in the special chemicals industry",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08992",
+      "title_zh": "在不重训模型的前提下为物理机器学习模型施加对称性约束",
+      "summary_zh": "该预印本讨论一种后处理手段：对已训练好的预测器按群上的归一化Haar测度做平均（即测试时增强），从而得到不变或等变预测器，并在一定假设下具有风险不增的保证。作者在物理仿真模型上给出数值实验，并进一步讨论非紧群情形下Haar测度无法归一化的问题，提出Weyl酉技巧、数据依赖的正交投影等替代方案。",
+      "why_zh": "把“对称性”从训练时的架构设计转为可事后施加的算子，并触及非紧群这一常被回避的技术难点，对物理仿真与科学机器学习读者有方法层面的启发。",
+      "details_zh": "摘要显示，核心对象是Reynolds算子：对有限群和紧群，按归一化Haar测度平均可把任意预测器投影到不变或等变函数空间，且在特定假设下风险不增。这一结论依赖群结构与风险假设，不能直接外推到所有模型。对非紧群，Haar测度不可归一化，作者列出三种替代路径，其中数据依赖正交投影涉及在不变函数空间上的非平凡优化。需注意这是预印本，数值实验仅限物理仿真场景，摘要未给出具体误差数值与对比基线，效果强弱尚待独立验证。",
+      "original_title": "Enforcing Symmetries on Pre-trained ML Models for Physics",
+      "focus": true,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-09",
+      "url": "https://www.psypost.org/shouting-hitting-and-taking-away-privileges-are-linked-to-toddlers-behavior-problems-across-14-countries/",
+      "title_zh": "14国研究：对幼儿喊叫、体罚和剥夺特权与更多行为问题相关，计时隔离与要求反思未见此关联",
+      "summary_zh": "据PsyPost报道，一项覆盖14个国家、865名幼儿的研究发现，母亲报告更频繁地对孩子喊叫、体罚或剥夺特权，与其报告的孩子更多行为与情绪问题相关；而使用计时隔离（time-out）和要求孩子反思则未显示这种关联。报道未在摘要中说明研究设计细节与因果推断限度。",
+      "why_zh": "跨14国的样本让育儿管教方式与幼儿行为问题的关联具有更广的比较价值，且区分了不同管教策略；但这是相关性研究，不能据此断定管教方式导致问题。",
+      "details_zh": "摘要给出的关键信息是样本规模865名幼儿、覆盖14个国家，数据来自母亲报告，结果变量为行为与情绪问题，关联出现在喊叫、体罚、剥夺特权三类方式上，而计时隔离与要求反思未显示关联。需要强调：这是媒体报道，未经独立交叉核实；摘要未说明研究是否为纵向设计、是否控制家庭压力与儿童气质等混杂因素，也未给出效应量。母亲同时报告管教与孩子行为，可能受共同报告偏差影响，因此关联方向与因果性均不能由该摘要确定。",
+      "original_title": "Shouting, hitting, and taking away privileges are linked to toddlers’ behavior problems across 14 countries",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08746",
+      "title_zh": "替代估计方程下闭式估计量的渐近框架",
+      "summary_zh": "该预印本针对由估计方程根定义的统计估计量（如极大似然、矩估计）在复杂模型中无法显式求解的问题，提出构造闭式近似估计量的一般方法，并建立量化其精度的理论框架。理论允许参数序列趋近参数空间边界或发散到无穷，并给出闭式近似与精确估计量具有相同一阶渐近分布的条件，应用于Gamma、Zeta等独立同分布模型。",
+      "why_zh": "闭式近似能降低计算量并让估计量对数据的依赖更透明；把边界与发散参数纳入渐近理论，比常规“内点”假设更贴近实际模型。",
+      "details_zh": "摘要指出，许多估计量是估计方程的根，复杂模型中方程无显式解，数值方法只能给近似解，而闭式近似便于理论分析。作者发展的框架不仅构造近似，还量化近似精度，并给出近似估计量与精确估计量一阶渐近分布相同的条件。理论覆盖参数趋近边界或趋于无穷的序列，这是标准渐近理论常排除的情形。应用示例包括Gamma、Zeta等独立同分布模型，但摘要未列出具体收敛速率或模拟结果，理论条件在实际模型中的可检验性仍需阅读全文确认。属预印本，未经独立验证。",
+      "original_title": "An Asymptotic Framework for Closed-Form Estimators from Surrogate Estimating Equations",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08683",
+      "title_zh": "语言模型内部情感表征存在“过度压缩”：细粒度情绪在隐空间中趋于两极",
+      "summary_zh": "一篇arXiv预印本研究了七个大语言模型在GoEmotions数据集（27种细粒度情绪加中性）上的内部表征。作者比较模型预测与情绪提示下的末位token表征，发现相对于细粒度分类体系存在一致的“过度压缩”现象：在不使用情绪标签的KMeans聚类下，隐表征最清晰的分割是把正负情绪分开，更粗的情绪族与情感分组也能用更少簇恢复，但线性探针仍保留相当的可分性。",
+      "why_zh": "不同于常见的“模型能否识别情绪”评测，该研究追问情绪区分在模型内部如何组织，提示输出表现可能掩盖表征层面的信息损失，对可解释性与情感计算都有启发。",
+      "details_zh": "研究使用英文Reddit数据集GoEmotions，含27个细粒度情绪类别加中性共28类，覆盖七个模型。摘要给出的核心发现是：模型隐表征的聚类结构比标签体系更粗，最明显的是正负情绪二分，情绪族和情感极性可用更少簇恢复；同时线性探针仍能保留“相当”的可分信息，说明压缩并非信息完全丢失。需要注意这是预印本，未经独立验证，聚类结论依赖所测试的KMeans协议，摘要未给出各模型的具体数值与探针精度，因此不宜推断所有模型或所有语言都如此。",
+      "original_title": "Compression of Emotion in Language Model Representations",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09847v1",
+      "title_zh": "计算机使用智能体是具身通用智能体",
+      "summary_zh": "该预印本提出一个立场性论点：正如AI多个领域通用模型逐步取代手工方法与专用架构，具身AI也可能迎来类似转变。作者的核心主张是，具身任务可以被表述为与数字软件的交互——他们构建软件，把智能体对物理环境的视角渲染到屏幕上，并提供在该环境中行动的控制接口；于是计算机使用智能体（CUA）可以通过同样的屏幕截图完成具身任务。摘要在此处截断，未给出实验设计与结果。",
+      "why_zh": "把具身任务“降维”为屏幕交互，挑战了必须依赖机器人本体与专用策略的默认假设；若成立，将改变具身AI的评测与数据获取方式，属于值得追问的范式主张。",
+      "details_zh": "可确认的内容：这是一篇立场/方法论文，主张具身任务可表述为与数字软件交互，作者为此构建了把物理环境视角渲染到屏幕并提供控制接口的软件，使CUA能凭截图执行具身任务。摘要未说明所覆盖的任务类型、与真实机器人或专用具身策略的对比结果、仿真到现实的差距如何处理，也未给出定量证据。来源为arXiv cs.LG，属预印本，未经独立验证；“通用模型取代专用方法”是作者类比得出的判断，而非已确立的结论，需谨慎对待。",
+      "original_title": "Computer-Use Agents Are Embodied Generalists",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "MIT Technology Review",
+      "published": "2026-11-09",
+      "url": "https://www.technologyreview.com/2026/11/09/1148194/the-backlash-about-data-centers-might-really-just-be-about-electricity/",
+      "title_zh": "数据中心争议或许本质上是电力问题：走访“数据中心巷”后的观察",
+      "summary_zh": "MIT Technology Review一篇通讯从美国弗吉尼亚州阿什本“数据中心巷”的走访出发，讨论围绕数据中心的反对声浪。作者提出，公众不满可能并不只是针对数据中心本身，而更集中在电力供应、电价与电网负担上。文章为媒体观察与评论，摘要未给出具体统计数据或政策结论，相关因果判断仍需更多证据。",
+      "why_zh": "把AI基础设施争议从“反科技”叙事拉回电力与地方成本，有助于读者理解算力扩张的真实约束，但这是记者观察而非系统研究。",
+      "details_zh": "摘要显示作者在美国选举投票期间到访全球最大数据中心枢纽阿什本，并据此讨论数据中心引发的反弹。其核心论点是：争议可能主要关于电力，而非单纯反对数据中心。该文属于媒体通讯，摘要没有提供电价涨幅、电网容量或居民调查数据，也未区分不同地区情况。读者应把它视为提出问题的观察性报道，而非已验证的因果结论；数据中心对地方电力与环境的实际影响仍需独立数据支撑。",
+      "original_title": "The backlash about data centers might really just be about electricity",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-09",
+      "url": "https://www.psypost.org/traditional-masculinity-beliefs-linked-to-sharper-testosterone-drops-in-dads-caring-for-preschoolers/",
+      "title_zh": "传统男性气概信念与父亲陪伴学龄前子女时睾酮下降更陡相关",
+      "summary_zh": "PsyPost报道一项研究发现，对男性气概持更传统信念的父亲，在独自陪伴学龄前子女一小时后睾酮下降更明显，这一结果与研究者原先预期相反。报道未在摘要中给出样本规模、测量方式与效应大小，研究设计与统计细节需查阅原始论文核实。",
+      "why_zh": "结果方向与预期相反，提示育儿中的生理反应可能受性别观念调节，而非单纯“带娃降睾酮”；对心理学与性别研究读者是有讨论价值的反常识线索。",
+      "details_zh": "据摘要，研究比较父亲的传统男性气概信念与其与学龄前子女独处一小时前后的睾酮变化，发现信念更传统者下降更陡，且作者称这与预期相反。报道未说明样本量、信念量表、睾酮采样时点与统计控制变量，也未交代是否预注册或经同行评审。因此目前只能视为一项媒体转述的发现，不能推断因果机制，例如是否反映照护压力、身份威胁或激素节律差异。读者应把它当作待核实的研究线索，而非已确认的普遍规律。",
+      "original_title": "Traditional masculinity beliefs linked to sharper testosterone drops in dads caring for preschoolers",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08631",
+      "title_zh": "BEVCast：面向高效端到端自动驾驶的路径自适应鸟瞰图",
+      "summary_zh": "该预印本指出，基于相机的驾驶模型构建稠密鸟瞰图网格，并对每个单元投入相同计算，但车辆在规划时域内只经过少数单元。作者提出BEVCast两阶段BEV：先用4.096米粗网格编码全场景，再由基于记录路径训练的热度头为粗单元分配热度，使分辨率随预测行驶路径自适应。",
+      "why_zh": "把计算资源按实际行驶路径分配，而非均匀铺满BEV网格，是端到端自动驾驶中较具体的效率思路。",
+      "details_zh": "摘要给出的已知细节有限：粗阶段网格单元为4.096米，热度头用记录路径训练，第二阶段对高热度区域细化，整体为两阶段路径自适应BEV。摘要未提供精度、延迟、算力节省比例或与基线模型的对比数值，也未说明在未见路径上的泛化表现。该思路的潜在风险是热度预测错误会导致关键区域分辨率不足，需看完整论文的失败案例分析。作为未经独立验证的预印本，其效率收益尚不能视为已确认。",
+      "original_title": "BEVCast: Path-Adaptive BEV for Efficient End-to-End Autonomous Driving",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.09426",
+      "title_zh": "确定性点过程分布的稳健类贝叶斯估计：非渐近风险界与Grassmann先验速率",
+      "summary_zh": "一篇arXiv统计学预印本研究从n个独立副本估计可测空间上确定性点过程（DP）的分布。作者用合适先验构造T-后验分布采样得到估计量，并给出Hellinger损失下以高概率成立的非渐近风险界；这些界在数据仅独立而非同分布、以及模型误设时仍成立，从而对少量离群点稳健。对秩k的确定性投影过程，Grassmann流形上的Haar先验给出约√(k(D-k)log n/n)的速率，模型选择可推广到无穷维情形。",
+      "why_zh": "把贝叶斯式后验方法用于点过程分布估计，并给出误设与离群点下的稳健保证，属于统计学习理论中较少见的组合，对高维子空间与随机几何问题有方法意义。",
+      "details_zh": "摘要显示，估计量来自与合适先验相关联的T-后验分布采样，风险分析针对Hellinger损失，结论为非渐近且高概率成立。稳健性体现在两个放松：样本只需独立而非独立同分布，模型可被误设，因此能容忍小比例离群点。对秩k投影过程，核对应D维空间中k维子空间，Haar先验下的速率量级为√(k(D-k)log n/n)；对一般DP，作者引入基于核谱分解的先验，混合子空间上的均匀分布。需注意这是预印本，摘要未给出常数、下界或模拟结果，速率的最优性尚不能据此判断。",
+      "original_title": "Robust Bayes-like estimation of the distribution of a determinantal process",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.09612",
+      "title_zh": "基于核方法的解析算子与参数化偏微分方程学习",
+      "summary_zh": "该预印本研究从有限样本中学习解析算子的核方法，核心问题是目标的正则性应如何决定核的选择。作者证明解析算子可嵌入向量值再生核希尔伯特空间，并给出有限样本高概率保证：无噪声情形下，合适的解析核可达到随样本量分数次幂指数衰减的速率，而Sobolev型核仅有多项式速率。理论应用于参数化椭圆偏微分方程的解算子，训练数据本身为有限元近似，所得界将采样误差与离散化误差分离，并给出网格尺寸与样本量的耦合方式，附有数值示例。",
+      "why_zh": "把“选什么核”从经验调参提升为由目标正则性决定的理论问题，并给出指数级与多项式级速率的分野，对算子学习与科学计算交叉方向有方法论启发。",
+      "details_zh": "摘要明确区分两类核的收敛速率：解析核在无噪声设定下取得随样本量分数次幂指数衰减的速率，Sobolev型核为多项式速率，这一对比是全文的核心卖点。应用于参数化椭圆PDE时，作者强调训练数据来自有限元近似，因此误差界同时包含采样与离散化两部分，并据此规定网格尺寸应如何随样本量变化。需注意这是arXiv预印本，尚未经独立验证；摘要未给出具体常数、维数依赖或数值实验规模，实际优势是否在中等样本下成立仍需阅读全文与复现。",
+      "original_title": "Kernel-Based Learning of Analytic Operators and Parametric PDEs",
+      "focus": false,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/43 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.09612",
+        "pages_read": 14,
+        "pages_total": 43,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 3
+          },
+          {
+            "id": "E3",
+            "page": 2
+          },
+          {
+            "id": "E4",
+            "page": 3
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E7",
+            "page": 3
+          },
+          {
+            "id": "E9",
+            "page": 5
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E11",
+            "page": 7
+          },
+          {
+            "id": "E14",
+            "page": 10
+          },
+          {
+            "id": "E16",
+            "page": 12
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文关注从有限样本出发、用核方法学习解析算子（analytic operators），核心问题是目标算子的正则性应如何决定核的选择；作者明确提出两个问题：能否设计核构造以捕捉目标算子的结构与正则性并显式建立核与算子的联系，以及能否将常用核纳入该框架。摘录还指出传统有限元、有限差分、谱方法在高分辨率重复仿真时计算代价高，而神经算子虽有经验成功但理论保证不完整。",
+            "evidence_ids": [
+              "E5",
+              "E3",
+              "E1"
+            ]
+          },
+          "method": {
+            "text": "方法属于理论分析型：建立解析算子到向量值再生核希尔伯特空间（VRKHS）的嵌入，构造幂级数核、Szegő 核与 Sobolev/Matérn 型核等例子，并把正则化经验风险最小化（核岭回归）作为估计器，给出其显式解形式；随后推导有限样本、高概率误差界。摘录仅给出框架与部分引理/命题陈述，完整证明与实验细节不在所给页码内，无法判断具体实验设置。",
+            "evidence_ids": [
+              "E5",
+              "E11",
+              "E14"
+            ]
+          },
+          "findings": {
+            "text": "摘要称在无噪声情形下，合适的解析核可给出以分数次幂指数衰减的速率，并给出量化随机抽样不确定性的有限样本高概率保证；正文还给出条件（如系数增长条件）下目标算子属于幂级数核或 Szegő 核对应的 VRKHS 的结论。由于摘录只到第 12 页且缺少第 5、6、7 节的定量结论与实验部分，无法判断具体速率常数、实验对比结果或是否经过独立验证；该文为 arXiv 预印本。",
+            "evidence_ids": [
+              "E5",
+              "E16",
+              "E7"
+            ]
+          },
+          "limitations": {
+            "text": "摘录明确指出：对一般 Lipschitz 连续算子，学习在一般情况下不可行；更有利的逼近速率需要额外正则性（如解析/全纯算子），而许多 PDE 相关算子满足该假设但并非所有算子都满足。作者还指出既有核理论结果通常没有显式说明核选择应如何反映目标算子结构，神经网络方面可比的速率多只针对网络存在性或训练目标的最小化子，而非训练算法输出。摘录未提供本文方法在非解析算子、噪声情形或高维情形下的失效边界，资料不足，无法判断。",
+            "evidence_ids": [
+              "E4",
+              "E3",
+              "E2"
+            ]
+          },
+          "replication": {
+            "text": "若要在学习层面复现，可依据摘录搭建：定义向量值核与 VRKHS、选取幂级数核/Szegő 核/Sobolev 核，按式 (2.4) 求解正则化经验风险最小化并用核岭回归显式解实现；对参数化椭圆 PDE 需满足一致椭圆性与系数 Lipschitz 等假设。但摘录未给出数据生成细节、超参数选择、误差评估的具体实验协议与代码，无法判断可复现性；且该文为预印本，尚无独立验证信息，复现前应核对完整论文第 6、7 节。",
+            "evidence_ids": [
+              "E9",
+              "E10",
+              "E7"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09891v1",
+      "title_zh": "CPU-ARC：把已推理过的解法缓存为CPU可执行的智能体推理资产",
+      "summary_zh": "该预印本指出，大语言模型常把“解决问题”与“执行解法”混为一谈，导致每个问题都从头推理。作者提出智能体推理缓存（agentic reasoning caching）：一旦某任务已被推理清楚，把其解法应用到新的问题实例上可以高效完成，且只需很少的模型参与。方法旨在从LLM推理中构建稳健的、CPU可执行的推理缓存（ARC）。摘要未给出基准与性能数据。",
+      "why_zh": "它把“推理复用”从提示缓存推进到可执行的解法缓存，触及AI Agent成本结构的核心问题；若成立，可改变Agent在重复任务上的算力分配方式。",
+      "details_zh": "摘要的核心主张是区分任务求解与解法执行：前者需要模型推理，后者在解法已知时可交由CPU高效完成，模型参与度很低。CPU-ARC试图把LLM推理过程转化为稳健、可在CPU上执行的缓存单元。该文为arXiv预印本，未经独立验证；摘要未说明缓存如何保证正确性、如何处理与新实例不完全匹配的情形、覆盖哪些任务类型，也未提供与基线Agent的对比数字。因此“高效”与“稳健”目前仅为作者表述，尚需复现与独立评估。",
+      "original_title": "CPU-ARC: Agentic Reasoning Caching for on-CPU Reasoning Reuse",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09864v1",
+      "title_zh": "Grasp-TAGS：通过评论家蒸馏实现任务感知抓取选择，用于抓取式移动操作",
+      "summary_zh": "一篇arXiv机器学习预印本提出Grasp-TAGS，面向“抓取式移动操作”（prehensile loco-manipulation）任务：移动机械臂需在长时程中协调移动与操作，用于服务机器人和仓储自动化中的大物体重排。作者指出此类任务性能依赖复杂的机器人与物体、物体与环境交互动力学，现有基于模型的方法往往难以可靠执行，因而提出用评论家蒸馏进行任务感知的抓取选择。",
+      "why_zh": "长时程移动操作是机器人学习中的难点，把抓取选择与任务目标通过评论家蒸馏耦合，可能比单独优化抓取更实用；但摘要未给出实验规模与成功率，价值待验证。",
+      "details_zh": "摘要说明该工作关注大物体重排场景，强调移动机械臂需在长时程内协调移动与操作，难点在于机器人与物体、物体与环境之间的交互动力学。作者称现有方法分为基于模型的一类（摘要在此处截断，未说明其具体局限）等路线。方法名称中的“评论家蒸馏”暗示用价值评论家把任务层面的信号传递给抓取选择模块，但摘要未交代网络结构、训练流程、仿真或真机实验、基线对比与量化结果。该文为预印本，未经独立验证，读者不宜据标题推断其已实现通用可靠的移动操作。",
+      "original_title": "Grasp-TAGS: Task-Aware Grasp Selection via Critic Distillation for Prehensile Loco-Manipulation",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-09",
+      "url": "https://www.psypost.org/human-brains-track-who-did-what-to-whom-in-ways-ai-language-models-dont-fmri-study-suggests/",
+      "title_zh": "fMRI研究提示人脑追踪“谁对谁做了什么”的方式与AI语言模型不同",
+      "summary_zh": "PsyPost报道一项fMRI研究，称大语言模型虽能生成类人文本，但在词序改变句意时（如“狗咬了人”与“人咬了狗”），其句子意义组织方式与人类不同。报道称人脑会追踪施事与受事的角色关系，而AI模型的表现方式存在差异。",
+      "why_zh": "直接比较人脑与LLM的句法-语义表征，触及“模型是否以类人方式理解语言”这一争议，比一般AI能力报道更有讨论价值。",
+      "details_zh": "该条为媒体报道，摘要仅给出研究结论方向，未披露样本量、实验范式、具体模型、脑区或统计结果，也未提供论文出处，因此无法核实。需要区分：fMRI研究本身可能经过同行评议，但此处的转述未经独立交叉核实。解读时应避免把“组织方式不同”直接等同于“模型不理解语言”，因为表征差异也可能来自训练目标、输入模态与任务设计。建议读者查找原始论文后再判断其证据强度。",
+      "original_title": "Human brains track who did what to whom in ways AI language models don’t, fMRI study suggests",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08793",
+      "title_zh": "序贯添加设计的最优性获精确证明：任意追加一次试验仍保持D最优",
+      "summary_zh": "一篇数理统计预印本研究了“添加顺序”试验设计。作者证明，在至少三个成分的两两排序模型中，向顺序正交表任意追加一次试验，所得设计在扩大后的精确设计类中仍是D最优，并允许重复试验；对折叠设计，追加任意一对反转试验也在该类中D最优。两类增广还同时最小化平均预测方差、最大化最小相对效率。",
+      "why_zh": "这是实验设计理论中的精确最优性结果，而非近似或经验结论，对需要排序比较的工业试验、偏好研究和算法评测设计有直接方法学价值。",
+      "details_zh": "摘要说明证明核心是把缩放差异表示为三元组的符号比较，并导出紧的整数下界，再借助经典谱不等式得到精确规模下的最优性，等号条件由四成分相对顺序计数刻画。折叠设计中的完整反转对还能保护两两排序效应估计，免受反转不变干扰。该结果属于数学证明型预印本，尚未经同行评审；摘要未给出具体模型假设之外的适用边界，读者不宜将其外推为所有排序模型都成立。",
+      "original_title": "Exact optimality of augmented order-of-addition designs",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08778",
+      "title_zh": "语义条件相似度（SCS）：一个形式化数学框架",
+      "summary_zh": "该预印本指出，语义文本相似度（STS）以文档对为输入、每次比较返回一个标量；在多文档场景中，当多个来源共同贡献于一个或多个目标时，成对STS无法把每个来源的边际语义贡献与其共享词汇区分开。作者提出语义条件相似度（SCS），作为STS的条件形式，在给定条件下计算两个文档之间的相似度。摘要在此处截断，未完整给出形式定义、性质与实验评估。",
+      "why_zh": "多源文档的“贡献归因”是检索增强生成、摘要与引用分析中的真实难题；把STS从成对标量扩展为条件量，是概念层面的重新表述，值得关注其可操作性。",
+      "details_zh": "摘要提供的信息有限：仅说明STS的局限——在多文档、多来源共享词汇的情形下，成对比较无法分离各来源的边际语义贡献；SCS被定义为STS的条件形式，在两个文档之间计算相似度，但“条件”具体指以何者为条件、如何形式化，摘要未展开。来源为arXiv cs.CL新投稿，属预印本，未经独立验证；文中是否给出公理性质、计算复杂度或下游任务实验，从现有材料无法判断，读者需查阅全文确认其数学框架与实证支持。",
+      "original_title": "Semantic Conditional Similarity (SCS): A Formal Mathematical Framework",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08578",
+      "title_zh": "HaNDF：以物体为条件的神经手部距离场先验",
+      "summary_zh": "该预印本提出HaNDF，即物体条件化的神经距离场，作为建模合理手–物构型的数据驱动先验，作用于手部关节的产品流形上。作者指出，近期无条件生成先验在人体姿态建模上已有成效，但手常处于与其他物体交互的状态，因此需要能对给定物体条件下的合理手部姿态建模的生成先验。摘要未提供实验设置与量化结果。",
+      "why_zh": "手–物交互是具身智能、机器人与动画的共同基础问题；把先验从“无条件手姿态”推进到“以物体为条件”，是建模假设上的实质变化，而非单纯精度提升。",
+      "details_zh": "摘要给出的动机是：手是多自由度的关节体，且经常出现在与其他物体的交互中，无条件生成先验难以刻画这种条件依赖。HaNDF以神经距离场形式表达手部构型空间中的合理区域，并以物体为条件。需要说明的是，该文为arXiv预印本，未经独立验证；摘要未说明训练数据来源、物体类别覆盖范围、推理速度，也未给出与既有手–物姿态先验的定量比较。因此其泛化到未见物体、以及是否依赖精确物体几何输入，均无法从现有材料判断。",
+      "original_title": "HaNDF: Object-Conditioned Geometric Neural Hand Distance Fields",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08541",
+      "title_zh": "ELPAC：以临床终点为锚的衰老进程分期与多模态协调建模",
+      "summary_zh": "该预印本关注衰老队列中影像、血浆与认知测量并存、但多数受试者仅有部分观测横截面快照的问题，需同时推断潜在分期、进展亚型与随阶段变化的多模态协调关系。作者提出ELPAC贝叶斯框架，一方面从临床可靠终点组反向整合亚型轨迹，另一方面对残差多模态变异做分解。摘要未给出数据集、样本量与验证结果。",
+      "why_zh": "把“分期、亚型、模态间协调”作为联合推断问题而非分别预测，是衰老与多模态建模中较少被正面处理的结构性难点，对生物统计与纵向建模读者有方法启发。",
+      "details_zh": "摘要强调现有方法多估计队列层面的衰老过程、在观测协变量下建模协方差，或直接融合模态做预测，很少同时处理终点锚定分期与进展分辨的跨模态残差协调，尽管受试者分期、亚型归属与模态互动彼此依赖。ELPAC的两部分构造为：沿编码模态特定单调方向与可选顺序先验的生物结构速度分量，从临床可靠终点组反向整合亚型轨迹；再对残差多模态变异做因子分解。该文为预印本，未经独立验证，摘要未披露队列来源、评价指标与外部验证情况，实际临床可用性尚不明确。",
+      "original_title": "ELPAC: Endpoint-Anchored Latent Progression with Stage-Varying Multimodal Coordination",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09878v1",
+      "title_zh": "分级卷积网络：无需显式尺度即可尺度不变，并对未知模糊更稳健",
+      "summary_zh": "一篇机器学习预印本从图像的高斯射流出发，把图像导数按阶数视为分级向量空间，证明局部分级卷积恰好对应齐次微分算子；局部特征若尺度不变，当且仅当它通过尺度归一化射流分解，或在不使用尺度时通过到加权球面的收缩映射分解。作者称在未知高斯模糊下，该收缩只发生尺度变化，而尺度归一化射流会受影响。",
+      "why_zh": "它把卷积网络的尺度不变性从工程技巧提升为可证明的代数刻画，并给出对未知模糊的稳健性论证，对视觉模型设计有理论启发。",
+      "details_zh": "摘要的核心是“分级”结构：膨胀λ会使k阶导数乘以λ^{-k}，因此局部分级卷积与齐次微分算子等价。尺度不变特征必须经过尺度归一化射流，或经过加权球面收缩；后者在未知高斯模糊下只改变尺度，而前者会引入额外变化。这为不依赖显式尺度参数的稳健特征提供了数学依据。但这是理论预印本，摘要未给出在真实数据集上的分类或检测实验，也未说明离散实现误差，实际网络收益仍需验证。",
+      "original_title": "Graded convolutional networks: scale invariance without the scale and robustness to unknown blur",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08704",
+      "title_zh": "语境与矛盾：现实中人们如何识别AI生成文本",
+      "summary_zh": "该预印本关注AI生成内容扩散后，人们在日常互动中形成的AI识别实践与话语，包括正式检测工具与非正式判断。研究以“文本的人类来源不再理所当然”为背景，考察真实场景中人们如何认定一段文字由AI写成，以及这些判断伴随的矛盾与语境依赖。摘要信息有限，未说明具体研究方法、样本与主要发现。",
+      "why_zh": "AI检测常被当作技术问题，但现实中大量判断由人凭语境完成，且易误判；把识别实践作为社会现象研究，对理解学术诚信与人际信任有现实意义。",
+      "details_zh": "据标题与摘要，论文属于cs.CL方向，主题是“AI生成写作的现实识别”，强调检测已渗透到几乎所有人际交流领域，正式与非正式的识别实践成为日常。摘要提出背景是文本的人类来源不再可被默认，但未交代采用访谈、问卷还是语料分析，也未给出误判率或具体案例。因此目前只能确认研究问题与视角，不能引用任何结论性发现。该文为预印本，未经同行评审与独立验证，读者应将其视为待核实的研究线索。",
+      "original_title": "Contextuality and Contradictions: Exploring Real-World Identifications of AI-Generated Writing",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08610",
+      "title_zh": "InstaGen提出组共享重要性采样，试图降低视频扩散Transformer注意力开销",
+      "summary_zh": "视频生成主流的扩散Transformer因注意力复杂度随序列增长而计算昂贵。该预印本关注置换块稀疏注意力（PBSA）路线：它通过语义置换后的注意力矩阵只计算部分块来降本，但现有方法通常为每个查询块只选少数关键块。InstaGen提出“组共享重要性采样”，摘要称用于快速视频生成，但未提供具体加速比、画质指标或对比基线结果。",
+      "why_zh": "视频生成的成本瓶颈在注意力，若组共享选择能在不显著损失质量下减少计算，会影响开源视频模型的可及性；但目前仅有方法概述，证据有限。",
+      "details_zh": "从标题和摘要可知，论文针对DiT视频生成的二次注意力复杂度，延续PBSA的块稀疏思路，创新点在于让一组查询块共享重要性采样结果，以减少逐查询块选择关键块的开销。摘要没有给出实验数据、生成质量评估、延迟降低幅度或与现有PBSA方法的定量比较，也未说明组如何划分、是否影响长视频一致性。作为未经独立验证的预印本，目前只能视为方法提案，不能据此判断其实际加速效果。",
+      "original_title": "InstaGen: Group-Shared Importance Sampling for Fast Video Generation",
+      "focus": false,
+      "edition": "evening"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09892v1",
+      "title_zh": "论智能体式操作策略：通用AI模型直接控制机械臂",
+      "summary_zh": "该预印本提出“智能体式操作策略”（AMP）：由通用AI模型直接向机械臂下达指令，并随任务推进调整动作，而非依赖在演示数据上训练的专用策略。作者称系统分析表明通用模型可比视觉-语言-动作模型（VLA）和世界-动作模型（WAM）等专用策略更可靠地控制机械臂，并给出参考实现AMP1。摘要未提供具体任务、成功率与对比实验细节。",
+      "why_zh": "若通用模型直接控制机器人可行，将改变机器人学习“专用策略+演示数据”的主流路线；但该主张需具体基准与复现支撑，值得追问其边界条件。",
+      "details_zh": "摘要称近期机器人操作研究集中于基于演示训练的专用策略，而作者主张通用AI模型能更可靠地控制机械臂，并系统分析AMP这一形态：通用模型直接命令机械臂，随任务展开调整动作。文中提到参考工具AMP1“原样运行”，但摘要未说明其底层模型、任务集合、评估指标及与VLA/WAM的定量比较。因此“更可靠”目前只是作者在预印本中的表述，缺乏独立复现与统计细节。读者应关注其任务覆盖面、失败模式与安全性，而不宜将摘要结论当作已确立的工程事实。",
+      "original_title": "On Agentic Manipulation Policies",
+      "focus": false,
+      "edition": "evening"
+    }
+  ]
+}
