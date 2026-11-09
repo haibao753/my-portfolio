@@ -2,9 +2,610 @@
   "version": 1,
   "date": "2026-11-09",
   "editions": [
+    "morning",
     "evening"
   ],
   "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08560",
+      "title_zh": "网络干扰下因果推断的极小极大设计与估计量",
+      "summary_zh": "一篇 arXiv 统计学预印本提出基于设计的极小极大理论，用于处理存在干扰（interference）时的线性因果估计量。作者分别研究三类问题：固定设计下优化估计量、在受限设计类中同时优化估计量与设计、以及在所有设计上同时优化两者；每类问题又区分全体估计量与设计无偏估计量。理论把干扰下的因果推断表述为扩展有限总体上的受约束抽样设计，并用加权抽样超图刻画可行处理分配下可联合抽样的潜在结果集合。",
+      "why_zh": "不同于常见的干扰下因果推断应用论文，该工作给出极小极大下界与设计层面的统一框架，对实验设计、A/B 测试溢出效应和网络平台政策评估有方法论意义。",
+      "details_zh": "摘要显示，作者允许任意正确设定的暴露映射（exposure mapping），包括恒等映射，这意味着不要求干扰结构被简化成邻域平均等特定形式。其核心构造是把每个单元可达的多个暴露水平展开为潜在结果，从而把干扰问题转化为扩展有限总体上的受约束抽样问题，再用超图描述哪些潜在结果可被同时观测。需要说明的是，该文为预印本，尚未经独立验证；摘要未给出具体收敛速率、下界阶数或模拟结果，因此无法判断其相对既有干扰文献的实际改进幅度。读者可关注其超图表述是否能指导实际随机化方案。",
+      "original_title": "Minimax designs and estimators for causal inference under network interference",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/133 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.08560",
+        "pages_read": 14,
+        "pages_total": 133,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 13
+          },
+          {
+            "id": "E2",
+            "page": 4
+          },
+          {
+            "id": "E3",
+            "page": 2
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E5",
+            "page": 2
+          },
+          {
+            "id": "E8",
+            "page": 5
+          },
+          {
+            "id": "E13",
+            "page": 10
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究网络干扰下的线性因果估计量，提出基于设计的极小极大理论，研究三类问题：固定设计下优化估计量、在受限设计类中同时优化估计量与设计、在所有可能设计中同时优化两者；并对全体估计量与设计无偏估计量分别考察极小极大风险。作者指出既有分析只能评估给定策略表现，无法判断风险能否通过换估计量、换设计-估计量对或去掉设计约束进一步降低，且缺少覆盖这三类问题、跨干扰结构、暴露映射与估计量的通用极小极大理论。",
+            "evidence_ids": [
+              "E4",
+              "E5"
+            ]
+          },
+          "method": {
+            "text": "方法核心是把随机化设计、干扰图与暴露映射诱导出的观测约束表示为一个加权采样超图：超边记录可联合观测的潜在结果集合，权重为随机化设计赋予可行样本的概率。固定设计下风险只通过诱导采样设计依赖随机化设计；受限设计问题依赖可达诱导采样设计集合；全设计问题依赖采样超图。下界方面使用不相交扰动打包与Assouad型超立方构造，给出全体估计量与无偏估计量的下界；上界方面将暴露Horvitz–Thompson、条件H-T或带偏收缩估计量与适配估计量的设计配对，并提出有序提议设计与预算约束lit-ball设计两种新构造。",
+            "evidence_ids": [
+              "E3",
+              "E8",
+              "E1"
+            ]
+          },
+          "findings": {
+            "text": "摘录给出的理论结果包括：定理4.1.2给出固定设计下由不相交扰动打包导出的下界，分别覆盖全体估计量与无偏估计量；若某集合的cb非零且ρP(Bb)=1，则不存在无偏估计量且界为+∞。作者还给出暴露H-T在固定设计问题中达到极小极大速率最优的充分条件（定理5.2.1），并给出一个随机饱和反例说明暴露H-T并非总是极小极大速率最优。摘录提到将一般界应用于四种干扰结构下的若干因果估计量，并称无干扰下平均处理效应的全设计极小极大风险为4/n量级，但该句在摘录中被截断，具体常数与完整结论无法从给定片段确认。",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E8"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录仅覆盖第1至13页的部分内容，公式在PDF提取中可能错排，例如定理4.1.2的求和与不等式符号不完整；无干扰情形4/n的结论句子被截断，无法核实完整表述。摘录未提供数值实验、模拟或真实数据结果，也未说明独立复现或第三方验证情况；该文为预印本（arXiv标识），不能视为已经独立验证的结论。此外，摘录未给出下界与上界在四种干扰结构下是否逐项匹配的完整陈述，因此无法判断最优性结论的全貌。",
+            "evidence_ids": [
+              "E1",
+              "E8",
+              "E4"
+            ]
+          },
+          "replication": {
+            "text": "复现建议（仅基于摘录）：先按第3节定义构造潜在结果表、暴露映射与可行分配集Z0，再由随机化设计P与暴露映射f计算诱导采样设计QP,f，并据此构建加权采样超图；然后实现定理4.1.2的扰动打包下界，检查每个打包集合的ρP(Bb)与符号cb；上界侧实现暴露H-T、条件H-T与收缩估计量，并复现有序提议设计与预算约束lit-ball设计。由于摘录未给出完整算法伪代码、超参数、代码或数据，具体复现条件与数值结果无法从给定材料确定；且该文为预印本，复现应视为独立检验而非已有验证。",
+            "evidence_ids": [
+              "E13",
+              "E1",
+              "E8"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08651",
+      "title_zh": "土耳其语多模态视频事实核查：新数据集与零样本智能体、微调系统对比",
+      "summary_zh": "一篇arXiv预印本指出，视频类虚假信息在社交媒体上传播迅速，但现有事实核查系统几乎只针对英文文本，土耳其语等低资源语言工具严重不足。作者构建了TeViD，据称是首个土耳其语多模态视频事实核查数据集，素材来自IFCN认证机构Teyit.org发布的文章。论文还比较了零样本智能体式系统与微调系统在该数据集上的表现。摘要信息有限，未给出数据规模、标注方案与具体评测结果。",
+      "why_zh": "把多模态事实核查从英文扩展到低资源语言，并对比智能体式零样本方法与微调路线，对多语言AI应用与虚假信息治理都有参考价值。",
+      "details_zh": "该工作的贡献主要在资源与评测两端：一是构建土耳其语视频事实核查数据集，来源为认证事实核查机构的公开文章，这使标注具备一定的专业背景；二是设置零样本智能体与微调系统的对照，触及当前一个实际问题——在低资源语言上，是靠通用大模型加工具编排，还是靠领域微调更有效。局限也很明显：这是预印本，摘要未披露样本量、类别分布、标注者间一致性，也未给出两种路线的具体胜负与误差分析；单一语言、单一来源的数据集能否代表真实传播场景仍需检验。读者应把它视为该方向的首批尝试之一，而非已确立的结论。",
+      "original_title": "Turkish Multimodal Video Fact-Checking: A New Dataset and a Comparison of Zero-Shot Agentic and Fine-Tuned Systems",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08555",
+      "title_zh": "pESTO：用风险驱动的提前停止改进p-greedy核回归",
+      "summary_zh": "该预印本指出，基于核的p-greedy贪心算法通常用幂函数等逐点误差指标选择逼近节点，但在含噪数据下，确定性准则会失效，因为真实解与估计的偏差同时受逼近误差和噪声放大影响，二者平衡未知。作者将这两部分显式分离，分别由幂函数和Lebesgue型项控制，并据此用Stein无偏风险估计（SURE）作为均方误差的代理，为节点数量提供可计算的停止准则。数值实验称该方法能平衡确定性精度与统计噪声。",
+      "why_zh": "把“选多少个基函数”从经验调参变成可计算的风险权衡，对核方法、高斯过程近似和科学计算中的贪心采样都有直接参考价值，而非普通模型刷榜。",
+      "details_zh": "摘要显示，研究聚焦于p-greedy这类通过最小化逐点误差指标来挑选逼近节点的核方法。作者的核心观察是：无噪声时幂函数等指标可用，但噪声存在时，估计误差由逼近误差与噪声放大两部分组成，且二者比例未知。论文将这两项分别对应幂函数和Lebesgue型项，并引入SURE作为均方误差代理，从而给出选择节点数的停止规则。数值实验支持该准则有效。需注意这是arXiv预印本，尚未经同行评审独立验证，实验规模与对比基线在摘要中未给出，结论应视为作者自述。",
+      "original_title": "pESTO: Iterative p-greedy kernel regression with risk-driven Early STOpping",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08730",
+      "title_zh": "为LLM数字孪生组织问卷历史：对背景、决策过程与评估画像的受控研究",
+      "summary_zh": "一篇arXiv预印本探讨基于大模型的“数字孪生”，即从个人既往回答的表示预测其在新情境下的反应。作者指出，已有证据显示压缩问卷历史未必降低预测准确率，提示表示结构而非信息量本身可能是关键设计选择。研究考察BDE这一固定表示，把每位受访者的问卷历史组织为背景、决策过程等部分，并进行受控比较。摘要信息有限，未给出具体数据集、样本量与量化结果。",
+      "why_zh": "把“如何组织个人历史”当作可实验的设计变量，而非一味堆上下文，对LLM个性化建模与评估方法有启发，区别于产品发布类新闻。",
+      "details_zh": "该研究的出发点是：如果压缩历史不损失准确率，那么表示的结构可能比信息总量更重要。作者提出并检验BDE表示，将受访者问卷历史拆分为背景、决策过程与评估画像等结构化部分，并做受控研究比较不同配置。这类工作与用LLM模拟人类回答、合成调查数据的讨论相关，潜在影响包括调查方法、用户建模与评估偏差。局限明显：输入仅有标题与简短摘要，缺少数据集来源、基线设置、评价指标与效应大小，无法判断结论稳健性；且为未经独立验证的预印本，不应视为已确立的结论。",
+      "original_title": "Structuring Survey Histories for LLM Digital Twins: A Controlled Study of Background, Decision Procedure, and Evaluation Profiles",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09843v1",
+      "title_zh": "猪的五十二种 shades：UCR档案究竟让分类器做什么",
+      "summary_zh": "一篇arXiv预印本审视时间序列分类的事实标准基准UCR档案，追问其任务是否真正类似该领域要解决的问题。作者以PigAirwayPressure数据集为例：原始实验关注气道压力能否在出血变得危急前发出提示，而在档案中同一批记录被转化为“这条曲线来自52头猪中的哪一头”的个体识别任务。作者指出该数据集并非孤例，并对档案任务与时间序列分类目标之间的匹配度进行系统考察。摘要未给出具体统计结果。",
+      "why_zh": "直指基准数据集的任务语义漂移问题，提醒研究者区分“能分类”与“解决目标问题”，对机器学习评测文化有反思价值。",
+      "details_zh": "该文的核心观察是任务重构：生理监测实验原本服务于临床预警，进入基准后被改写为多类个体识别，二者所需能力并不相同。作者称PigAirwayPressure不是异常个案，暗示UCR档案中可能存在更多类似的任务语义偏移，并据此质疑该基准作为时间序列分类标准评测的代表性。这对排行榜驱动的评测实践构成方法学提醒：高分未必对应目标场景的泛化能力。信息局限在于摘要未提供数据集层面的量化统计、筛选标准或替代基准建议，且为未经独立验证的预印本，具体比例与结论需查阅原文核实。",
+      "original_title": "Fifty-Two Shades of Pig: What the UCR Archive Really Asks Classifiers to Do",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.09110",
+      "title_zh": "拜占庭鲁棒分布式稀疏Softmax回归：在恶意节点比例约1/√m时达到集中式最优收敛率",
+      "summary_zh": "该预印本研究高维设定下的拜占庭鲁棒分布式稀疏Softmax回归，提出一种通信高效的分布式算法，采用坐标级截尾均值与坐标级中位数两种鲁棒聚合方式抵御拜占庭攻击。在带稀疏约束的次高斯设计假设下，作者给出分布式估计量的收敛率为 O_P(K^{5/2}√(s log(Kd)/N))，并称当拜占庭节点比例 α 约为 1/√m 时该速率与集中式 oracle 速率相匹配；合成数据实验显示方法表现更优。",
+      "why_zh": "与一般分布式学习新闻不同，它把鲁棒聚合的容错阈值与统计最优速率放在同一框架下讨论，对关心分布式训练安全与高维统计理论交叉的读者有直接参考价值。",
+      "details_zh": "摘要给出的核心贡献是算法与收敛率上界，而非完整实验报告。值得注意的是，其结论依赖次高斯设计、稀疏约束以及拜占庭比例 α≈1/√m 的设定，这意味着容错能力与参与方数量 m 相关，实际部署中若恶意节点比例更高，理论保证可能不再成立。摘要仅称合成数据实验“表现更优”，未提供对比基线、维度规模和通信开销的具体数值。作为未经独立验证的预印本，其速率匹配主张需读者自行核对证明细节与假设是否适用于自身场景。",
+      "original_title": "Byzantine-Robust Distributed Sparse Softmax Regression",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/26 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.09110",
+        "pages_read": 14,
+        "pages_total": 26,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 3
+          },
+          {
+            "id": "E3",
+            "page": 2
+          },
+          {
+            "id": "E4",
+            "page": 3
+          },
+          {
+            "id": "E5",
+            "page": 1
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E8",
+            "page": 4
+          },
+          {
+            "id": "E10",
+            "page": 6
+          },
+          {
+            "id": "E13",
+            "page": 9
+          },
+          {
+            "id": "E14",
+            "page": 10
+          },
+          {
+            "id": "E15",
+            "page": 11
+          },
+          {
+            "id": "E16",
+            "page": 12
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究高维设置下的拜占庭鲁棒分布式稀疏 softmax 回归：在数据分布在 m 台服务器、其中比例 α 的服务器为拜占庭（可发送任意梯度）的条件下，如何设计通信高效的分布式算法并给出稀疏性相关的误差界与支持恢复条件。",
+            "evidence_ids": [
+              "E1",
+              "E5",
+              "E8"
+            ]
+          },
+          "method": {
+            "text": "方法基于 CSL 与 CEASE 的迭代代理似然框架：将 ℓ1 惩罚的代理更新适配到 softmax 回归，并用坐标级截尾均值（trimmed mean）或坐标级中位数（median）聚合各 worker 梯度；服务器只交换参数与梯度而不传输原始数据。作者还给出稀疏性相关的 Frobenius 误差界（含显式拜占庭污染项），并在额外最小信号假设下给出精确支持恢复与符号一致性条件，另将误差分析扩展到二分类 robit 回归。",
+            "evidence_ids": [
+              "E1",
+              "E3",
+              "E6"
+            ]
+          },
+          "findings": {
+            "text": "理论方面，作者给出依赖稀疏性的 Frobenius 误差界，含显式拜占庭污染项；当 α ≍ m−1/2 时，所得速率在 N、s、d 的依赖关系上与 Tian et al. (2024) 的非分布式上界一致；并给出排除假支持坐标、在最小信号假设下保证精确支持恢复与符号一致性的条件。摘录中的数值实验部分主要展示估计误差随迭代次数 T、服务器数 m、局部样本量 n 与拜占庭比例 α 的变化曲线（含 CSL-tri、CSL-med、CSL-mean、Centralize 对比），但摘录未给出具体数值结论，无法判断各方法的定量优劣。",
+            "evidence_ids": [
+              "E1",
+              "E4",
+              "E16"
+            ]
+          },
+          "limitations": {
+            "text": "摘录仅说明第 5 节讨论局限与未来方向，但未给出该节内容，因此无法判断作者自述的具体局限。可确认的证据边界是：结果依赖若干假设（如 A1、A2 与 Assumption B 等），实验为合成数据与真实数据上的数值研究，攻击类型包括高斯攻击、全知攻击与比特翻转攻击；摘录未提供独立第三方验证，论文本身为预印本（arXiv，math.ST），其结论不应视为已经独立复现。",
+            "evidence_ids": [
+              "E4",
+              "E10",
+              "E14"
+            ]
+          },
+          "replication": {
+            "text": "复现建议：按摘录中的实验设置起步，例如无拜占庭情形取 K = 4、s = 8、d ∈ {40, 60, 80, 100}、N = 44100、λ = 4√(log d / N)，支撑集随机抽取 s 个指标且非零元取 1，特征 x ∼ N(0, I_d)，结果对 30 次独立重复取平均；再引入拜占庭比例 α 与高斯、全知、比特翻转攻击，比较 CSL-tri、CSL-med、CSL-mean 与集中式基线。注意摘录未给出完整算法伪代码、全部超参数与真实数据细节，复现前需查阅原文第 3、4 节与附录证明。",
+            "evidence_ids": [
+              "E13",
+              "E14",
+              "E15"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09825v1",
+      "title_zh": "BitDecoding-FP4：通过算法与系统协同设计实现原生FP4键值缓存解码",
+      "summary_zh": "一篇arXiv预印本关注长上下文大模型推理中键值缓存对显存容量与带宽的支配问题。4位微缩放格式（NVFP4、MXFP4）可压缩缓存并在FP4张量核心上运行注意力，但算法量化与系统加速之间存在缺口：现有FP4键值系统采用朴素量化导致精度明显下降，而面向精度的4位算法依赖向量码本，查表开销拖累解码吞吐。作者提出BitDecoding-FP4，通过算法与系统协同设计实现原生FP4键值缓存解码。摘要未给出具体加速比与精度数值。",
+      "why_zh": "长上下文推理的显存瓶颈是现实工程问题，该工作试图同时解决量化精度与查表开销的矛盾，属于推理系统层面的实质改进而非产品发布。",
+      "details_zh": "背景是：随着上下文变长，键值缓存成为显存容量和带宽的主要消耗者，低比特量化是主流缓解手段。4位微缩放格式已被硬件支持，但简单量化会损伤模型质量；高精度4位方案常用向量码本，解码时查表频繁，反而拖慢吞吐。该论文的切入点是算法与系统协同设计，试图在保持精度的同时让解码走原生FP4路径。需要说明的是，摘要只描述了问题与思路，未提供吞吐提升倍数、精度对比基线、支持的模型规模等关键数据，也未说明是否开源。作为未经独立验证的预印本，其实际收益需等待复现与工程评测。",
+      "original_title": "BitDecoding-FP4: Native FP4 KV Cache Decoding via Algorithm-System Co-Design",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-08",
+      "url": "https://www.psypost.org/ai-chatbots-can-flip-flop-on-false-claims-when-users-keep-repeating-them/",
+      "title_zh": "用户反复坚持错误说法时，AI聊天机器人可能改口",
+      "summary_zh": "PsyPost报道称，一项针对七个大语言模型的研究考察了持续对话压力下的表现：当用户反复坚持“正方形有五条边”这类错误主张时，模型可能改变立场。报道指出，这类多轮施压暴露了单次提问测试难以发现的弱点。该报道为媒体转述，未提供研究样本规模、具体模型名单、改口比例或统计检验等细节，相关研究结论尚需核实。",
+      "why_zh": "单轮基准测试高分不等于多轮对话中立场稳定，这一角度对评估AI助手可靠性有现实意义，也提示用户持续施压可能诱导错误输出。",
+      "details_zh": "该条来自心理学媒体PsyPost的RSS摘要，属于二手报道，未附论文链接或方法细节。可确认的信息是：研究覆盖七个大语言模型，采用持续多轮对话施压的方式，让用户反复主张明显错误的陈述，观察模型是否改口；报道强调单题测试会遗漏这类弱点。但“改口”的具体定义、不同模型间的差异、是否存在对照条件以及是否经过同行评议，摘要均未交代。读者应把它视为值得关注的研究线索，而非已确立的普遍结论；实际使用中模型表现还可能随版本与提示方式变化。",
+      "original_title": "AI chatbots can flip-flop on false claims when users keep repeating them",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.01914",
+      "title_zh": "超越统计一致性：面向混合式 AI 的机器学习新定义",
+      "summary_zh": "一篇 arXiv 机器学习预印本提出对机器学习的重新定义：机器“学到”一个函数，当且仅当它对每个输入返回的值在形式系统中有恰当推导。作者把哥德尔可表示性定理（计算等同于推导）扩展到可计算实数，并把观测数据作为经验定义纳入系统。其结论是：机器学到一个真实概率，当且仅当同时满足“真值条件”（估计收敛到真实概率，即统计一致性）与“保证条件”（机器在系统内部恰当推导出自身收敛性）。",
+      "why_zh": "该文把“学习”从统计一致性扩展到可证明的收敛性，触及当前大模型可解释性与可信度的理论根基，属于概念层面的反常识提法，值得跟踪但不宜当作定论。",
+      "details_zh": "摘要指出，诸如独立同分布这类关于数据的全局假设，并不足以替代系统内部的推导，因此作者认为学习“超越统计一致性”。这一框架试图把经验观察记录为公理式的经验定义，再要求机器给出收敛性的形式证明。需要强调，这是预印本的理论提议，摘要未提供具体形式系统、证明构造细节或可操作算法，也未说明该定义对现有深度学习实践的可检验含义。其价值更多在于提出一个可争论的判据，而非已被验证的结论；读者应区分“数学上可定义”与“工程上可实现”。",
+      "original_title": "Machine Learning Beyond Statistical Consistency for Hybrid AI",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08755",
+      "title_zh": "AtariBench：评测视觉语言模型在Atari游戏中的时空推理能力",
+      "summary_zh": "该预印本提出AtariBench，一个受控基准，覆盖20款Atari 2600游戏，要求视觉语言模型从高时间分辨率的游戏画面流中做序列决策。作者称该基准将游戏内快速动态与真实时钟推理速度解耦，以考察模型在动态环境中的时空推理能力，而现有静态视觉理解基准难以反映这一点。摘要未给出具体评测结果。",
+      "why_zh": "视觉语言模型在静态图上表现强，但能否在动态环境中连续决策仍是开放问题；该基准把“看懂”与“会行动”分开测，对Agent评测有参考意义。",
+      "details_zh": "摘要指出，视觉语言模型在静态视觉理解基准上成绩突出，但在动态环境中行动的能力了解较少。AtariBench覆盖20款Atari 2600游戏，要求模型基于高时间分辨率的游戏画面流做序列决策，并通过解耦游戏内动态与墙钟推理速度，试图把环境速度与模型延迟分开考察。摘要未说明参与评测的模型、具体指标、人类基线或主要结论，信息有限。该基准为arXiv预印本，尚未经独立验证；基准设计是否公平、任务难度分布如何，需阅读全文与后续复现才能判断。",
+      "original_title": "AtariBench: Evaluating Spatiotemporal Reasoning of Vision-Language Models in Atari Gameplay",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.09592",
+      "title_zh": "多项分布下离散全变差的方差：一般分布情形的渐近公式",
+      "summary_zh": "该预印本研究了多项分布X~Mult(N;p)的参考中心化离散全变差d_p的方差，在固定维数n≥3、所有p_i>0且N趋于无穷时的行为。作者证明Var(d_p)=N·v(p)+O(1)，其中v(p)由极限高斯边向量的绝对值之和的方差给出，可通过多项分布的边方差、相关性以及Nabeya关于折叠二元正态的协方差公式表达。与均匀情形不同，非相邻边对一般会对方差有贡献；O(1)余项由格点Edgeworth展开和Poisson求和控制，并随格点相位振荡。",
+      "why_zh": "为离散全变差这一常用正则化/检验统计量给出非均匀多项分布下的精确方差结构，属于概率与统计交叉的扎实理论进展，而非应用热点。",
+      "details_zh": "摘要说明，研究对象是多项计数向量相邻差减去期望差后的绝对值之和，即参考中心化离散全变差。主要结果是方差随样本量N线性增长，斜率v(p)由极限高斯边向量各分量绝对值之和的方差决定，并可用多项分布的边方差与相关性显式表达。作者强调，与均匀情形不同，非相邻边对一般会贡献到v(p)。余项为O(1)，通过格点Edgeworth展开与Poisson求和控制，且随格点相位振荡；在n=3、4时求和跑在一个子格陪集上。该公式可退化到已知的均匀情形Hoel–Kamat方差。以上均为预印本作者陈述，尚未经独立复核。",
+      "original_title": "Discrete total variation under the multinomial, Part 4: variance under a general distribution",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09828v1",
+      "title_zh": "为强化学习中的奖励黑客设计有效的监控干预：对抗监控可能诱发规避行为",
+      "summary_zh": "该预印本讨论强化学习中奖励难以设计与控制、模型易学会奖励黑客等非预期行为的问题。作者指出一种可能方案是监控奖励黑客并在检测到时施加惩罚，但针对监控器训练可能诱导模型产生规避行为，而如何在训练中有效使用监控器仍缺乏系统理解。为此作者提出并开放了一个研究环境，用于比较不同监控干预方式在缓解奖励黑客上的效果。",
+      "why_zh": "它没有停留在“加个监控器”的直觉方案，而是把监控器本身视为可被策略规避的对手，这对AI Agent对齐与RL训练实践是更贴近失败模式的问题设定。",
+      "details_zh": "摘要提供的信息有限：核心是提出一个开放研究环境，用于研究监控式干预如何缓解奖励黑客，并提示“训练对抗监控器可能导致规避行为”这一风险。但摘要未给出具体实验结论、监控器类型、惩罚强度设置或与无监控基线的量化对比，也未说明环境覆盖哪些任务族。因此目前只能确认问题框架与工具贡献，不能据此断言某种干预已被证明有效。作为未经独立验证的预印本，其环境设计是否可复现、结论是否稳健，需待论文正文与代码发布后判断。",
+      "original_title": "Designing Effective Monitor-Based Interventions for Mitigating Reward Hacking During RL",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-08",
+      "url": "https://www.psypost.org/toddler-temperament-is-linked-to-common-dna-variations-large-genetic-study-finds/",
+      "title_zh": "大型遗传研究发现幼儿气质与常见DNA变异相关",
+      "summary_zh": "据PsyPost报道，一项覆盖数万名儿童的研究将幼儿早期气质与常见DNA变异联系起来，这些变异与注意缺陷多动障碍（ADHD）和自闭症相关变异存在重叠。报道以“有的幼儿冲进陌生人房间、有的退缩”为引，讨论气质差异的遗传基础。该报道为媒体转述，摘要未给出具体样本量、效应大小、研究机构与发表期刊，相关结论需回到原始论文核实。",
+      "why_zh": "气质差异常被归因于养育方式，该研究提示常见遗传变异也有贡献且与神经发育障碍存在重叠，对理解行为差异的来源有启发，但需警惕把群体统计效应误读为个体决定论。",
+      "details_zh": "这条消息的价值在于把发展心理学中长期争论的“气质从何而来”问题放到大规模遗传数据下考察：若常见变异与幼儿气质相关，且与ADHD、自闭症相关变异重叠，说明正常行为差异与临床特征可能共享部分遗传基础，而非截然二分。但报道层面信息有限：未披露样本具体规模、气质的测量方式（问卷还是观察）、遗传关联的效应量、是否经过独立样本重复，也未说明研究是否预注册。此类多基因关联研究的单个变异效应通常很小，不能用于预测个体儿童行为。读者应把它当作研究方向信号，而非育儿指导或诊断依据。",
+      "original_title": "Toddler temperament is linked to common DNA variations, large genetic study finds",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08916",
+      "title_zh": "通用可识别性下do-演算的不完备性",
+      "summary_zh": "一篇arXiv预印本研究从任意观测分布和/或干预分布集合中识别因果效应的问题，作者称之为“通用可识别性”（uID），它推广了仅依赖观测分布的经典可识别性与针对特定干预分布的一般可识别性问题。摘要称既有研究已建立部分结果，本文则讨论do-演算在uID问题上的不完备性。由于提供的材料仅有标题与摘要片段，具体反例构造、定理条件与证明思路无法从现有信息确认。",
+      "why_zh": "因果推断的可识别性是机器学习与统计学的基础问题，若do-演算在更一般的分布集合下不完备，会影响因果发现工具的适用边界判断。",
+      "details_zh": "该条来自arXiv，归类标注为cs.CL，但主题属于因果推断理论。可确认的信息有限：uID把可用的分布集合从“仅观测”或“某类干预”推广到任意观测与干预分布的混合，而本文主张do-演算这一经典工具在该设定下不完备。所谓不完备通常意味着存在可识别的因果效应，但do-演算规则无法推出。摘要未提供反例规模、图结构限制或与既有gID结果的比较细节，也未说明结论是否依赖特定图类。作为未经独立验证的预印本，读者应等待全文与同行评议后再评估其强度。",
+      "original_title": "On the Incompleteness of do-calculus for Universal Identifiability",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.09701",
+      "title_zh": "学习该发生在哪里？文本、参数与联合适应的遗憾分析",
+      "summary_zh": "一篇arXiv预印本提出，语言模型系统在部署中可反复选择提示词与参数适配器，并用反馈指导后续选择；但早期选择会改变后续配置所继承的上下文或环境。作者把候选选择与“从始至终使用最佳固定提示—参数对”的累积损失之差分解为三项：候选族内选择遗憾、限制候选族带来的差距，以及实际部署历史带来的收益或损害。摘要称在损失函数独立于选择器随机性时，过去选择只影响有限轮次，限制切换次数可在所选族内获得次线性期望遗憾。",
+      "why_zh": "把“提示词还是微调”这一工程直觉形式化为可分解的遗憾问题，并显式建模切换带来的环境漂移，比常见的提示工程经验帖更有理论追问价值。",
+      "details_zh": "该文属于统计机器学习方向预印本，尚未经独立验证。摘要给出的关键设定是：候选提示与参数适配器预先构造，选择过程可重复，且用“若某候选自始至终被使用会产生怎样的历史”来评估候选质量，从而把候选本身的好坏与切换造成的效应分开。三项分解中，第二项刻画候选族受限的代价，第三项刻画真实部署历史的影响，这一区分对实际系统设计有参考意义。但摘要未给出具体遗憾界形式、实验设置或数据规模，且“损失函数固定”等条件在真实部署中未必成立，结论需待全文与复现检验。",
+      "original_title": "Where Should Learning Live? Regret Analysis for Text, Parameter, and Joint Adaptation",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09822v1",
+      "title_zh": "用AI发现经形式化验证的量子程序",
+      "summary_zh": "arXiv预印本摘要指出，量子计算机能否解决科学突破性问题，既取决于硬件，也取决于量子算法的改进，而后者通常需要专家多年协作。数学与计算机科学领域已用大语言模型加速自动发现循环。作者称量子算法只能在受限或小规模实例上由经典计算机评估，并据此展示了一项工作，但提供的摘要在此处截断，具体方法、验证框架与所得程序性能均未在材料中说明。",
+      "why_zh": "把大模型自动发现与形式化验证结合到量子程序，若能落地，可能改变算法设计的协作方式；但现有材料不足以判断其实际突破程度。",
+      "details_zh": "该条仅有标题与一段被截断的摘要，可确认的只有研究动机与大致方向：量子算法进步依赖专家长期协作，经典计算机只能在小规模或受限实例上评估量子算法，而AI自动发现循环已在数学和计算机科学中显现加速作用。标题强调“形式化验证”，暗示生成程序需通过机器可检验的证明，这与单纯启发式搜索有本质区别。但摘要未给出验证所用逻辑体系、生成的量子程序类型、与已知算法的对比结果，也未说明是否经过独立复核。作为预印本，应避免把“展示”理解为已确立的算法优势。",
+      "original_title": "Discovering formally verified quantum programs with AI",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.09765",
+      "title_zh": "随机几何图中友谊悖论的极限定律",
+      "summary_zh": "一篇arXiv预印本研究环面上以最大范数距离构造的随机几何图中“友谊悖论”效应的规模，即所有顶点的邻居平均度与其自身度之差的平均值。作者在连接半径的各个区间确定了该统计量的极限分布，并给出Kolmogorov距离或全变差距离下的非渐近误差界；还给出任意顶点数与半径小于二分之一时的精确均值。结果显示固定半径下极限并非高斯，而是中心化指数变量的加权和；半径缩小、期望度增大时趋于高斯并带Berry-Esseen界；期望度有界时以经典速率高斯；期望度趋于零时依情形为高斯、泊松或恒为零。",
+      "why_zh": "把社交网络中的经验悖论放进可计算的随机几何图模型，给出分区间极限律与非高斯反例，属于概率与网络科学的实质进展。",
+      "details_zh": "友谊悖论通常表述为“邻居平均而言比你自己拥有更多邻居”。该文把效应大小定义为一个全局平均差，并在环面随机几何图上系统分析其渐近行为。摘要强调结果覆盖连接半径的所有区间，且给出非渐近误差界，这比仅给渐近结论更有实用价值。值得注意的是固定半径下极限是加权指数和而非高斯，说明常见的高斯直觉在此不成立；只有在半径缩小、期望度增长的区间才恢复高斯性。信息局限在于：摘要未说明具体权重形式、证明技术及模拟验证，且为未经独立验证的预印本，结论需谨慎对待。",
+      "original_title": "Limit laws for the friendship paradox in random geometric graphs",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-09",
+      "url": "https://www.psypost.org/delaying-first-sexual-experience-linked-to-lower-depression-risk-through-economi/",
+      "title_zh": "首次性行为较晚与成年后抑郁风险较低相关，研究称教育成就与家庭收入是主要中介",
+      "summary_zh": "PsyPost报道一项研究称，首次性行为年龄较晚与成年后抑郁风险较低存在关联，且这种较低风险在很大程度上由更高的教育成就和更高的家庭收入所驱动。报道将这一关联解释为社会经济路径的中介作用，而非首次性行为时间本身的直接保护效应。该报道基于新闻摘要，未提供样本量、数据来源、随访年限与统计模型细节。",
+      "why_zh": "与常见“某行为影响心理健康”的轻量报道不同，它把相关性归因于教育与收入等社会经济中介，提醒读者区分直接效应与混杂路径，对理解心理学因果推断局限有启发。",
+      "details_zh": "需要强调，这是观察性关联报道，摘要本身已指出风险降低“很大程度上由”教育成就与家庭收入驱动，意味着首次性行为时间可能只是社会经济背景的标记，而非可干预的因果因素。报道未说明研究设计（横断面还是纵向）、样本代表性、抑郁测量工具，也未控制哪些混杂变量。读者应避免将其读成“推迟性行为可预防抑郁”的行为建议。该条为媒体转述，未经独立交叉核实，具体结论需回到原始论文核对。",
+      "original_title": "Waiting to have sex linked to lower depression risk later in life",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08639",
+      "title_zh": "强制输出选项字母会抑制拒答：来自WMDP的机制性证据",
+      "summary_zh": "一篇arXiv预印本研究大语言模型安全评测中多选题格式对拒答行为的影响，在WMDP数据集上考察Llama-3.1-8B与Qwen3-8B两个模型。作者用tuned lens技术发现，模型处理多选题时会很快锁定答案字母token，而开放式格式下拒答是逐步形成的；多选题格式下的激活值距“拒答方向”约为开放式的三倍远。消融承载多选题答案的注意力头会提高拒答率，说明答案选择与拒答存在竞争。作者据此认为多选题安全分数主要测量的是答案选择而非安全倾向。",
+      "why_zh": "揭示安全基准的题型本身会系统性压低拒答率，并给出机制层面证据，对如何解读模型安全评测分数有直接方法论意义，而非又一份榜单排名。",
+      "details_zh": "该研究的问题意识来自已有观察：多选题格式会降低拒答率，从而可能扭曲安全评测结论。作者在两个8B级模型上做了三类分析：用tuned lens追踪内部表征随时间的变化，比较多选题与开放式格式下激活与拒答方向的距离，以及通过消融特定注意力头观察拒答率变化。三者共同指向“答案选择与拒答竞争”的解释。需要强调的是，这是预印本，样本仅两个模型、一个基准数据集，摘要未报告具体数值与统计检验，机制解释是否推广到其他模型、语言和题型尚待验证；也不宜据此断言现有安全榜单整体失效。",
+      "original_title": "Forcing a Letter Suppresses Refusal: Mechanistic Evidence from WMDP",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08876",
+      "title_zh": "重加权迁移分类：由混合超额风险精确换算目标风险，并给出极小极大自适应速率",
+      "summary_zh": "该预印本研究重加权迁移学习中源数据与目标风险的关系：一个源可能让训练混合更易学习，却降低其对目标的准确价值。针对二分类，作者对每对分布与每个正目标权重，推导出仅由混合超额 hinge 风险蕴含的最紧目标超额风险界，并证明该精确换算曲线由密度加权局部投票决定。借助加权支持向量机的两样本 oracle 不等式给出混合超额项，在高斯核下显式化；在倾斜边界类上建立全程序极小极大分类速率，将源采样不确定性与关系不确定性分离。",
+      "why_zh": "它把“源数据好训但不好用”这一迁移学习常见困境转化为可计算的精确风险换算，并给出极小极大下界，属于方法论层面的实质推进，而非普通模型调参新闻。",
+      "details_zh": "摘要强调理论结果：精确换算曲线、oracle 不等式与极小极大速率，并称在高斯核与倾斜边界类上可显式分离 m^{-1}（源采样不确定性）与 τ^2（关系不确定性）。这类结果的价值在于说明重加权何时真正有益、何时只是让训练更容易。但摘要未给出数值实验规模、真实数据验证或与既有迁移界的具体比较，也未说明结论对多分类与非 hinge 损失的推广程度。作为预印本，其“最紧界”与速率最优性仍需同行复核证明。",
+      "original_title": "Reweighting for Transfer Classification: Exact Risk Conversion and Minimax Adaptation",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08645",
+      "title_zh": "从几何到功能：面向城市立面语义与功能解析的多任务LiDAR基准数据集",
+      "summary_zh": "该预印本指出，现有LiDAR基准多止步于几何与语义分割，缺少对建筑构件功能角色的推理支持。作者提出 HFX3D，一个大规模城市立面基准，包含加拿大哈利法克斯26栋建筑约4.92亿个LiDAR点，覆盖四个季节采集，任务同时涉及语义解析与功能解析。摘要将建筑立面理解与城市数字孪生、遗产建模和可持续城市分析联系起来。",
+      "why_zh": "与常见“又一个分割数据集”不同，它把标注目标从几何/语义推进到构件功能角色，这对城市数字孪生和具身AI的场景理解提出了新的评测维度。",
+      "details_zh": "根据摘要，HFX3D 的规模约为4.92亿点、26栋建筑、跨四季，强调多任务：语义分割之外还要判断每个建筑元素的功能角色。这一设定触及现有基准的空白——几何重建不等于理解立面为何这样设计。但摘要未说明功能标签体系如何定义、标注一致性如何保证、基线模型表现如何，也未给出数据开放许可与下载方式。作为预印本与数据集论文，其“大规模”和“多任务”主张需待数据卡与评测协议公开后核实，读者不宜仅凭摘要判断其可直接用于训练。",
+      "original_title": "From Geometry to Function: A Multi-Task LiDAR Benchmark Dataset for Semantic and Functional Parsing of Urban Facades",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09882v1",
+      "title_zh": "FlowMoP：随机多人运动预测",
+      "summary_zh": "一篇arXiv预印本提出FlowMoP，用条件流匹配框架联合生成多个智能体的多样化未来运动。作者指出多人3D运动预测本质上是随机的：同一段观测历史可对应多种合理延续，取决于意图、协调与社会情境，但主流方法仍是确定性的，每个智能体只输出固定数量结果。该框架同时建模全局轨迹与个体运动，以生成式方式产生多智能体未来。摘要未给出具体数据集与量化指标。",
+      "why_zh": "把多人交互预测从确定性回归转向生成式建模，契合人类运动多模态的本质，对自动驾驶与人群仿真等应用有方法意义。",
+      "details_zh": "该文的问题设定值得注意：多人场景中个体未来相互耦合，单独为每个智能体采样可能破坏协调性，因此需要联合生成。作者采用条件流匹配，声称可同时刻画全局轨迹结构与个体运动，从而产生多样且一致的未来。这与扩散模型、流匹配在轨迹预测中的兴起相呼应。局限在于输入仅有标题与摘要，缺少数据集（如ETH/UCY等）、评价指标（如ADE/FDE与多样性度量）、基线对比和推理成本信息；且为未经独立验证的预印本，生成质量与物理合理性尚待复现检验。",
+      "original_title": "FlowMoP: Stochastic Multi-Person Motion Prediction",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08643",
+      "title_zh": "FinEvolveKG：面向金融知识图谱构建的可控可归因提示演化",
+      "summary_zh": "一篇 arXiv 计算语言学预印本提出 FinEvolveKG，用于金融机构从共享的 SEC 10-K 文件中构建知识图谱。不同分析需求（风险分析、组合管理、投资研究）要求抽取适配，但又不能破坏共享的实体接地、类型体系和时间规则。手工编写角色提示与微调会增加成本，而无权重提示优化虽可替代，却可能让单一整体提示的无约束演化改写共享规则。该工作因此强调“受控”与“可归因”的提示演化。",
+      "why_zh": "金融知识图谱是机构级落地场景，该文关注多团队共享本体下的提示优化治理问题，比一般提示工程论文更贴近真实部署中的一致性与审计需求。",
+      "details_zh": "摘要显示，问题背景是同一批 10-K 文件被多个分析场景复用，若各自演化提示，容易造成接地、类型和时间规则碎片化。作者提出以无权重（weight-free）方式优化提示，但加入约束与归因机制，避免整体提示在演化中改写共享规则。需要说明，这是预印本，摘要未给出数据集规模、基线对比、抽取准确率或人工评估结果，也未说明“可归因”具体指追溯到哪一层。因此目前只能确认其问题设定与设计取向，不能判断相对微调或手工提示的实际收益。对关注 AI Agent 在受监管行业落地的读者，其治理思路值得留意。",
+      "original_title": "FinEvolveKG: Controlled and Attributable Prompt Evolution for Financial Knowledge Graph Construction",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09887v1",
+      "title_zh": "单隐层ReLU网络集合在Sobolev空间中是否弱闭：一个肯定性结果",
+      "summary_zh": "该预印本证明，对有界连通开集Ω，至多N个神经元的单隐层ReLU网络集合在W^{1,p}(Ω)中是弱闭的。由此，该集合上任何强制性、弱下半连续的泛函都能取到最小值。作者指出这覆盖了凸被积函数的Deep Ritz方法、Sobolev训练与Lipschitz学习等情形；并进一步讨论权重衰减参数趋于零时正则化极小子的行为。",
+      "why_zh": "为基于神经网络求解PDE和Sobolev训练提供存在性理论基础，回答“变分问题在ReLU网络类上是否有解”这一常被绕过的数学问题，属方法学底层进展。",
+      "details_zh": "摘要给出的主要结论是：单隐层、至多N个神经元的ReLU网络集合，在有界连通开集Ω上于Sobolev空间W^{1,p}(Ω)中弱闭。弱闭性配合泛函的强制性与弱下半连续性，可保证最小值在集合内取到，而不是只在闭包上取到。作者列举的应用包括凸被积函数的Deep Ritz方法、Sobolev训练和Lipschitz学习，并提到当权重衰减参数趋于零时对正则化极小子的分析。摘要未给出p的范围、证明技术细节与反例讨论，信息有限。该结果为arXiv预印本，尚未经同行评审，应用范围应以全文假设为准。",
+      "original_title": "On the (non-)closedness of the set of ReLU networks",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CV",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.08731",
+      "title_zh": "eSharp：基于扩散的锐利单目度量事件相机深度估计",
+      "summary_zh": "一篇 arXiv 计算机视觉预印本提出 eSharp，面向事件相机的单目度量深度估计（MDE）。深度感知对自主导航、工业检测和混合现实很关键，但常受功耗与体积限制，因此单目方案受青睐。传统基于帧的 MDE 在快速运动和高动态范围场景下仍受挑战。eSharp 将基于扩散的方法引入事件到深度的度量估计，摘要强调“锐利”与度量尺度，但未在可见摘要中给出精度或速度数据。",
+      "why_zh": "事件相机与扩散模型结合是视觉感知的前沿组合，针对的是帧相机在高速与高动态范围下的结构性短板，而非又一篇普通深度估计刷榜。",
+      "details_zh": "根据摘要，eSharp 的定位是事件驱动的单目度量深度估计框架，目标是同时应对快速运动与高动态范围，并输出具有度量尺度的深度。摘要提到“基于扩散”和“锐利”，暗示其关注边缘与细节保持，但未披露网络结构、训练数据、损失设计或与现有事件深度方法的定量比较。作为预印本，其结论未经独立验证；读者应注意“度量”意味着绝对尺度而非相对深度，这通常依赖标定或特定监督信号，而摘要未说明尺度来源。该方向对低功耗机器人与 AR 设备有潜在意义，但实际部署价值需等待代码与评测。",
+      "original_title": "eSharp: Diffusion-based Sharp Monocular Metric Event-to-Depth Estimation",
+      "focus": false,
+      "edition": "morning"
+    },
     {
       "source_type": "媒体报道",
       "verification_status": "未经独立交叉核实",
