@@ -2,9 +2,610 @@
   "version": 1,
   "date": "2026-11-11",
   "editions": [
+    "morning",
     "evening"
   ],
   "items": [
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.13210",
+      "title_zh": "确定性不可知PAC学习的近最优样本复杂度",
+      "summary_zh": "该预印本研究确定性标签下的不可知PAC学习：样本由任意确定性函数标注，该函数不必属于概念类C，从而刻画了无随机标签噪声的模型错配情形。作者称此前工作已把样本复杂度上界从经典的O(d/ε²)改进到Õ(K/ε)，但上下界仍有较大差距；本文证明VC维为d、直径有限的类可用Õ(K^{1/3}d^{2/3}/ε)样本学习，并构造了在对数因子内紧的类，同时讨论了在线版本的最小最大遗憾。",
+      "why_zh": "不同于一般模型性能新闻，这条给出可检验的样本复杂度上下界匹配结果，属于学习理论中少见的“紧界”进展，值得关注其证明思路与假设条件。",
+      "details_zh": "摘要显示该工作位于可实现学习与完全不可知学习之间：标签确定但概念类可能错配。已知信息是上界形式与紧性构造，以及在线类比结果；但摘要未给出具体证明技术、常数因子、对K和d的依赖细节，也未说明实验或应用场景。作为预印本，结论尚未经同行评审或独立复现，读者应把它视为理论主张而非已确认定论。其价值在于缩小了此前上界与下界之间的差距，但“近最优”仅指对数因子意义下。",
+      "original_title": "Near-Optimal Sample Complexity of Deterministic Agnostic PAC Learning",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/33 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.13210",
+        "pages_read": 14,
+        "pages_total": 33,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 3
+          },
+          {
+            "id": "E3",
+            "page": 6
+          },
+          {
+            "id": "E4",
+            "page": 10
+          },
+          {
+            "id": "E6",
+            "page": 2
+          },
+          {
+            "id": "E7",
+            "page": 3
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究的是确定性标签（deterministically labeled）分布下的不可知（agnostic）PAC 学习的最优样本复杂度问题：学习器从 i.i.d. 训练样本出发，希望输出假设，使其在未来样本上的分类误差以高概率接近概念类 C 中最佳概念的误差。摘录显示作者以 VC 维 d 与直径参数 K 等组合复杂度参数刻画样本复杂度上界与下界。",
+            "evidence_ids": [
+              "E1",
+              "E6",
+              "E2"
+            ]
+          },
+          "method": {
+            "text": "方法为理论分析：给出样本复杂度 m_C(ε,δ) 的下界与上界定理（Theorem 1.1），上界由一种结合经验风险最小化（ERM）与记忆化（memorization）的学习算法得到，这与 Ben-David and Urner [2014] 纯记忆化算法不同；分析先研究概念类仅含两个函数的特例，并引入 SET-VC、PERT-VC 等组合参数用于无限直径情形的分析。",
+            "evidence_ids": [
+              "E2",
+              "E7",
+              "E3"
+            ]
+          },
+          "findings": {
+            "text": "理论结果：对非退化概念类 C（VC(C)=d<∞、D(C)=K<∞），Theorem 1.1 给出 m_C(ε,δ) 的 Ω 下界与 Õ 上界，并指出对某些有限 K0、每个 d 与 K≥max{K0,d}，存在概念类使上述上界紧（即匹配的 Ω 下界）。摘录未提供数值实验；这是预印本中的理论结论，未见独立验证。",
+            "evidence_ids": [
+              "E2"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录仅覆盖引言、定义与部分证明片段，无法判断完整证明细节与所有条件。作者明确留下开放问题：SET-VC(C) 与 PERT-VC(C) 是否总相等，或是否存在二者不等的概念类；解决该问题才能澄清无限直径情形上界是否与小 ε 区间已有下界匹配。摘录未说明实验验证或独立复现。",
+            "evidence_ids": [
+              "E4"
+            ]
+          },
+          "replication": {
+            "text": "复现建议（基于摘录可支持的范围）：先按第 2 节定义实现 VC 维、直径、SET-VC、PERT-VC 等参数的计算，再在小规模有限概念类上验证 Theorem 1.1 所述上下界形式；实现 ERM+记忆化算法并检验其误差界。摘录未给出完整算法伪代码、常数与实验设置，因此无法据此完整复现证明或数值结果，需查阅全文；该材料为预印本，尚无独立验证信息。",
+            "evidence_ids": [
+              "E3",
+              "E7",
+              "E1"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.12903",
+      "title_zh": "SELD：检测上下文压缩中“答案对但证据被删”的静默证据丢失",
+      "summary_zh": "该预印本指出，长输入场景下上下文压缩已很常见，但压缩后的上下文只有在保留答案证据时才有用。现有检查多比较阅读模型的答案或其最可能词，因而漏掉一种常见失败：关键证据被删除而答案不变，即“静默证据丢失”，使答案缺乏支撑，并对复用该上下文的其他模型构成风险。作者提出 SELD 来检测这一问题。",
+      "why_zh": "它把上下文压缩的评估从“答案是否相同”推进到“证据是否仍在”，直接关系到压缩上下文被多模型复用时的事实可靠性，是 RAG 与长上下文工程中易被忽视的失效模式。",
+      "details_zh": "据摘要，静默证据丢失的定义是：压缩过程移除了关键证据，但阅读模型仍给出相同答案，因此基于答案或最可能词的常规检查无法发现。这类压缩上下文若被其他模型复用，答案将失去依据，风险被放大。SELD 被提出用于检测该现象，但摘要未说明其具体检测信号、阈值或评测数据集，也未给出检出率与误报率。该文为 arXiv 预印本，尚未经独立验证；其“常见失败”的判断来自作者自述，需结合后续复现与同行评审看待。",
+      "original_title": "SELD: Detecting Silent Evidence Loss in Context Compression beyond the Answer",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.14468",
+      "title_zh": "异质SIS反应扩散模型的贝叶斯反问题与疫情阈值不确定性",
+      "summary_zh": "该预印本研究带标准发生率的异质易感—感染—易感（SIS）反应扩散模型，利用早期观测对疾病持续存在做贝叶斯推断。作者称主要流行动态只通过传播率与恢复率之差以及感染者扩散系数依赖未知系数，同一对量决定主特征值，而主特征值的符号决定是否持续存在，因此早期数据可用于推断阈值附近的不确定性。",
+      "why_zh": "把疫情持续阈值与反问题不确定性结合，比一般传染病建模新闻更关注“早期数据能否识别关键参数”，对数学建模与公共卫生推断都有方法意义。",
+      "details_zh": "摘要给出的关键结构是：模型动态对未知系数的依赖被压缩为传播—恢复率差和感染扩散系数两个组合量，主特征值符号对应持续与消亡的阈值。作者据此研究从早期观测做贝叶斯推断的可行性。信息局限明显：摘要未提供具体数据、先验设定、数值实验或可识别性证明的完整条件，也未说明异质性空间结构如何影响结论。作为数学预印本，结论未经独立验证，读者不应将其理解为对真实疫情预测能力的已证实评估。",
+      "original_title": "Bayesian inverse problems and epidemic-threshold uncertainty for a heterogeneous SIS reaction-diffusion model",
+      "focus": true,
+      "research": {
+        "status": "partial_pdf_text",
+        "material_scope": "公开 PDF 中提取文本的前 14/30 页；非全文核验",
+        "source_url": "https://arxiv.org/pdf/2611.14468",
+        "pages_read": 14,
+        "pages_total": 30,
+        "citations": [
+          {
+            "id": "E1",
+            "page": 1
+          },
+          {
+            "id": "E2",
+            "page": 2
+          },
+          {
+            "id": "E3",
+            "page": 3
+          },
+          {
+            "id": "E4",
+            "page": 1
+          },
+          {
+            "id": "E5",
+            "page": 2
+          },
+          {
+            "id": "E6",
+            "page": 3
+          },
+          {
+            "id": "E10",
+            "page": 7
+          },
+          {
+            "id": "E15",
+            "page": 12
+          },
+          {
+            "id": "E16",
+            "page": 13
+          }
+        ],
+        "sections": {
+          "question": {
+            "text": "论文研究在异质SIS反应–扩散模型下，能否仅凭疫情早期的感染流行率观测，对疾病能否持续（阈值R0>1）进行贝叶斯推断并量化不确定性。摘要指出，主导的流行率动态只通过传播率与恢复率之差以及感染扩散系数依赖于未知系数，而同一对量决定主特征值的符号，从而决定持续性。",
+            "evidence_ids": [
+              "E1",
+              "E4",
+              "E5"
+            ]
+          },
+          "method": {
+            "text": "方法为函数空间贝叶斯反演框架：对初始感染规模ε的感染密度做二阶展开，在噪声按ε缩放时识别参数（相同(q,dI)）之间流行率数据律的KL散度中ε²的系数，并证明在Hellinger距离下O(ε)收敛到极限流行率后验与联合流行率–发病率后验；另用两个时刻间感染L2范数的增长来界定主特征值。",
+            "evidence_ids": [
+              "E2",
+              "E3"
+            ]
+          },
+          "findings": {
+            "text": "摘录给出的结果主要是理论性的：低流行率展开、后验极限与特征值增长界（定理5.1、5.2、5.3、5.8及推论5.5、5.6）。第7节的数值实验被描述为说明流行率如何提供持续性信息以及非线性后验如何趋近低流行率极限，但摘录未给出具体数值、误差量级或比较结论，因此无法判断实验数值结果。",
+            "evidence_ids": [
+              "E2",
+              "E3",
+              "E16"
+            ]
+          },
+          "limitations": {
+            "text": "证据边界：摘录仅覆盖第1–13页左右，第7节数值实验的具体设置与结果、附录细节均未包含，无法评估数值验证、离散化误差率或实际数据表现。文中也指出具体离散化速率需要额外的状态正则性与可积误差常数。此外，这是预印本（arXiv标识），摘录中未见独立验证或同行评审信息，不能视为已被独立复现的结论。",
+            "evidence_ids": [
+              "E15",
+              "E6"
+            ]
+          },
+          "replication": {
+            "text": "复现建议（仅基于摘录）：先实现SIS反应–扩散正问题及Neumann边界条件，验证定理3.1的状态界与定理5.1的O(ε²)展开；再按第4节构造可容许先验与贝叶斯后验，检验Hellinger距离收敛；最后按第7节思路做低流行率极限与非线性后验对比。由于摘录缺少第7节参数、网格与噪声设定，具体复现条件无法判断，需查阅完整论文。",
+            "evidence_ids": [
+              "E10",
+              "E16",
+              "E3"
+            ]
+          }
+        },
+        "review_status": "AI 辅助归纳，页码可复核；未独立验证、未复现实验或证明"
+      },
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-10",
+      "url": "https://arxiv.org/abs/2611.14514v1",
+      "title_zh": "对比式发现：让LLM智能体在竞争性解释之间做开放式科学发现",
+      "summary_zh": "该预印本指出，现有LLM科学发现智能体多采用逐点假设检验，只把假设h与其否定¬h比较，证据否定h后无法得知支持哪种替代解释。作者提出Contrastive Discovery，用互斥且穷尽的竞争性解释构成对比集，以实验证据在集合上重新分配信念的程度来评分，信念集中于某一解释即视为问题解决。摘要称在六个领域中，信念变化最大的逐点候选中89%为否定结果。",
+      "why_zh": "把科学发现从“证伪单一假设”转向“在竞争解释间分配信念”，触及LLM智能体推理评测的方法论盲点，对做Agent与自动实验设计的读者有直接启发。",
+      "details_zh": "摘要给出的关键设计是：对比集只改变智能体提出和评分的单位，因此已有智能体可直接复用，对已收集证据重新评估或指导后续搜索。这暗示该方法更像评测与搜索目标的改造，而非新模型。摘要提到六领域实验及89%这一比例，但未说明领域构成、基线设置与统计不确定性；作为预印本，结论尚未经独立验证，89%也不等于方法整体优于现有智能体。读者应注意其证据来自作者自设基准。",
+      "original_title": "Contrastive Discovery: Open-Ended Scientific Discovery over Competing Explanations",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-10",
+      "url": "https://arxiv.org/abs/2611.14419v1",
+      "title_zh": "评估LLM生成的世界模型能否支撑神经符号推理",
+      "summary_zh": "该预印本研究五个LLM能否把开放式自然语言情境生成为部分可观测随机博弈形式的世界模型，并追问“机械上合法”是否足以说明模型忠实刻画了原决策问题。作者指出多智能体情境下可能存在多种合理形式化，因此引入基准来检验生成模型与意图问题之间的一致性。摘要未给出具体评测结果。",
+      "why_zh": "LLM生成形式化世界模型是规划、验证与安全推理的前置环节；区分“语法合法”与“语义忠实”是容易被忽略却决定可用性的问题。",
+      "details_zh": "摘要明确了任务设定：输入为开放式自然语言情境，输出为部分可观测随机博弈，并涉及五个LLM与多智能体下的形式化歧义。但摘要未披露基准规模、评价指标、各模型表现，也未说明由谁判定“忠实”。因此目前只能确认研究提出了一个值得追问的评测问题，不能据此判断LLM生成世界模型已可靠。预印本结论未经独立验证，读者不宜引用具体性能结论。",
+      "original_title": "Evaluating LLM-Generated World Models for Neuro-Symbolic Reasoning",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.13928",
+      "title_zh": "稀疏多重检验在一因子相依下的渐近贝叶斯最优性",
+      "summary_zh": "该预印本研究已知一因子协方差、信号为中心高斯的两组模型下的稀疏多重检验问题，给出观测数据贝叶斯Oracle的一阶风险展开，包含异质载荷的有限维载荷平均与同质载荷的显式极限常数。作者称在因子估计与信号校准条件下，同质一因子Oracle的首阶风险严格小于独立坐标情形，而观测到潜在因子不再带来一阶风险下降，并证明MRD-GBS逐步下降程序在稀疏性下的渐近贝叶斯最优性。",
+      "why_zh": "把多重检验从独立坐标推广到因子相关结构，并给出风险展开与最优性结论，对高维统计与可重复性分析有方法意义，不同于一般应用型统计热点。",
+      "details_zh": "摘要显示，论文关注的是检验统计量之间存在一因子相关时的稀疏多重检验，而非独立假设下的经典情形。其核心贡献有三：一是对观测数据贝叶斯Oracle做一阶风险展开，异质载荷情形出现有限维载荷平均项，同质载荷情形给出显式极限常数；二是比较一因子Oracle与独立坐标Oracle的首阶风险，声称前者严格更小，但已知潜在因子并不进一步降低一阶风险；三是在因子估计与信号校准条件下证明MRD-GBS的渐近贝叶斯最优性。需要注意，这是arXiv预印本，结论未经独立验证，摘要未给出模拟或实际数据证据，适用条件的具体强度也需阅读全文确认。",
+      "original_title": "Asymptotic Bayes Optimality of Sparse Multiple Testing Procedures under One-Factor Dependence",
+      "focus": true,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-10",
+      "url": "https://www.psypost.org/social-media-algorithms-promote-content-that-conflicts-with-your-values/",
+      "title_zh": "研究称X的推荐算法会推送与用户价值观相冲突的内容",
+      "summary_zh": "据PsyPost报道，一项新研究称X的推荐算法会主动推送与用户个人价值观相冲突的内容。报道称这种错配由用户与不喜欢的帖子争论所驱动，形成令人沮丧的反馈循环，并对偏左翼用户影响更大。该条为媒体报道摘要，未提供研究样本、测量方式与算法细节。",
+      "why_zh": "把推荐算法的价值错配与用户争论行为联系起来，涉及平台设计与政治心理，比一般的“算法有害”评论更具机制假设，但需注意其证据来自二手报道。",
+      "details_zh": "摘要给出的核心机制是：用户与反感内容互动（争论）会被算法解读为参与信号，从而强化同类推送，形成循环；报道还称影响在偏左用户中更明显。这些说法目前仅来自媒体转述，未见原始论文的样本规模、价值观测量工具、因果识别策略或平台数据获取方式，因此“算法主动推广”与“用户行为驱动”之间的因果归属尚不能确认。读者应将其视为待核实的研究线索，而非已确立的平台行为结论。",
+      "original_title": "Social media algorithms on X promote content that conflicts with your values",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "工程与开源",
+      "source": "The Register",
+      "published": "2026-11-11",
+      "url": "https://www.theregister.com/ai-and-ml/2026/11/11/openai-builds-a-kill-switch-for-its-research-models/5309006",
+      "title_zh": "OpenAI为其研究模型设置“终止开关”",
+      "summary_zh": "据 The Register 报道，OpenAI 正在为其研究模型构建一种“终止开关”机制。报道以设问方式提出：一个失控的智能体在35秒内能造成多大损害——因为关闭它可能就需要这么久。该报道目前仅有标题与简短摘要，未披露开关的技术实现、触发条件、适用范围，也未说明是否有第三方审计或独立验证。",
+      "why_zh": "AI Agent 的安全讨论多停留在原则层面，这条指向具体的工程控制手段与响应时延问题；但信息量很少，适合作为追踪线索而非结论。",
+      "details_zh": "可确认的内容仅限于：报道主体是 OpenAI，对象是其研究模型，机制被描述为“终止开关”，并引出“35秒”这一响应时间尺度的设问。需要明确的是，这一时间数字出自媒体摘要的修辞性提问，并非已核实的技术指标；开关是自动触发还是人工介入、是否覆盖多智能体场景、失效模式如何，摘要均未涉及。对关注 AI Agent 安全的读者，值得追问的是：终止开关能否应对模型规避、权限扩散和外部工具调用带来的延迟，以及这类机制由谁审计。在原始报道与技术文档公开前，不宜把它当作已落地的安全标准。",
+      "original_title": "OpenAI builds a kill switch for its research models",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "中国观察",
+      "source": "国际媒体中国报道",
+      "published": "2026-11-11",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNN0RyUmRuVzJ1WDEwcGk4ZVpaU05GRkprbUQtaHBRRGVWOXNEanN0QnZUOTJrVHB1cFRNbHZ0dnpab1NwdkoxSDd2ZE4wYXlManN0MUNFMG9VcU9oMTF2MHRyMUMzY1BUQ25GVlc3d0NqSG41dld6NUdBLW5WRUdBNExDWHh0RGNsb0xCTHpBeS1tc0k0STJzT19jUUVFWVM0LS05QkVDTnlXRzVMSlhuZEFXak9GcGxGVUczWkd6bmxnSGs1Q0taTFVmakdIeENT?oc=5",
+      "title_zh": "研究称“香港金融衰落”叙事忽略整体图景",
+      "summary_zh": "南华早报一则报道称，有研究认为关于香港金融地位衰落的流行叙事没有把握整体图景。目前仅有聚合来源的标题与一句摘要，未提供研究机构、数据口径、具体指标或反驳论据，报道原文也需进一步核实。",
+      "why_zh": "香港国际金融中心地位是持续争论的议题，但本条仅有标题级信息，价值在于提示存在对主流“衰落叙事”的系统性质疑，而非提供可引用的结论。",
+      "details_zh": "该条目来自聚合RSS，仅含标题与一句摘要，属于需要核实原始报道的线索。标题指向一项研究，主张“香港金融衰落”的叙事遗漏了更大图景，但摘要未说明研究由谁完成、使用哪些指标（如资产管理规模、IPO募资、跨境结算或银行体系存款）、覆盖什么时间区间，也未给出与衰落论相反的具体证据。因此目前只能确认存在这样一则报道，不能据此判断香港金融地位的实际走势，也不应把标题中的“研究称”当作已独立验证的结论。读者若要引用，应回到南华早报原文核对研究方法与数据来源。",
+      "original_title": "Why narratives of Hong Kong’s financial decline miss the big picture: study - South China Morning Post",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "聚合线索",
+      "verification_status": "需要核实原始报道",
+      "material_scope": "聚合RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "Hacker News",
+      "published": "2026-11-10",
+      "url": "https://github.com/GoogleChrome/modern-web-guidance",
+      "title_zh": "Show HN：让编码智能体告别约 2019 年的 JavaScript，改用现代 Web 原生能力",
+      "summary_zh": "该 Hacker News 帖子指出，浏览器已原生支持许多过去需数十行 JS 或额外依赖才能实现的功能，例如用 CSS.highlights 做文本范围高亮、用 dialog 与 showModal() 获得背景遮罩与焦点管理、用 field-sizing 让文本框随输入自动增高。发帖者称，模型虽知道部分特性名称，却很少默认采用平台原生方案，而倾向沿用旧的基于 JS 的模式，因此他们着手推动改变。",
+      "why_zh": "它触及编码智能体的一个现实偏差：模型倾向复述训练中常见的旧模式，而非采用更简洁的现代平台能力，这对评估智能体代码质量与前端工程实践有直接参考意义。",
+      "details_zh": "该条为 Hacker News 聚合线索，摘要仅概述发帖者观点，未提供所涉工具的具体名称、实现方式或评测数据，需核实原始项目页面。可确认的信息是：发帖者主张浏览器原生已覆盖文本高亮、模态对话框焦点管理、文本域自动增高这些常见需求，而编码智能体默认仍生成旧式 JS 方案。这一观察属于发帖者经验性判断，并非系统性测量；模型为何偏好旧模式、原生方案在兼容性与可访问性上的取舍，摘要均未涉及，不宜据此推断普遍结论。",
+      "original_title": "Show HN: Get your coding agent off ~2019 JavaScript, onto modern web primitives",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.12955",
+      "title_zh": "用“预测惊讶”作为自 grounding 的概念瓶颈，实现可解释时间序列分类",
+      "summary_zh": "该预印本关注风险敏感场景下的时间序列分类器需同时满足准确、可解释、证据不足时可弃权三点，但现有方法难以兼得。作者提出 ConceptTime：用冻结的概率预测器在每一时刻预测下一观测的分布，将预测与实际的失配称为“预测惊讶”，并用该信号同时定位分段边界、刻画各段特征，从而以单一自监督信号闭合“先有边界还是先有模式”的循环。",
+      "why_zh": "它把可解释性中的概念定义问题转化为预测误差驱动的分段，绕开了固定窗口与专家词表的取舍，对高风险场景的可解释模型设计有方法启发。",
+      "details_zh": "摘要指出的结构性难题是：有意义的时序模式依赖分段边界，而有意义的边界又依赖预期模式，形成循环。ConceptTime 的解法是不预设窗口或专家标注词表，而让一个冻结的概率预测器逐时刻输出下一观测的分布，以预测与实际信号的失配（预测惊讶）同时承担分段与段特征描述两项功能。该思路若成立，可让模型在证据弱时弃权并给出可读的段级解释。但这是预印本，摘要未提供数据集、准确率或弃权校准的具体结果，可解释性是否真正成立仍需独立评估。",
+      "original_title": "Predictive Surprise as Self-Grounding Concept Bottleneck for Interpretable Time Series",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.12918",
+      "title_zh": "IntentTwin：离线网页行为预测中的候选支持混淆与“预言机到部署”落差",
+      "summary_zh": "该预印本指出，离线网页行为基准常把真实发生的动作插入一个有限候选集再测重排序，这种协议可能制造“候选支持混淆”：当目标动作不在训练支持内、而所有干扰项都从该支持中采样时，仅凭是否属于支持集就能识别正确答案，而无需建模行为本身。作者用“支持可识别率”（SIR）形式化该效应，并构建相应方法（摘要在此处截断），标题还指向离线评测与真实部署之间的落差问题。",
+      "why_zh": "这是对评测方法本身的批评：如果基准能被“数据来源”而非“行为理解”刷分，那么大量离线指标可能系统性高估模型能力，对做推荐与行为预测的人有直接警示。",
+      "details_zh": "摘要提供的关键概念是候选支持混淆与支持可识别率，逻辑是：真实动作被插入候选集，干扰项却来自训练分布，于是“是否在支持集内”成为泄露性特征。这类问题在离线评测中容易被忽视，因为指标看起来正常，但模型学到的可能是数据构造痕迹而非行为规律。需要说明的是，摘要在此处被截断，作者提出的具体修正方案、实验规模和SIR的实测数值均未给出，标题中的“预言机到部署落差”也缺少可核对的细节。因此应把它读作一个方法论警示，而非已被广泛验证的结论。",
+      "original_title": "IntentTwin: Deconfounding Candidate Support and the Oracle-to-Deployment Gap in Offline Web Behavior Prediction",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-10",
+      "url": "https://arxiv.org/abs/2611.14505v1",
+      "title_zh": "Continual-ARC：衡量智能体在“工作寿命”内持续习得技能的新基准",
+      "summary_zh": "该预印本指出，现有持续学习基准通常只覆盖单一应用领域、每个任务只出现一次，且只考察单一类型的学习器，导致基于记忆与基于权重的方法难以在同一尺度上比较。作者提出 Continual-ARC，用三版 ARC-AGI 任务构建终身学习流：任务无需领域知识，旧任务在休眠间隔后以新实例重现，同时不断有新任务到来；学习器可为示例、提交答案或在框架内行动付费，并按反馈预算消耗比例计分。",
+      "why_zh": "它把“持续学习”从单次任务准确率转向长期预算约束下的技能保持与迁移，为比较记忆型与权重型智能体提供了统一评测框架，值得关注其设计是否可复现。",
+      "details_zh": "据摘要，Continual-ARC 的核心设计是“同一任务在间隔后以新实例回归”，以检验学习器是否真正保留技能而非记住答案；同时允许学习器在实例间保留任意状态，使记忆型与权重型系统在同一评分尺度上竞争。计分依据是反馈预算的消耗比例，而非单纯正确率，这引入了成本—收益权衡。需要说明的是，该文为 arXiv 预印本，尚未经独立验证；摘要未给出具体任务数量、基线结果或统计显著性，因此不宜据此判断哪类方法更优。",
+      "original_title": "Continual-ARC: Measuring Skill Acquisition over a Working Lifetime",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-10",
+      "url": "https://arxiv.org/abs/2611.14519v1",
+      "title_zh": "医学图像分割：基础模型适配与任务专用训练的对比",
+      "summary_zh": "该预印本讨论在大型自然图像集合上预训练的基础模型正被越来越多地适配到医学图像分割，人们期待它们取代逐任务训练的模型。作者指出多数比较只使用训练分布内的数据和单一配置缺乏论证的任务专用基线，因此对新临床站点性能的证据有限；基础模型需要适配多少、哪些因素决定成败也仍不清楚。",
+      "why_zh": "直指“基础模型将取代专用模型”这一流行预期背后的评测缺陷，提醒读者关注分布外泛化与基线公平性，而非只看单一数据集上的分数。",
+      "details_zh": "摘要明确点出两类问题：评测数据多来自训练分布，以及任务专用基线只设一个且配置少有说明，这会系统性高估基础模型的迁移优势。作者还提出两个未解问题——需要适配模型的多大比例，以及决定性能差异的因素是什么。信息局限在于摘要未给出具体数据集、模型清单与实验数值，也未说明结论方向；这是未经独立验证的预印本，不能据此断言基础模型优于或劣于专用方法。",
+      "original_title": "Medical Image Segmentation: Foundation Model Adaptation versus Task-Specific Training",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.13240",
+      "title_zh": "面向多球面预测变量的自适应局部Fréchet回归",
+      "summary_zh": "该预印本研究响应变量取值于一般度量空间、预测变量位于若干不同维球面乘积上的局部Fréchet回归。作者提出带因子专属带宽的局部常数与局部线性估计量，建立一致收敛速率，并通过比较全模型与逐一剔除因子的交叉拟合预测风险来筛选球面因子，证明该程序能一致恢复活跃因子集，且估计量达到已知活跃因子集时的同等速率。",
+      "why_zh": "把非欧响应回归与球面因子选择结合，并给出因子选择后速率不损失的统计保证，对函数型与分布型数据分析有方法学价值，而非普通模型调参报道。",
+      "details_zh": "摘要显示方法覆盖标量响应与球面响应，并用于船速与漂流浮标速度分布数据。一个值得注意的技术点是：对支撑在共同紧区间上的一维Wasserstein响应，一致速率无需响应空间的熵条件，这降低了分布型回归的理论门槛。局限在于这是未经独立验证的预印本，摘要未给出具体收敛速率常数、模拟规模与因子选择的一致性条件细节，实际高维球面乘积下的计算成本也需读全文确认。",
+      "original_title": "Adaptive local Fr\\'echet regression with polyspherical predictors",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "心理学",
+      "source": "PsyPost",
+      "published": "2026-11-10",
+      "url": "https://www.psypost.org/leafy-greens-versus-meat-where-your-nitrates-come-from-may-matter-for-brain-health/",
+      "title_zh": "绿叶菜与肉类：硝酸盐来源不同，或与脑健康差异相关",
+      "summary_zh": "PsyPost报道一项大型丹麦研究，称植物来源硝酸盐与较低痴呆发生率相关，而动物来源和自来水中的硝酸盐与较高发生率相关。报道强调两者都含硝酸盐，差别可能在来源。该报道为媒体转述，摘要未提供研究设计细节、样本量、随访时长或混杂因素控制情况。",
+      "why_zh": "同一化学物质因食物来源不同而呈现相反关联，是营养流行病学中典型的混杂与替代效应问题，对理解“某成分有害/有益”式报道有警示意义。",
+      "details_zh": "可确认的只有报道层面的关联方向：植物来源硝酸盐对应较低痴呆率，动物与自来水来源对应较高。这是观察性关联，不能推出因果；吃绿叶菜多的人与吃加工肉多的人在整体饮食、社会经济状况和生活方式上差异很大，可能解释部分结果。摘要未给出效应大小、置信区间与调整变量，也未说明痴呆如何判定。读者应等待原始论文与独立评论，不宜据此调整饮食。",
+      "original_title": "Leafy greens versus meat: Where your nitrates come from may matter for brain health",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "媒体报道",
+      "verification_status": "未经独立交叉核实",
+      "material_scope": "新闻RSS标题与摘要",
+      "related_coverage": [],
+      "category": "国际科技",
+      "source": "TechCrunch",
+      "published": "2026-11-10",
+      "url": "https://techcrunch.com/2026/11/10/openai-anthropic-face-new-oversight-as-new-yorks-ai-safety-law-takes-effect/",
+      "title_zh": "纽约AI安全法生效，OpenAI与Anthropic面临新监管",
+      "summary_zh": "TechCrunch报道称，纽约州准备执行其全面的AI安全法，要求OpenAI、Anthropic等主要开发者进行注册、披露安全实践，并报告重大事故，否则可能面临罚款。报道将此举描述为对前沿模型开发者的新监督机制，但具体条款、生效范围与执行时间在摘要中未展开。",
+      "why_zh": "州级AI安全立法进入执行阶段，是观察美国AI监管实际落地方式的关键案例，对关注模型合规成本与治理路径的读者比一般产品快讯更有制度意义。",
+      "details_zh": "据该报道，纽约的AI安全法要求大型开发者注册、公开安全做法并上报关键事件，违规可被罚款，OpenAI与Anthropic被点名为受影响的代表企业。摘要未说明“重大事故”的界定、注册门槛按何种规模划分、披露内容是否公开，以及联邦层面是否可能产生法律冲突。该信息来自单一媒体，未经独立交叉核实，属于对即将执行的监管框架的概述而非法律文本。对研究者而言，值得追问的是这类州法如何定义前沿模型、如何与既有自愿承诺衔接，以及合规披露会否形成可比较的安全信息。",
+      "original_title": "OpenAI, Anthropic face new oversight as New York’s AI safety law takes effect",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.13869",
+      "title_zh": "高维少样本下异常值对硬间隔线性SVM的影响",
+      "summary_zh": "该预印本在样本量固定、维度持续增长的设定下，分析异常值如何影响硬间隔线性支持向量机。作者称，单侧污染时中心化Gram矩阵收敛为常数内点块加异常值对角分量，极限对偶问题有闭式解，所有异常值通过一个有效距离起作用，并由此给出内点支持丧失、间隔收缩、截距偏移和渐近误分类的显式阈值。双侧污染时极限截距由类别平衡约束的乘子决定，两类方向相反，因此至多一类会崩溃或被渐近误分类；对称污染下判别函数不变但间隔收缩。摘要称有七组数值实验验证。",
+      "why_zh": "把“异常值有多坏”从经验直觉变成可计算的相变阈值，对理解高维少样本下线性模型的脆弱性有直接价值，也提醒不要把SVM的稳健性当作默认前提。",
+      "details_zh": "这条属于理论统计与机器学习交叉工作，核心贡献是极限刻画而非新算法。摘要中可确认的要素包括：维度增长而样本量固定的渐近框架、单侧与双侧污染的分别处理、闭式极限对偶解、以及若干显式阈值。需要留意的是，结论依赖特定的污染模型与硬间隔假设，实际数据中软间隔、正则化和标签噪声都会改变图景；七组数值实验是作者自述，未经独立复核。对读者而言，更值得追问的是这些阈值能否转化为可操作的诊断指标，例如在什么维度样本比下应优先考虑稳健替代方案。",
+      "original_title": "Outliers and the Hard-Margin Linear SVM in High-Dimension, Low-Sample-Size Settings",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.12900",
+      "title_zh": "从相关帖子到可归属片段：为抑郁问卷推断提供显式症状证据",
+      "summary_zh": "该预印本关注用纵向社交媒体历史推断标准化抑郁问卷作答。作者指出，这类任务需要与症状语义相关、可归属到具体用户、且足够具体以对应单个问卷条目的证据；现有方法靠语义相似度检索帖子，可能引入误导性材料。论文提出转向可归属的文本片段作为显式症状证据，摘要未给出完整方法与量化结果。",
+      "why_zh": "把心理健康推断的证据单位从“帖子”细化到“可归属片段”，涉及可解释性与测量效度，对关注AI用于心理评估的读者有方法层面的启发。",
+      "details_zh": "可确认的信息有限：来源为arXiv cs.CL新论文，摘要只说明问题设定与对语义相似度检索的批评，未提供数据集、模型、准确率或隐私处理细节。此类研究天然涉及敏感健康数据与伦理审查，摘要未涉及。读者应把它视为问题框架的提出，而非已验证可用的抑郁筛查工具；任何“AI可从社交媒体判断抑郁”的表述都超出该摘要能支持的范围。",
+      "original_title": "From Relevant Posts to Attributable Spans: Explicit Symptom Evidence for Depression Questionnaire Inference",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "数学",
+      "source": "arXiv math.ST",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.13930",
+      "title_zh": "高斯核长度尺度估计与确定性响应函数",
+      "summary_zh": "该预印本研究高斯过程所用无限光滑高斯核的长度尺度参数估计：当观测来自固定的一元响应函数时，分析最大似然与交叉验证估计量的固定域渐近性质。作者称此前该设定下没有理论结果，并证明估计量的下界依赖于响应函数的正则性（以傅里叶变换衰减速率衡量）；对带限函数及傅里叶变换按exp(-a|ω|^γ)衰减（γ>2）的函数，估计量至少以对数速率发散。",
+      "why_zh": "高斯过程的不确定性估计常被直接使用，这条揭示长度尺度在光滑核下可能不可一致估计，对核方法与贝叶斯优化实践有提醒意义。",
+      "details_zh": "摘要指出核心问题是：当真实响应函数固定而非随机生成时，长度尺度能否被可靠估计。作者给出依赖于函数正则性的下界，并特别指出对非常光滑的响应函数，估计量会随样本量增大而发散。这意味着常用的最大似然或交叉验证选出的长度尺度可能并不收敛到真值。信息局限在于：摘要未给出具体发散速率常数、模拟或实证结果，也未说明多维情形；作为预印本，结论尚待评审与复现，不宜直接外推为所有高斯过程应用的普遍结论。",
+      "original_title": "Lengthscale Estimation for the Gaussian Kernel and Deterministic Response Functions",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-10",
+      "url": "https://arxiv.org/abs/2611.14493v1",
+      "title_zh": "企业分析智能体评测框架比较：稳定性、风险检测与未知故障发现",
+      "summary_zh": "该预印本在受控研究环境中，用冻结的执行轨迹比较三类LLM分析智能体评测范式：基于轨迹的LLM评判、带红队的纯文本LLM评判、确定性启发式规则。第一阶段重复测量显示97%的配置达到稳定性阈值，且稳定性模式与智能体无关；第二阶段在72个已知风险测试用例上，基于轨迹的框架F1为0.90，纯文本评判召回相当但误报多5倍；第三阶段发现24个新故障。",
+      "why_zh": "企业部署Agent时“怎么评测”往往比模型本身更关键；该研究把评测框架的稳定性、误报代价与未知故障发现放在同一实验里比较，对工程选型有参考价值。",
+      "details_zh": "摘要强调实验使用冻结轨迹和受控环境，这有利于可复现，但也意味着结论未必外推到真实在线流量。三类框架各有范式差异，F1=0.90与“误报多5倍”是作者在72个真值用例上的测量，样本规模有限；第三阶段称发现24个新故障且与已知用例零重叠，但摘要未交代这些故障如何被确认。作为预印本，结果未经独立复核，不宜直接当作评测工具排名。",
+      "original_title": "Comparative Analysis of Agent Evaluation Frameworks: Stability, Detection, and Discovery in Enterprise Analytics Agents",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-10",
+      "url": "https://arxiv.org/abs/2611.14426v1",
+      "title_zh": "两个社区，一个问题：资源受限项目调度中的分支定界与A*比较",
+      "summary_zh": "该预印本比较运筹学中的分支定界与人工智能中的A*两种精确搜索方法，指出二者虽共享基本搜索原理，但搜索空间探索方式不同，可能导致计算性能显著差异。作者以资源受限项目调度问题（RCPSP）为示例场景，先建立两种方法之间的关系，再考察其性能差异。",
+      "why_zh": "这条不是新算法刷榜，而是跨社区方法对照，提醒AI与运筹学对同一精确搜索问题的表述差异会影响实际求解效率。",
+      "details_zh": "摘要说明研究动机是两种方法分属不同学科传统，尽管原理相通却少有系统对照。作者选择RCPSP作为代表性组合优化问题，先梳理分支定界与A*之间的对应关系，再分析探索策略带来的计算表现差异。信息局限在于：摘要未给出实验规模、基准实例、具体加速比或结论方向，也未说明是否提出统一框架。作为预印本，其比较结果尚待评审；读者不宜据此判断某一方法在一般调度问题上更优，只能视为方法学对照的线索。",
+      "original_title": "Two Communities, One Problem: Branch-and-Bound vs. A* for Resource-Constrained Project Scheduling",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv cs.LG",
+      "published": "2026-11-10",
+      "url": "https://arxiv.org/abs/2611.14511v1",
+      "title_zh": "Pyrite：构建并评测蛋白质-配体构象排序智能体",
+      "summary_zh": "该预印本提出 Pyrite，一个包含1500对构象的蛋白质-配体成对排序基准，用于检验模型能否从共折叠模型生成的候选构象中挑出更接近真实结合方式的一个。作者称，配备三维可视化工具和物理评分的专家化学家表现接近随机，说明现有化学信号难以解读。随后提出结构化表示 PyriteRep 及两个基于大语言模型的智能体，分别以文本推理和生成可执行特征代码的方式排序，摘要称准确率最高约67%和74%。",
+      "why_zh": "与常见的“新模型刷榜”不同，这条把焦点放在评测本身：连专家都接近随机，提示该任务的信号可能被高估，对关注AI4Science评测效度的人有启发。",
+      "details_zh": "摘要给出的关键信息有三点：基准规模为1500对构象、专家在有工具辅助下接近随机水平、两个LLM智能体分别达到约67%和74%的准确率。需要强调的是，这些数字来自作者自述的预印本，尚未经过独立复现或同行评审，基准构建方式、配对难度分布和“接近随机”的具体统计口径都未在摘要中说明。另一个值得追问的问题是：智能体的优势究竟来自对分子几何与相互作用的理解，还是来自对数据分布或评分函数的利用。在独立验证出现前，不宜把74%解读为该问题已被解决。",
+      "original_title": "Pyrite: Building and Benchmarking Protein-Ligand Pose Ranking Agents",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.AI",
+      "published": "2026-11-10",
+      "url": "https://arxiv.org/abs/2611.14487v1",
+      "title_zh": "Re-Search：用双人提问游戏拆解大模型的研究构想能力",
+      "summary_zh": "该预印本提出Re-Search，把研究构想过程改造成“二十问”式游戏：只给出已发表论文的研究问题，模型需通过提出是/否问题重新发现论文核心思想。作者称该框架基于200篇ICML论文构建，用以观察大模型如何探索研究想法空间、在何处受限，并弥补现有评估掩盖迭代搜索过程的不足。",
+      "why_zh": "把研究构想评估设计成可交互的搜索过程而非一次性打分，为理解LLM科研辅助能力的边界提供了新测量思路，对AI Agent与科研自动化讨论有直接参考价值。",
+      "details_zh": "摘要指出，研究构想本质上是迭代的：研究者依据反馈逐步修正想法，但现有评估往往只看最终产出，掩盖了搜索过程。Re-Search借用“二十问”的形式，让模型在仅知研究问题的条件下，通过一系列是/否提问逼近论文的核心思想，从而把构想能力拆解为可观察的提问与排除过程。作者称数据集来自200篇ICML论文，但摘要未披露模型表现、对比基线或评分标准等具体结果。该工作为预印本，未经同行评审与独立复现，其“揭示LLM局限”的结论应视为作者主张，需结合全文方法细节判断。",
+      "original_title": "Re-Search: Dissecting LLM Ideation Through a Two-Player Questioning Game",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS标题摘要及公开页面元数据",
+      "related_coverage": [],
+      "category": "机器学习",
+      "source": "arXiv stat.ML",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.13489",
+      "title_zh": "连续仿真优化中同时识别近优区域：极小极大复杂度与自适应采样",
+      "summary_zh": "该预印本指出仿真优化通常只返回单个最优点，但当决策还依赖资源成本等独立标准时，决策者需要的是期望表现落在最优值容差内的设计集合，且容差常在看到权衡后才确定。作者研究在连续设计空间上对所有不超过给定上限的容差同时识别近优区域，给出下界，表明区域识别并非优化的副产品，并提出自适应采样方法SASORI。",
+      "why_zh": "把“要一整片近优解而非一个最优点”形式化为统计问题并给出复杂度下界，对仿真、实验设计与多目标决策都有直接启发，区别于常见的算法跑分新闻。",
+      "details_zh": "摘要给出的下界依赖维度、光滑度以及描述近优设计几何的覆盖参数，并指出即使预先知道最优设计，任何程序仍需大量仿真评估，这说明区域识别的难度有本质来源。作者提出的SASORI据称能达到相应性能，但摘要被截断，未提供上界匹配程度、常数因子与实验设置。作为预印本，结论尚未经独立复现，读者应把它视为理论框架与算法提案，而非已验证的工程结论。",
+      "original_title": "Simultaneous Near-Optimal Region Identification in Continuous Simulation Optimization: Minimax Complexity and Adaptive Sampling",
+      "focus": false,
+      "edition": "morning"
+    },
+    {
+      "source_type": "研究预印本",
+      "verification_status": "未经独立验证",
+      "material_scope": "RSS论文标题与摘要",
+      "related_coverage": [],
+      "category": "AI",
+      "source": "arXiv cs.CL",
+      "published": "2026-11-11",
+      "url": "https://arxiv.org/abs/2611.12906",
+      "title_zh": "Brasilidade：衡量大语言模型的巴西身份认同",
+      "summary_zh": "该预印本提出一个新基准，旨在弥补当前评估大语言模型巴西葡萄牙语能力的不足。作者称Brasilidade是一套分布在四个领域的标准化任务评估方法，并率先公开第一个领域的任务，聚焦巴西葡萄牙语的语言细微差别、语法与变体。摘要提到结果显示模型规模等因素与表现相关，但具体结论因摘要截断而不完整。",
+      "why_zh": "低资源语言变体的评测长期被英语基准掩盖，该工作把“巴西性”拆成可测任务，对多语模型评估与文化适配讨论有参考价值，而非又一份通用榜单。",
+      "details_zh": "从摘要可知该基准强调巴西葡萄牙语内部的语法与地域变体差异，而非仅做葡语与英语的翻译对照，这使其能暴露模型对语言变体的敏感度。作者称四个领域仅公开了第一个，说明整体评估框架尚在建设中，跨领域结论不宜提前外推。局限明显：摘要被截断，未给出任务数量、样本规模、参评模型清单与具体分数，也未说明标注者背景与质量控制；作为预印本，基准本身的效度仍需社区复核。",
+      "original_title": "Brasilidade: Measuring Brazilian Identity for Large Language Models",
+      "focus": false,
+      "edition": "morning"
+    },
     {
       "source_type": "研究预印本",
       "verification_status": "未经独立验证",
